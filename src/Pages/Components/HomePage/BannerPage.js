@@ -7,7 +7,7 @@ export default function BannerPage() {
 
   return (
     <div style={{ height: '700px', border: '1px solid black', cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>
-      <img className='BannerImage' src="https://d3rodw1h7g0i9b.cloudfront.net/assets/frontend/temp_home/banners/desktop/main_banner.webp" />
+      <img className='BannerImage' alt='' src="https://d3rodw1h7g0i9b.cloudfront.net/assets/frontend/temp_home/banners/desktop/main_banner.webp" />
     </div>
   )
 }
