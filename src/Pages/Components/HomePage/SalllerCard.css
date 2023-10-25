@@ -1,0 +1,14 @@
+
+.imageTag {
+    height: auto;
+    width: 388.889px;
+}
+
+.glider-track{
+    transform: translateZ(0);
+    height: auto !important;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* z-index: 1; */
+}

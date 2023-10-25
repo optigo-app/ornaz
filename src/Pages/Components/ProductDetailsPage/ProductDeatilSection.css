@@ -1,0 +1,24 @@
+
+.imageDetail{
+    display: flex;
+}
+.imageDetailImage{
+    width: 50%;
+    height: 600px;
+    border: 1px solid black;
+}
+
+.imageDetailByNow{
+    width: 50%;
+    height: 600px;
+    border: 1px solid black;
+}
+.productDeatils{
+    width: 65%;
+    border: 1px solid black;
+}
+
+.contactForm{
+    width: 35%;
+    border: 1px solid black;
+}
