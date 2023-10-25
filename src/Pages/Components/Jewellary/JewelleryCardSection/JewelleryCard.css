@@ -1,0 +1,19 @@
+.main{
+    width: 75%;
+    /* border: 1px solid black; */
+    background-color: #f8f8f8;
+}
+.images{
+    /* border: 1px solid black; */
+    width: 31%;
+    margin: 10px;
+    cursor: pointer;
+}
+.imagesData{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.productImages{
+    width: 100%;
+}
