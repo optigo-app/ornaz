@@ -1,6 +1,8 @@
 .whyOrnazMain{
     border: 1px solid black;
     width: 25%;
+    display: flex;
+    order: 2;
 }
 .text{
     cursor: pointer;

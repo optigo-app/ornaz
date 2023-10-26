@@ -1,6 +1,8 @@
 .policeMain{
     width: 25%;
     border: 1px solid black;
+    display: flex;
+    order: 4;
 }
 .text{
     cursor: pointer;
