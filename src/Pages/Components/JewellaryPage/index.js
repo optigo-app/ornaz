@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../HomePage/Header'
+import Header from '../HomePage/Header/Header'
 import ShopByFilterPage from './ShopByFilterPage'
 import JewelleryCardSection from './JewelleryCardSection'
 import FooterSection from '../FooterSection'
