@@ -1,6 +1,8 @@
 .OrnazExperienceMain{
     border: 1px solid black;
     width: 25%;
+    display: flex;
+    order: 1;
 }
 .text{
     cursor: pointer;

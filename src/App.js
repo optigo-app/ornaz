@@ -4,7 +4,6 @@ import HomePage from './Pages/Components/home';
 import LoginPage from './Pages/Components/login/Login';
 import Register from './Pages/Components/register/Register';
 import Jewellary from './Pages/Components/Jewellary';
-import ProductDeatil from './Pages/Components/productdetails/ProductDeatil';
 import DisplayTechnology from './Pages/Components/footer/experience/DisplayTechnology';
 import DesignRing from './Pages/Components/footer/experience/DesignRing';
 import BookAppoinment from './Pages/Components/footer/experience/BookAppoinment';
@@ -23,6 +22,8 @@ import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver
 import BlogSection from './Pages/Components/footer/allaboutornaz/BlogSection';
 import About from './Pages/Components/footer/allaboutornaz/About';
 import Friend from './Pages/Components/footer/allaboutornaz/Friend';
+import ProductDeatil from './Pages/Components/productdetails/productDet/ProductDeatil';
+import CartDetail from './Pages/Components/cart/cartDeatil/CartDetail';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
         <Route path="/BlogSection" element={<BlogSection />} />
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/RegisterPage" element={<Register />} />
+        <Route path="/CartDetail" element={<CartDetail />} />
       </Routes>
     </BrowserRouter>
   );
