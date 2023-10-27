@@ -1,7 +1,10 @@
 import React from 'react'
+import PersnolCheckOutForm from './PersnolCheckOutForm'
 
-export default function CheckOutSummryPage() {
+export default function CheckOutSummry() {
   return (
-    <div>index</div>
+    <div>
+      <PersnolCheckOutForm />
+    </div>
   )
 }

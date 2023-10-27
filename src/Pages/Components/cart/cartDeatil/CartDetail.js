@@ -138,6 +138,10 @@ const cartData = [
   },
 ]
 export default function CartDetail() {
+
+
+  const navigation = useNavigate();
+  
   return (
     <div>
       <Header />
@@ -199,7 +203,7 @@ export default function CartDetail() {
               <p style={{ marginTop : '5px' }}>₹75,519.50</p>
             </div>
           </div>
-          <button className='btnCheckOut'>Checkout Securely</button>
+          <button className='btnCheckOut' onClick={() => navigation('/CheckOutSummry')}>Checkout Securely</button>
         </div>
 
       </div>

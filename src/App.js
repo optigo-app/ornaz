@@ -24,6 +24,7 @@ import About from './Pages/Components/footer/allaboutornaz/About';
 import Friend from './Pages/Components/footer/allaboutornaz/Friend';
 import ProductDeatil from './Pages/Components/productdetails/productDet/ProductDeatil';
 import CartDetail from './Pages/Components/cart/cartDeatil/CartDetail';
+import CheckOutSummry from './Pages/Components/checkoutsummry';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/RegisterPage" element={<Register />} />
         <Route path="/CartDetail" element={<CartDetail />} />
+        <Route path="/CheckOutSummry" element={<CheckOutSummry />} />
       </Routes>
     </BrowserRouter>
   );
