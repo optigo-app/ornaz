@@ -132,11 +132,12 @@ export default function Header() {
           <div className="middel-header-level-2">
             <span>register</span>
             <span>login</span>
-            <span style={{ display: "flex" }}>
+            <span style={{ display: "flex" ,cursor : 'pointer'}} onClick={() => navigation('/CartDetail')}>
               <img
                 src={cartImg}
                 alt="..."
-                style={{ height: "20px", width: "20px" }}
+                style={{ height: "20px", width: "20px"}}
+                
               />
               <span style={{ fontSize: "18px" }}>{"(1)"}</span>
             </span>
@@ -149,7 +150,7 @@ export default function Header() {
           <ul className="nav-ul">
             <li className="nav-li">
               {" "}
-              <img src={logo} alt={"..."} style={{ width: "12vw" }} />
+              <img src={logo} alt={"..."} style={{ width: "12vw" , cursor : 'pointer'}} onClick={() => navigation('/')}/>
             </li>
             <li className="nav-li-for-her">
               <span className="for-her">FOR HER</span>

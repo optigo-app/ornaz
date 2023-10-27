@@ -6,7 +6,7 @@
 .imageDetailImage {
     width: 1185px;
     height: 700px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -17,7 +17,7 @@
 .imageDetailByNow {
     width: 580px;
     height: 700px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     /* margin-left: 100px; */
@@ -26,7 +26,7 @@
 
 .productDeatils {
     width: 1230px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -75,7 +75,7 @@
 
 .contactForm {
     width: 34.70%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: flex;
     order: 1;
 }
@@ -106,7 +106,6 @@
     background-color: #45d4d5;
     cursor: pointer;
     padding: 5px;
-    text-allign: center;
     margin: 0px;
     width: 49.5%;
     border: 0;

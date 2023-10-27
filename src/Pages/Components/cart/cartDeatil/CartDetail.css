@@ -42,6 +42,7 @@
     order: 1;
     justify-content: flex-end;
     width: 1150px;
+    z-index: -1;
 }
 
 .cartTotal{

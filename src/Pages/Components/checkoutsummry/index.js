@@ -1,5 +1,5 @@
 import React from 'react'
-import PersnolCheckOutForm from './PersnolCheckOutForm'
+import PersnolCheckOutForm from './persnolCheckForm/PersnolCheckOutForm'
 
 export default function CheckOutSummry() {
   return (
