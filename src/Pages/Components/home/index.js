@@ -14,9 +14,13 @@ import HomeFooter from './HomeFooter/HomeFooter'
 export default function Home() {
   return (
     <div>
+      <div className='header'>
       <Header/>
       <BannerPage />
+      </div>
+      <div className='sallercard'>
       <SallerCard />
+      </div>
       <ConnectPage/>
       <CategoryPage />
       <MentionSection />
