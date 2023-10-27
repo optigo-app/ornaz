@@ -1,0 +1,16 @@
+.mention-outer-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:70px;
+    margin-top: 50px ;
+}
+
+.mention-images{
+    width:177.61px;
+    filter: grayscale(100%);
+}
+
+.mention-images:hover{
+    transform: scale3d(1.2, 1.2, 1.2) !important;
+}

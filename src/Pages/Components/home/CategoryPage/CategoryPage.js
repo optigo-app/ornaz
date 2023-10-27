@@ -16,7 +16,9 @@ export default function CategoryPage() {
 ]
   return (
     <>
+    <div style={{height:'auto'}}>
     <Cards sallerCardImg={demoJSON} cardTitle={'Shop by Category'} type={'category'}/> 
+    </div>
     </>
     );
 }
