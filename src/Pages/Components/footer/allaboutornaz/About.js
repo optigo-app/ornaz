@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from '../../home/Header'
+import Header from '../../home/Header/Header'
 import Footer from '..'
 
 export default function About() {

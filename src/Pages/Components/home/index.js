@@ -1,23 +1,23 @@
 import React from 'react'
-import Header from './Header'
-import BannerPage from './Banner'
-import SallerCard from './SallerCard'
-import ConnectPage from './Connect'
-import CategoryPage from './Category'
-import MentionSection from './MentionSection'
-import CelebrityCardsPage from './CelebrityCards'
-import JewelleryGiftsCardsPage from './JewelleryGiftsCards'
-import TestimonialSection from './TestimonialSection'
-import AppoinmentSection from './AppoinmentSection'
-import HomeFooter from './HomeFooter'
+import Header from './Header/Header'
+import BannerPage from './BannerPage/BannerPage'
+import SallerCard from './SallerCard/SallerCard'
+import ConnectPage from './ConnectPage/ConnectPage'
+import CategoryPage from './CategoryPage/CategoryPage'
+import MentionSection from './MentionSection/MentionSection'
+import CelebrityCardsPage from './CelebrityCardsPage/CelebrityCardsPage'
+import JewelleryGiftsCardsPage from './JewelleryGiftsCardsPage/JewelleryGiftsCardsPage'
+import TestimonialSection from './TestimonialSection/TestimonialSection'
+import AppoinmentSection from './AppoinmentSection/AppoinmentSection'
+import HomeFooter from './HomeFooter/HomeFooter'
 
 export default function Home() {
   return (
     <div>
-      <Header />
+      <Header/>
       <BannerPage />
       <SallerCard />
-      <ConnectPage />
+      <ConnectPage/>
       <CategoryPage />
       <MentionSection />
       <CelebrityCardsPage />

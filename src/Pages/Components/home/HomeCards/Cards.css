@@ -1,0 +1,68 @@
+.card-outer-container{
+    padding-left: 8%;
+    width:100%;
+    user-select: none !important;
+}
+.card-inner-container{
+    user-select: none !important;
+    float: left;
+    width:2346px
+}
+
+.card-inner-container-cate{
+    user-select: none !important;
+    float: left;
+}
+
+.card-inner-container:hover{
+    color:#45d4d5
+}
+
+.card-inner-container-cate:hover{
+    color:#45d4d5
+}
+
+.cards-img{
+    transition: all 0.5s ease-in-out;
+}
+
+.cards-img:hover{
+    transform: scale3d(1.2, 1.2, 1.2) !important;
+}
+
+.cards-img-text-container{
+  display: flex;
+  overflow-x:hidden;
+  float: left;
+  width:1751px;
+  height: auto;
+  gap:15px;
+  padding-right: 40px;
+  cursor: grab;
+  position: relative;
+  user-select: none !important;
+  margin-top: 15px;
+}
+
+.card-body{
+    user-select: none !important;
+}
+
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:90%;
+    user-select: none !important;
+}
+.card-title-text{
+    font-size: 25px;
+    font-family: Zapf Humanist;
+    color: #2c2c2c;
+    user-select: none !important;
+}
+.card-shopall{
+    color:#45d4d5;
+    text-decoration: underline;
+    user-select: none !important;
+}

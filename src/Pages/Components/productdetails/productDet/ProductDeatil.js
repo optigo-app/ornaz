@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './ProductDeatil.css'
 import Footer from '../../footer'
-import Header from '../../home/Header'
+import Header from '../../home/Header/Header'
 import ProductContact from '../productCont/ProductContact';
 
 

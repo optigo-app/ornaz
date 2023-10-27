@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../../home/Header'
-import Footer from '../../footer'
 import './CartDetail.css'
+import Header from '../../home/Header/Header'
+import Footer from '../../footer'
 
 const cartData = [
   {
