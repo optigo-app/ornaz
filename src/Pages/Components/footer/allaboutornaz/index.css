@@ -1,6 +1,6 @@
 .AllAboutOrnazMain{
-    width: 25%; 
-    border: 1px solid black;
+    width: 20%; 
+    /* border: 1px solid black; */
     display: flex;
     order: 3;
 }

@@ -3,6 +3,7 @@ import './ProductDeatil.css'
 import Footer from '../../footer'
 import Header from '../../home/Header/Header'
 import ProductContact from '../productCont/ProductContact';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function ProductDeatil() {
@@ -12,6 +13,9 @@ export default function ProductDeatil() {
   const [isOpenDetail, setIsOpenDetail] = useState(false);
   const [isOpenMetalDetail, setIsOpenMetalDetail] = useState(false);
   const [isOpenPrice, setIsOpenPrice] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(undefined)
+  const [selectedSizeError, setSelectedSizeError] = useState(false)
+  const navigation = useNavigate();
 
   const toggleList = () => {
     setIsOpen(!isOpen);
@@ -29,6 +33,19 @@ export default function ProductDeatil() {
     setIsOpenPrice(!isOpenPrice);
   };
 
+
+  const handleChangeSize = (e) => {
+    setSelectedSize(e.target.value)
+    setSelectedSizeError(false)
+  }
+  const handleBynow = () => {
+    if (selectedSize === undefined) {
+      setSelectedSizeError(true)
+    } else {
+      setSelectedSizeError(false)
+      navigation('/CartDetail')
+    }
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -63,8 +80,8 @@ export default function ProductDeatil() {
             <p style={{ color: '#434343', fontSize: '15px', display: 'flex' }}>18 KT GOLD J-SI1</p>
           </div>
           <div className='dropSize'>
-            <p style={{ fontWeight: 400 }}>Size</p>
-            <select id="fruit-select">
+            <p style={{ fontWeight: 400 }}>Size</p> {selectedSizeError && <p style={{ color: 'red', marginRight: '190px' }}>*Please Select A Size</p>}
+            <select id="fruit-select" value={selectedSize} onChange={handleChangeSize}>
               <option>SELECT YOUR SIZE</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -134,7 +151,7 @@ export default function ProductDeatil() {
             </li>
           </ul>
           <div>
-            <button className='btnByNow'>Buy Now</button>
+            <button className='btnByNow' onClick={handleBynow}>Buy Now</button>
             <button className='btnKnowMore'>Know More</button>
           </div>
           <div style={{
@@ -161,21 +178,21 @@ export default function ProductDeatil() {
             <p className='productDetailTitle'>PRODUCT DETAILS</p>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0px' }}>
               <p className='proDetail'>Product Code</p>
-              <p className='proDetail' style={{marginRight : '20px'}}>CodeSRA1236-white-18-J-SI1</p>
+              <p className='proDetail' style={{ marginRight: '20px' }}>CodeSRA1236-white-18-J-SI1</p>
             </div>
             <div className='productDetailMain' onClick={toggleDeatilList}>
               <p>DIAMOND DETAILS</p>
-              <p style={{marginRight : '20px'}}>{isOpenDetail ? '-' : '+'}</p>
+              <p style={{ marginRight: '20px' }}>{isOpenDetail ? '-' : '+'}</p>
             </div>
             <div className='productSubDeatil'>
               <p className='proDetail'>Total Weight</p>
-              <p className='proDetail' style={{marginRight : '20px'}}>0.4 carat</p>
+              <p className='proDetail' style={{ marginRight: '20px' }}>0.4 carat</p>
             </div>
             <div className='productSubDeatil'>
               <p className='proDetail'>Total no. of Diamonds</p>
-              <p className='proDetail' style={{marginRight : '20px'}}>1</p>
+              <p className='proDetail' style={{ marginRight: '20px' }}>1</p>
             </div>
-            <ul className={`my-DetailList ${isOpenDetail ? 'open' : ''}`} style={{ border: isOpenDetail ? '1px solid lightgray'  :' '}}>
+            <ul className={`my-DetailList ${isOpenDetail ? 'open' : ''}`} style={{ border: isOpenDetail ? '1px solid lightgray' : ' ' }}>
               <li>
                 <div className='dropSize'>
                   <p className='dropDetailTitle'>Clarity</p>
@@ -215,7 +232,7 @@ export default function ProductDeatil() {
             </ul>
             <div className='productDetailMain' onClick={toggleMetalDeatilList}>
               <p>METAL DETAILS</p>
-              <p style={{marginRight : '20px'}}>{isOpenMetalDetail ? '-' : '+'}</p>
+              <p style={{ marginRight: '20px' }}>{isOpenMetalDetail ? '-' : '+'}</p>
             </div>
             <ul className={`my-DetailList ${isOpenMetalDetail ? 'open' : ''}`}>
               <li>
@@ -234,7 +251,7 @@ export default function ProductDeatil() {
 
             <div className='productDetailMain' onClick={togglePriceList}>
               <p>PRICE BREAKUP</p>
-              <p style={{marginRight : '20px'}}>{isOpenPrice ? '-' : '+'}</p>
+              <p style={{ marginRight: '20px' }}>{isOpenPrice ? '-' : '+'}</p>
             </div>
             <ul className={`my-DetailList ${isOpenPrice ? 'open' : ''}`}>
               <li>
