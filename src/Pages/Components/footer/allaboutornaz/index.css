@@ -1,0 +1,13 @@
+.AllAboutOrnazMain{
+    width: 25%; 
+    border: 1px solid black;
+    display: flex;
+    order: 3;
+}
+.text{
+    height: 12px;
+    color: #808080;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'Lato , sans-serif';
+}
