@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../home/Header'
-import ShopByFilter from './ShopByFilter/ShopByFilter'
+import Header from '../home/Header/Header'
 import JewelleryCard from './JewelleryCardSection/JewelleryCard'
+import ShopByFilter from './ShopByFilter/ShopByFilter'
 import Footer from '../footer'
 
 export default function Jewellary() {
