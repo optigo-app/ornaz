@@ -1,56 +1,111 @@
 import React from 'react'
 import './TestimonialSection.css'
+import s1 from '../../../assets/testimonial/s1.webp'
+import s2 from '../../../assets/testimonial/s2.webp'
+import s3 from '../../../assets/testimonial/s3.webp'
+import s4 from '../../../assets/testimonial/s4.webp'
+import s5 from '../../../assets/testimonial/s5.webp'
+import s6 from '../../../assets/testimonial/s6.webp'
+import ar from '../../../assets/ar.svg'
+import al from '../../../assets/al.svg'
+import star from '../../../assets/star.svg'
 
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
 export default function TestimonialSection() {
+
+  let demoJson =[
+    {
+      images:s1,
+      discrip:"Had a great experience dealing with ILA from Ornaz!! Quality and design of the ring is amazing!! For any occasion or ceremonies Ornaz is the final stop!!👍🏼",
+      auther:'Akshay Jaiswal'
+    },
+    {
+      images:s2,
+      discrip:"My fiancé and I were looking for a ring for our upcoming wedding. Professionalism, empathy and great customer-understanding are three attributes that come to my mind when I think of ORNAZ. For me, more than the product, it’s the customer experience that I judge a business on. And these guys had it ON POINT!",
+      auther:'Akarshak Gera'
+    },
+    {
+      images:s3,
+      discrip:"Had an amazing experience with ORNAZ. Got the ring of my dreams. Thank you team!",
+      auther:'Arshita'
+    },
+    {
+      images:s4,
+      discrip:"Great shopping experience. Vaani from Ornaz’s sales team was super helpful, she made the entire experience of buying an engagement ring online seamless !",
+      auther:'Atishay Patni'
+    },
+    {
+      images:s5,
+      discrip:"I got a Radiant Cut Diamond Ring with a hidden Halo setting and it is beyond gorgeous. The way of dealing is really captivating unlike the traditional jewellery stores plus I am really satisfied with the product too.",
+      auther:'Deephues'
+    },
+    {
+      images:s6,
+      discrip:"We wanted our engagement rings to have our birthstone Amethyst symbolic of our Zodiac, as we both are Aquarians. They designed our ring perfectly within our budget, keeping no quality compromise and customer satisfaction as their topmost priority.",
+      auther:'Vinci Priyasha'
+    },
+  ]
+
+ 
+  const CustomPrevArrow = ({ onClick }) => {
+    return (
+      <button className="custom-arrow custom-prev" onClick={onClick}>
+        <img src={al} alt='prev' style={{width:'25px',height:'25px'}}/>
+      </button>
+    );
+  };
+  const CustomNextArrow = ({ onClick }) => {
+    return (
+      <button className="custom-arrow custom-next" onClick={onClick}>
+        <img src={ar} alt='next' style={{width:'25px',height:'25px'}}/>
+      </button>
+    );
+  };
+
   return (
-    <div style={{ height: '600px', border: '1px solid black' }}>
+    <div style={{ height: '649.27px',marginTop:'50px',width:'1498.53px',marginLeft:'189px' }}>
       <Carousel
         showArrows={true}
-        infiniteLoop={true}
+        infiniteLoop={false}
         showThumbs={false}
         showStatus={false}
-        autoPlay={true}
+        autoPlay={false}
         interval={6100}
+        showIndicators={false}
+        swipeable={true}
+        emulateTouch={true}
+        renderArrowPrev={(onClickHandler, hasPrev) =>
+          hasPrev && <CustomPrevArrow onClick={onClickHandler} />
+        }
+        renderArrowNext={(onClickHandler, hasNext) =>
+          hasNext && <CustomNextArrow onClick={onClickHandler} />
+        }
+        
       >
+        {demoJson.map((data)=>(
         <div>
-          <img src="/images/shirley.png" alt=''/>
-          <div className="myCarousel">
-            <h3>Shirley Fultz</h3>
-            <h4>Designer</h4>
-            <p>
-              It's freeing to be able to catch up on customized news and not be
-              distracted by a social media element on the same site
-            </p>
+          <div className="myCarousel" >
+            <img src={data.images} alt='' style={{width:'48%'}}/>
+            <div style={{display:'flex',flexDirection:'column'}}>
+              <font style={{fontSize:'25px',marginBottom:'5px',color:'#2C2C2C'}}>Testimonials</font>
+              <div style={{border:"1px solid rgb(44 44 44 / 15%)"}}></div>
+            <div style={{marginTop:'-15px',marginBottom:'-15px'}}>
+              <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
+              <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
+              <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
+              <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
+              <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
+            </div>
+            <font style={{display:'flex',width:'456px',color:'#2C2C2C'}}>{`"${data.discrip}"`}</font>
+            <font className='auther'>{data.auther}</font>
+            </div>
           </div>
         </div>
-
-        <div>
-          <img src="/images/daniel.png" alt=''/>
-          <div className="myCarousel">
-            <h3>Daniel Keystone</h3>
-            <h4>Designer</h4>
-            <p>
-              The simple and intuitive design makes it easy for me use. I highly
-              recommend Fetch to my peers.
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <img src="/images/theo.png" alt=''/>
-          <div className="myCarousel">
-            <h3>Theo Sorel</h3>
-            <h4>Designer</h4>
-            <p>
-              I enjoy catching up with Fetch on my laptop, or on my phone when
-              I'm on the go!
-            </p>
-          </div>
-        </div>
+        ))
+        }
       </Carousel>
 
     </div>

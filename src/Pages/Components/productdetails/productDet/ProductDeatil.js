@@ -52,11 +52,11 @@ export default function ProductDeatil() {
       <Header />
       <div className='imageDetail'>
         <div className='imageDetailImage'>
-          <img src='https://d3d5st4bexye3p.cloudfront.net/__sized__/products/SRA1236/SRA1236-1-crop-c0-5__0-5-540x540-70.jpg'
+          <img src='https://d3d5st4bexye3p.cloudfront.net/__sized__/products/SRA1236/SRA1236-1-crop-c0-5__0-5-540x540-70.jpg' alt='...'
             style={{ width: '500px', objectFit: 'cover' }} />
           <div>
-            <img src="https://d3rodw1h7g0i9b.cloudfront.net/images/icons/xr_360.png" style={{ height: '100px', width: '100px' }} />
-            <img src='https://d3d5st4bexye3p.cloudfront.net/__sized__/products/SRA1236/SRA1236-1-crop-c0-5__0-5-540x540-70.jpg'
+            <img src="https://d3rodw1h7g0i9b.cloudfront.net/images/icons/xr_360.png" style={{ height: '100px', width: '100px' }}  alt='...'/>
+            <img src='https://d3d5st4bexye3p.cloudfront.net/__sized__/products/SRA1236/SRA1236-1-crop-c0-5__0-5-540x540-70.jpg' alt='...'
               style={{ height: '100px', width: '100px', margin: '10px' }} />
           </div>
         </div>
@@ -71,9 +71,9 @@ export default function ProductDeatil() {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p style={{ color: '#434343', fontWeight: 300, fontSize: '15px', display: 'flex', cursor: 'pointer' }} onClick={toggleList}>Customize the product&nbsp;&nbsp;
               <span style={{ display: 'flex' }}>
-                {isOpen ? <img id="customize_icon" style={{ position: 'relative', left: '2px' }} src="https://d3rodw1h7g0i9b.cloudfront.net/images/drop-down.png" />
+                {isOpen ? <img  alt='...' id="customize_icon" style={{ position: 'relative', left: '2px' }} src="https://d3rodw1h7g0i9b.cloudfront.net/images/drop-down.png" />
                   :
-                  <img id="customize_icon" style={{ position: 'relative', left: '2px' }} src="https://d3rodw1h7g0i9b.cloudfront.net/images/drop-up.png" />
+                  <img id="customize_icon" style={{ position: 'relative', left: '2px' }} alt='...' src="https://d3rodw1h7g0i9b.cloudfront.net/images/drop-up.png" />
                 }
               </span>
             </p>
@@ -162,12 +162,12 @@ export default function ProductDeatil() {
             paddingTop: '30px'
           }}>
             <div>
-              <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/cert.png" /></span>CERTIFIED JEWELLERY</p>
-              <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/30return.png" /></span>RETURN -7 DAYS</p>
-              <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/exchange-icon.png" /></span>EXCHANGE & BUY BACK - LIFE TIME</p>
+              <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img alt='...' width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/cert.png" /></span>CERTIFIED JEWELLERY</p>
+              <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img  alt='...' width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/30return.png" /></span>RETURN -7 DAYS</p>
+              <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img  alt='...' width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/exchange-icon.png" /></span>EXCHANGE & BUY BACK - LIFE TIME</p>
             </div>
             <div>
-              <img height="65px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/whsp.svg" style={{ margin: '20px', cursor: 'pointer' }} />
+              <img height="65px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/whsp.svg" alt='...' style={{ margin: '20px', cursor: 'pointer' }} />
             </div>
           </div>
         </div>
