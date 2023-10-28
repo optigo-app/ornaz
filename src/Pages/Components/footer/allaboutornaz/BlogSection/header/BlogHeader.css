@@ -1,0 +1,51 @@
+.menu-toggle {
+    color: #000000;
+}
+.menu-toggle {
+    border: none;
+    outline: none;
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    background: transparent;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    color: #000;    
+    font-size: 0;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+    margin: 40px;
+}
+
+#close-mobile-menu {
+    position: absolute;
+    right: 20px;
+    height: 22px;
+    width: 32px;
+    top: 40px;
+}
+
+.top-misc {
+    position: absolute;
+    right: 50px;
+    display: flex;
+    height: 100px;
+}
+.header-social a {
+    color: #000;
+    font-size: 16px;
+    margin-left: 14px;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.sideBar{
+    background-color: red;
+}
