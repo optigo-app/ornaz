@@ -152,7 +152,7 @@ export default function CartDetail() {
             {
               cartData.map((data, index) =>
                 <div className='cart' >
-                  <img src={data.imageUrl} className='cartImage' />
+                  <img src={data.imageUrl} className='cartImage' alt='...'/>
                   <div style={{ marginLeft: '10px' }}>
                     <p className='cartDetails'>{data.name}</p>
                     <p className='cartDetails'>{data.ringModel}</p>
