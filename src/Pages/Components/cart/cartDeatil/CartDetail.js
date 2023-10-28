@@ -3,7 +3,6 @@ import './CartDetail.css'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../home/Header/Header'
 import Footer from '../../footer'
-import { useNavigate } from 'react-router-dom'
 
 const cartData = [
   {

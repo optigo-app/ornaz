@@ -13,7 +13,7 @@ export default function ProductDeatil() {
   const [isOpenDetail, setIsOpenDetail] = useState(false);
   const [isOpenMetalDetail, setIsOpenMetalDetail] = useState(false);
   const [isOpenPrice, setIsOpenPrice] = useState(false);
-  const [selectedSize, setSelectedSize] = useState(undefined)
+  const [selectedSize, setSelectedSize] = useState(0)
   const [selectedSizeError, setSelectedSizeError] = useState(false)
   const navigation = useNavigate();
 
@@ -39,7 +39,7 @@ export default function ProductDeatil() {
     setSelectedSizeError(false)
   }
   const handleBynow = () => {
-    if (selectedSize === undefined) {
+    if (selectedSize == 0) {
       setSelectedSizeError(true)
     } else {
       setSelectedSizeError(false)
@@ -82,7 +82,7 @@ export default function ProductDeatil() {
           <div className='dropSize'>
             <p style={{ fontWeight: 400 }}>Size</p> {selectedSizeError && <p style={{ color: 'red', marginRight: '190px' }}>*Please Select A Size</p>}
             <select id="fruit-select" value={selectedSize} onChange={handleChangeSize}>
-              <option>SELECT YOUR SIZE</option>
+              <option value='0'>SELECT YOUR SIZE</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>

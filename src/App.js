@@ -5,13 +5,10 @@ import LoginPage from './Pages/Components/login/Login';
 import Register from './Pages/Components/register/Register';
 import Jewellary from './Pages/Components/Jewellary';
 import DisplayTechnology from './Pages/Components/footer/experience/DisplayTechnology';
-import DesignRing from './Pages/Components/footer/experience/DesignRing';
 import BookAppoinment from './Pages/Components/footer/experience/BookAppoinment';
 import FreeEngraving from './Pages/Components/footer/experience/FreeEngraving';
 import GiaAssistance from './Pages/Components/footer/WhyOrnaz/GiaAssistance';
-import Certification from './Pages/Components/footer/WhyOrnaz/Certification';
-import Craftsmanship from './Pages/Components/footer/WhyOrnaz/Craftsmanship';
-import QualityValue from './Pages/Components/footer/WhyOrnaz/QualityValue';
+import QualityValue from './Pages/Components/footer/WhyOrnaz/qualityval/QualityValue';
 import LifeTimeExchange from './Pages/Components/footer/Policies/LifeTimeExchange';
 import TermsCondition from './Pages/Components/footer/Policies/TermsCondition';
 import DeliveryShipping from './Pages/Components/footer/Policies/DeliveryShipping';
@@ -25,6 +22,9 @@ import Friend from './Pages/Components/footer/allaboutornaz/Friend';
 import ProductDeatil from './Pages/Components/productdetails/productDet/ProductDeatil';
 import CartDetail from './Pages/Components/cart/cartDeatil/CartDetail';
 import CheckOutSummry from './Pages/Components/checkoutsummry';
+import DesignRing from './Pages/Components/footer/experience/designRing/DesignRing';
+import Certification from './Pages/Components/footer/WhyOrnaz/certification/Certification';
+import Craftsmanship from './Pages/Components/footer/WhyOrnaz/craftsmanship/Craftsmanship';
 
 function App() {
   return (

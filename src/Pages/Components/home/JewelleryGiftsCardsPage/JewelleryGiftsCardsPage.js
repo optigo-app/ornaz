@@ -6,6 +6,7 @@ import necklaces from '../../../assets/finegifts/necklaces.webp'
 import gifts from '../../../assets/finegifts/gifts.webp'
 import bands from '../../../assets/finegifts/bands.webp'
 import { Cards } from '../HomeCards/Cards'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function JewelleryGiftsCardsPage() {
@@ -18,6 +19,7 @@ export default function JewelleryGiftsCardsPage() {
     {prodImg:bands,prodtitle:'Stackable Bands'},
     
   ]
+  const navigation = useNavigate();
 
   return (
     <div 
