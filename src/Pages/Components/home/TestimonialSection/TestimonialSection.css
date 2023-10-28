@@ -1,4 +1,4 @@
-.carousel-root {
+/* .carousel-root {
     width: 64% !important;
     margin: auto !important;
     margin-top: 3% !important;
@@ -125,4 +125,53 @@
       width: 24% !important;
       border-radius: 50%;
     }
-  }
+  } */
+
+
+.myCarousel{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: white;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 600px;
+}
+
+.carousel.carousel-slider {
+  display: flex;
+}
+
+.custom-arrow {
+  background:none;
+  color: white;
+  font-size: 18px;
+  /* padding: 10px 20px; */
+  border: none;
+  cursor: pointer;
+}
+
+.custom-arrow-prev {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.custom-arrow-next {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.auther{
+  font-style: italic;
+  color: #45d4d5;
+  font-weight: 500;
+}
+
+
+
+

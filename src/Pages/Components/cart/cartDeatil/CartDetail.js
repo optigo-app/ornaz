@@ -3,7 +3,6 @@ import './CartDetail.css'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../home/Header/Header'
 import Footer from '../../footer'
-import { useNavigate } from 'react-router-dom'
 
 const cartData = [
   {
@@ -153,7 +152,7 @@ export default function CartDetail() {
             {
               cartData.map((data, index) =>
                 <div className='cart' >
-                  <img src={data.imageUrl} className='cartImage' />
+                  <img src={data.imageUrl} className='cartImage' alt='...'/>
                   <div style={{ marginLeft: '10px' }}>
                     <p className='cartDetails'>{data.name}</p>
                     <p className='cartDetails'>{data.ringModel}</p>
