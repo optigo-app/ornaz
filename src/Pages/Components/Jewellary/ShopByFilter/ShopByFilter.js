@@ -1,5 +1,6 @@
 import React from 'react'
 import './ShopByFilter.css'
+import { BTN_APPLY, BTN_CLEAREALL, SHOP_BY } from '../../../Constants'
 
 const Collections = [
   {
@@ -141,14 +142,14 @@ export default function ShopByFilter() {
   return (
     <div className='filterMain'>
       <div className='head'>
-        <p style={{ color: 'white', margin: '18px' }}>SHOP BY</p>
-        <button className='btnClear'>CLEAR ALL</button>
+        <p style={{ color: 'white', margin: '18px' }}>{SHOP_BY}</p>
+        <button className='btnClear'>{BTN_CLEAREALL}</button>
       </div>
-      <div>
-        <p>Total Product</p>
+      <div style={{border : '0.1px solid #cecece' , height : '50px'}}>
+        <p className='totalProduct'>Total Product: (30)</p>
       </div>
       <div className='priceTop'>
-        <p style={{ color : '#888'}}>Price</p>
+        <p style={{ color : '#888' , margin :0}}>Price</p>
         <div style={{ display: 'flex' }}>
           <input style={{ width: '49%',height : '40px', float: 'left' }} id="id_price_0" type="number" min="0" class="form-control d-inline" placeholder="from" />
           <span style={{ float: 'left' }}> - </span>
@@ -221,7 +222,7 @@ export default function ShopByFilter() {
         }
       </div>
       <div>
-        <button className='btnApply'>APPLY</button>
+        <button className='btnApply'>{BTN_APPLY}</button>
       </div>
 
 

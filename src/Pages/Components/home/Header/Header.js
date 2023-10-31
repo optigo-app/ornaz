@@ -1,49 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Header.css'
 import cartImg from '../../../assets/cart.png'
 import logo from '../../../assets/logo.png'
 import searchlogo from '../../../assets/search.svg'
 // import ring1 from '../../../assets/svg.svg'
-import {Tooltip,OverlayTrigger} from 'react-bootstrap'
+import { Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HER, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, LIFETIME_WARRANTY, LOGOUT, LOGOUT_MESSAGE, MONEY_BACK_GUARANTEE, YOUR_ACCOUNT } from "../../../Constants";
+
+
+
+
+
 
 export default function Header() {
   const navigation = useNavigate();
-    
+
+  const [isLogin, setIsLogin] = useState(true);
+  const [showLogout, setShowLogout] = useState(false);
+
   let demoJSON = [
-    {currency:"$ AUD",title:'Australian Dollar'},
-    {currency:"৳ BDT",title:'Bangladeshi Taka'},
-    {currency:"£ GBP",title:'British Pound Sterling'},
-    {currency:"C$ CAD",title:'Canadian Dollar'},
-    {currency:"€ EUR",title:'Euro'},
-    {currency:"FJ$ FJD",title:'Fijian dollar'},
-    {currency:"HK$ HKD",title:'Hong Kong dollar'},
-    {currency:"₹ INR",title:'Indian Rupee'},
-    {currency:"KSh KES",title:'Kenyan shilling'},
-    {currency:"RM MYR",title:'Malaysian ringgit'},
-    {currency:".ރ MVR",title:'Maldivian rufiyaa'},
-    {currency:"Rs MUR",title:'Mauritian rupee'},
-    {currency:"₦ NGN",title:'Naira'},
-    {currency:"N$ NAD",title:'Namibian dollar'},
-    {currency:"रू NPR",title:'Nepalese rupee'},
-    {currency:"$ NZD",title:'New Zealand Dollar'},
-    {currency:"ر.ع OMR",title:'Omani rial'},
-    {currency:"Rs PKR",title:'Pakistani rupee'},
-    {currency:"₱ PHP",title:'Philippine Peso'},
-    {currency:"ر.ق QR",title:'Qatari Riyal'},
-    {currency:"SR SAR",title:'Saudi Riyal'},
-    {currency:"$ SGD",title:'Singapore dollar'},
-    {currency:"R ZAR",title:'South African Rand'},
-    {currency:"Rs LKR",title:'Sri Lankan rupee'},
-    {currency:"kr SEK",title:'Swedish krona'},
-    {currency:"Fr. CHF",title:'Swiss Franc'},
-    {currency:"฿ THB",title:'Thai baht'},
-    {currency:"AED AED",title:'United Arab Emirates dirham'},
-    {currency:"$ USD",title:'United States Dollar'},
-    {currency:"¥ JPY",title:'Yen'},
-    {currency:"ZK ZMK",title:'Zambian Kwacha'},
+    { currency: "$ AUD", title: 'Australian Dollar' },
+    { currency: "৳ BDT", title: 'Bangladeshi Taka' },
+    { currency: "£ GBP", title: 'British Pound Sterling' },
+    { currency: "C$ CAD", title: 'Canadian Dollar' },
+    { currency: "€ EUR", title: 'Euro' },
+    { currency: "FJ$ FJD", title: 'Fijian dollar' },
+    { currency: "HK$ HKD", title: 'Hong Kong dollar' },
+    { currency: "₹ INR", title: 'Indian Rupee' },
+    { currency: "KSh KES", title: 'Kenyan shilling' },
+    { currency: "RM MYR", title: 'Malaysian ringgit' },
+    { currency: ".ރ MVR", title: 'Maldivian rufiyaa' },
+    { currency: "Rs MUR", title: 'Mauritian rupee' },
+    { currency: "₦ NGN", title: 'Naira' },
+    { currency: "N$ NAD", title: 'Namibian dollar' },
+    { currency: "रू NPR", title: 'Nepalese rupee' },
+    { currency: "$ NZD", title: 'New Zealand Dollar' },
+    { currency: "ر.ع OMR", title: 'Omani rial' },
+    { currency: "Rs PKR", title: 'Pakistani rupee' },
+    { currency: "₱ PHP", title: 'Philippine Peso' },
+    { currency: "ر.ق QR", title: 'Qatari Riyal' },
+    { currency: "SR SAR", title: 'Saudi Riyal' },
+    { currency: "$ SGD", title: 'Singapore dollar' },
+    { currency: "R ZAR", title: 'South African Rand' },
+    { currency: "Rs LKR", title: 'Sri Lankan rupee' },
+    { currency: "kr SEK", title: 'Swedish krona' },
+    { currency: "Fr. CHF", title: 'Swiss Franc' },
+    { currency: "฿ THB", title: 'Thai baht' },
+    { currency: "AED AED", title: 'United Arab Emirates dirham' },
+    { currency: "$ USD", title: 'United States Dollar' },
+    { currency: "¥ JPY", title: 'Yen' },
+    { currency: "ZK ZMK", title: 'Zambian Kwacha' },
   ]
 
+  const handleLogOut = () => {
+    setIsLogin(false)
+    setShowLogout(true)
+  }
   return (
     <>
       {/* top-header */}
@@ -66,7 +79,7 @@ export default function Header() {
                   paddingRight: "20px",
                 }}
               >
-                <font size="2">24/7 CUSTOMER SERVICE</font>
+                <font size="2">{CUSTERM_SERVICES}</font>
               </span>
               <span
                 className="text-lef"
@@ -76,7 +89,7 @@ export default function Header() {
                   paddingRight: "20px",
                 }}
               >
-                <font size="2"> LIFETIME WARRANTY</font>
+                <font size="2"> {LIFETIME_WARRANTY}</font>
               </span>
               <span
                 className="text-lef"
@@ -86,7 +99,7 @@ export default function Header() {
                   paddingRight: "20px",
                 }}
               >
-                <font size="2">FREE INTERNATIONAL SHIPPING*</font>
+                <font size="2">{FREE_INTERNATIONAL_SHIPPING}</font>
               </span>
               <span
                 className="text-lef"
@@ -96,7 +109,7 @@ export default function Header() {
                   paddingRight: "20px",
                 }}
               >
-                <font size="2">100% MONEY BACK GUARANTEE</font>
+                <font size="2">{MONEY_BACK_GUARANTEE}</font>
               </span>
             </div>
             <div className="currency-dropDown">
@@ -107,9 +120,9 @@ export default function Header() {
                   <table className="drop-table">
                     {demoJSON.map((data) => (
                       <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{data.title}</Tooltip>}>
-                      <tr>
-                        <td>{data.currency}</td>
-                      </tr>
+                        <tr>
+                          <td>{data.currency}</td>
+                        </tr>
                       </OverlayTrigger>
                     ))}
                   </table>
@@ -130,14 +143,21 @@ export default function Header() {
             </p>
           </div>
           <div className="middel-header-level-2">
-            <span>register</span>
-            <span>login</span>
-            <span style={{ display: "flex" ,cursor : 'pointer'}} onClick={() => navigation('/CartDetail')}>
+            {/* {isLogin ?
+              <> */}
+                <span className="middel-header-font" onClick={() => navigation('/account')}>{YOUR_ACCOUNT}</span>
+                <span className="middel-header-font" onClick={handleLogOut}>{LOGOUT}</span>
+              {/* </> :
+              <>
+                <span className="middel-header-font">register</span>
+                <span className="middel-header-font">login</span>
+              </>} */}
+            <span style={{ display: "flex", cursor: 'pointer' }} onClick={() => navigation('/CartDetail')}>
               <img
                 src={cartImg}
                 alt="..."
-                style={{ height: "20px", width: "20px"}}
-                
+                style={{ height: "20px", width: "20px" }}
+
               />
               <span style={{ fontSize: "18px" }}>{"(1)"}</span>
             </span>
@@ -150,15 +170,15 @@ export default function Header() {
           <ul className="nav-ul">
             <li className="nav-li">
               {" "}
-              <img src={logo} alt={"..."} style={{ width: "12vw" , cursor : 'pointer'}} onClick={() => navigation('/')}/>
+              <img src={logo} alt={"..."} style={{ width: "12vw", cursor: 'pointer' }} onClick={() => navigation('/')} />
             </li>
             <li className="nav-li-for-her">
-              <span className="for-her">FOR HER</span>
+              <span className="for-her">{FOR_HER}</span>
               <span className="for-her-dropdown"></span>
             </li>
-            <li className="nav-li"> FOR HIM</li>
-            <li className="nav-li"> Eternity Bands</li>
-            <li className="nav-li">FINE JEWELLERY GIFTS</li>
+            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{FOR_HIM}</li>
+            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ETERNITY_BANDS}</li>
+            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{FINE_JEWELLERY_GIFTS}</li>
             <li
               className="nav-li"
               style={{
@@ -179,6 +199,10 @@ export default function Header() {
           </ul>
         </div>
       </nav>
+      {showLogout && <div className="alert alert-success">
+        <button type="button" className="close" data-dismiss="alert" aria-hidden="true" onClick={() => setShowLogout(false)}>×</button>
+        {LOGOUT_MESSAGE}
+      </div>}
     </>
   );
 }

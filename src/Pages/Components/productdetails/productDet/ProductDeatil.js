@@ -4,6 +4,7 @@ import Footer from '../../footer'
 import Header from '../../home/Header/Header'
 import ProductContact from '../productCont/ProductContact';
 import { useNavigate } from 'react-router-dom';
+import { BTN_BUYNOW, BTN_KWONMORE, CUSTOMIZE_PRODUCT, PRODUCT_DETAIL, SELECT_SIZE } from '../../../Constants';
 
 
 export default function ProductDeatil() {
@@ -53,7 +54,7 @@ export default function ProductDeatil() {
       <div className='imageDetail'>
         <div className='imageDetailImage'>
           <img src='https://d3d5st4bexye3p.cloudfront.net/__sized__/products/SRA1236/SRA1236-1-crop-c0-5__0-5-540x540-70.jpg' alt='...'
-            style={{ width: '500px', objectFit: 'cover' }} />
+            style={{ width: '500px', objectFit: 'cover' , zIndex : -1, position: 'relative' }} />
           <div>
             <img src="https://d3rodw1h7g0i9b.cloudfront.net/images/icons/xr_360.png" style={{ height: '100px', width: '100px' }}  alt='...'/>
             <img src='https://d3d5st4bexye3p.cloudfront.net/__sized__/products/SRA1236/SRA1236-1-crop-c0-5__0-5-540x540-70.jpg' alt='...'
@@ -69,7 +70,7 @@ export default function ProductDeatil() {
             <p style={{ fontSize: '18px', marginLeft: '20px', color: '#999' }}>₹ 4000,000</p>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <p style={{ color: '#434343', fontWeight: 300, fontSize: '15px', display: 'flex', cursor: 'pointer' }} onClick={toggleList}>Customize the product&nbsp;&nbsp;
+            <p style={{ color: '#434343', fontWeight: 300, fontSize: '15px', display: 'flex', cursor: 'pointer' }} onClick={toggleList}>{CUSTOMIZE_PRODUCT}&nbsp;&nbsp;
               <span style={{ display: 'flex' }}>
                 {isOpen ? <img  alt='...' id="customize_icon" style={{ position: 'relative', left: '2px' }} src="https://d3rodw1h7g0i9b.cloudfront.net/images/drop-down.png" />
                   :
@@ -82,7 +83,7 @@ export default function ProductDeatil() {
           <div className='dropSize'>
             <p style={{ fontWeight: 400 }}>Size</p> {selectedSizeError && <p style={{ color: 'red', marginRight: '190px' }}>*Please Select A Size</p>}
             <select id="fruit-select" value={selectedSize} onChange={handleChangeSize}>
-              <option value='0'>SELECT YOUR SIZE</option>
+              <option value='0'>{SELECT_SIZE}</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -151,8 +152,8 @@ export default function ProductDeatil() {
             </li>
           </ul>
           <div>
-            <button className='btnByNow' onClick={handleBynow}>Buy Now</button>
-            <button className='btnKnowMore'>Know More</button>
+            <button className='btnByNow' onClick={handleBynow}>{BTN_BUYNOW}</button>
+            <button className='btnKnowMore'>{BTN_KWONMORE}</button>
           </div>
           <div style={{
             display: 'flex',
@@ -175,7 +176,7 @@ export default function ProductDeatil() {
       <div className='imageDetail'>
         <div className='productDeatils'>
           <div className='productDeatilSub'>
-            <p className='productDetailTitle'>PRODUCT DETAILS</p>
+            <p className='productDetailTitle'>{PRODUCT_DETAIL}</p>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0px' }}>
               <p className='proDetail'>Product Code</p>
               <p className='proDetail' style={{ marginRight: '20px' }}>CodeSRA1236-white-18-J-SI1</p>

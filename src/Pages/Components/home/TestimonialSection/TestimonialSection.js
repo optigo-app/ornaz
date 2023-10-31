@@ -13,6 +13,7 @@ import star from '../../../assets/star.svg'
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import { TESTIMONIALS } from '../../../Constants'
 
 export default function TestimonialSection() {
 
@@ -90,7 +91,7 @@ export default function TestimonialSection() {
           <div className="myCarousel" >
             <img src={data.images} alt='' style={{width:'48%'}}/>
             <div style={{display:'flex',flexDirection:'column'}}>
-              <font style={{fontSize:'25px',marginBottom:'5px',color:'#2C2C2C'}}>Testimonials</font>
+              <font style={{fontSize:'25px',marginBottom:'5px',color:'#2C2C2C'}}>{TESTIMONIALS}</font>
               <div style={{border:"1px solid rgb(44 44 44 / 15%)"}}></div>
             <div style={{marginTop:'-15px',marginBottom:'-15px'}}>
               <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>

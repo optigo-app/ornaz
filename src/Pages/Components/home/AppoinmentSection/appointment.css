@@ -33,6 +33,7 @@
 .text3-container{
       border: 1px solid black;
       padding: 5px 35px;
+      cursor: pointer;
 
 }
 
