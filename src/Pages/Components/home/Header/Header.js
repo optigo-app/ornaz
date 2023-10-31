@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React,{ useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Header.css'
 import cartImg from '../../../assets/cart.png'
 import logo from '../../../assets/logo.png'
 import searchlogo from '../../../assets/search.svg'
+import ring from '../../../assets/ring.png'
 // import ring1 from '../../../assets/svg.svg'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HER, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, LIFETIME_WARRANTY, LOGOUT, LOGOUT_MESSAGE, MONEY_BACK_GUARANTEE, YOUR_ACCOUNT } from "../../../Constants";
@@ -53,6 +54,130 @@ export default function Header() {
     { currency: "ZK ZMK", title: 'Zambian Kwacha' },
   ]
 
+  let hermenuJSON =[{
+    menu1:{
+      'title':'SHOP RINGS BY SHAPE',
+      'menus':[
+        {label:'Round cut Rings'},
+        {label:'Princess Cut Rings'},
+        {label:'Cushion Cut Rings'},
+        {label:'Oval Cut Rings'},
+        {label:'Heart Cut Rings'},
+        {label:'pear Cut Rings'},
+        {label:'Emerald Cut Rings'},
+      ]
+    },
+    menu2:{
+      'title':'DESIGN YOUR OWN ENGAGEMENT RING',
+      'menus':[
+        {label:'Submit Your Own'},
+      ]
+    },
+    menu3:{
+      'title':'ENGAGEMENT RINGS BY STYLES ',
+      'menus':[
+        {label:'Plain Solitaire'},
+        {label:'Vintage'},
+        {label:'Side-Stone'},
+        {label:'Three Stone'},
+        {label:'Cluster'},
+        {label:'Halo'},
+        {label:'Pave'},
+      ]
+    },
+    menu4:{
+      'title':'SHOPE BY METAL',
+      'menus':[
+        {label:'White Gold'},
+        {label:'Rose Gold'},
+       
+      ]
+    },
+  }]
+
+  console.log("hermenuJSON",hermenuJSON);
+
+  const ForHerMenu = useCallback(
+    (data,num) => (
+      <>
+        <font
+          style={{ color: "black", fontSize: "14px" }}
+          className="title-container"
+        >
+          {data[`menu${num}`].title}
+        </font>
+        <div className={`label-container ${num===3? 'menu-3':''}`}>
+          {data[`menu${num}`].menus.map((menudata) => (
+            <font className="label-font">{menudata.label}</font>
+          ))}
+        </div>
+      </>
+    ),
+    []
+  );
+
+  let hermenuJSON =[{
+    menu1:{
+      'title':'SHOP RINGS BY SHAPE',
+      'menus':[
+        {label:'Round cut Rings'},
+        {label:'Princess Cut Rings'},
+        {label:'Cushion Cut Rings'},
+        {label:'Oval Cut Rings'},
+        {label:'Heart Cut Rings'},
+        {label:'pear Cut Rings'},
+        {label:'Emerald Cut Rings'},
+      ]
+    },
+    menu2:{
+      'title':'DESIGN YOUR OWN ENGAGEMENT RING',
+      'menus':[
+        {label:'Submit Your Own'},
+      ]
+    },
+    menu3:{
+      'title':'ENGAGEMENT RINGS BY STYLES ',
+      'menus':[
+        {label:'Plain Solitaire'},
+        {label:'Vintage'},
+        {label:'Side-Stone'},
+        {label:'Three Stone'},
+        {label:'Cluster'},
+        {label:'Halo'},
+        {label:'Pave'},
+      ]
+    },
+    menu4:{
+      'title':'SHOPE BY METAL',
+      'menus':[
+        {label:'White Gold'},
+        {label:'Rose Gold'},
+       
+      ]
+    },
+  }]
+
+  console.log("hermenuJSON",hermenuJSON);
+
+  const ForHerMenu = useCallback(
+    (data,num) => (
+      <>
+        <font
+          style={{ color: "black", fontSize: "14px" }}
+          className="title-container"
+        >
+          {data[`menu${num}`].title}
+        </font>
+        <div className={`label-container ${num===3? 'menu-3':''}`}>
+          {data[`menu${num}`].menus.map((menudata) => (
+            <font className="label-font">{menudata.label}</font>
+          ))}
+        </div>
+      </>
+    ),
+    []
+  );
+
   const handleLogOut = () => {
     setIsLogin(false)
     setShowLogout(true)
@@ -74,7 +199,6 @@ export default function Header() {
               <span
                 className="text-lef"
                 style={{
-                  maxWidth: "15vw",
                   paddingLeft: "20px",
                   paddingRight: "20px",
                 }}
@@ -84,7 +208,6 @@ export default function Header() {
               <span
                 className="text-lef"
                 style={{
-                  maxWidth: "15vw",
                   paddingLeft: "20px",
                   paddingRight: "20px",
                 }}
@@ -94,7 +217,6 @@ export default function Header() {
               <span
                 className="text-lef"
                 style={{
-                  maxWidth: "15vw",
                   paddingLeft: "20px",
                   paddingRight: "20px",
                 }}
@@ -104,7 +226,6 @@ export default function Header() {
               <span
                 className="text-lef"
                 style={{
-                  maxWidth: "15vw",
                   paddingLeft: "20px",
                   paddingRight: "20px",
                 }}
@@ -119,7 +240,10 @@ export default function Header() {
                 <div className="currency-option">
                   <table className="drop-table">
                     {demoJSON.map((data) => (
-                      <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{data.title}</Tooltip>}>
+                      <OverlayTrigger
+                        placement="right"
+                        overlay={<Tooltip id="tooltip">{data.title}</Tooltip>}
+                      >
                         <tr>
                           <td>{data.currency}</td>
                         </tr>
@@ -135,7 +259,7 @@ export default function Header() {
 
       {/* middel header */}
 
-      <header>
+      <header className="middel-header-container">
         <div className="middel-header">
           <div className="middel-header-level-1">
             <p style={{ marginTop: "10px" }}>
@@ -143,21 +267,16 @@ export default function Header() {
             </p>
           </div>
           <div className="middel-header-level-2">
-            {/* {isLogin ?
-              <> */}
-                <span className="middel-header-font" onClick={() => navigation('/account')}>{YOUR_ACCOUNT}</span>
-                <span className="middel-header-font" onClick={handleLogOut}>{LOGOUT}</span>
-              {/* </> :
-              <>
-                <span className="middel-header-font">register</span>
-                <span className="middel-header-font">login</span>
-              </>} */}
-            <span style={{ display: "flex", cursor: 'pointer' }} onClick={() => navigation('/CartDetail')}>
+            <span onClick={() => navigation("/RegisterPage")}>register</span>
+            <span onClick={() => navigation("/LoginPage")}>login</span>
+            <span
+              style={{ display: "flex", cursor: "pointer" }}
+              onClick={() => navigation("/CartDetail")}
+            >
               <img
                 src={cartImg}
                 alt="..."
                 style={{ height: "20px", width: "20px" }}
-
               />
               <span style={{ fontSize: "18px" }}>{"(1)"}</span>
             </span>
@@ -169,12 +288,48 @@ export default function Header() {
         <div className="nav-container">
           <ul className="nav-ul">
             <li className="nav-li">
-              {" "}
-              <img src={logo} alt={"..."} style={{ width: "12vw", cursor: 'pointer' }} onClick={() => navigation('/')} />
+              <img
+                src={logo}
+                alt={"..."}
+                style={{ width: "12vw", cursor: "pointer" }}
+                onClick={() => navigation("/")}
+              />
             </li>
             <li className="nav-li-for-her">
-              <span className="for-her">{FOR_HER}</span>
-              <span className="for-her-dropdown"></span>
+              <span className="for-her">FOR HER</span>
+              <span className="for-her-dropdown">
+                <div className="for-her-container">
+                  <div className="forher-inner-container">
+                    {hermenuJSON.map((data) => (
+                      <div style={{display:'flex',flexDirection:'column',gap:'30px'}}>
+                        <span className="drop-container">
+                          {ForHerMenu(data, 1)}
+                        </span>
+                        <span className="drop-container">
+                          {ForHerMenu(data, 2)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="vertical-forher-line"></div>
+                  <div className="forher-inner-container support" style={{paddingLeft:'26px'}}>
+                    {hermenuJSON.map((data) => (
+                      <>
+                      <span className="drop-container">
+                        {ForHerMenu(data, 3)}
+                      </span>
+                      <span className="drop-container" style={{marginTop:'20px'}}>
+                        {ForHerMenu(data, 4)}
+                      </span>
+                      </>
+                    ))}
+                  </div>
+                  <div className="vertical-forher-line" style={{}}></div>
+                  <div className="forher-inner-container" >
+                    <img src={ring} style={{width:'198px',height:'200px'}}/>
+                  </div>
+                </div>
+              </span>
             </li>
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{FOR_HIM}</li>
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ETERNITY_BANDS}</li>
