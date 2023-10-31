@@ -1,56 +1,62 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import HomePage from './Pages/Components/HomePage';
-import JewellaryPage from './Pages/Components/JewellaryPage';
-import ProductDetailsPage from './Pages/Components/ProductDetailsPage';
-import DisplayTechnologyPage from './Pages/Components/FooterSection/OrnazExperience/DisplayTechnologyPage';
-import DesignRingPage from './Pages/Components/FooterSection/OrnazExperience/DesignRingPage';
-import BookAppoinmentPage from './Pages/Components/FooterSection/OrnazExperience/BookAppoinmentPage';
-import FreeEngravingPage from './Pages/Components/FooterSection/OrnazExperience/FreeEngravingPage';
-import GiaAssistancePage from './Pages/Components/FooterSection/WhyOrnaz/GiaAssistancePage';
-import CertificationPage from './Pages/Components/FooterSection/WhyOrnaz/CertificationPage';
-import CraftsmanshipSection from './Pages/Components/FooterSection/WhyOrnaz/CraftsmanshipSection';
-import QualityValuePage from './Pages/Components/FooterSection/WhyOrnaz/QualityValuePage';
-import LifeTimeExchangeSection from './Pages/Components/FooterSection/Policies/LifeTimeExchangeSection';
-import TermsConditionPage from './Pages/Components/FooterSection/Policies/TermsConditionPage';
-import DeliveryShippingPage from './Pages/Components/FooterSection/Policies/DeliveryShippingPage';
-import PrivacyPolicy from './Pages/Components/FooterSection/Policies/PrivacyPolicy';
-import AskedQuetionPage from './Pages/Components/FooterSection/Policies/AskedQuetionPage';
-import AboutPage from './Pages/Components/FooterSection/AllAboutOrnaz/AboutPage';
-import FriendPage from './Pages/Components/FooterSection/AllAboutOrnaz/FriendPage';
-import CelebTakeOverSection from './Pages/Components/FooterSection/AllAboutOrnaz/CelebTakeOverSection';
-import BlogSection from './Pages/Components/FooterSection/AllAboutOrnaz/BlogSection';
-import ContactPage from './Pages/Components/FooterSection/AllAboutOrnaz/ContactPage';
-import LoginPage from './Pages/Components/LoginPage/LoginPage';
-import RegisterPage from './Pages/Components/RegisterPage/RegisterPage';
+import HomePage from './Pages/Components/home';
+import LoginPage from './Pages/Components/login/Login';
+import Register from './Pages/Components/register/Register';
+import Jewellary from './Pages/Components/Jewellary';
+import DisplayTechnology from './Pages/Components/footer/experience/DisplayTechnology';
+import BookAppoinment from './Pages/Components/footer/experience/BookAppoinment';
+import FreeEngraving from './Pages/Components/footer/experience/FreeEngraving';
+import GiaAssistance from './Pages/Components/footer/WhyOrnaz/GiaAssistance';
+import QualityValue from './Pages/Components/footer/WhyOrnaz/qualityval/QualityValue';
+import LifeTimeExchange from './Pages/Components/footer/Policies/LifeTimeExchange';
+import TermsCondition from './Pages/Components/footer/Policies/TermsCondition';
+import DeliveryShipping from './Pages/Components/footer/Policies/DeliveryShipping';
+import AskedQuetion from './Pages/Components/footer/Policies/AskedQuetion';
+import Contact from './Pages/Components/footer/allaboutornaz/Contact';
+import PrivacyPolicy from './Pages/Components/footer/Policies/PrivacyPolicy';
+import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver';
+import BlogSection from './Pages/Components/footer/allaboutornaz/BlogSection';
+import About from './Pages/Components/footer/allaboutornaz/About';
+import Friend from './Pages/Components/footer/allaboutornaz/Friend';
+import ProductDeatil from './Pages/Components/productdetails/productDet/ProductDeatil';
+import CartDetail from './Pages/Components/cart/cartDeatil/CartDetail';
+import CheckOutSummry from './Pages/Components/checkoutsummry';
+import DesignRing from './Pages/Components/footer/experience/designRing/DesignRing';
+import Certification from './Pages/Components/footer/WhyOrnaz/certification/Certification';
+import Craftsmanship from './Pages/Components/footer/WhyOrnaz/craftsmanship/Craftsmanship';
+import Forgot from './Pages/Components/forgot/Forgot';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/jewelleryPage" element={<JewellaryPage />} />
-        <Route path="/productDetailsPage" element={<ProductDetailsPage />} />
-        <Route path="/DisplayTechnologyPage" element={<DisplayTechnologyPage />} />
-        <Route path="/DesignRingPage" element={<DesignRingPage />} />
-        <Route path="/BookAppoinmentPage" element={<BookAppoinmentPage />} />
-        <Route path="/FreeEngravingPage" element={<FreeEngravingPage />} />
-        <Route path="/GiaAssistancePage" element={<GiaAssistancePage />} />
-        <Route path="/CertificationPage" element={<CertificationPage />} />
-        <Route path="/CraftsmanshipSection" element={<CraftsmanshipSection />} />
-        <Route path="/QualityValuePage" element={<QualityValuePage />} />
-        <Route path="/LifeTimeExchangeSection" element={<LifeTimeExchangeSection />} />
-        <Route path="/TermsConditionPage" element={<TermsConditionPage />} />
-        <Route path="/DeliveryShippingPage" element={<DeliveryShippingPage />} />
+        <Route path="/jewelleryPage" element={<Jewellary />} />
+        <Route path="/productDetails" element={<ProductDeatil />} />
+        <Route path="/DisplayTechnology" element={<DisplayTechnology />} />
+        <Route path="/DesignRing" element={<DesignRing />} />
+        <Route path="/BookAppoinment" element={<BookAppoinment />} />
+        <Route path="/FreeEngraving" element={<FreeEngraving />} />
+        <Route path="/GiaAssistance" element={<GiaAssistance />} />
+        <Route path="/Certification" element={<Certification />} />
+        <Route path="/Craftsmanship" element={<Craftsmanship />} />
+        <Route path="/QualityValue" element={<QualityValue />} />
+        <Route path="/LifeTimeExchange" element={<LifeTimeExchange />} />
+        <Route path="/TermsCondition" element={<TermsCondition />} />
+        <Route path="/DeliveryShipping" element={<DeliveryShipping />} />
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
-        <Route path="/AskedQuetionPage" element={<AskedQuetionPage />} />
-        <Route path="/AboutPage" element={<AboutPage />} />
-        <Route path="/ContactPage" element={<ContactPage />} />
-        <Route path="/FriendPage" element={<FriendPage />} />
-        <Route path="/CelebTakeOverSection" element={<CelebTakeOverSection />} />
+        <Route path="/AskedQuetion" element={<AskedQuetion />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="/Friend" element={<Friend />} />
+        <Route path="/CelebTakeOver" element={<CelebTakeOver />} />
         <Route path="/BlogSection" element={<BlogSection />} />
         <Route path="/LoginPage" element={<LoginPage />} />
-        <Route path="/RegisterPage" element={<RegisterPage />} />
+        <Route path="/RegisterPage" element={<Register />} />
+        <Route path="/ForgotPassworrd" element={<Forgot />} />
+        <Route path="/CartDetail" element={<CartDetail />} />
+        <Route path="/CheckOutSummry" element={<CheckOutSummry />} />
       </Routes>
     </BrowserRouter>
   );
