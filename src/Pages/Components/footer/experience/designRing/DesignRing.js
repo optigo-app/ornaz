@@ -20,7 +20,7 @@ export default function DesignRing() {
             <div className='detailSection'>
               <p style={{fontSize : '16px'}}>Although we have an extensive selection of Engagement Rings to choose from, if you have any specific design in your mind, that is when our custom fabrication comes in. Custom creating a piece of jewellery is often perceived as complicated and expensive, but that is not the case here as we provide this service complimentary while taking care of turning your imagination into reality . We will take the time to explain the process of custom creation.</p>
               <p style={{fontSize : '16px'}}>We at ORNAZ always say that an engagement ring must be built center out. Ring settings are a matter of taste and there is no setting that is superior to all the others, but the size, shape, and even quality of the center stone can dictate which style of setting is most aesthetically pleasing. That is why we are determined to combine your vision with our technical expertise to produce a product that will leave you in awe for years to come.</p>
-              <img src="https://d3rodw1h7g0i9b.cloudfront.net/images/image-1.jpg" alt="" style={{ width: '100%' }} />
+              <img src="https://d3rodw1h7g0i9b.cloudfront.net/images/image-1.jpg" alt="" style={{ width: '100%' ,position: 'relative', zIndex : -1 }} />
             </div>
             <div className='stepSection'>
               <p style={{ fontSize: '1.5rem', fontWeight: 'normal', margin: '0px' }}>Step By Step Process</p>

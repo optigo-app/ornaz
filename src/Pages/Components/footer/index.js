@@ -5,6 +5,7 @@ import Policies from './Policies'
 import WhyOrnaz from './WhyOrnaz'
 import './index.css'
 import { Form } from 'react-bootstrap'
+import { BTN_JOIN, SIGNUP_NEWSLETTER } from '../../Constants'
 
 export default function Footer() {
   return (
@@ -16,14 +17,14 @@ export default function Footer() {
           alignSelf: 'center',
           padding: '10px',
           fontWeight: '300'
-        }}>Signup For Newsletters</p>
+        }}>{SIGNUP_NEWSLETTER}</p>
         {/* <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Control type="email" placeholder="name@example.com" />
           </Form.Group>
         </Form> */}
         <input type='text' className='enterEmail' placeholder='enter your email' />
-        <button className='btnjoin'>JOIN</button>
+        <button className='btnjoin'>{BTN_JOIN}</button>
       </div>
       <div style={{ display: 'flex', padding: '15px' }}>
         <OrnazExperience />

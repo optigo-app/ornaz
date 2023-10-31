@@ -1,5 +1,6 @@
 import React from 'react'
 import './appointment.css'
+import { APPOINMENT_DES, APPOINMENT_TITLE, BTN_APPOINMENT } from '../../../Constants'
 
 export default function AppoinmentSection() {
   return (
@@ -7,10 +8,10 @@ export default function AppoinmentSection() {
     className='outer-container' 
     >
       <div className='inner-container'>
-        <span className='text1'>Consult with a Diamond Expert</span>
-        <span className='text2'>Buying Engagement Ring & Fine Jewellery Made Easy, Consult a Diamond Expert & Stylist From the Comfort of Your Home.</span>
+        <span className='text1'>{APPOINMENT_TITLE}</span>
+        <span className='text2'>{APPOINMENT_DES}</span>
         <div className='text3-container'>
-          <span className='text3'> Book a Virtual Appointment </span>
+          <span className='text3'> {BTN_APPOINMENT} </span>
         </div>
       </div>
     </div>

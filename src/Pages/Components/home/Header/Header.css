@@ -38,13 +38,53 @@ nav{
     justify-content:center;
     align-items:center;
 }
-
+.middel-header-font{
+    cursor: pointer;
+}
 .currency-dropDown{
     display: flex;
     justify-content: center;
     width:4%;
     border-left: 1px solid white;
 }
+
+.alert-success {
+    color: #145a32;
+    background-color: #d4efdf;
+    border-color: #c3e8d2;
+}
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.close:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+[type=reset], [type=submit], button, html [type=button] {
+    -webkit-appearance: button;
+}
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+
 
 /* .currency-select{
     margin:0px 10px;
@@ -122,6 +162,7 @@ td:hover{
     justify-content: center;
     align-items: center;
     height: 57px;
+    cursor: pointer;
 }
 .nav-li-for-her:hover .for-her-dropdown{
     display: block;

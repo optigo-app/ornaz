@@ -22,13 +22,20 @@
     cursor: pointer;
 }
 
-
+.totalProduct{
+    font-size: 10px;
+    color: #888;
+    margin: 0;
+    padding: 10px 0px;
+    margin: 5px;
+}
 
 .gender{
     border-bottom: 1px solid #888;
 }
 .priceTop{
     border-bottom: 1px solid #888;
+    margin-top: 10px;
 
 }
 .metal{

@@ -3,6 +3,7 @@ import './CartDetail.css'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../home/Header/Header'
 import Footer from '../../footer'
+import { BTN_CHECKOUT_SECURELY, BTN_REMOVE } from '../../../Constants'
 
 const cartData = [
   {
@@ -173,7 +174,7 @@ export default function CartDetail() {
                     <p className='cartDetails' style={{ fontSize: '0.7rem', color: 'green', marginTop: '-5px' }}>Save: ₹{data.save}</p>
                   </div>
                   <div>
-                    <button className='btnRemove'>Romove</button>
+                    <button className='btnRemove'>{BTN_REMOVE}</button>
                   </div>
 
                 </div>
@@ -204,7 +205,7 @@ export default function CartDetail() {
               <p style={{ marginTop : '5px' }}>₹75,519.50</p>
             </div>
           </div>
-          <button className='btnCheckOut' onClick={() => navigation('/CheckOutSummry')}>Checkout Securely</button>
+          <button className='btnCheckOut' onClick={() => navigation('/CheckOutSummry')}>{BTN_CHECKOUT_SECURELY}</button>
         </div>
 
       </div>

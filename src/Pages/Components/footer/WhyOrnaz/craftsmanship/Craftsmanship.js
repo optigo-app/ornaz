@@ -8,7 +8,7 @@ export default function Craftsmanship() {
     <div>
       <Header />
       <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <div style={{ width: '1150px' }}>
+        <div style={{ width: '1150px' ,padding: '20px 0'}}>
           <img src="https://d3rodw1h7g0i9b.cloudfront.net/images/static_banners/craftmanship_banner_desktop.jpg" alt="" width="100%" className='imageHandle' />
           <section className='slide-section text-center base-font p-top50'>
 
