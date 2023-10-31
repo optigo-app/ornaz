@@ -25,6 +25,7 @@ import CheckOutSummry from './Pages/Components/checkoutsummry';
 import DesignRing from './Pages/Components/footer/experience/designRing/DesignRing';
 import Certification from './Pages/Components/footer/WhyOrnaz/certification/Certification';
 import Craftsmanship from './Pages/Components/footer/WhyOrnaz/craftsmanship/Craftsmanship';
+import Forgot from './Pages/Components/forgot/Forgot';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/BlogSection" element={<BlogSection />} />
         <Route path="/LoginPage" element={<LoginPage />} />
         <Route path="/RegisterPage" element={<Register />} />
+        <Route path="/ForgotPassworrd" element={<Forgot />} />
         <Route path="/CartDetail" element={<CartDetail />} />
         <Route path="/CheckOutSummry" element={<CheckOutSummry />} />
       </Routes>
