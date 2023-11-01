@@ -54,26 +54,6 @@ export default function Header() {
     { currency: "ZK ZMK", title: 'Zambian Kwacha' },
   ]
 
-
-  const ForHerMenu = useCallback(
-    (data,num) => (
-      <>
-        <font
-          style={{ color: "black", fontSize: "14px" }}
-          className="title-container"
-        >
-          {data[`menu${num}`].title}
-        </font>
-        <div className={`label-container ${num===3? 'menu-3':''}`}>
-          {data[`menu${num}`].menus.map((menudata) => (
-            <font className="label-font">{menudata.label}</font>
-          ))}
-        </div>
-      </>
-    ),
-    []
-  );
-
   let hermenuJSON =[{
     menu1:{
       'title':'SHOP RINGS BY SHAPE',
@@ -115,7 +95,6 @@ export default function Header() {
     },
   }]
 
-  console.log("hermenuJSON",hermenuJSON);
 
   // const ForHerMenu = useCallback(
   //   (data,num) => (
