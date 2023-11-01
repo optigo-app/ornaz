@@ -19,7 +19,6 @@ header {
 .paymentMain {
     display: flex;
     justify-content: center;
-    
 }
 
 .topBar {
@@ -71,4 +70,53 @@ header {
     border: 1px solid #D5D9D9;
     border-radius: 10px;
 
+}
+
+
+@media screen and (min-width: 376px) {
+    .mobileMainPaymentCart {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 375px) {
+
+    .mainPaymentCart{
+        display: none;
+    }
+
+    .mobileMainPaymentCart{
+    /* border: 1px solid #D5D9D9; */
+
+    }
+    .paymentMain{
+        display: 'block'!important;
+    }
+
+    .mobileCartPayment{
+
+    }
+
+    .mobilePaymentCart{
+        margin: 10px;
+        width: 95%;
+        background: #fefefe;
+        border: 1px solid rgb(233, 233, 233);
+        display: flex;
+        flex-direction: row;
+    }
+
+    .mobilePaymentCartImage{
+        height: 152px;
+        width: 140px;
+        transition: .3s ease;
+    }
+
+    .topBar{
+        width: 100%!important;
+    }
+    .mobilePaymentTopBar{
+        display: flex!important;
+        flex-direction: column!important;
+    }
 }
