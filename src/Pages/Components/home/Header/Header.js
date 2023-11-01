@@ -96,24 +96,24 @@ export default function Header() {
   }]
 
 
-  // const ForHerMenu = useCallback(
-  //   (data,num) => (
-  //     <>
-  //       <font
-  //         style={{ color: "black", fontSize: "14px" }}
-  //         className="title-container"
-  //       >
-  //         {data[`menu${num}`].title}
-  //       </font>
-  //       <div className={`label-container ${num===3? 'menu-3':''}`}>
-  //         {data[`menu${num}`].menus.map((menudata) => (
-  //           <font className="label-font">{menudata.label}</font>
-  //         ))}
-  //       </div>
-  //     </>
-  //   ),
-  //   []
-  // );
+  const ForHerMenu = useCallback(
+    (data,num) => (
+      <>
+        <font
+          style={{ color: "black", fontSize: "14px" }}
+          className="title-container"
+        >
+          {data[`menu${num}`].title}
+        </font>
+        <div className={`label-container ${num===3? 'menu-3':''}`}>
+          {data[`menu${num}`].menus.map((menudata) => (
+            <font className="label-font">{menudata.label}</font>
+          ))}
+        </div>
+      </>
+    ),
+    []
+  );
 
   const handleLogOut = () => {
     setIsLogin(false)
