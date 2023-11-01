@@ -95,69 +95,6 @@ export default function Header() {
     },
   }]
 
-  console.log("hermenuJSON",hermenuJSON);
-
-  const ForHerMenu = useCallback(
-    (data,num) => (
-      <>
-        <font
-          style={{ color: "black", fontSize: "14px" }}
-          className="title-container"
-        >
-          {data[`menu${num}`].title}
-        </font>
-        <div className={`label-container ${num===3? 'menu-3':''}`}>
-          {data[`menu${num}`].menus.map((menudata) => (
-            <font className="label-font">{menudata.label}</font>
-          ))}
-        </div>
-      </>
-    ),
-    []
-  );
-
-  let hermenuJSON =[{
-    menu1:{
-      'title':'SHOP RINGS BY SHAPE',
-      'menus':[
-        {label:'Round cut Rings'},
-        {label:'Princess Cut Rings'},
-        {label:'Cushion Cut Rings'},
-        {label:'Oval Cut Rings'},
-        {label:'Heart Cut Rings'},
-        {label:'pear Cut Rings'},
-        {label:'Emerald Cut Rings'},
-      ]
-    },
-    menu2:{
-      'title':'DESIGN YOUR OWN ENGAGEMENT RING',
-      'menus':[
-        {label:'Submit Your Own'},
-      ]
-    },
-    menu3:{
-      'title':'ENGAGEMENT RINGS BY STYLES ',
-      'menus':[
-        {label:'Plain Solitaire'},
-        {label:'Vintage'},
-        {label:'Side-Stone'},
-        {label:'Three Stone'},
-        {label:'Cluster'},
-        {label:'Halo'},
-        {label:'Pave'},
-      ]
-    },
-    menu4:{
-      'title':'SHOPE BY METAL',
-      'menus':[
-        {label:'White Gold'},
-        {label:'Rose Gold'},
-       
-      ]
-    },
-  }]
-
-  console.log("hermenuJSON",hermenuJSON);
 
   const ForHerMenu = useCallback(
     (data,num) => (
