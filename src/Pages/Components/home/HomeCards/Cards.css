@@ -9,7 +9,10 @@
 .card-inner-container{
     user-select: none !important;
     float: left;
-    width:2346px
+    width:2346px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .card-inner-container-cate{
@@ -25,9 +28,7 @@
     color:#45d4d5
 }
 
-.cards-img{
-    transition: all 0.5s ease-in-out;
-}
+
 
 .cards-img:hover{
     transform: scale3d(1.2, 1.2, 1.2) !important;
@@ -76,3 +77,230 @@
     text-decoration: underline;
     user-select: none !important;
 }
+
+.cards-img{
+    width:371.61px;
+    height:371.61px;
+    position: relative;
+    z-index: 1;
+    object-fit: cover;
+    transition: all 0.5s ease-in-out;
+}
+
+.cards-img-celebs{
+    width:371.97px;
+    height:557.95px;
+    position: relative;
+    z-index: 1;
+    object-fit: cover;
+    transition: all 0.5s ease-in-out;
+}
+
+.cards-img-cat{
+    width:380.61px;
+    height:380.61px;
+    position: relative;
+    z-index: 1;
+    object-fit: cover;
+    transition: all 0.5s ease-in-out;
+}
+
+.img-container{
+    width:371.61px;
+    height:371.61px;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.img-container-celebs{
+    width:371.97px;
+    height:557.95px;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.img-container-catogery{
+    width:380.61px;
+    height:380.61px;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+        /* media-queries  */
+
+
+@media screen and (max-width:1764px){
+    .card-outer-container{
+        padding-left: 1%;
+    }
+    .cards-img-text-container{
+        width:1620px
+    }
+}
+@media screen and (max-width:1654px){
+    .card-outer-container{
+        padding-left: 1%;
+    }
+    .cards-img-text-container{
+        width:1520px
+    }
+}
+
+@media screen and (max-width:1880px){
+    .card-outer-container{
+        padding-left: 2%;
+    }
+}
+
+@media screen and (max-width:1530px){
+    .card-outer-container{
+        padding-left: 2%;
+    }
+    .cards-img-text-container{
+        width:1420px
+    }
+}
+
+@media screen and (max-width:1412px){
+    .cards-img-text-container{
+        width:1290px
+    }
+    .card-outer-container{
+        padding-left: 2%;
+    }
+}
+
+@media screen and (max-width:1291px){
+    .cards-img-text-container{
+        width:1130px;
+    }
+    .card-outer-container{
+        padding-left: 4%;
+    }
+}
+
+@media screen and (max-width:1155px){
+    .cards-img-text-container{
+        width:1030px
+    }
+    .card-outer-container{
+        padding-left: 2%;
+    }
+}
+@media screen and (max-width:1155px){
+    .cards-img-text-container{
+        width:1030px
+    }
+    .card-outer-container{
+        padding-left: 4%;
+    }
+}
+@media screen and (max-width:1053px){
+    .cards-img-text-container{
+        width:930px
+    }
+    .card-outer-container{
+        padding-left: 3%;
+    }
+}
+
+@media screen and (max-width:934px){
+    .cards-img-text-container{
+        width:830px
+    }
+    .card-outer-container{
+        padding-left: 3%;
+    }
+    .card-inner-container{
+        align-items: center;
+    }
+}
+
+@media screen and (max-width:832px){
+    .cards-img-text-container{
+        width:730px
+    }
+    .card-outer-container{
+        padding-left: 3%;
+    }
+}
+
+@media screen and (max-width:730px){
+    .cards-img-text-container{
+        width:620px
+    }
+    .card-outer-container{
+        padding-left: 3%;
+    }
+}
+
+@media screen and (max-width:622px){
+    .cards-img-text-container{
+        width:520px
+    }
+    .card-outer-container{
+        padding-left: 4%;
+    }
+}
+
+@media screen and (max-width:520px){
+    .cards-img-text-container{
+        width:380px
+    }
+    .card-outer-container{
+        padding-left: 10%;
+    }
+}
+
+@media screen and (max-width:450px){
+    .card-outer-container{
+        padding-left: 4%;   
+    }
+}
+
+@media screen and (max-width:424px){
+    .img-container , .img-container-catogery{
+        height: 300.61px;
+        width: 300.61px;
+    }
+    .cards-img , .cards-img-cat{
+        height: 300.61px;
+        width: 300.61px;
+    }
+
+    /* .img-container-catogery{
+        
+    }
+
+    .cards-img-cat{
+
+    } */
+
+}
+@media screen and (max-width:404px){
+    .img-container-celebs{
+        width:298.97px;
+        height:468.95px;
+        object-fit: none;
+    }
+    .cards-img-celebs{
+        width:298.97px;
+        height:468.95px;
+    }
+
+}
+
+@media screen and (max-width:373px){
+    .cards-img-text-container{
+        width: 365px;
+    }
+}
+
+
+
