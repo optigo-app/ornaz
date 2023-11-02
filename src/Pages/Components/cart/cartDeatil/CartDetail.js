@@ -220,10 +220,11 @@ export default function CartDetail() {
         <Header />
         <div className='mobileMainCart'>
           <div className='mobileCardDetails'>
-            <div>
+            <div style={{width : '100%'}}>
               {
                 cartData.map((data, index) =>
                   <div className='mobilSubCart' >
+                  
                     <img src={data.imageUrl} className='mobileCartImage' alt='...' />
                     <div style={{ marginLeft: '10px' }}>
                       <p className='cartDetails' style={{ fontSize: '20px', fontWeight: 600 }}>{data.name}</p>
@@ -239,7 +240,7 @@ export default function CartDetail() {
                         <p className='cartDetails'>{data.ringModel}</p>
                       </div>
                     </div>
-                    <div style={{ }}>
+                    <div style={{ position : 'absolute' , right : '20px'}}>
                       <div style={{ height: '30px', width: '30px', border: '1px solid black', borderRadius: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <CloseIcon />
                       </div>
