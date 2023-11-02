@@ -1,10 +1,10 @@
 import React,{ useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Header.css'
-import cartImg from '../../../assets/cart.png'
-import logo from '../../../assets/logo.png'
-import searchlogo from '../../../assets/search.svg'
-import ring from '../../../assets/ring.png'
+import cartImg from '../../../assets/other/cart.png'
+import logo from '../../../assets/other/logo.png'
+import searchlogo from '../../../assets/other/search.svg'
+import ring from '../../../assets/other/ring.png'
 // import ring1 from '../../../assets/svg.svg'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HER, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, LIFETIME_WARRANTY, LOGOUT, LOGOUT_MESSAGE, MONEY_BACK_GUARANTEE, YOUR_ACCOUNT } from "../../../Constants";
