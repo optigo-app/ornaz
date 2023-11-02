@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './TestimonialSection.css'
 import s1 from '../../../assets/testimonial/s1.webp'
 import s2 from '../../../assets/testimonial/s2.webp'
@@ -6,9 +6,9 @@ import s3 from '../../../assets/testimonial/s3.webp'
 import s4 from '../../../assets/testimonial/s4.webp'
 import s5 from '../../../assets/testimonial/s5.webp'
 import s6 from '../../../assets/testimonial/s6.webp'
-import ar from '../../../assets/ar.svg'
-import al from '../../../assets/al.svg'
-import star from '../../../assets/star.svg'
+import ar from '../../../assets/other/ar.svg'
+import al from '../../../assets/other/al.svg'
+import star from '../../../assets/other/star.svg'
 
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -66,10 +66,29 @@ export default function TestimonialSection() {
     );
   };
 
+  const isArrowShow = () =>{
+    if(window.innerWidth<=1155){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+    useEffect(() => {
+    const handleResize = () => {
+      isArrowShow();
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isArrowShow]);
+
   return (
-    <div style={{ height: '649.27px',marginTop:'50px',width:'1498.53px',marginLeft:'189px' }}>
+    <div className='monial-container'>
       <Carousel
-        showArrows={true}
+        showArrows={isArrowShow()}
         infiniteLoop={false}
         showThumbs={false}
         showStatus={false}
@@ -89,7 +108,7 @@ export default function TestimonialSection() {
         {demoJson.map((data)=>(
         <div>
           <div className="myCarousel" >
-            <img src={data.images} alt='' style={{width:'48%'}}/>
+            <img src={data.images} alt=''style={{width:'48%'}} className='testimonial-image'/>
             <div style={{display:'flex',flexDirection:'column'}}>
               <font style={{fontSize:'25px',marginBottom:'5px',color:'#2C2C2C'}}>{TESTIMONIALS}</font>
               <div style={{border:"1px solid rgb(44 44 44 / 15%)"}}></div>
