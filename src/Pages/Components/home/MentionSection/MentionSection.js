@@ -19,12 +19,12 @@ export default function MentionSection() {
   ]
 
   return (
-    <div style={{paddingLeft:'11%'}}>
+    <div className='main-connect-container'>
       <div className='mention-outer-container'>
       {dummyJson.map((data)=>(
       <div className='mention-inner-container'>
         <a>
-        <img src={data.mentionImg} alt='...mention images' className='mention-images' style={{color:'gray'}} />
+        <img src={data.mentionImg} alt='' className='mention-images' style={{color:'gray'}} />
         </a>
       </div>
       ))}

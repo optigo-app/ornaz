@@ -172,6 +172,44 @@
   font-weight: 500;
 }
 
+.monial-container{
+  height: 649.27px;
+  margin-top:50px;
+  width:1498.53px;
+  margin-left:189px
+}
+
+
+@media screen and (max-width:1736px) {
+  .monial-container{
+    margin-left: 2%;
+  }
+}
+
+@media screen and (max-width:1540px) {
+  .monial-container{
+    width:1388.53px;
+  }
+}
+
+@media screen and (max-width:1412px) {
+  .monial-container{
+    width:1270.53px;
+  }
+}
+
+@media screen and (max-width:1291px) {
+  .monial-container{
+    width:1146.53px;
+  }
+}
+@media screen and (max-width:1156px) {
+  .monial-container{
+    width:100%;
+    height:100%;
+  }
+}
+
 
 
 
