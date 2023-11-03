@@ -27,3 +27,20 @@
     cursor: pointer;
     font-weight: 300;
 }
+
+
+@media screen and (min-width: 1025px) {
+    .mobileFooterSection {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 1024px) {
+
+    .webFooterSection {
+        display: none;
+    }
+
+
+}

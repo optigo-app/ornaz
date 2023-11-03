@@ -7,9 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { BTN_BUYNOW, BTN_KWONMORE, CUSTOMIZE_PRODUCT, PRODUCT_DETAIL, SELECT_SIZE } from '../../../Constants';
 import MobileFooter from '../../MobileFooter';
 
-
 export default function ProductDeatil() {
-
 
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDetail, setIsOpenDetail] = useState(false);
@@ -386,23 +384,6 @@ export default function ProductDeatil() {
                 </div>
               </li>
             </ul>
-
-            {/* <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              listStyle: 'none',
-              paddingLeft: '10px',
-              paddingTop: '30px'
-            }}>
-              <div>
-                <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img alt='...' width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/cert.png" /></span>CERTIFIED JEWELLERY</p>
-                <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img alt='...' width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/30return.png" /></span>RETURN -7 DAYS</p>
-                <p style={{ fontSize: '12px', display: 'flex' }}><span style={{ marginRight: '10px' }}><img alt='...' width="20px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/exchange-icon.png" /></span>EXCHANGE & BUY BACK - LIFE TIME</p>
-              </div>
-              <div>
-                <img height="65px" src="https://d3rodw1h7g0i9b.cloudfront.net/images/whsp.svg" alt='...' style={{ margin: '20px', cursor: 'pointer' }} />
-              </div>
-            </div> */}
           </div>
         </div>
         <div className='mobilImageDetail'>

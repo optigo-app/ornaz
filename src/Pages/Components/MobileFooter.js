@@ -3,7 +3,7 @@ import React from 'react'
 export default function MobileFooter() {
     return (
         <div style={{borderTop : '1px solid #888'}}>
-            <div style={{ display: 'flex' ,marginTop : '15px' }}>
+            <div style={{ display: 'flex' ,marginTop : '15px' ,justifyContent : 'space-around' }}>
                 <div style={{ display: 'flex' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="800" fill="none" stroke="#000" stroke-width="3" viewBox="0 0 64 64" style={{ width: '35px' }}><path stroke-linecap="round" d="M55.5 31a23.93 23.93 0 01-.41 5.44 23.51 23.51 0 01-42.37 9M8.49 32.6a23.26 23.26 0 01.42-5 23.51 23.51 0 0142.29-9.17"></path><path stroke-linecap="round" d="M40.63 17.46L51.48 18.73 52.56 8.55"></path><path stroke-linecap="round" d="M23.08 46.19L12.24 44.92 11.15 55.1"></path><path stroke-linecap="round" d="M25.79 22.57h2.92c2.85 0 6 .94 6 5.27 0 4.71-4 6.51-8.22 6a.25.25 0 00-.2.42l9 9.67"></path><path stroke-linecap="round" d="M38.14 22.57L28.07 22.57"></path><path stroke-linecap="round" d="M25.94 28L38.21 28"></path></svg>
                     <div style={{ width: '120px', marginLeft: '10px', color: 'rgb(68, 68, 68)', fontWeight: 600, fontSize: '17px' }}>Easy, 7-day returns</div>
@@ -16,7 +16,7 @@ export default function MobileFooter() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', marginTop: '10px' }}>
+            <div style={{ display: 'flex', marginTop: '10px',justifyContent : 'space-around'  }}>
                 <div style={{ display: 'flex' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="800" viewBox="0 0 1920 1920" style={{ width: '35px' }}><path fill-rule="evenodd" d="M960 15l266.667 241.92 359.893-13.867 48.747 356.907L1920 820.547l-192 304.64 76.267 352.106-342.934 109.867-167.893 318.613L960 1769.56l-333.44 136.213-167.893-318.613-342.934-109.867L192 1125.187 0 820.547 284.693 599.96l48.747-356.907 359.893 13.867L960 15zm0 144L764.907 335.96l-32.214 29.227-43.52-1.6-263.253-10.134-35.627 260.907-5.866 43.2-34.454 26.56-208.106 161.387L282.24 1068.44l23.253 36.693-9.28 42.667-55.68 257.387 250.774 80.426 41.493 13.334 20.373 38.506 122.667 232.96 243.84-99.52L960 1654.36l40.32 16.533 243.84 99.52 122.773-232.96 20.267-38.506 41.493-13.334 250.774-80.426-55.68-257.387-9.28-42.667 23.253-36.693 140.48-222.933-208.213-161.387-34.454-26.56-5.866-43.2-35.734-260.907-263.04 10.134-43.626 1.6-32.214-29.227L960 159zm341.056 613.483l64.533 85.013-561.6 426.24-255.04-255.04 75.414-75.413 189.226 189.226 487.467-370.026z"></path></svg>
                     <div style={{ width: '120px', alignSelf: 'center', marginLeft: '10px', color: 'rgb(68, 68, 68)', fontWeight: 600, fontSize: '17px' }}>Certified Jewellery</div>
