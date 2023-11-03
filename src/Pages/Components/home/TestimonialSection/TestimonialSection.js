@@ -67,7 +67,7 @@ export default function TestimonialSection() {
   };
 
   const isArrowShow = () =>{
-    if(window.innerWidth<=1155){
+    if(window.innerWidth<=1180){
       return false;
     }
     else{
@@ -108,8 +108,8 @@ export default function TestimonialSection() {
         {demoJson.map((data)=>(
         <div>
           <div className="myCarousel" >
-            <img src={data.images} alt=''style={{width:'48%'}} className='testimonial-image'/>
-            <div style={{display:'flex',flexDirection:'column'}}>
+            <img src={data.images} alt='' style={{ width:window.innerWidth<=800?'100%':'48%'}} className='testi-image'/>
+            <div style={{display:'flex',flexDirection:'column'}} className='testi-info-container'>
               <font style={{fontSize:'25px',marginBottom:'5px',color:'#2C2C2C'}}>{TESTIMONIALS}</font>
               <div style={{border:"1px solid rgb(44 44 44 / 15%)"}}></div>
             <div style={{marginTop:'-15px',marginBottom:'-15px'}}>
@@ -119,7 +119,7 @@ export default function TestimonialSection() {
               <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
               <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
             </div>
-            <font style={{display:'flex',width:'456px',color:'#2C2C2C'}}>{`"${data.discrip}"`}</font>
+            <font className='testimonial-descrip'>{`"${data.discrip}"`}</font>
             <font className='auther'>{data.auther}</font>
             </div>
           </div>
