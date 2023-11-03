@@ -6,6 +6,7 @@ import WhyOrnaz from './WhyOrnaz'
 import './index.css'
 import { Form } from 'react-bootstrap'
 import { BTN_JOIN, SIGNUP_NEWSLETTER } from '../../Constants'
+import MobileFooter from './mobileFooter/MobileFooter'
 
 export default function Footer() {
   return (
@@ -35,7 +36,7 @@ export default function Footer() {
         </div>
       </div>
       <div className='mobileFooterSection'>
-
+          <MobileFooter />
       </div>
     </div>
 
