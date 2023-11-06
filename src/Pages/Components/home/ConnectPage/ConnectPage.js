@@ -1,16 +1,48 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import './connect.css';
+import connect from '../../../assets/other/connect.webp'
+import respConnect from '../../../assets/responsive Images/resp_connect.webp'
 
 export default function ConnectPage() {
 
   const navigation = useNavigate();
 
 
+  const imagesAlternate = () =>{
+    if(window.innerWidth<=800){
+        return respConnect
+    }
+    else{
+      return connect
+    }
+  }
+  useEffect(() => {
+    const handleResize = () => {
+      imagesAlternate();
+    };
+  
+    // Attach the event listener when the component mounts
+    window.addEventListener('resize', handleResize);
+  
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
   return (
-    <div  onClick={() => navigation('/jewelleryPage')}>
-      <div class="slick-main-container" style={{ paddingLeft: "8%" , cursor : 'pointer'}}>
-        <img class="lazy ls-is-cached lazyloaded" src="https://d3rodw1h7g0i9b.cloudfront.net/images/desktop_home/connect_now_desktop_2.webp" data-src="https://d3rodw1h7g0i9b.cloudfront.net/images/desktop_home/connect_now_desktop_2.webp" alt="Solitaires and perfect engagement rings"  style={{ height: '585.17px', width: "1560.47px" ,marginTop:'90px'}} />
+    <div className='main-connect-container' onClick={() => navigation("/jewelleryPage")} >
+      <div
+        className="slick-main-container"
+      >
+        <img
+          src={imagesAlternate()}
+          className='connect-img'
+          style={{  width: "1560.47px", marginTop: "90px" }}
+        />
       </div>
     </div>
-  )
+  );
 }

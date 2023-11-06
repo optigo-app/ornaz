@@ -35,3 +35,5 @@ export const BTN_REMOVE = 'Romove'
 export const BTN_CHECKOUT_SECURELY = 'Checkout Securely'
 export const BTN_PLACEORDER = 'PLACE ORDER'
 export const BTN_APPOINMENT ='Book a Virtual Appointment'
+export const BTN_CONFIRM ='CONFIRM'
+

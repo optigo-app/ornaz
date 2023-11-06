@@ -172,6 +172,92 @@
   font-weight: 500;
 }
 
+.monial-container{
+  height: 649.27px;
+  margin-top:50px;
+  width:1498.53px;
+  margin-left:189px
+}
+
+.testimonial-descrip{
+  display:flex;
+  width:456px;
+  color:#2C2C2C;
+}
+
+
+
+@media screen and (max-width:1736px) {
+  .monial-container{
+    margin-left: 2%;
+  }
+}
+
+@media screen and (max-width:1540px) {
+  .monial-container{
+    width:1388.53px;
+  }
+}
+
+@media screen and (max-width:1412px) {
+  .monial-container{
+    width:1270.53px;
+  }
+}
+
+@media screen and (max-width:1291px) {
+  .monial-container{
+    width:1146.53px;
+  }
+}
+
+@media screen and (max-width:1184px) {
+  .monial-container{
+    width:100%;
+    height:100%;
+  }
+  .testimonial-descrip {
+    width:350px;
+    font-size: 14.5px;
+  }
+}
+
+@media screen and (max-width:520px) {
+  .myCarousel{
+    margin-left: 4%;
+  }
+  .testi-info-container{
+    margin-left: 0px;
+  }
+}
+
+@media screen and (min-width:840px) {
+  .testi-info-container{
+    margin-left:24px
+  }
+}
+
+@media screen and (max-width:840px) {
+  
+  .monial-container{
+    margin-left: 0.5%;
+  }
+
+  .myCarousel{
+    flex-wrap: wrap;
+    height: auto;
+    margin-top: 20px;
+  }
+  
+  .testi-image{
+    height: auto;
+    object-fit: cover;
+  }
+
+  
+ 
+}
+
 
 
 
