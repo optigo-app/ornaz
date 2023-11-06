@@ -1,3 +1,4 @@
+export const CATAGORY ='MY CATAGORY'
 export const FOR_HIM = 'FOR HIM'
 export const FOR_HER = 'FOR HER'
 export const ETERNITY_BANDS = 'Eternity Bands'
@@ -35,3 +36,4 @@ export const BTN_CHECKOUT_SECURELY = 'Checkout Securely'
 export const BTN_PLACEORDER = 'PLACE ORDER'
 export const BTN_APPOINMENT ='Book a Virtual Appointment'
 export const BTN_CONFIRM ='CONFIRM'
+
