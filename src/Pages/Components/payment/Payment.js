@@ -11,8 +11,8 @@ const cartData = [
         Size: '5',
         Qty: '1',
         DeliveryBy: 'Delivery by - 25 Nov',
-        oldPrice: '10,000,145',
-        newPrice: '9,99,999',
+        oldPrice: '10,000',
+        newPrice: '9,99,888',
         save: '12,122,2333',
         imageUrl: 'https://d3d5st4bexye3p.cloudfront.net/__sized__/products/ARA1183/ARA1183-1-crop-c0-5__0-5-540x540-70.jpg'
     },
@@ -24,7 +24,7 @@ const cartData = [
         Size: '5',
         Qty: '1',
         DeliveryBy: 'Delivery by - 25 Nov',
-        oldPrice: '10,000,145',
+        oldPrice: '10,000',
         newPrice: '9,99,999',
         save: '12,122,2333',
 
@@ -39,7 +39,7 @@ const cartData = [
         Size: '5',
         Qty: '1',
         DeliveryBy: 'Delivery by - 25 Nov',
-        oldPrice: '10,000,145',
+        oldPrice: '10,000',
         newPrice: '9,99,999',
         save: '12,122,2333',
         imageUrl: 'https://d3d5st4bexye3p.cloudfront.net/__sized__/products/ARA1183/ARA1183-1-crop-c0-5__0-5-540x540-70.jpg'
@@ -52,7 +52,7 @@ const cartData = [
         Size: '5',
         Qty: '1',
         DeliveryBy: 'Delivery by - 25 Nov',
-        oldPrice: '10,000,145',
+        oldPrice: '10,000',
         newPrice: '9,99,999',
         save: '1',
         imageUrl: 'https://d3d5st4bexye3p.cloudfront.net/__sized__/products/ARA1183/ARA1183-1-crop-c0-5__0-5-540x540-70.jpg'
@@ -150,7 +150,7 @@ export default function Payment() {
             <div className='paymentMain'>
                 <div className='topBar'>
                     <p style={{ marginBottom: "2rem", fontSize: '1.4rem' }}>Pay for order OR894808</p>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', height: '120px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', height: '120px' }} className='mobilePaymentTopBar'>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             <label className='radioButton'><input type='radio' name='payment' />Pre-Payment (25%)</label>
                             <label className='radioButton'><input type='radio' name='payment' />Payment</label>
@@ -186,6 +186,41 @@ export default function Payment() {
                             )
                         }
                     </div>
+
+                    <div className='mobileMainPaymentCart'>
+                        {
+                            cartData.map((data, index) =>
+                                <div className='mobilePaymentCart' >
+                                    <img src={data.imageUrl} className='mobilePaymentCartImage' alt='...' />
+                                    <div style={{ marginLeft: '10px', width: '100%', display: 'flex', alignSelf: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }} className='mobileCartPayment'>
+                                            <div style={{ marginLeft: '10px' }}>
+                                                <p className='cartDetails' style={{ fontSize: '20px', fontWeight: 600 }}>{data.name}</p>
+                                                <div style={{ display: 'flex', }}>
+                                                    <p className='cartDetails' style={{ fontSize: '1rem', color: 'black', fontWeight: 500 }}>₹{data.newPrice}</p>&nbsp;&nbsp;&nbsp;
+                                                    <p className='cartDetails' style={{ color: 'black', fontSize: '0.9rem' }}><del>₹{data.oldPrice}</del></p>
+                                                </div>
+                                                <p className='cartDetails' style={{ color: 'green', fontSize: '0.9rem' }}>{data.DeliveryBy}</p>
+                                                <p className='cartDetails' style={{ fontSize: '14px' }}>Ring Size - {data.Size}</p>
+                                                {/* &nbsp;&nbsp;&nbsp; */}
+                                                <div style={{ display: 'flex', }}>
+                                                    <p className='cartDetails'>{data.Wight}</p>
+                                                    <p className='cartDetails'>{data.ringModel}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div>
+
+
+
+
+
+
+
                     <div style={{
                         border: '1px solid #D5D9D9',
                         marginTop: '15px',

@@ -1,17 +1,18 @@
-.filterMain{
+.filterMain {
     width: 25%;
     border: 1px solid #888;
     background-color: #f8f8f8;
     margin: 2px;
 }
 
-.head{
+.head {
     display: flex;
     height: 60px;
     justify-content: space-between;
     background-color: #414141;
 }
-.btnClear{
+
+.btnClear {
     border: 1px solid white;
     background-color: #414141;
     color: white;
@@ -22,7 +23,7 @@
     cursor: pointer;
 }
 
-.totalProduct{
+.totalProduct {
     font-size: 10px;
     color: #888;
     margin: 0;
@@ -30,51 +31,163 @@
     margin: 5px;
 }
 
-.gender{
+.gender {
     border-bottom: 1px solid #888;
 }
-.priceTop{
+
+.priceTop {
     border-bottom: 1px solid #888;
     margin-top: 10px;
 
 }
-.metal{
+
+.metal {
     border-bottom: 1px solid #888;
 }
 
-.Occasion{
+.Occasion {
     border-bottom: 1px solid #888;
 }
 
-.price{
-    border-bottom: 1px solid #888;
-}
-.shape{
-    border-bottom: 1px solid #888;
-}
-.stonType{
+.price {
     border-bottom: 1px solid #888;
 }
 
-.chekBoxOrName{
+.shape {
+    border-bottom: 1px solid #888;
+}
+
+.stonType {
+    border-bottom: 1px solid #888;
+}
+
+.chekBoxOrName {
     display: flex;
     margin-left: 30px;
 }
 
-.checkName{
+.checkName {
     color: #888;
     margin: 10px;
 }
 
-.checkTitle{
+.checkTitle {
     color: #888;
     margin: 10px 0px 10px 20px;
 
 }
 
-.btnApply{
+.btnApply {
     width: 100%;
     height: 40px;
     background-color: #40e0d0;
     border: 0.1px solid #f8f8f8;
+}
+
+
+@media screen and (min-width: 771px) {
+    .filterMobile {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 320px) {
+
+    .filterMain {
+        display: none;
+    }
+
+    .filterMobile {
+        position: sticky;
+        bottom: 0
+    }
+
+    .sortFont {
+        margin: 0;
+        padding-left: 10px;
+
+    }
+
+    .sortBY {
+        display: flex;
+        padding-left: 30px;
+        height: 45px;
+    }
+
+}
+
+@media screen and (max-width: 375px) {
+
+    .filterMain {
+        display: none;
+    }
+
+    .filterMobile {
+        position: sticky;
+        bottom: 0
+    }
+
+    .sortFont {
+        margin: 0;
+        padding-left: 10px;
+
+    }
+
+    .sortBY {
+        display: flex;
+        padding-left: 30px;
+        height: 45px;
+    }
+
+}
+
+@media screen and (max-width: 425px) {
+
+    .filterMain {
+        display: none;
+    }
+
+    .filterMobile {
+        position: sticky;
+        bottom: 0
+    }
+
+    .sortFont {
+        margin: 0;
+        padding-left: 10px;
+
+    }
+
+    .sortBY {
+        display: flex;
+        padding-left: 30px;
+        height: 45px;
+    }
+
+}
+
+@media screen and (max-width: 770px) {
+
+    .filterMain {
+        display: none;
+    }
+
+    .filterMobile {
+        position: sticky;
+        bottom: 0
+    }
+
+    .sortFont {
+        margin: 0;
+        padding-left: 10px;
+
+    }
+
+    .sortBY {
+        display: flex;
+        padding-left: 30px;
+        height: 45px;
+    }
+
 }

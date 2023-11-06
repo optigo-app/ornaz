@@ -26,6 +26,7 @@ import DesignRing from './Pages/Components/footer/experience/designRing/DesignRi
 import Certification from './Pages/Components/footer/WhyOrnaz/certification/Certification';
 import Craftsmanship from './Pages/Components/footer/WhyOrnaz/craftsmanship/Craftsmanship';
 import Forgot from './Pages/Components/forgot/Forgot';
+import Payment from './Pages/Components/payment/Payment';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
         <Route path="/ForgotPassworrd" element={<Forgot />} />
         <Route path="/CartDetail" element={<CartDetail />} />
         <Route path="/CheckOutSummry" element={<CheckOutSummry />} />
+        <Route path="/Payment" element={<Payment />} />
       </Routes>
     </BrowserRouter>
   );

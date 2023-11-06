@@ -9,7 +9,7 @@ export default function QualityValue() {
     <div>
       <Header />
       <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <div style={{ width: '1100px'}} className='main'>
+        <div style={{ width: '1100px'}} className='qualityValueMain'>
           <section>
             <h2>Maximum Sparkle</h2>
             <p className = 'qualityDeatil'>We've revolutionized what it means to buy Engagement rings and Solitaires so you can make the most of your budget. By cutting out the middleman, we pass the savings onto you, all while preserving exceptional customer service and the highest quality diamonds and craftsmanship.</p>

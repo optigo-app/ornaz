@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './TestimonialSection.css'
 import s1 from '../../../assets/testimonial/s1.webp'
 import s2 from '../../../assets/testimonial/s2.webp'
@@ -6,9 +6,9 @@ import s3 from '../../../assets/testimonial/s3.webp'
 import s4 from '../../../assets/testimonial/s4.webp'
 import s5 from '../../../assets/testimonial/s5.webp'
 import s6 from '../../../assets/testimonial/s6.webp'
-import ar from '../../../assets/ar.svg'
-import al from '../../../assets/al.svg'
-import star from '../../../assets/star.svg'
+import ar from '../../../assets/other/ar.svg'
+import al from '../../../assets/other/al.svg'
+import star from '../../../assets/other/star.svg'
 
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -66,10 +66,29 @@ export default function TestimonialSection() {
     );
   };
 
+  const isArrowShow = () =>{
+    if(window.innerWidth<=1180){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+    useEffect(() => {
+    const handleResize = () => {
+      isArrowShow();
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isArrowShow]);
+
   return (
-    <div style={{ height: '649.27px',marginTop:'50px',width:'1498.53px',marginLeft:'189px' }}>
+    <div className='monial-container'>
       <Carousel
-        showArrows={true}
+        showArrows={isArrowShow()}
         infiniteLoop={false}
         showThumbs={false}
         showStatus={false}
@@ -89,8 +108,8 @@ export default function TestimonialSection() {
         {demoJson.map((data)=>(
         <div>
           <div className="myCarousel" >
-            <img src={data.images} alt='' style={{width:'48%'}}/>
-            <div style={{display:'flex',flexDirection:'column'}}>
+            <img src={data.images} alt='' style={{ width:window.innerWidth<=800?'100%':'48%'}} className='testi-image'/>
+            <div style={{display:'flex',flexDirection:'column'}} className='testi-info-container'>
               <font style={{fontSize:'25px',marginBottom:'5px',color:'#2C2C2C'}}>{TESTIMONIALS}</font>
               <div style={{border:"1px solid rgb(44 44 44 / 15%)"}}></div>
             <div style={{marginTop:'-15px',marginBottom:'-15px'}}>
@@ -100,7 +119,7 @@ export default function TestimonialSection() {
               <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
               <img src={star} alt='rating' style={{width:'35.5px',height:'93.46px'}}/>
             </div>
-            <font style={{display:'flex',width:'456px',color:'#2C2C2C'}}>{`"${data.discrip}"`}</font>
+            <font className='testimonial-descrip'>{`"${data.discrip}"`}</font>
             <font className='auther'>{data.auther}</font>
             </div>
           </div>

@@ -19,7 +19,7 @@ export default function SallerCard() {
 
   return (
     <>
-     <Cards sallerCardImg={demoJSON} cardTitle={'Shop Our Best Sellers'}/>   
+     <Cards sallerCardImg={demoJSON} cardTitle={'Shop Our Best Sellers'} type={'seller'}/>   
     </>
   )
 }

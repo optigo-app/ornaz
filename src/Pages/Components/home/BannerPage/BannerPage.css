@@ -5,3 +5,14 @@
     /* object-fit: cover; */
     
 }
+
+.myCarousel{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: white;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 600px;
+  }
