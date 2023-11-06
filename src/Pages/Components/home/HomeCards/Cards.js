@@ -48,8 +48,6 @@ export const Cards = ({ sallerCardImg, cardTitle, type }) => {
     }
   }
 
- 
-
   // const cardsImgTextContainer = () =>{
   //   if(type==='seller'){
   //     return 'cards-img-text-container seller'
@@ -66,7 +64,7 @@ export const Cards = ({ sallerCardImg, cardTitle, type }) => {
       <div className="card-outer-container" >
         <div className="card-header">
           <span className="card-title-text">{cardTitle}</span>
-          {(type !== 'celebs'&& type!=='banner') && <span className="card-shopall" style={{ marginRight: type === 'category' ? '10px' : '' }}>Shop All</span>}
+          {(type !== 'celebs') && <span className="card-shopall" style={{ marginRight: type === 'category' ? '10px' : '' }}>Shop All</span>}
         </div>
         <div className='cards-img-text-container' id='scrollable' {...events} ref={ref}>
           {CardData()?.map((data) => (

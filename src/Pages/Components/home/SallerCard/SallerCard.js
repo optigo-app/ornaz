@@ -19,7 +19,35 @@ export default function SallerCard() {
 
   return (
     <>
-     <Cards sallerCardImg={demoJSON} cardTitle={'Shop Our Best Sellers'} type={'seller'}/>   
+    <div
+      style={{ height: "auto", marginTop:'80px' }}
+    >
+      <div className="card-outer-container" >
+        <div className="card-header">
+          <span className="card-title-text">Shop Our Best Sellers</span>
+          <span className="card-shopall">Shop All</span>
+        </div>
+        <div className='cards-img-text-container'>
+          {demoJSON?.map((data) => (
+            <div className='card-inner-container'>
+              <div className='img-container'>
+                <img
+                  src={data.prodImg}
+                  alt="..."
+                  className='cards-img'
+                />
+              </div>
+
+              <div className="card-footer" style={{ marginTop: '10px', fontWeight: '500', fontSize: '14.3px', position: 'relative', zIndex: 1 }}>
+                <font>{data.prodtitle}</font>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+     {/* <Cards sallerCardImg={demoJSON} cardTitle={'Shop Our Best Sellers'} type={'seller'}/>    */}
     </>
   )
 }

@@ -13,7 +13,7 @@ import HomeFooter from './HomeFooter/HomeFooter'
 
 export default function Home() {
   return (
-    <div>
+    <div className='index-container'>
       <div className='header'>
       <Header/>
       <BannerPage />

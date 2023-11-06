@@ -251,7 +251,7 @@
 
 @media screen and (max-width:520px){
     .cards-img-text-container{
-        width:380px
+        width:100%
     }
     .card-outer-container{
         padding-left: 10%;
@@ -261,6 +261,9 @@
 @media screen and (max-width:450px){
     .card-outer-container{
         padding-left: 4%;   
+    }
+    .cards-img-text-container{
+        width:100%
     }
 }
 
@@ -272,6 +275,10 @@
     .cards-img , .cards-img-cat{
         height: 300.61px;
         width: 300.61px;
+    }
+
+    .cards-img-text-container{
+        width:100%
     }
 
     /* .img-container-catogery{
@@ -293,12 +300,15 @@
         width:298.97px;
         height:468.95px;
     }
+    .cards-img-text-container{
+        width:100%
+    }
 
 }
 
 @media screen and (max-width:373px){
     .cards-img-text-container{
-        width: 365px;
+        width:100%
     }
 }
 
