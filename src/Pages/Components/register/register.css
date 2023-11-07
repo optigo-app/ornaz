@@ -57,6 +57,7 @@
     gap:30px;
     margin-bottom: 30px;
     margin-top: 25px;
+    padding: 15px;
 }
 
 .input-outer-container{
@@ -143,5 +144,23 @@ label{
     border-color: #f9d0d0;
     width:100%;
     border-radius: 4px;
+}
+
+@media screen and (max-width:726px) {
+    .main-outer-container{
+        flex-wrap: wrap;
+        width:100%;
+    }
+
+    .have-an-account{
+        width:100%;
+        order: 1;
+        margin: 30px 0px;
+    }
+
+    .create-an-account-container{
+        width:100%;
+        order:2;
+    }
 }
 

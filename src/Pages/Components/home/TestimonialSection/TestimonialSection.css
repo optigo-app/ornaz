@@ -223,9 +223,7 @@
 }
 
 @media screen and (max-width:520px) {
-  .myCarousel{
-    margin-left: 4%;
-  }
+
   .testi-info-container{
     margin-left: 0px;
   }

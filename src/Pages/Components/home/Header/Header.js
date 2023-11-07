@@ -6,7 +6,7 @@ import logo from '../../../assets/other/logo.png'
 import searchlogo from '../../../assets/other/search.svg'
 import ring from '../../../assets/other/ring.png'
 // import ring1 from '../../../assets/svg.svg'
-import { Tooltip, OverlayTrigger } from 'react-bootstrap'
+import Tooltip from '@mui/material/Tooltip';
 import { SwipeableDrawer } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ContactsIcon from '@mui/icons-material/Contacts';
@@ -202,14 +202,12 @@ export default function Header({ name }) {
                 <div className="currency-option">
                   <table className="drop-table">
                     {demoJSON.map((data) => (
-                      <OverlayTrigger
-                        placement="right"
-                        overlay={<Tooltip id="tooltip">{data.title}</Tooltip>}
-                      >
+                     <Tooltip title={data.title} arrow placement="top" >
                         <tr>
                           <td>{data.currency}</td>
                         </tr>
-                      </OverlayTrigger>
+                     </Tooltip>
+                   
                     ))}
                   </table>
                 </div>

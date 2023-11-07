@@ -48,7 +48,7 @@ export const Cards = ({ sallerCardImg, cardTitle, type }) => {
     }
   }
 
-
+ 
 
   // const cardsImgTextContainer = () =>{
   //   if(type==='seller'){

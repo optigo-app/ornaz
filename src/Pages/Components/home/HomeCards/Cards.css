@@ -287,6 +287,9 @@
     .card-outer-container {
         padding-left: 4%;
     }
+    .cards-img-text-container{
+        width:100%
+    }
 }
 
 @media screen and (max-width:424px) {
@@ -301,6 +304,10 @@
     .cards-img-cat {
         height: 300.61px;
         width: 300.61px;
+    }
+
+    .cards-img-text-container{
+        width:100%
     }
 
     /* .img-container-catogery{
@@ -323,6 +330,12 @@
     .cards-img-celebs {
         width: 298.97px;
         height: 468.95px;
+    }
+    .cards-img-text-container{
+        width:100%
+    }
+    .cards-img-text-container{
+        width:100%
     }
 
 }
