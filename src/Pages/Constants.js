@@ -1,4 +1,4 @@
-export const CATEGORY = 'MY CATEGORY ABHISHEK AMRUT'
+export const CATEGORY = 'MY CATEGORY'
 export const FOR_HIM = 'FOR HIM'
 export const FOR_HER = 'FOR HER'
 export const ETERNITY_BANDS = 'Eternity Bands'

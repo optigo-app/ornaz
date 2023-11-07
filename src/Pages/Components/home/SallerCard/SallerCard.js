@@ -19,7 +19,7 @@ export default function SallerCard() {
 
   return (
     <>
-    <div
+    {/* <div
       style={{ height: "auto", marginTop:'80px' }}
     >
       <div className="card-outer-container" >
@@ -45,9 +45,9 @@ export default function SallerCard() {
           ))}
         </div>
       </div>
-    </div>
+    </div> */}
 
-     {/* <Cards sallerCardImg={demoJSON} cardTitle={'Shop Our Best Sellers'} type={'seller'}/>    */}
+     <Cards sallerCardImg={demoJSON} cardTitle={'Shop Our Best Sellers'} type={'seller'}/>   
     </>
   )
 }

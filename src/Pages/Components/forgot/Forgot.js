@@ -42,7 +42,6 @@ const Forgot = () => {
         <div className="forgot-container">
           <span className="title"> FORGOT YOUR PASSWORD?</span>
           <div className="sub-title">
-            {" "}
             Please let us know the email you have used to register or purchase
             at our store.
           </div>
@@ -51,8 +50,8 @@ const Forgot = () => {
             style={{ display: open ? "block" : "none" }}
           >
             <div style={{ padding: "12px 20px" }}>
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <span style={{marginRight:'276px'}}>{emailErr}</span><span onClick={() => setOpen(false)}>X</span>
+              <div style={{ display: "flex", justifyContent: "flex-end",width:'100%' }}>
+              <span style={{padding:'15px',width:'95%'}}>{emailErr}</span><span style={{width:'5%',display:'flex',justifyContent:'center',alignItems:'center'}} onClick={() => setOpen(false)}>X</span>
               </div>
               {/* <div
                 style={{
