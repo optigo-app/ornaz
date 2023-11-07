@@ -10,23 +10,15 @@ import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-
 const customTabStyle = {
   '&.Mui-selected': {
-    // Your custom styles for the selected tab
     border: '1px solid black',
     color: 'black',
     borderBottom: '1px solid #e0e0e0',
   },
 };
 
-function CustomTabPanel(props: TabPanelProps) {
+function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -47,7 +39,7 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 
-function a11yProps(index: number) {
+function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
@@ -66,7 +58,7 @@ export default function Account() {
   const [newPassword, setNewPassword] = useState('');
   const [shoNewPassword, setShowNewPassword] = useState(false);
 
-  const handleChange = (event, newValue: number) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const handlePasswordChange = (e) => {
@@ -93,7 +85,7 @@ export default function Account() {
         </div>
         <div className='accountMain'>
           <p className='title'>MY ACCOUNT</p>
-          <Box sx={{ width: '50%' }}>
+          <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                 <Tab label="RECENT ORDERS" {...a11yProps(0)} sx={customTabStyle} />

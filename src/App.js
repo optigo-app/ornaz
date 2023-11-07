@@ -27,6 +27,7 @@ import Certification from './Pages/Components/footer/WhyOrnaz/certification/Cert
 import Craftsmanship from './Pages/Components/footer/WhyOrnaz/craftsmanship/Craftsmanship';
 import Forgot from './Pages/Components/forgot/Forgot';
 import Payment from './Pages/Components/payment/Payment';
+import Account from './Pages/Components/account';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
         <Route path="/CartDetail" element={<CartDetail />} />
         <Route path="/CheckOutSummry" element={<CheckOutSummry />} />
         <Route path="/Payment" element={<Payment />} />
+        <Route path='/your-account' element={<Account/>}/>
       </Routes>
     </BrowserRouter>
   );
