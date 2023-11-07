@@ -1,6 +1,6 @@
 import React from 'react'
 import './appointment.css'
-import { APPOINMENT_DES, APPOINMENT_TITLE, BTN_APPOINMENT } from '../../../Constants'
+import { APPOINMENT_DES, APPOINMENT_TITLE, BTN_APPOINMENT } from '../../../../lib/consts/Strings'
 
 export default function AppoinmentSection() {
   return (

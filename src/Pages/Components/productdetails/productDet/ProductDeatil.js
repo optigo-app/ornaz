@@ -4,8 +4,8 @@ import Footer from '../../footer'
 import Header from '../../home/Header/Header'
 import ProductContact from '../productCont/ProductContact';
 import { useNavigate } from 'react-router-dom';
-import { BTN_BUYNOW, BTN_KWONMORE, CUSTOMIZE_PRODUCT, PRODUCT_DETAIL, SELECT_SIZE } from '../../../Constants';
-import MobileFooter from '../../MobileFooter';
+import MobileFooter from '../../mobileComp/mobileFooter/MobileFooter';
+import { BTN_BUYNOW, BTN_KWONMORE, CUSTOMIZE_PRODUCT, PRODUCT_DETAIL, SELECT_SIZE } from '../../../../lib/consts/Strings';
 
 export default function ProductDeatil() {
 

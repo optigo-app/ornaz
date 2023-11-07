@@ -191,3 +191,20 @@
     }
 
 }
+
+
+@media screen and (max-width: 1024px) {
+    
+    .filterMain {
+        width: 60%!important;
+    }
+
+}
+
+@media screen and (max-width: 1440px) {
+    
+    .filterMain {
+        width: 50%!important;
+    }
+
+}

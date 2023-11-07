@@ -46,7 +46,7 @@ export default function MobileFooter() {
                     backgroundColor: 'rgb(243, 243, 243)',
                     marginBottom: '20px'
                 }}>
-                    <p style={{textAlign : 'center' , fontSize : '25px' ,margin: '0px', fontWeight : 500}}>Sign Up for Newsletter</p>
+                    <p style={{ textAlign: 'center', fontSize: '25px', margin: '0px', fontWeight: 500 }}>Sign Up for Newsletter</p>
                     <div style={{
                         height: '70px',
                         margin: '20px'

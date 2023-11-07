@@ -1,4 +1,4 @@
-import React,{ useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Header.css'
 import cartImg from '../../../assets/other/cart.png'
@@ -7,18 +7,43 @@ import searchlogo from '../../../assets/other/search.svg'
 import ring from '../../../assets/other/ring.png'
 // import ring1 from '../../../assets/svg.svg'
 import Tooltip from '@mui/material/Tooltip';
-import { CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HER, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, LIFETIME_WARRANTY, LOGOUT, LOGOUT_MESSAGE, MONEY_BACK_GUARANTEE, YOUR_ACCOUNT } from "../../../Constants";
+import { SwipeableDrawer } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
+import ContactsIcon from '@mui/icons-material/Contacts';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import SearchIcon from '@mui/icons-material/Search';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import LockIcon from '@mui/icons-material/Lock';
+import { CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, LIFETIME_WARRANTY, LOGOUT_MESSAGE, MONEY_BACK_GUARANTEE } from "../../../../lib/consts/Strings";
 
 
-
-
-
-
-export default function Header() {
+export default function Header({ name }) {
   const navigation = useNavigate();
 
   const [isLogin, setIsLogin] = useState(true);
   const [showLogout, setShowLogout] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isOpenEngagementRing, setIsEngagementRing] = useState(false);
+  const [isOpenFineJewellaryGift, setFineJewellaryGift] = useState(false);
+  const [isOpenInr, setIsInr] = useState(false);
+
+  const openDrawer = () => {
+    setDrawerOpen(true);
+  };
+  const closeDrawer = () => {
+    setDrawerOpen(false);
+  };
+
+  const togglEngagementRing = () => {
+    setIsEngagementRing(!isOpenEngagementRing);
+  };
+  const toggleFineJewellaryGift = () => {
+    setFineJewellaryGift(!isOpenFineJewellaryGift);
+  };
+  const toggleInr = () => {
+    setIsInr(!isOpenInr);
+  };
 
   let demoJSON = [
     { currency: "$ AUD", title: 'Australian Dollar' },
@@ -54,50 +79,50 @@ export default function Header() {
     { currency: "ZK ZMK", title: 'Zambian Kwacha' },
   ]
 
-  let hermenuJSON =[{
-    menu1:{
-      'title':'SHOP RINGS BY SHAPE',
-      'menus':[
-        {label:'Round cut Rings'},
-        {label:'Princess Cut Rings'},
-        {label:'Cushion Cut Rings'},
-        {label:'Oval Cut Rings'},
-        {label:'Heart Cut Rings'},
-        {label:'pear Cut Rings'},
-        {label:'Emerald Cut Rings'},
+  let hermenuJSON = [{
+    menu1: {
+      'title': 'SHOP RINGS BY SHAPE',
+      'menus': [
+        { label: 'Round cut Rings' },
+        { label: 'Princess Cut Rings' },
+        { label: 'Cushion Cut Rings' },
+        { label: 'Oval Cut Rings' },
+        { label: 'Heart Cut Rings' },
+        { label: 'pear Cut Rings' },
+        { label: 'Emerald Cut Rings' },
       ]
     },
-    menu2:{
-      'title':'DESIGN YOUR OWN ENGAGEMENT RING',
-      'menus':[
-        {label:'Submit Your Own'},
+    menu2: {
+      'title': 'DESIGN YOUR OWN ENGAGEMENT RING',
+      'menus': [
+        { label: 'Submit Your Own' },
       ]
     },
-    menu3:{
-      'title':'ENGAGEMENT RINGS BY STYLES ',
-      'menus':[
-        {label:'Plain Solitaire'},
-        {label:'Vintage'},
-        {label:'Side-Stone'},
-        {label:'Three Stone'},
-        {label:'Cluster'},
-        {label:'Halo'},
-        {label:'Pave'},
+    menu3: {
+      'title': 'ENGAGEMENT RINGS BY STYLES ',
+      'menus': [
+        { label: 'Plain Solitaire' },
+        { label: 'Vintage' },
+        { label: 'Side-Stone' },
+        { label: 'Three Stone' },
+        { label: 'Cluster' },
+        { label: 'Halo' },
+        { label: 'Pave' },
       ]
     },
-    menu4:{
-      'title':'SHOPE BY METAL',
-      'menus':[
-        {label:'White Gold'},
-        {label:'Rose Gold'},
-       
+    menu4: {
+      'title': 'SHOPE BY METAL',
+      'menus': [
+        { label: 'White Gold' },
+        { label: 'Rose Gold' },
+
       ]
     },
   }]
 
 
   const ForHerMenu = useCallback(
-    (data,num) => (
+    (data, num) => (
       <>
         <font
           style={{ color: "black", fontSize: "14px" }}
@@ -105,7 +130,7 @@ export default function Header() {
         >
           {data[`menu${num}`].title}
         </font>
-        <div className={`label-container ${num===3? 'menu-3':''}`}>
+        <div className={`label-container ${num === 3 ? 'menu-3' : ''}`}>
           {data[`menu${num}`].menus.map((menudata) => (
             <font className="label-font">{menudata.label}</font>
           ))}
@@ -193,7 +218,6 @@ export default function Header() {
       </header>
 
       {/* middel header */}
-
       <header className="middel-header-container">
         <div className="middel-header">
           <div className="middel-header-level-1">
@@ -218,6 +242,7 @@ export default function Header() {
           </div>
         </div>
       </header>
+
       {/* bottom header */}
       <nav className="nav-bottom-header">
         <div className="nav-container">
@@ -236,7 +261,7 @@ export default function Header() {
                 <div className="for-her-container">
                   <div className="forher-inner-container">
                     {hermenuJSON.map((data) => (
-                      <div style={{display:'flex',flexDirection:'column',gap:'30px'}}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
                         <span className="drop-container">
                           {ForHerMenu(data, 1)}
                         </span>
@@ -247,21 +272,21 @@ export default function Header() {
                     ))}
                   </div>
                   <div className="vertical-forher-line"></div>
-                  <div className="forher-inner-container support" style={{paddingLeft:'26px'}}>
+                  <div className="forher-inner-container support" style={{ paddingLeft: '26px' }}>
                     {hermenuJSON.map((data) => (
                       <>
-                      <span className="drop-container">
-                        {ForHerMenu(data, 3)}
-                      </span>
-                      <span className="drop-container" style={{marginTop:'20px'}}>
-                        {ForHerMenu(data, 4)}
-                      </span>
+                        <span className="drop-container">
+                          {ForHerMenu(data, 3)}
+                        </span>
+                        <span className="drop-container" style={{ marginTop: '20px' }}>
+                          {ForHerMenu(data, 4)}
+                        </span>
                       </>
                     ))}
                   </div>
                   <div className="vertical-forher-line" style={{}}></div>
                   <div className="forher-inner-container" >
-                    <img src={ring} style={{width:'198px',height:'200px'}}/>
+                    <img src={ring} style={{ width: '198px', height: '200px' }} />
                   </div>
                 </div>
               </span>
@@ -293,6 +318,134 @@ export default function Header() {
         <button type="button" className="close" data-dismiss="alert" aria-hidden="true" onClick={() => setShowLogout(false)}>×</button>
         {LOGOUT_MESSAGE}
       </div>}
+
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        zIndex: '100'
+      }} className="mobileHeader">
+        {/* <button onClick={openDrawer}>Open Drawer</button> */}
+        <div style={{ display: 'flex', margin: '5px', alignItems: 'center' }}>
+          <MenuIcon
+            style={{ fontSize: '40px' }}
+            onClick={openDrawer}
+          />
+          {name ?
+            <p style={{ fontSize: '20px', fontWeight: 500 }}>{name}</p> :
+            <img alt="ORNAZ" src="https://d1idqhwk00c3jv.cloudfront.net/v55/assets/icons/new_logo.png" style={{ width: '120px', height: '30px' }} onClick={() => navigation('/')}/>
+          }
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', margin: '10px' }}>
+          <div style={{
+            width: '40px',
+          }} onClick={() => navigation('/MobileSearch')}>
+            <SearchIcon style={{ fontSize: '30px' }} />
+          </div>
+          <div style={{
+            width: '40px'
+          }} onClick={() => navigation('/WatchList')}>
+            <FavoriteBorderIcon style={{ fontSize: '26px' }} />
+          </div>
+          <div style={{
+            width: '40px'
+          }} onClick={() => navigation('/MobileCart')}>
+            <LockIcon style={{ fontSize: '25px' }} />
+          </div>
+        </div>
+
+      </div>
+
+      <div>
+        <SwipeableDrawer
+          anchor="left"
+          open={isDrawerOpen}
+          onClose={closeDrawer}
+          onOpen={() => { }}
+        >
+          <div className="drawer-content">
+            {/* <button onClick={closeDrawer}>Close Drawer</button> */}
+            <div style={{ width: '250px', display: 'flex', justifyContent: 'space-between', margin: '15px', alignItems: 'center' }}>
+              <img alt="ORNAZ" src="https://d1idqhwk00c3jv.cloudfront.net/v55/assets/icons/new_logo.png" style={{ width: '120px', height: '30px' }}
+                onClick={() => { navigation('/'); closeDrawer(); }}
+              />
+              <div onClick={() => navigation('/Profile')}>
+                <ContactsIcon />
+              </div>
+            </div>
+
+            <div className='headerDrawerTitle' onClick={togglEngagementRing}>
+              <p>Engagement Ring</p>
+              <p style={{ marginRight: '20px' }}>{isOpenEngagementRing ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
+            </div>
+            <ul className={`my-HeaderDrawer ${isOpenEngagementRing ? 'open' : ''}`} style={{ borderBottom: !isOpenEngagementRing ? '0.1px solid lightgray' : ' ' }}>
+              <li onClick={() => { navigation('/jewelleryPage'); closeDrawer(); }}>
+                <p className='sub-listt-title'>For Her</p>
+              </li>
+              <li onClick={() => { navigation('/jewelleryPage'); closeDrawer(); }}>
+                <p className='sub-listt-title'>For Him</p>
+              </li>
+              <li onClick={() => { navigation('/jewelleryPage'); closeDrawer(); }}>
+                <p className='sub-listt-title'>View All</p>
+              </li>
+            </ul>
+
+            <div className='headerDrawerTitle' onClick={toggleFineJewellaryGift}>
+              <p>Fine Jewellery Gifts</p>
+              <p style={{ marginRight: '20px' }}>{isOpenFineJewellaryGift ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
+            </div>
+            <ul className={`my-HeaderDrawer ${isOpenFineJewellaryGift ? 'open' : ''}`} style={{ borderBottom: !isOpenFineJewellaryGift ? '0.1px solid lightgray' : ' ' }}>
+              <li onClick={() => { navigation('/jewelleryPage'); closeDrawer(); }}>
+                <p className='sub-listt-title'>Earrings</p>
+              </li>
+              <li onClick={() => { navigation('/jewelleryPage'); closeDrawer(); }}>
+                <p className='sub-listt-title'>Necklaces</p>
+              </li>
+              <li onClick={() => { navigation('/jewelleryPage'); closeDrawer(); }}>
+                <p className='sub-listt-title'>Stackble Bands</p>
+              </li>
+            </ul>
+
+            <div className='headerDrawerTitle' style={{ borderBottom: '1px solid lightgray' }} onClick={() => { navigation('/jewelleryPage'); closeDrawer(); }}>
+              <p>Enternity Bands</p>
+            </div>
+
+            <div className='headerDrawerTitle' style={{ borderBottom: '1px solid lightgray' }}>
+              <p>Try At Home For Free</p>
+            </div>
+
+            <div className='headerDrawerTitle' onClick={toggleInr}>
+              <p>INR</p>
+              <p style={{ marginRight: '20px' }}>{isOpenInr ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
+            </div>
+            <ul className={`my-HeaderDrawer ${isOpenInr ? 'open' : ''}`} style={{ borderBottom: !isOpenInr ? '0.1px solid lightgray' : ' ' }}>
+              <li>
+                <p className='sub-listt-title'>For Her</p>
+              </li>
+              <li>
+                <p className='sub-listt-title'>For Him</p>
+              </li>
+              <li>
+                <p className='sub-listt-title'>View All</p>
+              </li>
+            </ul>
+
+            <div className='headerDrawerTitle' style={{ borderBottom: '1px solid lightgray' }}>
+              <p>Blog</p>
+            </div>
+
+            <div className='headerDrawerTitle' style={{ borderBottom: '1px solid lightgray' }}>
+              <p>Your Orders</p>
+            </div>
+
+            <div className='headerDrawerTitle' style={{ borderBottom: '1px solid lightgray' }} onClick={() => { navigation('/Contact'); closeDrawer(); }}>
+              <p>Contact Us</p>
+            </div>
+
+          </div>
+        </SwipeableDrawer>
+      </div>
     </>
   );
 }
