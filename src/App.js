@@ -64,8 +64,14 @@ function App() {
         <Route path="/ForgotPassworrd" element={<Forgot />} />
         <Route path="/CartDetail" element={<CartDetail />} />
         <Route path="/CheckOutSummry" element={<CheckOutSummry />} />
+        <Route path="/Account" element={<Account />} />
         <Route path="/Payment" element={<Payment />} />
-        
+        <Route path="/WatchList" element={<WatchList />} />
+        <Route path="/MobileSearch" element={<MobileSearch />} />
+        <Route path="/MobileCart" element={<MobileCart />} />
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/FAQ" element={<FAQ />} />
+
       </Routes>
     </BrowserRouter>
   );
