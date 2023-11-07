@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import './PersnolCheckOutForm.css'
 import Header from '../../home/Header/Header'
-import { ADD_NOTE_TO_ORDER, BTN_PLACEORDER, ORDER_REVIEW, SHIPPING_ADDRESS } from '../../../Constants'
 import { useNavigate } from 'react-router-dom'
+import { ADD_NOTE_TO_ORDER, BTN_PLACEORDER, ORDER_REVIEW, SHIPPING_ADDRESS } from '../../../../lib/consts/Strings';
 
 export default function PersnolCheckOutForm() {
 

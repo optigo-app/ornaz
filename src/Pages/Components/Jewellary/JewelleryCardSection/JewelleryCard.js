@@ -1,7 +1,8 @@
 import React from 'react'
 import './JewelleryCard.css'
 import { useNavigate } from 'react-router-dom'
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const allImages = [
   {
@@ -178,16 +179,22 @@ export default function JewelleryCard() {
         {
           allImages.map((data, index) =>
             <div className='images' onClick={() => navigation('/productDetails')}>
-              <img src={data.src} className="productImages" />
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <p style={{margin : 0}}>{data.name}</p>
-                <p style={{margin : 0}}>₹{data.Price}</p>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '25px', right: '15px' }}>
+                  <FavoriteBorderIcon />
+                </div>
+                <img src={data.src} className="productImages" />
+
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <p style={{margin : 0}}>{data.shape}</p>
-                <p style={{margin : 0, textDecoration : 'line-through' , color : 'red'}} >₹{data.oldPrice}</p>
+                <p style={{ margin: 0 }}>{data.name}</p>
+                <p style={{ margin: 0 }}>₹{data.Price}</p>
               </div>
-              <p style={{margin : 0}}>{data.productName}</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <p style={{ margin: 0 }}>{data.shape}</p>
+                <p style={{ margin: 0, textDecoration: 'line-through', color: 'red' }} >₹{data.oldPrice}</p>
+              </div>
+              <p style={{ margin: 0 }}>{data.productName}</p>
             </div>
           )
         }

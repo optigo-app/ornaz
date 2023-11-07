@@ -29,14 +29,14 @@
 }
 
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1441px) {
     .mobileFooterSection {
         display: none;
     }
 }
 
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1440px) {
 
     .webFooterSection {
         display: none;

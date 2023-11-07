@@ -13,7 +13,6 @@ import LifeTimeExchange from './Pages/Components/footer/Policies/LifeTimeExchang
 import TermsCondition from './Pages/Components/footer/Policies/TermsCondition';
 import DeliveryShipping from './Pages/Components/footer/Policies/DeliveryShipping';
 import AskedQuetion from './Pages/Components/footer/Policies/AskedQuetion';
-import Contact from './Pages/Components/footer/allaboutornaz/Contact';
 import PrivacyPolicy from './Pages/Components/footer/Policies/PrivacyPolicy';
 import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver';
 import BlogSection from './Pages/Components/footer/allaboutornaz/BlogSection';
@@ -27,6 +26,12 @@ import Certification from './Pages/Components/footer/WhyOrnaz/certification/Cert
 import Craftsmanship from './Pages/Components/footer/WhyOrnaz/craftsmanship/Craftsmanship';
 import Forgot from './Pages/Components/forgot/Forgot';
 import Payment from './Pages/Components/payment/Payment';
+import WatchList from './Pages/Components/mobileComp/wishList/WishList';
+import MobileSearch from './Pages/Components/mobileComp/mobileSearch/MobileSearch';
+import MobileCart from './Pages/Components/mobileComp/mobileCart/MobileCart';
+import Contact from './Pages/Components/footer/allaboutornaz/contactPage/Contact';
+import Profile from './Pages/Components/mobileComp/profile/Profile';
+import FAQ from './Pages/Components/mobileComp/FAQ/FAQ';
 
 function App() {
   return (
@@ -59,6 +64,11 @@ function App() {
         <Route path="/CartDetail" element={<CartDetail />} />
         <Route path="/CheckOutSummry" element={<CheckOutSummry />} />
         <Route path="/Payment" element={<Payment />} />
+        <Route path="/MobileCart" element={<MobileCart />} />
+        <Route path="/MobileSearch" element={<MobileSearch />} />
+        <Route path="/WatchList" element={<WatchList />} />
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/FAQ" element={<FAQ />} />
       </Routes>
     </BrowserRouter>
   );

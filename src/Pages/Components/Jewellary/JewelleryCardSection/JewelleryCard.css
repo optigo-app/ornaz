@@ -70,3 +70,19 @@
     }
 
 }
+
+@media screen and (max-width: 1024px) {
+    .main{
+        width: 100%!important;
+        padding: 0!important;
+    }
+
+    .images{
+        width: 40%!important;
+    }
+    .imagesData {
+        justify-content: center;
+    }
+    
+    
+}

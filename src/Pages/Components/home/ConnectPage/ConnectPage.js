@@ -40,7 +40,7 @@ export default function ConnectPage() {
         <img
           src={imagesAlternate()}
           className='connect-img'
-          style={{  width: "1560.47px", marginTop: "90px" }}
+          style={{  width: "1560.47px"}}
         />
       </div>
     </div>

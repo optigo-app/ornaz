@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './ShopByFilter.css'
-import { BTN_APPLY, BTN_CLEAREALL, SHOP_BY } from '../../../Constants'
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
@@ -9,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CloseIcon from '@mui/icons-material/Close';
+import { BTN_APPLY, BTN_CLEAREALL, SHOP_BY } from '../../../../lib/consts/Strings';
 const Collections = [
   {
     id: '0',

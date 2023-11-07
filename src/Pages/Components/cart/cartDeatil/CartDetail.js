@@ -3,9 +3,9 @@ import './CartDetail.css'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../home/Header/Header'
 import Footer from '../../footer'
-import { BTN_CHECKOUT_SECURELY, BTN_CONFIRM, BTN_REMOVE } from '../../../Constants'
 import CloseIcon from '@mui/icons-material/Close';
-import MobileFooter from '../../MobileFooter'
+import MobileFooter from '../../mobileComp/mobileFooter/MobileFooter'
+import { BTN_CHECKOUT_SECURELY, BTN_CONFIRM, BTN_REMOVE } from '../../../../lib/consts/Strings'
 
 const cartData = [
   {

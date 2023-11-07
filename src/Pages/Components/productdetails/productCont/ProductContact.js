@@ -1,6 +1,6 @@
 import React from 'react'
 import './ProductContact.css'
-import { BTN_SUBMIT, CONTACT_FORM, PLEASE_CALL } from '../../../Constants'
+import { BTN_SUBMIT, CONTACT_FORM, PLEASE_CALL } from '../../../../lib/consts/Strings'
 
 export default function ProductContact() {
   return (

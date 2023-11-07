@@ -80,7 +80,7 @@ export default function BannerPage() {
     {/* <div onClick={() => navigation('/jewelleryPage')}>
       <Cards sallerCardImg={bannersArr} cardTitle={''} type={'banner'}/>
     </div> */}
-    <div style={{}}>
+    <div style={{cursor : 'pointer'}}>
       <Carousel
        showArrows={false}
        infiniteLoop={true}
@@ -91,6 +91,7 @@ export default function BannerPage() {
        showIndicators={false}
        swipeable={true}
        emulateTouch={true}
+       onClickItem={() => navigation("/jewelleryPage")}
       >
       
         <img src={imagesAlternate(0)}  alt='banner Images...'/>

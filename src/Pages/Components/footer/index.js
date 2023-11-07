@@ -5,8 +5,8 @@ import Policies from './Policies'
 import WhyOrnaz from './WhyOrnaz'
 import './index.css'
 import { Form } from 'react-bootstrap'
-import { BTN_JOIN, SIGNUP_NEWSLETTER } from '../../Constants'
 import MobileFooter from './mobileFooter/MobileFooter'
+import { BTN_JOIN, SIGNUP_NEWSLETTER } from '../../../lib/consts/Strings'
 
 export default function Footer() {
   return (
