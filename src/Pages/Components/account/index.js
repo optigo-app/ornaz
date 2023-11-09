@@ -14,7 +14,6 @@ const customTabStyle = {
   '&.Mui-selected': {
     border: '1px solid black',
     color: 'black',
-    borderBottom: '1px solid #e0e0e0',
   },
 };
 
@@ -85,9 +84,9 @@ export default function Account() {
         </div>
         <div className='accountMain'>
           <p className='title'>MY ACCOUNT</p>
-          <Box sx={{ width: '100%' }}>
+          <Box className='tab-container'>
             <Box sx={{ borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tabs value={value} onChange={handleChange} variant="scrollable"  aria-label="basic tabs example">
                 <Tab label="RECENT ORDERS" {...a11yProps(0)} sx={customTabStyle} />
                 <Tab label="CHANGE PASSWORD" {...a11yProps(1)} sx={customTabStyle} />
                 <Tab label="ADDRESSES BOOK" {...a11yProps(2)} sx={customTabStyle} />
@@ -134,15 +133,18 @@ export default function Account() {
                 />
 
               </div>
-              <div>
+              <div style={{
+                  display:'flex',
+                  justifyContent:'center',
+                  }}>
                 <Button style={{
                   backgroundColor: '#1e83a9',
                   color: 'white',
                   marginTop: '50px',
-                  float: 'right',
-                  right: '100px',
                   height: '40px',
-                  width: '250px'
+                  width: '250px',
+                  display:'flex',
+                  
                 }}>CHANGE PASSWORD</Button>
               </div>
 

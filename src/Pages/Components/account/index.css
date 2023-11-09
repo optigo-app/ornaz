@@ -25,15 +25,32 @@
 
 .newPassword{
     height: 30px;
-    width: 80%;
+    width: 85%;
 
 }
 
 .oldPassword{
     height: 80px;
-    width: 80%;
+    width: 85%;
 
 }
 
-.changngebtn{
+.tab-container{
+    width:50%
+}
+
+@media screen and (max-width:768px) {
+    .tab-container{
+        width:95%
+    } 
+
+    .newPassword{
+        height: 30px;
+        width: 100%;
+    }
+    
+    .oldPassword{
+        height: 80px;
+        width: 100%;
+    }
 }
