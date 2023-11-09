@@ -15,6 +15,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LockIcon from '@mui/icons-material/Lock';
+import i1 from '../../../../lib/consts/Images'
+
 import { CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, LIFETIME_WARRANTY, LOGOUT_MESSAGE, MONEY_BACK_GUARANTEE } from "../../../../lib/consts/Strings";
 
 
@@ -27,6 +29,8 @@ export default function Header({ name }) {
   const [isOpenEngagementRing, setIsEngagementRing] = useState(false);
   const [isOpenFineJewellaryGift, setFineJewellaryGift] = useState(false);
   const [isOpenInr, setIsInr] = useState(false);
+
+  console.log('i1',i1);
 
   const openDrawer = () => {
     setDrawerOpen(true);
@@ -83,13 +87,13 @@ export default function Header({ name }) {
     menu1: {
       'title': 'SHOP RINGS BY SHAPE',
       'menus': [
-        { label: 'Round cut Rings' },
-        { label: 'Princess Cut Rings' },
-        { label: 'Cushion Cut Rings' },
-        { label: 'Oval Cut Rings' },
-        { label: 'Heart Cut Rings' },
-        { label: 'pear Cut Rings' },
-        { label: 'Emerald Cut Rings' },
+        { label: 'Round cut Rings',imgclass:i1[0] },
+        { label: 'Princess Cut Rings',imgclass:i1[1] },
+        { label: 'Cushion Cut Rings',imgclass:i1[2]},
+        { label: 'Oval Cut Rings',imgclass:i1[3]},
+        { label: 'Heart Cut Rings',imgclass:i1[4]},
+        { label: 'pear Cut Rings',imgclass:i1[5]},
+        { label: 'Emerald Cut Rings',imgclass:i1[6]},
       ]
     },
     menu2: {
@@ -132,7 +136,11 @@ export default function Header({ name }) {
         </font>
         <div className={`label-container ${num === 3 ? 'menu-3' : ''}`}>
           {data[`menu${num}`].menus.map((menudata) => (
-            <font className="label-font">{menudata.label}</font>
+            <div style={{display:'flex',alignItems:'center',gap:'5px'}}>
+              {num===1 && <span>{menudata.imgclass}</span>}
+              {num===2 && <FavoriteBorderIcon/>}{num===2 && '+'}{num===2 && <FavoriteBorderIcon/>}
+              <font className="label-font">{menudata.label}</font>
+            </div>
           ))}
         </div>
       </>
