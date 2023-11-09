@@ -6,7 +6,9 @@ export default function LifeTimeExchange() {
   return (
     <div>
       <Header />
-      <h1>LifeTimeExchangeSection</h1>
+      <div >
+
+      </div>
       <FooterSection />
     </div>
   )
