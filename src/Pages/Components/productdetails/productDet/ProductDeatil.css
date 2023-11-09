@@ -177,7 +177,7 @@
     padding: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.7s ease;
 }
 
 .my-list.open {
@@ -190,7 +190,7 @@
     padding: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.7s ease;
     margin: 5px;
 }
 

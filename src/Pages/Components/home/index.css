@@ -1,4 +1,4 @@
-.header + .sallercard {
+/* .header + .sallercard {
     position: relative;
 }
 
@@ -6,8 +6,16 @@
     width:375px;
 }
 
+
 @media screen and (max-width:375px) {
     .index-container{
         width:375px;
+    }
+} */
+
+
+@media screen and (min-width:769px) {
+    .JewelleryGiftsBannerPage{
+        display: none!important;
     }
 }

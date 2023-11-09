@@ -331,6 +331,21 @@ td:hover {
     max-height: 300px;
     margin-inline: 20px;
 }
+
+.INRitems{
+
+    height: 45px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    margin: 5px;
+}
+.INRname{
+    margin: 0;
+    align-self: center;
+}
+
 @media screen and (min-width:1441px) {
     .mobileHeader{
         display: none;

@@ -285,7 +285,7 @@ export default function ProductDeatil() {
 
       <div className='mobile'>
         <div className='mobilImageDetail'>
-          <div className='mobileImageDetailImage'>
+          <div className='mobileImageDetailImage' style={{marginTop : '55px'}}>
             <img src='https://d3d5st4bexye3p.cloudfront.net/__sized__/products/SRA1236/SRA1236-1-crop-c0-5__0-5-540x540-70.jpg' alt='...'
               style={{ width: '100%', objectFit: 'cover', zIndex: -1, position: 'relative' }} />
             <div>
