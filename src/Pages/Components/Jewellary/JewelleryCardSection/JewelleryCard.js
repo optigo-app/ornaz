@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './JewelleryCard.css'
 import { useNavigate } from 'react-router-dom'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -170,21 +170,26 @@ const allImages = [
 ]
 export default function JewelleryCard() {
 
+  const [faverite , setFaverite] = useState(false);
+
   const navigation = useNavigate();
 
+  const handleFaverite = () => {
+    setFaverite(!faverite)
+  }
   return (
     <div className='main'>
-
       <div className='imagesData'>
         {
           allImages.map((data, index) =>
-            <div className='images' onClick={() => navigation('/productDetails')}>
+            <div className='images'>
               <div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'relative', top: '25px', right: '15px' }}>
-                  <FavoriteBorderIcon />
+                <div className='faverite' style={{ display: 'flex',userSelect:'none', justifyContent: 'flex-end', position: 'relative', top: '35px', right: '0px' }} onClick={handleFaverite}>
+                  <FavoriteBorderIcon style={{ color: faverite ? 'red' : 'rgb(29, 170, 193)', height: '35px', width: '35px', padding: '4px', backgroundColor: 'white', borderRadius: '15px' }} />
                 </div>
-                <img src={data.src} className="productImages" />
-
+                <div onClick={() => navigation('/productDetails')}>
+                  <img src={data.src} className="productImages" />
+                </div>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <p style={{ margin: 0 }}>{data.name}</p>

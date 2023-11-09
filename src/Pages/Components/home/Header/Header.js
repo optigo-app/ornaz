@@ -202,12 +202,12 @@ export default function Header({ name }) {
                 <div className="currency-option">
                   <table className="drop-table">
                     {demoJSON.map((data) => (
-                     <Tooltip title={data.title} arrow placement="top" >
+                      <Tooltip title={data.title} arrow placement="top" >
                         <tr>
                           <td>{data.currency}</td>
                         </tr>
-                     </Tooltip>
-                   
+                      </Tooltip>
+
                     ))}
                   </table>
                 </div>
@@ -333,7 +333,7 @@ export default function Header({ name }) {
           />
           {name ?
             <p style={{ fontSize: '20px', fontWeight: 500 }}>{name}</p> :
-            <img alt="ORNAZ" src="https://d1idqhwk00c3jv.cloudfront.net/v55/assets/icons/new_logo.png" style={{ width: '120px', height: '30px' }} onClick={() => navigation('/')}/>
+            <img alt="ORNAZ" src="https://d1idqhwk00c3jv.cloudfront.net/v55/assets/icons/new_logo.png" style={{ width: '120px', height: '30px' }} onClick={() => navigation('/')} />
           }
         </div>
 
@@ -419,16 +419,24 @@ export default function Header({ name }) {
               <p>INR</p>
               <p style={{ marginRight: '20px' }}>{isOpenInr ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
             </div>
-            <ul className={`my-HeaderDrawer ${isOpenInr ? 'open' : ''}`} style={{ borderBottom: !isOpenInr ? '0.1px solid lightgray' : ' ' }}>
-              <li>
-                <p className='sub-listt-title'>For Her</p>
-              </li>
-              <li>
-                <p className='sub-listt-title'>For Him</p>
-              </li>
-              <li>
-                <p className='sub-listt-title'>View All</p>
-              </li>
+            <ul className={`my-HeaderDrawer ${isOpenInr ? 'open' : ''}`} style={{ borderBottom: !isOpenInr ? '0.1px solid lightgray' : ' ', overflow: 'scroll' }}>
+              <div style={{ display: 'flex', width: '240px', flexWrap: 'wrap' }}>
+                <div className="INRitems">
+                  <p className="INRname">AUD</p>
+                </div>
+                <div className="INRitems">
+                  <p className="INRname">AUD</p>
+                </div>
+                <div className="INRitems">
+                  <p className="INRname">AUD</p>
+                </div>
+                <div className="INRitems">
+                  <p className="INRname">AUD</p>
+                </div>
+                <div className="INRitems">
+                  <p className="INRname">AUD</p>
+                </div>
+              </div>
             </ul>
 
             <div className='headerDrawerTitle' style={{ borderBottom: '1px solid lightgray' }}>
@@ -441,6 +449,25 @@ export default function Header({ name }) {
 
             <div className='headerDrawerTitle' style={{ borderBottom: '1px solid lightgray' }} onClick={() => { navigation('/Contact'); closeDrawer(); }}>
               <p>Contact Us</p>
+            </div>
+
+            <div style={{ display: 'flex', marginTop: '50px' }}>
+              <button style={{
+                border: '1px solid #45d4d5',
+                height: '50px',
+                backgroundColor: 'white',
+                fontSize: '22px',
+                fontWeight: 500,
+                marginInline: '20px'
+
+              }} onClick={() => navigation('/LoginPage')}>SIGN IN</button>
+              <button style={{
+                border: '0px',
+                height: '50px',
+                backgroundColor: '#45d4d5',
+                fontSize: '22px',
+                fontWeight: 500
+              }} onClick={() => navigation('/RegisterPage')}>SIGN UP</button>
             </div>
 
           </div>

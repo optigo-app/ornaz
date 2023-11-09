@@ -220,7 +220,7 @@ export default function CartDetail() {
         <Header />
         <div className='mobileMainCart'>
           <div className='mobileCardDetails'>
-            <div style={{width : '100%'}}>
+            <div style={{width : '100%' , marginTop : '55px'}}>
               {
                 cartData.map((data, index) =>
                   <div className='mobilSubCart' >

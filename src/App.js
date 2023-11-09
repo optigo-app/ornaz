@@ -5,15 +5,14 @@ import LoginPage from './Pages/Components/login/Login';
 import Register from './Pages/Components/register/Register';
 import Jewellary from './Pages/Components/Jewellary';
 import DisplayTechnology from './Pages/Components/footer/experience/DisplayTechnology';
-import BookAppoinment from './Pages/Components/footer/experience/BookAppoinment';
-import FreeEngraving from './Pages/Components/footer/experience/FreeEngraving';
+import BookAppoinment from './Pages/Components/footer/experience/bookAppoiment/BookAppoinment';
+import FreeEngraving from './Pages/Components/footer/experience/freeEngraving/FreeEngraving';
 import GiaAssistance from './Pages/Components/footer/WhyOrnaz/GiaAssistance';
 import QualityValue from './Pages/Components/footer/WhyOrnaz/qualityval/QualityValue';
-import LifeTimeExchange from './Pages/Components/footer/Policies/LifeTimeExchange';
-import TermsCondition from './Pages/Components/footer/Policies/TermsCondition';
-import DeliveryShipping from './Pages/Components/footer/Policies/DeliveryShipping';
+import TermsCondition from './Pages/Components/footer/Policies/termsEndCondi/TermsCondition';
+import DeliveryShipping from './Pages/Components/footer/Policies/deliveryShiping/DeliveryShipping';
 import AskedQuetion from './Pages/Components/footer/Policies/AskedQuetion';
-import PrivacyPolicy from './Pages/Components/footer/Policies/PrivacyPolicy';
+import PrivacyPolicy from './Pages/Components/footer/Policies/PrivacyPolicy/PrivacyPolicy';
 import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver';
 import BlogSection from './Pages/Components/footer/allaboutornaz/BlogSection';
 import About from './Pages/Components/footer/allaboutornaz/About';
@@ -33,6 +32,7 @@ import MobileCart from './Pages/Components/mobileComp/mobileCart/MobileCart';
 import Contact from './Pages/Components/footer/allaboutornaz/contactPage/Contact';
 import Profile from './Pages/Components/mobileComp/profile/Profile';
 import FAQ from './Pages/Components/mobileComp/FAQ/FAQ';
+import LifeTimeExchange from './Pages/Components/footer/Policies/lifeTimeExch/LifeTimeExchange';
 
 function App() {
   return (

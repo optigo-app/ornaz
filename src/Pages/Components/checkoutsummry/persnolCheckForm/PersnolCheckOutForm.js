@@ -337,7 +337,8 @@ export default function PersnolCheckOutForm() {
               height: '50px',
               width: '250px',
               border: 'none',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              marginTop: '20px'
             }} onClick={handlePlaceOrder}>{BTN_PLACEORDER}</button>
           </div>
         </div>

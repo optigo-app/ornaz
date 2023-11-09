@@ -16,3 +16,11 @@
     margin-right: auto;
     height: 600px;
   }
+
+
+  @media screen and (max-width:1440px) {
+    .bannerMain{
+        margin-top: 55px!important;
+    }
+}
+ 
