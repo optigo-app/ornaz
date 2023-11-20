@@ -17,7 +17,6 @@
     cursor: pointer;
     margin: 40px;
 }
-
 #close-mobile-menu {
     position: absolute;
     right: 20px;
@@ -30,7 +29,7 @@
     position: absolute;
     right: 50px;
     display: flex;
-    height: 100px;
+    top:42px
 }
 .header-social a {
     color: #000;
