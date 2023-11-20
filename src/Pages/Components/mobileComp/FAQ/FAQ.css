@@ -20,6 +20,7 @@
 }
 
 .my-FAQ.open {
-    max-height: 600px;
+    max-height: 800px;
     margin-inline: 25px;
+    margin-top: 0px;
 }

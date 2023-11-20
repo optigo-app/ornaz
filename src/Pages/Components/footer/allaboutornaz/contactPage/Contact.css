@@ -44,8 +44,21 @@
 }
 
 
+.inputFiled{
+    width: 320px;
+    height: 30px;
+}
+.inputFiledLabel{
+}
 @media screen and (min-width:1441px) {
     .mobileContact{
         display: none;
     }
+}
+
+@media screen and (max-width:1440px) {
+    .webContact {
+        display: none;
+    }
+
 }
