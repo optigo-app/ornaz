@@ -13,10 +13,10 @@ import TermsCondition from './Pages/Components/footer/Policies/termsEndCondi/Ter
 import DeliveryShipping from './Pages/Components/footer/Policies/deliveryShiping/DeliveryShipping';
 import AskedQuetion from './Pages/Components/footer/Policies/AskedQuetion';
 import PrivacyPolicy from './Pages/Components/footer/Policies/PrivacyPolicy/PrivacyPolicy';
-import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver';
+import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver/CelebTakeOver';
 import BlogSection from './Pages/Components/footer/allaboutornaz/BlogSection';
 import About from './Pages/Components/footer/allaboutornaz/About';
-import Friend from './Pages/Components/footer/allaboutornaz/Friend';
+import Friend from './Pages/Components/footer/allaboutornaz/ReferFriends/Friend';
 import ProductDeatil from './Pages/Components/productdetails/productDet/ProductDeatil';
 import CartDetail from './Pages/Components/cart/cartDeatil/CartDetail';
 import CheckOutSummry from './Pages/Components/checkoutsummry';

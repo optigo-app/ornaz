@@ -66,7 +66,6 @@ export default function Contact() {
     <div>
       <Header />
       <div className='webContact'>
-
         <h1>ContactPage</h1>
       </div>
 
