@@ -11,11 +11,10 @@ import GiaAssistance from './Pages/Components/footer/WhyOrnaz/GiaAssistance';
 import QualityValue from './Pages/Components/footer/WhyOrnaz/qualityval/QualityValue';
 import TermsCondition from './Pages/Components/footer/Policies/termsEndCondi/TermsCondition';
 import DeliveryShipping from './Pages/Components/footer/Policies/deliveryShiping/DeliveryShipping';
-import AskedQuetion from './Pages/Components/footer/Policies/AskedQuetion';
 import PrivacyPolicy from './Pages/Components/footer/Policies/PrivacyPolicy/PrivacyPolicy';
 import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver';
 import BlogSection from './Pages/Components/footer/allaboutornaz/BlogSection';
-import About from './Pages/Components/footer/allaboutornaz/About';
+import About from './Pages/Components/footer/allaboutornaz/about/About';
 import Friend from './Pages/Components/footer/allaboutornaz/Friend';
 import ProductDeatil from './Pages/Components/productdetails/productDet/ProductDeatil';
 import CartDetail from './Pages/Components/cart/cartDeatil/CartDetail';
@@ -33,6 +32,7 @@ import Contact from './Pages/Components/footer/allaboutornaz/contactPage/Contact
 import Profile from './Pages/Components/mobileComp/profile/Profile';
 import FAQ from './Pages/Components/mobileComp/FAQ/FAQ';
 import LifeTimeExchange from './Pages/Components/footer/Policies/lifeTimeExch/LifeTimeExchange';
+import AskedQuetion from './Pages/Components/footer/Policies/askedQuetion/AskedQuetion';
 
 function App() {
   return (

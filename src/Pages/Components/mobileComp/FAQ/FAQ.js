@@ -88,11 +88,11 @@ export default function FAQ() {
                     <p style={{ fontSize: '24px', fontWeight: 600 }}>Frequently Asked Quetions</p>
                 </div>
                 <div>
-                    <div className='frequentlyTitle' onClick={toggleGeneralList}>
+                    <div className='frequentlyTitle' onClick={toggleGeneralList} style={{marginBlock : !isOpenGeneral && '10px'}}>
                         <p>General</p>
                         <p style={{ marginRight: '20px' }}>{isOpenGeneral ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                     </div>
-                    <div>
+                    <div style={{display : !isOpenGeneral && 'none'}}>
                         <ul className={`my-FAQ ${isOpenGeneral ? 'open' : ''}`}>
                             <li>
                                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -158,11 +158,11 @@ export default function FAQ() {
                         </ul>
                     </div>
 
-                    <div className='frequentlyTitle' onClick={toggleOSRList}>
+                    <div className='frequentlyTitle' onClick={toggleOSRList} style={{marginBlock : !isOpenOSR && '10px'}}>
                         <p>Order, Shiping & Returns</p>
                         <p style={{ marginRight: '20px' }}>{isOpenOSR ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                     </div>
-                    <div>
+                    <div style={{display : !isOpenOSR && 'none'}}>
                         <ul className={`my-FAQ ${isOpenOSR ? 'open' : ''}`}>
                             <li>
                                 <Accordion expanded={expanded === 'panel15'} onChange={handleChange('panel15')}>
@@ -335,11 +335,11 @@ export default function FAQ() {
                         </ul>
                     </div>
 
-                    <div className='frequentlyTitle' onClick={togglePaymentsList}>
+                    <div className='frequentlyTitle' onClick={togglePaymentsList} style={{marginBlock : !isOpenPayments && '10px'}}>
                         <p>Payments</p>
                         <p style={{ marginRight: '20px' }}>{isOpenPayments ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                     </div>
-                    <div>
+                    <div style={{display : !isOpenPayments && 'none'}}>
                         <ul className={`my-FAQ ${isOpenPayments ? 'open' : ''}`}>
                             <li>
                                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -370,11 +370,11 @@ export default function FAQ() {
                         </ul>
                     </div>
 
-                    <div className='frequentlyTitle' onClick={toggleAfterServicesList}>
+                    <div className='frequentlyTitle' onClick={toggleAfterServicesList} style={{marginBlock : !isOpenAfterServices && '10px'}}>
                         <p>After services</p>
                         <p style={{ marginRight: '20px' }}>{isOpenAfterServices ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                     </div>
-                    <div>
+                    <div style={{display : !isOpenAfterServices && 'none'}}>
                         <ul className={`my-FAQ ${isOpenAfterServices ? 'open' : ''}`}>
                             <li>
                                 <Accordion expanded={expanded === 'panel14'} onChange={handleChange('panel14')}>
@@ -393,11 +393,11 @@ export default function FAQ() {
                         </ul>
                     </div>
 
-                    <div className='frequentlyTitle' onClick={toggleAllAboutDaimondsList}>
-                        <p>All About Daimonds</p>
+                    <div className='frequentlyTitle' onClick={toggleAllAboutDaimondsList} style={{marginBlock : !isOpenAllAboutDaimonds && '10px'}}>
+                        <p>All About Daimonds</p>   
                         <p style={{ marginRight: '20px' }}>{isOpenAllAboutDaimonds ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                     </div>
-                    <div>
+                    <div style={{display : !isOpenAllAboutDaimonds && 'none'}}>
                         <ul className={`my-FAQ ${isOpenAllAboutDaimonds ? 'open' : ''}`}>
 
                             <li>

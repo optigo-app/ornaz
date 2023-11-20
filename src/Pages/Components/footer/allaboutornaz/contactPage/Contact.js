@@ -56,18 +56,94 @@ export default function Contact() {
       }
     }
 
-
-
-
-
-
   }
   return (
     <div>
       <Header />
       <div className='webContact'>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          paddingBottom: '50px',
+          marginTop: '30px'
+        }}>
+          <div style={{
+            display: 'flex',
 
-        <h1>ContactPage</h1>
+          }}>
+
+            <div style={{ width: '550px', borderRight: '2px solid lightgray' }}>
+              <div style={{ marginRight: '20px' }}>
+                <div style={{ borderBottom: '1px solid rgba(0,0,0,.1)' }}>
+                  <p style={{ fontSize: '22px', marginBottom: '10px' }}>CONTACT US</p>
+                </div>
+                <p style={{ fontWeight: 500, margin: '20px 0px 0px 0px', fontSize: '13px' }}>Customer Care</p>
+                <p style={{ margin: '5px 0px 0px 0px' }}>Call us at 18002120299(11:00 AM-8:00 PM, 7 days a week)</p>
+                <p style={{ margin: '10px 0px 0px 0px' }}>or</p>
+                <p style={{ margin: '10px 0px 0px 0px' }}>Write to us at contactus@ornaz.com</p>
+                <p style={{ fontWeight: 500, margin: '20px 0px 0px 0px', fontSize: '13px' }}>Contact Us</p>
+                <p style={{ margin: '4px 0px 0px 0px' }}>For all Contact Us and bulk enquiries or sales associations please write to us at care@ornaz.com</p>
+                <p style={{ fontWeight: 500, margin: '20px 0px 0px 0px', fontSize: '13px' }}>Office Address</p>
+                <p style={{ margin: '2px 0px 0px 0px' }}>
+                  Ornaz Jewellery Pvt. Ltd.<br />
+                  A-26/5, 2nd floor, DLF city phase-1,  sector-28<br />
+                  Near DLF Mega Mall, Golf Course Road <br />
+                  Gurgaon, Haryana 122002<br />
+                  India
+                </p>
+              </div>
+            </div>
+
+            <div style={{
+              width: '600px',
+              marginInline: '15px'
+            }}>
+              <div style={{ borderBottom: '1px solid rgba(0,0,0,.1)' }}>
+                <p style={{ fontSize: '22px', textAlign: 'center', marginBottom: '10px' }}>NEED HELP?</p>
+              </div>
+
+              <div style={{ paddingInline: '100px' }}>
+                <p style={{ textAlign: 'center' }}>Please call us at 18002120299</p>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}>
+                  <label for="name" className="inputFiledLabel"><em>*</em>Name</label>
+                  <input name="name" id="name" title="Name" value="" className="inputFiled" type="text" />
+                </div>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginTop: '15px'
+                }}>
+                  <label for="name" className="inputFiledLabel"><em>*</em>Mobile</label>
+                  <input name="name" id="name" title="Name" value="" className="inputFiled" type="text" />
+                </div>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginTop: '15px'
+
+                }}>
+                  <label for="name" className="inputFiledLabel"><em>*</em>Email</label>
+                  <input name="name" id="name" title="Name" value="" className="inputFiled" type="text" />
+                </div>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  marginTop: '15px'
+
+                }}>
+                  <label for="name" className="inputFiledLabel"><em>*</em>Comment</label>
+                  <textarea name="name" id="name" title="Name" value="" className="inputFiled" type="text" />
+                </div>
+                <p style={{ margin: '0px' }}>* Required Fields</p>
+                <button style={{ marginTop: '20px', height: '25px', width: '80px' }}>Submit</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className='mobileContact'>
@@ -134,7 +210,7 @@ export default function Contact() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => {handleClose(); navigation('/');}}>Go Back</Button>
+            <Button onClick={() => { handleClose(); navigation('/'); }}>Go Back</Button>
           </DialogActions>
         </Dialog>
       </div>
