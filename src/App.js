@@ -12,7 +12,7 @@ import QualityValue from './Pages/Components/footer/WhyOrnaz/qualityval/QualityV
 import TermsCondition from './Pages/Components/footer/Policies/termsEndCondi/TermsCondition';
 import DeliveryShipping from './Pages/Components/footer/Policies/deliveryShiping/DeliveryShipping';
 import PrivacyPolicy from './Pages/Components/footer/Policies/PrivacyPolicy/PrivacyPolicy';
-import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver';
+import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver/CelebTakeOver';
 import BlogSection from './Pages/Components/footer/allaboutornaz/BlogSection';
 import About from './Pages/Components/footer/allaboutornaz/about/About';
 import Friend from './Pages/Components/footer/allaboutornaz/Friend';
