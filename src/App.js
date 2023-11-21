@@ -33,6 +33,7 @@ import Profile from './Pages/Components/mobileComp/profile/Profile';
 import FAQ from './Pages/Components/mobileComp/FAQ/FAQ';
 import LifeTimeExchange from './Pages/Components/footer/Policies/lifeTimeExch/LifeTimeExchange';
 import AskedQuetion from './Pages/Components/footer/Policies/askedQuetion/AskedQuetion';
+import ArticleDetailPage from './Pages/Components/footer/allaboutornaz/BlogSection/articleDetail/ArticleDetailPage';
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
         <Route path="/MobileCart" element={<MobileCart />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/FAQ" element={<FAQ />} />
+        <Route path="/ArticleDetailPage" element={<ArticleDetailPage />} />
 
       </Routes>
     </BrowserRouter>
