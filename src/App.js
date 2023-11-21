@@ -15,7 +15,7 @@ import PrivacyPolicy from './Pages/Components/footer/Policies/PrivacyPolicy/Priv
 import CelebTakeOver from './Pages/Components/footer/allaboutornaz/CelebTakeOver/CelebTakeOver';
 import BlogSection from './Pages/Components/footer/allaboutornaz/BlogSection';
 import About from './Pages/Components/footer/allaboutornaz/about/About';
-import Friend from './Pages/Components/footer/allaboutornaz/Friend';
+import Friend from './Pages/Components/footer/allaboutornaz/ReferFriends/Friend';
 import ProductDeatil from './Pages/Components/productdetails/productDet/ProductDeatil';
 import CartDetail from './Pages/Components/cart/cartDeatil/CartDetail';
 import CheckOutSummry from './Pages/Components/checkoutsummry';

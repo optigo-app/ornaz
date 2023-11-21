@@ -1,12 +1,13 @@
 import React from 'react'
 import Header from '../../../home/Header/Header'
-import Footer from '../..'
 import BlogHeader from './header/BlogHeader'
+import Footer from './blogFooter/Footer'
 
 export default function BlogSection() {
   return (
     <div>
         <BlogHeader />
+        <Footer />  
     </div>
   )
 }

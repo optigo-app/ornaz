@@ -1,0 +1,14 @@
+
+
+
+.articleDeatilMain{
+    display: flex;
+}
+.articleDetail{
+    width: 1000px;
+    border: 1px solid;
+}
+.articleSidePart{
+    width: 400px;
+    border: 1px solid;
+}

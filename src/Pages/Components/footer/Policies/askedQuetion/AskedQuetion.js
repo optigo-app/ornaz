@@ -50,7 +50,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function AskedQuetion() {
 
   const [isOpenGeneral, setIsGeneral] = useState(false);
-  const [expanded, setExpanded] = useState('panel1');
+  const [expanded, setExpanded] = useState('');
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
