@@ -8,6 +8,8 @@ export default function BlogSection() {
   return (
     <div>
         <BlogHeader />
+        <Blog />
+        <Footer />
     </div>
   )
 }

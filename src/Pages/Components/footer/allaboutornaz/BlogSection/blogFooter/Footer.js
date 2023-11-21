@@ -18,7 +18,7 @@ export default function Footer() {
       </div>
       <div style={{display: 'flex',padding:'30px',  justifyContent : 'space-between',alignItems : 'center', backgroundColor: '#010101' }}>
         <div>
-          <p style={{color : '#888888',fontSize : '12px'}}>(C) 2020 - ORNAZ. All Rights Reserved.</p>
+          <p style={{color : '#888888',fontSize : '12px',margin : '0px'}}>(C) 2020 - ORNAZ. All Rights Reserved.</p>
         </div>
         <div  className="white-icon">
           <FaFacebookF style={{height : '25px', width : '25px', marginInline :'7px'}}/>
