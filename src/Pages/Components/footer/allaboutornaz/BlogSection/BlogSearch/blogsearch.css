@@ -1,0 +1,41 @@
+.recent-post
+{
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #ffffff;
+    background-color: #202020;
+    font-family: Montserrat,serif;
+    font-weight: 500;
+    padding:15px 0px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.recent-post-text{
+    font-size: 14px;
+    font-family: Montserrat,serif;
+    width:300px;
+}
+
+.icon-div{
+    float: none;
+    font-size: 16px;
+    margin: 0 3px 8px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 100%;
+    border: 1px solid #ddd;
+    width: 36px;
+    height: 36px;
+    line-height: 29px;
+    display: inline-block;
+}
+
+.icon-div:hover{
+    background: #f5f5f5;
+    transition: background-color 120ms linear;
+    text-decoration: none;
+}

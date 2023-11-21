@@ -6,7 +6,8 @@ import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { Divider } from "@mui/material";
-import Carousel from "react-bootstrap/Carousel";
+import { GrMenu } from "react-icons/gr";
+
 
 export default function BlogHeader() {
   const handleClose = () => setOpenDrawer(false);
@@ -25,7 +26,8 @@ export default function BlogHeader() {
         }}
       >
         <div>
-          <button className="menu-toggle" onClick={handleShow}></button>
+          {/* <button className="menu-toggle" onClick={handleShow}></button> */}
+          <GrMenu onClick={handleShow} style={{margin:'50px',fontSize:'25px'}} />
         </div>
         <div>
           <img
