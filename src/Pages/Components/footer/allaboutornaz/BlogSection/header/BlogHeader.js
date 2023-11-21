@@ -6,6 +6,7 @@ import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { Divider } from "@mui/material";
+import { GrMenu } from "react-icons/gr";
 import { IoMdClose } from "react-icons/io";
 
 export default function BlogHeader() {
@@ -29,7 +30,8 @@ export default function BlogHeader() {
         }}
       >
         <div>
-          <button className="menu-toggle" onClick={handleShow}></button>
+          {/* <button className="menu-toggle" onClick={handleShow}></button> */}
+          <GrMenu onClick={handleShow} style={{margin:'50px',fontSize:'25px'}} />
         </div>
         <div>
           <img
