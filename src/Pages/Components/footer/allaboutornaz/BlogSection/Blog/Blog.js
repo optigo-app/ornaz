@@ -10,20 +10,23 @@ import { TfiArrowCircleRight } from "react-icons/tfi";
 import ArticalCards from '../articalCards/ArticalCards';
 import { Divider } from '@mui/material'
 import BlogSearch from '../BlogSearch/BlogSearch';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Blog() {
 
-  const [divFlag,setDivFlag] = useState(false);
+  const [divFlag, setDivFlag] = useState(false);
+  const navigation = useNavigate();
 
 
   return (
-    <div style={{ display: "flex", justifyContent: "center",flexDirection:'column',alignItems:'center'}}>
+    <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column', alignItems: 'center' }}>
       <div
-        style={{ marginTop: "60px", height: "600px", width: "1140px" }}
+        style={{ marginTop: "60px", height: "600px", width: "1140px", cursor: 'pointer' }}
         id="carousels-div"
         onMouseEnter={() => setDivFlag(true)}
         onMouseLeave={() => setDivFlag(false)}
+        onClick={() => navigation('/ArticleDetailPage')}
       >
         <Carousel
           fade
@@ -95,42 +98,42 @@ export default function Blog() {
           </Carousel.Item>
         </Carousel>
       </div>
-      <div style={{width:'1140px'}}>
-    <div style={{display:'flex',width:'100%',gap:'43px'}}>
-      <div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent:"flex-start",
-          margin: "31px 0px",
-          gap:'40px'
+      <div style={{ width: '1140px' }}>
+        <div style={{ display: 'flex', width: '100%', gap: '43px' }}>
+          <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                margin: "31px 0px",
+                gap: '40px'
 
-        }}
-      >
-        <Divider orientation="horizontal" style={{ background: "gray",width:'250px'}} />
-        <p style={{fontSize:'20px',fontFamily:'Montserrat,sans-serif',fontWeight:500,marginTop:'12px',letterSpacing:'2px'}}>LATEST ARTICLES</p>
-        <Divider orientation="horizontal" style={{ background: "gray", width:'250px' }} />
+              }}
+            >
+              <Divider orientation="horizontal" style={{ background: "gray", width: '250px' }} />
+              <p style={{ fontSize: '20px', fontFamily: 'Montserrat,sans-serif', fontWeight: 500, marginTop: '12px', letterSpacing: '2px' }}>LATEST ARTICLES</p>
+              <Divider orientation="horizontal" style={{ background: "gray", width: '250px' }} />
+            </div>
+            <div style={{ width: '800px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+            </div>
+          </div>
+          <div >
+            <BlogSearch />
+          </div>
+        </div>
       </div>
-      <div style={{width:'800px',display:'flex',flexWrap:'wrap',justifyContent:'space-between'}}>
-        <ArticalCards/>
-        <ArticalCards/>
-        <ArticalCards/>
-        <ArticalCards/>
-        <ArticalCards/>
-        <ArticalCards/>
-        <ArticalCards/>
-        <ArticalCards/>
-        <ArticalCards/>
-        <ArticalCards/>
-      </div>
-      </div>
-      <div >
-        <BlogSearch/>
-      </div>
-    </div>
-    </div>
     </div>
   );
 }
