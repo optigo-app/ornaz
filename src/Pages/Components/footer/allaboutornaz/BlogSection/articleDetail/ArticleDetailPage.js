@@ -4,6 +4,7 @@ import { FaFacebookF, FaTwitter, FaPinterest, FaLinkedinIn, FaRegEnvelope } from
 import Footer from '../blogFooter/Footer'
 import { Divider } from '@mui/material'
 import BlogHeader from '../header/BlogHeader'
+import BlogSearch from '../BlogSearch/BlogSearch'
 
 export default function ArticleDetailPage() {
   return (
@@ -197,7 +198,7 @@ export default function ArticleDetailPage() {
 
         </div>
         <div className='articleSidePart'>
-
+            <BlogSearch />
         </div>
       </div>
       <Footer />
