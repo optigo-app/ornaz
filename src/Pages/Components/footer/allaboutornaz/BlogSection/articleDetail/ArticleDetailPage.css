@@ -6,14 +6,14 @@
 .articleDetail {
     width: 750px;
     /* border: 1px solid; */
-    margin-top: 100px;
+    margin-top: 20px;
 
 }
 
 .articleSidePart {
-    width: 400px;
+    width: 340px;
     /* border: 1px solid; */
-    margin-top: 50px;
+    margin-top: -30px;
     padding: 20px;
     margin-left: 20px;
 }
@@ -88,6 +88,13 @@
 .leaveInputBox::placeholder {
     padding-inline: 10px;
   }
+
+  .articaleTop-img{
+    height: 650px;
+    width:1140px; 
+    object-fit:cover;
+    margin-top: 100px;
+}
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./BlogHeader.css";
 import Drawer from "@mui/material/Drawer";
 import { FaFacebookF } from "react-icons/fa";
@@ -9,6 +9,8 @@ import { Divider } from "@mui/material";
 import { GrMenu } from "react-icons/gr";
 import { IoMdClose } from "react-icons/io";
 import bloglogo from '../../../../../assets/other/blog-logo.png'
+import { IoClose } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogHeader() {
   const handleClose = () => setOpenDrawer(false);
@@ -28,9 +30,57 @@ export default function BlogHeader() {
       document.getElementById("top-misc").style.top="30px"
     }
   }
+  const [searchValue, setSearchValue] = useState(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const navigation = useNavigate();
+  const inputRef = useRef(null);
 
+
+  const timer = setTimeout(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, 100); // Delay focusing for 100 milliseconds
+
+  const toggleOverlay = () => {
+    clearTimeout(timer)
+    console.log(inputRef.current);
+
+    if (inputRef.current !== null) {
+      inputRef.current.focus();
+    }
+    setShowOverlay(!showOverlay);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleEnterKeyPressed();
+    }
+  };
+
+  const handleEnterKeyPressed = () => {
+    navigation('/SearchResult',{
+      state : {
+        search : searchValue
+      }
+    })
+  };
   return (
-    <div>
+    <div >
+      {showOverlay && (
+        <>
+          <div className="overlay" onClick={toggleOverlay}>
+            <div className="searchClose">
+              <IoClose style={{ height: '50px', width: '50px' }} />
+            </div>
+            {/* <div id="text">Overlay Text</div> */}
+            <input spellcheck="false" id="text"
+              onChange={(event) => setSearchValue(event.target.value)}
+              onKeyPress={handleKeyPress} ref={inputRef} className="serachOverly" placeholder="Search the site..."></input>
+
+          </div>
+        </>
+      )}
       <div
         style={{
           display: "flex",
@@ -46,9 +96,10 @@ export default function BlogHeader() {
         }}
         id='headerid'
       >
+
         <div>
           {/* <button className="menu-toggle" onClick={handleShow}></button> */}
-          <GrMenu onClick={handleShow} style={{marginLeft:'50px',fontSize:'22px'}} />
+          <GrMenu onClick={handleShow} style={{ margin: '50px', fontSize: '25px', cursor: 'pointer' }} />
         </div>
         <div>
           <img
@@ -87,7 +138,7 @@ export default function BlogHeader() {
               flexItem
               style={{ margin: "0px 15px 0px 15px", backgroundColor: "black" }}
             />
-            <div className="header-search-wrap">
+            <div className="header-search-wrap" onClick={toggleOverlay}>
               <a href="#search" className="toggle-search-box">
                 <FaSearch />
               </a>
@@ -95,6 +146,7 @@ export default function BlogHeader() {
           </div>
         </div>
       </div>
+
 
       <Drawer
         open={openDrawer}
@@ -129,14 +181,14 @@ export default function BlogHeader() {
             <p style={{ margin: '0px 0px 8px -20px', fontSize: '13px' }}>ETERNITY BANDS</p>
           </div>
 
-          <div style={{display  :'flex' ,justifyContent : 'space-between' ,marginTop : '50px' , marginInline : '20px'}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '50px', marginInline: '20px' }}>
             <div>
-              <FaFacebookF style={{margin : '7px' ,cursor : 'pointer'}}/>
-              <FaTwitter style={{margin : '7px',cursor : 'pointer'}} />
-              <FaInstagram style={{margin : '7px',cursor : 'pointer'}}/>
+              <FaFacebookF style={{ margin: '7px', cursor: 'pointer' }} />
+              <FaTwitter style={{ margin: '7px', cursor: 'pointer' }} />
+              <FaInstagram style={{ margin: '7px', cursor: 'pointer' }} />
             </div>
             <div>
-              <FaSearch style={{cursor : 'pointer'}}  />
+              <FaSearch style={{ cursor: 'pointer' }} />
             </div>
           </div>
         </div>

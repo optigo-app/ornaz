@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../../home/Header/Header'
 import FooterSection from '../..'
 import './AskedQuetion.css'
@@ -51,6 +51,10 @@ export default function AskedQuetion() {
 
   const [isOpenGeneral, setIsGeneral] = useState(false);
   const [expanded, setExpanded] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[])
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);

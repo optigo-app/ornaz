@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../../../home/Header/Header'
 import Footer from '../..'
 import './Certification.css'
 
 export default function Certification() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[])
+
   return (
     <div>
       <Header />

@@ -4,10 +4,10 @@ import HomePage from './Pages/Components/home';
 import LoginPage from './Pages/Components/login/Login';
 import Register from './Pages/Components/register/Register';
 import Jewellary from './Pages/Components/Jewellary';
-import DisplayTechnology from './Pages/Components/footer/experience/DisplayTechnology';
+import DisplayTechnology from './Pages/Components/footer/experience/DisplayTechnology/DisplayTechnology';
 import BookAppoinment from './Pages/Components/footer/experience/bookAppoiment/BookAppoinment';
 import FreeEngraving from './Pages/Components/footer/experience/freeEngraving/FreeEngraving';
-import GiaAssistance from './Pages/Components/footer/WhyOrnaz/GiaAssistance';
+import GiaAssistance from './Pages/Components/footer/WhyOrnaz/GiaAssistance/GiaAssistance';
 import QualityValue from './Pages/Components/footer/WhyOrnaz/qualityval/QualityValue';
 import TermsCondition from './Pages/Components/footer/Policies/termsEndCondi/TermsCondition';
 import DeliveryShipping from './Pages/Components/footer/Policies/deliveryShiping/DeliveryShipping';
@@ -34,6 +34,7 @@ import FAQ from './Pages/Components/mobileComp/FAQ/FAQ';
 import LifeTimeExchange from './Pages/Components/footer/Policies/lifeTimeExch/LifeTimeExchange';
 import AskedQuetion from './Pages/Components/footer/Policies/askedQuetion/AskedQuetion';
 import ArticleDetailPage from './Pages/Components/footer/allaboutornaz/BlogSection/articleDetail/ArticleDetailPage';
+import SearchResult from './Pages/Components/footer/allaboutornaz/BlogSection/searchResult/SearchResult';
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/ArticleDetailPage" element={<ArticleDetailPage />} />
+        <Route path="/SearchResult" element={<SearchResult />} />
 
       </Routes>
     </BrowserRouter>

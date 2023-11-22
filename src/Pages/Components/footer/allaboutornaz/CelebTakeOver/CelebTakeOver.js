@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../../../home/Header/Header'
 import Footer from '../..'
 import banner from '../../../../assets/celebs takeover/c_t_b.jpg'
@@ -14,6 +14,11 @@ import km3 from '../../../../assets/celebs takeover/hk3.jpg'
 import './celebtakeover.css'
 
 export default function CelebTakeOver() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[])
+
   return (
     <div>
       <Header />
