@@ -34,7 +34,7 @@ export default function Blog() {
         className="carousels-div"
         onMouseEnter={() => setDivFlag(true)}
         onMouseLeave={() => setDivFlag(false)}
-        onClick={() => navigation('/ArticleDetailPage')}
+        // onClick={() => navigation('/ArticleDetailPage')}
       >
         <Carousel
           fade

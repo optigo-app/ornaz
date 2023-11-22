@@ -99,7 +99,7 @@ export default function BlogHeader() {
 
         <div>
           {/* <button className="menu-toggle" onClick={handleShow}></button> */}
-          <GrMenu onClick={handleShow} style={{ margin: '50px', fontSize: '25px', cursor: 'pointer' }} />
+          <GrMenu onClick={handleShow} className="grMenu"/>
         </div>
         <div>
           <img
@@ -137,6 +137,7 @@ export default function BlogHeader() {
               orientation="vertical"
               flexItem
               style={{ margin: "0px 15px 0px 15px", backgroundColor: "black" }}
+              className="divider-header"
             />
             <div className="header-search-wrap" onClick={toggleOverlay}>
               <a href="#search" className="toggle-search-box">

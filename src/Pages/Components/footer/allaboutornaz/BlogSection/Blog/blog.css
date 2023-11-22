@@ -239,6 +239,12 @@
     .unique-class{
         margin-top: 130px;
     }
+    .bcards-tinner-container{
+        display: flex;
+        width: auto;
+        gap:43px;
+        padding:10px
+    }
     
 }
 
@@ -247,8 +253,9 @@
     .carousels-div{
         margin-top: 150px;
         height:400px; 
-        width: auto;
+        width: 100%;
         margin-bottom: 50px; 
+        padding: 10px;
     }
     .slick-img{
         height:400px;
