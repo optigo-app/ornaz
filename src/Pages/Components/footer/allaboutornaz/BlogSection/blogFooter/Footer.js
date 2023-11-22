@@ -7,7 +7,7 @@ export default function Footer() {
     <div>
       <div className='insta'>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBlock: '40px' }}>
-          <span style={{color : '#555555', textTransform : 'uppercase', fontSize : '13px',letterSpacing : '2px'}}>India's 1st &amp; Only Engagement Ring Brand
+          <span style={{color : '#555555',textAlign: 'center', textTransform : 'uppercase', fontSize : '13px',letterSpacing : '2px'}}>India's 1st &amp; Only Engagement Ring Brand
             <img draggable="false" role="img" className="emoji" alt="💍" src="https://s.w.org/images/core/emoji/14.0.0/svg/1f48d.svg" />
           </span>
           <div style={{ display: 'flex' ,alignItems : 'center' ,marginTop : '10px' }}>
@@ -16,7 +16,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div style={{display: 'flex',padding:'30px',  justifyContent : 'space-between',alignItems : 'center', backgroundColor: '#010101' }}>
+      <div className='blogFooter' style={{padding:'30px', backgroundColor: '#010101' }}>
         <div>
           <p style={{color : '#888888',fontSize : '12px',margin : '0px'}}>(C) 2020 - ORNAZ. All Rights Reserved.</p>
         </div>
