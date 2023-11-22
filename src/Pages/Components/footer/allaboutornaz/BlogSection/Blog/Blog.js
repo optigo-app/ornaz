@@ -8,8 +8,10 @@ import './blog.css'
 import { TfiArrowCircleLeft } from "react-icons/tfi";
 import { TfiArrowCircleRight } from "react-icons/tfi";
 import ArticalCards from '../articalCards/ArticalCards';
-import { Divider } from '@mui/material'
+import { Divider, Pagination, PaginationItem } from '@mui/material'
 import BlogSearch from '../BlogSearch/BlogSearch';
+import { HiOutlineArrowLongRight } from "react-icons/hi2";
+import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -20,10 +22,16 @@ export default function Blog() {
 
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column', alignItems: 'center' }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <div
-        style={{ marginTop: "60px", height: "600px", width: "1140px", cursor: 'pointer' }}
-        id="carousels-div"
+        className="carousels-div"
         onMouseEnter={() => setDivFlag(true)}
         onMouseLeave={() => setDivFlag(false)}
         onClick={() => navigation('/ArticleDetailPage')}
@@ -49,12 +57,13 @@ export default function Blog() {
               ""
             )
           }
+          
         >
-          <Carousel.Item>
-            <img src={bg1} alt="First slide" className="slick-img" />
+          <Carousel.Item style={{zIndex:-1,position:'relative'}}>
+            <img src={bg1} alt="First slide" className="slick-img " />
             <Carousel.Caption className="slick-caption">
               <div className="slick-cap-div">
-                <div style={{ width: "800px" }}>
+                <div className='slick-cap-inner-div'>
                   <p className="post-cats">
                     DIAMOND EDUCATION / ENGAGEMENT RINGS / GUIDE
                   </p>
@@ -65,13 +74,13 @@ export default function Blog() {
                 </div>
               </div>
             </Carousel.Caption>
-          </Carousel.Item>
+          </Carousel.Item >
 
-          <Carousel.Item>
+          <Carousel.Item style={{zIndex:-1,position:'relative'}}>
             <img src={bg2} alt="First slide" className="slick-img" />
             <Carousel.Caption className="slick-caption">
-              <div className="slick-cap-div" style={{ marginTop: "200px" }}>
-                <div style={{ width: "800px" }}>
+              <div className="slick-cap-div unique-class">
+                <div className='slick-cap-inner-div'>
                   <p className="post-cats">ENGAGEMENT RINGS</p>
                   <p className="entry-title">
                     Upgrade Your Ring Game This Diwali Sale!
@@ -82,11 +91,11 @@ export default function Blog() {
             </Carousel.Caption>
           </Carousel.Item>
 
-          <Carousel.Item>
+          <Carousel.Item style={{zIndex:-1,position:'relative'}}>
             <img src={bg3} alt="First slide" className="slick-img" />
             <Carousel.Caption className="slick-caption">
               <div className="slick-cap-div">
-                <div style={{ width: "800px" }}>
+                <div className='slick-cap-inner-div'>
                   <p className="post-cats">Engagement Rings</p>
                   <p className="entry-title">
                     The Perfect Engagement Ring For Your Zodiac Sign
@@ -98,38 +107,100 @@ export default function Blog() {
           </Carousel.Item>
         </Carousel>
       </div>
-      <div style={{ width: '1140px' }}>
-        <div style={{ display: 'flex', width: '100%', gap: '43px' }}>
-          <div>
+      <div className='bcards-title-container'>
+        <div className='bcards-tinner-container'>
+          <div className='btc-1'>
+            <div
+              className='bcards-title'
+            >
+              <Divider
+                orientation="horizontal"
+                className='bcards-divider'
+              />
+              <p
+                className='bcards-title-text'
+              >
+                LATEST ARTICLES
+              </p>
+              <Divider
+                orientation="horizontal"
+                className='bcards-divider'
+              />
+            </div>
+            <div
+              className='bcards-div'
+            >
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+              <ArticalCards />
+            </div>
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                margin: "31px 0px",
-                gap: '40px'
-
+                justifyContent: "center",
+                marginBottom: "70px",
               }}
             >
-              <Divider orientation="horizontal" style={{ background: "gray", width: '250px' }} />
-              <p style={{ fontSize: '20px', fontFamily: 'Montserrat,sans-serif', fontWeight: 500, marginTop: '12px', letterSpacing: '2px' }}>LATEST ARTICLES</p>
-              <Divider orientation="horizontal" style={{ background: "gray", width: '250px' }} />
-            </div>
-            <div style={{ width: '800px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-              <ArticalCards />
-              <ArticalCards />
-              <ArticalCards />
-              <ArticalCards />
-              <ArticalCards />
-              <ArticalCards />
-              <ArticalCards />
-              <ArticalCards />
-              <ArticalCards />
-              <ArticalCards />
+              <Pagination
+                count={10}
+                renderItem={(item) => (
+                  <PaginationItem
+                  sx={{
+                    "&.Mui-selected":{
+                      backgroundColor:'#f7eee9',
+                      color: '#000000'
+                    }
+                  }}
+                    slots={{
+                      previous: () => {
+                        return (
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              gap: "9px",
+                              fontSize: "14px",
+                              fontFamily: "Montserrat, sans-serif",
+                            }}
+                          >
+                            <HiOutlineArrowLongLeft />{" "}
+                            <p style={{ marginTop: "15px",letterSpacing:'2px'}}>PREV</p>
+                          </div>
+                        );
+                      },
+                      next: () => {
+                        return (
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              gap: "9px",
+                              fontSize: "14px",
+                              fontFamily: "Montserrat, sans-serif",
+                            }}
+                          >
+                            <p style={{ marginTop: "15px",letterSpacing:'2px'}}>NEXT</p>
+                            <HiOutlineArrowLongRight />
+                          </div>
+                        );
+                      },
+                    }}
+                    {...item}
+                  />
+                )}
+              />
             </div>
           </div>
-          <div >
+          <div className='btc-2'>
             <BlogSearch />
           </div>
         </div>

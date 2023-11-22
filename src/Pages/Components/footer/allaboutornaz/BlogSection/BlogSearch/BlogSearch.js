@@ -8,31 +8,19 @@ const BlogSearch = () => {
   return (
     <>
       <div
-        style={{
-          border: "1px solid #ddd",
-          padding: "8px 12px 12px",
-          width: "100%",
-          marginTop: "45px",
-        }}
+        className='search-container'
       >
         <input
-          style={{
-            border: "none",
-            outline: "none",
-            fontSize: "14px",
-            fontFamily: "Montserrat,sans-serif",
-            width: "250px",
-          }}
           placeholder="Search The Site..."
+          className='search-input'
         />
-        <FaSearch />
+        <FaSearch className='faicon'/>
       </div>
 
-      <div stylke={{ width: "296px" }}>
+      <div className='widget-container'>
         {Widget(1)}
         {Widget(2)}
         {Widget(3)}
-        
       </div>
     </>
   );
