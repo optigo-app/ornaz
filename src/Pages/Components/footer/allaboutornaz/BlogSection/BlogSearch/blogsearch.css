@@ -39,3 +39,60 @@
     transition: background-color 120ms linear;
     text-decoration: none;
 }
+
+.search-container{
+    border: 1px solid #ddd;
+    padding: 8px 12px 12px;
+    width: 100%;
+    margin-top: 45px;
+}
+
+.search-input{
+    border: none;
+    outline:none;
+    font-size:14px;
+    font-family:Montserrat,sans-serif;
+    width:250px;
+}
+
+.widget-container{
+    width:296px;
+}
+
+@media screen and (max-width:980px) {
+    .search-container{
+        border: 1px solid #ddd;
+        padding: 3px 12px 3px 12px;
+        width: 100%;
+        margin-top: 0;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+    .faicon{
+        margin-top: 8px;
+    }
+    .widget-container{
+        width:auto
+    }
+    .recent-post-text{
+        width: auto;
+    }
+}
+
+@media screen and (max-width:766px) {
+    .search-container{
+        border: 1px solid #ddd;
+        padding: 3px 12px 3px 12px;
+        width: 300px;
+        margin-top: 0;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+    .recent-post-text{
+        font-size: 14px;
+        font-family: Montserrat,serif;
+        width:300px;
+    }
+}

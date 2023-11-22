@@ -29,7 +29,8 @@
     position: absolute;
     right: 50px;
     display: flex;
-    top:42px
+    top:30px;
+    transition: 0.25s ease;
 }
 .header-social a {
     color: #000;

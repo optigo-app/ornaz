@@ -8,6 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import { Divider } from "@mui/material";
 import { GrMenu } from "react-icons/gr";
 import { IoMdClose } from "react-icons/io";
+import bloglogo from '../../../../../assets/other/blog-logo.png'
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +16,20 @@ export default function BlogHeader() {
   const handleClose = () => setOpenDrawer(false);
   const handleShow = () => setOpenDrawer(true);
   const [openDrawer, setOpenDrawer] = useState(false);
+  
+
+  window.onscroll= function() {scrollFunction()};
+
+  function scrollFunction() {
+    if(document.body.scrollTop > 80 || document.documentElement.scrollTop > 80){
+      document.getElementById("headerid").style.height="75px"
+      document.getElementById("top-misc").style.top="23px"
+    }
+    else{
+      document.getElementById("headerid").style.height="90px"
+      document.getElementById("top-misc").style.top="30px"
+    }
+  }
   const [searchValue, setSearchValue] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
   const navigation = useNavigate();
@@ -70,14 +85,16 @@ export default function BlogHeader() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          height: "100px",
+          height: "90px",
           boxShadow: "0 0 28px rgba(0,0,0,.07)",
           alignItems: "center",
           position: 'fixed',
           width: '100%',
           backgroundColor: 'white',
-          zIndex: 100
+          zIndex: 1,
+          transition:'.25s ease'
         }}
+        id='headerid'
       >
 
         <div>
@@ -86,13 +103,13 @@ export default function BlogHeader() {
         </div>
         <div>
           <img
-            src="https://www.ornaz.com/blog/wp-content/uploads/2020/05/10XX5.png"
+            src={bloglogo}
             alt="ORNAZ Blog"
-            style={{ marginRight: "45px", height: "75px" }}
+            style={{ maxHeight: "60px",marginRight:'70px'}}
           />
         </div>
         <div>
-          <div className="top-misc">
+          <div className="top-misc" id="top-misc">
             <div className="header-social" style={{ height: "auto" }}>
               <a
                 href="https://www.facebook.com/ornazjewels/"
@@ -119,7 +136,7 @@ export default function BlogHeader() {
             <Divider
               orientation="vertical"
               flexItem
-              style={{ margin: "0px 15px 0px 15px", color: "#1f2025" }}
+              style={{ margin: "0px 15px 0px 15px", backgroundColor: "black" }}
             />
             <div className="header-search-wrap" onClick={toggleOverlay}>
               <a href="#search" className="toggle-search-box">
