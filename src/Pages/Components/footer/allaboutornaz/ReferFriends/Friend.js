@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../../../home/Header/Header'
 import Footer from '../..'
 import './Friend.css'
 
 export default function Friend() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[])
+
   return (
     <>
       <Header />

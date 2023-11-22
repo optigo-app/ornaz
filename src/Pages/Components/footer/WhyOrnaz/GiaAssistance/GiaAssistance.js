@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react'
 import Header from '../../../home/Header/Header'
 import FooterSection from '../..'
-import './BookAppoinment.css'
+import './GiaAssistance.css'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
-
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-
-
-
-export default function BookAppoinment() {
+export default function GiaAssistance() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,11 +37,7 @@ export default function BookAppoinment() {
                   </div>
                   <input className='apointTextBox' type='text' style={{ width: '95%' }} placeholder='Enter Your Email' />
                   <div style={{ display: 'flex' }}>
-                    <input className='apointTextBox' type='date' />
-                    {/* <LocalizationProvider dateAdapter={AdapterDayjs} >
-                      <DatePicker className="datePickerCustom" />
-                    </LocalizationProvider> */}
-
+                    <input className='apointTextBox' type='date' placeholder="Choose a date"/>
                     <select className='apointTextBox' style={{ height: '40px', width: '250px', fontSize: '14px', border: '1px solid #45d4d5' }}>
                       <option>Please choose time slot</option>
                       <option>10:00AM - 11.00AM</option>

@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../../../home/Header/Header'
 import FooterSection from '../..'
 
 export default function DeliveryShipping() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[])
+
   return (
     <div>
       <Header />

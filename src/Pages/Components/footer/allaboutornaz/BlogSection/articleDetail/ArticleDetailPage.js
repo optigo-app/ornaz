@@ -5,11 +5,36 @@ import Footer from '../blogFooter/Footer'
 import { Divider } from '@mui/material'
 import BlogHeader from '../header/BlogHeader'
 import BlogSearch from '../BlogSearch/BlogSearch'
+import bg2 from '../../../../../assets/blog-banner/blog-slider-big-2.jpeg'
+import Carousel from 'react-bootstrap/Carousel';
 
 export default function ArticleDetailPage() {
   return (
     <div>
       <BlogHeader />
+      <div>
+        <Carousel
+          fade
+          indicators={false}
+          prevIcon=''
+          nextIcon=''
+        >
+          <Carousel.Item>
+            <img src={bg2} alt="First slide" className="articaleTop-img" />
+            <Carousel.Caption className="slick-caption">
+              <div className="slick-cap-div" style={{ marginTop: "400px" }}>
+                <div style={{ width: "800px" }}>
+                  <p className="post-cats">ENGAGEMENT RINGS</p>
+                  <p className="entry-title">
+                    Upgrade Your Ring Game This Diwali Sale!
+                  </p>
+                  <p className="date-wrap">NOVEMBER 3, 2023</p>
+                </div>
+              </div>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+      </div>
       <div className='articleDeatilMain'>
         <div className='articleDetail'>
 
@@ -50,7 +75,6 @@ export default function ArticleDetailPage() {
                 <br />
                 <br />
                 Come to ORNAZ and get free assistance throughout the stressful journey to find THE engagement ring.</p>
-
             </div>
           </div>
 
@@ -76,7 +100,6 @@ export default function ArticleDetailPage() {
               <p>To make your Diwali celebrations even more memorable, we are proud to introduce our ‘0% making charges’ offer on every order*. What does this mean for you? It means that when you purchase one of our stunning engagement rings, you only pay for the cost of the diamond and the precious metal, and there are absolutely no additional charges for the craftsmanship that goes into creating your unique ring. This incredible offer allows you to get the most value for your money, making your dream engagement ring more accessible than ever.</p>
               <br />
               <h2>Why Choose Our Diamond Engagement Rings?</h2>
-
             </div>
           </div>
 
@@ -102,7 +125,7 @@ export default function ArticleDetailPage() {
             marginTop: '40px'
           }}>
             <Divider orientation='horizontal' style={{ background: 'gray', height: '1px', width: '30%' }} />
-            <div className='articleTopIcone' style={{width : '40%'}}>
+            <div className='articleTopIcone' style={{ width: '40%' }}>
               <div className='topFaceBook'>
                 <FaFacebookF style={{ height: '15px', width: '15px', marginInline: '7px' }} />
               </div>
@@ -166,7 +189,7 @@ export default function ArticleDetailPage() {
               <p style={{ color: '#888' }}>LEAVE A REPLY</p>
               <textarea type='text' className='leaveBox' />
             </div>
-            <div style={{ marginBlock: '10px', display : 'flex',flexWrap : 'wrap' }}>
+            <div style={{ marginBlock: '10px', display: 'flex', flexWrap: 'wrap' }}>
               <input placeholder='Name' type='text' className='leaveInputBox' />
               <input placeholder='Email' type='text' className='leaveInputBox' />
               <input placeholder='Website' type='text' className='leaveInputBox' />
@@ -198,7 +221,7 @@ export default function ArticleDetailPage() {
 
         </div>
         <div className='articleSidePart'>
-            <BlogSearch />
+          <BlogSearch />
         </div>
       </div>
       <Footer />

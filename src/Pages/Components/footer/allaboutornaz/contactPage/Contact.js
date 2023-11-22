@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Contact.css'
 import Header from '../../../home/Header/Header'
 import Footer from '../..'
@@ -23,6 +23,10 @@ export default function Contact() {
   const [mobileNo, setMobileNo] = useState(undefined);
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  },[])
 
   const handleClickOpen = () => {
     setOpen(true);
