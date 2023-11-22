@@ -134,6 +134,14 @@
         display: none;
     }
 
+    .top-misc {
+      position: absolute;
+      right: 15px;
+      display: flex;
+      top: 30px;
+      transition: 0.25s ease;
+  }
+  
     .grMenu{
       margin:10px;
       font-size:25px;
