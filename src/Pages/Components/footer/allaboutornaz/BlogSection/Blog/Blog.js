@@ -34,7 +34,7 @@ export default function Blog() {
         className="carousels-div"
         onMouseEnter={() => setDivFlag(true)}
         onMouseLeave={() => setDivFlag(false)}
-        // onClick={() => navigation('/ArticleDetailPage')}
+      // onClick={() => navigation('/ArticleDetailPage')}
       >
         <Carousel
           fade
@@ -57,9 +57,9 @@ export default function Blog() {
               ""
             )
           }
-          
+
         >
-          <Carousel.Item style={{zIndex:-1,position:'relative'}}>
+          <Carousel.Item style={{ zIndex: -1, position: 'relative' }}>
             <img src={bg1} alt="First slide" className="slick-img " />
             <Carousel.Caption className="slick-caption">
               <div className="slick-cap-div">
@@ -76,7 +76,7 @@ export default function Blog() {
             </Carousel.Caption>
           </Carousel.Item >
 
-          <Carousel.Item style={{zIndex:-1,position:'relative'}}>
+          <Carousel.Item style={{ zIndex: -1, position: 'relative' }}>
             <img src={bg2} alt="First slide" className="slick-img" />
             <Carousel.Caption className="slick-caption">
               <div className="slick-cap-div unique-class">
@@ -91,7 +91,7 @@ export default function Blog() {
             </Carousel.Caption>
           </Carousel.Item>
 
-          <Carousel.Item style={{zIndex:-1,position:'relative'}}>
+          <Carousel.Item style={{ zIndex: -1, position: 'relative' }}>
             <img src={bg3} alt="First slide" className="slick-img" />
             <Carousel.Caption className="slick-caption">
               <div className="slick-cap-div">
@@ -110,22 +110,10 @@ export default function Blog() {
       <div className='bcards-title-container'>
         <div className='bcards-tinner-container'>
           <div className='btc-1'>
-            <div
-              className='bcards-title'
-            >
-              <Divider
-                orientation="horizontal"
-                className='bcards-divider'
-              />
-              <p
-                className='bcards-title-text'
-              >
-                LATEST ARTICLES
-              </p>
-              <Divider
-                orientation="horizontal"
-                className='bcards-divider'
-              />
+            <div style={{ display: 'flex', alignItems: 'center',marginBlock: '30px',marginInline: '5px' }}>
+              <Divider orientation="horizontal" style={{ background: 'gray', height: '1px', width: '35%' }}/>
+              <p style={{ margin: '0px', fontSize: '18px', width: '25%', textAlign: 'center', marginInline: '15px', fontWeight: 500 }}>LATEST ARTICLES</p>
+              <Divider orientation="horizontal" style={{ background: 'gray', height: '1px', width: '33%' }}/>
             </div>
             <div
               className='bcards-div'
@@ -152,12 +140,12 @@ export default function Blog() {
                 count={10}
                 renderItem={(item) => (
                   <PaginationItem
-                  sx={{
-                    "&.Mui-selected":{
-                      backgroundColor:'#f7eee9',
-                      color: '#000000'
-                    }
-                  }}
+                    sx={{
+                      "&.Mui-selected": {
+                        backgroundColor: '#f7eee9',
+                        color: '#000000'
+                      }
+                    }}
                     slots={{
                       previous: () => {
                         return (
@@ -172,7 +160,7 @@ export default function Blog() {
                             }}
                           >
                             <HiOutlineArrowLongLeft />{" "}
-                            <p style={{ marginTop: "15px",letterSpacing:'2px'}}>PREV</p>
+                            <p style={{ marginTop: "15px", letterSpacing: '2px' }}>PREV</p>
                           </div>
                         );
                       },
@@ -188,7 +176,7 @@ export default function Blog() {
                               fontFamily: "Montserrat, sans-serif",
                             }}
                           >
-                            <p style={{ marginTop: "15px",letterSpacing:'2px'}}>NEXT</p>
+                            <p style={{ marginTop: "15px", letterSpacing: '2px' }}>NEXT</p>
                             <HiOutlineArrowLongRight />
                           </div>
                         );
