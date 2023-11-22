@@ -4,15 +4,18 @@
 }
 
 .articleDetail {
-    width: 700px;
-    border: 1px solid;
+    width: 750px;
+    /* border: 1px solid; */
     margin-top: 100px;
 
 }
 
 .articleSidePart {
     width: 400px;
-    border: 1px solid;
+    /* border: 1px solid; */
+    margin-top: 50px;
+    padding: 20px;
+    margin-left: 20px;
 }
 
 .articleTopIcone {
@@ -98,7 +101,7 @@
 
     .articleDetail {
         width: 100%;
-        border: 1px solid;
+        /* border: 1px solid; */
     }
     
 }

@@ -12,11 +12,13 @@ import { Divider, Pagination, PaginationItem } from '@mui/material'
 import BlogSearch from '../BlogSearch/BlogSearch';
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
 import { HiOutlineArrowLongLeft } from "react-icons/hi2";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Blog() {
 
-  const [divFlag,setDivFlag] = useState(false);
+  const [divFlag, setDivFlag] = useState(false);
+  const navigation = useNavigate();
 
 
   return (
@@ -32,6 +34,7 @@ export default function Blog() {
         className="carousels-div"
         onMouseEnter={() => setDivFlag(true)}
         onMouseLeave={() => setDivFlag(false)}
+        onClick={() => navigation('/ArticleDetailPage')}
       >
         <Carousel
           fade
