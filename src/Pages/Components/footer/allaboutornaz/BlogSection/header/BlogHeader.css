@@ -122,3 +122,21 @@
     top: 10%;
     left: 90%;
   }
+
+  .grMenu{
+    margin : 50px;
+    font-size:25px;
+    cursor:pointer;
+  }
+
+  @media screen and (max-width:1024px) {
+    .header-social,.divider-header{
+        display: none;
+    }
+
+    .grMenu{
+      margin:10px;
+      font-size:25px;
+    cursor:pointer;
+    }
+  }
