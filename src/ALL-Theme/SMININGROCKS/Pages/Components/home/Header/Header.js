@@ -122,10 +122,7 @@ export default function Header({ name }) {
       const scrollPosition = window.scrollY;
       setIsHeaderFixed(scrollPosition > 100);
     };
-
     window.addEventListener('scroll', handleScroll);
-
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
