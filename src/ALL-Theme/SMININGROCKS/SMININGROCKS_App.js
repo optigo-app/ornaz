@@ -5,7 +5,7 @@ import Impact from './Pages/Components/Impact'
 
 export default function SMININGROCKS_App() {
     return (
-        <div>
+        <div style={{backgroundColor : '#c0bbb1'}}> 
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/impact" element={<Impact />} />
