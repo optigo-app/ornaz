@@ -6,35 +6,26 @@ import SmilingRock from './smiling_Rock/SmilingRock';
 import FestiveFinds from './FestiveFind/FestiveFinds';
 import DaimondEveyone from './DaimondsEveryone/DaimondEveyone';
 
-// import BannerPage from './BannerPage/BannerPage'
-// import SallerCard from './SallerCard/SallerCard'
-// import ConnectPage from './ConnectPage/ConnectPage'
-// import CategoryPage from './CategoryPage/CategoryPage'
-// import MentionSection from './MentionSection/MentionSection'
-// import CelebrityCardsPage from './CelebrityCardsPage/CelebrityCardsPage'
-// import JewelleryGiftsCardsPage from './JewelleryGiftsCardsPage/JewelleryGiftsCardsPage'
-// import TestimonialSection from './TestimonialSection/TestimonialSection'
-// import AppoinmentSection from './AppoinmentSection/AppoinmentSection'
-// import HomeFooter from './HomeFooter/HomeFooter'
-// import JewelleryGiftsBannerPage from './jewelleryGiftsBannerPage/JewelleryGiftsBannerPage'
 
 export default function Home() {
 
-  
+
   return (
-    <div className='homeMain' style={{backgroundColor : '#c0bbb1'}}>
-      
-      <div className='header'>
-      <Header />
-      <Video />
-      {/* <BannerPage />  */}
+    <div>
+      <div className='smining-header'>
+        <Header />
       </div>
-      <div className='homeCompo'>
+      <div className='homeMain'>
+
+      <Video />
+        {/* <div className='homeCompo'>
         <SmilingRock />
         <FestiveFinds />
         <DaimondEveyone />
-      </div>
-      {/* <div className='sallercard'>
+      </div> */}
+
+
+        {/* <div className='sallercard'>
       <SallerCard />
       </div>
       <ConnectPage/>
@@ -48,6 +39,7 @@ export default function Home() {
       <TestimonialSection />
       <AppoinmentSection />
       <HomeFooter /> */}
+      </div>
     </div>
   )
 }
