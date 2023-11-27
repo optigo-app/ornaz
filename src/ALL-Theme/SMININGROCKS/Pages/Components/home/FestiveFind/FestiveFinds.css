@@ -1,0 +1,27 @@
+.FestiveMainImage {
+    position: relative;
+}
+
+.festiveBox {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 20px;
+}
+
+.DiscoverBtn {
+    margin-top: 30px;
+    height: 60px;
+    width: 200px;
+    background-color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.DiscoverBtn:hover {
+    border: 1px solid white;
+    color: white;
+    background-color: transparent;
+}

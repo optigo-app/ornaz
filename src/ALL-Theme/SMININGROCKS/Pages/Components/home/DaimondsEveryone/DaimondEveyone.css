@@ -1,0 +1,8 @@
+
+.daimondEvery{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: 30%;
+    margin-block: 5%;
+}
