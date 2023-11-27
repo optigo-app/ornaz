@@ -1,6 +1,5 @@
 import React from 'react'
 import './index.css';
-import Header from './Header/Header'
 import Video from './topVideo/Video';
 import SmilingRock from './smiling_Rock/SmilingRock';
 import FestiveFinds from './FestiveFind/FestiveFinds';
@@ -25,7 +24,7 @@ export default function Home() {
     <div className='homeMain' style={{backgroundColor : '#c0bbb1'}}>
       
       <div className='header'>
-      <Header />
+      {/* <Header /> */}
       <Video />
       {/* <BannerPage />  */}
       </div>
