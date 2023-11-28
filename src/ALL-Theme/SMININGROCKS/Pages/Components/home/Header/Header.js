@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Header.css'
 // import ring1 from '../../../assets/svg.svg'
@@ -15,7 +15,8 @@ import i1 from '../../../../lib/consts/Images'
 import { PiStarThin } from "react-icons/pi";
 import { IoSearchOutline } from "react-icons/io5";
 import { ABOUT_US, ACCOUNT, BLOG, CELEBRITY, CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, IMPACT, LAB_GROWN, LIFETIME_WARRANTY, LOGOUT_MESSAGE, LOOK_BOOK, MONEY_BACK_GUARANTEE, PRESS, SHOP } from "../../../../lib/consts/Strings";
-
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { PiStarFourThin } from "react-icons/pi";
 
 export default function Header({ name }) {
   const navigation = useNavigate();
@@ -26,8 +27,6 @@ export default function Header({ name }) {
   const [isOpenEngagementRing, setIsEngagementRing] = useState(false);
   const [isOpenFineJewellaryGift, setFineJewellaryGift] = useState(false);
   const [isOpenInr, setIsInr] = useState(false);
-
-  console.log('i1', i1);
 
   const openDrawer = () => {
     setDrawerOpen(true);
@@ -128,6 +127,17 @@ export default function Header({ name }) {
     };
   }, []);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+
+  const handleDropdownOpen = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleDropdownClose = () => {
+    setIsDropdownOpen(false);
+  };
+
+
   return (
     <>
       <div className="Smining-Top-Header">
@@ -135,13 +145,21 @@ export default function Header({ name }) {
           width: '33.33%',
           display: 'flex'
         }}>
-          <ul className="nav-ul">
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>SHOP</li>
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
+          <ul className="nav-ul-shop">
+            <li
+              className="nav-li-shop-main"
+              onMouseEnter={handleDropdownOpen}
+              onMouseLeave={handleDropdownClose}
+
+            >
+              <span style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}>SHOP<RiArrowDropDownLine style={{ width: '20px', height: '20px' }} /></span>
+
+            </li>
+            <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{IMPACT}</li>
+            <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
+            <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
+            <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
+            <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
           </ul>
         </div>
         <div style={{
@@ -170,38 +188,95 @@ export default function Header({ name }) {
           display: 'flex',
           justifyContent: 'flex-end'
         }}>
-          <ul className="nav-ul">
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ABOUT_US}</li>
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LAB_GROWN}</li>
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ACCOUNT}</li>
-            <li className="nav-li" style={{}}><PiStarThin /></li>
-            <li className="nav-li" style={{}}><IoSearchOutline /></li>
-            <li className="nav-li" style={{}}>
-              <svg viewBox="0 0 31 31" class="w1"><use xlink="http://www.w3.org/1999/xlink" href="#icon-cart" x="0" y="0"></use></svg>
-              <svg viewBox="0 0 31 31" class="w1">
-                <use xlink="http://www.w3.org/1999/xlink" href="#icon-cart-alt" x="0" y="0"></use>
-              </svg>
-            </li>
+          <ul className="nav-ul-shop">
+            <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ABOUT_US}</li>
+            <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LAB_GROWN}</li>
+            <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ACCOUNT}</li>
+            <li className="nav-li-smining" ><PiStarThin style={{ height: '15px', width: '15px' }} /></li>
+            <li className="nav-li-smining" style={{}}><IoSearchOutline style={{ height: '15px', width: '15px' }} /></li>
+            <li className="nav-li-smining" style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ height: '35px', width: '35px' }} /></li>
           </ul>
+        </div>
+      </div >
+
+      <div
+        onMouseEnter={handleDropdownOpen}
+        onMouseLeave={handleDropdownClose}
+        className={`shop-dropdown ${isDropdownOpen ? 'open' : ''}`}
+      >
+        <div style={{ display: 'flex', padding: '50px', color: 'black' }}
+          onMouseEnter={handleDropdownOpen}
+          onMouseLeave={handleDropdownClose}>
+          <div>
+            <ul>
+              <li>FINE JEWELLERY</li>
+              <li>Ring</li>
+              <li>Ring</li>
+              <li>Ring</li>
+              <li>Ring</li>
+              <li>Ring</li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+              <li style={{ height: '19px' }}>COLLECTION</li>
+
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li>BOUTIQUE</li>
+              <li>Haute Couture</li>
+              <li>Haute Couture</li>
+              <li>Haute Couture</li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <header className={isHeaderFixed ? 'fixed' : ''}>
+
+
+      <div className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? 'fixed' : ''}`}>
         <div className="Smining-Top-Header-fixed">
           <div style={{
             width: '30.33%',
             display: 'flex'
           }}>
             <ul className="nav-ul-fixed">
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
+              <li
+                className="nav-li-shop-main"
+                onMouseEnter={handleDropdownOpen}
+                onMouseLeave={handleDropdownClose}
+              >
+                <span style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}>SHOP<RiArrowDropDownLine style={{ width: '20px', height: '20px' }} /></span>
+              </li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{IMPACT}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
             </ul>
           </div>
           <div style={{
-            width: '33.33%',
+            width: '65%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
@@ -222,22 +297,21 @@ export default function Header({ name }) {
             </a>
           </div>
           <div style={{
-            width: '33.33%',
+            width: '43.33%',
             display: 'flex',
             justifyContent: 'flex-end'
-
           }}>
             <ul className="nav-ul-fixed">
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ABOUT_US}</li>
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LAB_GROWN}</li>
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ACCOUNT}</li>
-              <li className="nav-li" style={{width : '0px'}}><PiStarThin style={{height : '15px' , width: '15px'}}/></li>
-              <li className="nav-li" style={{width : '0px'}}><IoSearchOutline style={{height : '15px' , width: '15px'}}/></li>
-              <li className="nav-li" style={{}}>  </li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ABOUT_US}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LAB_GROWN}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ACCOUNT}</li>
+              <li className="nav-li-smining" ><PiStarThin style={{ height: '15px', width: '15px' }} /></li>
+              <li className="nav-li-smining" style={{}}><IoSearchOutline style={{ height: '15px', width: '15px' }} /></li>
+              <li className="nav-li-smining" style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ height: '30px', width: '30px' }} /></li>
             </ul>
           </div>
         </div>
-      </header>
+      </div>
 
       <div style={{
         position: 'fixed',
