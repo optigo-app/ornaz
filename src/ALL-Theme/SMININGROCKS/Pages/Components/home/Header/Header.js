@@ -136,6 +136,7 @@ export default function Header({ name }) {
           display: 'flex'
         }}>
           <ul className="nav-ul">
+            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>SHOP</li>
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{IMPACT}</li>
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
