@@ -4,7 +4,7 @@ import Home from './Pages/Components/home'
 
 export default function SMININGROCKS_App() {
     return (
-        <div style={{backgroundColor : '#c0bbb1'}}> 
+        <div> 
             <Routes>
                 <Route path="/" element={<Home />} />
             </Routes>

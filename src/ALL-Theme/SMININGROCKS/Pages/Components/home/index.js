@@ -5,27 +5,28 @@ import Video from './topVideo/Video';
 import SmilingRock from './smiling_Rock/SmilingRock';
 import FestiveFinds from './FestiveFind/FestiveFinds';
 import DaimondEveyone from './DaimondsEveryone/DaimondEveyone';
+import ShopByCategory from './shopByCategory/ShopByCategory';
+import SmilingBrides from './SmilingBrides/SmilingBrides';
+import FeaturedCollection from './FeaturedCollection/FeaturedCollection';
 
 
 export default function Home() {
 
 
   return (
-    <div>
-      <div className='smining-header'>
+    <div style={{ backgroundColor: '#c0bbb1' }}>
+      <div className='smining-header'> 
         <Header />
       </div>
       <div className='homeMain'>
-
-      <Video />
-        {/* <div className='homeCompo'>
+        <Video />
         <SmilingRock />
         <FestiveFinds />
         <DaimondEveyone />
-      </div> */}
-
-
-        {/* <div className='sallercard'>
+        <ShopByCategory />
+        <SmilingBrides />
+        <FeaturedCollection />
+        {/* <div className='sal lercard'>
       <SallerCard />
       </div>
       <ConnectPage/>

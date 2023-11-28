@@ -12,7 +12,6 @@ export default function CategoryPage() {
     { prodImg: mens, prodtitle: 'Men’s Engagement Rings' },
     { prodImg: eternity, prodtitle: 'Eternity Bands' },
     { prodImg: gifts, prodtitle: 'Fine Jewellery Gifts' },
-
   ]
 
   const type = 'category';
