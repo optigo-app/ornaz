@@ -1,35 +1,34 @@
 .impact-container{
-    background-image: url('https://cdn.accentuate.io/19336265828/3641674891364/Stocksy_txp824d1dddS9J200_Medium_2036581.jpg');
-    height: 100vh;
+    /* background-image: url('https://cdn.accentuate.io/19336265828/3641674891364/Stocksy_txp824d1dddS9J200_Medium_2036581.jpg'); */
+    height: auto;
+    width: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.6;
+    opacity: 0.4;
     top:0;
     bottom: 0;
     left:0;
     right: 0;
     z-index: -1;
-    position: absolute;
+    position: fixed;
 }
 
 .impact-container2{
     background-color: black;
-    opacity: 0.4;
-    height: 100vh;
+    opacity: 0.2;
+    height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    object-fit: cover;
     top:0;
     bottom: 0;
     left:0;
     right: 0;
     z-index:-1;
-    position: absolute
+    position: fixed
 }
 
-.impact-img-container{
-    /* position: relative;
-    z-index: 1; */
-}
+
 

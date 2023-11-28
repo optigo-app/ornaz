@@ -4,13 +4,14 @@ import Video from './topVideo/Video';
 import SmilingRock from './smiling_Rock/SmilingRock';
 import FestiveFinds from './FestiveFind/FestiveFinds';
 import DaimondEveyone from './DaimondsEveryone/DaimondEveyone';
+import Header from './Header/Header';
 
 
 export default function Home() {
 
 
   return (
-    <div>
+    <div style={{backgroundColor:'#c1bcb2'}}>
       <div className='smining-header'>
         <Header />
       </div>

@@ -137,7 +137,7 @@ export default function Header({ name }) {
         }}>
           <ul className="nav-ul">
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>SHOP</li>
-            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{IMPACT}</li>
+            <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
             <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
@@ -193,7 +193,7 @@ export default function Header({ name }) {
             display: 'flex'
           }}>
             <ul className="nav-ul-fixed">
-              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{IMPACT}</li>
+              <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
               <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
               <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
               <li className="nav-li" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
