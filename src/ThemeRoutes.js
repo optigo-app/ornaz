@@ -1,16 +1,17 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import ORNAZ_App from './ALL-Theme/ORNAZ/ORNAZ_App'
-import SMININGROCKS_App from './ALL-Theme/SMININGROCKS/SMININGROCKS_App'
+import OrnazApp from './ALL-Theme/ORNAZ/ORNAZ_App'
+import SmilingRocksApp from './ALL-Theme/SMININGROCKS/SMININGROCKS_App'
 
 export default function ThemeRoutes() {
+
+  
   return (
     <div>
       <div>
-        {false && <ORNAZ_App />}
+        {false && <OrnazApp />}
       </div>
       <div>
-        {true && <SMININGROCKS_App />}
+        {true && <SmilingRocksApp />}
       </div>
     </div>
   )
