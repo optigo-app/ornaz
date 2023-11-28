@@ -1,10 +1,10 @@
 import React from 'react'
 import './index.css';
-import Header from './Header/Header'
 import Video from './topVideo/Video';
 import SmilingRock from './smiling_Rock/SmilingRock';
 import FestiveFinds from './FestiveFind/FestiveFinds';
 import DaimondEveyone from './DaimondsEveryone/DaimondEveyone';
+import Header from './Header/Header';
 import ShopByCategory from './shopByCategory/ShopByCategory';
 import SmilingBrides from './SmilingBrides/SmilingBrides';
 import FeaturedCollection from './FeaturedCollection/FeaturedCollection';
