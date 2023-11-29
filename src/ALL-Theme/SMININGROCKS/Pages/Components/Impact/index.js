@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
-import i1 from "../../assets/Impact/banner.webp";
-import  Campaign  from "./campaign/Campaign";
+import i1 from "../../assets/Impact/campaign/banner.webp";
+import Campaign from "./campaign/Campaign";
 import Header from "../home/Header/Header";
 
 const index = () => {
@@ -31,11 +31,11 @@ const index = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "100px",
+            marginTop: "-55px",
             flexDirection: "column",
-            maxWidth:'1680px',
-            marginRight:'auto',
-            marginLeft:'auto'
+            maxWidth: "1680px",
+            marginRight: "auto",
+            marginLeft: "auto",
           }}
           className="main-front-container"
         >
@@ -80,9 +80,39 @@ const index = () => {
               place.
             </p>
           </div>
-  
-          <Campaign/>
-       
+
+          <Campaign />
+
+          <div
+            style={{
+              textAlign: "center",
+              width: "620px",
+              height: "441px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "26px",
+                fontFamily: "FreightDisp Pro Medium",
+                color: "white",
+                lineHeight: "25px",
+              }}
+              className="quotes-div2 descript"
+            >
+              “Creating Smiling Rocks has been our dream and life mission as our
+              way of spreading smiles around the world and to help make our
+              world a better place.”
+            </p>
+            <p style={{ color: "white" }}>
+              <small>
+                <i>-Smiling Rocks Founders</i>
+              </small>
+            </p>
+          </div>
         </div>
       </div>
     </>
