@@ -127,7 +127,7 @@ export default function Header({ name }) {
     };
   }, []);
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleDropdownOpen = () => {
     setIsDropdownOpen(true);

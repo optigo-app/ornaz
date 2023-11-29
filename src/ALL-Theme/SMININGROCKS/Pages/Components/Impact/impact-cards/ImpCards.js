@@ -1,8 +1,8 @@
 import React from "react";
-import image1 from "../../../assets/Impact/img1.webp";
-import image2 from "../../../assets/Impact/img2.webp";
-import image3 from "../../../assets/Impact/img3.webp";
-import image4 from "../../../assets/Impact/img4.webp";
+import image1 from "../../../assets/Impact/campaign/img1.webp";
+import image2 from "../../../assets/Impact/campaign/img2.webp";
+import image3 from "../../../assets/Impact/campaign/img3.webp";
+import image4 from "../../../assets/Impact/campaign/img4.webp";
 import edu1 from "../../../assets/Impact/smallogo/edu-logo-1.avif";
 import edu2 from "../../../assets/Impact/smallogo/edu-logo-2.avif";
 import med1 from "../../../assets/Impact/smallogo/med1.avif";
@@ -104,7 +104,7 @@ const ImpCards = () => {
             border: "1px solid #e1e1e1",
           }}
         >
-          <div style={{ width: "50%", height: "auto" }}>
+          <div style={{ width: "50%",display:'flex',flexDirection:'column',justifyContent:'space-between' }}>
             <div
               style={{
                 display: "flex",
@@ -114,7 +114,8 @@ const ImpCards = () => {
                 color:'#7d7f85',
                 borderBottom:'1px solid #e1e1e1',
                 paddingBottom:'30px',
-                margin:'0px 60px'
+                margin:'0px 60px',
+                height:'75%',
               }}
             >
               <img src={jd.icon} alt={'...'} style={{margin:'30px 0px 20px 0px'}}/>
@@ -125,25 +126,20 @@ const ImpCards = () => {
               {jd.counter.map((countData,i)=>(
                 counterFunc(countData.a,countData.b,i)
               ))}
-              {/* {counterFunc('11','Yearly Scholarships',0)}
-              {counterFunc('6','Digital Library')}
-              {counterFunc('50 Enrolled','in Female-led Skill Training Program')} */}
-              
             </div>
-            <div style={{display:'flex',width:'33.33%',alignItems:'center',padding:'30px 20px',marginLeft:'20px'}}>
+            <div style={{display:'flex',width:'33.33%',alignItems:'center',padding:'30px 20px',marginLeft:i%2===0 ?'20px':'60px',height:'25%'}}>
                 {jd.fund.map((imgData)=>(
                     <img src= {imgData.i} alt={'...'}/>
                 ))}
             </div>
           </div>
-          <div style={{ width: "50%", height: "auto",bottom:0}}>
+          <div style={{ width: "50%"}}>
             <img
               src={jd.banner}
               alt={"..."}
-              style={{ objectFit: "cover", marginTop: "5px", height: "637px",marginBottom:'-5px',width:'100%' }}
+              style={{ objectFit:'cover',marginTop: "5px", height: "100%",marginBottom:'-5px', width:'100%' }}
             />
           </div>
-            
         </div>
         ))
 
