@@ -8,6 +8,7 @@ import Header from './Header/Header';
 import ShopByCategory from './shopByCategory/ShopByCategory';
 import SmilingBrides from './SmilingBrides/SmilingBrides';
 import FeaturedCollection from './FeaturedCollection/FeaturedCollection';
+import ShopifySection from './shopifySection/ShopifySection';
 
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         <ShopByCategory />
         <SmilingBrides />
         <FeaturedCollection />
+        <ShopifySection />
         {/* <div className='sal lercard'>
       <SallerCard />
       </div>

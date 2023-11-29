@@ -2,6 +2,7 @@ import React from "react";
 import "./index.css";
 import i1 from "../../assets/Impact/banner.webp";
 import  Campaign  from "./campaign/Campaign";
+import Header from "../home/Header/Header";
 
 const index = () => {
   return (
@@ -13,7 +14,7 @@ const index = () => {
           </div>
         </div>
      </div> */}
-
+      <Header />
       <div>
         <div className="back-img-container">
           <img
