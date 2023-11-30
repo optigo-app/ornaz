@@ -42,9 +42,7 @@
     position: relative;
     text-decoration: none;
     color: #000;
-    /* Text color */
     transition: color 0.3s;
-    /* Smooth color transition */
 }
 
 .learnMore::before {
@@ -52,13 +50,10 @@
     position: absolute;
     width: 0;
     height: 2px;
-    /* Thickness of the underline */
     bottom: 0;
     left: 0;
     background-color: #000;
-    /* Color of the underline */
     transition: width 0.3s ease;
-    /* Animation transition */
 }
 
 .learnMore:hover::before {
@@ -69,4 +64,23 @@
 .simple-card__img {
     margin-bottom: 30px;
     max-height: 45px;
+}
+
+
+@media screen and (max-width: 1440px) {
+    .smilingRock {
+        margin-inline: 5px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .smilingRock {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .smilingRockBox {
+        width: 40%;
+    }
 }

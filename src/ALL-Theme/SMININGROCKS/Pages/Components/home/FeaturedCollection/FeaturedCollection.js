@@ -81,9 +81,7 @@ export default function FeaturedCollection() {
 
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring1ImageChange ? ring1hover : ring1} style={{
-                                        height: '400px', cursor: 'pointer',
-                                    }} onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                    <img src={ring1ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -92,7 +90,7 @@ export default function FeaturedCollection() {
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring2ImageChange ? ring2hover : ring2} style={{ height: '400px', cursor: 'pointer' }} onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                    <img src={ring2ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -105,7 +103,7 @@ export default function FeaturedCollection() {
                         <div className='linkRingLove'>
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring1ImageChange ? ring1hover : ring1} style={{ height: '400px', cursor: 'pointer' }} onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                    <img src={ring1ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -114,7 +112,7 @@ export default function FeaturedCollection() {
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring2ImageChange ? ring2hover : ring2} style={{ height: '400px', cursor: 'pointer' }} onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                    <img src={ring2ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -126,7 +124,7 @@ export default function FeaturedCollection() {
                         <div className='linkRingLove'>
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring1ImageChange ? ring1hover : ring1} style={{ height: '400px', cursor: 'pointer' }} onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                    <img src={ring1ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -135,7 +133,7 @@ export default function FeaturedCollection() {
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring2ImageChange ? ring2hover : ring2} style={{ height: '400px', cursor: 'pointer' }} onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                    <img src={ring2ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -146,14 +144,14 @@ export default function FeaturedCollection() {
                     </Slider>
                 </div>
                 <div className='linkingLoveImage'>
-                    <img src={linkingLoveImage} style={{ height: '645px', marginTop: '5px' }} />
+                    <img src={linkingLoveImage} className='linkingLoveImageDesign'  />
                 </div>
             </div>
 
 
             <div className='linkingLoveMain'>
                 <div className='linkingLoveImage'>
-                    <img src={floraMain} style={{ height: '645px', marginTop: '5px' }} />
+                    <img src={floraMain} className='linkingLoveImageDesign' />
                 </div>
                 <div className='linkingLove'>
                     <p className='linkingTitle'>FLORA</p>
@@ -164,9 +162,7 @@ export default function FeaturedCollection() {
 
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring3ImageChange ? ring1hover : ring1} style={{
-                                        height: '400px', cursor: 'pointer',
-                                    }} onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                                    <img src={ring3ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -175,7 +171,7 @@ export default function FeaturedCollection() {
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring4ImageChange ? ring2hover : ring2} style={{ height: '400px', cursor: 'pointer' }} onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
+                                    <img src={ring4ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -188,9 +184,7 @@ export default function FeaturedCollection() {
                         <div className='linkRingLove'>
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring3ImageChange ? ring1hover : ring1} style={{
-                                        height: '400px', cursor: 'pointer',
-                                    }} onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                                    <img src={ring3ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -199,7 +193,7 @@ export default function FeaturedCollection() {
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring4ImageChange ? ring2hover : ring2} style={{ height: '400px', cursor: 'pointer' }} onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
+                                    <img src={ring4ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -211,9 +205,7 @@ export default function FeaturedCollection() {
                         <div className='linkRingLove'>
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring3ImageChange ? ring1hover : ring1} style={{
-                                        height: '400px', cursor: 'pointer',
-                                    }} onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                                    <img src={ring3ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
@@ -222,7 +214,7 @@ export default function FeaturedCollection() {
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring4ImageChange ? ring2hover : ring2} style={{ height: '400px', cursor: 'pointer' }} onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
+                                    <img src={ring4ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>

@@ -15,3 +15,7 @@
 .shopByCategoryBox{
     margin: 30px;  
 }
+.shopByCategoryBoxImg{
+    height: 200px;
+    width: 200px;
+}
