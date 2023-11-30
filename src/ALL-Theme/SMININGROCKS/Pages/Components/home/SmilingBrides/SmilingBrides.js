@@ -6,17 +6,18 @@ import { Colors } from '../../../../lib/consts/Colors'
 export default function SmilingBrides() {
     return (
         <div>
-            <div style={{ display: 'flex', marginInline: '90px' }}>
+            <div className='smilingBridesMain'>
                 <div className='smilingBrides'>
                     <p style={{
                         color: Colors.fontColor,
                         fontSize: '25px',
+                        textAlign: 'center',
                         fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif'
                     }}>SMILING BRIDES</p>
                     <button className='enagementBtn'>ENGAGEMENT COLLECTION</button>
                 </div>
                 <div className='smlingBridesImages'>
-                    <img src={bridesImage} style={{height: '650px', width : '100%',marginTop: '5px'}}/>
+                    <img src={bridesImage} className='smilingMainImages'/>
                 </div>
             </div>
         </div>

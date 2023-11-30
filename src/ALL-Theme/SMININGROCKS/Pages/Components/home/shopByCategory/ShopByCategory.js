@@ -22,22 +22,23 @@ export default function ShopByCategory() {
         </div>
         <div style={{
           display: 'flex',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          flexWrap: 'wrap'
         }}>
           <div className='shopByCategoryBox'>
-            <img src={shop1} style={{ height: '200px', width: '200px' }} />
+            <img src={shop1} className='shopByCategoryBoxImg'/>
             <p style={{fontWeight : 500, color : Colors.fontColor ,textAlign : 'center'}}>RINGS</p>
           </div>
           <div className='shopByCategoryBox'>
-            <img src={shop2} style={{ height: '200px', width: '200px' }} />
+            <img src={shop2} className='shopByCategoryBoxImg' />
             <p style={{fontWeight : 500, color : Colors.fontColor ,textAlign : 'center'}}>EARRINGS</p>
           </div>
           <div className='shopByCategoryBox'>
-            <img src={shop3} style={{ height: '200px', width: '200px' }} />
+            <img src={shop3} className='shopByCategoryBoxImg' />
             <p style={{fontWeight : 500, color : Colors.fontColor ,textAlign : 'center'}}>NACKLACES</p>
           </div >
           <div className='shopByCategoryBox'>
-            <img src={shop4} style={{ height: '200px', width: '200px' }} />
+            <img src={shop4} className='shopByCategoryBoxImg' />
             <p style={{fontWeight : 500, color : Colors.fontColor ,textAlign : 'center'}}>BRACELETS</p>
           </div>
         </div>

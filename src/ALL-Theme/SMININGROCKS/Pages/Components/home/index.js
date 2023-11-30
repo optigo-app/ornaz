@@ -9,6 +9,9 @@ import ShopByCategory from './shopByCategory/ShopByCategory';
 import SmilingBrides from './SmilingBrides/SmilingBrides';
 import FeaturedCollection from './FeaturedCollection/FeaturedCollection';
 import ShopifySection from './shopifySection/ShopifySection';
+import SustainAbility from '../sustainAbility/SustainAbility';
+import ShopOurInstagram from './shopOurInstagram/ShopOurInstagram';
+import Footer from './Footer/Footer';
 
 
 export default function Home() {
@@ -16,7 +19,7 @@ export default function Home() {
 
   return (
     <div style={{ backgroundColor: '#c0bbb1' }}>
-      <div className='smining-header'> 
+      <div className='smining-header'>
         <Header />
       </div>
       <div className='homeMain'>
@@ -27,21 +30,24 @@ export default function Home() {
         <ShopByCategory />
         <SmilingBrides />
         <FeaturedCollection />
+        <div style={{ marginTop: '60px' }}>
+          <SustainAbility />
+        </div>
         <ShopifySection />
-        {/* <div className='sal lercard'>
-      <SallerCard />
+        <ShopOurInstagram />
+        <Footer />
       </div>
-      <ConnectPage/>
-      <CategoryPage />
-      <MentionSection />
-      <CelebrityCardsPage />
-      <div className='JewelleryGiftsBannerPage'>
-        <JewelleryGiftsBannerPage />
-      </div>
-      <JewelleryGiftsCardsPage />
-      <TestimonialSection />
-      <AppoinmentSection />
-      <HomeFooter /> */}
+      <div>
+        <p style={{
+          paddingBlock: '30px',
+          margin: '0px',
+          textAlign: 'center',
+          color:'white',
+          cursor: 'pointer',
+          fontSize: '13px',
+          fontWeight: 500,
+          letterSpacing: '1px'
+        }}>BACK TO TOP</p>
       </div>
     </div>
   )

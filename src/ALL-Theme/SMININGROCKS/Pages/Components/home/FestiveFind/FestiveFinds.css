@@ -1,7 +1,9 @@
 .FestiveMainImage {
     position: relative;
 }
-
+.FestiveBannerImage{
+    width: 100%;
+}
 .festiveBox {
     position: absolute;
     top: 50%;
@@ -24,4 +26,19 @@
     border: 1px solid white;
     color: white;
     background-color: transparent;
+}
+
+@media screen and (max-width: 1024px) {
+    .FestiveMainImage {
+        display: flex!important;
+        flex-direction: column!important;
+    }
+    .festiveBox {
+        position: static!important;
+        background-color: #c0bbb1;
+        top: 0;
+        left: 0;
+        transform: translate(0%, 0%)!important;
+        text-align: center;
+    }
 }

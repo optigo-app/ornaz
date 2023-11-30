@@ -5,3 +5,22 @@
 .smining-header{
     height: 110px;
 }
+
+/* 
+
+@media screen and (min-width: 1441px) {
+    .mobileFooterSection {
+        display: none;
+    }
+} */
+
+
+@media screen and (max-width: 1440px) {
+
+    .homeMain {
+        margin-inline: 2%;
+
+    }
+
+
+}
