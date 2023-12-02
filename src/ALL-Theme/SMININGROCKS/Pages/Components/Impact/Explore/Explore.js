@@ -1,9 +1,10 @@
 import React from 'react'
+import Footer from '../../home/Footer/Footer'
 
 const Explore = () => {
   return (
-    <div style={{width:'100%',background:'#fff'}}>
-        <div style={{display:'flex',justifyContent:'center',color:'#7d7f85',alignItems:'center',marginTop:'60px',flexDirection:'column'}}>
+    <div style={{width:'100%',background:'#fff',marginBottom:'100px'}}>
+        <div style={{display:'flex',justifyContent:'center',color:'#7d7f85',alignItems:'center',marginTop:'60px',flexDirection:'column',borderBottom:'1px solid #e1e1e1'}}>
         <h2>Explore More</h2>
         <div style={{display:'flex',gap:'40px',marginTop:'30px'}}>
             <div>
@@ -32,6 +33,7 @@ const Explore = () => {
             </div>
         </div>
         </div>
+        <Footer/>
     </div>
   )
 }

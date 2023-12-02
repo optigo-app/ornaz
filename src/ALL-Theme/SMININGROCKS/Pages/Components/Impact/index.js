@@ -108,6 +108,7 @@ const index = () => {
             </p>
           </div>
           <Explore/>
+          
         </div>
       </div>
     </>
