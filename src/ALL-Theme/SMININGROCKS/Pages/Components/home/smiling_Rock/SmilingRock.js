@@ -22,7 +22,7 @@ export default function SmilingRock() {
                     <p className='learnMore'>LEARN MORE</p>
                 </div>
                 <div className='smilingRockBox'>
-                    <img class="simple-card__img " src="//smilingrocks.com/cdn/shop/files/BM_Logo_v02_972x.png?v=1659083102" srcset="//smilingrocks.com/cdn/shop/files/BM_Logo_v02_972x.png?v=1659083102 1x, //smilingrocks.com/cdn/shop/files/BM_Logo_v02_1944x.png?v=1659083102 2x" alt="" />
+                    <img class="simple-card__img "  src="//smilingrocks.com/cdn/shop/files/BM_Logo_v02_972x.png?v=1659083102" srcset="//smilingrocks.com/cdn/shop/files/BM_Logo_v02_972x.png?v=1659083102 1x, //smilingrocks.com/cdn/shop/files/BM_Logo_v02_1944x.png?v=1659083102 2x" alt="" />
                     <p className='smilingBoxName'>ESG+ Certified Brand Butterfly Mark</p>
                     <p className='learnMore'>LEARN MORE</p>
                 </div>

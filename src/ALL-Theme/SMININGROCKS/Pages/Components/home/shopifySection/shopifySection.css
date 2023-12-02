@@ -12,13 +12,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    order: 2;
 }
 
 .shopifyMainImage {
     /* border: 1px solid; */
     width: 50%;
-    order: 1;
 }
 
 .shopifyTitle {

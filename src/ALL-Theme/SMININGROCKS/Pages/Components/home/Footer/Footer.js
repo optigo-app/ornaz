@@ -4,8 +4,12 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaYoutube } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
+
+    const navigation = useNavigate();
+
     return (
         <div>
             <div className='footerTopMain'>
@@ -34,9 +38,9 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className='footerMoreOption'>
-                        <p className='footerMoreOptionData'>CONTACT US</p>
-                        <p className='footerMoreOptionData'>FAQ</p>
-                        <p className='footerMoreOptionData'>SERVICE POLICY</p>
+                        <p className='footerMoreOptionData' onClick={() => navigation('/contactUs')}>CONTACT US</p>
+                        <p className='footerMoreOptionData' onClick={() => navigation('/faq')}>FAQ</p>
+                        <p className='footerMoreOptionData' onClick={() => navigation('/servicePolicy')}>SERVICE POLICY</p>
                         <p className='footerMoreOptionData'>PRESS</p>
                 </div>
                 <div className='footerMoreText'>
