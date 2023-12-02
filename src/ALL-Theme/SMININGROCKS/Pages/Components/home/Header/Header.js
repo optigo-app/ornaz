@@ -14,7 +14,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import i1 from '../../../../lib/consts/Images'
 import { PiStarThin } from "react-icons/pi";
 import { IoSearchOutline } from "react-icons/io5";
-import { ABOUT_US, ACCOUNT, BLOG, CELEBRITY, CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, IMPACT, LAB_GROWN, LIFETIME_WARRANTY, LOGOUT_MESSAGE, LOOK_BOOK, MONEY_BACK_GUARANTEE, PRESS, SHOP } from "../../../../lib/consts/Strings";
+import { ABOUT_US, ACCOUNT, BLOG, CELEBRITY, CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, IMPACT, LAB_GROWN, LIFETIME_WARRANTY, LOGIN, LOGOUT_MESSAGE, LOOK_BOOK, MONEY_BACK_GUARANTEE, PRESS, SHOP } from "../../../../lib/consts/Strings";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
@@ -203,15 +203,17 @@ export default function Header({ name }) {
             justifyContent: 'flex-end'
           }}>
             <ul className="nav-ul-shop">
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ABOUT_US}</li>
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LAB_GROWN}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ACCOUNT}</li>
-              <li className="nav-li-smining" ><PiStarThin style={{ height: '15px', width: '15px' }} /></li>
-              <li className="nav-li-smining" style={{}}><IoSearchOutline style={{ height: '15px', width: '15px' }} /></li>
-              <li className="nav-li-smining" style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ height: '35px', width: '35px' }} /></li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/signIn')}>{LOGIN}</li>
+              <li className="nav-li-smining" onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+              <li className="nav-li-smining" onClick={() => navigation('/signIn')} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+              <li className="nav-li-smining" onClick={() => navigation('/signIn')} style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
             </ul>
           </div>
-        </div >
+        </div>
+
         <div
           onMouseEnter={handleDropdownOpen}
           onMouseLeave={handleDropdownClose}
@@ -264,6 +266,7 @@ export default function Header({ name }) {
             </div>
           </div>
         </div>
+
         <div className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? 'fixed' : ''}`}>
           <div className="Smining-Top-Header-fixed">
             <div style={{
@@ -312,12 +315,13 @@ export default function Header({ name }) {
               justifyContent: 'flex-end'
             }}>
               <ul className="nav-ul-fixed">
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ABOUT_US}</li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LAB_GROWN}</li>
+                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
+                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
                 <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ACCOUNT}</li>
-                <li className="nav-li-smining" ><PiStarThin style={{ height: '15px', width: '15px' }} /></li>
-                <li className="nav-li-smining" style={{}}><IoSearchOutline style={{ height: '15px', width: '15px' }} /></li>
-                <li className="nav-li-smining" style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ height: '30px', width: '30px' }} /></li>
+                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/signIn')}>{LOGIN}</li>
+                <li className="nav-li-smining" onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+                <li className="nav-li-smining" onClick={() => navigation('/signIn')} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+                <li className="nav-li-smining" onClick={() => navigation('/signIn')} style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
               </ul>
             </div>
           </div>
@@ -363,8 +367,6 @@ export default function Header({ name }) {
           </div>
         </div>
 
-
-
         <div div className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? 'fixed' : ''}`}>
           <div className="Smining-Top-Header-fixed" style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', margin: '5px', alignItems: 'center' }}>
@@ -394,10 +396,8 @@ export default function Header({ name }) {
             <div style={{ width: '40px' }} onClick={() => navigation('/MobileSearch')}>
               <SearchIcon style={{ fontSize: '30px' }} />
             </div>
-
           </div>
         </div>
-
 
         <Drawer
           anchor="left"
@@ -412,13 +412,10 @@ export default function Header({ name }) {
         >
           <div>
             <Button onClick={toggleDrawer(false)}>Close Drawer</Button>
-            <p>Drawer Content Goes Here</p>
+            <p>Drawer Content Goes</p>
           </div>
         </Drawer >
       </div>
-
-
-
 
 
     </>
