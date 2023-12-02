@@ -3,17 +3,11 @@ import "./index.css";
 import i1 from "../../assets/Impact/campaign/banner.webp";
 import Campaign from "./campaign/Campaign";
 import Header from "../home/Header/Header";
+import Explore from "./Explore/Explore";
 
 const index = () => {
   return (
     <>
-      {/* <div className='impact-container'>
-         <div className='impact-container2'>
-         <div className='impact-img-container'>
-           <img src={i1} alt={'img'} style={{zIndex:999}}/>
-          </div>
-        </div>
-     </div> */}
       <Header />
       <div>
         <div className="back-img-container">
@@ -113,6 +107,7 @@ const index = () => {
               </small>
             </p>
           </div>
+          <Explore/>
         </div>
       </div>
     </>
