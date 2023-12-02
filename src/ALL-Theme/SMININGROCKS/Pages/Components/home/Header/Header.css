@@ -1,3 +1,7 @@
+
+.sminingHeaderWeb{
+    height: 110px;
+}
 .Smining-Top-Header {
     display: flex;
     background-color: transparent;
@@ -180,12 +184,16 @@
 }
 
 @media screen and (min-width:1441px) {
-    .mobileHeader {
+    .mobileHeaderSmining {
         display: none;
     }
 }
 
 @media screen and (max-width:1440px) {
+
+    .sminingHeaderWeb{
+        display: none;
+    }
     .top_header {
         display: none;
     }

@@ -25,7 +25,7 @@ const index = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "-55px",
+            // marginTop: "-55px",
             flexDirection: "column",
             maxWidth: "1680px",
             marginRight: "auto",
@@ -33,7 +33,7 @@ const index = () => {
           }}
           className="main-front-container"
         >
-          <img src={i1} alt="..." className="impact-banner" />
+          <img src={i1} alt="..."  />
 
           <div
             style={{

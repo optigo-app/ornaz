@@ -22,10 +22,33 @@
 .shopifyTitle {
     color: #7d7f85;
     font-size: 30px;
+    text-align: center;
     font-family: 'FreightDispProMedium-Regular,Times New Roman,serif';
 }
 .shopifyDescription{
     width: 70%;
     font-size: 13px;
     text-align: center;
+}
+
+
+
+@media screen and (max-width: 1000px) {
+    .shopifyMain {
+        display: flex;
+        flex-direction: column;    
+        margin-inline: 10px;
+        margin-block: 60px;
+    
+    }
+
+    .shopifyDesc {
+        width: 100%;
+        order: 2;
+    }
+    
+    .shopifyMainImage {
+        width: 100%;
+        order: 1;
+    }
 }
