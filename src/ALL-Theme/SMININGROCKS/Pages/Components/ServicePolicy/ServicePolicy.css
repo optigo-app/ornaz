@@ -27,3 +27,16 @@
     font-weight: 500;
 
 }
+
+
+
+@media screen and (max-width:1200px) {
+    .smiling-ServicePolicyMain {
+    margin-inline: 2%;
+
+    }
+    .smiling-ServiPolicySubMain{
+    padding-inline: 5%;
+
+    }
+}

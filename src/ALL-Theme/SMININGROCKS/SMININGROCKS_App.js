@@ -13,6 +13,7 @@ import ServicePolicy from './Pages/Components/ServicePolicy/ServicePolicy'
 import MyWishList from './Pages/Components/myWishList/MyWishList'
 import Lookbook from './Pages/Components/Lookbook/index'
 import Press from './Pages/Components/press/Press'
+import Account from './Pages/Components/account/Account'
 
 export default function SMININGROCKS_App() {
     return (
@@ -31,6 +32,7 @@ export default function SMININGROCKS_App() {
                 <Route path="/myWishList" element={<MyWishList />} />
                 <Route path="/lookbook" element={<Lookbook />} />
                 <Route path="/press" element={<Press />} />
+                <Route path="/account" element={<Account />} />
             </Routes>
         </div>
     )

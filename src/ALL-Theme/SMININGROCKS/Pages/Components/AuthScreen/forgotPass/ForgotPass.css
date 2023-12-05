@@ -5,7 +5,7 @@
 }
 
 .labGrowForgot {
-    width: 25%;
+    width: 420px;
     margin: 10px;
 }
 
@@ -53,4 +53,16 @@
 }
 .cancleForgot:hover::before {
     width: 100%; 
+}
+
+
+
+@media screen and (max-width: 700px) {
+    .labGrowForgot {
+        width: 80%;
+    }
+    .submitBtnForgot{
+        width: 80%;
+    }
+   
 }

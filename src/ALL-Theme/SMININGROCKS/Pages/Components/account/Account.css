@@ -1,0 +1,104 @@
+.Smiling-AccountMain {
+    background-color: white;
+    margin-inline: 6%;
+}
+
+.SmilingAccountTitle {
+
+    font-size: 40px;
+    text-align: center;
+    color: #7d7f85;
+    font-family: 'FreightDispProBook-Regular,Times New Roman,serif';
+    font-weight: 500;
+    padding-top: 80px;
+}
+
+.smling-AccountTabMain {
+    margin-inline: 20%;
+}
+
+.smlingOrderHistory {
+
+    border: 1px solid #e1e1e1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.smlingOrderHistoryBtn {
+    height: 55px;
+    width: 200px;
+    background-color: #7d7f85;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+    border: 0;
+}
+
+.smilingSavedAddressMain {
+    border: 1px solid #e1e1e1;
+}
+
+
+.smilingAccountSavedRemoveBtn {
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 15px;
+    color: #7d7f85;
+    margin: 0px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    height: 22px;
+}
+
+.smilingAccountSavedRemoveBtn::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0%;
+    height: 1px;
+    background-color: black;
+    transition: width 0.3s ease-out;
+}
+
+.smilingAccountSavedRemoveBtn:hover::before {
+    width: 100%;
+    left: 0;
+    right: auto;
+    transition: width 0.3s ease-out;
+}
+
+.smilingAcoountAddNewBtn{
+    height: 55px;
+    width: 220px;
+    background-color: #7d7f85;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border: 0;
+    transition: all 0.4s ease;
+    margin-top: 25px;
+}
+.smilingAcoountAddNewBtn:hover{
+    border: 1px solid #7d7f85;
+    background-color: white;
+    color: #7d7f85;
+}
+.smilingAccountLogout{
+    position: relative;
+    left: 280px;
+    top: 18px;
+    font-size: 13px;
+    color: #7d7f85;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+.smilingAccountLogout:hover{
+    border-bottom: 1px solid black;
+}
+
+/* 1px solid #e1e1e1 */

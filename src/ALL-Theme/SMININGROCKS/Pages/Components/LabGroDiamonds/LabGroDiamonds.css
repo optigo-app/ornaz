@@ -67,6 +67,7 @@
 .labGrowBox1Title {
     font-size: 25px;
     color: #7d7f85;
+    text-align: center;
     font-family: 'FreightDispProMedium-Regular,Times New Roman,serif';
 }
 
@@ -91,6 +92,8 @@
 
 .labGrowTableMain {
     border: 1px solid #e1e1e1;
+    width: max-content; 
+    white-space: nowrap;
 }
 
 .labGrowTableDa {
@@ -135,8 +138,94 @@
     color: #7d7f85;
     border: 1px solid #7d7f85;
 }
-.labGrowZenithImg{
+
+.labGrowZenithImg {
     width: 70%;
 }
 
+.labGrowBoxImages {
+    height: 100%;
+    width: 100%;
+    margin-top: 5px;
+}
+
 /* 1px solid #e1e1e1 */
+
+@media screen and (max-width: 1300px) {
+
+    .labGrowBoxMain {
+        display: flex;
+        margin-inline: 10px;
+    }
+
+}
+
+
+@media screen and (max-width: 1010px) {
+    .labGrowMain {}
+
+    .labGrowBoxMain {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .labGrowBox1 {
+        order: 2;
+        width: 100%;
+    }
+
+    .labGrowBox2 {
+        order: 1;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .labGrowBoxImages {
+        object-fit: cover;
+    }
+    .labGrowBox1Desc{
+        width: 97%;
+    }
+
+    .labGroTableBottomDesc{
+        margin-inline: 20px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .labGrowBox2 {
+        height: auto;
+    }
+    .labGroProcessImg{
+        height: 250px;
+    }
+   
+}
+
+@media screen and (max-width: 350px) {
+    .labGrowTableMain {
+        margin-left: 250px;
+    }
+}
+@media screen and (max-width: 450px) {
+    .labGrowTableMain {
+        margin-left: 200px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .labGrowTableMain {
+        margin-left: 150px;
+    }
+}
+
+
+
+
+@media screen and (max-width: 400px) {
+  
+    .labGrowMoreBtn{
+        height: 70px;
+    }
+}
+
+

@@ -4,6 +4,7 @@ import './MyWishList.css'
 import Footer from '../home/Footer/Footer'
 
 export default function MyWishList() {
+    
     return (
         <div style={{
             backgroundColor: '#c0bbb1'

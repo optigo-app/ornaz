@@ -18,6 +18,8 @@ import { ABOUT_US, ACCOUNT, BLOG, CELEBRITY, CUSTERM_SERVICES, ETERNITY_BANDS, F
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
+import CloseIcon from '@mui/icons-material/Close';
+import { IoClose } from "react-icons/io5";
 
 export default function Header({ name }) {
   const navigation = useNavigate();
@@ -28,6 +30,21 @@ export default function Header({ name }) {
   const [isOpenEngagementRing, setIsEngagementRing] = useState(false);
   const [isOpenFineJewellaryGift, setFineJewellaryGift] = useState(false);
   const [isOpenInr, setIsInr] = useState(false);
+  const [inputValue, setInputValue] = useState(1);
+  const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
+
+
+  const toggleOverlay = () => {
+    setSerachShowOverlay(!serachsShowOverlay);
+  };
+
+  const handleIncrement = () => {
+    setInputValue((prevValue) => Math.min(parseInt(prevValue, 10) + 1, 99));
+  }
+  const handleDecrement = () => {
+    setInputValue((prevValue) => Math.max(parseInt(prevValue, 10) - 1, 1));
+  };
+
 
   const openDrawer = () => {
     setDrawerOpen(true);
@@ -116,11 +133,13 @@ export default function Header({ name }) {
 
 
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
+  const [isHeaderFixedDropShow, setIsHeaderFixedDropShow] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       setIsHeaderFixed(scrollPosition > 100);
+      setIsHeaderFixedDropShow(scrollPosition > 100);
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -151,8 +170,52 @@ export default function Header({ name }) {
     setOpen(isOpen);
   };
 
+  const [openCart, setOpenCart] = useState(false);
+
+  const toggleCartDrawer = (isOpen) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setOpenCart(isOpen);
+  };
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setInputValue(value)
+
+    const regex = /^[0-9]{0,2}$/;
+    const filteredValue = value.replace(/\D/g, '');
+
+    if (regex.test(value) || value === '') {
+      // If the value matches the pattern or is empty, update the input
+      // You can perform any other necessary action here, like setting the state
+    }
+  };
   return (
     <>
+      {serachsShowOverlay && (
+        <>
+          <div className="smlingSearchoverlay">
+            <div className="smlingTopSerachOver">
+              <IoSearchOutline style={{ height: '15px', width: '15px', marginRight: '10px' }} />
+              <input type="text" placeholder="search" className="serachinputBoxOverly" />
+              <IoClose style={{ height: '30px', width: '30px', color: '#7d7f85', cursor: 'pointer' }} onClick={toggleOverlay} />
+            </div>
+          </div>
+
+          <div className={`smlingSearchoverlayNew ${isHeaderFixedDropShow ? 'fixed' : ''}`}>
+            <div className="smlingTopSerachOver-Fixed">
+              <IoSearchOutline style={{ height: '15px', width: '15px', marginRight: '10px' }} />
+              <input type="text" placeholder="search" className="serachinputBoxOverly" />
+              <IoClose style={{ height: '30px', width: '30px', color: '#7d7f85', cursor: 'pointer' }} onClick={toggleOverlay} />
+            </div>
+          </div>
+        </>
+      )
+      }
       <div className="sminingHeaderWeb">
         <div className="Smining-Top-Header">
           <div style={{
@@ -166,7 +229,7 @@ export default function Header({ name }) {
                 onMouseLeave={handleDropdownClose}
 
               >
-                <span style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}>SHOP<RiArrowDropDownLine style={{ width: '20px', height: '20px' }} /></span>
+                <span className="nav-li-smining" style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}>SHOP<RiArrowDropDownLine style={{ width: '20px', height: '20px' }} /></span>
 
               </li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
@@ -205,11 +268,11 @@ export default function Header({ name }) {
             <ul className="nav-ul-shop">
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ACCOUNT}</li>
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/signIn')}>{LOGIN}</li>
-              <li className="nav-li-smining" onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-              <li className="nav-li-smining" onClick={() => navigation('/signIn')} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-              <li className="nav-li-smining" onClick={() => navigation('/signIn')} style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li>
+              {/* <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/signIn')}>{LOGIN}</li> */}
+              <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+              <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+              <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', marginTop: '0px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
             </ul>
           </div>
         </div>
@@ -217,9 +280,9 @@ export default function Header({ name }) {
         <div
           onMouseEnter={handleDropdownOpen}
           onMouseLeave={handleDropdownClose}
-          className={`shop-dropdown ${isDropdownOpen ? 'open' : ''}`}
+          className={`shop-dropdown ${isDropdownOpen ? 'open' : ''} ${isHeaderFixed ? 'fixed' : ''}`}
         >
-          <div style={{ display: 'flex', padding: '50px', color: 'black' }}
+          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white' }}
             onMouseEnter={handleDropdownOpen}
             onMouseLeave={handleDropdownClose}>
             <div>
@@ -267,7 +330,7 @@ export default function Header({ name }) {
           </div>
         </div>
 
-        <div className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? 'fixed' : ''}`}>
+        <div className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? 'fixed' : ''} ${serachsShowOverlay ? 'searchoverly' : ''}`}>
           <div className="Smining-Top-Header-fixed">
             <div style={{
               width: '30.33%',
@@ -281,11 +344,11 @@ export default function Header({ name }) {
                 >
                   <span style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}>SHOP<RiArrowDropDownLine style={{ width: '20px', height: '20px' }} /></span>
                 </li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/lookbook')}>{LOOK_BOOK}</li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/press')}>{PRESS}</li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/lookbook')}>{LOOK_BOOK}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/press')}>{PRESS}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
               </ul>
             </div>
             <div style={{
@@ -315,13 +378,13 @@ export default function Header({ name }) {
               justifyContent: 'flex-end'
             }}>
               <ul className="nav-ul-fixed">
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{ACCOUNT}</li>
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/signIn')}>{LOGIN}</li>
-                <li className="nav-li-smining" onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-                <li className="nav-li-smining" onClick={() => navigation('/signIn')} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-                <li className="nav-li-smining" onClick={() => navigation('/signIn')} style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li>
+                {/* <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/signIn')}>{LOGIN}</li> */}
+                <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+                <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+                <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
               </ul>
             </div>
           </div>
@@ -416,6 +479,104 @@ export default function Header({ name }) {
           </div>
         </Drawer >
       </div>
+
+      <Drawer
+        anchor="right"
+        open={openCart}
+        onClose={toggleCartDrawer(false)}
+        transitionDuration={500}
+        sx={{
+          '& .MuiDrawer-paper': {
+            width: '40%',
+            maxWidth: '40%',
+          },
+        }}
+      >
+        <div>
+          {/* <Button onClick={toggleCartDrawer(false)}>Close Drawer</Button> */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '20px' }}>
+            <CloseIcon onClick={toggleCartDrawer(false)} style={{ cursor: 'pointer', color: '#7d7f85' }} />
+          </div>
+          <p style={{
+            fontSize: '40px',
+            color: '#7d7f85',
+            textAlign: 'center',
+            fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
+          }}>Your Cart</p>
+          <div style={{
+            backgroundColor: '#f1f2f2',
+          }}>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: '15px'
+            }}>
+              <p style={{ margin: '0px' }}>Deliveries are available only in the USA.</p>
+              <p>3% will be donated to your choice of charity. Learn More</p>
+            </div>
+          </div>
+          <div className="smiling-cartBoxMain">
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignContent: 'center',
+              width: '30%'
+            }}>
+              <img src='https://cdn.shopify.com/s/files/1/0021/8444/6052/products/Lab-grown-diamond-white-gold-necklace-srnl00345wht_grande.jpg?v=1613627041' className='smiling-cartBoxImg' />
+            </div>
+            <div style={{
+              width: '65%',
+              margin: '20px'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                height: '20px'
+              }}>
+                <p style={{ fontSize: '14px', color: '#7d7f85' }}>My Type 0.28ct "B" Lab Grown</p>
+                <p>Ships in 14 days</p>
+                <p>$66,661.00</p>
+              </div>
+              <div style={{ fontSize: '14px', color: '#7d7f85' }}>
+                Diamond Necklace<br />
+                NL-00147WHT
+              </div>
+              <p style={{ fontSize: '12px', color: '#7d7f85' }}>White Gold / 18 Inches / 0.28</p>
+              <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', border: '1px solid #7d7f85' }}>
+                  <p style={{
+                    margin: '10px',
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    cursor: 'pointer'
+                  }} onClick={handleDecrement} >-</p>
+                  <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }}
+                    maxLength={2}
+                    inputMode="numeric"
+                    value={inputValue}
+                    onChange={handleInputChange} />
+                  <p style={{
+                    margin: '10px',
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    cursor: 'pointer'
+                  }} onClick={handleIncrement}>+</p>
+                </div>
+                <p style={{
+                  margin: '10px',
+                  fontSize: '15px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>REMOVE</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </Drawer >
 
 
     </>

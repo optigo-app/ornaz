@@ -8,8 +8,7 @@
 }
 
 .labGroSignTextBox {
-    width: 25%;
-    /* border: 1px solid #e1e1e1; */
+    width: 420px;
     height: 20px;
 }
 
@@ -46,9 +45,10 @@
     margin: 10px;
 }
 
-.smilingSignForgotDiv{
+.smilingSignForgotDiv {
     margin-top: 15px;
 }
+
 .smilingSignForgot {
     font-size: 12px;
     margin-top: 15px;
@@ -62,7 +62,7 @@
     transition: color 0.3s;
 }
 
-.smilinngLogReturnHomeDiv{
+.smilinngLogReturnHomeDiv {
     margin-top: 10px;
 }
 
@@ -80,7 +80,44 @@
 }
 
 .smilingSignForgot:hover::before {
-    width: 100%; 
+    width: 100%;
+}
+
+
+/* @media screen and (max-width: 1441px) {
+    .labGroSignTextBox {
+       width: 35%;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .labGroSignTextBox {
+       width: 50%;
+    }
+} */
+
+@media screen and (max-width: 700px) {
+    .labGroSignTextBox {
+        width: 70%;
+    }
+
+    .smlingSignRegiBtn {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+
+    .smiling-SignInBtn {
+        width: 70% !important;
+
+    }
+
+    .smiling-RegisterBtn {
+        width: 70% !important;
+
+
+    }
 }
 
 /* 1px solid #e1e1e1 */
