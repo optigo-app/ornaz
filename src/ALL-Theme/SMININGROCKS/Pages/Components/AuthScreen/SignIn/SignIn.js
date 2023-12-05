@@ -36,7 +36,7 @@ export default function SignIn() {
                         className='labGroSignTextBox'
                         style={{ marginTop: '50px' }}
                     />
-                    <div style={{ marginTop: '70px' }}>
+                    <div style={{ marginTop: '70px' }} className='smlingSignRegiBtn'>
                         <button className='smiling-SignInBtn'>SIGN IN</button>
                         <button className='smiling-RegisterBtn' onClick={() => navigation('/register')}>REGISTER NOW</button>
                     </div>

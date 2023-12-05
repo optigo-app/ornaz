@@ -11,6 +11,7 @@ import ContactUs from './Pages/Components/contactUs/ContactUs'
 import FAQ from './Pages/Components/FAQ/FAQ'
 import ServicePolicy from './Pages/Components/ServicePolicy/ServicePolicy'
 import MyWishList from './Pages/Components/myWishList/MyWishList'
+import Account from './Pages/Components/account/Account'
 
 export default function SMININGROCKS_App() {
     return (
@@ -27,6 +28,7 @@ export default function SMININGROCKS_App() {
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/servicePolicy" element={<ServicePolicy />} />
                 <Route path="/myWishList" element={<MyWishList />} />
+                <Route path="/account" element={<Account />} />
             </Routes>
         </div>
     )

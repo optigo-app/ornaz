@@ -36,13 +36,13 @@ export default function LabGroDiamonds() {
                         <p className='labGrowBox1Desc'>Smiling Rocks diamonds are in full compliance with our Transparency, Sustainability and Responsible sourcing. Our lab grown diamonds are sourced from renewable grown diamonds and are grown in our own facility using generic electricity. Our in-house diamond and jewelry manufacturing make our pricing affordable with no middlemen.</p>
                     </div>
                     <div className='labGrowBox2'>
-                        <img src='//smilingrocks.com/cdn/shop/files/image_2_7cdd5b1c-4f0c-4ad3-91a4-64e74c8cb787_180x.jpg?v=1613689623 180w,' style={{ height: '100%', width: '100%', marginTop: '5px' }} />
+                        <img src='//smilingrocks.com/cdn/shop/files/image_2_7cdd5b1c-4f0c-4ad3-91a4-64e74c8cb787_180x.jpg?v=1613689623 180w,' className='labGrowBoxImages' />
                     </div>
                 </div>
 
                 <div className='labGrowBoxMain' style={{ marginTop: '60px' }}>
                     <div className='labGrowBox2'>
-                        <img src='//smilingrocks.com/cdn/shop/files/1_forthe_planet_logo_180x.jpg?v=1651112898 180w,' style={{ height: '100%', width: '100%', marginTop: '5px' }} />
+                        <img src='//smilingrocks.com/cdn/shop/files/1_forthe_planet_logo_180x.jpg?v=1651112898 180w,' className='labGrowBoxImages' />
                     </div>
                     <div className='labGrowBox1'>
                         <p className='labGrowBox1Title'>1% for the Planet</p>
@@ -56,13 +56,13 @@ export default function LabGroDiamonds() {
                         <p className='labGrowBox1Desc'>Our lab-grown diamonds are graded using the standard 4Cs method of assessing diamond quality. We provide International Gemological Institute (IGI) certification for larger diamonds. Identification is important to us and is a representation of our quality mark. We have laser-inscribed Smiling Rocks logo and is only visible under a microscope. Smiling Rocks logo is inscribed on the surface on each diamond as our assurance on excellent quality.</p>
                     </div>
                     <div className='labGrowBox2'>
-                        <img src='//smilingrocks.com/cdn/shop/files/1_forthe_planet_logo_180x.jpg?v=1651112898 180w,' style={{ height: '100%', width: '100%', marginTop: '5px' }} />
+                        <img src='//smilingrocks.com/cdn/shop/files/1_forthe_planet_logo_180x.jpg?v=1651112898 180w,' className='labGrowBoxImages' />
                     </div>
                 </div>
 
                 <div style={{ paddingTop: '70px' }}>
                     <p className='labDrowTableTitle'>Identical to Mined Diamonds in Every Way</p>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div style={{ display: 'flex',overflowX: 'auto', justifyContent: 'center' }}>
                         <table className='labGrowTableMain'>
                             <thead>
                                 <tr>
@@ -103,7 +103,7 @@ export default function LabGroDiamonds() {
                     alignItems: 'center',
                     marginTop: '70px'
                 }}>
-                    <p>Zenith - The Celebration of Human Spirit and Innovation</p>
+                    <p style={{textAlign  : 'center'}}>Zenith - The Celebration of Human Spirit and Innovation</p>
                     <img src="https://cdn.accentuate.cloud/images/2184446052/ZENITH-Diamond-painting_Reena-Ahluwalia_Copyright.jpg?v=1650953931950" className='labGrowZenithImg'></img>
                     
                     <p style={{color: '#7d7f85' , width : '60%',textAlign: 'center'}}>Smiling Rocks wants to celebrate the new Era of technological advancement with all of you. Its remarkable to be a part of the new change in our industry. We believe Zenith is the first ever lab-grown diamond painting commissioned to Reena Alhuwalia by Smiling Rocks.</p>

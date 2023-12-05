@@ -1,6 +1,7 @@
 import React from 'react'
 import sustain1 from '../../assets/sustain/sustain1.webp'
 import sustain2 from '../../assets/sustain/sustain2.webp'
+import './sustain.css'
 
 const SustainAbility = () => {
   return (

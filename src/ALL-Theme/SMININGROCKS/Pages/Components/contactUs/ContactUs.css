@@ -54,12 +54,62 @@
     transition: all 0.4s ease;
 }
 
-.Fo-contactBox1BtnSub:hover{
+.Fo-contactBox1BtnSub:hover {
     background-color: white;
     border: 1px solid #7d7f85;
     color: #7d7f85;
 }
+
 .Fo-contactBox2Desc {
     color: #7d7f85;
     font-size: 14px;
+}
+
+
+
+@media screen and (min-width:1441px) {
+    .mobileHeaderSmining {
+        /* display: none; */
+    }
+}
+
+@media screen and (max-width:1440px) {
+    .Fo-contactBox1 {
+        padding-left: 0px;
+
+    }
+
+    .Fo-contactBox2 {
+        width: 40%;
+        margin: 0px;
+        margin-top: 15%;
+        margin-left: 100px;
+    }
+}
+
+@media screen and (max-width:1000px) {
+
+    .Fo-contactBoxMain {
+        display: flex;
+        margin-inline: 10%;
+        flex-direction: column;
+    }
+
+    .Fo-contactBox1 {
+        width: 100%;
+        padding-left: 0px;
+        margin-top: 50px;
+        border-right: 0;
+    }
+    .Fo-contactBox1InputBox {
+        height: 60px;
+        width: 100%;
+        border: 1px solid #e1e1e1;
+    }
+    .Fo-contactBox2 {
+        width: 100%;
+        margin: 10px;
+        margin-top: 30px;
+
+    }
 }
