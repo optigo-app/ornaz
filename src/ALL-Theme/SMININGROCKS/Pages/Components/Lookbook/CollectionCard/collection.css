@@ -1,0 +1,52 @@
+.outerCollDiv{
+ display: flex;
+ width:100%;
+ border:1px solid #e1e1e1;
+ justify-content: center;
+ align-items: center;
+ 
+}
+
+.leftCollPortion{
+width:23%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.rightCollPortion{
+width:77%;
+height: 100%;
+display: flex;
+}
+.collHeading{
+    font-family: "FreightDisp Pro Medium";
+    font-size: 26px;
+    color: #7d7f85;
+}
+.collBtn{
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #fff;
+    background-color: #7d7f85;
+    outline: none;
+    border:none;
+    letter-spacing: 2px;
+    padding: 20px 45px;
+    border:1px solid #7d7f85;
+    transition: 0.3s ease;
+}
+.collimg{
+height: 703px;
+width:100%;
+object-fit: cover;
+margin-top: 5px;
+margin-bottom: -6px;
+}
+
+.collBtn:hover{
+    background-color: white;
+    color:#7d7f85;
+}

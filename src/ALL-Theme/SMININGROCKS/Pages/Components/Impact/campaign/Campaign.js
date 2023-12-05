@@ -58,7 +58,7 @@ const Campaign = () => {
           <div style={{width:'568px',marginTop:'25px',color:'#7d7f85'}}>
           <p style={{fontFamily:'FreightDisp Pro Medium',fontSize:'26px'}}>Keeping The Promise</p>
           <p style={{fontFamily:'TT Commons, sans-serif',fontSize:'13px'}}>
-            Together, we will create an unstoppable force in achieving the <space/>
+            Together, we will create an unstoppable force in achieving the&nbsp;
              <b>Sustainable Development Goals</b>. With just nine years left the 
             time has come to deliver on our 2030 promise.
           </p>
@@ -67,7 +67,7 @@ const Campaign = () => {
             our promise for the Global Goals and create the world we 
             want to see today and for our future.
           </p>
-          <p style={{fontFamily:'TT Commons, sans-serif',fontSize:'13px'}}> <u style={{cursor:'pointer'}}>Donate Now</u> Directly to UNSDG fund!</p>
+          <p style={{fontFamily:'TT Commons, sans-serif',fontSize:'13px'}}> <u style={{cursor:'pointer'}}>Donate Now</u>&nbsp;Directly to UNSDG fund!</p>
           </div>
         </div>
       </div>

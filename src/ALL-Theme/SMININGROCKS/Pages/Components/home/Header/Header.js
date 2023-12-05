@@ -233,8 +233,8 @@ export default function Header({ name }) {
 
               </li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/lookbook')}>{LOOK_BOOK}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/press')}>{PRESS}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
             </ul>
@@ -345,8 +345,8 @@ export default function Header({ name }) {
                   <span style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}>SHOP<RiArrowDropDownLine style={{ width: '20px', height: '20px' }} /></span>
                 </li>
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
-                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{LOOK_BOOK}</li>
-                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{PRESS}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/lookbook')}>{LOOK_BOOK}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/press')}>{PRESS}</li>
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
               </ul>

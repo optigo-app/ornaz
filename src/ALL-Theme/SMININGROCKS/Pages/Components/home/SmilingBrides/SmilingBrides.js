@@ -17,7 +17,7 @@ export default function SmilingBrides() {
                     <button className='enagementBtn'>ENGAGEMENT COLLECTION</button>
                 </div>
                 <div className='smlingBridesImages'>
-                    <img src={bridesImage} className='smilingMainImages'/>
+                    <img src={bridesImage} className='smilingMainImages' alt={''}/>
                 </div>
             </div>
         </div>
