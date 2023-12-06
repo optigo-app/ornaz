@@ -1,0 +1,10 @@
+.bloghead::after{
+    content: "";
+    position: relative;
+    width: auto; 
+    height: 1px;
+    background-color: #7f7d85;
+    left:0;
+    bottom: -1px;
+    display:flex;
+}
