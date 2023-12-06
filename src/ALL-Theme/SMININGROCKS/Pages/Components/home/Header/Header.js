@@ -235,8 +235,8 @@ export default function Header({ name }) {
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/lookbook')}>{LOOK_BOOK}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/press')}>{PRESS}</li>
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/celeb')}>{CELEBRITY}</li>
+              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/blog')}>{BLOG}</li>
             </ul>
           </div>
           <div style={{
@@ -347,8 +347,8 @@ export default function Header({ name }) {
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/lookbook')}>{LOOK_BOOK}</li>
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/press')}>{PRESS}</li>
-                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{CELEBRITY}</li>
-                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/jewelleryPage')}>{BLOG}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/celeb')}>{CELEBRITY}</li>
+                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/blog')}>{BLOG}</li>
               </ul>
             </div>
             <div style={{

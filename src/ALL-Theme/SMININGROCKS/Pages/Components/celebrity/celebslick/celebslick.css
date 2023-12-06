@@ -1,0 +1,7 @@
+.smcelebimg:nth-child(2n){
+    margin-top: 25px;
+}
+
+.carousel .control-dots{
+    top:460px;
+}
