@@ -14,6 +14,7 @@ import MyWishList from './Pages/Components/myWishList/MyWishList'
 import Lookbook from './Pages/Components/Lookbook/index'
 import Press from './Pages/Components/press/Press'
 import Account from './Pages/Components/account/Account'
+import SearchResult from './Pages/Components/searchResult/SearchResult'
 
 export default function SMININGROCKS_App() {
     return (
@@ -33,6 +34,7 @@ export default function SMININGROCKS_App() {
                 <Route path="/lookbook" element={<Lookbook />} />
                 <Route path="/press" element={<Press />} />
                 <Route path="/account" element={<Account />} />
+                <Route path="/searchResult" element={<SearchResult />} />
             </Routes>
         </div>
     )

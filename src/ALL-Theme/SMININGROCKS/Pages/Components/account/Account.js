@@ -57,13 +57,25 @@ export default function Account() {
                     <p className='SmilingAccountTitle'>Your Account</p>
                     <div className='smling-AccountTabMain'>
                         <Box sx={{ width: '100%' }}>
-                            <Box sx={{ display: 'flex', justifyContent: 'center', borderBottom: 1, borderColor: 'divider' }}>
-                                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"  >   {/* indicatorColor="#7d7f85" */}
-                                    <Tab label="ORDER HISTORY" {...a11yProps(0)} />
-                                    <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
-                                </Tabs>
-                                <p className='smilingAccountLogout'>LOG OUT</p>
-                            </Box>
+                            <div className='smlingAccountTabWebView'>
+                                <Box sx={{ display: 'flex', justifyContent: 'center', borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"  >   {/*  orientation="vertical" indicatorColor="#7d7f85" */}
+                                        <Tab label="ORDER HISTORY" {...a11yProps(0)} />
+                                        <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
+                                    </Tabs>
+                                    <p className='smilingAccountLogout'>LOG OUT</p>
+                                </Box>
+                            </div>
+                            <div className='smlingAccountTabMobileView'>
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-start', borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{width : '100%'}} >   {/*  indicatorColor="#7d7f85" */}
+                                        <Tab label="ORDER HISTORY" {...a11yProps(0)} sx={{textAlign:'start', borderBottom: 1,width:'90%', borderColor: 'divider' }} />
+                                        <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
+                                    </Tabs>
+                                </Box>
+                                <p className='smilingAccountLogoutMobile'>LOG OUT</p>
+                            </div>
+
                             <CustomTabPanel value={value} index={0}>
 
                                 <div>
@@ -110,12 +122,12 @@ export default function Account() {
                                             }}>DEFAULT ADDRESS</p>
                                         </div>
                                         <p style={{
-                                                fontSize: '13px',
-                                                fontWeight: 500,
-                                                marginTop: '15px',
-                                                margin: '30px',
-                                                color: '#7d7f85',
-                                            }}>United States</p>
+                                            fontSize: '13px',
+                                            fontWeight: 500,
+                                            marginTop: '15px',
+                                            margin: '30px',
+                                            color: '#7d7f85',
+                                        }}>United States</p>
                                         <div style={{
                                             display: 'flex',
                                             margin: '30px',

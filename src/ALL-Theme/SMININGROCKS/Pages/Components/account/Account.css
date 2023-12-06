@@ -71,7 +71,7 @@
     transition: width 0.3s ease-out;
 }
 
-.smilingAcoountAddNewBtn{
+.smilingAcoountAddNewBtn {
     height: 55px;
     width: 220px;
     background-color: #7d7f85;
@@ -82,12 +82,14 @@
     transition: all 0.4s ease;
     margin-top: 25px;
 }
-.smilingAcoountAddNewBtn:hover{
+
+.smilingAcoountAddNewBtn:hover {
     border: 1px solid #7d7f85;
     background-color: white;
     color: #7d7f85;
 }
-.smilingAccountLogout{
+
+.smilingAccountLogout {
     position: relative;
     left: 280px;
     top: 18px;
@@ -97,8 +99,59 @@
     cursor: pointer;
     transition: all 0.4s ease;
 }
-.smilingAccountLogout:hover{
+
+.smilingAccountLogout:hover {
     border-bottom: 1px solid black;
+}
+
+
+
+@media screen and (max-width: 1441px) {
+
+    .Smiling-AccountMain {
+    margin-inline: 2%;
+
+    }
+
+    .smling-AccountTabMain {
+    margin-inline: 5%;
+
+    }
+}
+@media screen and (min-width: 1050px) {
+    .smlingAccountTabMobileView{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1049px) {
+
+    .smlingAccountTabWebView{
+        display: none;
+    }
+
+    .smilingAccountLogoutMobile{
+        position: relative;
+        left: 18px;
+        top: 10px;
+        font-size: 13px;
+        color: #7d7f85;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        border-bottom: 1xp solid #7d7f85!important;
+    }
+    .css-10d9dml-MuiTabs-indicator{
+        position: relative!important;
+    }
+    .css-jg8ebh-MuiButtonBase-root-MuiTab-root{
+        display: flex;
+        align-items: start!important;
+    }
+    .css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
+        display: flex;
+        align-items: start!important;
+    }
 }
 
 /* 1px solid #e1e1e1 */

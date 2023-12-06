@@ -38,26 +38,34 @@
     letter-spacing: 1.5px;
 }
 
+
+.smilingRockBox {
+    position: relative;
+    /* Other styles for smilingRockBox */
+}
+
 .learnMore {
     position: relative;
     text-decoration: none;
     color: #000;
-    transition: color 0.3s;
 }
 
 .learnMore::before {
     content: '';
     position: absolute;
-    width: 0;
-    height: 2px;
     bottom: 0;
-    left: 0;
-    background-color: #000;
-    transition: width 0.3s ease;
+    left: 100%; /* Initially positioned outside */
+    width: 0%;
+    height: 1px;
+    background-color: black;
+    transition: width 0.3s ease-out, left 0.3s ease-out; /* Added 'left' property for transition */
 }
 
-.learnMore:hover::before {
-    width: 100%; 
+.smilingRockBox:hover .learnMore::before {
+    width: 100%;
+    left: 0;
+    right: auto;
+    transition: width 0.3s ease-out;
 }
 
 
