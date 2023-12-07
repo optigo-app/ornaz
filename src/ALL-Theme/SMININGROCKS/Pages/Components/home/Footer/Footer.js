@@ -41,7 +41,7 @@ export default function Footer() {
                         <p className='footerMoreOptionData' onClick={() => navigation('/contactUs')}>CONTACT US</p>
                         <p className='footerMoreOptionData' onClick={() => navigation('/faq')}>FAQ</p>
                         <p className='footerMoreOptionData' onClick={() => navigation('/servicePolicy')}>SERVICE POLICY</p>
-                        <p className='footerMoreOptionData'>PRESS</p>
+                        <p className='footerMoreOptionData' onClick={() => navigation('/press')}>PRESS</p>
                 </div>
                 <div className='footerMoreText'>
                     <p style={{

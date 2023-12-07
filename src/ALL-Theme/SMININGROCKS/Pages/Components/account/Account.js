@@ -68,8 +68,8 @@ export default function Account() {
                             </div>
                             <div className='smlingAccountTabMobileView'>
                                 <Box sx={{ display: 'flex', justifyContent: 'flex-start', borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{width : '100%'}} >   {/*  indicatorColor="#7d7f85" */}
-                                        <Tab label="ORDER HISTORY" {...a11yProps(0)} sx={{textAlign:'start', borderBottom: 1,width:'90%', borderColor: 'divider' }} />
+                                    <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{ width: '100%' }} >   {/*  indicatorColor="#7d7f85" */}
+                                        <Tab label="ORDER HISTORY" {...a11yProps(0)} sx={{ textAlign: 'start', borderBottom: 1, width: '90%', borderColor: 'divider' }} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
                                     </Tabs>
                                 </Box>
