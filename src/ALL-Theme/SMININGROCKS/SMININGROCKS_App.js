@@ -17,6 +17,8 @@ import Account from './Pages/Components/account/Account'
 import SearchResult from './Pages/Components/searchResult/SearchResult'
 import Celeb from './Pages/Components/celebrity/Celeb'
 import Blog from './Pages/Components/Blog/Blog'
+import ProductList from './Pages/Components/productPage/ProductList'
+import ProdDetail from './Pages/Components/productDetail/ProdDetail'
 
 export default function SMININGROCKS_App() {
     return (
@@ -39,6 +41,8 @@ export default function SMININGROCKS_App() {
                 <Route path="/searchResult" element={<SearchResult />} />
                 <Route path="/celeb" element={<Celeb />} />
                 <Route path="/blog" element={<Blog />} />
+                <Route path="/productpage" element={<ProductList />}/>
+                <Route path="/productdetail" element={<ProdDetail />}/>
             </Routes>
         </div>
     )
