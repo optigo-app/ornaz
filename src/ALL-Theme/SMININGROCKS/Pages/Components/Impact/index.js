@@ -53,7 +53,7 @@ const index = () => {
                 textTransform: "capitalize",
                 paddingBottom: "15px",
               }}
-              className="quotes-div1 title"
+              className="quotes-div1Title"
             >
               Together We Can Make An Impact
             </p>
@@ -65,7 +65,7 @@ const index = () => {
                 fontSize: "22px",
                 fontFamily: "FreightDisp Pro Medium",
               }}
-              className="quotes-div1 descript"
+              className="quotes-div1Descript"
             >
               Our purpose is to building a chain of smile through innovative lab
               grown diamonds, sustainable luxury and giving back to the
@@ -87,6 +87,7 @@ const index = () => {
               alignItems: "center",
               flexDirection: "column",
             }}
+            className="quotes-div2"
           >
             <p
               style={{
@@ -94,8 +95,9 @@ const index = () => {
                 fontFamily: "FreightDisp Pro Medium",
                 color: "white",
                 lineHeight: "25px",
+                textAlign: 'center'
               }}
-              className="quotes-div2 descript"
+              className="quotes-div2Descript"
             >
               “Creating Smiling Rocks has been our dream and life mission as our
               way of spreading smiles around the world and to help make our

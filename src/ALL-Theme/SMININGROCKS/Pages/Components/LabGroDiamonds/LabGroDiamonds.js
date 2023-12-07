@@ -62,7 +62,7 @@ export default function LabGroDiamonds() {
 
                 <div style={{ paddingTop: '70px' }}>
                     <p className='labDrowTableTitle'>Identical to Mined Diamonds in Every Way</p>
-                    <div style={{ display: 'flex',overflowX: 'auto', justifyContent: 'center' }}>
+                    <div style={{ display: 'flex',overflowX: 'scroll',overflowY: 'scroll', justifyContent: 'center' }}>
                         <table className='labGrowTableMain'>
                             <thead>
                                 <tr>
