@@ -17,6 +17,7 @@ const Card = ({newsimg,newsdesc,newsdate}) => {
         backgroundColor:'white'
         // position:'absolute'
       }}
+      className=''
     >
       <div>
         <img

@@ -65,7 +65,7 @@ export default function ShopifySection() {
                                 <p style={{ fontSize: '12px', fontWeight: 500, letterSpacing: '1px' }}>{data.Link}</p>
                             </div>
                             <div className='shopifyMainImage'>
-                                <img src={data.images} style={{ height: '100%', marginTop: '5px' }} />
+                                <img src={data.images} style={{ height: '100%',width:'100%', marginTop: '5px' }} />
                             </div>
                         </div>
                     </div>

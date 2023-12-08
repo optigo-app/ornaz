@@ -41,7 +41,10 @@
 
 
 @media screen and (max-width:768px) {
-
+    .impact-container{
+        /* background-image: url('https://cdn.accentuate.io/19336265828/3641674891364/Stocksy_txp824d1dddS9J200_Medium_2036581.jpg'); */
+        height: 100%!important;
+    }
     .quotes-div2{
         width: fit-content!important;
     }
