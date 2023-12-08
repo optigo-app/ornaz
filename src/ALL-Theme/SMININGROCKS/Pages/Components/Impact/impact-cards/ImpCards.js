@@ -134,7 +134,7 @@ const ImpCards = () => {
               </div>
               <div style={{ display: 'flex', width: '33.33%', alignItems: 'center', padding: '30px 20px', marginLeft: i % 2 === 0 ? '20px' : '60px', height: '25%' }}>
                 {jd.fund.map((imgData) => (
-                  <img src={imgData.i} alt={'...'} />
+                  <img src={imgData.i} alt={'...'} style={{width:'100%'}} />
                 ))}
               </div>
             </div>
@@ -142,7 +142,7 @@ const ImpCards = () => {
               <img
                 src={jd.banner}
                 alt={"..."}
-                style={{ objectFit: 'cover', marginTop: "5px", height: "100%", marginBottom: '-5px', width: '100%' }}
+                style={{ objectFit: 'cover',  height: "100%", width: '100%' }}
               />
             </div>
           </div>

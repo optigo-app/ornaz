@@ -29,6 +29,16 @@ const ProdDetail = () => {
             width: "100%",
           }}
         >
+         <div style={{width:'100%',display:'flex'}} className='product-detail-container'>
+          <div style={{width:'65%'}}>
+            <img 
+            src={'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45.jpg?v=1613627318'} 
+            alt={''}
+            style={{transform:'0px 0px 0px'}}
+            />
+          </div>
+          <div style={{width:'35%'}}></div>
+         </div>
           <div
             style={{
               padding: "0px 85px",
@@ -37,6 +47,8 @@ const ProdDetail = () => {
               justifyContent: "center",
               alignItems: "center",
             }}
+
+            className='compeletethelook'
           >
 
               <img
@@ -56,7 +68,6 @@ const ProdDetail = () => {
                 flexDirection:'column',
                 justifyContent:'center',
                 alignItems:'center',
-                
               }}
             >
               <p style={{fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85',fontSize:'30px',marginLeft:'-87px'}}>Complete The Look</p>

@@ -50,7 +50,7 @@ const Campaign = () => {
         <SustainAbility />
       </div>
       <div className="campaingImages" style={{ padding: "0px 85px 0px", marginTop: '45px' }}>
-        <img src={united} alt={''} />
+        <img src={united} alt={''} style={{width:'100%'}} />
       </div>
       <div style={{ padding: "0px 85px 0px", marginTop: '45px' }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
