@@ -57,7 +57,7 @@ const Press = () => {
         </div>
         <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
         <div style={{maxWidth:'1680px',backgroundColor:'white'}}>
-            <img src={'https://smilingrocks.com/cdn/shop/files/Press_page_1512x.jpg?v=1614293076'} alt={''} style={{objectFit:'cover',height:'882.59px',width:'100%',marginTop:'8px'}}/>
+            <img src={'https://smilingrocks.com/cdn/shop/files/Press_page_1512x.jpg?v=1614293076'} alt={''} style={{objectFit:'cover',height:'882.59px',width:'100%'}}/>
             <div style={{display:'flex',flexWrap:'wrap',padding:'0 85px',marginTop:'-70px',}}>
               {
                 CardData.map((ci)=>(

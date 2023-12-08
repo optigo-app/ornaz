@@ -33,7 +33,7 @@ const index = () => {
           }}
           className="main-front-container"
         >
-          <img src={i1} alt="..."  />
+          <img src={i1} alt="..." style={{width:'100%'}} />
 
           <div
             style={{

@@ -14,7 +14,7 @@ const BlogCard = ({dj}) => {
             {blogdate}
          </p>
          <div style={{width:'800px',overflow:'visible',left:'-17%',position:'relative',marginTop:'35px'}}>
-         <img src={blogImg} alt={''} />
+         <img src={blogImg} alt={''} style={{width:'100%'}} />
          </div>
     </div>
   )
