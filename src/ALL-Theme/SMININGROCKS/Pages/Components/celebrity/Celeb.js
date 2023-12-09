@@ -92,20 +92,21 @@ const Celeb = () => {
         }}
       >
         <Header/>
-        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-            <div style={{maxWidth:'1680px',backgroundColor:'white',height:'100%'}}>
-                <img src={'https://smilingrocks.com/cdn/shop/files/Celebrity_Page_Banner_-_Met_Gala_2023_1680x.jpg?v=1683165587'} alt={''}/>
-                <div>
-                    <h1 style={{fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85',textAlign:'center',margin:'60px 0px'}}>Celebrities</h1>
-                    <div style={{display:'flex',gap:'20px',margin:'30px 15px',flexWrap:'wrap'}}>
+        <div style={{display:'flex'}} className='smilingCelebMain'>
+            <div className='smilingCelebMainSub'>
+                <img src={'https://smilingrocks.com/cdn/shop/files/Celebrity_Page_Banner_-_Met_Gala_2023_1680x.jpg?v=1683165587'} alt={''} className='smilingCeleMainTopImage'/>
+                <div className='smilingCelebBoxMain' style={{backgroundColor:'white'}}>
+                    <h1 style={{fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85',textAlign:'center',paddingTop:'80px'}}>Celebrities</h1>
+                    <div style={{display:'flex',margin:'30px 15px',flexWrap:'wrap'}}>
                         {
                         demoJSON.map((dj)=>(
                             <CelebSlick dj={dj}/>
                             ))
                         }
                     </div>
-                </div>
                 <Footer/>
+
+                </div>
             </div>
         </div>
       </div>

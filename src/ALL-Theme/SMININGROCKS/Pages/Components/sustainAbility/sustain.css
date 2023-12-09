@@ -27,6 +27,12 @@
     }
 }
 
+@media screen and (max-width: 400px) {
+    .sustainBoxImageBoxMain{
+        padding: 0px!important;
+    }
+}
+
 @media screen and (max-width: 800px) {
     .sustaionMain {
         padding: 0px;
