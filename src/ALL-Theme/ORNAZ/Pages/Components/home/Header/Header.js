@@ -212,7 +212,7 @@ export default function Header({ name }) {
                     {demoJSON.map((data) => (
                       <Tooltip title={data.title} arrow placement="top" >
                         <tr>
-                          <td>{data.currency}</td>
+                          <td className="ornazCurrencytd">{data.currency}</td>
                         </tr>
                       </Tooltip>
 

@@ -116,7 +116,7 @@ button.close {
     align-items: center;
 }
 
-td {
+.ornazCurrencytd {
     display: flex;
     width: 144px;
     height: 49px;
@@ -125,7 +125,7 @@ td {
     color: #888
 }
 
-td:hover {
+.ornazCurrencytd:hover {
     background-color: #45d4d5;
 }
 
