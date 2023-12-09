@@ -12,11 +12,11 @@ const SustainAbility = () => {
           <p style={{ fontSize: '14px', fontFamily: "TT Commons, sans-serif", color: '#7d7f85' }}>For our planet, our home, and our future</p>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px' }}>
-          <div style={{ background: '#fafafa', padding: '20px 20px 0px 20px', textAlign: 'center' }}>
+          <div style={{ background: '#fafafa', padding: '20px 20px 0px 20px', textAlign: 'center' }} className='sustainBoxImageBoxMain'>
             <img src={sustain1} alt={''}  className='sustaionImage1'/>
             <p style={{ marginTop: "7px", color: '#7d7f85', fontSize: '13px', fontFamily: "TT Commons, sans-serif", fontWeight: '600' }}>1% for the Planet</p>
           </div>
-          <div style={{ background: '#fafafa', padding: '20px 20px 0px 20px', textAlign: 'center' }}>
+          <div style={{ background: '#fafafa', padding: '20px 20px 0px 20px', textAlign: 'center' }} className='sustainBoxImageBoxMain'>
             <img src={sustain2} alt={''} className='sustaionImage2' />
             <p style={{ marginTop: "7px", color: '#7d7f85', fontSize: '13px', fontFamily: "TT Commons, sans-serif", fontWeight: '600' }}> Certified Butterfly Mark on ESG+</p>
           </div>

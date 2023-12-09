@@ -1,0 +1,12 @@
+.smilingBlogMain{
+    background-color: white;
+    width: 100%;
+    margin-inline: 6%;
+}
+
+@media screen and (max-width: 1000px) {
+    .smilingBlogMainSub {
+        width: auto!important;
+    }
+  
+}

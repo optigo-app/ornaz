@@ -62,7 +62,7 @@ export default function LabGroDiamonds() {
 
                 <div style={{ paddingTop: '70px' }}>
                     <p className='labDrowTableTitle'>Identical to Mined Diamonds in Every Way</p>
-                    <div style={{ display: 'flex',overflowX: 'scroll',overflowY: 'scroll', justifyContent: 'center' }}>
+                    <div style={{ display: 'flex', overflowX: 'scroll', overflowY: 'scroll', justifyContent: 'center' }}>
                         <table className='labGrowTableMain'>
                             <thead>
                                 <tr>
@@ -97,16 +97,16 @@ export default function LabGroDiamonds() {
                 </div>
 
                 <div style={{
-                    display : 'flex',
+                    display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
                     marginTop: '70px'
                 }}>
-                    <p style={{textAlign  : 'center'}}>Zenith - The Celebration of Human Spirit and Innovation</p>
+                    <p style={{ textAlign: 'center' }}>Zenith - The Celebration of Human Spirit and Innovation</p>
                     <img src="https://cdn.accentuate.cloud/images/2184446052/ZENITH-Diamond-painting_Reena-Ahluwalia_Copyright.jpg?v=1650953931950" className='labGrowZenithImg'></img>
-                    
-                    <p style={{color: '#7d7f85' , width : '60%',textAlign: 'center'}}>Smiling Rocks wants to celebrate the new Era of technological advancement with all of you. Its remarkable to be a part of the new change in our industry. We believe Zenith is the first ever lab-grown diamond painting commissioned to Reena Alhuwalia by Smiling Rocks.</p>
+
+                    <p style={{ color: '#7d7f85', width: '60%', textAlign: 'center' }}>Smiling Rocks wants to celebrate the new Era of technological advancement with all of you. Its remarkable to be a part of the new change in our industry. We believe Zenith is the first ever lab-grown diamond painting commissioned to Reena Alhuwalia by Smiling Rocks.</p>
                 </div>
 
                 <ContactForm />
