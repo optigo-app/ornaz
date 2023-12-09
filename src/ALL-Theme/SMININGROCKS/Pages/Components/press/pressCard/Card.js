@@ -17,7 +17,7 @@ const Card = ({newsimg,newsdesc,newsdate}) => {
         backgroundColor:'white'
         // position:'absolute'
       }}
-      className=''
+      className='smilingPressCardMain'
     >
       <div>
         <img
@@ -26,7 +26,7 @@ const Card = ({newsimg,newsdesc,newsdate}) => {
           style={{ height: "50px", width: "317.5px", objectFit: "contain",marginBottom:'15px'}}
         />
       </div>
-      <div style={{ textAlign: "center",width:'302px'}}>
+      <div className='smilingPresBoxDesc' style={{ textAlign: "center",width:'302px'}}>
         <p style={{fontSize:'18px',color:'#7d7f85',fontWeight:'500'}}>{newsdesc}</p>
       </div>
       <div>

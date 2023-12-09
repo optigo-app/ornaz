@@ -12,3 +12,32 @@
     border:1px solid #7d7f85;
     transition: 0.3s ease;
 }
+
+
+@media screen and (max-width: 1441px) {
+    .smilingPresBoxDesc{
+        width: auto!important;
+    }   
+}
+
+
+@media screen and (max-width: 1000px) {
+    .smilingPressCardMain{
+        width: 33.33%!important;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .smilingPressCardMain{
+        width: 50%!important;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .smilingPressCardMain{
+        width: 100%!important;
+    }
+}
+
+

@@ -1,10 +1,23 @@
-.bloghead::after{
+.bloghead::after {
     content: "";
     position: relative;
-    width: auto; 
+    width: auto;
     height: 1px;
     background-color: #7f7d85;
-    left:0;
+    left: 0;
     bottom: -1px;
-    display:flex;
+    display: flex;
+}
+
+@media screen and (max-width: 1000px) {
+    .smilingBlogImage {
+        width: 80%!important;
+    }
+    .smilingBlogImageBoxMain{
+    }
+    .smilingBlogImageMain{
+        left: 0px!important;
+        display: flex!important;
+        justify-content: center;
+    }
 }

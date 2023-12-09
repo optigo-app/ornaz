@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../home/Header/Header'
 import Footer from '../home/Footer/Footer'
 import BlogCard from './blogcard/BlogCard'
+import './Blog.css'
 
 const Blog = () => {
 
@@ -42,7 +43,7 @@ const Blog = () => {
             <p style={{fontSize:'40px',fontFamily: 'FreightDisp Pro Medium', color: '#fff'}}>Blog and Style Guide</p>
         </div>
         <div style={{display:'flex',justifyContent:'center',alignItems:'center',}}>
-            <div style={{width:'1680px',backgroundColor:'white'}}>
+            <div className='smilingBlogMain'>
                 <div>
                     <div style={{display:'flex',justifyContent:'center',alignItems:'center',padding:'90px 30px 32px',flexDirection:'column'}}>
                         <p style={{width:'600px',fontSize:'14px',color:'#7f7d85',fontWeight:500}} >
@@ -52,7 +53,7 @@ const Blog = () => {
                             latest fashion trends in the lab created diamond 
                             and jewelry world.
                         </p>
-                        <div style={{display:'flex',flexDirection:"column",width:'600px'}}>
+                        <div className='smilingBlogMainSub' style={{display:'flex',flexDirection:"column",width:'600px'}}>
                         {
                             demoJSON.map((dj)=>(
                                 <BlogCard dj={dj} />

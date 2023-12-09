@@ -13,7 +13,6 @@ export default function SearchResult() {
     const [ring3ImageChange, setRing3ImageChange] = useState(false);
 
     const location = useLocation();
-    console.log(location.state);
 
 
     const handleMouseEnterRing3 = () => {
@@ -34,9 +33,29 @@ export default function SearchResult() {
                 textAlign: 'center',
                 fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif',
                 paddingBlock: '30px'
-            }}>Search Results for "{location.state.searchText}"</p>
+            }}>Search Results for "{location.state?.searchText}"</p>
             <div className='smilingSearchResultMain'>
                 <div className='smilingSearchResultBoxMain'>
+                    <div className='smilingSearchResultBox'>
+                        <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
+                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                    </div>
+                    <div className='smilingSearchResultBox'>
+                        <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
+                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                    </div>
+                    <div className='smilingSearchResultBox'>
+                        <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
+                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                    </div>
+                    <div className='smilingSearchResultBox'>
+                        <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
+                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                    </div>
                     <div className='smilingSearchResultBox'>
                         <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
                         <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>

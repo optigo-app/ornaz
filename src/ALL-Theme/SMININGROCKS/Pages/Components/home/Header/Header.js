@@ -615,7 +615,7 @@ export default function Header({ name }) {
           </div>
         </div>
 
-        {!drawerShowOverlay && <div div className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? 'fixed' : ''}`}>
+        {!drawerShowOverlay && <div div className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? 'fixed' : ''} ${serachsShowOverlay ? 'searchoverly' : ''}`}>
           <div className="Smining-Top-Header-fixed" style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', margin: '5px', alignItems: 'center' }}>
               {drawerShowOverlay ? <IoClose style={{ height: '30px', width: '30px', color: '#7d7f85', cursor: 'pointer' }} onClick={toggleDrawerOverlay} /> : <MenuIcon style={{ fontSize: '40px', color: '#7d7f85' }} onClick={toggleDrawerOverlay} />}

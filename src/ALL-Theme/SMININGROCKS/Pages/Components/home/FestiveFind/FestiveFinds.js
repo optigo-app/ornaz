@@ -1,7 +1,11 @@
 import React from 'react'
 import './FestiveFinds.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function FestiveFinds() {
+
+    const navigation = useNavigate();
+
     return (
         <div>
             <div className='FestiveMainImage'>
@@ -13,7 +17,7 @@ export default function FestiveFinds() {
                         Explore your jewelry for upcoming holiday!
                     </p>
                     <div >
-                        <button className='DiscoverBtn'>DISCOVER MORE</button>
+                        <button className='DiscoverBtn' onClick={() => navigation('/productpage')}>DISCOVER MORE</button>
                     </div>
                 </div>
             </div>
