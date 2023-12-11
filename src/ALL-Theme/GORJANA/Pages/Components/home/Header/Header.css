@@ -1,0 +1,38 @@
+.gorjanaHeader{
+    box-shadow: inset 0 -1px 0 0 #e4e6ec;
+    position: fixed;
+    width: 100%;
+}
+.gorjanaTopHeader {
+    background-color: #f6efe6;
+    padding: 5px;
+    padding-left: 60px;
+}
+
+
+.gorajanaBottomHeaderMain{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: white;
+
+}
+
+.gorjanaImgMenuMain{
+    display: flex;
+    margin-left: 44px;
+    margin-top: 2px;
+}
+.gorjanaHeaderMenu{
+    display: flex;
+    list-style: none;
+    margin: 0px;
+    margin-left: 7px;
+}
+.gorjana-Menu-item{
+    margin: 0px;
+    padding-inline: 20px;
+    font-family: inherit;
+    font-size: 14px;
+    color: inherit;
+}

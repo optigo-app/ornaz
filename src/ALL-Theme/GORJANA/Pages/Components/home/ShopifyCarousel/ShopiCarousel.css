@@ -1,0 +1,25 @@
+.shopiCarTile {
+    margin-inline: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.shopiCarTile.one {
+    font-size: 30px;
+}
+
+.shopiCarTile.two {
+    font-size: 30px;
+}
+
+.shopiCarTile.three {
+    font-size: 30px;
+}
+
+.shopiCarTile.fou {
+    font-size: 30px;
+}
+
+.shopiCarTile.five {
+    font-size: 30px;
+}
