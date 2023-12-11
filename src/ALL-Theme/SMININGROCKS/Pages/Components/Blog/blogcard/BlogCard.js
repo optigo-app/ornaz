@@ -13,8 +13,8 @@ const BlogCard = ({ dj }) => {
       <p style={{ color: '#7f7d85', marginTop: '15px' }} >
         {blogdate}
       </p>
-      <div className='smilingBlogImageMain' style={{ width: '800px', overflow: 'visible', left: '-17%', position: 'relative', marginTop: '35px' }}>
-        <img src={blogImg} alt={''} style={{ width: '100%' }} className='smilingBlogImage' />
+      <div className='smilingBlogImageMain'>
+        <img src={blogImg} alt={''} className='smilingBlogImage' />
       </div>
     </div>
   )

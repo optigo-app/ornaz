@@ -41,11 +41,8 @@ const ProdDetail = () => {
         }}
       >
         <div className='prodDetailWhitecont' >
-          <div
-            style={{ width: "100%", display: "flex" }}
-            className="product-detail-container"
-          >
-            <div style={{ width: "60%" }}>
+          <div className="product-detail-container" >
+            <div className='srprodetail1' >
               <img
                 src={
                   "https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45.jpg?v=1613627318"
@@ -53,44 +50,23 @@ const ProdDetail = () => {
                 alt={""}
                 style={{
                   width: "100%",
-                  height: "680px",
                   zindex: -1,
                   position: "relative",
                   objectFit: "cover",
                 }}
               />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  paddingLeft: "50px",
-                  zIndex: 1,
-                  top: "200px",
-                  position: "absolute",
-                }}
-              >
+              <div className='srthumb_images' >
                 {imgData.map((data) => (
                   <img
                     src={data.links}
                     alt={""}
-                    style={{
-                      width: "58px",
-                      height: "58px",
-                      border: "1px solid #e1e1e1",
-                    }}
+                    className='srthumb_images_el'
                   />
                 ))}
               </div>
             </div>
-            <div
-              style={{
-                width: "40%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <div style={{ margin: "120px 150px 0px" }}>
+            <div className='srprodetail2' >
+              <div className='srprodetail2-cont'>
                 <p
                   style={{
                     fontSize: "40px",
@@ -405,7 +381,7 @@ const ProdDetail = () => {
             </div>
           </div>
           <div
-            style={{ display: "flex", justifyContent: "center", width: "100%",marginTop:'80px',marginBottom:'-60px'}}
+            className='Acc-container'
           >
             <div
               style={{
@@ -425,7 +401,7 @@ const ProdDetail = () => {
               >
                 Tell Me More
               </p>
-              <ul style={{ listStyleType: "none", width: "40%" }}>
+              <ul className='srAccul'>
                 <li
                   className="tellmoreli"
                   onClick={() => {
@@ -613,21 +589,11 @@ const ProdDetail = () => {
                       src={
                         "https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-earrings-sre00362wht_medium.jpg?v=1590473229"
                       }
-                      style={{
-                        width: "110px",
-                        height: "110px",
-                        objectFit: "cover",
-                      }}
+                      className='srthelook_img'
                     />
                   </div>
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      borderBottom: "1px solid #e1e1e1",
-                      gap: "158px",
-                      marginRight: "30px",
-                    }}
+                    className='srthelook_prodinfo'
                   >
                     <div
                       style={{
@@ -645,7 +611,7 @@ const ProdDetail = () => {
                       </p>
                     </div>
                     <div>
-                      <span style={{ fontSize: "30px", color: "#7d7f85" }}>
+                      <span style={{ fontSize: "30px", color: "#7d7f85",padding:'5px'}} className=''>
                         &#8250;
                       </span>
                     </div>
@@ -657,21 +623,11 @@ const ProdDetail = () => {
                       src={
                         "https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-necklace-srnl00367wht_medium.jpg?v=1613626874"
                       }
-                      style={{
-                        width: "110px",
-                        height: "110px",
-                        objectFit: "cover",
-                      }}
+                      className='srthelook_img'
                     />
                   </div>
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      borderBottom: "1px solid #e1e1e1",
-                      gap: "158px",
-                      marginRight: "30px",
-                    }}
+                    className='srthelook_prodinfo'
                   >
                     <div
                       style={{
@@ -701,20 +657,11 @@ const ProdDetail = () => {
                       src={
                         "https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-bracelet-srbl00236wht_medium.jpg?v=1590473675"
                       }
-                      style={{
-                        width: "110px",
-                        height: "110px",
-                        objectFit: "cover",
-                      }}
+                      className='srthelook_img'
                     />
                   </div>
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "158px",
-                      marginRight: "30px",
-                    }}
+                    className='srthelook_prodinfo'
                   >
                     <div
                       style={{

@@ -9,15 +9,25 @@
     display: flex;
 }
 
+.smilingBlogImageMain{
+    width:800px;
+    overflow:visible; 
+    left: -17%; 
+    position:relative; 
+    margin-top:35px;
+}
+
+.smilingBlogImage{
+    width:100%
+}
+
 @media screen and (max-width: 1000px) {
-    .smilingBlogImage {
-        width: 80%!important;
-    }
-    .smilingBlogImageBoxMain{
-    }
+    
+   
     .smilingBlogImageMain{
-        left: 0px!important;
-        display: flex!important;
+        width:auto;
+        left: 0px;
+        display: flex;
         justify-content: center;
     }
 }
