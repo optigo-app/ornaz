@@ -1,0 +1,51 @@
+.gorGiftMain {
+    display: flex;
+    margin-inline: 12%;
+}
+
+.gorGiftBox1 {
+    width: 45%;
+    margin-top: 13%;
+    margin-inline: 5%;
+
+}
+
+.gorGiftBox1Images {
+    width: 100%;
+}
+
+
+.gorGiftBox2 {
+    width: 55%;
+    margin-top: 7%;
+}
+
+.gorGiftBox2Images {
+    width: 95%;
+    height: 720px;
+}
+
+.gorGiftBoxDesc {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.25;
+    font-family: 'Freight Big Pro,serif';
+}
+
+.gorViewLookBookimg {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.gorViewLookBookDesc {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.gorViewLookBookImage {
+    width: 65%;
+}

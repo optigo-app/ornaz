@@ -1,0 +1,39 @@
+.gorjanaFave1{
+    padding-top: 110px;
+    cursor: pointer;
+}
+.gorjanaFaveImage{
+    width: 100%;
+}
+.gorjanaFaveBox{
+    position: absolute;
+    top: 40%;
+    right: 14%;
+}
+
+.gorjanaFavBoxLink{
+    font-size: 19px;
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -15px;
+    font-family: 'Freight Big Pro,serif';
+    text-decoration: underline;
+}
+
+.gorjanaFave2{
+    padding-top: 45px;
+    cursor: pointer;
+}
+
+.gorjanaFaveBox2{
+    position: absolute;
+    top: 130%;
+    left: 15%;
+}
+.gorjanaFavBoxLink2{
+    font-size: 19px;
+    color: white;
+    font-family: 'Freight Big Pro,serif';
+    text-decoration: underline;
+}
