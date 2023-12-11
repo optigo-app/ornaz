@@ -293,7 +293,7 @@ export default function Header({ name }) {
             </div>
             <div className="smlingDraweOverlayMain">
               <div className="drawrTitlediv">
-                <p style={{ margin: '0px', display: 'flex', justifyContent: 'space-between' }} onClick={toggleList}>FINE JEWELLERY<spa>{isOpen ? '-' : '+'}</spa></p>
+                <p style={{ margin: '0px', display: 'flex', justifyContent: 'space-between' }} onClick={toggleList}>FINE JEWELLERY<span>{isOpen ? '-' : '+'}</span></p>
                 <ul className={`my-list-fineJewe ${isOpen ? 'open' : ''}`}>
                   <li>
                     <p style={{ marginTop: '10px' }}>Ring</p>
@@ -306,7 +306,7 @@ export default function Header({ name }) {
                 </ul>
               </div>
               <div className="drawrTitlediv" style={{ marginTop: '20px' }}>
-                <p style={{ margin: '0px', display: 'flex', justifyContent: 'space-between' }} onClick={toggleListCollection}>COLLECTION<spa>{isOpenCollection ? '-' : '+'}</spa></p>
+                <p style={{ margin: '0px', display: 'flex', justifyContent: 'space-between' }} onClick={toggleListCollection}>COLLECTION<span>{isOpenCollection ? '-' : '+'}</span></p>
 
                 <ul className={`my-list-fineJewe ${isOpenCollection ? 'open' : ''}`}>
                   <li>
@@ -337,7 +337,7 @@ export default function Header({ name }) {
                 </ul>
               </div>
               <div className="drawrTitlediv" style={{ marginTop: '20px' }}>
-                <p style={{ margin: '0px', display: 'flex', justifyContent: 'space-between' }} onClick={toggleListBouti}>BOUTIQUE<spa>{isOpenBouti ? '-' : '+'}</spa></p>
+                <p style={{ margin: '0px', display: 'flex', justifyContent: 'space-between' }} onClick={toggleListBouti}>BOUTIQUE<span>{isOpenBouti ? '-' : '+'}</span></p>
 
                 <ul className={`my-list-fineJewe ${isOpenBouti ? 'open' : ''}`}>
                   <li>

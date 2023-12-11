@@ -46,7 +46,7 @@ const Blog = () => {
             <div className='smilingBlogMain'>
                 <div>
                     <div style={{display:'flex',justifyContent:'center',alignItems:'center',padding:'90px 30px 32px',flexDirection:'column'}}>
-                        <p style={{width:'600px',fontSize:'14px',color:'#7f7d85',fontWeight:500}} >
+                        <p className='srblog-head' >
                             Sharing our style and looks for lab grown diamond 
                             jewelry collections! A guide for you to find 
                             different ways to stylize your wardrobe with the 
