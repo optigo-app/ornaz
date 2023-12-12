@@ -1,8 +1,11 @@
 import React from 'react'
 import { PiMapPinLight } from "react-icons/pi";
 import './Header.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+
+    let navigate = useNavigate()
     return (
         <div>
             <div className='gorjanaHeader'>
@@ -18,7 +21,7 @@ export default function Header() {
                             alignItems: 'center'
                         }}>
                             <ul className='gorjanaHeaderMenu'>
-                                <li className='gorjana-Menu-item'>Jewelry</li>
+                                <li className='gorjana-Menu-item' onClick={()=>navigate('/jewelry')}>Jewelry</li>
                                 <li className='gorjana-Menu-item'>Fine Jewelry</li>
                                 <li className='gorjana-Menu-item'>New Arrivals</li>
                                 <li className='gorjana-Menu-item'>Best Sellers</li>
