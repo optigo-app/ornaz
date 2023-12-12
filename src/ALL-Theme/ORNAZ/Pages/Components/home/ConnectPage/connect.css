@@ -11,7 +11,9 @@
 }
 
 .connect-img{
-    
+    max-width: 100%;
+    width: auto;
+    transform: translate3d(0px, -0.828638%, 0px);
 }
 
 /* @media screen and (max-width:1672px) {
