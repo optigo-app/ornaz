@@ -53,7 +53,7 @@ const ProductCard = ({productsList}) => {
                         style={{
                             width:'100%',
                             objectFit:'cover',
-                            transition:'all 0.7s ease',
+                            transition:'all 0.3s ease',
                             position:'absolute',
                             zIndex:1,
                             opacity:(imgFlag && (imgInx===i))? 1 : 0,
