@@ -58,7 +58,7 @@ export default function SallerCard() {
   return (
     <div>
 
-      <div className='sliderCardWeb' style={{height : '510px'}}>
+      <div className='sliderCardWeb' style={{ height: '510px' }}>
         <Cards sallerCardImg={demoJSON} cardTitle={'Shop Our Best Sellers'} type={'seller'} />
       </div>
 
@@ -67,9 +67,9 @@ export default function SallerCard() {
           <span className="card-title-text">{cardTitle}</span>
           {(type !== 'celebs' && type !== 'banner') && <span className="card-shopall" style={{ marginRight: type === 'category' ? '10px' : '' }}>Shop All</span>}
         </div>
-        <div class="scrollable-container">
-          <div class="image-scroll-container">
-            <div class="image-scroll-content">
+        <div className="scrollable-container">
+          <div className="image-scroll-container">
+            <div className="image-scroll-content">
               {demoJSON?.map((data, index) => (
                 <div key={index} className="image-wrapper">
                   <img src={data.prodImg} alt={`Image ${index + 1}`} />

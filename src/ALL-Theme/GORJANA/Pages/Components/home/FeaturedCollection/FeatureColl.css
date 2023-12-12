@@ -1,0 +1,30 @@
+.gorFetureMain {
+    display: flex;
+    margin-inline: 12%;
+}
+
+.gorFetureBox1 {
+    width: 45%;
+    margin-top: 13%;
+    margin-inline: 5%;
+
+}
+.gorFutureBox1Images {
+    width: 100%;
+}
+
+.gorFetureBox2 {
+    width: 55%;
+    margin-top: 7%;
+}
+.gorFetureBox2Images {
+    width: 95%;
+    height: 690px;
+}
+
+.gorFutureBoxDesc {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.25;
+    font-family: 'Freight Big Pro,serif';
+}
