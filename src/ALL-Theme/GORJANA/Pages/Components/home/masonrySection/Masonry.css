@@ -1,0 +1,28 @@
+.GorMansoryMain{
+    display: flex;
+    margin-inline: 15%;
+}
+
+.GorMansoryBox1{
+    width: 50%;
+}
+.GorMansoryBox1Img{
+    width: 90%;
+}
+.GorMansoryBox2{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+.GorMansoryBox2Img{
+    width: 90%;
+}
+
+.GorMansoryBtn{
+    height: 50px;
+    width: 200px;
+    background-color: #283045;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+}

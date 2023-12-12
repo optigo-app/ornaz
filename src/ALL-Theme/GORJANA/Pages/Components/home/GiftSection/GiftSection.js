@@ -29,7 +29,7 @@ export default function GiftSection() {
                         <img src='https://www.gorjana.com/cdn/shop/files/Feature-GiftsUnder_150_4b3637bc-a43b-451c-b183-3721016224d5.jpg?v=1702053479&%3Bwidth=1200&em-format=avif' className='gorGiftBox2Images' />
                         <p className='gorGiftBoxDesc'>Gifts Under $150</p>
                     </div>
-                    <div >
+                    <div style={{marginTop: '50px'}}>
                         <img src='https://www.gorjana.com/cdn/shop/files/MasonryGrid-GiftsThatGlitter.jpg?v=1701380400&%3Bwidth=1200&em-format=avif' className='gorGiftBox2Images' />
                         <p className='gorGiftBoxDesc'>Splurge Worthy Gifts</p>
                     </div>

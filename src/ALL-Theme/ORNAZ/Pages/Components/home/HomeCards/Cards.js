@@ -88,9 +88,6 @@ export const Cards = ({ sallerCardImg, cardTitle, type }) => {
           </div>
         </div>
       </div>
-
-     
-
     </div>
 
   );

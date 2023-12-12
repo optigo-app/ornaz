@@ -348,7 +348,7 @@ button.close {
 
 @media screen and (min-width:1441px) {
     .mobileHeader{
-        display: none;
+        display: none!important;
     }
 }
 
