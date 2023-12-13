@@ -36,3 +36,32 @@
         text-underline-offset: 3px;
     }
 }
+
+.filter_btn_div{
+    display: flex;
+    gap:7px;
+    justify-content: center;
+    padding: 24px 18px;
+    border-top: 1px solid #e4e6ec;
+    position: fixed;
+    bottom:0;
+    background-color: white;
+}
+
+.gjbtn{
+    outline: none;
+    border:1px solid #283045;
+    padding: 8px 20px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.gjclear{
+  background-color: white;
+  color:#283045
+}
+
+.gjresults{
+  background-color: #283045;
+  color:white
+}
