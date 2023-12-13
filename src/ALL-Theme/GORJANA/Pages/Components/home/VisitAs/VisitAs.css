@@ -1,0 +1,36 @@
+.gorTopVisiteDetail {
+    background-color: #f6efe6;
+    margin-block: 8%;
+    padding-inline: 14%;
+    display: flex;
+}
+
+.gorTopVisiteDetailBox{
+    width: 33.33%;
+    padding-block: 2%;
+}
+
+.gorTopVisiteDetailTitle{
+    font-size: 22px;
+    font-family: 'Freight Big Pro,serif';
+}
+.gorTopVisiteDetailDesc{
+    font-size: 13px;
+    width: 60%;
+}
+
+.gorVsiteBox1{
+    width: 30%;
+}
+
+.gorVsiteBox2{
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-inline: 2%;
+}
+.gorVsiteBox3{
+    width: 40%;
+    object-fit: cover;
+}

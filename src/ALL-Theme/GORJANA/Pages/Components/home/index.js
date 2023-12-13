@@ -8,6 +8,8 @@ import FeatureColl from './FeaturedCollection/FeatureColl'
 import Masonry from './masonrySection/Masonry'
 import Footer from './Footer/Footer'
 import Recommended from './Recommended/Recommended'
+import VisitAs from './VisitAs/VisitAs'
+import InstaSection from './instagram/InstaSection'
 
 export default function Home() {
   return (
@@ -21,6 +23,8 @@ export default function Home() {
             <FeatureColl />
             <Masonry />
             <Recommended />
+            <VisitAs />
+            <InstaSection />
             <Footer />
         </div>
     </div>

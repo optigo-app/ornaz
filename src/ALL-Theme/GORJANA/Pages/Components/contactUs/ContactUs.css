@@ -1,0 +1,28 @@
+
+.gorContactMain{
+    margin-top: 11%;
+    margin-inline: 30%;
+}
+
+.gorContacInputBox{
+    height: 50px;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding-left: 20px;
+}
+
+.gorContacInputMessageBox{
+    height: 150px;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding-left: 20px;
+    appearance: none; /* Remove default arrow on other browsers */
+    
+}
+
+.gorContactSubBtn{
+    height: 50px;
+    width: 150px;
+    color: white;
+    background-color: #4d5469;
+}

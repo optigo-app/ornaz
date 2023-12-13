@@ -7,6 +7,10 @@ import { Drawer } from "@mui/material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useRecoilState } from "recoil";
 import { BlurFlag } from "./Pages/recoil";
+import SignIn from './Pages/Components/AuthSection/SignIn'
+import ContactUs from './Pages/Components/contactUs/ContactUs'
+import Accessibility from './Pages/Components/Accessibility/Accessibility'
+import PrivacyPolicy from './Pages/Components/PrivacyPolicy/PrivacyPolicy'
 
 export default function GORJANA_App() {
 
@@ -65,6 +69,10 @@ export default function GORJANA_App() {
                   setBlurFlag(false);
                 }}
               />
+                <Route path="/Signin" element={<SignIn />} />
+                <Route path="/ContactUs" element={<ContactUs />} />
+                <Route path="/accessibility" element={<Accessibility />} />
+                <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
             </span>
           </div>
         </div>
