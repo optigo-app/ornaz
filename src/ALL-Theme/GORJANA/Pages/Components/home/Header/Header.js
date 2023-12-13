@@ -31,14 +31,7 @@ export default function Header({}) {
               className="gorjanaHederImage"
               onClick={() => navigate("/")}
             />
-            <div
-              style={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "space-between",
-                alignContent: "center",
-              }}
-            >
+            <div className="gorjanaHeaderSubMenuMain">
               <ul className="gorjanaHeaderMenu">
                 <li
                   className="gorjana-Menu-item"
