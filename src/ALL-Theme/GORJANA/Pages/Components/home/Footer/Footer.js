@@ -5,7 +5,11 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { TfiYoutube } from "react-icons/tfi";
 import { MdOutlineMusicNote } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 export default function Footer() {
+
+    const navigation = useNavigate();
+
     return (
         <div>
             <div className='gorjanaFooterMain'>
@@ -24,7 +28,7 @@ export default function Footer() {
                     </div>
                     <div className='gorjanaFooterMainBox2'>
                         <p className='gorjanaFooterLink'>FAQ</p>
-                        <p className='gorjanaFooterLink'>Contact Us</p>
+                        <p className='gorjanaFooterLink' onClick={() =>navigation('/ContactUs')}>Contact Us</p>
                         <p className='gorjanaFooterLink'>Shipping & Returns</p>
                         <p className='gorjanaFooterLink'>Store Locator</p>
                         <p className='gorjanaFooterLink'>Wholesale</p>
@@ -53,9 +57,9 @@ export default function Footer() {
                         <p>© 2023 gorjana & Griffin, Inc. All rights reserved.</p>
                     </div>
                     <div style={{ display: 'flex' }}>
-                        <p style={{paddingInline: '15px' ,fontSize: '14px', borderRight: '1px solid'}}>Accessibility</p>
-                        <p style={{paddingInline: '15px' ,fontSize: '14px', borderRight: '1px solid'}}>Privacy Policy</p>
-                        <p style={{paddingInline: '15px' ,fontSize: '14px', borderRight: '1px solid'}}>Terms</p>
+                        <p style={{paddingInline: '15px' ,cursor:'pointer', fontSize: '14px', borderRight: '1px solid'}} onClick={() => navigation('/accessibility')}>Accessibility</p>
+                        <p style={{paddingInline: '15px' ,cursor:'pointer', fontSize: '14px', borderRight: '1px solid'}} onClick={() => navigation('/privacyPolicy')}>Privacy Policy</p>
+                        <p style={{paddingInline: '15px' ,fontSize: '14px', borderRight: '1px solid'}} onClick={() => navigation('/accessibility')}>Terms</p>
                         <p style={{paddingInline: '15px' ,fontSize: '14px'}}>Do Not Share My Information</p>
                     </div>
                 </div>
