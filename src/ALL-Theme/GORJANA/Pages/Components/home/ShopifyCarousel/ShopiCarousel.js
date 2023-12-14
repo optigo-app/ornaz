@@ -7,7 +7,7 @@ export default function ShopiCarousel() {
 
   return (
     <div>
-        <div style={{display : 'flex' , justifyContent : 'center',marginTop: '70px'}}>
+        <div className='gorShopiTitle' >
             <p className={`shopiCarTile ${selectedTitle === 'one' && selectedTitle}`} onClick={() => setSelectedTitle('one')}>Necklaces</p>
             <p  className={`shopiCarTile ${selectedTitle === 'two' && selectedTitle}`} onClick={() => setSelectedTitle('two')}>Earrings</p>
             <p className={`shopiCarTile ${selectedTitle === 'three' && selectedTitle}`} onClick={() => setSelectedTitle('three')}>Bracelets</p>
