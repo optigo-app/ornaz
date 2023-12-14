@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { useSetRecoilState } from "recoil";
-import { BlurFlag } from "../../../recoil";
+import { BlurFlag, SideNavListItem } from "../../../recoil";
 
 import { IoMenuOutline } from "react-icons/io5";
 
@@ -13,6 +13,7 @@ export default function Header({ }) {
   let navigate = useNavigate();
 
   let setRecoilBlurFlag = useSetRecoilState(BlurFlag);
+  let setRecoilSideNavListItem = useSetRecoilState(SideNavListItem);
 
   return (
     <div>
@@ -33,12 +34,60 @@ export default function Header({ }) {
             />
             <div className="gorjanaHeaderSubMenuMain">
               <ul className="gorjanaHeaderMenu">
-                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Jewelry</li>
-                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Fine Jewelry</li>
-                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> New Arrivals</li>
-                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Best Sellers</li>
-                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Gifts</li>
-                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Explore </li>
+                <li
+                  className="gorjana-Menu-item"
+                  onClick={() => {
+                    setRecoilBlurFlag(true)
+                    setRecoilSideNavListItem('jewelry')
+                  }}
+                >
+                  Jewelry
+                </li>
+                <li
+                  className="gorjana-Menu-item"
+                  onClick={() => {
+                    setRecoilBlurFlag(true)
+                    setRecoilSideNavListItem('fine jewelry')
+                  }}
+                >
+                  Fine Jewelry
+                </li>
+                <li
+                  className="gorjana-Menu-item"
+                  onClick={() => {
+                    setRecoilBlurFlag(true)
+                    setRecoilSideNavListItem('new Arrivals')
+                  }}
+                >
+                  New Arrivals
+                </li>
+                <li
+                  className="gorjana-Menu-item"
+                  onClick={() => {
+                    setRecoilBlurFlag(true)
+                    setRecoilSideNavListItem('Best sellers')
+                  }}
+                >
+                  Best Sellers
+                </li>
+                <li
+                  className="gorjana-Menu-item"
+                  onClick={() => {
+                    setRecoilBlurFlag(true)
+                    setRecoilSideNavListItem('gifts')
+                  }}
+                >
+                  Gifts
+                </li>
+                <li
+                  className="gorjana-Menu-item"
+                  onClick={() => {
+                    setRecoilBlurFlag(true)
+                    setRecoilSideNavListItem('explore')
+                  }}
+                >
+                  Explore
+                </li>
               </ul>
               <div className="gorjanaHeaderMenuIconeWeb">
                 <IoSearch
