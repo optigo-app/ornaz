@@ -147,7 +147,7 @@ const ProductList = ({PageType}) => {
     
   return (
     <>
-      <div style={{ filter: filterFlag && "blur(10px)" }}>
+      <div style={{ filter: filterFlag && "blur(10px)",backgroundColor: filterFlag && '#f6efe680'}}>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <span className="gj_pagetitle">{pageTitle}</span>
         </div>
