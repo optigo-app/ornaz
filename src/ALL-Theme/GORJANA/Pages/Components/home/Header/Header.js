@@ -5,15 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { useSetRecoilState } from "recoil";
-import { BlurFlag, SideNavListItem } from "../../../recoil";
+import { BlurFlag, SideNavListFlag, SideNavListItem } from "../../../recoil";
 
 import { IoMenuOutline } from "react-icons/io5";
 
 export default function Header({ }) {
   let navigate = useNavigate();
 
-  let setRecoilBlurFlag = useSetRecoilState(BlurFlag);
-  let setRecoilSideNavListItem = useSetRecoilState(SideNavListItem);
+  const setRecoilBlurFlag = useSetRecoilState(BlurFlag);
+  const setRecoilSideNavListItem = useSetRecoilState(SideNavListItem);
+  const setRecoilSideNavListFlag = useSetRecoilState(SideNavListFlag)
 
   return (
     <div>
@@ -39,6 +40,7 @@ export default function Header({ }) {
                   onClick={() => {
                     setRecoilBlurFlag(true)
                     setRecoilSideNavListItem('jewelry')
+                    setRecoilSideNavListFlag(true)
                   }}
                 >
                   Jewelry
@@ -48,6 +50,7 @@ export default function Header({ }) {
                   onClick={() => {
                     setRecoilBlurFlag(true)
                     setRecoilSideNavListItem('fine jewelry')
+                    setRecoilSideNavListFlag(true)
                   }}
                 >
                   Fine Jewelry
@@ -57,6 +60,7 @@ export default function Header({ }) {
                   onClick={() => {
                     setRecoilBlurFlag(true)
                     setRecoilSideNavListItem('new Arrivals')
+                    setRecoilSideNavListFlag(true)
                   }}
                 >
                   New Arrivals
@@ -66,6 +70,7 @@ export default function Header({ }) {
                   onClick={() => {
                     setRecoilBlurFlag(true)
                     setRecoilSideNavListItem('Best sellers')
+                    setRecoilSideNavListFlag(true)
                   }}
                 >
                   Best Sellers
@@ -75,6 +80,7 @@ export default function Header({ }) {
                   onClick={() => {
                     setRecoilBlurFlag(true)
                     setRecoilSideNavListItem('gifts')
+                    setRecoilSideNavListFlag(true)
                   }}
                 >
                   Gifts
@@ -84,6 +90,7 @@ export default function Header({ }) {
                   onClick={() => {
                     setRecoilBlurFlag(true)
                     setRecoilSideNavListItem('explore')
+                    setRecoilSideNavListFlag(true)
                   }}
                 >
                   Explore
