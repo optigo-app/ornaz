@@ -4,9 +4,8 @@ import './GiftSection.css'
 export default function GiftSection() {
     return (
         <div>
-                        <p className='gorGiftBoxMainTitleMobile'>Gifting Made Easy</p>
+            <p className='gorGiftBoxMainTitleMobile'>Gifting Made Easy</p>
             <div className='gorGiftMain'>
-
                 <div className='gorGiftBox1'>
                     <div>
                         <p className='gorGiftBoxMainTitleWeb'>Gifting Made Easy</p>
