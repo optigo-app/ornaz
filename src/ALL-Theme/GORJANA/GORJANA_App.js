@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Drawer } from "@mui/material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { BlurFlag, SideNavListItem } from "./Pages/recoil";
+import { BlurFlag, SideNavListFlag, SideNavListItem } from "./Pages/recoil";
 import SignIn from "./Pages/Components/AuthSection/SignIn";
 import ContactUs from "./Pages/Components/contactUs/ContactUs";
 import Accessibility from "./Pages/Components/Accessibility/Accessibility";
@@ -19,7 +19,7 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 export default function GORJANA_App() {
   const [blurFlag, setBlurFlag] = useRecoilState(BlurFlag);
   const [navItem, setNavItem] = useState('');
-  const [subNavFlag, setSubNavFlag] = useState(false);
+  const [subNavFlag, setSubNavFlag] = useRecoilState(SideNavListFlag);
 
   const SideNavListItemLabel = useRecoilValue(SideNavListItem)
 
@@ -41,6 +41,8 @@ export default function GORJANA_App() {
       return false
     }
   }
+
+  console.log("CheckFlag",CheckFlag(),blurFlag);
 
 
 
