@@ -10,18 +10,7 @@ import { IoMdClose } from "react-icons/io";
 export default function SignIn() {
 
     const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        // border: '2px solid #000',
-
-        boxShadow: 24,
-        pt: 2,
-        px: 4,
-        pb: 3,
+   
     };
 
     const [open, setOpen] = useState(false);
@@ -33,7 +22,7 @@ export default function SignIn() {
     };
 
     return (
-        <div style={{filter: open && 'blur(10px)'}}>
+        <div style={{ filter: open && 'blur(10px)' }}>
             <Header />
             <div className='gorAuthMain'>
                 <p className='gorAuthMainTitle'>Account</p>
@@ -60,12 +49,12 @@ export default function SignIn() {
                     <div className='gorRegisterMain'>
                         <p style={{ fontSize: '35px', margin: '20px 0px 0px 0px', color: '#283045', fontFamily: 'Freight Big Pro,serif' }}>Create Account</p>
                         <p>Create an account for faster checkout.</p>
-                        <div style={{ display: 'flex' }}>
-                            <div style={{ width: '45%' }}>
+                        <div className='gorRegisterFLname'>
+                            <div className='gorRegisterFLnameFirst'>
                                 <p style={{ margin: '0px 0px 10px 0px', fontSize: '13px' }}>First Name*</p>
                                 <input type='text' placeholder='Your first name' className='gorEmailInputBoxFirst' />
                             </div>
-                            <div style={{ width: '45%', paddingLeft: '10px' }}>
+                            <div className='gorRegisterFLnameLast'>
                                 <p style={{ margin: '0px 0px 10px 0px', fontSize: '13px' }}>Last Name*</p>
                                 <input type='text' placeholder='Your last name' className='gorEmailInputBoxFirst' />
                             </div>
@@ -92,13 +81,12 @@ export default function SignIn() {
                 onClose={handleClose}
                 aria-labelledby="parent-modal-title"
                 aria-describedby="parent-modal-description"
-
                 sx={{
                     outline: 'none',
                     border: 'none'
                 }}
             >
-                <Box sx={{ ...style, width: 600 }}>
+                <Box component={'div'} className='gorForgotPopup'>
 
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -106,11 +94,11 @@ export default function SignIn() {
                         </div>
                         <p style={{ fontSize: '35px', marginTop: '25px', textAlign: 'center', fontFamily: 'Freight Big Pro,serif' }}>Recover Your Password</p>
                         <p style={{ fontSize: '15px', textAlign: 'center' }}>Enter the email address associated with your account and we'll send you a link to log in.</p>
-                        <div style={{ display: 'flex',marginBlock: '20px', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', marginBlock: '20px', justifyContent: 'center' }}>
                             <input type='text' placeholder='Email Address' className='gorEmailInputBox' />
                         </div>
 
-                            <p style={{ fontSize: '18px',cursor:'pointer',textDecoration:'underline', textAlign: 'center' }}  onClose={handleClose}>CANCEL</p>
+                        <p style={{ fontSize: '18px', cursor: 'pointer', textDecoration: 'underline', textAlign: 'center' }} onClose={handleClose}>CANCEL</p>
                     </div>
                 </Box>
             </Modal>

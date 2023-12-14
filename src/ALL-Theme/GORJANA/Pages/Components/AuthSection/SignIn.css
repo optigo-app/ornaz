@@ -71,3 +71,102 @@
     /* border: 1px solid; */
     margin-left: 30px;
 }
+
+.gorRegisterFLname{
+    display: flex;
+}
+.gorRegisterFLnameFirst{
+    width: 45%;
+}
+.gorRegisterFLnameLast{
+    width: 45%;
+    margin-left: 10px;
+}
+.gorForgotPopup{
+     width: 600px;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     background-color: white;
+     box-shadow: 24;
+     padding-top: 2;
+     prefix: 4;
+     padding-bottom: 3;
+}
+
+@media screen and (max-width: 1440px) {
+
+    .gorAuthMain {
+        margin-top: 12%;
+        margin-inline: 5%;
+    }
+}
+
+
+@media screen and (max-width: 900px) {
+
+    .gorAuthMain {
+        margin-top: 15%;
+        margin-inline: 3%;
+    }
+
+    .gorAuthMainSub{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gorSignInMain {
+        width: 100%;
+        /* border: 1px solid; */
+    }
+    .gorRegisterMain {
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 30px;
+    }
+
+    .gorEmailInputBox{
+        width: 100%;
+    }
+    .gorRegisterFLname{
+        display: flex;
+        flex-direction: column;
+    }
+    .gorRegisterFLnameLast{
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+    .gorRegisterFLnameFirst{
+        width: 100%;
+    }
+    .gorSignINBtn{
+        width: 100%;
+    }
+    .gorRegisterBtn{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+
+    .gorAuthMain {
+        margin-top: 22%!important;
+    }
+}
+@media screen and (max-width: 650px) {
+
+    .gorForgotPopup{
+        width: 95%;
+        padding: 10px;
+   }
+   
+}
+
+@media screen and (max-width: 450px) {
+
+    .gorAuthMain {
+        margin-top: 32%!important;
+    }
+}

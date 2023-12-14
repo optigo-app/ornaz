@@ -11,6 +11,8 @@ import SignIn from "./Pages/Components/AuthSection/SignIn";
 import ContactUs from "./Pages/Components/contactUs/ContactUs";
 import Accessibility from "./Pages/Components/Accessibility/Accessibility";
 import PrivacyPolicy from "./Pages/Components/PrivacyPolicy/PrivacyPolicy";
+import Terms from "./Pages/Components/Terms/Terms";
+import ShippingReturn from "./Pages/Components/shippingReturn/ShippingReturn";
 
 export default function GORJANA_App() {
   const [blurFlag, setBlurFlag] = useRecoilState(BlurFlag);
@@ -80,6 +82,8 @@ export default function GORJANA_App() {
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/accessibility" element={<Accessibility />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/Terms" element={<Terms />} />
+        <Route path="/shipping" element={<ShippingReturn />} />
         <Route path="/jewelry" element={<JewelryPage />} />
       </Routes>
     </div>

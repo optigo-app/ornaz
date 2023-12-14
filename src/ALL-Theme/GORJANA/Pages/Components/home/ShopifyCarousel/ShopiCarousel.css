@@ -4,6 +4,17 @@
     cursor: pointer;
 }
 
+.gorShopiTitle {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+    overflow-x: scroll;
+}
+
+.gorShopiTitle::-webkit-scrollbar {
+    display: none;
+}
+
 .shopiCarTile.one {
     font-size: 30px;
 }

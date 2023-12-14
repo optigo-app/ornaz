@@ -9,7 +9,7 @@ import { BlurFlag } from "../../../recoil";
 
 import { IoMenuOutline } from "react-icons/io5";
 
-export default function Header({}) {
+export default function Header({ }) {
   let navigate = useNavigate();
 
   let setRecoilBlurFlag = useSetRecoilState(BlurFlag);
@@ -33,42 +33,12 @@ export default function Header({}) {
             />
             <div className="gorjanaHeaderSubMenuMain">
               <ul className="gorjanaHeaderMenu">
-                <li
-                  className="gorjana-Menu-item"
-                  onClick={() => setRecoilBlurFlag(true)}
-                >
-                  Jewelry
-                </li>
-                <li
-                  className="gorjana-Menu-item"
-                  onClick={() => setRecoilBlurFlag(true)}
-                >
-                  Fine Jewelry
-                </li>
-                <li
-                  className="gorjana-Menu-item"
-                  onClick={() => setRecoilBlurFlag(true)}
-                >
-                  New Arrivals
-                </li>
-                <li
-                  className="gorjana-Menu-item"
-                  onClick={() => setRecoilBlurFlag(true)}
-                >
-                  Best Sellers
-                </li>
-                <li
-                  className="gorjana-Menu-item"
-                  onClick={() => setRecoilBlurFlag(true)}
-                >
-                  Gifts
-                </li>
-                <li
-                  className="gorjana-Menu-item"
-                  onClick={() => setRecoilBlurFlag(true)}
-                >
-                  Explore
-                </li>
+                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Jewelry</li>
+                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Fine Jewelry</li>
+                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> New Arrivals</li>
+                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Best Sellers</li>
+                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Gifts</li>
+                <li className="gorjana-Menu-item" onClick={() => setRecoilBlurFlag(true)}> Explore </li>
               </ul>
               <div className="gorjanaHeaderMenuIconeWeb">
                 <IoSearch

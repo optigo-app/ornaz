@@ -2,12 +2,19 @@
     background-color: #f6efe6;
     margin-block: 8%;
     padding-inline: 14%;
+    height: 200px;
     display: flex;
+    overflow-x: scroll;
 }
 
+.gorTopVisiteDetail::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Webkit (Chrome, Safari, etc.) */
+  }
+
 .gorTopVisiteDetailBox{
-    width: 33.33%;
+    width: 310px;
     padding-block: 2%;
+    margin-inline: 5%;
 }
 
 .gorTopVisiteDetailTitle{
@@ -16,7 +23,7 @@
 }
 .gorTopVisiteDetailDesc{
     font-size: 13px;
-    width: 60%;
+    width: 300px;
 }
 
 .gorVsiteBox1{
