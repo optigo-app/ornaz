@@ -26,3 +26,34 @@
     color: white;
     background-color: #4d5469;
 }
+
+@media screen and (max-width: 1440px) {
+
+    .gorContactMain{
+        margin-inline: 15%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+
+    .gorContactMain{
+        margin-inline: 15%;
+        margin-top: 13%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+
+    .gorContactMain{
+        margin-inline: 5%;
+        margin-top: 18%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    .gorContactMain{
+        margin-inline: 5%;
+        margin-top: 35%;
+    }
+}

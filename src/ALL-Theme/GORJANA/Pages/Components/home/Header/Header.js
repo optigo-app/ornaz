@@ -9,7 +9,7 @@ import { BlurFlag, SideNavListItem } from "../../../recoil";
 
 import { IoMenuOutline } from "react-icons/io5";
 
-export default function Header({}) {
+export default function Header({ }) {
   let navigate = useNavigate();
 
   let setRecoilBlurFlag = useSetRecoilState(BlurFlag);

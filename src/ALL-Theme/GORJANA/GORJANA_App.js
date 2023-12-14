@@ -15,6 +15,8 @@ import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRigh
 import phonesvg from "./Pages/assets/phone.svg";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 
+import Terms from "./Pages/Components/Terms/Terms";
+import ShippingReturn from "./Pages/Components/shippingReturn/ShippingReturn";
 
 export default function GORJANA_App() {
   const [blurFlag, setBlurFlag] = useRecoilState(BlurFlag);
@@ -215,6 +217,8 @@ export default function GORJANA_App() {
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/accessibility" element={<Accessibility />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/Terms" element={<Terms />} />
+        <Route path="/shipping" element={<ShippingReturn />} />
         <Route path="/jewelry" element={<JewelryPage />} />
       </Routes>
     </div>
