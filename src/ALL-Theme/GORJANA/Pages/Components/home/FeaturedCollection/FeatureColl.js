@@ -4,16 +4,11 @@ import './FeatureColl.css'
 export default function FeatureColl() {
     return (
         <div>
+            <p className='gorFutureMainTitleMobile'>Featured</p>
             <div className='gorFetureMain'>
                 <div className='gorFetureBox1'>
                     <div>
-                        <p style={{
-                            fontSize: '31px',
-                            fontFamily: 'Freight Big Pro,serif',
-                            fontWeight: 300,
-                            lineHeight: '1.25',
-                            margin: '0px'
-                        }}>Featured</p>
+                        <p className='gorFutureMainTitleWeb'>Featured</p>
                         <img src='https://www.gorjana.com/cdn/shop/files/OffMonth-MasonryGrid-Birthstones.jpg?v=1701379789&%3Bwidth=1200&em-format=avif' className='gorFutureBox1Images' />
                         <p className='gorFutureBoxDesc'>Birthstones</p>
                     </div>
