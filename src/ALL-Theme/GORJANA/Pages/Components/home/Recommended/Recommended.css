@@ -37,3 +37,10 @@
     background-color: #ffffffe6;
     border: none;
 }
+
+@media screen and (max-width:1441px) {
+
+    .gorReccommMain{
+        margin-inline: 3%!important;
+    }
+}

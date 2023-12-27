@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./Pages/Components/home";
 import JewelryPage from "./Pages/Components/jewelry/JewelryPage";
 import { useState } from "react";
@@ -14,16 +14,23 @@ import PrivacyPolicy from "./Pages/Components/PrivacyPolicy/PrivacyPolicy";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import phonesvg from "./Pages/assets/phone.svg";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-
 import Terms from "./Pages/Components/Terms/Terms";
 import ShippingReturn from "./Pages/Components/shippingReturn/ShippingReturn";
+import StoreLocatore from "./Pages/Components/storeLocatore/StoreLocatore";
+import WholeSale from "./Pages/Components/wholesale/WholeSale";
+import Carrers from "./Pages/Components/carrers/Carrers";
+import AboutUs from "./Pages/Components/AboutUs/AboutUs";
+import FAQ from "./Pages/Components/FAQ/FAQ";
+import Charity from "./Pages/Components/Charity/Charity";
 
 export default function GORJANA_App() {
   const [blurFlag, setBlurFlag] = useRecoilState(BlurFlag);
   const [navItem, setNavItem] = useState('');
   const [subNavFlag, setSubNavFlag] = useRecoilState(SideNavListFlag);
 
+
   const SideNavListItemLabel = useRecoilValue(SideNavListItem)
+  const naviagtion = useNavigate();
 
   let navItems = [
     { label: "jewelry" },
@@ -35,16 +42,16 @@ export default function GORJANA_App() {
   ];
 
 
-  const CheckFlag = () =>{
-    if(blurFlag === true){
+  const CheckFlag = () => {
+    if (blurFlag === true) {
       return subNavFlag
     }
-    else{
+    else {
       return false
     }
   }
 
-  console.log("CheckFlag",CheckFlag(),blurFlag);
+  console.log("CheckFlag", CheckFlag(), blurFlag);
 
 
 
@@ -112,18 +119,18 @@ export default function GORJANA_App() {
                     }}
                     onClick={() => {
                       setNavItem(navi.label)
-                      setSubNavFlag((prev)=>!prev)
+                      setSubNavFlag((prev) => !prev)
                     }}
                   >
                     <span
                       style={{
                         padding: "12px 0px",
                         textDecoration:
-                          navItem ===(navi.label?navi.label:SideNavListItemLabel) ? "underline" : "",
+                          navItem === (navi.label ? navi.label : SideNavListItemLabel) ? "underline" : "",
                         textUnderlineOffset:
-                          navItem === (navi.label?navi.label:SideNavListItemLabel) ? "3px" : "",
+                          navItem === (navi.label ? navi.label : SideNavListItemLabel) ? "3px" : "",
                         textDecorationThickness:
-                          navItem === (navi.label?navi.label:SideNavListItemLabel) ? "1px" : "",
+                          navItem === (navi.label ? navi.label : SideNavListItemLabel) ? "1px" : "",
                       }}
                     >
                       {navi.label}
@@ -131,7 +138,7 @@ export default function GORJANA_App() {
                     <span>
                       <KeyboardArrowRightRoundedIcon
                         style={{ fontSize: "32px" }}
-                        
+
                       />
                     </span>
                   </div>
@@ -150,14 +157,14 @@ export default function GORJANA_App() {
                   backgroundColor: "white",
                 }}
               >
-                <span>Sign in / Create Account</span>
-                <span style={{ display: "flex", gap: "12px" }}>
+                <span style={{ cursor: 'pointer' }} onClick={() => { naviagtion('/Signin'); setBlurFlag(false); }}>Sign in / Create Account</span>
+                <span style={{ display: "flex", cursor: 'pointer', gap: "12px" }} onClick={() => { naviagtion('/ContactUs'); setBlurFlag(false); }}>
                   <div>
                     <img src={phonesvg} alt={""} style={{ width: "20px" }} />
                   </div>
                   Contact Us
                 </span>
-                <span style={{ display: "flex", gap: "12px" }}>
+                <span style={{ display: "flex", gap: "12px", cursor: 'pointer' }} onClick={() => { naviagtion('/storeLocatore'); setBlurFlag(false); }}>
                   <div>
                     <LocationOnOutlinedIcon style={{ width: "20px" }} />
                   </div>
@@ -170,8 +177,8 @@ export default function GORJANA_App() {
       </Drawer>
       <div
         style={{
-          width: "400px", 
-          height:"100%",
+          width: "400px",
+          height: "100%",
           backgroundColor: "white",
           zIndex: 111,
           position: "fixed",
@@ -179,14 +186,22 @@ export default function GORJANA_App() {
           left: "375px",
           borderLeft: "1px solid #e4e6ec",
           transform: !CheckFlag() && "translate(-800px,0px)",
-          opacity: !CheckFlag()  ? 0 : 1,
+          opacity: !CheckFlag() ? 0 : 1,
           transition: "0.5s",
         }}
       >
-        <div style={{marginTop:'125px'}}>
-            dfgdfg
+        <div style={{ marginTop: '125px' }}>
+          <h1 onClick={() => naviagtion('/aboutUs')}>About us</h1>
         </div>
       </div>
+
+
+    
+
+
+
+
+
 
       {/* <Drawer
         open={blurFlag}
@@ -216,12 +231,18 @@ export default function GORJANA_App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Signin" element={<SignIn />} />
+        <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/accessibility" element={<Accessibility />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/Terms" element={<Terms />} />
         <Route path="/shipping" element={<ShippingReturn />} />
         <Route path="/jewelry" element={<JewelryPage />} />
+        <Route path="/storeLocatore" element={<StoreLocatore />} />
+        <Route path="/WholeSale" element={<WholeSale />} />
+        <Route path="/Carrers" element={<Carrers />} />
+        <Route path="/FAQ" element={<FAQ />} />
+        <Route path="/Charity" element={<Charity />} />
       </Routes>
     </div>
   );

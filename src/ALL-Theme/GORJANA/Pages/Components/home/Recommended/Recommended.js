@@ -80,7 +80,7 @@ export default function Recommended() {
                 fontFamily: 'Freight Big Pro,serif',
                 margin: '0px'
             }}>Recommended For You</p>
-            <div style={{
+            <div className='gorReccommMain' style={{
                 display: 'flex',
                 justifyContent: 'center',
                 marginInline: '265px'

@@ -36,6 +36,25 @@
     font-family: 'Freight Big Pro,serif';
 }
 
+.gorFetureBox1Sub{
+    margin-top: 60px;
+}
+.gorFetureBox2Sub{
+    margin-top: 50px;
+}
+@media screen and (max-width: 1550px) {
+
+    .gorFetureBox2Images {
+        width: 95%;
+        height: 100%;
+    }
+
+    .gorFetureMain {
+        display: flex;
+        margin-inline: 3%;
+    }
+
+}
 
 
 @media screen and (min-width: 751px) {
@@ -48,5 +67,49 @@
 
     .gorFutureMainTitleWeb {
         display: none;
+    }
+
+    .gorFetureBox1 {
+        width: 50%;
+        margin-top: 1%;
+        margin-inline: 2%;
+    }
+
+    .gorFetureMain {
+        display: flex;
+        margin-inline: 3%;
+    }
+
+    .gorFutureBox1Images {
+        width: 100%;
+    }
+
+
+    .gorFetureBox2 {
+        width: 50%;
+        margin-top: 5px !important;
+    }
+
+    .gorFetureBox2Images {
+        width: 100%!important;
+        height: 100% !important;
+    }
+
+    .gorFutureMainTitleMobile {
+        font-size: 31px;
+        font-weight: 300;
+        font-family: 'Freight Big Pro,serif';
+        line-height: 1.25px;
+        margin: 30px;
+    }
+
+    .gorFutureBoxDesc{
+        font-size: 15px;
+    }
+    .gorFetureBox1Sub{
+        margin-top: 0px;
+    }
+    .gorFetureBox2Sub{
+        margin-top: 0px;
     }
 }

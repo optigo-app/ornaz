@@ -28,12 +28,12 @@ export default function Footer() {
                         <input type='text' placeholder='Email Address' className='gorjanaFooterMainBox1Input' />
                     </div>
                     <div className='gorjanaFooterMainBox2'>
-                        <p className='gorjanaFooterLink'>FAQ</p>
+                        <p className='gorjanaFooterLink' onClick={() => navigation('/FAQ')}>FAQ</p>
                         <p className='gorjanaFooterLink' onClick={() => navigation('/ContactUs')}>Contact Us</p>
                         <p className='gorjanaFooterLink' onClick={() => navigation('/shipping')}>Shipping & Returns</p>
-                        <p className='gorjanaFooterLink'>Store Locator</p>
-                        <p className='gorjanaFooterLink'>Wholesale</p>
-                        <p className='gorjanaFooterLink'>Careers</p>
+                        <p className='gorjanaFooterLink' onClick={() => navigation('/storeLocatore')}>Store Locator</p>
+                        <p className='gorjanaFooterLink' onClick={() => navigation('/WholeSale')}>Wholesale</p>
+                        <p className='gorjanaFooterLink' onClick={() => navigation('/Carrers')}>Careers</p>
                     </div>
                     <div className='gorjanaFooterMainBox3'>
                         <p style={{ fontSize: '19px', fontWeight: 500 }}>Contact Us</p>
