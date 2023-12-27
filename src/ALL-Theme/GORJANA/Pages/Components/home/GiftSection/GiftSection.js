@@ -28,7 +28,8 @@ export default function GiftSection() {
                     </div>
                 </div>
             </div>
-            <div style={{
+
+            <div className='gorLookBookMain' style={{
                 display: 'flex',
                 marginTop: '70px'
             }}>

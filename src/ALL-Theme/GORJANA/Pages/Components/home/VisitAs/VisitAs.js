@@ -23,11 +23,11 @@ export default function VisitAs() {
                 <p style={{
                     fontSize: '25px',
                     fontFamily: 'Freight Big Pro,serif',
+                    
                     margin: '0px',
                     marginLeft: '25px'
-
                 }}>Visit Us in Store</p>
-                <div style={{ display: 'flex', marginInline: '30px' }}>
+                <div className='gorVisitMain' style={{ display: 'flex', marginInline: '30px' }}>
                     <div className='gorVsiteBox1'>
                         <img src='https://www.gorjana.com/cdn/shop/files/Southampton_c5355611-e79d-4982-aeb5-353036f1fbc4.jpg?v=1696619504&%3Bwidth=1000&em-format=avif' style={{ width: '100%' }} />
                     </div>

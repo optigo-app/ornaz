@@ -8,36 +8,61 @@
 }
 
 .gorTopVisiteDetail::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Webkit (Chrome, Safari, etc.) */
-  }
+    display: none;
+    /* Hide scrollbar for Webkit (Chrome, Safari, etc.) */
+}
 
-.gorTopVisiteDetailBox{
+.gorTopVisiteDetailBox {
     width: 310px;
     padding-block: 2%;
     margin-inline: 5%;
 }
 
-.gorTopVisiteDetailTitle{
+.gorTopVisiteDetailTitle {
     font-size: 22px;
     font-family: 'Freight Big Pro,serif';
 }
-.gorTopVisiteDetailDesc{
+
+.gorTopVisiteDetailDesc {
     font-size: 13px;
     width: 300px;
 }
 
-.gorVsiteBox1{
+.gorVsiteBox1 {
     width: 30%;
 }
 
-.gorVsiteBox2{
+.gorVsiteBox2 {
     width: 35%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding-inline: 2%;
 }
-.gorVsiteBox3{
+
+.gorVsiteBox3 {
     width: 40%;
     object-fit: cover;
+}
+
+
+@media screen and (max-width: 800px) {
+
+    .gorVisitMain {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gorVsiteBox1{
+        width: 100%;
+    }
+
+    .gorVsiteBox2{
+        width: 100%;
+    }
+
+    .gorVsiteBox3{
+        width: 100%;
+    }
+
 }
