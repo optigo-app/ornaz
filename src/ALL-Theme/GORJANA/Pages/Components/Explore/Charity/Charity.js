@@ -1,7 +1,7 @@
 import React from 'react'
 import './Charity.css'
-import Header from '../home/Header/Header'
-import Footer from '../home/Footer/Footer'
+import Header from '../../home/Header/Header'
+import Footer from '../../home/Footer/Footer'
 
 export default function Charity() {
     return (

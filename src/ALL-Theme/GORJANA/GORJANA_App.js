@@ -19,9 +19,9 @@ import ShippingReturn from "./Pages/Components/shippingReturn/ShippingReturn";
 import StoreLocatore from "./Pages/Components/storeLocatore/StoreLocatore";
 import WholeSale from "./Pages/Components/wholesale/WholeSale";
 import Carrers from "./Pages/Components/carrers/Carrers";
-import AboutUs from "./Pages/Components/AboutUs/AboutUs";
+import AboutUs from "./Pages/Components/Explore/AboutUs/AboutUs";
 import FAQ from "./Pages/Components/FAQ/FAQ";
-import Charity from "./Pages/Components/Charity/Charity";
+import Charity from "./Pages/Components/Explore/Charity/Charity";
 import { makeStyles } from "@mui/styles";
 import "./gorjana.css";
 import jw1 from './Pages/assets/navjw/jw-1.avif';
@@ -31,6 +31,9 @@ import jw4 from './Pages/assets/navjw/jw-4.avif';
 import jw5 from './Pages/assets/navjw/jw-5.avif';
 import jw6 from './Pages/assets/navjw/jw-6.avif';
 import jw7 from './Pages/assets/navjw/jw-7.avif';
+import MontholyHoroscope from "./Pages/Components/Explore/MonthoHoroscope/MontholyHoroscope";
+import LayerLikeStyle from "./Pages/Components/Explore/LayerLikeStyle/LayerLikeStyle";
+import CareGuide from "./Pages/Components/Explore/CareGuide/CareGuide";
 
 const drawerWidth = 740;
 
@@ -39,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
   },
 }));
-
 export default function GORJANA_App() {
   const [blurFlag, setBlurFlag] = useRecoilState(BlurFlag);
   const [navItem, setNavItem] = useState("");
@@ -488,6 +490,9 @@ export default function GORJANA_App() {
         <Route path="/Carrers" element={<Carrers />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/Charity" element={<Charity />} />
+        <Route path="/horoscope" element={<MontholyHoroscope />} />
+        <Route path="/layerLikeStyle" element={<LayerLikeStyle />} />
+        <Route path="/careGuide" element={<CareGuide />} />
       </Routes>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import './AboutUs.css'
-import Header from '../home/Header/Header'
-import Footer from '../home/Footer/Footer'
+import Header from '../../home/Header/Header'
+import Footer from '../../home/Footer/Footer'
 import { useDraggable } from 'react-use-draggable-scroll'
 
 export default function AboutUs() {

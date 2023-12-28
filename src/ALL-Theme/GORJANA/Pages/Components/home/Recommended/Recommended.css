@@ -10,7 +10,7 @@
 
 .gor-image-scroll-content {
     display: inline-block;
-    overflow: hidden;
+    overflow: auto;
     object-fit: cover;
 }
 

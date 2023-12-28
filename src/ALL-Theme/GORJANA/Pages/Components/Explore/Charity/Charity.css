@@ -43,3 +43,43 @@
     text-align: center;
     width: 60%;
 }
+
+
+@media screen and (max-width:1440px) {
+
+    .gorCharityMain{
+        margin-top: 150px;
+        margin-inline: 2%;
+    }
+
+    .gorGivinTopDesc1{
+        width: 100%!important;
+    }
+
+    .gorGivinTopDesc2{
+        width: 100%!important;
+    }
+
+    .gorCharityOurPa1{
+        width: 100%;
+    }
+    .gorCharityOurPa2{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+
+    .gorCharityImageBox{
+
+        display: flex;
+        flex-direction: column;
+    }
+    .gorCharityImageBox1{
+        width: 100%;
+    }
+    .gorCharityImageBox2{
+        width: 100%;
+        text-align: center;
+    }
+}

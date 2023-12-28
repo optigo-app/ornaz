@@ -7,14 +7,7 @@ export default function Recommended() {
 
     const ref = useRef();
     const { events } = useDraggable(ref);
-    const [allImageHover, setAllImagesHover] = useState({
-        first: false,
-        second: false,
-        third: false,
-        fourth: false,
-        five: false,
-        six: false
-    })
+
 
     let demoJSON = [
         {
@@ -59,18 +52,6 @@ export default function Recommended() {
 
         },
     ]
-
-    const type = 'seller';
-    const cardTitle = 'Shop Our Best Sellers';
-
-    const handleMouceEnter = (index) => {
-        setAllImagesHover({ first: true })
-    }
-    const handleMouceLeave = (index) => {
-        setAllImagesHover({ first: false })
-
-    }
-
     return (
         <div>
             {/* <div className='sliderCardMobile'> */}
@@ -89,17 +70,14 @@ export default function Recommended() {
                     <div className="gor-image-scroll-content" {...events} ref={ref}>
                         {demoJSON?.map((data, index) => (
                             <div key={index} className="gor-image-wrapper">
-                                <div style={{ display: 'flex', flexDirection: 'column',position: 'relative' }}>
-                                    <img src={data.prodImg} alt={`Image ${index + 1}`}
-                                        onMouseEnter={() => handleMouceEnter(index)}
-                                        onMouseLeave={() => handleMouceLeave(index)}
-                                    />
+                                <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                                    <img src={data.prodImg} alt={`Image ${index + 1}`} />
                                     <div>
-                                        <p style={{margin: '0px'}}>{data.prodtitle}</p>
-                                        <p style={{margin: '0px'}}>{data.price}</p>
+                                        <p style={{ margin: '0px' }}>{data.prodtitle}</p>
+                                        <p style={{ margin: '0px' }}>{data.price}</p>
                                         <p>{data.more}</p>
                                         <div className='gorRecommDiv' >
-                                            <button  className='gorRecommBtn'>Add To Card</button>
+                                            <button className='gorRecommBtn'>Add To Card</button>
                                         </div>
                                     </div>
                                 </div>
