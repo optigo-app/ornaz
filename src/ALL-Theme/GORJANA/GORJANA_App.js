@@ -40,12 +40,14 @@ const drawerWidth = 740;
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
+    transition:'width 3s'
   },
 }));
 export default function GORJANA_App() {
   const [blurFlag, setBlurFlag] = useRecoilState(BlurFlag);
   const [navItem, setNavItem] = useState("");
   const [subNavFlag, setSubNavFlag] = useRecoilState(SideNavListFlag);
+  const [subNavShow,setSubNavShow] = useState(true)
 
   const SideNavListItemLabel = useRecoilValue(SideNavListItem);
   const naviagtion = useNavigate();
@@ -179,7 +181,6 @@ export default function GORJANA_App() {
     return StoreData;
   }
 
-  console.log("subNavData",subNavData()[0]?.navLabel.map((data,i)=>`${data.label}${i}`));
 
   const CheckFlag = () => {
     if (blurFlag === true) {
@@ -204,14 +205,13 @@ export default function GORJANA_App() {
           zIndex: 111,
         }}
         classes={{
-          paper: true && classes.drawerPaper,
+          paper: subNavShow && classes.drawerPaper,
         }}
       >
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
               width: "375px",
-              
               height: "100%",
             }}
           >
@@ -282,11 +282,13 @@ export default function GORJANA_App() {
                               ? "1px"
                               : "",
                         }}
+                        onClick={()=>console.log("navItem",navItem)}
                       >
                         {navi.label}
                       </span>
                       <span>
                         <KeyboardArrowRightRoundedIcon
+                          onClick={()=> navItem !== navi.label ?setSubNavShow(true) :setSubNavShow(!subNavShow)}
                           style={{ fontSize: "32px" }}
                         />
                       </span>
@@ -350,12 +352,13 @@ export default function GORJANA_App() {
               marginTop: "120px",
               position: "fixed",
               left: "375px",
-              display: "flex",
+              display: subNavShow? "flex" : "none",
               flexDirection: "column",
               overflowY: "scroll",
               height: "100vh",
               borderLeft: "1px solid #e4e6ec",
               paddingBottom:'120px',
+              transition:'width 2s'
             }}
           >
             <div

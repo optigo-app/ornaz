@@ -1,16 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect} from 'react'
 import './proddetail.css'
 import Header from '../home/Header/Header'
 import Footer from '../home/Footer/Footer'
 import SmilingRock from '../home/smiling_Rock/SmilingRock'
-import { Checkbox, Divider } from '@mui/material'
+import { Checkbox, Divider, Skeleton } from '@mui/material'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
+import filterData from '../../jsonFile/M_4_95oztttesi0o50vr.json'
 
 const ProdDetail = () => {
 
     const[acc,setAcc]=useState(false);
     const[accNo,setAccNo]=useState('');
+    const [imgLoading, setImgLoading] = useState(true);
+
+    const[productData,setProductData]=useState();
+    const[thumbImg,setThumbImg]=useState();
+
+    const handelImgLoad = () =>{
+      setImgLoading(false)
+    }
+
+    useEffect(() => {
+      let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
+      setProductData(localProductData)
+    }, [])
 
 
     let imgData=[
@@ -22,6 +36,20 @@ const ProdDetail = () => {
         {links:'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045'},
         {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
     ]
+
+
+    console.log("productdetailData",productData?.thumbimage.split(","));
+
+    const handelmainImg = () =>{
+      let filterImg=productData?.originalimage.split(",").filter((ele,i)=>{
+       return i === thumbImg 
+      })
+
+      return filterImg 
+    }
+
+    console.log("handelmainImg",handelmainImg());
+    
 
   return (
     <div
@@ -43,9 +71,24 @@ const ProdDetail = () => {
         <div className='prodDetailWhitecont' >
           <div className="product-detail-container" >
             <div className='srprodetail1' >
+              {/* {!imgLoading */}
+              
+              {imgLoading && 
+              <Skeleton sx={{
+                  width: "100%",
+                  // zindex: 11111,
+                  // position: "relative",
+                  // objectFit: "cover",
+                  marginLeft:'51px',
+                  marginTop:'5%',
+                  height:'90%'
+                  // display: !imgLoading ? "none": "block"
+                }} 
+                variant="rounded"  />
+                }
               <img
                 src={
-                  "https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45.jpg?v=1613627318"
+                  productData?.imagepath +( !handelmainImg()?.length?productData?.originalimage.split(",")[0] :handelmainImg())
                 }
                 alt={""}
                 style={{
@@ -53,14 +96,20 @@ const ProdDetail = () => {
                   zindex: -1,
                   position: "relative",
                   objectFit: "cover",
+                  marginLeft:'51px',
+                  display: imgLoading ? "none": "block"
                 }}
+
+                onLoad={handelImgLoad}
               />
+              {/* } */}
               <div className='srthumb_images' >
-                {imgData.map((data) => (
+                {productData?.thumbimage.split(",").map((data,i) => (
                   <img
-                    src={data.links}
+                    src={productData?.imagepath+data}
                     alt={""}
                     className='srthumb_images_el'
+                    onClick={()=>setThumbImg(i)}
                   />
                 ))}
               </div>
@@ -75,9 +124,7 @@ const ProdDetail = () => {
                     lineHeight: "40px",
                   }}
                 >
-                  Drizzle 0.51ct Lab Grown Diamond Ring
-                  <br />
-                  R-00363WHT
+                  {productData?.title}
                 </p>
 
                 <p style={{ color: "#7d7f85", fontSize: "14px" }}>
@@ -106,12 +153,12 @@ const ProdDetail = () => {
                   >
                     <span
                       style={{
-                        textTransform: "uppercase",
-                        fontSize: "14px",
+                        // textTransform: "uppercase",
+                        fontSize: "12px",
                         color: "#7d7f85",
                       }}
                     >
-                      14K metal color
+                      Metal Purity : {productData?.MetalPurity}
                     </span>
                     <sapn
                       style={{
@@ -120,10 +167,20 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                       }}
                     >
-                      white gold
+                      Metal Color : {productData?.MetalColorName}
+                    </sapn>
+                    <sapn
+                      style={{
+                        textTransform: "capitalize",
+                        fontSize: "12px",
+                        color: "#7d7f85",
+                      }}
+                    >
+                      Diamond Quality Color: {`${productData?.diamondquality}-${productData?.diamondcolorname}` }
                     </sapn>
                   </div>
-                  <div
+                  {productData?.IsColorWiseImageExists 
+                  !==null && <div
                     style={{ display: "flex", gap: "5px" }}
                     className="part2"
                   >
@@ -175,7 +232,7 @@ const ProdDetail = () => {
                         }}
                       ></div>
                     </div>
-                  </div>
+                  </div>}
                 </div>
 
                 <div
@@ -245,10 +302,78 @@ const ProdDetail = () => {
                     </select>
                   </div>
                 </div>
+                 
+                <Divider sx={{marginTop:'20px',background:'#a9a7a7'}}/>
+
+                <div
+                  style={{ display: "flex", width: "100%", marginTop: "12px" }}
+                  className="srcolorsizecarat"
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "49.5%",
+                    }}
+                  >
+                    <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                      METAL COLOR:
+                    </label>
+                    <select
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        color: "#7d7f85",
+                        fontSize: "12.5px",
+                      }}
+                    >
+                      {
+                        filterData.MetalColorList.map((mtcol)=>(
+                          <option>{mtcol.MetalColorName}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                  <Divider
+                    orientation="vertical"
+                    flexItem
+                    style={{
+                      opacity: 1,
+                      height: "30px",
+                      margin: "10px 10px 0px 10px",
+                    }}
+                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "49.5%",
+                    }}
+                  >
+                    <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                      METAL TYPE:
+                    </label>
+                    <select
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        color: "#7d7f85",
+                        fontSize: "12.5px",
+                      }}
+                    >
+                      {
+                        filterData.MetalTypeList.map((mtype)=>(
+                          <option>{mtype.MetalTypeName}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                </div>
+
 
                 <div style={{ marginTop: "23px" }}>
                   <p style={{ color: "#7d7f85", fontSize: "12px" }}>
-                    Price: $1,125.00
+                    Price: {`$${productData?.price}`}
                   </p>
                 </div>
 
@@ -427,48 +552,52 @@ const ProdDetail = () => {
                       <div className="srAccContainer">
                         <div className="srFloat">
                           <span>
-                            <b>Stock Number</b>:SRR-00363WHT
+                            <b>MetalPurity</b>: {productData?.MetalPurity}
                           </span>
                           <span>
-                            <b>Metal</b>:14K
+                            <b>MetalWeight</b>: {productData?.MetalWeight}
                           </span>
                           <span>
-                            <b>Height</b>:3mm
+                            <b>GrossWeight</b>: {productData?.Grossweight}
                           </span>
                           <span>
-                            <b>Width</b>:12mm
+                            <b>DiamondWeight</b>: {productData?.diamondweight}
                           </span>
                           <span>
-                            <b>Number of Diamonds</b>:41
+                            <b>NumberOfDiamonds</b>: {productData?.diamondpcs}
                           </span>
                         </div>
                         <div className="srFloat">
                           <span>
-                            <b>Total Carat Weight(ctw):</b>:0.51
+                            <b>Netwt</b>: {productData?.netwt}
                           </span>
                           <span>
-                            <b>Average Color</b>:E-F
+                          <b>DiamondQuality</b>: {productData?.diamondquality}
                           </span>
                           <span>
-                            <b>Average Clarity</b>:Sl1
+                            <b>DiamondColorname</b>: {productData?.diamondcolorname}
                           </span>
                           <span>
-                            <b>Setting Type</b>:Prong & Micro Pave
+                            <b>TotalDiamondWeight</b>: {productData?.totaldiamondweight}
+                          </span>
+                          <span>
+                            <b>DiamondSetting</b>: {productData?.diamondsetting}
                           </span>
                         </div>
                       </div>
-                      <div style={{marginBottom:'15px'}}>
+                      {/* <div style={{marginBottom:'15px'}}>
                         <span style={{fontSize:'13px',fontWeight:'normal'}}>
                           Total carat weight (ctw) represents the approximate
                           total weight of all diamonds in each jewelry and may
                           vary from 0.48 to 0.54 carats. All diamonds are lab
                           grown diamonds.
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </li>
-                <li
+                {/* <div style={{display:acc && accNo === '2' ? 'block':'none',userSelect:'none',transition:'0.5s'}}>  */}
+                {/* <li
                   className="tellmoreli"
                   onClick={() => {
                     setAccNo("");
@@ -483,7 +612,6 @@ const ProdDetail = () => {
                       {acc && accNo === "2" ? "-" : "+"}
                     </span>
                   </span>
-                  {/* <div style={{display:acc && accNo === '2' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                   <div
                     className={`my-list-fineJewe ${
                       acc && accNo === "2" ? "openAcc" : ""
@@ -531,8 +659,9 @@ const ProdDetail = () => {
                     </table>
                     <span style={{fontSize:'12px'}}>All our rings can be resized by one size up or down, except for Eternity Bands.</span>
                   </div>
-                </li>
-                <li
+                </li> */}
+                  {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
+                {/* <li
                   className="tellmoreli"
                   onClick={() => {
                     setAccNo("");
@@ -547,7 +676,6 @@ const ProdDetail = () => {
                       {acc && accNo === "3" ? "-" : "+"}
                     </span>
                   </span>
-                  {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                   <div
                     className={`my-list-fineJewe ${
                       acc && accNo === "3" ? "openAcc" : ""
@@ -558,11 +686,11 @@ const ProdDetail = () => {
                    moment.We offer a free return & refund up to 30 days after 
                    your purchase. For more please read our Shipping and Returns Policy
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
-          <div className="compeletethelook_cont">
+          {/* <div className="compeletethelook_cont">
             <img
               src={
                 "https://cdn.accentuate.io/3245609615460/4121939443812/99-v1581576944425.jpg?2048x1950"
@@ -687,8 +815,8 @@ const ProdDetail = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <SmilingRock />
+          </div> */}
+          {/* <SmilingRock /> */}
           <Footer />
         </div>
       </div>
