@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './Header.css'
 // import ring1 from '../../../assets/svg.svg'
 import Tooltip from '@mui/material/Tooltip';
-import { Drawer, SwipeableDrawer } from "@mui/material";
+import { Dialog, Drawer, SwipeableDrawer } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -21,7 +21,7 @@ import { Button } from "react-bootstrap";
 import CloseIcon from '@mui/icons-material/Close';
 import { IoClose } from "react-icons/io5";
 
-export default function Header({ name }) {
+export default function Header({ onLoginClick }) {
   const navigation = useNavigate();
 
   const [isLogin, setIsLogin] = useState(true);
@@ -229,6 +229,29 @@ export default function Header({ name }) {
       }
     })
   };
+
+  const [openLoginDailog, setOpenLoginDailog] = React.useState(false);
+  const openLoginDailogBox = () => {
+    setOpenLoginDailog(true);
+  };
+  const closeLoginDailog = () => {
+    openLoginDailog(false);
+  };
+
+
+
+  const [islogin, setislogin] = useState(null);
+
+  const fetchData = async () => {
+    const value = await localStorage.getItem('LoginUser');
+    const val = value === 'true' ? true : false
+    setislogin(val);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       {serachsShowOverlay && (
@@ -398,6 +421,18 @@ export default function Header({ name }) {
       )
       }
 
+      <Dialog
+        open={open}
+        onClose={closeLoginDailog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+
+        <Button onClick={closeLoginDailog}>Disagree</Button>
+        <Button onClick={closeLoginDailog} autoFocus>
+          Agree
+        </Button>
+      </Dialog>
 
       <div className="sminingHeaderWeb">
         <div className="Smining-Top-Header">
@@ -449,8 +484,8 @@ export default function Header({ name }) {
             <ul className="nav-ul-shop">
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
-              <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li>
-              {/* <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/signIn')}>{LOGIN}</li> */}
+              {islogin ? <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li> :
+                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={onLoginClick}>{LOGIN}</li>}
               <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
               <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
               <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', marginTop: '0px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
@@ -561,8 +596,8 @@ export default function Header({ name }) {
               <ul className="nav-ul-fixed">
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
-                <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li>
-                {/* <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/signIn')}>{LOGIN}</li> */}
+                {islogin ? <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li> :
+                  <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={onLoginClick}>{LOGIN}</li>}
                 <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
                 <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
                 <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>

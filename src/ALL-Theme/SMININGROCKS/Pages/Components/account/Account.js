@@ -46,6 +46,10 @@ export default function Account() {
         setValue(newValue);
     };
 
+    const handleLogout = () => {
+        localStorage.setItem('LoginUser', 'false');
+        window.location.reload()
+    }
 
     return (
         <div style={{
@@ -63,7 +67,7 @@ export default function Account() {
                                         <Tab label="ORDER HISTORY" {...a11yProps(0)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
                                     </Tabs>
-                                    <p className='smilingAccountLogout'>LOG OUT</p>
+                                    <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
                                 </Box>
                             </div>
                             <div className='smlingAccountTabMobileView'>
@@ -73,7 +77,9 @@ export default function Account() {
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
                                     </Tabs>
                                 </Box>
-                                <p className='smilingAccountLogoutMobile'>LOG OUT</p>
+                                <div onClick={() => alert('dddd')}>
+                                    <p className='smilingAccountLogoutMobile' onClick={handleLogout}>LOG OUT</p>
+                                </div>
                             </div>
 
                             <CustomTabPanel value={value} index={0}>
