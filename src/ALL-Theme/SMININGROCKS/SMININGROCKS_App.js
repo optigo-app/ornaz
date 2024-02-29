@@ -19,6 +19,8 @@ import Celeb from './Pages/Components/celebrity/Celeb'
 import Blog from './Pages/Components/Blog/Blog'
 import ProductList from './Pages/Components/productPage/ProductList'
 import ProdDetail from './Pages/Components/productDetail/ProdDetail'
+import ContinueWithEmail from './Pages/Components/AuthScreen/ContinueWithEmail/ContinueWithEmail'
+import LoginWithEmail from './Pages/Components/AuthScreen/LoginWithEmail/LoginWithEmail'
 
 export default function SMININGROCKS_App() {
     return (
@@ -31,6 +33,8 @@ export default function SMININGROCKS_App() {
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgotPass" element={<ForgotPass />} />
+                <Route path="/ContinueWithEmail" element={<ContinueWithEmail />} />
+                <Route path="/LoginWithEmail" element={<LoginWithEmail />} />
                 <Route path="/contactUs" element={<ContactUs />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/servicePolicy" element={<ServicePolicy />} />
