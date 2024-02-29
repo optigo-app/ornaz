@@ -411,7 +411,7 @@ export default function Header({ name }) {
                 onMouseEnter={handleDropdownOpen}
                 onMouseLeave={handleDropdownClose}
               >
-                <span className="nav-li-smining" style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}>SHOP<RiArrowDropDownLine style={{ width: '20px', height: '20px' }} /></span>
+                <span className="nav-li-smining" style={{ display: 'flex', alignItems: 'center', fontWeight: 500 }}>dddSHOP<RiArrowDropDownLine style={{ width: '20px', height: '20px' }} /></span>
               </li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/impact')}>{IMPACT}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/lookbook')}>{LOOK_BOOK}</li>
