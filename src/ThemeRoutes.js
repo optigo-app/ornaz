@@ -12,10 +12,10 @@ export default function ThemeRoutes() {
         {false && <OrnazApp />}
       </div>
       <div>
-        {false && <SmilingRocksApp />}
+        {true && <SmilingRocksApp />}
       </div>
       <div>
-        {true && <GORJANA_App />}
+        {false && <GORJANA_App />}
       </div>
     </div>
   )
