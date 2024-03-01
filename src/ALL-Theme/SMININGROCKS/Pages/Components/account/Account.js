@@ -3,6 +3,7 @@ import Header from '../home/Header/Header'
 import './Account.css'
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 import Footer from '../home/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -14,7 +15,7 @@ function CustomTabPanel(props) {
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
             {...other}
-        >
+        > 
             {value === index && (
                 <Box sx={{ p: 3 }}>
                     <Typography>{children}</Typography>
@@ -41,11 +42,17 @@ export default function Account() {
 
 
     const [value, setValue] = useState(0);
+    const naviagation = useNavigate();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    const handleLogout = () => {
+        localStorage.setItem('LoginUser', 'false');
+        naviagation('/')
+        window.location.reload()
+    }
 
     return (
         <div style={{
@@ -63,7 +70,7 @@ export default function Account() {
                                         <Tab label="ORDER HISTORY" {...a11yProps(0)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
                                     </Tabs>
-                                    <p className='smilingAccountLogout'>LOG OUT</p>
+                                    <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
                                 </Box>
                             </div>
                             <div className='smlingAccountTabMobileView'>
@@ -73,7 +80,9 @@ export default function Account() {
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
                                     </Tabs>
                                 </Box>
-                                <p className='smilingAccountLogoutMobile'>LOG OUT</p>
+                                <div onClick={() => alert('dddd')}>
+                                    <p className='smilingAccountLogoutMobile' onClick={handleLogout}>LOG OUT</p>
+                                </div>
                             </div>
 
                             <CustomTabPanel value={value} index={0}>
