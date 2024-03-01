@@ -393,7 +393,7 @@ export default function Header({ onLoginClick }) {
               <div style={{
                 marginTop: '20px'
               }}>
-                <p style={{ color: 'white', margin: '0px' }} onClick={() => navigation('/signIn')}>Login</p>
+                <p style={{ color: 'white', margin: '0px' }}>Login</p>
                 <p style={{ color: 'white', marginTop: '10px' }} onClick={() => navigation('/myWishList')}>Wishlist</p>
               </div>
               <div style={{

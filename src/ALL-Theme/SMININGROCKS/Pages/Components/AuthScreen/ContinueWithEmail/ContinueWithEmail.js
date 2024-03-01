@@ -10,7 +10,6 @@ export default function ContinueWithEmail() {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [submitClicked, setSubmitClicked] = useState(false);
     const navigation = useNavigate();
 
     const validateEmail = (email) => {
@@ -31,7 +30,6 @@ export default function ContinueWithEmail() {
     };
 
     const handleSubmit = async () => {
-        setSubmitClicked(true); // Set submitClicked to true when submit button is clicked
         if (!email.trim()) {
             setEmailError('Email is required.');
             return;
@@ -107,7 +105,7 @@ export default function ContinueWithEmail() {
                             helperText={emailError} // Display the error message
                         />
                         <button className='submitBtnForgot' onClick={handleSubmit}>SUBMIT</button>
-                        <p className='cancleForgot'>CANCEL</p>
+                        <p className='cancleForgot' onClick={() => navigation('/')}>CANCEL</p>
                     </div>
                     <Footer />
                 </div>

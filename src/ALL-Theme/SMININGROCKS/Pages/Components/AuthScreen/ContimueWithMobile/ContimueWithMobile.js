@@ -33,9 +33,12 @@ export default function ContimueWithMobile() {
     const handleSubmit = async () => {
 
         if (!mobileNo.trim()) {
-            errors.mobileNo = 'Mobile No. is required';
+            setErrors({ mobileNo: 'Mobile No. is required' });
+            return;
+        } else if (!/^\d{10}$/.test(mobileNo.trim())) {
+            setErrors({ mobileNo: 'Enter Valid mobile number' });
+            return;
         }
-
 
         try {
             setIsLoading(true);
@@ -43,6 +46,7 @@ export default function ContimueWithMobile() {
             const combinedValue = JSON.stringify({
                 country_code: '91', mobile: `${mobileNo}`, FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
             });
+            console.log('combinedValuecombinedValue', combinedValue);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
                 "con": "{\"id\":\"\",\"mode\":\"WEBVALDNMOBILE\"}",
@@ -50,11 +54,13 @@ export default function ContimueWithMobile() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            if (response.Data.rd[0].stat === 1) {
+            console.log('ressssssss', response);
+            if (response.Data.Table1[0].stat === '1') {
                 navigation('/LoginWithMobileCode', { mobileNo: mobileNo });
                 localStorage.setItem('registerMobile', mobileNo)
             } else {
-                errors.mobileNo = 'Mobile No. is Not Register';
+                navigation('/register', { mobileNo: mobileNo });
+                localStorage.setItem('registerMobile', mobileNo)
             }
         } catch (error) {
             console.error('Error:', error);
