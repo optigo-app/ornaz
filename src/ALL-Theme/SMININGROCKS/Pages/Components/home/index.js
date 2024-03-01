@@ -39,10 +39,7 @@ export default function Home() {
           "f": "formname (init)"
         };
         const response = await axios.post(APIURL, body, { headers: header });
-
-        console.log('Response:', response);
         if (response.status === 200) {
-          console.log('YearCodeYearCodeYearCodeYearCodeYearCode', response.data.Data.rd[0]);
           localStorage.setItem('YearCode', response.data.Data.rd[0].YearCode);
           localStorage.setItem('FrontEnd_RegNo', response.data.Data.rd[0].FrontEnd_RegNo);
           localStorage.setItem('domain', response.data.Data.rd[0].domain);
@@ -86,7 +83,7 @@ export default function Home() {
             <IoMdMail style={{ height: '25px', width: '25px' }} />
             <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500, paddingLeft: '25px' }}>Continue with email</p>
           </div>
-          <div className='loginMobile'>
+          <div className='loginMobile' onClick={() => navigation('/ContimueWithMobile')}>
             <FaMobileAlt style={{ height: '25px', width: '25px', marginRight: '10px' }} />
             <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500, paddingLeft: '25px' }}>Log in with mobile</p>
           </div>
