@@ -137,7 +137,7 @@ export default function Register() {
       errors.confirmPassword = 'Passwords do not match';
     }
     if (Object.keys(errors).length === 0) {
-      const hashedPassword = hashPasswordSHA1('pasta');
+      const hashedPassword = hashPasswordSHA1(password);
       setIsLoading(true);
       try {
         const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');

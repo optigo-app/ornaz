@@ -90,7 +90,6 @@ export default function CareGuide() {
     const handleRightScroll = () => {
         if (ref.current) {
             ref.current.scrollLeft += 200;
-            console.log(ref.current.scrollLef);
             if (ref.current.scrollLeft === 0) {
                 setShowErrow(false)
 

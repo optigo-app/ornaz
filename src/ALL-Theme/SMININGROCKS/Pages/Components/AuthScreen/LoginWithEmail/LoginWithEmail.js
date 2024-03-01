@@ -5,6 +5,7 @@ import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import CryptoJS from 'crypto-js';
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');
@@ -44,6 +45,10 @@ export default function LoginWithEmail() {
         event.preventDefault();
     };
 
+    function hashPasswordSHA1(password) {
+        const hashedPassword = CryptoJS.SHA1(password).toString(CryptoJS.enc.Hex);
+        return hashedPassword;
+    }
 
     const handleSubmit = async () => {
         setSubmitClicked(true);
@@ -53,31 +58,45 @@ export default function LoginWithEmail() {
             return;
         }
 
-        // try {
-        //     setIsLoading(true);
-        //     const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
-        //     const combinedValue = JSON.stringify({
-        //         userid: `${email}`, FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
-        //     });
-        //     const encodedCombinedValue = btoa(combinedValue);
-        //     const body = {
-        //         "con": "{\"id\":\"\",\"mode\":\"WEBLOGIN\"}",
-        //         "f": "LoginWithEmail (handleSubmit)",
-        //         p: encodedCombinedValue
-        //     };
-        //     const response = await CommonAPI(body);
-        //     console.log('encodedCombinedValue : ', response);
+        const hashedPassword = hashPasswordSHA1(confirmPassword);
+        try {
+            setIsLoading(true);
 
-        //     if (response.Data.rd[0].stat === 1) {
+            const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
+            const combinedValue = JSON.stringify({
+                userid: `${email}`, mobileno: '', pass: `${hashedPassword}`, mobiletoken: '', FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
+            });
+            const encodedCombinedValue = btoa(combinedValue);
+            const body = {
+                "con": "{\"id\":\"\",\"mode\":\"WEBLOGIN\"}",
+                "f": "LoginWithEmail (handleSubmit)",
+                p: encodedCombinedValue
+            };
+            const response = await CommonAPI(body);
+            if (response.Data.rd[0].stat === 1) {
+                localStorage.setItem('LoginUser', 'true')
+                localStorage.setItem('userEmail', email);
+                alert('Register Sucssessfully');
+                navigation('/');
+            } else {
+                errors.confirmPassword = 'Password is Invalid'
+            }
+            // if(response){
+            //     localStorage.setItem('LoginUser', 'true')
+            //     localStorage.setItem('userEmail', email);
+            //     alert('Register Sucssessfully');
+            //     navigation('/');
+            // }    
+            // if (response.Data.rd[0].stat === 1) {
 
-        //     } else {
+            // } else {
 
-        //     }
-        // } catch (error) {
-        //     console.error('Error:', error);
-        // } finally {
-        //     setIsLoading(false);
-        // }
+            // }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
 
@@ -85,6 +104,11 @@ export default function LoginWithEmail() {
         setShowConfirmPassword(!showConfirmPassword);
     };
 
+    const handleNavigation = () => {
+        localStorage.setItem('LoginCodeEmail', 'true');
+        localStorage.setItem('registerEmail' , email);
+        navigation('/LoginWithEmailCode');
+    }
     return (
         <div style={{ backgroundColor: '#c0bbb1' }}>
             {isLoading && (
@@ -140,7 +164,12 @@ export default function LoginWithEmail() {
                         />
 
                         <button className='submitBtnForgot' onClick={handleSubmit}>Login</button>
-                        <p className='cancleForgot'>CANCEL</p>
+                        <p className='cancleForgot' onClick={() => navigation('/')}>CANCEL</p>
+
+                        <button className='submitBtnForgot' onClick={handleNavigation}>Login With a Code instead on email</button>
+                        <p>Go passwordless! we'll send you an email.</p>
+
+                        <p style={{ color: 'blue' }}>Forgot Password ?</p>
                     </div>
                     <Footer />
                 </div>
