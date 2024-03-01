@@ -3,6 +3,7 @@ import Header from '../home/Header/Header'
 import './Account.css'
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 import Footer from '../home/Footer/Footer';
+import QuotationFilters from './quotationFilters/QuotationFilters';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -14,7 +15,7 @@ function CustomTabPanel(props) {
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
             {...other}
-        > 
+        >
             {value === index && (
                 <Box sx={{ p: 3 }}>
                     <Typography>{children}</Typography>
@@ -41,10 +42,15 @@ export default function Account() {
 
 
     const [value, setValue] = useState(0);
+    const [value1, setValue1] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const handleChangeSub = (event, newValue) => {
+        setValue1(newValue);
+    }
 
     const handleLogout = () => {
         localStorage.setItem('LoginUser', 'false');
@@ -66,6 +72,7 @@ export default function Account() {
                                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"  >   {/*  orientation="vertical" indicatorColor="#7d7f85" */}
                                         <Tab label="ORDER HISTORY" {...a11yProps(0)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
+                                        <Tab label="ACCOUNT" {...a11yProps(2)} />
                                     </Tabs>
                                     <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
                                 </Box>
@@ -75,6 +82,7 @@ export default function Account() {
                                     <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{ width: '100%' }} >   {/*  indicatorColor="#7d7f85" */}
                                         <Tab label="ORDER HISTORY" {...a11yProps(0)} sx={{ textAlign: 'start', borderBottom: 1, width: '90%', borderColor: 'divider' }} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
+                                        <Tab label="ACCOUNT" {...a11yProps(2)} />
                                     </Tabs>
                                 </Box>
                                 <div onClick={() => alert('dddd')}>
@@ -83,7 +91,6 @@ export default function Account() {
                             </div>
 
                             <CustomTabPanel value={value} index={0}>
-
                                 <div>
                                     <p style={{
                                         textAlign: 'center',
@@ -149,6 +156,25 @@ export default function Account() {
                                     </div>
                                     <button className='smilingAcoountAddNewBtn'>ADD NEW ADDRESS</button>
                                 </div>
+                            </CustomTabPanel>
+                            <CustomTabPanel value={value} index={2}>
+                                {/* <QuotationFilters /> */}
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example">
+                                        <Tab label="Item One" {...a11yProps(0)} />
+                                        <Tab label="Item Two" {...a11yProps(1)} />
+                                        <Tab label="Item Three" {...a11yProps(2)} />
+                                    </Tabs>
+                                </Box>
+                                <CustomTabPanel value={value1} index={0}>
+                                    Item One
+                                </CustomTabPanel>
+                                <CustomTabPanel value={value1} index={1}>
+                                    Item Two
+                                </CustomTabPanel>
+                                <CustomTabPanel value={value1} index={2}>
+                                    Item Three
+                                </CustomTabPanel>
                             </CustomTabPanel>
                         </Box>
                     </div>
