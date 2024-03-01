@@ -16,6 +16,9 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
+import { event } from "jquery";
+import { CommonAPI } from "../../../Utils/API/CommonAPI";
+import { async } from "q";
 
  
 const ProductList = () => {
@@ -24,12 +27,16 @@ const ProductList = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [HoveredID, setHoveredID] = useState();
   const [filterChecked, setFilterChecked] = useState({});
+  const [wishFlag,setWishFlag] = useState(false)
+  const [cartFlag,setCartFlag] = useState(false)
 
   const navigate = useNavigate();
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail);
   };
+
+
 
   const toggleDrawerOverlay = () => {
     setDrawerShowOverlay(!drawerShowOverlay);
@@ -44,6 +51,15 @@ const ProductList = () => {
     });
     productData.push(obj);
   });
+
+  useEffect(() => {
+      window.scrollTo(0,0);
+  }, []); 
+
+
+  useEffect(()=>{
+
+  },[])
 
 
   // let collectionsfilter = () =>{
@@ -247,12 +263,6 @@ const ProductList = () => {
     });
 });
 
-
-
-
-
-
-
   const mergedArray = filteredProducts.reduce((acc, curr) => acc.concat(curr), []);
   const finalDataOfDisplaying = () =>{
     if(mergedArray.length && mergedArray){
@@ -261,6 +271,37 @@ const ProductList = () => {
     else{
       return updateProductsWithMetalColorName()
     }
+  }
+
+  const handelWishList = (event,prod) =>{
+
+    setWishFlag(event.target.checked)
+
+    let WishCheck = event.target.checked
+
+    console.log("productsWish",WishCheck? prod : "")
+  }
+
+  const handelCartList = async(event,prod)=>{
+
+    
+    setCartFlag(event.target.checked)
+    let CartCheck = event.target.checked
+
+    let product = CartCheck? prod : ""
+
+    // const encodedCombinedValue = btoa(product);
+    // const body = {
+    //   con: '{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"bunty@eg.com\"}',
+    //   f: "AddToCart (CartIcon)",
+    //   p: encodedCombinedValue,
+    // };
+
+    // await CommonAPI()
+    
+    console.log("productsCart",product)
+
+
   }
 
 
@@ -654,6 +695,9 @@ const ProductList = () => {
                             }
                             disableRipple={true}
                             sx={{padding:"5px"}}
+                            // onClick={()=>handelWishList(products)}
+                            value={wishFlag}
+                            onChange={(e)=>handelWishList(e,products)}
                           />
                        
                         </div>
@@ -671,6 +715,9 @@ const ProductList = () => {
                             }
                             disableRipple={true}
                             sx={{padding:"5px"}}
+                            // onClick={()=>}
+                            value={cartFlag}
+                            onChange={(e)=>handelCartList(e,products)}
                           />
                         </div>
                       </div>
