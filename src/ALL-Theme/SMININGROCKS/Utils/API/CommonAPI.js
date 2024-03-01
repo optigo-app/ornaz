@@ -15,27 +15,9 @@ export const CommonAPI = async (body) => {
             Yearcode: yearCode,
             Version: version
         };
-        console.log('header is.......................',header);
         const response = await axios.post(APIURL, body, { headers: header });
         return response?.data;
     } catch (error) {
         console.error('error is..',error);
     }
 };
-
-
-// const handleLogin = async () => {
-
-//         try {
-//             const body = {
-              
-//             };
-//             const response = await apiCall(body);
-//             if (response.stat === 1) {
-//                 callHome(response.data[0].token);
-//             }
-//         } catch (error) {
-//             console.error('Error:', error);
-//         }
-//     }
-// }

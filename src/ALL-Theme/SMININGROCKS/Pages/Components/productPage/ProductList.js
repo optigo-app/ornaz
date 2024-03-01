@@ -45,7 +45,6 @@ const ProductList = () => {
     productData.push(obj);
   });
 
-  console.log("arr", productData);
 
   // let collectionsfilter = () =>{
   //   let arr1=[]
@@ -179,7 +178,6 @@ const ProductList = () => {
   });
 
   const handelProductSubmit = (product) => {
-    console.log("product", product);
     localStorage.setItem("srProductsData", JSON.stringify(product));
     navigate("/productdetail");
   };
@@ -235,8 +233,6 @@ const ProductList = () => {
     return {type:ele[1].type,value:ele[1].value}
   })
 
-  console.log("filterChecked",sepeTypeVal);
-
   // const filteredProducts = productData.filter(product => {
   //   return sepeTypeVal.every(filter => {
   //     return product[filter.type] === filter.value 
@@ -258,10 +254,6 @@ const ProductList = () => {
 
 
   const mergedArray = filteredProducts.reduce((acc, curr) => acc.concat(curr), []);
-
-  console.log("filteredProducts",filteredProducts);
-  // console.log("ArrFil",ArrFil);
-
   const finalDataOfDisplaying = () =>{
     if(mergedArray.length && mergedArray){
       return mergedArray

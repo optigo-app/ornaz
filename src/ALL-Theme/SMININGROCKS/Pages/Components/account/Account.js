@@ -3,6 +3,7 @@ import Header from '../home/Header/Header'
 import './Account.css'
 import { Box, Tab, Tabs, Typography } from '@mui/material'
 import Footer from '../home/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -41,6 +42,7 @@ export default function Account() {
 
 
     const [value, setValue] = useState(0);
+    const naviagation = useNavigate();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -48,6 +50,7 @@ export default function Account() {
 
     const handleLogout = () => {
         localStorage.setItem('LoginUser', 'false');
+        naviagation('/')
         window.location.reload()
     }
 
