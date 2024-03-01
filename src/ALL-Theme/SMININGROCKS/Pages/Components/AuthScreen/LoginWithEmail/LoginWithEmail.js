@@ -73,25 +73,16 @@ export default function LoginWithEmail() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
+            console.log('response...',response);
             if (response.Data.rd[0].stat === 1) {
                 localStorage.setItem('LoginUser', 'true')
+                localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 localStorage.setItem('userEmail', email);
                 alert('Register Sucssessfully');
                 navigation('/');
             } else {
                 errors.confirmPassword = 'Password is Invalid'
             }
-            // if(response){
-            //     localStorage.setItem('LoginUser', 'true')
-            //     localStorage.setItem('userEmail', email);
-            //     alert('Register Sucssessfully');
-            //     navigation('/');
-            // }    
-            // if (response.Data.rd[0].stat === 1) {
-
-            // } else {
-
-            // }
         } catch (error) {
             console.error('Error:', error);
         } finally {
@@ -106,7 +97,7 @@ export default function LoginWithEmail() {
 
     const handleNavigation = () => {
         localStorage.setItem('LoginCodeEmail', 'true');
-        localStorage.setItem('registerEmail' , email);
+        localStorage.setItem('registerEmail', email);
         navigation('/LoginWithEmailCode');
     }
     return (

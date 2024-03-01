@@ -24,7 +24,7 @@ export default function Register() {
 
   useEffect(() => {
     const storedEmail = localStorage.getItem('registerEmail');
-    const storedMobileNo = localStorage.getItem('mobileNo');
+    const storedMobileNo = localStorage.getItem('registerMobile');
 
     if (storedEmail) setEmail(storedEmail);
     if (storedMobileNo) setMobileNo(storedMobileNo);
@@ -301,7 +301,7 @@ export default function Register() {
               <input type='checkbox' />
               <p style={{ margin: '5px' }}>Subscribe to our newsletter</p>
             </div>
-            <p className='SmilingSignInHere' onClick={() => navigation('/signIn')}>SIGN IN HERE</p>
+            <p className='SmilingSignInHere' onClick={() => navigation('/')}>BACK</p>
 
           </div>
           <Footer />
