@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../home/Header/Header';
 import './Register.css';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -140,9 +140,10 @@ export default function Register() {
       const hashedPassword = hashPasswordSHA1(password);
       setIsLoading(true);
       try {
-        const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
+        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+        const { FrontEnd_RegNo } = storeInit;
         const combinedValue = JSON.stringify({
-          firstname: `${firstName}`, lastname: `${lastName}`, userid: `${email}`, country_code: '91', mobile: `${mobileNo}`, pass: `${hashedPassword}`, FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`, Customerid: '0'
+          firstname: `${firstName}`, lastname: `${lastName}`, userid: `${email}`, country_code: '91', mobile: `${mobileNo}`, pass: `${hashedPassword}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: '0'
         });
         const encodedCombinedValue = btoa(combinedValue);
         const body = {
@@ -176,7 +177,7 @@ export default function Register() {
     <div style={{ backgroundColor: '#c0bbb1' }}>
       {isLoading && (
         <div className="loader-overlay">
-          <div className="loader"></div>
+          <CircularProgress />
         </div>
       )}
       <Header />

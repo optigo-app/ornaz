@@ -1,23 +1,20 @@
 
-
 import axios from "axios";
+const APIURL = 'https://api.optigoapps.com/test/store.aspx';
 
-const APIURL = 'https://api.optigoapps.com/test/store.aspx'
+const storeInit = JSON.parse(localStorage.getItem('storeInit'));
 
 export const CommonAPI = async (body) => {
     try {
-
-        const yearCode = localStorage.getItem('YearCode');
-        const version = localStorage.getItem('version');
-        const token = localStorage.getItem('token');
+        const { YearCode, version, token } = storeInit;
         const header = {
             Authorization: `Bearer ${token}`,
-            Yearcode: yearCode,
+            Yearcode: YearCode,
             Version: version
         };
         const response = await axios.post(APIURL, body, { headers: header });
         return response?.data;
     } catch (error) {
-        console.error('error is..',error);
+        console.error('error is..', error);
     }
 };

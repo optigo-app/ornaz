@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './Header.css'
 // import ring1 from '../../../assets/svg.svg'
 import Tooltip from '@mui/material/Tooltip';
-import { Dialog, Drawer, SwipeableDrawer } from "@mui/material";
+import { Dialog, Drawer, SwipeableDrawer, TextField } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -20,16 +20,10 @@ import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
 import CloseIcon from '@mui/icons-material/Close';
 import { IoClose } from "react-icons/io5";
+import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 
 export default function Header({ onLoginClick }) {
   const navigation = useNavigate();
-
-  const [isLogin, setIsLogin] = useState(true);
-  const [showLogout, setShowLogout] = useState(false);
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const [isOpenEngagementRing, setIsEngagementRing] = useState(false);
-  const [isOpenFineJewellaryGift, setFineJewellaryGift] = useState(false);
-  const [isOpenInr, setIsInr] = useState(false);
   const [inputValue, setInputValue] = useState(1);
   const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
   const [drawerShowOverlay, setDrawerShowOverlay] = useState(false);
@@ -65,93 +59,6 @@ export default function Header({ onLoginClick }) {
     setInputValue((prevValue) => Math.max(parseInt(prevValue, 10) - 1, 1));
   };
 
-
-  const openDrawer = () => {
-    setDrawerOpen(true);
-  };
-  const closeDrawer = () => {
-    setDrawerOpen(false);
-  };
-
-  const togglEngagementRing = () => {
-    setIsEngagementRing(!isOpenEngagementRing);
-  };
-  const toggleFineJewellaryGift = () => {
-    setFineJewellaryGift(!isOpenFineJewellaryGift);
-  };
-  const toggleInr = () => {
-    setIsInr(!isOpenInr);
-  };
-
-
-  let hermenuJSON = [{
-    menu1: {
-      'title': 'SHOP RINGS BY SHAPE',
-      'menus': [
-        { label: 'Round cut Rings', imgclass: i1[0] },
-        { label: 'Princess Cut Rings', imgclass: i1[1] },
-        { label: 'Cushion Cut Rings', imgclass: i1[2] },
-        { label: 'Oval Cut Rings', imgclass: i1[3] },
-        { label: 'Heart Cut Rings', imgclass: i1[4] },
-        { label: 'pear Cut Rings', imgclass: i1[5] },
-        { label: 'Emerald Cut Rings', imgclass: i1[6] },
-      ]
-    },
-    menu2: {
-      'title': 'DESIGN YOUR OWN ENGAGEMENT RING',
-      'menus': [
-        { label: 'Submit Your Own' },
-      ]
-    },
-    menu3: {
-      'title': 'ENGAGEMENT RINGS BY STYLES ',
-      'menus': [
-        { label: 'Plain Solitaire' },
-        { label: 'Vintage' },
-        { label: 'Side-Stone' },
-        { label: 'Three Stone' },
-        { label: 'Cluster' },
-        { label: 'Halo' },
-        { label: 'Pave' },
-      ]
-    },
-    menu4: {
-      'title': 'SHOPE BY METAL',
-      'menus': [
-        { label: 'White Gold' },
-        { label: 'Rose Gold' },
-
-      ]
-    },
-  }]
-  const ForHerMenu = useCallback(
-    (data, num) => (
-      <>
-        <font
-          style={{ color: "black", fontSize: "14px" }}
-          className="title-container"
-        >
-          {data[`menu${num}`].title}
-        </font>
-        <div className={`label-container ${num === 3 ? 'menu-3' : ''}`}>
-          {data[`menu${num}`].menus.map((menudata) => (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              {num === 1 && <span>{menudata.imgclass}</span>}
-              {num === 2 && <FavoriteBorderIcon />}{num === 2 && '+'}{num === 2 && <FavoriteBorderIcon />}
-              <font className="label-font">{menudata.label}</font>
-            </div>
-          ))}
-        </div>
-      </>
-    ),
-    []
-  );
-  const handleLogOut = () => {
-    setIsLogin(false)
-    setShowLogout(true)
-  }
-
-
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
   const [isHeaderFixedDropShow, setIsHeaderFixedDropShow] = useState(false);
 
@@ -177,21 +84,7 @@ export default function Header({ onLoginClick }) {
     setIsDropdownOpen(false);
   };
 
-
-  const [open, setOpen] = useState(false);
-
-  const toggleDrawer = (isOpen) => (event) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setOpen(isOpen);
-  };
-
   const [openCart, setOpenCart] = useState(false);
-
   const toggleCartDrawer = (isOpen) => (event) => {
     if (
       event.type === 'keydown' &&
@@ -230,16 +123,6 @@ export default function Header({ onLoginClick }) {
     })
   };
 
-  const [openLoginDailog, setOpenLoginDailog] = React.useState(false);
-  const openLoginDailogBox = () => {
-    setOpenLoginDailog(true);
-  };
-  const closeLoginDailog = () => {
-    openLoginDailog(false);
-  };
-
-
-
   const [islogin, setislogin] = useState(null);
 
   const fetchData = async () => {
@@ -251,6 +134,179 @@ export default function Header({ onLoginClick }) {
   useEffect(() => {
     fetchData();
   }, []);
+
+
+
+
+  const [cartListData, setCartListData] = useState([]);
+  const [imageURL, setImageURL] = useState('');
+  const [yKey, setYouKey] = useState('');
+  const [customerID, setCustomerID] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  useEffect(() => {
+    if (openCart) {
+      getCartData();
+    }
+  }, [openCart, isLoading]);
+
+  const getCartData = async () => {
+    try {
+      const ImageURL = localStorage.getItem('UploadLogicalPath');
+      setImageURL(ImageURL);
+      const storedData = localStorage.getItem('loginUserDetail');
+      const data = JSON.parse(storedData);
+      const customerid = data.id;
+      setCustomerID(data.id);
+      const customerEmail = data.email1;
+      setUserEmail(customerEmail);
+
+      const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+      const { FrontEnd_RegNo, ukey } = storeInit;
+      setYouKey(ukey);
+
+      const combinedValue = JSON.stringify({
+        CurrentPage: "1", PageSize: "1000", ukey: `${ukey}`, CurrRate: "1", FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
+      });
+      console.log('combinedValuecombinedValue...', combinedValue);
+      const encodedCombinedValue = btoa(combinedValue);
+      const body = {
+        "con": `{\"id\":\"\",\"mode\":\"GetCartDetails\",\"appuserid\":\"${customerEmail}\"}`,
+        "f": "Header (getCartData)",
+        p: encodedCombinedValue
+      };
+      const response = await CommonAPI(body);
+      console.log('response...', response);
+
+      if (response?.Data) {
+        setCartListData(response?.Data?.rd);
+        setMainRemarks(response?.Data?.rd[0].OrderRemarks);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      // setIsLoading(false);
+    }
+  }
+
+  const handleRemove = async (data) => {
+    console.log('dattaaaaaa', data);
+    try {
+      setIsLoading(true);
+      const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+      const { FrontEnd_RegNo } = storeInit;
+      const combinedValue = JSON.stringify({
+        designno: `${data.designno}`, autocode: `${data.autocode}`, metalcolorid: '0', isSolStockNo: '0', is_show_stock_website: '0', isdelete_all: '0', FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`, cartidlist: ''
+      });
+      console.log('combinedValuecombinedValue...', combinedValue);
+      console.log('userEmailuserEmail...', userEmail);
+      const encodedCombinedValue = btoa(combinedValue);
+      const body = {
+        "con": `{\"id\":\"Store\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${userEmail}\"}`,
+        "f": "myWishLisy (handleRemoveCatList)",
+        p: encodedCombinedValue
+      };
+      const response = await CommonAPI(body);
+      console.log('response...', response);
+      if (response.Data.rd[0].stat === 1) {
+        navigation('/myWishList')
+      } else {
+        alert('Error');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+
+  }
+
+  const [remarks, setRemarks] = useState({});
+  const [Mainremarks, setMainRemarks] = useState('');
+
+  const handleInputChangeMainRemarks = (e) => {
+    setMainRemarks(e.target.value)
+  }
+  const submitMainRemrks = async () => {
+    if (!Mainremarks || Mainremarks.trim() === '') {
+      alert('Enter a value for remarks.');
+    } else {
+      try {
+        setIsLoading(true);
+        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+        const { FrontEnd_RegNo } = storeInit;
+        const combinedValue = JSON.stringify({
+          orderremarks: `${Mainremarks}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
+        });
+        console.log('combinedValuecombinedValue...', combinedValue);
+        const encodedCombinedValue = btoa(combinedValue);
+        const body =
+        {
+          "con": `{\"id\":\"\",\"mode\":\"SAVEORDERREMARK\",\"appuserid\":\"${userEmail}\"}`,
+          "f": "Header (handleMainRemrks)",
+          p: encodedCombinedValue
+        };
+        const response = await CommonAPI(body);
+        console.log('response...', response);
+        if (response.Data.rd[0].stat === 1) {
+          alert('done');
+        } else {
+          alert('Error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }
+  const handleInputChangeRemarks = (e, index) => {
+    const { value } = e.target;
+    setRemarks(prevRemarks => ({
+      ...prevRemarks,
+      [index]: value
+    }));
+  };
+
+  const handleSubmit = async (index, data) => {
+    const remark = remarks[index];
+    if (!remark || remark.trim() === '') {
+      alert('Enter a value for remarks.');
+    } else {
+
+      try {
+        setIsLoading(true);
+        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+        const { FrontEnd_RegNo } = storeInit;
+        const combinedValue = JSON.stringify({
+          designno: `${data.designno}`, autocode: `${data.autocode}`, remarks: `${remark}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
+        });
+        const encodedCombinedValue = btoa(combinedValue);
+        const body =
+        {
+          "con": `{\"id\":\"\",\"mode\":\"SAVEDESIGNREMARK\",\"appuserid\":\"${userEmail}\"}`,
+          "f": "Header (handleSingleRemaksSubmit)",
+          p: encodedCombinedValue
+        };
+        const response = await CommonAPI(body);
+        if (response.Data.rd[0].stat === 1) {
+          // setRemarks(prevRemarks => ({
+          //   ...prevRemarks,
+          //   [index]: ''
+          // }));
+          alert('done');
+        } else {
+          alert('Error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
 
   return (
     <>
@@ -420,19 +476,6 @@ export default function Header({ onLoginClick }) {
         </>
       )
       }
-
-      <Dialog
-        open={open}
-        onClose={closeLoginDailog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-
-        <Button onClick={closeLoginDailog}>Disagree</Button>
-        <Button onClick={closeLoginDailog} autoFocus>
-          Agree
-        </Button>
-      </Dialog>
 
       <div className="sminingHeaderWeb">
         <div className="Smining-Top-Header">
@@ -698,7 +741,6 @@ export default function Header({ onLoginClick }) {
         }}
       >
         <div>
-          {/* <Button onClick={toggleCartDrawer(false)}>Close Drawer</Button> */}
           <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '20px' }}>
             <CloseIcon onClick={toggleCartDrawer(false)} style={{ cursor: 'pointer', color: '#7d7f85' }} />
           </div>
@@ -708,7 +750,7 @@ export default function Header({ onLoginClick }) {
             textAlign: 'center',
             fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
           }}>Your Cart</p>
-          <div style={{
+          {/* <div style={{
             backgroundColor: '#f1f2f2',
           }}>
             <div style={{
@@ -720,8 +762,10 @@ export default function Header({ onLoginClick }) {
               <p style={{ margin: '0px' }}>Deliveries are available only in the USA.</p>
               <p>3% will be donated to your choice of charity. Learn More</p>
             </div>
-          </div>
-          <div className="smiling-cartBoxMain">
+          </div> */}
+
+
+          {/* <div className="smiling-cartBoxMain">
             <div style={{
               display: 'flex',
               justifyContent: 'center',
@@ -783,8 +827,96 @@ export default function Header({ onLoginClick }) {
               </div>
             </div>
 
-          </div>
+          </div> */}
 
+        </div>
+        <div style={{ paddingBottom: '150px' }}>
+          {cartListData?.map((item, index) => (
+            <div key={item.id} className="smiling-cartBoxMain">
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignContent: 'center',
+                width: '30%'
+              }}>
+                <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiling-cartBoxImg' />
+              </div>
+              <div style={{
+                width: '65%',
+                margin: '20px'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}>
+                  <p style={{ fontSize: '14px', color: '#7d7f85' }}>{item.designno}</p>
+                  <p className="CartPageShipingIn">Ships in 14 days</p>
+                  <p style={{
+                    color: '#7d7f85',
+                    marginLeft: '35px'
+                  }}>${item.TotalUnitCost}</p>
+                </div>
+                <div style={{ fontSize: '14px', marginTop: '-20px', color: '#7d7f85' }}>
+                  {item.Mastermanagement_CategoryName}<br />
+                  {item.DefaultImageName1}
+                </div>
+                <p style={{ fontSize: '12px', color: '#7d7f85' }}>White Gold / 18 Inches / {item.Quantity}</p>
+                <p className="CartPageShipingInSmall">Ships in 14 days</p>
+                <div style={{ display: 'flex' }}>
+                  <div style={{ display: 'flex', justifyContent: 'center', border: '1px solid #7d7f85' }}>
+                    <p style={{
+                      margin: '10px',
+                      fontSize: '20px',
+                      fontWeight: 500,
+                      cursor: 'pointer'
+                    }} onClick={handleDecrement} >-</p>
+                    <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }}
+                      maxLength={2}
+                      inputMode="numeric"
+                      value={inputValue}
+                      onChange={handleInputChange} />
+                    <p style={{
+                      margin: '10px',
+                      fontSize: '20px',
+                      fontWeight: 500,
+                      cursor: 'pointer'
+                    }} onClick={handleIncrement}>+</p>
+                  </div>
+                  <p style={{
+                    margin: '10px',
+                    fontSize: '15px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }} onClick={() => handleRemove(item)}>REMOVE</p>
+                  <input
+                    type="text"
+                    value={item.Remarks || ''}
+                    onChange={(e) => {
+                      const updatedCartListData = [...cartListData];
+                      updatedCartListData[index].Remarks = e.target.value;
+                      setCartListData(updatedCartListData);
+                      setRemarks(prevRemarks => ({
+                        ...prevRemarks,
+                        [index]: e.target.value
+                      }));
+                    }}
+                  />
+                  <button onClick={() => handleSubmit(index, item)}>Add Remarks</button>
+                </div>
+              </div>
+            </div>
+          ))}
+          <input
+            label="Enter Remarks"
+            variant="outlined"
+            value={Mainremarks}
+            onChange={(e) => handleInputChangeMainRemarks(e)}
+          />
+          <button onClick={submitMainRemrks}>Add Remarks</button>
+        </div>
+        <div className="placeOrderBtnMain">
+          <button className="placeOrderBtn" onClick={() => navigation('/Delivery')}>Place Order</button>
         </div>
       </Drawer >
 
