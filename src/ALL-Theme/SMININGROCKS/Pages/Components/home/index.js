@@ -23,12 +23,11 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       // const APIURL = 'http://zen/api/';
-
-      const APIURL = 'https://api.optigoapps.com/test/';
-
+      const APIURL = 'https://api.optigoapps.com/test/store.aspx';
       const header = {
         Authorization: 'Bearer optigo_json_api',
         domain: 'gstore.orail.co.in',
+        version: 'V4',
         // domain: 'zen',
       };
 
@@ -40,12 +39,8 @@ export default function Home() {
         };
         const response = await axios.post(APIURL, body, { headers: header });
         if (response.status === 200) {
-          localStorage.setItem('YearCode', response.data.Data.rd[0].YearCode);
-          localStorage.setItem('FrontEnd_RegNo', response.data.Data.rd[0].FrontEnd_RegNo);
-          localStorage.setItem('domain', response.data.Data.rd[0].domain);
-          localStorage.setItem('ukey', response.data.Data.rd[0].ukey);
-          localStorage.setItem('version', response.data.Data.rd[0].version);
-          localStorage.setItem('token', response.data.Data.rd[0].token);
+          localStorage.setItem('UploadLogicalPath', response.data.Data.rd[0].UploadLogicalPath);
+          localStorage.setItem('storeInit', JSON.stringify(response.data.Data.rd[0]));
         }
       } catch (error) {
         console.error('Error:', error);

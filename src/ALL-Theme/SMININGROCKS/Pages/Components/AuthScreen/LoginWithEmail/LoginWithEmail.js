@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../home/Header/Header';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
@@ -62,9 +62,10 @@ export default function LoginWithEmail() {
         try {
             setIsLoading(true);
 
-            const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+            const { FrontEnd_RegNo } = storeInit;
             const combinedValue = JSON.stringify({
-                userid: `${email}`, mobileno: '', pass: `${hashedPassword}`, mobiletoken: '', FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
+                userid: `${email}`, mobileno: '', pass: `${hashedPassword}`, mobiletoken: '', FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
@@ -73,25 +74,16 @@ export default function LoginWithEmail() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
+            console.log('response...',response);
             if (response.Data.rd[0].stat === 1) {
                 localStorage.setItem('LoginUser', 'true')
+                localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 localStorage.setItem('userEmail', email);
                 alert('Register Sucssessfully');
                 navigation('/');
             } else {
                 errors.confirmPassword = 'Password is Invalid'
             }
-            // if(response){
-            //     localStorage.setItem('LoginUser', 'true')
-            //     localStorage.setItem('userEmail', email);
-            //     alert('Register Sucssessfully');
-            //     navigation('/');
-            // }    
-            // if (response.Data.rd[0].stat === 1) {
-
-            // } else {
-
-            // }
         } catch (error) {
             console.error('Error:', error);
         } finally {
@@ -106,14 +98,14 @@ export default function LoginWithEmail() {
 
     const handleNavigation = () => {
         localStorage.setItem('LoginCodeEmail', 'true');
-        localStorage.setItem('registerEmail' , email);
+        localStorage.setItem('registerEmail', email);
         navigation('/LoginWithEmailCode');
     }
     return (
         <div style={{ backgroundColor: '#c0bbb1' }}>
-            {isLoading && (
+          {isLoading && (
                 <div className="loader-overlay">
-                    <div className="loader"></div>
+                    <CircularProgress />
                 </div>
             )}
             <Header />
