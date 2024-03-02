@@ -13,7 +13,9 @@ export const CommonAPI = async (body) => {
             Version: version
         };
         const response = await axios.post(APIURL, body, { headers: header });
+        console.log("response",response?.data)
         return response?.data;
+
     } catch (error) {
         console.error('error is..', error);
     }
