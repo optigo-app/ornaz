@@ -24,6 +24,7 @@ import LoginWithEmail from './Pages/Components/AuthScreen/LoginWithEmail/LoginWi
 import LoginWithEmailCode from './Pages/Components/AuthScreen/LoginWithEmailCode/LoginWithEmailCode'
 import ContimueWithMobile from './Pages/Components/AuthScreen/ContimueWithMobile/ContimueWithMobile'
 import LoginWithMobileCode from './Pages/Components/AuthScreen/LoginWithMobileCode/LoginWithMobileCode'
+import Delivery from './Pages/Components/delivery/Delivery'
 
 export default function SMININGROCKS_App() {
     return (
@@ -52,6 +53,7 @@ export default function SMININGROCKS_App() {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/productpage" element={<ProductList />}/>
                 <Route path="/productdetail" element={<ProdDetail />}/>
+                <Route path="/Delivery" element={<Delivery />}/>
             </Routes>
         </div>
     )

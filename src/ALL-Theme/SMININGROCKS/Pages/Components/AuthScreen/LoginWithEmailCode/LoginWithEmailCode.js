@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../home/Header/Header';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
@@ -19,13 +19,15 @@ export default function LoginWithEmailCode() {
         const fetchData = async () => {
             try {
                 const storedEmail = localStorage.getItem('registerEmail');
+                const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+                const { FrontEnd_RegNo } = storeInit;
+
                 if (storedEmail) {
                     setEmail(storedEmail);
                     const value = localStorage.getItem('LoginCodeEmail');
                     if (value === 'true') {
-                        const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
                         const combinedValue = JSON.stringify({
-                            userid: storedEmail, FrontEnd_RegNo: encodedFrontEnd_RegNo
+                            userid: storedEmail, FrontEnd_RegNo: FrontEnd_RegNo
                         });
                         const encodedCombinedValue = btoa(combinedValue);
                         const body = {
@@ -97,9 +99,11 @@ export default function LoginWithEmailCode() {
 
         try {
             setIsLoading(true);
-            const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+            const { FrontEnd_RegNo } = storeInit;
+
             const combinedValue = JSON.stringify({
-                userid: `${email}`, mobileno: '', pass: `${mobileNo}`, mobiletoken: 'otp_email_login', FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
+                userid: `${email}`, mobileno: '', pass: `${mobileNo}`, mobiletoken: 'otp_email_login', FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
@@ -127,9 +131,10 @@ export default function LoginWithEmailCode() {
     const handleResendCode = async () => {
         setResendTimer(120);
         try {
-            const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+            const { FrontEnd_RegNo } = storeInit;
             const combinedValue = JSON.stringify({
-                userid: `${email}`, FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
+                userid: `${email}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
@@ -153,7 +158,7 @@ export default function LoginWithEmailCode() {
         <div style={{ backgroundColor: '#c0bbb1' }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <div className="loader"></div>
+                    <CircularProgress />
                 </div>
             )}
             <Header />

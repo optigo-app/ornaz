@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../../home/Header/Header';
 import './ContinueWithEmail.css';
-import { TextField } from '@mui/material';
+import { CircularProgress, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
@@ -38,12 +38,13 @@ export default function ContinueWithEmail() {
             setEmailError('Please enter a valid email address.');
             return;
         }
-
         try {
             setIsLoading(true);
-            const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+            const { FrontEnd_RegNo } = storeInit;
+
             const combinedValue = JSON.stringify({
-                userid: `${email}`, FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
+                userid: `${email}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
@@ -68,9 +69,9 @@ export default function ContinueWithEmail() {
 
     return (
         <div style={{ backgroundColor: '#c0bbb1' }}>
-            {isLoading && (
+          {isLoading && (
                 <div className="loader-overlay">
-                    <div className="loader"></div>
+                    <CircularProgress />
                 </div>
             )}
             <Header />
