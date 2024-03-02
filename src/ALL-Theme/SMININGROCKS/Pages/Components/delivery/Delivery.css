@@ -1,0 +1,33 @@
+.smilingDelivery {
+    margin-inline: 6%;
+    background-color: white;
+}
+
+.smilingOrderMain{
+    display: flex;
+    margin-inline: 10%;
+}
+
+.smilingdeliverBox1{
+    width: 60%;
+    margin-top: 8%;
+}
+
+.smilingdeliverBox2{
+    width: 40%;
+    margin-top: 8%;
+
+}
+
+.smilingDeliverImg{
+    height: 200px;
+    width: 200px;
+}
+
+.AddressMain{
+    border: 1px solid lightgray;
+    width: 100px;
+}
+.addressData{
+    margin: 0px;
+}

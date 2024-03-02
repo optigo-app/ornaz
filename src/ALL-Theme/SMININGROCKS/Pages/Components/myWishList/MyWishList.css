@@ -57,6 +57,11 @@
     margin: 10px;
 }
 
+.smiTopAddAllBtn:hover {
+    color: white;
+    background-color: #7d7f85;
+}
+
 .smiWishLsitBoxMain {
     display: flex;
     margin-inline: 5%;
@@ -67,6 +72,7 @@
 .smiWishLsitBox {
     border: 1px solid #e1e1e1;
     width: 25%;
+    position: relative;
 }
 
 .smiWishLsitBoxImge {

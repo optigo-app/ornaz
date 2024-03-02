@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../home/Header/Header';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
@@ -56,9 +56,10 @@ export default function LoginWithMobileCode() {
 
         try {
             setIsLoading(true);
-            const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+            const { FrontEnd_RegNo } = storeInit;
             const combinedValue = JSON.stringify({
-                userid: '', mobileno: `${mobileNo}`, pass: `${enterOTP}`, mobiletoken: 'otp_mobile_login', FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
+                userid: '', mobileno: `${mobileNo}`, pass: `${enterOTP}`, mobiletoken: 'otp_mobile_login', FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
             const encodedCombinedValue = btoa(combinedValue);
             console.log('combinedValuecombinedValuecombinedValue', combinedValue);
@@ -89,9 +90,10 @@ export default function LoginWithMobileCode() {
     const handleResendCode = async () => {
         setResendTimer(120);
         try {
-            const encodedFrontEnd_RegNo = localStorage.getItem('FrontEnd_RegNo');
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+            const { FrontEnd_RegNo } = storeInit;
             const combinedValue = JSON.stringify({
-                country_code: '91', mobile: `${mobileNo}`, FrontEnd_RegNo: `${encodedFrontEnd_RegNo}`
+                country_code: '91', mobile: `${mobileNo}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
@@ -117,7 +119,7 @@ export default function LoginWithMobileCode() {
         <div style={{ backgroundColor: '#c0bbb1' }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <div className="loader"></div>
+                    <CircularProgress />
                 </div>
             )}
             <Header />
