@@ -50,44 +50,14 @@ export default function Home() {
   }, []);
 
 
-  const [openLoginDailog, setOpenLoginDailog] = useState(false);
-  const navigation = useNavigate();
-  const openLoginDailogBox = () => {
-    setOpenLoginDailog(true);
-  };
-  const closeLoginDailog = () => {
-    setOpenLoginDailog(false);
-  };
 
 
   return (
-    <div style={{ backgroundColor: '#c0bbb1' }}>
+    <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
 
-      <Dialog
-        open={openLoginDailog}
-        // onClose={closeLoginDailog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <div className='loginDailog'>
-          <IoClose style={{ float: 'right', height: '30px', width: '30px', cursor: 'pointer', backgroundColor: '#e4e6ec' }} onClick={closeLoginDailog} />
-          <p className='loginDiTile'>Log in or sign up in seconds</p>
-          <p>Use your email or mobile no to continue with the organization.</p>
-
-          <div className='loginMail' onClick={() => navigation('/ContinueWithEmail')}>
-            <IoMdMail style={{ height: '25px', width: '25px' }} />
-            <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500, paddingLeft: '25px' }}>Continue with email</p>
-          </div>
-          <div className='loginMobile' onClick={() => navigation('/ContimueWithMobile')}>
-            <FaMobileAlt style={{ height: '25px', width: '25px', marginRight: '10px' }} />
-            <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500, paddingLeft: '25px' }}>Log in with mobile</p>
-          </div>
-          <p style={{ marginTop: '20px', fontSize: '14px' }}>By continuing, you agree to our Terms of Use. Read our Privacy Policy.</p>
-        </div>
-      </Dialog>
-      <div className='smining-header'>
+      {/* <div className='smining-header'>
         <Header onLoginClick={openLoginDailogBox} />
-      </div>
+      </div> */}
       <div className='homeMain'>
         <Video />
         <SmilingRock />

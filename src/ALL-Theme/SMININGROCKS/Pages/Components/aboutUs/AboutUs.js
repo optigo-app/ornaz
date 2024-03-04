@@ -6,9 +6,8 @@ import Footer from '../home/Footer/Footer'
 
 export default function AboutUs() {
     return (
-        <div>
+        <div style={{paddingTop: '110px'}}>
             {/* https://cdn.accentuate.io/19336364132/3641674891364/Stocksy_txpdd2f673ddEJ200_Medium_1086442.jpg?1733x1155 */}
-            <Header />
             <div>
                 <img
                     src="https://cdn.accentuate.io/19336364132/3641674891364/Stocksy_txpdd2f673ddEJ200_Medium_1086442.jpg?1733x1155"

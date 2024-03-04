@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './Header.css'
 // import ring1 from '../../../assets/svg.svg'
 import Tooltip from '@mui/material/Tooltip';
-import { Dialog, Drawer, SwipeableDrawer, TextField } from "@mui/material";
+import { Badge, Dialog, Drawer, SwipeableDrawer, TextField } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -20,6 +20,8 @@ import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
 import CloseIcon from '@mui/icons-material/Close';
 import { IoClose } from "react-icons/io5";
+import { useRecoilValue } from "recoil";
+import { CartListCounts, WishListCounts } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 
 export default function Header({ onLoginClick }) {
@@ -31,6 +33,9 @@ export default function Header({ onLoginClick }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenCollection, setIsOpenCollection] = useState(false);
   const [isOpenBouti, setIsOpenBouti] = useState(false);
+
+  const getCartListCount =  useRecoilValue(CartListCounts)
+  const getWishListCount =  useRecoilValue(WishListCounts)
 
 
   const toggleList = () => {
@@ -529,9 +534,17 @@ export default function Header({ onLoginClick }) {
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
               {islogin ? <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li> :
                 <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={onLoginClick}>{LOGIN}</li>}
-              <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+                <Badge badgeContent={getWishListCount}  overlap={'rectangular'} color="secondary">
+                  <Tooltip title="Add To WishList" >
+                    <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '20px', cursor: 'pointer', width: '20px' }} /></li>
+                  </Tooltip>
+                </Badge>
               <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-              <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', marginTop: '0px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
+              <Badge  badgeContent={getCartListCount}  overlap={'rectangular'} color="secondary">
+                  <Tooltip title="Add To Cart" >
+                    <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', cursor: 'pointer',marginTop: '0px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
+                  </Tooltip>
+              </Badge>
             </ul>
           </div>
         </div>
@@ -641,9 +654,19 @@ export default function Header({ onLoginClick }) {
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
                 {islogin ? <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li> :
                   <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={onLoginClick}>{LOGIN}</li>}
-                <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-                <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-                <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
+
+              <Badge badgeContent={getWishListCount}  overlap={'rectangular'} color="secondary">
+                  <Tooltip title="Add To WishList" >
+                    <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '20px', cursor: 'pointer', width: '20px' }} /></li>
+                  </Tooltip>
+                </Badge>
+              <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+              <Badge  badgeContent={getCartListCount}  overlap={'rectangular'} color="secondary">
+                  <Tooltip title="Add To Cart" >
+                    <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', marginTop: '0px',cursor: 'pointer' }}><PiStarFourThin style={{ cursor: 'pointer', height: '30px', width: '30px' }} /></li>
+                  </Tooltip>
+              </Badge>
+
               </ul>
             </div>
           </div>

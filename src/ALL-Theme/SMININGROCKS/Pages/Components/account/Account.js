@@ -7,6 +7,7 @@ import QuotationFilters from './quotationFilters/QuotationFilters';
 import { useNavigate } from 'react-router-dom';
 import SalesApi from './salesApi/SalesApi';
 import ManageAddress from './address/ManageAddress';
+import OrderHistory from './accountOrderHistory/OrderHistory';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -73,9 +74,9 @@ export default function Account() {
 
     return (
         <div style={{
-            backgroundColor: '#c0bbb1'
+            backgroundColor: '#c0bbb1',
+            paddingTop: '110px'
         }}>
-            <Header />
             <div>
                 <div className='Smiling-AccountMain'>
                     <p className='SmilingAccountTitle'>Your Account</p>
@@ -106,7 +107,8 @@ export default function Account() {
 
                             <CustomTabPanel value={value} index={0}>
                                 <div>
-                                    <p style={{
+                                    <OrderHistory />
+                                    {/* <p style={{
                                         textAlign: 'center',
                                         color: '#7d7f85',
                                         marginTop: '30px',
@@ -117,7 +119,7 @@ export default function Account() {
                                             <p style={{ textAlign: 'center' }}>You have not completed any orders.</p>
                                             <button className='smlingOrderHistoryBtn'>SHOP NOW</button>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>

@@ -56,9 +56,9 @@ const ProdDetail = () => {
         height: "100%",
         width: "100%",
         paddingBottom: "100px",
+        paddingTop: '110px'
       }}
     >
-      <Header />
       <div
         style={{
           display: "flex",
