@@ -92,3 +92,25 @@
     right: 0;
     transform: translateY(-50%);
 }
+
+.quotaionFiltertable{
+    position: relative;
+}
+
+.quotaionFiltertable thead > tr:first-child{
+    position: sticky;
+    top: 0;
+}
+
+.muiSmilingRocksBtn{
+    border: 1px solid #7d7f85 !important;
+}
+
+.muiSmilingRocksBtn:hover{
+    background: #fff !important;
+    color: #7d7f85;
+}
+
+.muiSmilingRocksBtn:hover svg{
+    color: #7d7f85 !important;
+}

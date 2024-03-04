@@ -5,6 +5,8 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 import Footer from '../home/Footer/Footer';
 import QuotationFilters from './quotationFilters/QuotationFilters';
 import { useNavigate } from 'react-router-dom';
+import SalesApi from './salesApi/SalesApi';
+import ManageAddress from './address/ManageAddress';
 import OrderHistory from './accountOrderHistory/OrderHistory';
 
 function CustomTabPanel(props) {
@@ -121,73 +123,22 @@ export default function Account() {
                                 </div>
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
-                                <div>
-                                    <p style={{
-                                        textAlign: 'center',
-                                        color: '#7d7f85',
-                                        marginTop: '30px',
-                                        fontSize: '20px'
-                                    }}>Saved Addresses</p>
-                                    <div className='smilingSavedAddressMain'>
-                                        <div style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            padding: '30px'
-                                        }}>
-                                            <p style={{
-                                                fontSize: '14px',
-                                                fontWeight: 600,
-                                                marginTop: '30px',
-                                                color: '#7d7f85'
-                                            }}>Name Hello</p>
-                                            <p style={{
-                                                fontSize: '15px',
-                                                fontWeight: 500,
-                                                marginTop: '20px',
-                                                color: '#7d7f85',
-                                                textDecoration: 'underline'
-                                            }}>DEFAULT ADDRESS</p>
-                                        </div>
-                                        <p style={{
-                                            fontSize: '13px',
-                                            fontWeight: 500,
-                                            marginTop: '15px',
-                                            margin: '30px',
-                                            color: '#7d7f85',
-                                        }}>United States</p>
-                                        <div style={{
-                                            display: 'flex',
-                                            margin: '30px',
-                                        }}>
-                                            <p className='smilingAccountSavedRemoveBtn'>EDIT</p>
-                                            <p style={{
-                                                marginInline: '5px',
-                                                marginTop: '-2px',
-                                                color: '#7d7f85'
-                                            }}>|</p>
-                                            <p className='smilingAccountSavedRemoveBtn'>REMOVE</p>
-                                        </div>
-                                    </div>
-                                    <button className='smilingAcoountAddNewBtn'>ADD NEW ADDRESS</button>
-                                </div>
+                                <ManageAddress />
+                      
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={2}>
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator}}>
+                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator}} scrollButtons="auto">
                                         <Tab label="Account Quotation Filters" {...a11yProps(0)} sx={{color: "#7d7f85"}} />
-                                        <Tab label="Item Two" {...a11yProps(1)} sx={{color: "#7d7f85"}} />
-                                        <Tab label="Item Three" {...a11yProps(2)} sx={{color: "#7d7f85"}} />
+                                        <Tab label="Acount Sales" {...a11yProps(1)} sx={{color: "#7d7f85"}} />
                                     </Tabs>
                                 </Box>
                                 <CustomTabPanel value={value1} index={0} className="quotationFilters">
                                     <QuotationFilters />
                                 </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={1}>
-                                    Item Two
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={2}>
-                                    Item Three
+                                <CustomTabPanel value={value1} index={1} className="AcountSales">
+                                    <SalesApi />
                                 </CustomTabPanel>
                             </CustomTabPanel>
                         </Box>
