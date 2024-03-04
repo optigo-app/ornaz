@@ -8,8 +8,7 @@ import Explore from "./Explore/Explore";
 const index = () => {
   return (
     <>
-      <Header />
-      <div>
+      <div style={{ paddingTop: '110px' }}>
         <div className="back-img-container">
           <img
             src={

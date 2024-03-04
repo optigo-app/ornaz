@@ -24,10 +24,10 @@ const index = () => {
         backgroundColor: "#c0bbb1",
         height: "100%",
         width: "100%",
-        paddingBottom: '100px'
+        paddingBottom: '100px',
+        paddingTop: '110px'
       }}
     >
-      <Header />
       <div className='smilingLookBookMain' style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
         <div
           style={{

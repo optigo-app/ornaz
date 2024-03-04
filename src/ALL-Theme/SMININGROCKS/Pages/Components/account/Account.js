@@ -62,9 +62,9 @@ export default function Account() {
 
     return (
         <div style={{
-            backgroundColor: '#c0bbb1'
+            backgroundColor: '#c0bbb1',
+            paddingTop: '110px'
         }}>
-            <Header />
             <div>
                 <div className='Smiling-AccountMain'>
                     <p className='SmilingAccountTitle'>Your Account</p>

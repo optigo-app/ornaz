@@ -182,14 +182,14 @@ export default function MyWishList() {
 
     return (
         <div style={{
-            backgroundColor: '#c0bbb1'
+            backgroundColor: '#c0bbb1',
+            paddingTop: '110px'
         }}>
             {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress />
                 </div>
             )}
-            <Header />
             <div>
                 <div className='smiling-wishlist'>
                     <p className='SmiWishListTitle'>My Wishlist</p>
