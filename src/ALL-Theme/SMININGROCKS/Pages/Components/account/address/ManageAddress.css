@@ -1,0 +1,19 @@
+.muiSmilingRocksBtnManage{
+    border: 1px solid #7d7f85 !important;
+    margin-left: auto !important;
+    display: block !important;
+}
+
+.muiSmilingRocksBtnManage:hover, .muiSmilingRocksBtnManageEdit:hover{
+    background: #fff !important;
+    color: #7d7f85;
+}
+
+.manageAddressBlock{
+    border: 1px solid #e9e9ed;
+    padding: 15px;
+}
+
+.muiSmilingRocksBtnManageEdit{
+    border: 1px solid #7d7f85 !important;
+}
