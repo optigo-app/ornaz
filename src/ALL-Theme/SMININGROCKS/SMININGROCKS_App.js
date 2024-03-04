@@ -25,6 +25,7 @@ import LoginWithEmailCode from './Pages/Components/AuthScreen/LoginWithEmailCode
 import ContimueWithMobile from './Pages/Components/AuthScreen/ContimueWithMobile/ContimueWithMobile'
 import LoginWithMobileCode from './Pages/Components/AuthScreen/LoginWithMobileCode/LoginWithMobileCode'
 import Delivery from './Pages/Components/delivery/Delivery'
+// import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
 
 export default function SMININGROCKS_App() {
     return (
