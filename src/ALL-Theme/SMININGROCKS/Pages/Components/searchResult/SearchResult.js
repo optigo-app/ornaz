@@ -24,9 +24,10 @@ export default function SearchResult() {
 
     return (
         <div style={{
-            backgroundColor: '#c0bbb1'
+            backgroundColor: '#c0bbb1',
+        paddingTop: '110px'
+
         }}>
-            <Header />
             <p style={{
                 fontSize: '40px',
                 color: 'white',
