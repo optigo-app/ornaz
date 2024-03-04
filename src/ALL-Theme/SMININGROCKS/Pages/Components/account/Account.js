@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import SalesApi from './salesApi/SalesApi';
 import ManageAddress from './address/ManageAddress';
 import OrderHistory from './accountOrderHistory/OrderHistory';
+import AccountLedger from './accountLedger/AccountLedger';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -108,18 +109,6 @@ export default function Account() {
                             <CustomTabPanel value={value} index={0}>
                                 <div>
                                     <OrderHistory />
-                                    {/* <p style={{
-                                        textAlign: 'center',
-                                        color: '#7d7f85',
-                                        marginTop: '30px',
-                                        fontSize: '20px'
-                                    }}>Your Order History</p>
-                                    <div className='smlingOrderHistory'>
-                                        <div style={{ padding: '100px', textAlign: 'center' }}>
-                                            <p style={{ textAlign: 'center' }}>You have not completed any orders.</p>
-                                            <button className='smlingOrderHistoryBtn'>SHOP NOW</button>
-                                        </div>
-                                    </div> */}
                                 </div>
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
@@ -131,14 +120,22 @@ export default function Account() {
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator}} scrollButtons="auto">
                                         <Tab label="Account Quotation Filters" {...a11yProps(0)} sx={{color: "#7d7f85"}} />
-                                        <Tab label="Acount Sales" {...a11yProps(1)} sx={{color: "#7d7f85"}} />
+                                        <Tab label="Account Ledger" {...a11yProps(1)} sx={{color: "#7d7f85"}} />
+                                        <Tab label="Acount Sales" {...a11yProps(3)} sx={{color: "#7d7f85"}} />
+                                        <Tab label="Item Three" {...a11yProps(2)} sx={{color: "#7d7f85"}} />
                                     </Tabs>
                                 </Box>
                                 <CustomTabPanel value={value1} index={0} className="quotationFilters">
                                     <QuotationFilters />
                                 </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={1} className="AcountSales">
+                                <CustomTabPanel value={value1} index={1}>
+                                    <AccountLedger />
+                                </CustomTabPanel>
+                                <CustomTabPanel value={value1} index={3} className="AcountSales">
                                     <SalesApi />
+                                </CustomTabPanel>
+                                <CustomTabPanel value={value1} index={2}>
+                                    Item Three
                                 </CustomTabPanel>
                             </CustomTabPanel>
                         </Box>

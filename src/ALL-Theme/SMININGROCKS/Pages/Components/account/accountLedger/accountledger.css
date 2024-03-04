@@ -1,0 +1,21 @@
+.fs_al{
+    font-size: 15px;
+}
+.fs_al2{
+    font-size: 14px;
+}
+.eeal{
+    font-size: 12px;
+    width: 70%;
+}
+.fs_td{
+    font-size: 13px;
+}
+._centeral{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.w_Al{
+    width: 7.14%;
+}
