@@ -5,6 +5,7 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 import Footer from '../home/Footer/Footer';
 import QuotationFilters from './quotationFilters/QuotationFilters';
 import { useNavigate } from 'react-router-dom';
+import OrderHistory from './accountOrderHistory/OrderHistory';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -104,7 +105,8 @@ export default function Account() {
 
                             <CustomTabPanel value={value} index={0}>
                                 <div>
-                                    <p style={{
+                                    <OrderHistory />
+                                    {/* <p style={{
                                         textAlign: 'center',
                                         color: '#7d7f85',
                                         marginTop: '30px',
@@ -115,7 +117,7 @@ export default function Account() {
                                             <p style={{ textAlign: 'center' }}>You have not completed any orders.</p>
                                             <button className='smlingOrderHistoryBtn'>SHOP NOW</button>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
