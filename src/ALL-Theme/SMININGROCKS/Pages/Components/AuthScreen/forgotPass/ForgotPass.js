@@ -7,9 +7,9 @@ import Footer from '../../home/Footer/Footer'
 export default function ForgotPass() {
     return (
         <div style={{
-            backgroundColor: '#c0bbb1'
+            backgroundColor: '#c0bbb1',
+            paddingTop: '110px'
         }}>
-            <Header />
             <div style={{
                 backgroundColor: '#c0bbb1'
             }}>
