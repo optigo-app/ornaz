@@ -19,16 +19,25 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { event } from "jquery";
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import { async } from "q";
+import axios from "axios";
+import { useSetRecoilState } from "recoil";
+import { CartListCounts, WishListCounts } from "../../../../../Recoil/atom";
 
  
 const ProductList = () => {
   const [isOpenDetail, setIsOpenDetail] = useState(false);
+  const [ProductApiData,setProductApiData] =useState([])
   const [drawerShowOverlay, setDrawerShowOverlay] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [HoveredID, setHoveredID] = useState();
   const [filterChecked, setFilterChecked] = useState({});
   const [wishFlag,setWishFlag] = useState(false)
   const [cartFlag,setCartFlag] = useState(false)
+
+
+  const setCartCount = useSetRecoilState(CartListCounts)
+  const setWishCount = useSetRecoilState(WishListCounts)
+
 
   const navigate = useNavigate();
 
@@ -37,29 +46,62 @@ const ProductList = () => {
   };
 
 
+  const fetchFile = async () => {
+    await axios.get(
+      "https://gstore.orail.co.in/assets/95oztttesi0o50vr/Store_Data/Productlist/Productlist_3_95oztttesi0o50vr.txt"
+    ).then(
+      (res)=>
+        {
+          console.log(res?.data)
+          setProductApiData(res?.data)
+        })
+    .catch((err)=>console.log("err",err))
+   
+  }; 
+
+  useEffect(()=>{
+    fetchFile()
+  },[])
+
+
 
   const toggleDrawerOverlay = () => {
     setDrawerShowOverlay(!drawerShowOverlay);
   };
 
+  
+
   let productData = [];
 
-  prodListData.data[0].map((ele) => {
-    let obj = {};
-    Object.entries(prodListData.ProductsList).map((objele) => {
-      obj[objele[0]] = ele[objele[1]];
+  if (ProductApiData?.data?.[0]) {
+    ProductApiData.data[0].map((ele) => {
+      let obj = {};
+      Object.entries(prodListData.ProductsList).map((objele) => {
+        obj[objele[0]] = ele[objele[1]];
+      });
+      productData.push(obj);
     });
-    productData.push(obj);
-  });
+  }
+
+  // let product2Data = [];
+
+  // ProductApiData.data[0].map((ele) => {
+  //   let obj = {};
+  //   Object.entries(prodListData.ProductsList).map((objele) => {
+  //     obj[objele[0]] = ele[objele[1]];
+  //   });
+  //   product2Data.push(obj);
+  // });
+
+
+
+  // console.log("product2Data",ProductApiData?.data[0]?.map((ele)=>ele))
 
   useEffect(() => {
       window.scrollTo(0,0);
   }, []); 
 
 
-  useEffect(()=>{
-
-  },[])
 
 
   // let collectionsfilter = () =>{
@@ -273,35 +315,302 @@ const ProductList = () => {
     }
   }
 
-  const handelWishList = (event,prod) =>{
+  // console.log("finalDataOfDisplaying",finalDataOfDisplaying());
 
-    setWishFlag(event.target.checked)
+  
+  const getCountApi = async()=>{
 
-    let WishCheck = event.target.checked
+        const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+        const UserEmail = localStorage.getItem("userEmail")
+        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
-    console.log("productsWish",WishCheck? prod : "")
+    let EncodeData = {FrontEnd_RegNo:`${FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
+
+    const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
+
+    let body = {
+        "con":`{\"id\":\"\",\"mode\":\"Getcount\",\"appuserid\":\"${UserEmail}\"}`,
+        "f":"onAddToCart-AddToWishList-Reload (cartcount)",
+        "p":encodedCombinedValue
+        }
+
+    await CommonAPI(body).then((res)=>{
+      if(res?.Data?.rd[0]?.msg === "success"){
+        const CountCart = res?.Data?.rd[0]?.cartcount
+        const WishCount = res?.Data?.rd[0]?.wishcount
+
+        setCartCount(CountCart)
+        setWishCount(WishCount)
+
+      }
+    })
+
   }
 
+
+  useEffect(()=>{
+
+    getCountApi();
+
+  },[])
+
+  const handelWishList = async(event,prod) =>{
+
+    try{
+      setWishFlag(event.target.checked)
+
+      if(event.target.checked === true){
+
+        const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+        const ukey = localStorage.getItem("ukey")
+        const UserEmail = localStorage.getItem("userEmail")
+        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+        const product =  prod 
+
+        console.log("prod",prod);
+  
+        const finalJSON = {
+          "stockweb_event": "",
+          "Mastermanagement_CategorySize": "",
+          "sizeamountpersentage": "",
+          "stockno": "",
+          "is_show_stock_website": "0",
+          "cmboDiaQualityColor": "C-VS#@#FG",
+          "cmboMetalType": "GOLD 10K",
+          "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
+          "BrandName":`${product?.BrandName ?? ""}`,
+          "Brandid": 5,
+          "CategoryName":`${product?.CategoryName}`,
+          "Categoryid":Number(`${product?.Categoryid}`),
+          "CenterStoneId":Number(`${product?.CenterStoneId}`),
+          "CenterStonePieces":Number(`${product?.CenterStonePieces}`),
+          "CollectionName":`${product?.CollectionName}`,
+          "Collectionid":Number(`${product?.Collectionid}`),
+          "ColorWiseRollOverImageName":`${product?.ColorWiseRollOverImageName}`,
+          "DefaultImageName":`${product?.DefaultImageName}`,
+          "DisplayOrder":Number(`${product?.DisplayOrder}`),
+          "FrontEnd_OrderCnt":Number(`${product?.FrontEnd_OrderCnt}`),
+          "GenderName":`${product?.GenderName}`,
+          "Genderid":Number(`${product?.Genderid}`),
+          "Grossweight":Number(`${product?.Grossweight}`),
+          "InReadyStockCnt":Number(`${product?.InReadyStockCnt}`),
+          "IsBestSeller":Number(`${product?.IsBestSeller}`),
+          "IsColorWiseImageExists":`${product?.IsColorWiseImageExists}`,
+          "IsInReadyStock":Number(`${product?.IsInReadyStock}`),
+          "IsNewArrival":`${product?.IsNewArrival}`,
+          "IsRollOverColorWiseImageExists":`${product?.IsRollOverColorWiseImageExists}`,
+          "IsTrending":Number(`${product?.IsTrending}`),
+          "MasterManagement_labid":Number(`${product?.MasterManagement_labid}`),
+          "MasterManagement_labname": "",
+          "MetalColorName": `${product?.MetalColorName}`,
+          "MetalColorid": Number(`${product?.MetalColorid}`),
+          "MetalPurity": `${product?.MetalPurity}`,
+          "MetalPurityid": Number(`${product?.MetalTypeid}`),
+          "MetalTypeName": "",
+          "MetalTypeid": Number(`${product?.IsInReadyStock}`),
+          "MetalWeight": Number(`${product?.MetalWeight}`),
+          "OcassionName": `${product?.OcassionName ?? ""}`,
+          "Ocassionid": Number(`${product?.Ocassionid}`),
+          "ProducttypeName":`${product?.ProducttypeName}`,
+          "Producttypeid": Number(`${product?.Producttypeid}`),
+          "RollOverImageName":`${product?.RollOverImageName}`,
+          "SubCategoryName":`${product?.SubCategoryName ?? ""}`,
+          "SubCategoryid":Number(`${product?.SubCategoryid ?? ""}`),
+          "ThemeName":`${product?.ThemeName ?? ""}`,
+          "Themeid":Number(`${product?.Themeid}`),
+          "TitleLine":`${product?.TitleLine}`,
+          "UnitCost": Number(`${product?.UnitCost}`),
+          "UnitCostWithmarkup":Number( `${product?.UnitCostWithmarkup}`),
+          "autocode": `${product?.autocode}`,
+          "colorstonecolorname": `${product?.colorstonecolorname}`,
+          "colorstonequality": `${product?.colorstonequality}`,
+          "designno": `${product?.designno}`,
+          "diamondcolorname": `${product?.diamondcolorname}`,
+          "diamondpcs":Number(`${product?.diamondpcs}`),
+          "diamondquality":`${product?.diamondquality}`,
+          "diamondsetting":`${product?.diamondsetting}`,
+          "diamondshape": `${product?.diamondshape}`,
+          "diamondweight": Number(`${product?.diamondweight}`),
+          "encrypted_designno":`${product?.encrypted_designno}`,
+          "hashtagid":`${product?.hashtagid}`,
+          "hashtagname": `${product?.hashtagname}`,
+          "imagepath": `${product?.imagepath}`,
+          "imgrandomno": `${product?.imgrandomno}`,
+          "mediumimage":`${product?.mediumimage ?? ""}`,
+          "originalimage":`${product?.originalimage}`,
+          "storyline_html": `${product?.storyline_html}`,
+          "storyline_video": `${product?.storyline_video}`,
+          "thumbimage":`${product?.thumbimage}`,
+          "totaladditionalvalueweight": 0,
+          "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
+          "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
+          "updatedate": `${product?.updatedate}`,
+          "videoname":`${product?.videoname ?? ""}`,
+          "FrontEnd_RegNo":`${FrontEnd_RegNo}`,
+          "Customerid": `${Customer_id?.id}`,
+          "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
+          "DQuality": `${product?.diamondquality}`,
+          "DColor":`${product?.diamondcolorname}`,
+          "UploadLogicalPath":`${product?.UploadLogicalPath ?? ""}`,
+          "ukey": `${ukey}`
+        }
+
+        console.log("finalJSON",finalJSON);
+
+        const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
+  
+        const body = {
+          con: `{\"id\":\"\",\"mode\":\"addwishlist\",\"appuserid\":\"${UserEmail}\"}`,
+          f: "AddToWishListIconClick (addwishlist)",
+          p: encodedCombinedValue,
+        };
+    
+        await CommonAPI(body).then(async(res)=>{
+
+          if(res?.Data?.rd[0]?.msg === "success"){
+
+            await getCountApi()
+            
+          }
+      })
+      }
+
+
+
+    } 
+    catch(error){
+      console.log("error",error);
+    }
+    console.log("productsWish",prod)
+    // prod["checkFlag"] = event.target.checked
+  }
+
+
+
+
   const handelCartList = async(event,prod)=>{
+    try{
+      setCartFlag(event.target.checked)
+  
+      if(event.target.checked === true){
+      const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+      const UserEmail = localStorage.getItem("userEmail")
+      const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+  
+  
+      const product =  prod 
+  
+      const finalJSON = {
+          "stockweb_event": "",
+          "designno": `${product?.designno}`,
+          "autocode": `${product?.autocode}`,
+          "imgrandomno": `${product?.imgrandomno}`,
+          "producttypeid": `${product?.Producttypeid}`,
+          "metaltypeid": `${product?.MetalTypeid}`,
+          "metalcolorid": `${product?.MetalColorid}`,
+          "stockno": "",
+          "DQuality": `${product?.diamondquality}`,
+          "DColor":`${product?.diamondcolorname}`,
+          "cmboMetalType":"",
+          "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
+          "BrandName":`${product?.BrandName ?? ""}`,
+          "Brandid":Number(`${product?.Brandid}`),
+          "CategoryName":`${product?.CategoryName}`,
+          "Categoryid":Number(`${product?.Categoryid}`),
+          "CenterStoneId":Number(`${product?.CenterStoneId}`),
+          "CenterStonePieces":Number(`${product?.CenterStonePieces}`),
+          "CollectionName":`${product?.CollectionName}`,
+          "Collectionid":Number(`${product?.Collectionid}`),
+          "ColorWiseRollOverImageName":`${product?.ColorWiseRollOverImageName}`,
+          "DefaultImageName":`${product?.DefaultImageName}`,
+          "DisplayOrder":Number(`${product?.DisplayOrder}`),
+          "FrontEnd_OrderCnt":Number(`${product?.FrontEnd_OrderCnt}`),
+          "GenderName":`${product?.GenderName}`,
+          "Genderid":Number(`${product?.Genderid}`),
+          "Grossweight":Number(`${product?.Grossweight}`),
+          "InReadyStockCnt":Number(`${product?.InReadyStockCnt}`),
+          "IsBestSeller":Number(`${product?.IsBestSeller}`),
+          "IsColorWiseImageExists":`${product?.IsColorWiseImageExists}`,
+          "IsInReadyStock":Number(`${product?.IsInReadyStock}`),
+          "IsNewArrival":`${product?.IsNewArrival}`,
+          "IsRollOverColorWiseImageExists":`${product?.IsRollOverColorWiseImageExists}`,
+          "IsTrending":Number(`${product?.IsTrending}`),
+          "MasterManagement_labid":Number(`${product?.MasterManagement_labid}`),
+          "MasterManagement_labname": "",
+          "MetalColorName": `${product?.MetalColorName}`,
+          "MetalColorid": Number(`${product?.MetalColorid}`),
+          "MetalPurity": `${product?.MetalPurity}`,
+          "MetalPurityid": Number(`${product?.MetalTypeid}`),
+          "MetalTypeName": "",
+          "MetalTypeid": Number(`${product?.IsInReadyStock}`),
+          "MetalWeight": Number(`${product?.MetalWeight}`),
+          "OcassionName": `${product?.OcassionName ?? ""}`,
+          "Ocassionid": Number(`${product?.Ocassionid}`),
+          "ProducttypeName":`${product?.ProducttypeName}`,
+          "Producttypeid": Number(`${product?.Producttypeid}`),
+          "RollOverImageName":`${product?.RollOverImageName}`,
+          "SubCategoryName":`${product?.SubCategoryName ?? ""}`,
+          "SubCategoryid":Number(`${product?.SubCategoryid ?? ""}`),
+          "ThemeName":`${product?.ThemeName ?? ""}`,
+          "Themeid":Number(`${product?.Themeid}`),
+          "TitleLine":`${product?.TitleLine}`,
+          "UnitCost": Number(`${product?.UnitCost}`),
+          "UnitCostWithmarkup":Number( `${product?.UnitCostWithmarkup}`),
+          "colorstonecolorname": `${product?.colorstonecolorname}`,
+          "colorstonequality": `${product?.colorstonequality}`,
+          "diamondcolorname": `${product?.diamondcolorname}`,
+          "diamondpcs":Number(`${product?.diamondpcs}`),
+          "diamondquality":`${product?.diamondquality}`,
+          "diamondsetting":`${product?.diamondsetting}`,
+          "diamondshape": `${product?.diamondshape}`,
+          "diamondweight": Number(`${product?.diamondweight}`),
+          "encrypted_designno":`${product?.encrypted_designno}`,
+          "hashtagid":`${product?.hashtagid}`,
+          "hashtagname": `${product?.hashtagname}`,
+          "imagepath": `${product?.imagepath}`,
+          "mediumimage":`${product?.mediumimage ?? ""}`,
+          "originalimage":`${product?.originalimage}`,
+          "storyline_html": `${product?.storyline_html}`,
+          "storyline_video": `${product?.storyline_video}`,
+          "thumbimage":`${product?.thumbimage}`,
+          "totaladditionalvalueweight":Number(`${product?.totaladditionalvalueweight}`),
+          "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
+          "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
+          "updatedate": `${product?.updatedate}`,
+          "videoname":`${product?.videoname ?? ""}`,
+          "FrontEnd_RegNo":`${FrontEnd_RegNo}`,
+          "Customerid": `${Customer_id?.id}`,
+          "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
+          "quantity": `${product?.quantity ?? "1"}`
+      }
 
+      const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
+
+      const body = {
+        con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${UserEmail}\"}`,
+        f: "AddToCartIconClick (addcartlist)",
+        p: encodedCombinedValue,
+      };
+
+  
+      
+      
+      await CommonAPI(body).then(async(res)=>{
+          console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+
+          if(res?.Data?.rd[0]?.msg === "success"){
+
+            await getCountApi()
+          }
+      })
+    }
+
+    }
+    catch(error){
+      console.log("error",error);
+    }
     
-    setCartFlag(event.target.checked)
-    let CartCheck = event.target.checked
-
-    let product = CartCheck? prod : ""
-
-    // const encodedCombinedValue = btoa(product);
-    // const body = {
-    //   con: '{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"bunty@eg.com\"}',
-    //   f: "AddToCart (CartIcon)",
-    //   p: encodedCombinedValue,
-    // };
-
-    // await CommonAPI()
-    
-    console.log("productsCart",product)
-
-
   }
 
 

@@ -5,6 +5,7 @@ import { Box, Tab, Tabs, Typography } from '@mui/material'
 import Footer from '../home/Footer/Footer';
 import QuotationFilters from './quotationFilters/QuotationFilters';
 import { useNavigate } from 'react-router-dom';
+import OrderHistory from './accountOrderHistory/OrderHistory';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -37,6 +38,15 @@ function a11yProps(index) {
         id: `simple-tab-${index}`,
         'aria-controls': `simple-tabpanel-${index}`,
     };
+}
+
+const tabIndicator = {
+    '& .MuiTab-textColorPrimary.Mui-selected': {
+        color: "#3b3c3d",
+    },
+    '& .MuiTabs-indicator': {
+        backgroundColor: "#3b3c3d"
+    }
 }
 
 export default function Account() {
@@ -95,7 +105,8 @@ export default function Account() {
 
                             <CustomTabPanel value={value} index={0}>
                                 <div>
-                                    <p style={{
+                                    <OrderHistory />
+                                    {/* <p style={{
                                         textAlign: 'center',
                                         color: '#7d7f85',
                                         marginTop: '30px',
@@ -106,7 +117,7 @@ export default function Account() {
                                             <p style={{ textAlign: 'center' }}>You have not completed any orders.</p>
                                             <button className='smlingOrderHistoryBtn'>SHOP NOW</button>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
@@ -163,14 +174,14 @@ export default function Account() {
                             <CustomTabPanel value={value} index={2}>
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example">
-                                        <Tab label="Item One" {...a11yProps(0)} />
-                                        <Tab label="Item Two" {...a11yProps(1)} />
-                                        <Tab label="Item Three" {...a11yProps(2)} />
+                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator}}>
+                                        <Tab label="Account Quotation Filters" {...a11yProps(0)} sx={{color: "#7d7f85"}} />
+                                        <Tab label="Item Two" {...a11yProps(1)} sx={{color: "#7d7f85"}} />
+                                        <Tab label="Item Three" {...a11yProps(2)} sx={{color: "#7d7f85"}} />
                                     </Tabs>
                                 </Box>
-                                <CustomTabPanel value={value1} index={0}>
-                                    Item One
+                                <CustomTabPanel value={value1} index={0} className="quotationFilters">
+                                    <QuotationFilters />
                                 </CustomTabPanel>
                                 <CustomTabPanel value={value1} index={1}>
                                     Item Two
