@@ -14,9 +14,11 @@
     text-transform: uppercase;
     color: white;
 }
-.sminingHeaderWeb{
+
+/* .sminingHeaderWeb{
     display: none;
-}
+} */
+
 .lh_alt{
     line-height: 14px;
     font-size: 14px;
