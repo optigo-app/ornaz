@@ -4,6 +4,54 @@
     width: 100%;
 }
 
+
+.smilingCartRemoveBtn{
+    height: 40px;
+    width: 100px;
+    border: none;
+    background-color: lightgray;
+    font-weight: 500;
+}
+.YourCartMainRemkarBoxSingle{
+    height: 40px;
+    width: 240px;
+    margin-top: 15px;
+}
+.SmilingAddSingleRemkarBtn{
+    height: 40px;
+    width: 150px;
+    background-color: #f1d8c6;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    margin-top: 15px;
+}
+.SmilingAddSingleRemkarBtn:hover{
+    background-color: white;
+    border: 1px solid #f1d8c6;
+}
+.SmilingAddRemkarBtn{
+    height: 40px;
+    width: 200px;
+    background-color: #f1d8c6;
+    border: none;
+    outline: none;
+    font-weight: 500;
+}
+.SmilingAddRemkarBtn:hover{
+    background-color: white;
+    border: 1px solid #f1d8c6;
+}
+.addRemkarMain{
+    display: flex;
+    justify-content: flex-end;
+    margin-inline: 15px;
+}
+.YourCartMainRemkarBox{
+    width: 97%;
+    margin-inline: 10px;
+    border-radius: 5px;
+}
 .Smining-Top-Header {
     display: flex;
     top: 0px;
@@ -154,6 +202,9 @@
 
 .smiling-cartBoxMain {
     display: flex;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin: 10px;
 }
 
 .smiling-cartBoxImg {
