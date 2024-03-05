@@ -852,101 +852,21 @@ const handelCartList = async(event,prod)=>{
 
   return (
     <div>
-      {drawerShowOverlay && (
-        <>
-          <div className="mobileSmlingProductFilterOverly">
-            <div
-              style={{
-                display: "flex",
-                margin: "20px",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <IoClose
-                  style={{
-                    height: "30px",
-                    width: "30px",
-                    color: "white",
-                    cursor: "pointer",
-                  }}
-                  onClick={toggleDrawerOverlay}
-                />
-              </div>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "white",
-                  fontWeight: 500,
-                }}
-              >
-                Clear Filter
-              </p>
-            </div>
-            <div>{/* content....... */}</div>
-            <div
-              style={{
-                backgroundColor: "#7d7f85",
-                position: "fixed",
-                bottom: "0px",
-                width: "100%",
-              }}
-            >
-              <p
-                style={{
-                  color: "white",
-                  textAlign: "center",
-                  paddingTop: "15px",
-                }}
-              >
-                APPLY FILTERS
-              </p>
-            </div>
-          </div>
-        </>
-      )}
       <div
         style={{
           backgroundColor: "#c0bbb1",
           height: "100%",
           width: "100%",
           paddingBottom: "100px",
+
         }}
       >
-        {!drawerShowOverlay && <Header />}
-        {/* <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            textAlign: "center",
-            gap: "12px",
-            padding: "40px 20px 70px",
-          }}
-        >
-          <h1 style={{ fontFamily: "FreightDisp Pro Medium", color: "white" }}>
-            Rings
-          </h1>
-
-          <p
-            style={{
-              width: "346px",
-              fontSize: "14px",
-              color: "#fff",
-              fontWeight: "500",
-            }}
-          >
-            From uncompromising minimalism to ultra-femme, these are lab grown
-            diamond rings are to revel in.
-          </p>
-        </div> */}
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            paddingTop: '110px'
           }}
         >
           <div className="smilingProductMain" id="smilingProductMain">
