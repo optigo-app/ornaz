@@ -24,12 +24,20 @@ export default function Home() {
     const fetchData = async () => {
       // const APIURL = 'http://zen/api/';
       const APIURL = 'https://api.optigoapps.com/test/store.aspx';
+
       const header = {
         Authorization: 'Bearer optigo_json_api',
         domain: 'gstore.orail.co.in',
         version: 'V4',
         // domain: 'zen',
       };
+      // const header = {
+      //   Authorization: 'Bearer optigo_json_api',
+      //   YearCode:'',
+      //   version: '',
+      //   domain: 'zen',
+      //   // domain: 'zen',
+      // };
 
       try {
         const body = {
@@ -38,6 +46,7 @@ export default function Home() {
           "f": "formname (init)"
         };
         const response = await axios.post(APIURL, body, { headers: header });
+        console.log('ressssssssssssss',response);
         if (response.status === 200) {
           localStorage.setItem('UploadLogicalPath', response.data.Data.rd[0].UploadLogicalPath);
           localStorage.setItem('storeInit', JSON.stringify(response.data.Data.rd[0]));

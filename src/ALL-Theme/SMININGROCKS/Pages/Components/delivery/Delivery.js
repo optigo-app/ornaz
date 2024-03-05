@@ -8,6 +8,7 @@ import { MdEdit } from "react-icons/md";
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router';
 
 export default function Delivery() {
 
@@ -31,12 +32,12 @@ export default function Delivery() {
     const [isEditMode, setIsEditMode] = useState(false);
     const [editAddressIndex, setEditAddressIndex] = useState(null);
     const [editId, setEditId] = useState('');
+    const navigation = useNavigate();
 
     const handleOpen = (item, addressIndex = null) => {
         setIsEditMode(addressIndex !== null);
         if (addressIndex !== null && addressData.length > addressIndex) {
             setEditId(item.id)
-            alert(item.id)
             const address = addressData[addressIndex];
             if (address) {
                 setFormData({
@@ -113,7 +114,7 @@ export default function Delivery() {
                 console.log('response...', response);
                 if (response.Data?.rd) {
                     setAddressData(response.Data.rd);
-                }else{
+                } else {
                     alert('nodata')
                 }
             } catch (error) {
@@ -225,8 +226,6 @@ export default function Delivery() {
                     const combinedValue = JSON.stringify({
                         addrid: `${editId}`, firstname: `${formData.firstName}`, lastname: `${formData.lastName}`, street: `${formData.address}`, addressprofile: `${formData.firstName + formData.lastName}`, city: `${formData.city}`, state: `${formData.state}`, country: `${formData.country}`, zip: `${formData.zipCode}`, mobile: `${formData.mobileNo}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
                     });
-                    console.log('edit..... combinedValuecombinedValue...', combinedValue);
-
                     const encodedCombinedValue = btoa(combinedValue);
                     const body = {
                         "con": `{\"id\":\"\",\"mode\":\"EDITADDRESS\",\"appuserid\":\"${data.email1}\"}`,
@@ -356,6 +355,19 @@ export default function Delivery() {
         }
     }
 
+    const [selectedAddressId, setSelectedAdderssId] = useState('');
+    useEffect(() => {
+        const defaultAddressItem = addressData.find(item => item.isdefault === 1);
+        if (defaultAddressItem) {
+            let deafu = JSON.stringify(defaultAddressItem)
+            setSelectedAdderssId(deafu);
+        } else {
+            setSelectedAdderssId(null);
+        }
+    }, [addressData]);
+    
+    localStorage.setItem('selectedAddressId', selectedAddressId)
+    console.log('selectedAddressIdselectedAddressId', selectedAddressId);
     return (
         <div style={{
             backgroundColor: '#c0bbb1',
@@ -540,6 +552,7 @@ export default function Delivery() {
                             }
                         </div>
                         <button className='smilingAddToAddressBtn' onClick={handleOpen}>ADD NEW ADDRESS</button>
+                        <button style={{ marginInline: '20px' }} className='smilingAddToAddressBtn' onClick={() => navigation('/Payment')}>Continue</button>
                     </div>
                     <div className='smilingdeliverBox2'>
                         <p style={{ fontSize: '30px', fontWeight: 500, color: 'gray' }}>Order Summary</p>

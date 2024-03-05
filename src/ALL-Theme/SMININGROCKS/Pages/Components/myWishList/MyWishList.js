@@ -30,7 +30,7 @@ export default function MyWishList() {
                 const customerEmail = data.email1;
                 setUserEmail(customerEmail);
                 const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-                const { FrontEnd_RegNo ,ukey } = storeInit;
+                const { FrontEnd_RegNo, ukey } = storeInit;
                 setYouKey(ukey);
                 const combinedValue = JSON.stringify({
                     is_show_stock_website: "0", PageSize: "1000", CurrentPage: "1", FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`, UploadLogicalPath: "", ukey: `${ukey}`, ThumDefImg: "", CurrencyRate: '1'
@@ -200,41 +200,23 @@ export default function MyWishList() {
                     </div>
 
                     <div className='smiWishLsitBoxMain'>
-                        {wishlistData?.map(item => (
-                            <div key={item.id} className='smiWishLsitBox'>
-                                <div style={{ position: 'absolute', right: '20px', top: '5px' }}>
-                                    <IoClose style={{ height: '30px', width: '30px', cursor: 'pointer' }} onClick={() => handleRemoveWichList(item)} />
-                                </div>
-                                <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' alt='Wishlist item' />
-                                <p className='smiWishLsitBoxDesc1'>{item.designno}</p>
-                                <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} $ {item.TotalUnitCost}</p>
-                                <p className='smiWishLsitBoxDesc3' onClick={() => handleAddToCart(item.autocode)}>ADD TO CART +</p>
+                        {wishlistData?.length === 0 ?
+                            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500 }}>No Data Available</p>
+                                <p>Please First Add To Wishlist Data</p>
                             </div>
-                        ))}
-                        {/* <div className='smiWishLsitBox'>
-                            <img src='https://cdn.shopify.com/s/files/1/0021/8444/6052/products/Lab-grown-diamond-white-gold-necklace-srnl00345wht_grande.jpg?v=1613627041' className='smiWishLsitBoxImge' />
-                            <p className='smiWishLsitBoxDesc1'>DRIZZLE 0.38CT LAB GROWN DIAMOND NECKLACE NL-00345WHT</p>
-                            <p className='smiWishLsitBoxDesc2'>White Gold / 18 Inches / 0.38 $999.00</p>
-                            <p className='smiWishLsitBoxDesc3'>ADD TO CART +</p>
-                        </div>
-                        <div className='smiWishLsitBox'>
-                            <img src='https://cdn.shopify.com/s/files/1/0021/8444/6052/products/Lab-grown-diamond-white-gold-necklace-srnl00345wht_grande.jpg?v=1613627041' className='smiWishLsitBoxImge' />
-                            <p className='smiWishLsitBoxDesc1'>DRIZZLE 0.38CT LAB GROWN DIAMOND NECKLACE NL-00345WHT</p>
-                            <p className='smiWishLsitBoxDesc2'>White Gold / 18 Inches / 0.38 $999.00</p>
-                            <p className='smiWishLsitBoxDesc3'>ADD TO CART +</p>
-                        </div>
-                        <div className='smiWishLsitBox'>
-                            <img src='https://cdn.shopify.com/s/files/1/0021/8444/6052/products/Lab-grown-diamond-white-gold-necklace-srnl00345wht_grande.jpg?v=1613627041' className='smiWishLsitBoxImge' />
-                            <p className='smiWishLsitBoxDesc1'>DRIZZLE 0.38CT LAB GROWN DIAMOND NECKLACE NL-00345WHT</p>
-                            <p className='smiWishLsitBoxDesc2'>White Gold / 18 Inches / 0.38 $999.00</p>
-                            <p className='smiWishLsitBoxDesc3'>ADD TO CART +</p>
-                        </div>
-                        <div className='smiWishLsitBox'>
-                            <img src='https://cdn.shopify.com/s/files/1/0021/8444/6052/products/Lab-grown-diamond-white-gold-necklace-srnl00345wht_grande.jpg?v=1613627041' className='smiWishLsitBoxImge' />
-                            <p className='smiWishLsitBoxDesc1'>DRIZZLE 0.38CT LAB GROWN DIAMOND NECKLACE NL-00345WHT</p>
-                            <p className='smiWishLsitBoxDesc2'>White Gold / 18 Inches / 0.38 $999.00</p>
-                            <p className='smiWishLsitBoxDesc3'>ADD TO CART +</p>
-                        </div> */}
+                            :
+                            wishlistData?.map(item => (
+                                <div key={item.id} className='smiWishLsitBox'>
+                                    <div style={{ position: 'absolute', right: '20px', top: '5px' }}>
+                                        <IoClose style={{ height: '30px', width: '30px', cursor: 'pointer' }} onClick={() => handleRemoveWichList(item)} />
+                                    </div>
+                                    <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' alt='Wishlist item' />
+                                    <p className='smiWishLsitBoxDesc1'>{item.designno}</p>
+                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} $ {item.TotalUnitCost}</p>
+                                    <p className='smiWishLsitBoxDesc3' onClick={() => handleAddToCart(item.autocode)}>ADD TO CART +</p>
+                                </div>
+                            ))}
                     </div>
                     <Footer />
                 </div>
