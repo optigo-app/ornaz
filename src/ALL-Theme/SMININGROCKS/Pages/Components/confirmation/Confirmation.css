@@ -1,0 +1,33 @@
+.simlimgCofirmationMain {
+    margin-inline: 6%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SmilingthanksImg {
+    height: 250px;
+    width: 250px
+}
+.confritmSubmain{
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contiShopiBtn{
+    height: 40px;
+    width: 200px;
+    border: none;
+    outline: none;
+    background-color: #f1d8c6;
+    font-weight: 500;
+}
+
+.contiShopiBtn:hover{
+    background-color: white;
+    border: 1px solid #f1d8c6;
+}
