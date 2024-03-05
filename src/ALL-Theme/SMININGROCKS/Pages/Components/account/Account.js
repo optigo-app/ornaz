@@ -9,6 +9,7 @@ import SalesApi from './salesApi/SalesApi';
 import ManageAddress from './address/ManageAddress';
 import OrderHistory from './accountOrderHistory/OrderHistory';
 import AccountLedger from './accountLedger/AccountLedger';
+import DesignWiseSalesReport from '../sales/DesignWiseSalesReport/DesignWiseSalesReport';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -89,6 +90,7 @@ export default function Account() {
                                         <Tab label="ORDER HISTORY" {...a11yProps(0)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
                                         <Tab label="ACCOUNT" {...a11yProps(2)} />
+                                        <Tab label="SALES" {...a11yProps(3)} />
                                     </Tabs>
                                     <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
                                 </Box>
@@ -99,6 +101,7 @@ export default function Account() {
                                         <Tab label="ORDER HISTORY" {...a11yProps(0)} sx={{ textAlign: 'start', borderBottom: 1, width: '90%', borderColor: 'divider' }} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
                                         <Tab label="ACCOUNT" {...a11yProps(2)} />
+                                        <Tab label="SALES" {...a11yProps(3)} />
                                     </Tabs>
                                 </Box>
                                 <div onClick={() => alert('dddd')}>
@@ -113,16 +116,16 @@ export default function Account() {
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
                                 <ManageAddress />
-                      
+
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={2}>
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator}} scrollButtons="auto">
-                                        <Tab label="Account Quotation Filters" {...a11yProps(0)} sx={{color: "#7d7f85"}} />
-                                        <Tab label="Account Ledger" {...a11yProps(1)} sx={{color: "#7d7f85"}} />
-                                        <Tab label="Acount Sales" {...a11yProps(3)} sx={{color: "#7d7f85"}} />
-                                        <Tab label="Item Three" {...a11yProps(2)} sx={{color: "#7d7f85"}} />
+                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
+                                        <Tab label="Account Quotation Filters" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />
+                                        <Tab label="Account Ledger" {...a11yProps(1)} sx={{ color: "#7d7f85" }} />
+                                        <Tab label="Acount Sales" {...a11yProps(3)} sx={{ color: "#7d7f85" }} />
+                                        <Tab label="Item Three" {...a11yProps(2)} sx={{ color: "#7d7f85" }} />
                                     </Tabs>
                                 </Box>
                                 <CustomTabPanel value={value1} index={0} className="quotationFilters">
@@ -131,11 +134,22 @@ export default function Account() {
                                 <CustomTabPanel value={value1} index={1}>
                                     <AccountLedger />
                                 </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={3} className="AcountSales">
+                                <CustomTabPanel value={value1} index={2} className="AcountSales">
                                     <SalesApi />
                                 </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={2}>
+                                <CustomTabPanel value={value1} index={3}>
                                     Item Three
+                                </CustomTabPanel>
+                            </CustomTabPanel>
+
+                            <CustomTabPanel value={value} index={3}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
+                                        <Tab label="Design Wise Sales Report" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />
+                                    </Tabs>
+                                </Box>
+                                <CustomTabPanel value={value1} index={0} className="DesignWiseSalesReport">
+                                    <DesignWiseSalesReport />
                                 </CustomTabPanel>
                             </CustomTabPanel>
                         </Box>

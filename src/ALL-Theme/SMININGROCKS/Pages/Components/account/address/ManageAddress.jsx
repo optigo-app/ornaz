@@ -33,6 +33,14 @@ const ManageAddress = () => {
         setDefaultAdd(event.target.value);
     };
 
+    const handleDefaultSet = (arr) => {
+        let findDefault = arr?.find(item => item.isdefault === 1);
+        if (findDefault === undefined) {
+            arr[0].isdefault = 1
+        }
+        return arr
+    }
+
     const handleDeleteAddress = async () => {
         try {
             setOpenDelete(false);
@@ -45,7 +53,7 @@ const ManageAddress = () => {
             const combinedValue = JSON.stringify({
                 addrid: `${deleteId}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
             });
-            console.log('edit..... combinedValuecombinedValue...', combinedValue);
+            // console.log('edit..... combinedValuecombinedValue...', combinedValue);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
                 "con": `{\"id\":\"\",\"mode\":\"DELADDRESS\",\"appuserid\":\"${data.email1}\"}`,
@@ -56,13 +64,12 @@ const ManageAddress = () => {
             if (response.Data.rd[0].stat === 1) {
                 toast.success('Delete success');
                 const updatedAddressData = addressData.filter(item => item.id !== deleteId);
-                handleDefaultSelection(updatedAddressData[0].id);
                 setAddressData(updatedAddressData);
             } else {
                 toast.error('error');
             }
             setOpenDelete(false);
-            console.log('dele. response...', response);
+            // console.log('dele. response...', response);
         } catch (error) {
             console.error('Error:', error);
         } finally {
@@ -180,7 +187,6 @@ const ManageAddress = () => {
                             zip: formData.zipCode,
                             shippingmobile: formData.mobileNo
                         };
-
                         const updatedAddressData = [...addressData];
                         updatedAddressData[editAddressIndex] = editedAddress;
                         setAddressData(updatedAddressData);
@@ -191,7 +197,6 @@ const ManageAddress = () => {
                     console.error('Error:', error);
                 } finally {
                     setIsLoading(false);
-
                 }
 
             } else {
@@ -311,48 +316,83 @@ const ManageAddress = () => {
         setErrors(errorsCopy);
     };
 
-    const handleDefaultSelection = (addressId) => {
-        const updatedAddressData = addressData.map(item => ({
-            ...item,
-            isdefault: item.id === addressId ? 1 : 0
-        }));
-        setAddressData(updatedAddressData);
+    const loginDetail = () => {
+        const storedData = localStorage.getItem('loginUserDetail');
+        const data = JSON.parse(storedData);
+        return {id: data.id, emai: data.email1}
+    }
+
+    const storeInit = () => {
+        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+        const { FrontEnd_RegNo } = storeInit;
+        return FrontEnd_RegNo;
+    }
+
+    const handleDefaultSelection = async (addressId) => {
+
+        try {
+            let loginCred = loginDetail();
+            let p_ = JSON.stringify({ "addrid": addressId, "FrontEnd_RegNo": storeInit(), "Customerid": loginCred?.id });
+            const body = {
+                "con": `{\"id\":\"\",\"mode\":\"SETDEFAULTADDRESS\",\"appuserid\":\"${loginCred?.emai}\"}`,
+                "f": "Delivery (fetchData)",
+                p: btoa(p_),
+            };
+            const response = await CommonAPI(body);
+            if (response.Data?.rd) {
+                fetchData();
+            } else {
+                alert('nodata')
+            }
+        } catch (err) {
+            console.error('Error:', err);
+        }
+        finally {
+            setIsLoading(false);
+        }
+
+
+        // const updatedAddressData = addressData.map(item => ({
+        //     ...item,
+        //     isdefault: item.id === addressId ? 1 : 0
+        // }));
+        // setAddressData(updatedAddressData);
+    };
+
+    const fetchData = async () => {
+        try {
+            setIsLoading(true);
+            const storedData = localStorage.getItem('loginUserDetail');
+            const data = JSON.parse(storedData);
+            const customerid = data.id;
+            // const customerEmail = data.email1;
+            // setUserEmail(customerEmail);
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+            const { FrontEnd_RegNo } = storeInit;
+            const combinedValue = JSON.stringify({
+                FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
+            });
+            const encodedCombinedValue = btoa(combinedValue);
+            const body = {
+                "con": `{\"id\":\"\",\"mode\":\"GETTBLADDRESSDATA\",\"appuserid\":\"${data.email1}\"}`,
+                "f": "Delivery (fetchData)",
+                p: encodedCombinedValue
+            };
+            const response = await CommonAPI(body);
+            // console.log('response...', response);
+            if (response.Data?.rd) {
+                setAddressData(response.Data.rd);
+            } else {
+                alert('nodata')
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setIsLoading(true);
-                const storedData = localStorage.getItem('loginUserDetail');
-                const data = JSON.parse(storedData);
-                const customerid = data.id;
-                // const customerEmail = data.email1;
-                // setUserEmail(customerEmail);
-                const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-                const { FrontEnd_RegNo } = storeInit;
-                const combinedValue = JSON.stringify({
-                    FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
-                });
-                // console.log('combinedValuecombinedValue...', combinedValue);
-                const encodedCombinedValue = btoa(combinedValue);
-                const body = {
-                    "con": `{\"id\":\"\",\"mode\":\"GETSHIPINGADDRESS\",\"appuserid\":\"${data.email1}\"}`,
-                    "f": "Delivery (fetchData)",
-                    p: encodedCombinedValue
-                };
-                const response = await CommonAPI(body);
-                // console.log('response...', response);
-                if (response.Data?.rd) {
-                    setAddressData(response.Data.rd);
-                } else {
-                    alert('nodata')
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
         fetchData();
     }, []);
 
@@ -380,7 +420,6 @@ const ManageAddress = () => {
                     isLoading ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <Box sx={{ display: "flex", flexWrap: "wrap", paddingTop: "10px" }} className="addressMainSec">
                         {
                             addressData?.map((item, index) => {
-                                console.log(item);
                                 return <Box className="AddressSec" key={index}>
                                     <Box className="manageAddressBlock">
                                         <Box sx={{ display: "flex", flexWrap: "wrap", }}>
@@ -390,12 +429,12 @@ const ManageAddress = () => {
                                         <Box>
                                             <Typography sx={{ paddingBottom: "15px" }}>{item?.street},{item?.city}-{item?.zip},{item?.state},{item?.country}</Typography>
                                         </Box>
-                                      <NavLink to="" style={{ textDecoration: "unset" }}>
-                                      <Box sx={{ display: "flex", paddingBottom: "15px", textDecoration: "unset", marginLeft: "-4px", }}>
-                                            <StayPrimaryPortraitIcon />
-                                            <Typography sx={{ paddingLeft: "3px",  textDecoration: "unset"  }}>{item?.shippingmobile}</Typography>
-                                        </Box>
-                                      </NavLink>
+                                        <NavLink to="" style={{ textDecoration: "unset" }}>
+                                            <Box sx={{ display: "flex", paddingBottom: "15px", textDecoration: "unset", marginLeft: "-4px", }}>
+                                                <StayPrimaryPortraitIcon />
+                                                <Typography sx={{ paddingLeft: "3px", textDecoration: "unset" }}>{item?.shippingmobile}</Typography>
+                                            </Box>
+                                        </NavLink>
 
 
                                         <Box sx={{ display: "flex", paddingBottom: "7px", alignItems: 'center' }}>
@@ -409,7 +448,7 @@ const ManageAddress = () => {
                                             <Typography>Default</Typography>
                                         </Box>
 
-                                        <Box sx={{ borderTop: "1px solid #dee2e6 !important", display: "flex", flexWrap: "wrap", paddingTop: "20px", position: 'absolute', bottom: 0, left: "15px", width: "calc( 100% - 30px)",  }}>
+                                        <Box sx={{ borderTop: "1px solid #dee2e6 !important", display: "flex", flexWrap: "wrap", paddingTop: "20px", position: 'absolute', bottom: 0, left: "15px", width: "calc( 100% - 30px)", }}>
                                             <Button className='muiSmilingRocksBtnManageEdit' variant="contained"
                                                 sx={{
                                                     background: "#7d7f85", maxHeight: "30px", minWidth: "max-content",

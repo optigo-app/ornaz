@@ -133,7 +133,6 @@ export default function Delivery() {
         setAddressData(updatedAddressData);
     };
 
-
     const handleInputChange = (e, fieldName) => {
         const { value } = e.target;
         setFormData((prevData) => ({
@@ -181,6 +180,7 @@ export default function Delivery() {
 
         setErrors(errorsCopy);
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const errors = {};
@@ -315,11 +315,11 @@ export default function Delivery() {
         }
     };
 
-
     const handleOpenDelete = (item) => {
         setDeleteId(item);
         setOpenDelete(true);
     }
+    
     const handleDeleteAddress = async () => {
         try {
             setOpenDelete(false);

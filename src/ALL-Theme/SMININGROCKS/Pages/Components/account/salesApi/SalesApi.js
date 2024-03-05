@@ -251,13 +251,13 @@ const SalesApi = () => {
                 dateTo: false,
                 search: false,
             }
-            console.log(compareDate?.toString()?.toLowerCase(), (searchValue?.trim()?.toLowerCase()),compareDate?.toString()?.toLowerCase()?.includes?.(searchValue?.trim()?.toLowerCase()) );
+            console.log(compareDate?.toString()?.toLowerCase(), (searchValue?.trim()?.toLowerCase()), compareDate?.toString()?.toLowerCase()?.includes?.(searchValue?.trim()?.toLowerCase()));
             if (searchValue !== "") {
                 if (e?.["SrNo"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
                     e?.["bill"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
                     e?.["totalAmt"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
                     compareDate?.toString()?.toLowerCase()?.includes?.(searchValue?.trim()?.toLowerCase())
-                    ) {
+                ) {
                     flags.search = true;
                 }
             } else {
@@ -323,7 +323,8 @@ const SalesApi = () => {
                                     label="Any"
                                     value={fromDate}
                                     onChange={(newValue) => setFromDate(newValue)}
-                                    format="DD/MM/YYYY"
+                                    format="DD MMM YYYY"
+                                    placeholder="DD MMM YYYY"
                                     className='quotationFilterDates'
                                 />
                             </LocalizationProvider>
@@ -337,7 +338,8 @@ const SalesApi = () => {
                                     label="Any"
                                     value={toDate}
                                     onChange={(newValue) => setToDate(newValue)}
-                                    format="DD/MM/YYYY"
+                                    format="DD MMM YYYY"
+                                    placeholder="DD MMM YYYY"
                                     className='quotationFilterDates'
                                 />
                             </LocalizationProvider>

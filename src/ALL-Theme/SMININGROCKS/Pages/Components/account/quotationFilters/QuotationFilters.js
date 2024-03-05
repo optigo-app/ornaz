@@ -390,7 +390,7 @@ const QuotationFilters = () => {
                   label="Date From"
                   value={fromDate}
                   onChange={(newValue) => setFromDate(newValue)}
-                  format="DD/MM/YYYY"
+                  format="DD MMM YYYY"
                   className='quotationFilterDates'
                 />
               </LocalizationProvider>
@@ -404,7 +404,7 @@ const QuotationFilters = () => {
                   label="Date To"
                   value={toDate}
                   onChange={(newValue) => setToDate(newValue)}
-                  format="DD/MM/YYYY"
+                  format="DD MMM YYYY"
                   className='quotationFilterDates'
                 />
               </LocalizationProvider>
