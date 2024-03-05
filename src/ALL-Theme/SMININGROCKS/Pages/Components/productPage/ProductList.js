@@ -439,12 +439,12 @@ removefromCart()
   
   const getCountApi = async()=>{
 
-        const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
         const UserEmail = localStorage.getItem("userEmail")
 
 
-    let EncodeData = {FrontEnd_RegNo:`${FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
+    let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
 
     const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
 
@@ -470,10 +470,10 @@ removefromCart()
   const getCartAndWishListData = async() =>{
   
     const UserEmail = localStorage.getItem("userEmail")
-    const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
     const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
-    let EncodeData = {FrontEnd_RegNo:`${FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
+    let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
 
     const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
 
@@ -509,7 +509,7 @@ removefromCart()
 
       if(event.target.checked === true){
 
-        const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
         const ukey = localStorage.getItem("ukey")
         const UserEmail = localStorage.getItem("userEmail")
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
@@ -595,7 +595,7 @@ removefromCart()
           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
           "updatedate": `${product?.updatedate}`,
           "videoname":`${product?.videoname ?? ""}`,
-          "FrontEnd_RegNo":`${FrontEnd_RegNo}`,
+          "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "DQuality": `${product?.diamondquality}`,
@@ -630,7 +630,7 @@ removefromCart()
         // {"designlist":"'MCJ10'","isselectall":"0","FrontEnd_RegNo":"95oztttesi0o50vr","Customerid":"856"}
 
 
-        const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
         const UserEmail = localStorage.getItem("userEmail")
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
         
@@ -639,7 +639,7 @@ removefromCart()
   
         console.log(prod.designno);
   
-        let Data = {"designlist":`'${prod?.designno}'`,"isselectall":"0","FrontEnd_RegNo":`${FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`}
+        let Data = {"designlist":`'${prod?.designno}'`,"isselectall":"0","FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`}
   
         let encodedCombinedValue = btoa(JSON.stringify(Data))
         const body = {
@@ -679,7 +679,7 @@ const handelCartList = async(event,prod)=>{
       setCartFlag(event.target.checked)
 
       if(event.target.checked === true){
-      const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
       const UserEmail = localStorage.getItem("userEmail")
       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
   
@@ -689,7 +689,7 @@ const handelCartList = async(event,prod)=>{
       console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
 
 
-      let wishToCartEncData = {"autocodelist":`${isWishHasCartData[0]?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
+      let wishToCartEncData = {"autocodelist":`${isWishHasCartData[0]?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
       
 
   
@@ -771,7 +771,7 @@ const handelCartList = async(event,prod)=>{
           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
           "updatedate": `${product?.updatedate}`,
           "videoname":`${product?.videoname ?? ""}`,
-          "FrontEnd_RegNo":`${FrontEnd_RegNo}`,
+          "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "quantity": `${product?.quantity ?? "1"}`
@@ -814,13 +814,13 @@ const handelCartList = async(event,prod)=>{
 
     }
     else{
-      const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
-      const UserEmail = localStorage.getItem("userEmail")
+      const storeInit = JSON.parse(localStorage.getItem("storeInit"))
       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+      const UserEmail = localStorage.getItem("userEmail")
       
       setCartRemoveData(prod.designno)
 
-      let Data = {"designno":`${prod?.designno}`,"autocode":`${prod?.autocode}`,"metalcolorid":0,"isSolStockNo":0,"is_show_stock_website":"0","isdelete_all":0,"FrontEnd_RegNo":`${FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`,"cartidlist":""}
+      let Data = {"designno":`${prod?.designno}`,"autocode":`${prod?.autocode}`,"metalcolorid":0,"isSolStockNo":0,"is_show_stock_website":"0","isdelete_all":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`,"cartidlist":""}
 
       let encodedCombinedValue = btoa(JSON.stringify(Data))
       const body = {
