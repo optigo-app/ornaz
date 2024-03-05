@@ -6,11 +6,12 @@ import { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
-const AccountLedger = () => {
+const AccountLedger = ({a11yProps}) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filterVisible, setFilterVisible] = useState(false);
     const navigate = useNavigate("");
+
     useEffect(() => {
         // Get current date
         const currentDate = new Date();
@@ -32,6 +33,16 @@ const AccountLedger = () => {
 
       const arr = [1,2,3,4,5];
 
+
+      const handleVoucherDebit = () => {
+            
+      }
+      const handleVoucherCredit = () => {
+
+      }
+
+
+
   return (
     <div>
         <div className='fs-4 fw-bold text-center text-secondary my-2 py-2'>Account Ledger</div>
@@ -46,8 +57,10 @@ const AccountLedger = () => {
                     To 
                     <input type="date" name="date" id="enddate" className='mx-2 p-1'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  /><SearchIcon /></div>
                     <div><button className='btn btn-secondary mx-2 py-1'>All</button></div>
-                    <div><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div>
-                    <div onClick={() => navigate("/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div>
+                    {/* <div onClick={() => navigate("/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
+                    <div onClick={() => window.open("http://localhost:3000/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div>
+                    {/* <div onClick={() => navigate("/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div> */}
+                    <div onClick={() => window.open("http://localhost:3000/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div>
                     <div className='mx-2'>
                         <button className='mx-1 btn border p-2 py-0 daybtn' title='days'>7</button>
                         <button className='mx-1 btn border p-2 py-0 daybtn' title='days'>15</button>
@@ -82,23 +95,6 @@ const AccountLedger = () => {
                 </div>
                 
                 <div className='m-2'>
-                    {/* <div className='header_al'>
-                        <div>Party Ledger</div>
-                        <div>
-                            <div>
-                                <div>gstore</div>
-                                <div>G-19,20</div>
-                                <div>surat-395006, Gujarat(India)</div>
-                                <div>T-12345678910</div>
-                                <div>support@orail.in | www.optigoapps,com</div>
-                            </div>
-                            <div>img</div>
-                        </div>
-                        <div className='d-flex justify-content-between align-items-center px-2'>
-                            <div>Party Ledger Prepared For : <b>Nimesh856</b></div>
-                            <div>From : <b>01 Mar 2024</b> To : <b>04 Mar 2024</b></div>
-                        </div>
-                    </div> */}
                     <table className='w-100'>
                         <thead className='w-100 border'>
                             <tr className='w-100 border-bottom fs_td'>
@@ -129,14 +125,14 @@ const AccountLedger = () => {
                                         <tr className='border' key={e}>
                                             <td className='border-end p-1 text-center'>04 Mar 24</td>
                                             <td className='border-end p-1 text-start ps-1'>Party Return</td>
-                                            <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline'>CRO158</td>
+                                            <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' style={{cursor:'pointer'}} onClick={() => window.open("http://localhost:3000/accountledgerdebit")}>CRO158</td>
                                             <td className='border-end p-1 text-end pe-1'>0.540</td>
                                             <td className='border-end p-1 text-end pe-1'>5.00</td>
                                             <td className='border-end p-1 text-end pe-1'>7500</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'>04 Mar 24</td>
                                             <td className='border-end p-1 text-start ps-1'>Party Receive</td>
-                                            <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline'>CRI683</td>
+                                            <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' onClick={() => window.open("http://localhost:3000/accountledgercrebit")} style={{cursor:'pointer'}}>CRI683</td>
                                             <td className='border-end p-1 text-end pe-1'>10.000</td>
                                             <td className='border-end p-1 text-end pe-1'>100.00</td>
                                             <td className='border-end p-1 text-end pe-1'>10,000</td>
@@ -163,17 +159,7 @@ const AccountLedger = () => {
                                         </tr>
                         </tbody>
                     </table>
-                    {/* <div className='d-flex justify-content-end align-items-center w-100'>
-                        <div>
-                            <div>Balance Gold : NA</div>
-                            <div>Balance Diam. : NA</div>
-                            <div>Balance Amount : NA</div>
-                        </div>
-                    </div> */}
                 </div>
-                {/* <div className='px-2 text-center w-100 py-3 text-secondary  fs-4'>
-                    No Data Found !!
-                </div> */}
             </div>
             
         </div>

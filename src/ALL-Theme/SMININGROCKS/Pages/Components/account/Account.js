@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../home/Header/Header'
 import './Account.css'
 import { Box, Tab, Tabs, Typography } from '@mui/material'
@@ -12,7 +12,9 @@ import AccountLedger from './accountLedger/AccountLedger';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-
+    useEffect(() => {
+        a11yProps(1)
+    },[])
     return (
         <div
             role="tabpanel"
@@ -36,7 +38,7 @@ function CustomTabPanel(props) {
 //     value: PropTypes.number.isRequired,
 //   };
 
-function a11yProps(index) {
+ function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
         'aria-controls': `simple-tabpanel-${index}`,
@@ -72,7 +74,9 @@ export default function Account() {
         naviagation('/')
         window.location.reload()
     }
-
+useEffect(() => {
+    a11yProps(1)
+},[])
     return (
         <div style={{
             backgroundColor: '#c0bbb1',
