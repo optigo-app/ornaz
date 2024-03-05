@@ -22,6 +22,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { checkMonth } from '../../../../Utils/globalFunctions/GlobalFunction';
 const CustomSortIcon = ({ order }) => {
   return (
     <>
@@ -217,68 +218,9 @@ const QuotationFilters = () => {
     setPage(0);
   };
 
-  const checkMonth = (val) => {
-    let month = "";
-    switch (val) {
-      case 0:
-        month = "01"
-        // month = "January"
-        break;
-      case 1:
-        month = "02"
-        // month = "February"
-        break;
-      case 2:
-        month = "03"
-        // month = "March"
-        break;
-      case 3:
-        month = "04"
-        // month = "April"
-        break;
-      case 4:
-        month = "05"
-        // month = "May"
-        break;
-      case 5:
-        month = "06"
-        // month = "June"
-        break;
-      case 6:
-        month = "07"
-        // month = "July"
-        break;
-      case 7:
-        month = "08"
-        // month = "August"
-        break;
-      case 8:
-        month = "09"
-        // month = "September"
-        break;
-      case 9:
-        month = "10"
-        // month = "October"
-        break;
-      case 10:
-        month = "11"
-        // month = "November"
-        break;
-      case 11:
-        month = "12"
-        // month = "December"
-        break;
-
-      default:
-        break;
-    }
-    return month;
-  }
-
   const handleSearch = (eve, searchValue, fromDatess, todatess, metalPurities, MetalColors, categories, statuss, orderPromDate) => {
     let fromdates = `${fromDatess?.["$y"]}-${checkMonth(fromDatess?.["$M"])}-${fromDatess?.["$D"]}`
     let todates = `${todatess?.["$y"]}-${checkMonth(todatess?.["$M"])}-${todatess?.["$D"]}`
-    console.log(fromdates, todates, searchValue, metalPurities, MetalColors, categories, statuss, orderPromDate);
     let filteredData = [];
     data?.forEach((e, i) => {
       let flags = {
@@ -426,7 +368,7 @@ const QuotationFilters = () => {
   return (
     <Box className='smilingSavedAddressMain quotationFiltersText' sx={{ padding: "20px", }}>
       <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-        <Button variant="contained" sx={{ marginBottom: "35px", background: "#7d7f85" }} onClick={eve => resetAllFilters(eve)}>All</Button>
+        <Button variant="contained" sx={{ marginBottom: "35px", background: "#7d7f85" }} className='muiSmilingRocksBtn' onClick={eve => resetAllFilters(eve)}>All</Button>
         <Box sx={{ padding: "0 20px" }}>
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
@@ -448,7 +390,7 @@ const QuotationFilters = () => {
                   label="Date From"
                   value={fromDate}
                   onChange={(newValue) => setFromDate(newValue)}
-                  format="DD/MM/YYYY"
+                  format="DD MMM YYYY"
                   className='quotationFilterDates'
                 />
               </LocalizationProvider>
@@ -462,7 +404,7 @@ const QuotationFilters = () => {
                   label="Date To"
                   value={toDate}
                   onChange={(newValue) => setToDate(newValue)}
-                  format="DD/MM/YYYY"
+                  format="DD MMM YYYY"
                   className='quotationFilterDates'
                 />
               </LocalizationProvider>
@@ -470,7 +412,7 @@ const QuotationFilters = () => {
           </Box>
         </Box>
         <Box sx={{ padding: "0 15px 35px 0", }}>
-          <Button variant='contained' sx={{ padding: "7px 10px", minWidth: "max-content", background: "#7d7f85" }} onClick={(eve) => handleSearch(eve, searchVal, fromDate, toDate, metalPurity, MetalColor, category, statuse, orderProm)}><SearchIcon sx={{ color: "#fff !important" }} /></Button>
+          <Button variant='contained' className='muiSmilingRocksBtn' sx={{ padding: "7px 10px", minWidth: "max-content", background: "#7d7f85" }} onClick={(eve) => handleSearch(eve, searchVal, fromDate, toDate, metalPurity, MetalColor, category, statuse, orderProm)}><SearchIcon sx={{ color: "#fff !important" }} /></Button>
         </Box>
         <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} >
           <label className='lh-1 selectLabel' style={{ marginTop: "-3px", position: "absolute", left: 0, top: "-16px", }}>Status</label>

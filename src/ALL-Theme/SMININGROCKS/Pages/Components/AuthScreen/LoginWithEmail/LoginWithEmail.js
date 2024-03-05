@@ -13,9 +13,6 @@ export default function LoginWithEmail() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-
-    const [emailError, setEmailError] = useState('');
-    const [submitClicked, setSubmitClicked] = useState(false);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -51,8 +48,6 @@ export default function LoginWithEmail() {
     }
 
     const handleSubmit = async () => {
-        setSubmitClicked(true);
-
         if (!confirmPassword.trim()) {
             errors.confirmPassword = 'Password is required';
             return;
@@ -102,13 +97,12 @@ export default function LoginWithEmail() {
         navigation('/LoginWithEmailCode');
     }
     return (
-        <div style={{ backgroundColor: '#c0bbb1' }}>
+        <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
           {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress />
                 </div>
             )}
-            <Header />
             <div style={{ backgroundColor: '#c0bbb1' }}>
                 <div className='smling-forgot-main'>
                     <p style={{
@@ -158,10 +152,10 @@ export default function LoginWithEmail() {
                         <button className='submitBtnForgot' onClick={handleSubmit}>Login</button>
                         <p className='cancleForgot' onClick={() => navigation('/')}>CANCEL</p>
 
-                        <button className='submitBtnForgot' onClick={handleNavigation}>Login With a Code instead on email</button>
+                        <button type='submit' className='submitBtnForgot' onClick={handleNavigation}>Login With a Code instead on email</button>
                         <p>Go passwordless! we'll send you an email.</p>
 
-                        <p style={{ color: 'blue' }}>Forgot Password ?</p>
+                        <p style={{ color: 'blue' , cursor: 'pointer'}} onClick={() => navigation('/forgotPass')}>Forgot Password ?</p>
                     </div>
                     <Footer />
                 </div>

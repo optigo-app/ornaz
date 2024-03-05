@@ -68,13 +68,12 @@ export default function ContinueWithEmail() {
     };
 
     return (
-        <div style={{ backgroundColor: '#c0bbb1' }}>
+        <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
           {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress />
                 </div>
             )}
-            <Header />
             <div style={{ backgroundColor: '#c0bbb1' }}>
                 <div className='smling-forgot-main'>
                     <p style={{
