@@ -19,3 +19,20 @@
 .w_Al{
     width: 7.14%;
 }
+.daybtn{
+    height: 35px;
+    width: 35px;
+}
+.daybtn:hover{
+    background-color: rgb(210, 213, 213);
+}
+/* .header_al{
+    display: none;
+} */
+
+/* @media print {
+    .header_al{
+        display: normal;
+    }   
+    
+} */
