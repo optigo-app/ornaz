@@ -101,7 +101,7 @@ export default function Account() {
 
         const storedData = localStorage.getItem('loginUserDetail');
         const data = JSON.parse(storedData);
-        setCustomerID(data.id);
+        setCustomerID(data?.id);
 
     }, []); // 
 
