@@ -1,0 +1,12 @@
+.DesignWiseSalesReport > div{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.netWtSecSlider.MuiSlider-colorPrimary{
+    color: #7d7f85;
+}
+
+.netWtSliderSec input{
+    padding: 5px
+}

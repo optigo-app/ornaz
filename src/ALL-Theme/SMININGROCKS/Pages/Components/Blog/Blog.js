@@ -35,10 +35,10 @@ const Blog = () => {
         backgroundColor: "#c0bbb1",
         height: "100%",
         width: "100%",
-        paddingBottom:'100px'
+        paddingBottom:'100px',
+        paddingTop: '110px'
       }}
     >
-        <Header/>
         <div style={{textAlign:'center',margin:'60px 0px',marginBottom:'120px'}}>
             <p style={{fontSize:'40px',fontFamily: 'FreightDisp Pro Medium', color: '#fff'}}>Blog and Style Guide</p>
         </div>

@@ -1,0 +1,50 @@
+.des_img_aoh{
+    height: 250px;
+    width: 250px;
+}
+._color{
+    color: brown;
+}
+._center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+._end{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.orderHistory .MuiAccordion-gutters::before{
+ opacity: 1 !important;
+}
+.orderedItems{
+    /* max-height: 600px;
+    min-height: 600px; */
+    height: 100%;
+    overflow-y: auto;
+    border: 1px solid #e8e8e8;
+    padding: 15px;
+}
+.paginate_OH{
+    width: 100%;
+}
+.break{
+    padding: 4px;
+}
+.orderedItems::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Styling the scrollbar thumb */
+.orderedItems::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* Styling the scrollbar track */
+.orderedItems::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}

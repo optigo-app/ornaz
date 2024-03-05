@@ -6,9 +6,9 @@ import Footer from '../home/Footer/Footer'
 export default function FAQ() {
     return (
         <div style={{
-            backgroundColor: '#c0bbb1'
+            backgroundColor: '#c0bbb1',
+            paddingTop: '110px'
         }}>
-            <Header />
             <div>
                 <div style={{ paddingBlock: '60px' }}>
                     <p style={{ fontSize: '40px', color: 'white', textAlign: 'center', fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif' }}>FAQ</p>

@@ -26,6 +26,10 @@ const ProdDetail = () => {
       setProductData(localProductData)
     }, [])
 
+    useEffect(()=>{
+      window.scrollTo(0,0)
+    },[])
+
 
     let imgData=[
         {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
@@ -37,9 +41,6 @@ const ProdDetail = () => {
         {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
     ]
 
-
-    console.log("productdetailData",productData?.thumbimage.split(","));
-
     const handelmainImg = () =>{
       let filterImg=productData?.originalimage.split(",").filter((ele,i)=>{
        return i === thumbImg 
@@ -48,9 +49,6 @@ const ProdDetail = () => {
       return filterImg 
     }
 
-    console.log("handelmainImg",handelmainImg());
-    
-
   return (
     <div
       style={{
@@ -58,9 +56,9 @@ const ProdDetail = () => {
         height: "100%",
         width: "100%",
         paddingBottom: "100px",
+        paddingTop: '110px'
       }}
     >
-      <Header />
       <div
         style={{
           display: "flex",
