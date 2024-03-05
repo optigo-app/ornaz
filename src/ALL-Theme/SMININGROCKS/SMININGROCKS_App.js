@@ -35,11 +35,16 @@ import AccountLedgerExcel from './Pages/Components/account/accountLedgerExcelDow
 import AccountLedger from './Pages/Components/account/accountLedger/AccountLedger';
 import DebitVoucher from './Pages/Components/account/accountLedgerVouchers/debitVoucher/DebitVoucher';
 import CreditVoucher from './Pages/Components/account/accountLedgerVouchers/creditVoucher/CreditVoucher';
+import { openSignInModal } from '../../Recoil/atom'
+import { useRecoilState } from 'recoil'
+import Payment from './Pages/Components/Payment/Payment'
+import Confirmation from './Pages/Components/confirmation/Confirmation'
 // import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
 
 export default function SMININGROCKS_App() {
 
-    const [openLoginDailog, setOpenLoginDailog] = useState(false);
+    const [openLoginDailog, setOpenLoginDailog] = useRecoilState(openSignInModal);
+
     const navigation = useNavigate();
     const location =  useLocation();
     
@@ -65,11 +70,11 @@ export default function SMININGROCKS_App() {
                     <p className='loginDiTile'>Log in or sign up in seconds</p>
                     <p>Use your email or mobile no to continue with the organization.</p>
 
-                    <div className='loginMail' onClick={() => navigation('/ContinueWithEmail')}>
+                    <div className='loginMail' onClick={() => { navigation('/ContinueWithEmail'); setOpenLoginDailog(false) }}>
                         <IoMdMail style={{ height: '25px', width: '25px' }} />
                         <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500, paddingLeft: '25px' }}>Continue with email</p>
                     </div>
-                    <div className='loginMobile' onClick={() => navigation('/ContimueWithMobile')}>
+                    <div className='loginMobile' onClick={() => { navigation('/ContimueWithMobile'); setOpenLoginDailog(false) }}>
                         <FaMobileAlt style={{ height: '25px', width: '25px', marginRight: '10px' }} />
                         <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500, paddingLeft: '25px' }}>Log in with mobile</p>
                     </div>
@@ -108,6 +113,9 @@ export default function SMININGROCKS_App() {
                     <Route path="/productpage" element={<ProductList />} />
                     <Route path="/productdetail" element={<ProdDetail />} />
                     <Route path="/Delivery" element={<Delivery />} />
+                    <Route path="/Payment" element={<Payment />} />
+                    <Route path="/Confirmation" element={<Confirmation />} />
+
                 </Routes>
             </div>
         </div>

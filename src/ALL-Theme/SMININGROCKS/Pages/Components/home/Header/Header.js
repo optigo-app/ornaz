@@ -20,8 +20,8 @@ import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
 import CloseIcon from '@mui/icons-material/Close';
 import { IoClose } from "react-icons/io5";
-import { useRecoilValue } from "recoil";
-import { CartListCounts, WishListCounts } from "../../../../../../Recoil/atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { CartListCounts, WishListCounts, openSignInModal } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 
 export default function Header({ onLoginClick }) {
@@ -34,8 +34,39 @@ export default function Header({ onLoginClick }) {
   const [isOpenCollection, setIsOpenCollection] = useState(false);
   const [isOpenBouti, setIsOpenBouti] = useState(false);
 
-  const getCartListCount =  useRecoilValue(CartListCounts)
-  const getWishListCount =  useRecoilValue(WishListCounts)
+  const getCartListCount = useRecoilValue(CartListCounts)
+  const getWishListCount = useRecoilValue(WishListCounts)
+
+  const setSigninPopupOpen = useSetRecoilState(openSignInModal)
+
+
+
+  const getMenuApi = async() =>{
+
+
+    const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+    const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+    let pData = JSON.stringify({"FrontEnd_RegNo":`${FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`})
+
+    let pEnc = btoa(pData)
+
+    const body ={
+      con:"{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
+      f:"onload (GETMENU)",
+      p:pEnc
+      }
+
+    await CommonAPI(body).then((res)=>{
+        console.log("res",res?.Data?.rd)
+    })
+    
+
+  }
+
+  useEffect(()=>{
+    getMenuApi()
+  },[])
 
 
   const toggleList = () => {
@@ -59,6 +90,13 @@ export default function Header({ onLoginClick }) {
 
   const handleIncrement = () => {
     setInputValue((prevValue) => Math.min(parseInt(prevValue, 10) + 1, 99));
+
+    alert(inputValue)
+
+    console.log('inutttt', inputValue);
+
+
+
   }
   const handleDecrement = () => {
     setInputValue((prevValue) => Math.max(parseInt(prevValue, 10) - 1, 1));
@@ -187,6 +225,8 @@ export default function Header({ onLoginClick }) {
 
       if (response?.Data) {
         setCartListData(response?.Data?.rd);
+        console.log('cartListDatacartListData...', cartListData.length);
+
         setMainRemarks(response?.Data?.rd[0].OrderRemarks);
       }
     } catch (error) {
@@ -216,7 +256,7 @@ export default function Header({ onLoginClick }) {
       const response = await CommonAPI(body);
       console.log('response...', response);
       if (response.Data.rd[0].stat === 1) {
-        navigation('/myWishList')
+        // navigation('/myWishList')
       } else {
         alert('Error');
       }
@@ -533,17 +573,17 @@ export default function Header({ onLoginClick }) {
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
               <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
               {islogin ? <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li> :
-                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={onLoginClick}>{LOGIN}</li>}
-                <Badge badgeContent={getWishListCount}  overlap={'rectangular'} color="secondary">
-                  <Tooltip title="Add To WishList" >
-                    <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '20px', cursor: 'pointer', width: '20px' }} /></li>
-                  </Tooltip>
-                </Badge>
+                <li className="nav-li-smining" style={{ cursor: 'pointer' }} onClick={() => setSigninPopupOpen(true)}>{LOGIN}</li>}
+              <Badge badgeContent={getWishListCount} overlap={'rectangular'} color="secondary">
+                <Tooltip title="Add To WishList" >
+                  <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '20px', cursor: 'pointer', width: '20px' }} /></li>
+                </Tooltip>
+              </Badge>
               <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-              <Badge  badgeContent={getCartListCount}  overlap={'rectangular'} color="secondary">
-                  <Tooltip title="Add To Cart" >
-                    <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', cursor: 'pointer',marginTop: '0px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
-                  </Tooltip>
+              <Badge badgeContent={getCartListCount} overlap={'rectangular'} color="secondary">
+                <Tooltip title="Add To Cart" >
+                  <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', cursor: 'pointer', marginTop: '0px' }}><PiStarFourThin style={{ cursor: 'pointer', height: '35px', width: '35px' }} /></li>
+                </Tooltip>
               </Badge>
             </ul>
           </div>
@@ -554,10 +594,12 @@ export default function Header({ onLoginClick }) {
           onMouseLeave={handleDropdownClose}
           className={`shop-dropdown ${isDropdownOpen ? 'open' : ''} ${isHeaderFixed ? 'fixed' : ''}`}
         >
-          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white' }}
+          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white'}}
             onMouseEnter={handleDropdownOpen}
-            onMouseLeave={handleDropdownClose}>
-            <div>
+            onMouseLeave={handleDropdownClose}
+            
+            >
+            {/* <div>
               <ul>
                 <li>FINE JEWELLERY</li>
                 <li>Ring</li>
@@ -598,7 +640,7 @@ export default function Header({ onLoginClick }) {
                 <li>Haute Couture</li>
                 <li>Haute Couture</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -653,19 +695,19 @@ export default function Header({ onLoginClick }) {
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/aboutUs')}>{ABOUT_US}</li>
                 <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/labGrowDaimonds')}>{LAB_GROWN}</li>
                 {islogin ? <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => navigation('/account')}>{ACCOUNT}</li> :
-                  <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={onLoginClick}>{LOGIN}</li>}
+                  <li className="nav-li-smining-fixed" style={{ cursor: 'pointer' }} onClick={() => setSigninPopupOpen(true)}>{LOGIN}</li>}
 
-              <Badge badgeContent={getWishListCount}  overlap={'rectangular'} color="secondary">
+                <Badge badgeContent={getWishListCount} overlap={'rectangular'} color="secondary">
                   <Tooltip title="Add To WishList" >
                     <li onClick={() => navigation('/myWishList')}><PiStarThin style={{ height: '20px', cursor: 'pointer', width: '20px' }} /></li>
                   </Tooltip>
                 </Badge>
-              <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
-              <Badge  badgeContent={getCartListCount}  overlap={'rectangular'} color="secondary">
+                <li onClick={toggleOverlay} style={{}}><IoSearchOutline style={{ height: '15px', cursor: 'pointer', width: '15px' }} /></li>
+                <Badge badgeContent={getCartListCount} overlap={'rectangular'} color="secondary">
                   <Tooltip title="Add To Cart" >
-                    <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', marginTop: '0px',cursor: 'pointer' }}><PiStarFourThin style={{ cursor: 'pointer', height: '30px', width: '30px' }} /></li>
+                    <li onClick={toggleCartDrawer(true)} style={{ marginLeft: '-10px', marginTop: '0px', cursor: 'pointer' }}><PiStarFourThin style={{ cursor: 'pointer', height: '30px', width: '30px' }} /></li>
                   </Tooltip>
-              </Badge>
+                </Badge>
 
               </ul>
             </div>
@@ -773,170 +815,79 @@ export default function Header({ onLoginClick }) {
             textAlign: 'center',
             fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
           }}>Your Cart</p>
-          {/* <div style={{
-            backgroundColor: '#f1f2f2',
-          }}>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: '15px'
-            }}>
-              <p style={{ margin: '0px' }}>Deliveries are available only in the USA.</p>
-              <p>3% will be donated to your choice of charity. Learn More</p>
-            </div>
-          </div> */}
-
-
-          {/* <div className="smiling-cartBoxMain">
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignContent: 'center',
-              width: '30%'
-            }}>
-              <img src='https://cdn.shopify.com/s/files/1/0021/8444/6052/products/Lab-grown-diamond-white-gold-necklace-srnl00345wht_grande.jpg?v=1613627041' className='smiling-cartBoxImg' />
-            </div>
-            <div style={{
-              width: '65%',
-              margin: '20px'
-            }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}>
-                <p style={{ fontSize: '14px', color: '#7d7f85' }}>My Type 0.28ct "B" Lab Grown</p>
-                <p className="CartPageShipingIn">Ships in 14 days</p>
-                <p style={{
-                  color: '#7d7f85',
-                  marginLeft: '35px'
-                }}>$66,661.00</p>
-              </div>
-              <div style={{ fontSize: '14px', marginTop: '-20px', color: '#7d7f85' }}>
-                Diamond Necklace<br />
-                NL-00147WHT
-              </div>
-              <p style={{ fontSize: '12px', color: '#7d7f85' }}>White Gold / 18 Inches / 0.28</p>
-
-              <p className="CartPageShipingInSmall">Ships in 14 days</p>
-
-              <div style={{ display: 'flex' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', border: '1px solid #7d7f85' }}>
-                  <p style={{
-                    margin: '10px',
-                    fontSize: '20px',
-                    fontWeight: 500,
-                    cursor: 'pointer'
-                  }} onClick={handleDecrement} >-</p>
-                  <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }}
-                    maxLength={2}
-                    inputMode="numeric"
-                    value={inputValue}
-                    onChange={handleInputChange} />
-                  <p style={{
-                    margin: '10px',
-                    fontSize: '20px',
-                    fontWeight: 500,
-                    cursor: 'pointer'
-                  }} onClick={handleIncrement}>+</p>
-                </div>
-                <p style={{
-                  margin: '10px',
-                  fontSize: '15px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>REMOVE</p>
-              </div>
-            </div>
-
-          </div> */}
-
         </div>
         <div style={{ paddingBottom: '150px' }}>
-          {cartListData?.map((item, index) => (
-            <div key={item.id} className="smiling-cartBoxMain">
-              <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignContent: 'center',
-                width: '30%'
-              }}>
-                <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiling-cartBoxImg' />
-              </div>
-              <div style={{
-                width: '65%',
-                margin: '20px'
-              }}>
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}>
-                  <p style={{ fontSize: '14px', color: '#7d7f85' }}>{item.designno}</p>
-                  <p className="CartPageShipingIn">Ships in 14 days</p>
-                  <p style={{
-                    color: '#7d7f85',
-                    marginLeft: '35px'
-                  }}>${item.TotalUnitCost}</p>
-                </div>
-                <div style={{ fontSize: '14px', marginTop: '-20px', color: '#7d7f85' }}>
-                  {item.Mastermanagement_CategoryName}<br />
-                  {item.DefaultImageName1}
-                </div>
-                <p style={{ fontSize: '12px', color: '#7d7f85' }}>White Gold / 18 Inches / {item.Quantity}</p>
-                <p className="CartPageShipingInSmall">Ships in 14 days</p>
-                <div style={{ display: 'flex' }}>
-                  <div style={{ display: 'flex', justifyContent: 'center', border: '1px solid #7d7f85' }}>
-                    <p style={{
-                      margin: '10px',
-                      fontSize: '20px',
-                      fontWeight: 500,
-                      cursor: 'pointer'
-                    }} onClick={handleDecrement} >-</p>
-                    <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }}
-                      maxLength={2}
-                      inputMode="numeric"
-                      value={inputValue}
-                      onChange={handleInputChange} />
-                    <p style={{
-                      margin: '10px',
-                      fontSize: '20px',
-                      fontWeight: 500,
-                      cursor: 'pointer'
-                    }} onClick={handleIncrement}>+</p>
+          {cartListData?.length === 0 ? (
+            <div style={{ backgroundColor: 'lightgray', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '150px' }}>
+              <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500 }}>No Data Available</p>
+              <p>Please First Add To Cart Data</p>
+            </div>
+          ) : (
+            <div>
+              {cartListData?.map((item, index) => (
+                <div key={item.id} className="smiling-cartBoxMain">
+                  <div style={{ position: 'absolute', right: '25px', cursor: 'pointer' }} onClick={() => handleRemove(item)}>
+                    <CloseIcon />
                   </div>
-                  <p style={{
-                    margin: '10px',
-                    fontSize: '15px',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center'
-                  }} onClick={() => handleRemove(item)}>REMOVE</p>
-                  <input
-                    type="text"
-                    value={item.Remarks || ''}
-                    onChange={(e) => {
-                      const updatedCartListData = [...cartListData];
-                      updatedCartListData[index].Remarks = e.target.value;
-                      setCartListData(updatedCartListData);
-                      setRemarks(prevRemarks => ({
-                        ...prevRemarks,
-                        [index]: e.target.value
-                      }));
-                    }}
-                  />
-                  <button onClick={() => handleSubmit(index, item)}>Add Remarks</button>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', width: '30%' }}>
+                    <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiling-cartBoxImg' />
+                  </div>
+                  <div style={{ width: '65%', margin: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <p style={{ fontSize: '14px', color: '#7d7f85' }}>{item.designno}</p>
+                      <p className="CartPageShipingIn">Ships in 14 days</p>
+                      <p style={{ color: '#7d7f85', marginRight: '50px' }}>${item.TotalUnitCost}</p>
+                    </div>
+                    <div style={{ fontSize: '14px', marginTop: '-20px', color: '#7d7f85' }}>
+                      {item.Mastermanagement_CategoryName}<br />
+                      {item.DefaultImageName1}
+                    </div>
+                    <p style={{ fontSize: '12px', color: '#7d7f85' }}>White Gold / 18 Inches / {item.Quantity}</p>
+                    <p className="CartPageShipingInSmall">Ships in 14 days</p>
+                    <div style={{ display: 'flex' }}>
+                      <div style={{ display: 'flex', justifyContent: 'center', height: '40px', border: '1px solid #7d7f85' }}>
+                        <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={handleDecrement} >-</p>
+                        <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }} maxLength={2} inputMode="numeric" value={item.Quantity} onChange={handleInputChange} />
+                        <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={handleIncrement}>+</p>
+                      </div>
+                      <p style={{color : 'blue' ,cursor: 'pointer' , textDecoration: 'underline'}}>UPDATE QUANTITY</p>
+                    </div>
+                    <div style={{ display: 'flex',justifyContent:'flex-end', marginTop: '10px' }}>
+                      <textarea
+                        type="text"
+                        placeholder="Enter Remarks..."
+                        value={item.Remarks || ''}
+                        onChange={(e) => {
+                          const updatedCartListData = [...cartListData];
+                          updatedCartListData[index].Remarks = e.target.value;
+                          setCartListData(updatedCartListData);
+                          setRemarks(prevRemarks => ({
+                            ...prevRemarks,
+                            [index]: e.target.value
+                          }));
+                        }}
+                        className="YourCartMainRemkarBoxSingle"
+                      />
+                      <button onClick={() => handleSubmit(index, item)} className="SmilingAddSingleRemkarBtn">Add Remarks</button>
+                    </div>
+                  </div>
                 </div>
+              ))}
+              <textarea
+                label="Enter Remarks"
+                variant="outlined"
+                placeholder="Enter Main Remark"
+                value={Mainremarks}
+                rows={4}
+                onChange={(e) => handleInputChangeMainRemarks(e)}
+                className="YourCartMainRemkarBox"
+                style={{ marginTop: '30px' }}
+              />
+              <div className="addRemkarMain">
+                <button onClick={submitMainRemrks} className="SmilingAddRemkarBtn">Add Main Remark</button>
               </div>
             </div>
-          ))}
-          <input
-            label="Enter Remarks"
-            variant="outlined"
-            value={Mainremarks}
-            onChange={(e) => handleInputChangeMainRemarks(e)}
-          />
-          <button onClick={submitMainRemrks}>Add Remarks</button>
+          )}
         </div>
         <div className="placeOrderBtnMain">
           <button className="placeOrderBtn" onClick={() => navigation('/Delivery')}>Place Order</button>

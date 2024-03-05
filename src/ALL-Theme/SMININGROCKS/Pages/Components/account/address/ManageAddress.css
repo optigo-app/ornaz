@@ -44,12 +44,9 @@
     .AddressSec{
         width: 49%;
         min-width: 49%;
-        margin-bottom: 1%;
+        /* margin-bottom: 1%; */
     }
 
-    .addressMainSec{
-        gap: 1%;
-    }
 }
 
 @media(max-width: 576px){

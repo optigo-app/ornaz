@@ -7,7 +7,12 @@ export const CartListCounts = atom({
     default: 0,
   });
 
-export const WishListCounts = atom({
+  export const WishListCounts = atom({
     key: 'WishListCounts',
     default: 0,
+  });
+
+  export const openSignInModal = atom({
+    key: 'openSignInModal',
+    default: false,
   });
