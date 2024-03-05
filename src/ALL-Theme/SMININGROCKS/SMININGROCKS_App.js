@@ -30,6 +30,7 @@ import { Dialog } from '@mui/material'
 import { IoMdMail } from 'react-icons/io'
 import { FaMobileAlt } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
+import AccountLedgerTable from './Pages/Components/account/accountLedgerTablePrint/AccountLedgerTable';
 // import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
 
 export default function SMININGROCKS_App() {
@@ -88,6 +89,7 @@ export default function SMININGROCKS_App() {
                     <Route path="/lookbook" element={<Lookbook />} />
                     <Route path="/press" element={<Press />} />
                     <Route path="/account" element={<Account />} />
+                    <Route path="/accountledgertable" element={<AccountLedgerTable />} />
                     <Route path="/searchResult" element={<SearchResult />} />
                     <Route path="/celeb" element={<Celeb />} />
                     <Route path="/blog" element={<Blog />} />
