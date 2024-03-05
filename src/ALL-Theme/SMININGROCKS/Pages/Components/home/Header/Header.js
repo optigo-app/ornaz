@@ -61,6 +61,13 @@ export default function Header({ onLoginClick }) {
 
   const handleIncrement = () => {
     setInputValue((prevValue) => Math.min(parseInt(prevValue, 10) + 1, 99));
+
+    alert(inputValue)
+
+    console.log('inutttt', inputValue);
+
+
+
   }
   const handleDecrement = () => {
     setInputValue((prevValue) => Math.max(parseInt(prevValue, 10) - 1, 1));
@@ -809,27 +816,28 @@ export default function Header({ onLoginClick }) {
                     <div style={{ display: 'flex' }}>
                       <div style={{ display: 'flex', justifyContent: 'center', height: '40px', border: '1px solid #7d7f85' }}>
                         <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={handleDecrement} >-</p>
-                        <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }} maxLength={2} inputMode="numeric" value={inputValue} onChange={handleInputChange} />
+                        <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }} maxLength={2} inputMode="numeric" value={item.Quantity} onChange={handleInputChange} />
                         <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={handleIncrement}>+</p>
                       </div>
-                      <div style={{ display: 'flex', marginTop: '50px' }}>
-                        <textarea
-                          type="text"
-                          placeholder="Enter Remarks..."
-                          value={item.Remarks || ''}
-                          onChange={(e) => {
-                            const updatedCartListData = [...cartListData];
-                            updatedCartListData[index].Remarks = e.target.value;
-                            setCartListData(updatedCartListData);
-                            setRemarks(prevRemarks => ({
-                              ...prevRemarks,
-                              [index]: e.target.value
-                            }));
-                          }}
-                          className="YourCartMainRemkarBoxSingle"
-                        />
-                        <button onClick={() => handleSubmit(index, item)} className="SmilingAddSingleRemkarBtn">Add Remarks</button>
-                      </div>
+                      <p style={{color : 'blue' ,cursor: 'pointer' , textDecoration: 'underline'}}>UPDATE QUANTITY</p>
+                    </div>
+                    <div style={{ display: 'flex',justifyContent:'flex-end', marginTop: '10px' }}>
+                      <textarea
+                        type="text"
+                        placeholder="Enter Remarks..."
+                        value={item.Remarks || ''}
+                        onChange={(e) => {
+                          const updatedCartListData = [...cartListData];
+                          updatedCartListData[index].Remarks = e.target.value;
+                          setCartListData(updatedCartListData);
+                          setRemarks(prevRemarks => ({
+                            ...prevRemarks,
+                            [index]: e.target.value
+                          }));
+                        }}
+                        className="YourCartMainRemkarBoxSingle"
+                      />
+                      <button onClick={() => handleSubmit(index, item)} className="SmilingAddSingleRemkarBtn">Add Remarks</button>
                     </div>
                   </div>
                 </div>
