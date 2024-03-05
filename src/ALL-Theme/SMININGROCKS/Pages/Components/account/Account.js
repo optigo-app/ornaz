@@ -307,7 +307,7 @@ export default function Account() {
                                 </CustomTabPanel>
                             </CustomTabPanel>
 
-                            <CustomTabPanel value={value} index={3}>
+                            <CustomTabPanel value={value} index={4}>
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                     <TextField
                                         id="outlined-confirm-password-input"
