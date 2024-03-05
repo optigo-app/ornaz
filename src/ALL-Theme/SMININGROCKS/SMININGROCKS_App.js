@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Route, Routes, useLocation, useNavigate, redirect } from 'react-router-dom'
 import Home from './Pages/Components/home'
 import Impact from './Pages/Components/Impact'
 import AboutUs from './Pages/Components/aboutUs/AboutUs'
@@ -30,6 +30,11 @@ import { Dialog } from '@mui/material'
 import { IoMdMail } from 'react-icons/io'
 import { FaMobileAlt } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
+import AccountLedgerTable from './Pages/Components/account/accountLedgerTablePrint/AccountLedgerTable';
+import AccountLedgerExcel from './Pages/Components/account/accountLedgerExcelDownload/AccountLedgerExcel';
+import AccountLedger from './Pages/Components/account/accountLedger/AccountLedger';
+import DebitVoucher from './Pages/Components/account/accountLedgerVouchers/debitVoucher/DebitVoucher';
+import CreditVoucher from './Pages/Components/account/accountLedgerVouchers/creditVoucher/CreditVoucher';
 import { openSignInModal } from '../../Recoil/atom'
 import { useRecoilState } from 'recoil'
 import Payment from './Pages/Components/Payment/Payment'
@@ -41,12 +46,16 @@ export default function SMININGROCKS_App() {
     const [openLoginDailog, setOpenLoginDailog] = useRecoilState(openSignInModal);
 
     const navigation = useNavigate();
+    const location =  useLocation();
+    
     const openLoginDailogBox = () => {
         setOpenLoginDailog(true);
     };
     const closeLoginDailog = () => {
         setOpenLoginDailog(false);
     };
+
+    
 
     return (
         <div>
@@ -93,6 +102,11 @@ export default function SMININGROCKS_App() {
                     <Route path="/lookbook" element={<Lookbook />} />
                     <Route path="/press" element={<Press />} />
                     <Route path="/account" element={<Account />} />
+                    <Route path="/accountledger" element={<AccountLedger />} />
+                    <Route path="/accountledgertable" element={<AccountLedgerTable />} />
+                    <Route path="/accountledgerexcel" element={<AccountLedgerExcel />} />
+                    <Route path="/accountledgerdebit" element={<DebitVoucher />} />
+                    <Route path="/accountledgercrebit" element={<CreditVoucher />} />
                     <Route path="/searchResult" element={<SearchResult />} />
                     <Route path="/celeb" element={<Celeb />} />
                     <Route path="/blog" element={<Blog />} />

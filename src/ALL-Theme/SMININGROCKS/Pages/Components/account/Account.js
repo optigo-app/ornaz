@@ -17,7 +17,9 @@ import DesignWiseSalesReport from '../sales/DesignWiseSalesReport/DesignWiseSale
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-
+    useEffect(() => {
+        a11yProps(1)
+    },[])
     return (
         <div
             role="tabpanel"
@@ -41,7 +43,7 @@ function CustomTabPanel(props) {
 //     value: PropTypes.number.isRequired,
 //   };
 
-function a11yProps(index) {
+ function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
         'aria-controls': `simple-tabpanel-${index}`,
