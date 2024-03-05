@@ -104,6 +104,13 @@
     border-bottom: 1px solid black;
 }
 
+.smlingAccountTabWebView button.Mui-selected{
+    color: #3b3c3d;
+}
+
+.smlingAccountTabWebView span.MuiTabs-indicator{
+    background-color: #3b3c3d;
+}
 
 
 @media screen and (max-width: 1441px) {
