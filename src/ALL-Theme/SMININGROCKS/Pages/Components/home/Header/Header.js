@@ -38,6 +38,18 @@ export default function Header({ onLoginClick }) {
   const getWishListCount =  useRecoilValue(WishListCounts)
 
 
+
+  const getMenuApi = async() =>{
+
+    
+
+  }
+
+  useEffect(()=>{
+
+  },[])
+
+
   const toggleList = () => {
     setIsOpen(!isOpen);
   };
@@ -216,7 +228,7 @@ export default function Header({ onLoginClick }) {
       const response = await CommonAPI(body);
       console.log('response...', response);
       if (response.Data.rd[0].stat === 1) {
-        navigation('/myWishList')
+        // navigation('/myWishList')
       } else {
         alert('Error');
       }
@@ -554,10 +566,12 @@ export default function Header({ onLoginClick }) {
           onMouseLeave={handleDropdownClose}
           className={`shop-dropdown ${isDropdownOpen ? 'open' : ''} ${isHeaderFixed ? 'fixed' : ''}`}
         >
-          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white' }}
+          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white'}}
             onMouseEnter={handleDropdownOpen}
-            onMouseLeave={handleDropdownClose}>
-            <div>
+            onMouseLeave={handleDropdownClose}
+            
+            >
+            {/* <div>
               <ul>
                 <li>FINE JEWELLERY</li>
                 <li>Ring</li>
@@ -598,7 +612,7 @@ export default function Header({ onLoginClick }) {
                 <li>Haute Couture</li>
                 <li>Haute Couture</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
 
