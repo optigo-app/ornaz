@@ -43,12 +43,29 @@ export default function Header({ onLoginClick }) {
 
   const getMenuApi = async() =>{
 
+
+    const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+    const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+    let pData = JSON.stringify({"FrontEnd_RegNo":`${FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`})
+
+    let pEnc = btoa(pData)
+
+    const body ={
+      con:"{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
+      f:"onload (GETMENU)",
+      p:pEnc
+      }
+
+    await CommonAPI(body).then((res)=>{
+        console.log("res",res?.Data?.rd)
+    })
     
 
   }
 
   useEffect(()=>{
-
+    getMenuApi()
   },[])
 
 
