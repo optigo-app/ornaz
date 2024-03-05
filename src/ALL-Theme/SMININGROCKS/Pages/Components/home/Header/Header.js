@@ -44,10 +44,10 @@ export default function Header({ onLoginClick }) {
   const getMenuApi = async() =>{
 
 
-    const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
     const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
-    let pData = JSON.stringify({"FrontEnd_RegNo":`${FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`})
+    let pData = JSON.stringify({"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`})
 
     let pEnc = btoa(pData)
 
