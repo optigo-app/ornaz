@@ -40,6 +40,35 @@ export default function Header({ onLoginClick }) {
   const setSigninPopupOpen = useSetRecoilState(openSignInModal)
 
 
+
+  const getMenuApi = async() =>{
+
+
+    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+    const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+    let pData = JSON.stringify({"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`})
+
+    let pEnc = btoa(pData)
+
+    const body ={
+      con:"{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
+      f:"onload (GETMENU)",
+      p:pEnc
+      }
+
+    await CommonAPI(body).then((res)=>{
+        console.log("res",res?.Data?.rd)
+    })
+    
+
+  }
+
+  useEffect(()=>{
+    getMenuApi()
+  },[])
+
+
   const toggleList = () => {
     setIsOpen(!isOpen);
   };
@@ -61,6 +90,13 @@ export default function Header({ onLoginClick }) {
 
   const handleIncrement = () => {
     setInputValue((prevValue) => Math.min(parseInt(prevValue, 10) + 1, 99));
+
+    alert(inputValue)
+
+    console.log('inutttt', inputValue);
+
+
+
   }
   const handleDecrement = () => {
     setInputValue((prevValue) => Math.max(parseInt(prevValue, 10) - 1, 1));
@@ -220,7 +256,7 @@ export default function Header({ onLoginClick }) {
       const response = await CommonAPI(body);
       console.log('response...', response);
       if (response.Data.rd[0].stat === 1) {
-        navigation('/myWishList')
+        // navigation('/myWishList')
       } else {
         alert('Error');
       }
@@ -558,10 +594,12 @@ export default function Header({ onLoginClick }) {
           onMouseLeave={handleDropdownClose}
           className={`shop-dropdown ${isDropdownOpen ? 'open' : ''} ${isHeaderFixed ? 'fixed' : ''}`}
         >
-          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white' }}
+          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white'}}
             onMouseEnter={handleDropdownOpen}
-            onMouseLeave={handleDropdownClose}>
-            <div>
+            onMouseLeave={handleDropdownClose}
+            
+            >
+            {/* <div>
               <ul>
                 <li>FINE JEWELLERY</li>
                 <li>Ring</li>
@@ -602,7 +640,7 @@ export default function Header({ onLoginClick }) {
                 <li>Haute Couture</li>
                 <li>Haute Couture</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -809,27 +847,28 @@ export default function Header({ onLoginClick }) {
                     <div style={{ display: 'flex' }}>
                       <div style={{ display: 'flex', justifyContent: 'center', height: '40px', border: '1px solid #7d7f85' }}>
                         <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={handleDecrement} >-</p>
-                        <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }} maxLength={2} inputMode="numeric" value={inputValue} onChange={handleInputChange} />
+                        <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }} maxLength={2} inputMode="numeric" value={item.Quantity} onChange={handleInputChange} />
                         <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={handleIncrement}>+</p>
                       </div>
-                      <div style={{ display: 'flex', marginTop: '50px' }}>
-                        <textarea
-                          type="text"
-                          placeholder="Enter Remarks..."
-                          value={item.Remarks || ''}
-                          onChange={(e) => {
-                            const updatedCartListData = [...cartListData];
-                            updatedCartListData[index].Remarks = e.target.value;
-                            setCartListData(updatedCartListData);
-                            setRemarks(prevRemarks => ({
-                              ...prevRemarks,
-                              [index]: e.target.value
-                            }));
-                          }}
-                          className="YourCartMainRemkarBoxSingle"
-                        />
-                        <button onClick={() => handleSubmit(index, item)} className="SmilingAddSingleRemkarBtn">Add Remarks</button>
-                      </div>
+                      <p style={{color : 'blue' ,cursor: 'pointer' , textDecoration: 'underline'}}>UPDATE QUANTITY</p>
+                    </div>
+                    <div style={{ display: 'flex',justifyContent:'flex-end', marginTop: '10px' }}>
+                      <textarea
+                        type="text"
+                        placeholder="Enter Remarks..."
+                        value={item.Remarks || ''}
+                        onChange={(e) => {
+                          const updatedCartListData = [...cartListData];
+                          updatedCartListData[index].Remarks = e.target.value;
+                          setCartListData(updatedCartListData);
+                          setRemarks(prevRemarks => ({
+                            ...prevRemarks,
+                            [index]: e.target.value
+                          }));
+                        }}
+                        className="YourCartMainRemkarBoxSingle"
+                      />
+                      <button onClick={() => handleSubmit(index, item)} className="SmilingAddSingleRemkarBtn">Add Remarks</button>
                     </div>
                   </div>
                 </div>

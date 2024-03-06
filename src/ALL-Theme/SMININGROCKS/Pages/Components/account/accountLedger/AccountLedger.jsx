@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-const AccountLedger = () => {
+import { useNavigate } from 'react-router-dom';
+const AccountLedger = ({a11yProps}) => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filterVisible, setFilterVisible] = useState(false);
+    const navigate = useNavigate("");
 
     useEffect(() => {
         // Get current date
@@ -27,7 +29,20 @@ const AccountLedger = () => {
 
       const toggleFilter = () => {
         setFilterVisible(!filterVisible);
-    };
+      };
+
+      const arr = [1,2,3,4,5];
+
+
+      const handleVoucherDebit = () => {
+            
+      }
+      const handleVoucherCredit = () => {
+
+      }
+
+
+
   return (
     <div>
         <div className='fs-4 fw-bold text-center text-secondary my-2 py-2'>Account Ledger</div>
@@ -42,8 +57,17 @@ const AccountLedger = () => {
                     To 
                     <input type="date" name="date" id="enddate" className='mx-2 p-1'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  /><SearchIcon /></div>
                     <div><button className='btn btn-secondary mx-2 py-1'>All</button></div>
-                    <div><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div>
-                    <div><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div>
+                    {/* <div onClick={() => navigate("/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
+                    <div onClick={() => window.open("http://localhost:3000/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div>
+                    {/* <div onClick={() => navigate("/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div> */}
+                    <div onClick={() => window.open("http://localhost:3000/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div>
+                    <div className='mx-2'>
+                        <button className='mx-1 btn border p-2 py-0 daybtn' title='days'>7</button>
+                        <button className='mx-1 btn border p-2 py-0 daybtn' title='days'>15</button>
+                        <button className='mx-1 btn border p-2 py-0 daybtn' title='days'>30</button>
+                        <button className='mx-1 btn border p-2 py-0 daybtn' title='days'>60</button>
+                        <button className='mx-1 btn border p-2 py-0 daybtn' title='days'>90</button>
+                    </div>
                     <div>
                         <select name="status" className='p-1' id="status">
                             <option value="all">All</option>
@@ -70,7 +94,7 @@ const AccountLedger = () => {
                     
                 </div>
                 
-                <div className='m-1'>
+                <div className='m-2'>
                     <table className='w-100'>
                         <thead className='w-100 border'>
                             <tr className='w-100 border-bottom fs_td'>
@@ -94,11 +118,48 @@ const AccountLedger = () => {
                                 <td className='p-1 text-center w_al'>VERIFIED</td>
                             </tr>
                         </thead>
+                        <tbody className='fs_td'>
+                            {
+                                arr?.map((e) => {
+                                    return(
+                                        <tr className='border' key={e}>
+                                            <td className='border-end p-1 text-center'>04 Mar 24</td>
+                                            <td className='border-end p-1 text-start ps-1'>Party Return</td>
+                                            <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' style={{cursor:'pointer'}} onClick={() => window.open("http://localhost:3000/accountledgerdebit")}>CRO158</td>
+                                            <td className='border-end p-1 text-end pe-1'>0.540</td>
+                                            <td className='border-end p-1 text-end pe-1'>5.00</td>
+                                            <td className='border-end p-1 text-end pe-1'>7500</td>
+                                            <td className='border-end p-1 text-center'></td>
+                                            <td className='border-end p-1 text-center'>04 Mar 24</td>
+                                            <td className='border-end p-1 text-start ps-1'>Party Receive</td>
+                                            <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' onClick={() => window.open("http://localhost:3000/accountledgercrebit")} style={{cursor:'pointer'}}>CRI683</td>
+                                            <td className='border-end p-1 text-end pe-1'>10.000</td>
+                                            <td className='border-end p-1 text-end pe-1'>100.00</td>
+                                            <td className='border-end p-1 text-end pe-1'>10,000</td>
+                                            <td className=' p-1 text-center'></td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                                        <tr className='border fw-bold'>
+                                            <td className='border-end p-1 text-center'></td>
+                                            <td className='border-end p-1 text-start ps-1'></td>
+                                            <td className='border-end p-1 text-start ps-1'></td>
+                                            <td className='border-end p-1 text-end pe-1'>0.540</td>
+                                            <td className='border-end p-1 text-end pe-1'>5.00</td>
+                                            <td className='border-end p-1 text-end pe-1'>7500</td>
+                                            <td className='border-end p-1 text-center'></td>
+                                            <td className='border-end p-1 text-center'></td>
+                                            <td className='border-end p-1 text-start ps-1'></td>
+                                            <td className='border-end p-1 text-start ps-1'></td>
+                                            <td className='border-end p-1 text-end pe-1'>10.000</td>
+                                            <td className='border-end p-1 text-end pe-1'>100.00</td>
+                                            <td className='border-end p-1 text-end pe-1'>10,000</td>
+                                            <td className=' p-1 text-center'></td>
+                                        </tr>
+                        </tbody>
                     </table>
                 </div>
-                {/* <div className='px-2 text-center w-100 py-3 text-secondary  fs-4'>
-                    No Data Found !!
-                </div> */}
             </div>
             
         </div>

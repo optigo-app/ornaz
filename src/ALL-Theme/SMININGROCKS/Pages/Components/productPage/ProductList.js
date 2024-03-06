@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Header from "../home/Header/Header";
 import Footer from "../home/Footer/Footer";
 import SmilingRock from "../home/smiling_Rock/SmilingRock";
@@ -33,6 +33,10 @@ const ProductList = () => {
   const [filterChecked, setFilterChecked] = useState({});
   const [wishFlag,setWishFlag] = useState(false)
   const [cartFlag,setCartFlag] = useState(false)
+  const[cartData,setCartData] = useState([]);
+  const[WishData,setWishData] = useState([]);
+  const [cartRemoveData,setCartRemoveData] = useState("");
+  const [wishListRemoveData,setWishListRemoveData] = useState("");
 
 
   const setCartCount = useSetRecoilState(CartListCounts)
@@ -47,12 +51,16 @@ const ProductList = () => {
 
 
   const fetchFile = async () => {
+
+    let storeinit=JSON.parse(localStorage.getItem("storeInit"))
+    let loginInfo=JSON.parse(localStorage.getItem("loginUserDetail"))
+
     await axios.get(
-      "https://gstore.orail.co.in/assets/95oztttesi0o50vr/Store_Data/Productlist/Productlist_3_95oztttesi0o50vr.txt"
+      `https://${storeinit?.domain}/assets/${storeinit?.FrontEnd_RegNo}/Store_Data/Productlist/Productlist_${loginInfo?.PackageId}_${storeinit?.FrontEnd_RegNo}.txt`
     ).then(
       (res)=>
         {
-          console.log(res?.data)
+          // console.log(res?.data)
           setProductApiData(res?.data)
         })
     .catch((err)=>console.log("err",err))
@@ -98,7 +106,11 @@ const ProductList = () => {
   // console.log("product2Data",ProductApiData?.data[0]?.map((ele)=>ele))
 
   useEffect(() => {
-      window.scrollTo(0,0);
+    // if(ProductApiData.length){
+      // window.scrollTo(0,0);
+      const element = document.getElementById("finejwelery")
+      element.scrollIntoView()
+    // }
   }, []); 
 
 
@@ -163,8 +175,8 @@ const ProductList = () => {
         (gen) => gen.Genderid === product.Genderid
       );
 
-
-
+    
+      
       if (metalColor) {
         product.MetalColorName = metalColor.MetalColorName;
       }
@@ -188,6 +200,103 @@ const ProductList = () => {
     return productData;
   }
 
+
+  const diffCartData = useCallback(() =>{
+
+  // let pdata;
+  
+  productData.forEach((pd)=>{
+    const pdata = cartData.find((cd)=>pd.designno === cd.DesignNo)
+    
+    // console.log("pdata",pdata);
+
+    if(pdata && !pd?.checkFlag){
+      pd.checkFlag = true
+    }
+    else{
+      pd.checkFlag = false
+    }
+  })
+
+
+return productData
+  
+},[productData,cartData])
+
+
+diffCartData()
+
+console.log("WishData",WishData);
+
+
+const diffWishData = useCallback(()=>{
+
+  productData.forEach((pd)=>{
+    const pdata = WishData.find((cd)=>pd.designno === cd.DesignNo)
+    
+
+    if(pdata && !pd?.wishCheck){
+      pd.wishCheck = true
+    }
+    else{
+      pd.wishCheck = false
+    }
+  })
+
+
+return productData
+
+},[productData,WishData])
+
+
+diffWishData()
+
+const removefromCart=()=>{
+  productData.map((pd)=>{
+ 
+
+    if(cartRemoveData && pd.designno === cartRemoveData){
+        pd.checkFlag = false
+    }
+    
+    if(wishListRemoveData  && pd.designno === wishListRemoveData){
+      pd.wishCheck = false
+    }
+
+  })
+
+
+return productData
+// // console.log("prodddd",product);
+// let prodD;
+// productData.forEach((pd)=>{
+
+//   // let prodD = productData.find((p)=>p?.designno === product?.designno && p?.checkFlag === true)
+
+//   // if(prodD){
+//   //   pd.checkFlag = false
+//   // }
+
+// if(pd?.designno===product?.designno){
+//    prodD = pd
+// }
+// if(prodD){
+//   pd.checkFlag = false
+// }
+
+// })
+
+// console.log("prodD",prodD);
+// return productData
+}
+
+removefromCart()
+
+
+
+
+  
+
   // let GetPrice = () =>{
   //   // let PriceDataChange=[]
   //   updateProductsWithMetalColorName()?.forEach(product=>{
@@ -200,6 +309,16 @@ const ProductList = () => {
   //   return updateProductsWithMetalColorName()
 
   // }
+
+
+  // useEffect(()=>{
+
+  //   let isWishHasCartData = productData?.filter((pd)=> WishData.find((wd)=>wd.autocode===pd.autocode))
+  //   console.log("isWishHasCartData",isWishHasCartData)
+
+  // },[WishData])
+
+
 
   updateProductsWithMetalColorName()?.forEach((product) => {
     const priceData = PriceData?.find(
@@ -320,11 +439,12 @@ const ProductList = () => {
   
   const getCountApi = async()=>{
 
-        const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
-        const UserEmail = localStorage.getItem("userEmail")
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+        const UserEmail = localStorage.getItem("userEmail")
 
-    let EncodeData = {FrontEnd_RegNo:`${FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
+
+    let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
 
     const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
 
@@ -347,12 +467,40 @@ const ProductList = () => {
 
   }
 
+  const getCartAndWishListData = async() =>{
+  
+    const UserEmail = localStorage.getItem("userEmail")
+    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+    const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+    let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
+
+    const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
+
+    const body = {
+        "con":`{\"id\":\"Store\",\"mode\":\"getdesignnolist\",\"appuserid\":\"${UserEmail}\"}`,
+        "f":" useEffect_login ( getdataofcartandwishlist )",
+        "p":encodedCombinedValue
+    }
+
+    await CommonAPI(body).then((res)=>{
+      if(res?.Message === "Success"){
+        setCartData(res?.Data?.rd)
+        setWishData(res?.Data?.rd1)
+      }
+    })
+
+  }
+
 
   useEffect(()=>{
 
+    getCartAndWishListData();
     getCountApi();
 
   },[])
+
+
 
   const handelWishList = async(event,prod) =>{
 
@@ -361,7 +509,7 @@ const ProductList = () => {
 
       if(event.target.checked === true){
 
-        const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
         const ukey = localStorage.getItem("ukey")
         const UserEmail = localStorage.getItem("userEmail")
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
@@ -447,7 +595,7 @@ const ProductList = () => {
           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
           "updatedate": `${product?.updatedate}`,
           "videoname":`${product?.videoname ?? ""}`,
-          "FrontEnd_RegNo":`${FrontEnd_RegNo}`,
+          "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "DQuality": `${product?.diamondquality}`,
@@ -469,11 +617,47 @@ const ProductList = () => {
         await CommonAPI(body).then(async(res)=>{
 
           if(res?.Data?.rd[0]?.msg === "success"){
+            
+            console.log("wishlistApiCalling",res)
 
+            await getCartAndWishListData()
             await getCountApi()
             
           }
       })
+      }
+      else{
+        // {"designlist":"'MCJ10'","isselectall":"0","FrontEnd_RegNo":"95oztttesi0o50vr","Customerid":"856"}
+
+
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+        const UserEmail = localStorage.getItem("userEmail")
+        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+        
+        
+        setWishListRemoveData(prod.designno)
+  
+        console.log(prod.designno);
+  
+        let Data = {"designlist":`'${prod?.designno}'`,"isselectall":"0","FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`}
+  
+        let encodedCombinedValue = btoa(JSON.stringify(Data))
+        const body = {
+          con: `{\"id\":\"\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${UserEmail}\"}`,
+          f: "RemoveFromWishlistIconClick (removeFromWishList)",
+          p: encodedCombinedValue,
+        }
+  
+        await CommonAPI(body).then(async(res)=>{
+          // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+          if(res?.Data?.rd[0]?.stat_msg === "success"){
+            // removefromCart()
+            await getCartAndWishListData()
+            await getCountApi()
+            // removefromCart(prod)
+          }
+      })
+
       }
 
 
@@ -482,24 +666,32 @@ const ProductList = () => {
     catch(error){
       console.log("error",error);
     }
-    console.log("productsWish",prod)
+    // console.log("productsWish",prod)
     // prod["checkFlag"] = event.target.checked
   }
 
 
 
 
-  const handelCartList = async(event,prod)=>{
+const handelCartList = async(event,prod)=>{
+
     try{
       setCartFlag(event.target.checked)
-  
+
       if(event.target.checked === true){
-      const FrontEnd_RegNo = localStorage.getItem("FrontEnd_RegNo")
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
       const UserEmail = localStorage.getItem("userEmail")
       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
   
-  
       const product =  prod 
+
+      let isWishHasCartData = WishData?.filter((pd)=> productData.find((wd)=>wd.autocode===pd.autocode))
+      console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
+
+
+      let wishToCartEncData = {"autocodelist":`${isWishHasCartData[0]?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
+      
+
   
       const finalJSON = {
           "stockweb_event": "",
@@ -579,13 +771,14 @@ const ProductList = () => {
           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
           "updatedate": `${product?.updatedate}`,
           "videoname":`${product?.videoname ?? ""}`,
-          "FrontEnd_RegNo":`${FrontEnd_RegNo}`,
+          "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "quantity": `${product?.quantity ?? "1"}`
       }
 
       const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
+      const wishToCartEncData1 =  btoa(JSON.stringify(wishToCartEncData));
 
       const body = {
         con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${UserEmail}\"}`,
@@ -593,17 +786,59 @@ const ProductList = () => {
         p: encodedCombinedValue,
       };
 
+      let body1 = {
+        con:`{\"id\":\"Store\",\"mode\":\"addwishlisttocart\",\"appuserid\":\"${UserEmail}\"}`,
+        f:"iconclick (addwishlisttocart)",
+        p: wishToCartEncData1
+      }
+
   
       
       
-      await CommonAPI(body).then(async(res)=>{
-          console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+      await CommonAPI(isWishHasCartData.length? body1 : body).then(async(res)=>{
+          // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+          if(!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success"){
+            await getCartAndWishListData()
+            await getCountApi()
+            // prod.checkFlag=false
+          }
 
-          if(res?.Data?.rd[0]?.msg === "success"){
-
+          if(isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success"){
+            await getCartAndWishListData()
             await getCountApi()
           }
       })
+
+      // let isWishHasCartData = WishData?.filter((wd)=> wd.autocode === prod.autocode)
+      //  console.log("isWishHasCartData",isWishHasCartData)
+
+    }
+    else{
+      const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+      const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+      const UserEmail = localStorage.getItem("userEmail")
+      
+      setCartRemoveData(prod.designno)
+
+      let Data = {"designno":`${prod?.designno}`,"autocode":`${prod?.autocode}`,"metalcolorid":0,"isSolStockNo":0,"is_show_stock_website":"0","isdelete_all":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`,"cartidlist":""}
+
+      let encodedCombinedValue = btoa(JSON.stringify(Data))
+      const body = {
+        con: `{\"id\":\"\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${UserEmail}\"}`,
+        f: "RemoveFromCartIconClick (removeFromCartList)",
+        p: encodedCombinedValue,
+      }
+
+      await CommonAPI(body).then(async(res)=>{
+        // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+        if(res?.Data?.rd[0]?.stat_msg === "success"){
+          // removefromCart()
+          await getCartAndWishListData()
+          await getCountApi()
+          // removefromCart(prod)
+        }
+    })
+
     }
 
     }
@@ -611,110 +846,30 @@ const ProductList = () => {
       console.log("error",error);
     }
     
-  }
+}
 
 
 
   return (
     <div>
-      {drawerShowOverlay && (
-        <>
-          <div className="mobileSmlingProductFilterOverly">
-            <div
-              style={{
-                display: "flex",
-                margin: "20px",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <IoClose
-                  style={{
-                    height: "30px",
-                    width: "30px",
-                    color: "white",
-                    cursor: "pointer",
-                  }}
-                  onClick={toggleDrawerOverlay}
-                />
-              </div>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "white",
-                  fontWeight: 500,
-                }}
-              >
-                Clear Filter
-              </p>
-            </div>
-            <div>{/* content....... */}</div>
-            <div
-              style={{
-                backgroundColor: "#7d7f85",
-                position: "fixed",
-                bottom: "0px",
-                width: "100%",
-              }}
-            >
-              <p
-                style={{
-                  color: "white",
-                  textAlign: "center",
-                  paddingTop: "15px",
-                }}
-              >
-                APPLY FILTERS
-              </p>
-            </div>
-          </div>
-        </>
-      )}
       <div
         style={{
           backgroundColor: "#c0bbb1",
           height: "100%",
           width: "100%",
           paddingBottom: "100px",
+
         }}
       >
-        {!drawerShowOverlay && <Header />}
-        {/* <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            textAlign: "center",
-            gap: "12px",
-            padding: "40px 20px 70px",
-          }}
-        >
-          <h1 style={{ fontFamily: "FreightDisp Pro Medium", color: "white" }}>
-            Rings
-          </h1>
-
-          <p
-            style={{
-              width: "346px",
-              fontSize: "14px",
-              color: "#fff",
-              fontWeight: "500",
-            }}
-          >
-            From uncompromising minimalism to ultra-femme, these are lab grown
-            diamond rings are to revel in.
-          </p>
-        </div> */}
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            paddingTop: '110px'
           }}
         >
-          <div className="smilingProductMain">
+          <div className="smilingProductMain" id="smilingProductMain">
             <div
               className="smilingProductSubMain"
               style={{ width: "100%", display: "flex" }}
@@ -728,7 +883,7 @@ const ProductList = () => {
                 className="smilingWebProductListSideBar"
               >
                 <ul>
-                  <li className="finejwelery">Filters</li>
+                  <li className="finejwelery" id="finejwelery">Filters</li>
                   {/* <li className="finejli">Rings</li>
                   <li className="finejli">Necklaces</li>
                   <li className="finejli">Earrings</li>
@@ -833,7 +988,7 @@ const ProductList = () => {
                   ))}
                 </div>
               </div>
-              <div className="smilingMobileProductListSideBar">
+              <div className="smilingMobileProductListSideBar"> 
                 <div onClick={toggleDeatilList} style={{ padding: "15px" }}>
                   <p
                     style={{
@@ -919,6 +1074,7 @@ const ProductList = () => {
                   margin: "40px 50px 0px 0px",
                 }}
                 className="smilingProductImageMain"
+                id="smilingProductImageMain"
               >
                 <div
                   style={{
@@ -1005,7 +1161,8 @@ const ProductList = () => {
                             disableRipple={true}
                             sx={{padding:"5px"}}
                             // onClick={()=>handelWishList(products)}
-                            value={wishFlag}
+                            // value={wishFlag}
+                            checked={products?.wishCheck}
                             onChange={(e)=>handelWishList(e,products)}
                           />
                        
@@ -1025,7 +1182,8 @@ const ProductList = () => {
                             disableRipple={true}
                             sx={{padding:"5px"}}
                             // onClick={()=>}
-                            value={cartFlag}
+                            // value={cartFlag}
+                            checked={products?.checkFlag}
                             onChange={(e)=>handelCartList(e,products)}
                           />
                         </div>

@@ -1,0 +1,54 @@
+.containerALT{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.headline_alt{
+    height: 40px;
+    background-color: #989898;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 5px;
+    text-transform: uppercase;
+    color: white;
+}
+
+/* .sminingHeaderWeb{
+    display: none;
+} */
+
+.lh_alt{
+    line-height: 14px;
+    font-size: 14px;
+}
+.firmnamealt{
+    font-size: 16px;
+}
+.mobileHeaderSmining{
+    display: none !important;
+}
+
+@media print {
+    .containerALT{
+        margin-top: 0px;
+        padding: 10px;
+    }
+    .lh_alt{
+        line-height: 12px;
+        font-size: 12px;
+    }
+    .sminingHeaderWeb{
+        display: none !important;
+    }
+    .fs_alt{
+        font-size: 9px;
+    }
+    .firmnamealt{
+        font-size: 12px !important;
+    }
+    .mobileHeaderSmining{
+        display: none !important;
+    }
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./orderhistory.css"
 import CircleIcon from '@mui/icons-material/Circle';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
@@ -14,6 +14,7 @@ const OrderHistory = () => {
     // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     // const currentItems = AccountOrderHistory?.slice(itemOffset, endOffset);
     // const pageCount = Math.ceil(AccountOrderHistory.length / itemsPerPage);
+    
     const getStatusColor = (orderType) => {
         switch (orderType) {
             case 'shipped':
@@ -31,6 +32,18 @@ const OrderHistory = () => {
     //     setItemOffset(newOffset);
     // };
     
+    const getData = async() => {
+
+        let storeinit=JSON.parse(localStorage.getItem("storeInit"))
+        let loginInfo=JSON.parse(localStorage.getItem("loginUserDetail"))
+        console.log(storeinit?.FrontEnd_RegNo, loginInfo);
+    }
+
+
+    useEffect(() => {
+        getData();
+    }, [])
+
   return (
     <div>
         <div className='text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-4'>Your Order History</div>
