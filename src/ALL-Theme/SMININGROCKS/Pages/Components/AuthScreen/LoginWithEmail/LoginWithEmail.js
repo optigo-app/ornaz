@@ -6,6 +6,8 @@ import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CryptoJS from 'crypto-js';
+import { useSetRecoilState } from 'recoil';
+import { loginState } from '../../../../../../Recoil/atom';
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');
@@ -14,6 +16,8 @@ export default function LoginWithEmail() {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const navigation = useNavigate();
+
+    const setIsLoginState = useSetRecoilState(loginState)
 
     useEffect(() => {
         const storedEmail = localStorage.getItem('registerEmail');
@@ -71,10 +75,11 @@ export default function LoginWithEmail() {
             const response = await CommonAPI(body);
             console.log('response...',response);
             if (response.Data.rd[0].stat === 1) {
+                setIsLoginState(true)
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 localStorage.setItem('userEmail', email);
-                alert('Register Sucssessfully');
+                // alert('Register Sucssessfully');
                 navigation('/');
             } else {
                 errors.confirmPassword = 'Password is Invalid'

@@ -16,3 +16,9 @@ export const CartListCounts = atom({
     key: 'openSignInModal',
     default: false,
   });
+
+
+  export const loginState = atom({
+    key: 'loginState',
+    default: false,
+  })
