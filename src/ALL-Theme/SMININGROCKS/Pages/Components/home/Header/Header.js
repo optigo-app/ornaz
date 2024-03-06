@@ -41,32 +41,32 @@ export default function Header({ onLoginClick }) {
 
 
 
-  const getMenuApi = async() =>{
+  const getMenuApi = async () => {
 
 
     const storeInit = JSON.parse(localStorage.getItem("storeInit"))
     const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
-    let pData = JSON.stringify({"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`})
+    let pData = JSON.stringify({ "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` })
 
     let pEnc = btoa(pData)
 
-    const body ={
-      con:"{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
-      f:"onload (GETMENU)",
-      p:pEnc
-      }
+    const body = {
+      con: "{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
+      f: "onload (GETMENU)",
+      p: pEnc
+    }
 
-    await CommonAPI(body).then((res)=>{
-        console.log("res",res?.Data?.rd)
+    await CommonAPI(body).then((res) => {
+      console.log("res", res?.Data?.rd)
     })
-    
+
 
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getMenuApi()
-  },[])
+  }, [])
 
 
   const toggleList = () => {
@@ -88,19 +88,73 @@ export default function Header({ onLoginClick }) {
     setDrawerShowOverlay(!drawerShowOverlay);
   };
 
-  const handleIncrement = () => {
-    setInputValue((prevValue) => Math.min(parseInt(prevValue, 10) + 1, 99));
+  const [lastEnteredQuantityIndex, setLastEnteredQuantityIndex] = useState(null);
+  const [lastEnteredQuantity, setLastEnteredQuantity] = useState('');
 
-    alert(inputValue)
-
-    console.log('inutttt', inputValue);
-
-
-
-  }
-  const handleDecrement = () => {
-    setInputValue((prevValue) => Math.max(parseInt(prevValue, 10) - 1, 1));
+  const handleIncrement = (index) => {
+    if (index >= 0 && index < cartListData.length && cartListData[index]) {
+      const updatedCartList = [...cartListData];
+      const currentQuantity = parseInt(updatedCartList[index].Quantity, 10) || 0;
+      updatedCartList[index].Quantity = Math.min(currentQuantity + 1, 99);
+      setCartListData(updatedCartList);
+    }
   };
+  
+  const handleDecrement = (index) => {
+    if (index >= 0 && index < cartListData.length && cartListData[index]) {
+      const updatedCartList = [...cartListData];
+      const currentQuantity = parseInt(updatedCartList[index].Quantity, 10) || 0;
+      updatedCartList[index].Quantity = Math.max(currentQuantity - 1, 1);
+      setCartListData(updatedCartList);
+    }
+  };
+  
+  const handleInputChange = (event, index) => {
+    let { value } = event.target;
+    if (index >= 0 && index < cartListData.length) {
+      value = value.replace(/\D|^0+/g, '');
+      const updatedCartList = [...cartListData];
+      updatedCartList[index] = { ...updatedCartList[index], Quantity: value };
+      setCartListData(updatedCartList);
+      setLastEnteredQuantityIndex(index);
+      setLastEnteredQuantity(value);
+    }
+  };
+
+  const handleUpdateQuantity = async (num) => {
+      try {
+        const updatedQuantity = cartListData[lastEnteredQuantityIndex].Quantity;
+        const firstItemQuantity = cartListData.length > 0 ? cartListData[0].Quantity : null;
+        console.log('Updated Quantities:', updatedQuantity);
+        console.log('firstItemQuantity:', firstItemQuantity);
+
+        // setIsLoading(true);
+        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+        const { FrontEnd_RegNo } = storeInit;
+        const combinedValue = JSON.stringify({
+          designno: `${num}`, Quantity: `${updatedQuantity}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
+        });
+        console.log('combinedValuecombinedValue', combinedValue);
+        const encodedCombinedValue = btoa(combinedValue);
+        const body = {
+          "con": `{\"id\":\"\",\"mode\":\"UpdateQuantity\",\"appuserid\":\"${userEmail}\"}`,
+          "f": "header (handleUpdateQuantity)",
+          p: encodedCombinedValue
+        };
+        const response = await CommonAPI(body);
+        console.log('responseresponse', response);
+        if (response.Data.rd[0].stat === 1) {
+          alert('done');
+        } else {
+          alert('Error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        // setIsLoading(false);
+      }
+  };
+
 
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
   const [isHeaderFixedDropShow, setIsHeaderFixedDropShow] = useState(false);
@@ -138,18 +192,7 @@ export default function Header({ onLoginClick }) {
     setOpenCart(isOpen);
   };
 
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setInputValue(value)
 
-    const regex = /^[0-9]{0,2}$/;
-    const filteredValue = value.replace(/\D/g, '');
-
-    if (regex.test(value) || value === '') {
-      // If the value matches the pattern or is empty, update the input
-      // You can perform any other necessary action here, like setting the state
-    }
-  };
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
@@ -594,11 +637,11 @@ export default function Header({ onLoginClick }) {
           onMouseLeave={handleDropdownClose}
           className={`shop-dropdown ${isDropdownOpen ? 'open' : ''} ${isHeaderFixed ? 'fixed' : ''}`}
         >
-          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white'}}
+          <div style={{ display: 'flex', padding: '50px', color: 'black', backgroundColor: 'white' }}
             onMouseEnter={handleDropdownOpen}
             onMouseLeave={handleDropdownClose}
-            
-            >
+
+          >
             {/* <div>
               <ul>
                 <li>FINE JEWELLERY</li>
@@ -844,15 +887,22 @@ export default function Header({ onLoginClick }) {
                     </div>
                     <p style={{ fontSize: '12px', color: '#7d7f85' }}>White Gold / 18 Inches / {item.Quantity}</p>
                     <p className="CartPageShipingInSmall">Ships in 14 days</p>
-                    <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
                       <div style={{ display: 'flex', justifyContent: 'center', height: '40px', border: '1px solid #7d7f85' }}>
                         <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={handleDecrement} >-</p>
-                        <input type="text" style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }} maxLength={2} inputMode="numeric" value={item.Quantity} onChange={handleInputChange} />
-                        <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={handleIncrement}>+</p>
+                        <input
+                          type="text"
+                          style={{ border: '0px', textAlign: 'center', outline: 'none', width: '50px' }}
+                          maxLength={2}
+                          inputMode="numeric"
+                          value={item.Quantity} // This should be item.Quantity
+                          onChange={(event) => handleInputChange(event, index)}
+                        />
+                        <p style={{ margin: '5px', fontSize: '20px', fontWeight: 500, cursor: 'pointer' }} onClick={() => handleIncrement(index)}>+</p>
                       </div>
-                      <p style={{color : 'blue' ,cursor: 'pointer' , textDecoration: 'underline'}}>UPDATE QUANTITY</p>
+                      <p style={{ color: 'blue', cursor: 'pointer', margin: '0px', textDecoration: 'underline' }} onClick={() => handleUpdateQuantity(item.designno)}>UPDATE QUANTITY</p>
                     </div>
-                    <div style={{ display: 'flex',justifyContent:'flex-end', marginTop: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
                       <textarea
                         type="text"
                         placeholder="Enter Remarks..."

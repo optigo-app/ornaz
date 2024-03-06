@@ -367,7 +367,15 @@ export default function Delivery() {
     }, [addressData]);
     
     localStorage.setItem('selectedAddressId', selectedAddressId)
-    console.log('selectedAddressIdselectedAddressId', selectedAddressId);
+
+    const handleContinue = () => {
+        if (selectedAddressId) {
+          navigation('/Payment');
+        } else {
+          alert('Please select an address before continuing.');
+        }
+      };
+
     return (
         <div style={{
             backgroundColor: '#c0bbb1',
@@ -378,7 +386,6 @@ export default function Delivery() {
                     <CircularProgress />
                 </div>
             )}
-
             <ToastContainer />
 
             <Dialog
@@ -552,7 +559,7 @@ export default function Delivery() {
                             }
                         </div>
                         <button className='smilingAddToAddressBtn' onClick={handleOpen}>ADD NEW ADDRESS</button>
-                        <button style={{ marginInline: '20px' }} className='smilingAddToAddressBtn' onClick={() => navigation('/Payment')}>Continue</button>
+                        <button style={{ marginInline: '20px' }} className='smilingAddToAddressBtn'  onClick={handleContinue}>Continue</button>
                     </div>
                     <div className='smilingdeliverBox2'>
                         <p style={{ fontSize: '30px', fontWeight: 500, color: 'gray' }}>Order Summary</p>
