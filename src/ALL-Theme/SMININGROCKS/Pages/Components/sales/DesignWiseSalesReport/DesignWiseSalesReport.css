@@ -3,10 +3,22 @@
     padding-right: 15px;
 }
 
+.designNo input{
+    padding: 10px 5px;
+}
+
 .netWtSecSlider.MuiSlider-colorPrimary{
     color: #7d7f85;
+    padding: 2px;
+}
+.netWtSliderSec{
+    padding-top: 7px;
 }
 
 .netWtSliderSec input{
     padding: 5px
+}
+
+.designWiseSalesReport *{
+    font-size: 12px !important;
 }
