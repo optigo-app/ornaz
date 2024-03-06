@@ -1,6 +1,7 @@
 .des_img_aoh{
-    height: 250px;
-    width: 250px;
+    height: 230px;
+    width: 230px;
+    object-fit: cover;
 }
 ._color{
     color: #976155;
@@ -51,4 +52,10 @@
 
 .fs_price_oh{
     font-size: 16px;
+}
+
+
+.container_order_details{
+    display: flex;
+    flex-wrap: wrap;
 }
