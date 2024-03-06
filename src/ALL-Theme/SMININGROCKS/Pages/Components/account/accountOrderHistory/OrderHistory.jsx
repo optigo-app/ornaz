@@ -14,6 +14,7 @@ const OrderHistory = () => {
   const [orderInfo, setOrderInfo] = useState(false);
   const [ukey, setUkey] = useState('');
   const [image_path, setImagePath] = useState('');
+  const [gId, setGid] = useState(false);
   // const [itemOffset, setItemOffset] = useState(0);
   // const itemsPerPage = 4;
   // Simulate fetching items from another resources.
@@ -101,14 +102,15 @@ const OrderHistory = () => {
   useEffect(() => {
     getData();
   }, []);
-
   const handleClick = (obj) => {
     setOrderDetails([]);
     if(obj?.TotalQuantity === 0) return ''
     else
     {
-        getOrderDetail(obj);
+        
         setOrderInfo(orderInfo === obj?.id ? null : obj?.id);
+        orderInfo === obj?.id ? setGid(false)  : setGid(true)
+        getOrderDetail(obj);
     }
   };
 
@@ -118,8 +120,9 @@ const OrderHistory = () => {
     let storeinit = JSON.parse(localStorage.getItem("storeInit"));
     let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"));
     const UserEmail = localStorage.getItem("userEmail");
-
     try {
+     if(!gId){
+     
       let EncodeData = {
         FrontEnd_RegNo: `${storeinit?.FrontEnd_RegNo}`,
         Customerid: `${loginInfo?.id}`,
@@ -160,10 +163,12 @@ const OrderHistory = () => {
           if(response2?.Data?.rd1){
              setOrderDetails(response2?.Data?.rd1);
              setLoaderOH2(false)
+
           }else{
             setLoaderOH2(true)
           }
       }
+    }
     } catch (error) {
       console.log(error);
     }
@@ -177,7 +182,7 @@ const OrderHistory = () => {
       {loaderOH ? (
         <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box>
       ) : (
-        <div className="orderedItems">
+        <div className="orderedItems user-select-none">
           {orderHistoryData?.length > 0 &&
             orderHistoryData?.map((e) => {
               return (
