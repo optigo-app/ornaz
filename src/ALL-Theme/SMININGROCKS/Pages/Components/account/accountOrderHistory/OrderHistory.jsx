@@ -103,11 +103,13 @@ const OrderHistory = () => {
   }, []);
 
   const handleClick = (obj) => {
-    // console.log(obj);
-
-    getOrderDetail(obj);
-
-    setOrderInfo(orderInfo === obj?.id ? null : obj?.id);
+    setOrderDetails([]);
+    if(obj?.TotalQuantity === 0) return ''
+    else
+    {
+        getOrderDetail(obj);
+        setOrderInfo(orderInfo === obj?.id ? null : obj?.id);
+    }
   };
 
   const getOrderDetail = async (obj) => {
@@ -179,18 +181,19 @@ const OrderHistory = () => {
           {orderHistoryData?.length > 0 &&
             orderHistoryData?.map((e) => {
               return (
-                <div className="border orderHistory p-1 px-0 my-4" key={e?.id}>
-                  <div className=" d-flex w-100 justify-content-between align-items-center p-1">
-                    <div className="w-25">
-                      <div className="d-flex justify-content-start w-100 align-items-center py-2">
-                        <div className="text-secondary fw-bold fs-5 ps-3 pe-5">
+                <div className="border orderHistory p-1 px-0 my-4" key={e?.id} onClick={() => handleClick(e)}>
+                  <div className=" d-flex w-100 justify-content-between align-items-center p-1 d_block">
+                    <div className="w-25 _w50_oh">
+                      <div className="d-flex justify-content-start w-100 align-items-center py-2 d_block">
+                        <div className="text-secondary fw-bold fs-5 ps-3 pe-5 fs_Small_2">
                           {e?.OrderPrefix}
                           {e?.orderno}
                         </div>
                         <div
                           className={`d-flex align-items-center  ${getStatusColor(
                             e?.b2c_MasterManagement_ProgressStatusId
-                          )} fs-5`}
+                          )} fs-5 fs_small fs_Small_2 pad_Setup`}
+                          style={{textTransform:'uppercase'}}
                         >
                           <div className="px-2">
                             <CircleIcon sx={{ fontSize: "10px" }} />
@@ -207,7 +210,7 @@ const OrderHistory = () => {
                         <span className="text-danger">{e?.TotalQuantity}</span>)
                       </div>
                     </div>
-                    <div className="py-2 pe-5 w-50 d-flex fs_price_oh _color fw-bold">
+                    <div className="py-2 pe-5 w-50 d-flex fs_price_oh _color fw-bold center_price px_change">
                       <div
                         dangerouslySetInnerHTML={{ __html: e?.Currencysymbol }}
                       ></div>{" "}
@@ -234,24 +237,17 @@ const OrderHistory = () => {
                             </AccordionDetails>
                         </Accordion> */}
                   <div>
-                    <div
-                      style={{ height: "30px", cursor: "pointer" }}
-                      title="info"
-                      className="border-bottom border-top"
-                      onClick={() => handleClick(e)}
-                    ></div>
+                    <div style={{ height: "10px", cursor: "pointer" }} title="info" className=" border-top" ></div>
                     {orderInfo === e?.id ? (
                       <>
                       {
-                        loaderOH2 ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <div className="p-4">
-                        <div className="d-flex align-items-center">
-                            {console.log("hello")}
+                        loaderOH2 ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <div className="p-4 dec_pad">
+                        <div className="d-flex flex-wrap align-items-center center_price_2 d_block">
                           {orderDetails?.length > 0 &&
                             orderDetails?.map((e) => {
-                                console.log(e)
                               return (
-                                <div className="container_order_details">
-                                  <div className="">
+                                <div className="container_order_details ">
+                                  <div className="_center_img">
                                     <img
                                       src={`${image_path}/${ukey}/Design_Image/D999EBEDCCMDAwMzQ2Mg==/Red_Thumb/0003462_23102023133214918.jpg`}
                                       alt="#designimage"
@@ -259,7 +255,7 @@ const OrderHistory = () => {
                                     />
                                   </div>
                                   <div className="ps-1 pt-1 text-secondary">
-                                    <div className="fw-bold fs-5">{e?.metaltypename} {e?.metalcolorname}</div>
+                                    <div className="fw-bold fs-5 fs_small">{e?.metaltypename} {e?.metalcolorname}</div>
                                     <div>{e?.designno}</div>
                                     <div>$ {e?.TotalUnitCostWithDiscount}</div>
                                   </div>
@@ -268,7 +264,7 @@ const OrderHistory = () => {
                             })}
                         </div>
                         <div className="pt-2 _end">
-                          <div className="d-flex justify-content-between align-items-center w-25 fs-4 text-secondary">
+                          <div className="d-flex justify-content-between align-items-center fs-4 w-25 w25_oh  text-secondary _w50_oh_2 fs_small ">
                             <div className="w-50">Total :</div>
                             <div className="w-50 _end">$ 0</div>
                           </div>
