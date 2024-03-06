@@ -3,7 +3,7 @@
     width: 250px;
 }
 ._color{
-    color: brown;
+    color: #976155;
 }
 ._center{
     display: flex;
@@ -47,4 +47,8 @@
 /* Styling the scrollbar track */
 .orderedItems::-webkit-scrollbar-track {
     background: #f1f1f1;
+}
+
+.fs_price_oh{
+    font-size: 16px;
 }
