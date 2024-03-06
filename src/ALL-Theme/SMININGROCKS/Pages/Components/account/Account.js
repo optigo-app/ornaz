@@ -14,12 +14,16 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import AccountLedger from './accountLedger/AccountLedger';
 import DesignWiseSalesReport from '../sales/DesignWiseSalesReport/DesignWiseSalesReport';
+import { loginState } from '../../../../../Recoil/atom';
+import { useSetRecoilState } from 'recoil';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
     useEffect(() => {
         a11yProps(1)
     },[])
+
+
     return (
         <div
             role="tabpanel"
@@ -65,6 +69,8 @@ export default function Account() {
     const [value, setValue] = useState(0);
     const [value1, setValue1] = useState(0);
     const naviagation = useNavigate();
+    const setIsLoginState = useSetRecoilState(loginState)
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -75,9 +81,10 @@ export default function Account() {
     }
 
     const handleLogout = () => {
+        setIsLoginState(false)
         localStorage.setItem('LoginUser', 'false');
         naviagation('/')
-        window.location.reload()
+        // window.location.reload()
     }
 
 

@@ -20,8 +20,8 @@ import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
 import CloseIcon from '@mui/icons-material/Close';
 import { IoClose } from "react-icons/io5";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, WishListCounts, openSignInModal } from "../../../../../../Recoil/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { CartListCounts, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 
 export default function Header({ onLoginClick }) {
@@ -346,10 +346,11 @@ export default function Header({ onLoginClick }) {
     })
   };
 
-  const [islogin, setislogin] = useState(null);
+  const [islogin, setislogin] = useRecoilState(loginState);
 
-  const fetchData = async () => {
-    const value = await localStorage.getItem('LoginUser');
+  const fetchData = () => {
+    const value = localStorage.getItem('LoginUser');
+    console.log("value",value);
     const val = value === 'true' ? true : false
     setislogin(val);
   };
@@ -358,8 +359,7 @@ export default function Header({ onLoginClick }) {
     fetchData();
   }, []);
 
-
-
+  console.log("islogin",islogin);
 
   const [cartListData, setCartListData] = useState([]);
   const [imageURL, setImageURL] = useState('');
