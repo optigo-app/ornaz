@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './proddetail.css'
 import Header from '../home/Header/Header'
 import Footer from '../home/Footer/Footer'
@@ -18,12 +18,12 @@ const ProdDetail = () => {
     const [cartFlag,setCartFlag] = useState(false);
     const [WishListFlag,setWishListFlag] = useState(false);
 
-    const[productData,setProductData]=useState();
-    const[thumbImg,setThumbImg]=useState();
+  const [productData, setProductData] = useState();
+  const [thumbImg, setThumbImg] = useState();
 
-    const handelImgLoad = () =>{
-      setImgLoading(false)
-    }
+  const handelImgLoad = () => {
+    setImgLoading(false)
+  }
 
     const handelLocalStorage = () =>{
       let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
@@ -36,25 +36,25 @@ const ProdDetail = () => {
       handelLocalStorage();
     }, [])
 
-    useEffect(()=>{
-      window.scrollTo(0,0)
-    },[])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
 
-    let imgData=[
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
-    ]
+  let imgData = [
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
+  ]
 
-    const handelmainImg = () =>{
-      let filterImg=productData?.originalimage.split(",").filter((ele,i)=>{
-       return i === thumbImg 
-      })
+  const handelmainImg = () => {
+    let filterImg = productData?.originalimage.split(",").filter((ele, i) => {
+      return i === thumbImg
+    })
 
       return filterImg 
     }
@@ -585,7 +585,7 @@ const ProdDetail = () => {
                   <button className="prodetailbtn">
                     Inquire about product
                   </button>
-                </div> */}
+                </div>
 
                 <div style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',alignItems:'center'}}>
                   
@@ -787,9 +787,8 @@ const ProdDetail = () => {
                   </span>
                   {/* <div style={{display:acc && accNo === '1' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                   <div
-                    className={`my-list-fineJewe ${
-                      acc && accNo === "1" ? "openAcc" : ""
-                    }`}
+                    className={`my-list-fineJewe ${acc && accNo === "1" ? "openAcc" : ""
+                      }`}
                   >
                     <div>
                       <div className="srAccContainer">
@@ -905,6 +904,7 @@ const ProdDetail = () => {
                     <span style={{fontSize:'12px'}}>All our rings can be resized by one size up or down, except for Eternity Bands.</span>
                   </div>
                 </li> */}
+                {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                 {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                 {/* <li
                   className="tellmoreli"

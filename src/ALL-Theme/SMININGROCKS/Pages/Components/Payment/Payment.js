@@ -37,7 +37,7 @@ export default function Payment() {
 
                 const encodedCombinedValue = btoa(combinedValue);
                 const body = {
-                    "con": `{\"id\":\"Store\",\"mode\":\"CURRENCYCOMBO\",\"appuserid\":\"${data.email1}\"}`,
+                    "con": `{\"id\":\"Store\",\"mode\":\"CURRENCYCOMBO\",\"appuserid\":\"${data.userid}\"}`,
                     "f": "payment (getTheId)",
                     p: encodedCombinedValue
                 };
@@ -81,20 +81,20 @@ export default function Payment() {
 
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
-                "con": `{\"id\":\"Store\",\"mode\":\"PlaceOrder\",\"appuserid\":\"${data.email1}\"}`,
+                "con": `{\"id\":\"Store\",\"mode\":\"PlaceOrder\",\"appuserid\":\"${data.userid}\"}`,
                 "f": "m-test2.orail.co.in (PlaceOrder)",
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
 
             console.log('response...', response);
-            if (response.Data.rd[0]) {
+            if (response.Data?.rd[0]?.stat == 1 ) {
                 let num = response.Data?.rd[0]?.orderno
                 localStorage.setItem('orderNumber', num)
                 navigation('/Confirmation')
 
             } else {
-
+                alert('error')
             }
 
         } catch (error) {

@@ -54,11 +54,9 @@ export default function ContinueWithEmail() {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
-                navigation('/LoginWithEmail', { email: email });
-                localStorage.setItem('registerEmail', email)
+                navigation('/LoginWithEmail', { state: { email: email } });
             } else {
-                navigation('/register', { email: email });
-                localStorage.setItem('registerEmail', email)
+                navigation('/register', { state: { email: email } });
             }
         } catch (error) {
             console.error('Error:', error);
@@ -68,8 +66,8 @@ export default function ContinueWithEmail() {
     };
 
     return (
-        <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
-          {isLoading && (
+        <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+            {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress />
                 </div>
@@ -94,17 +92,23 @@ export default function ContinueWithEmail() {
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField
+                            autoFocus
                             id="outlined-basic"
                             label="Email"
                             variant="outlined"
                             className='labGrowForgot'
                             style={{ margin: '15px' }}
                             value={email}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    handleSubmit();
+                                }
+                            }}
                             onChange={handleEmailChange}
-                            error={!!emailError} // Display error when there's an error
-                            helperText={emailError} // Display the error message
+                            error={!!emailError}
+                            helperText={emailError}
                         />
-                        <button className='submitBtnForgot' onClick={handleSubmit}>SUBMIT</button>
+                        <button type='submit' className='submitBtnForgot' onClick={handleSubmit}>SUBMIT</button>
                         <p className='cancleForgot' onClick={() => navigation('/')}>CANCEL</p>
                     </div>
                     <Footer />

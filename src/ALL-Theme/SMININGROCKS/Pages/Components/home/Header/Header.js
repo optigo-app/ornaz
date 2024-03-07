@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './Header.css'
 // import ring1 from '../../../assets/svg.svg'
 import Tooltip from '@mui/material/Tooltip';
-import { Badge, Dialog, Drawer, SwipeableDrawer, TextField } from "@mui/material";
+import { Badge, Dialog, Divider, Drawer, SwipeableDrawer, TextField } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -18,11 +18,11 @@ import { ABOUT_US, ACCOUNT, BLOG, CELEBRITY, CUSTERM_SERVICES, ETERNITY_BANDS, F
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
-import CloseIcon from '@mui/icons-material/Close';
 import { IoClose } from "react-icons/io5";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { CartListCounts, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
+import Cart from "./Cart";
 import titleImg from "../../../assets/title/sonasons.png"
 
 export default function Header() {
@@ -38,16 +38,9 @@ export default function Header() {
   const [menu1Index,setMenu1Index] = useState(null);
   const [menu2Index,setMenu2Index] = useState(null);
 
-
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
-
   const setSigninPopupOpen = useSetRecoilState(openSignInModal)
-
-
-  // console.log("finalData",finalData[1]?.param1?.map((fd)=>fd?.param2?.map((fd1)=>fd1)));
-  console.log("finalData",finalData[menu1Index]?.param1?.map((fd)=>fd)[menu2Index]?.param2?.map((fd1)=>fd1?.param2dataname))
-  // console.log("menu1Index",menu2Index)
 
   const transformData = (data) => {
 
@@ -108,83 +101,83 @@ export default function Header() {
     //   return acc;
     // }, []);
 
-    
-      const transformedData = data.reduce((acc, item) => {
-        const existingItem = acc.find(i => i.lavelid === item.levelid);
-        if (existingItem) {
-          const existingParam1 = existingItem.param1.find(p => p.param1dataid === item.param1dataid);
-          if (existingParam1) {
-            if (item.param2id) {
-              const existingParam2 = existingParam1.param2.find(p => p.param2dataid === item.param2dataid);
-              if (existingParam2) {
-                // If param2dataid already exists, do nothing
-              } else {
-                // Add new param2
-                existingParam1.param2.push({
-                  param2id: item.param2id,
-                  param2name: item.param2name,
-                  param2dataid: item.param2dataid,
-                  param2dataname: item.param2dataname
-                });
-              }
-            }
-          } else {
-            const newItem = {
-              param1id: item.param1id,
-              param1name: item.param1name,
-              param1dataid: item.param1dataid,
-              param1dataname: item.param1dataname,
-              param2: []
-            };
-            if (item.param2id) {
-              newItem.param2.push({
+
+    const transformedData = data.reduce((acc, item) => {
+      const existingItem = acc.find(i => i.lavelid === item.levelid);
+      if (existingItem) {
+        const existingParam1 = existingItem.param1.find(p => p.param1dataid === item.param1dataid);
+        if (existingParam1) {
+          if (item.param2id) {
+            const existingParam2 = existingParam1.param2.find(p => p.param2dataid === item.param2dataid);
+            if (existingParam2) {
+              // If param2dataid already exists, do nothing
+            } else {
+              // Add new param2
+              existingParam1.param2.push({
                 param2id: item.param2id,
                 param2name: item.param2name,
                 param2dataid: item.param2dataid,
                 param2dataname: item.param2dataname
               });
             }
-            existingItem.param1.push(newItem);
           }
         } else {
           const newItem = {
-            lavelid: item.levelid,
-            menuname: item.menuname,
-            link: item.link || '',
-            param0id: item.param0id || '',
-            param0name: item.param0name || '',
-            param0dataid: item.param0dataid || '',
-            param0dataname: item.param0dataname || '',
-            param1: []
+            param1id: item.param1id,
+            param1name: item.param1name,
+            param1dataid: item.param1dataid,
+            param1dataname: item.param1dataname,
+            param2: []
           };
-          if (item.param1id) {
-            const newParam1 = {
-              param1id: item.param1id,
-              param1name: item.param1name,
-              param1dataid: item.param1dataid,
-              param1dataname: item.param1dataname,
-              param2: []
-            };
-            if (item.param2id) {
-              newParam1.param2.push({
-                param2id: item.param2id,
-                param2name: item.param2name,
-                param2dataid: item.param2dataid,
-                param2dataname: item.param2dataname
-              });
-            }
-            newItem.param1.push(newParam1);
+          if (item.param2id) {
+            newItem.param2.push({
+              param2id: item.param2id,
+              param2name: item.param2name,
+              param2dataid: item.param2dataid,
+              param2dataname: item.param2dataname
+            });
           }
-          acc.push(newItem);
+          existingItem.param1.push(newItem);
         }
-        return acc;
-      }, []);
-    
-      setFinalData(transformedData);
+      } else {
+        const newItem = {
+          lavelid: item.levelid,
+          menuname: item.menuname,
+          link: item.link || '',
+          param0id: item.param0id || '',
+          param0name: item.param0name || '',
+          param0dataid: item.param0dataid || '',
+          param0dataname: item.param0dataname || '',
+          param1: []
+        };
+        if (item.param1id) {
+          const newParam1 = {
+            param1id: item.param1id,
+            param1name: item.param1name,
+            param1dataid: item.param1dataid,
+            param1dataname: item.param1dataname,
+            param2: []
+          };
+          if (item.param2id) {
+            newParam1.param2.push({
+              param2id: item.param2id,
+              param2name: item.param2name,
+              param2dataid: item.param2dataid,
+              param2dataname: item.param2dataname
+            });
+          }
+          newItem.param1.push(newParam1);
+        }
+        acc.push(newItem);
+      }
+      return acc;
+    }, []);
+
+    setFinalData(transformedData);
   };
 
 
-  const getMenuApi = async() =>{
+  const getMenuApi = async () => {
 
     const storeInit = JSON.parse(localStorage.getItem("storeInit"))
     const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
@@ -200,8 +193,7 @@ export default function Header() {
     }
 
     await CommonAPI(body).then((res) => {
-      console.log("res", res?.Data?.rd)
-        transformData(res?.Data?.rd)
+      transformData(res?.Data?.rd)
     })
 
 
@@ -229,73 +221,6 @@ export default function Header() {
 
   const toggleDrawerOverlay = () => {
     setDrawerShowOverlay(!drawerShowOverlay);
-  };
-
-  const [lastEnteredQuantityIndex, setLastEnteredQuantityIndex] = useState(null);
-  const [lastEnteredQuantity, setLastEnteredQuantity] = useState('');
-
-  const handleIncrement = (index) => {
-    if (index >= 0 && index < cartListData.length && cartListData[index]) {
-      const updatedCartList = [...cartListData];
-      const currentQuantity = parseInt(updatedCartList[index].Quantity, 10) || 0;
-      updatedCartList[index].Quantity = Math.min(currentQuantity + 1, 99);
-      setCartListData(updatedCartList);
-    }
-  };
-  
-  const handleDecrement = (index) => {
-    if (index >= 0 && index < cartListData.length && cartListData[index]) {
-      const updatedCartList = [...cartListData];
-      const currentQuantity = parseInt(updatedCartList[index].Quantity, 10) || 0;
-      updatedCartList[index].Quantity = Math.max(currentQuantity - 1, 1);
-      setCartListData(updatedCartList);
-    }
-  };
-  
-  const handleInputChange = (event, index) => {
-    let { value } = event.target;
-    if (index >= 0 && index < cartListData.length) {
-      value = value.replace(/\D|^0+/g, '');
-      const updatedCartList = [...cartListData];
-      updatedCartList[index] = { ...updatedCartList[index], Quantity: value };
-      setCartListData(updatedCartList);
-      setLastEnteredQuantityIndex(index);
-      setLastEnteredQuantity(value);
-    }
-  };
-
-  const handleUpdateQuantity = async (num) => {
-      try {
-        const updatedQuantity = cartListData[lastEnteredQuantityIndex].Quantity;
-        const firstItemQuantity = cartListData.length > 0 ? cartListData[0].Quantity : null;
-        console.log('Updated Quantities:', updatedQuantity);
-        console.log('firstItemQuantity:', firstItemQuantity);
-
-        // setIsLoading(true);
-        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-        const { FrontEnd_RegNo } = storeInit;
-        const combinedValue = JSON.stringify({
-          designno: `${num}`, Quantity: `${updatedQuantity}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
-        });
-        console.log('combinedValuecombinedValue', combinedValue);
-        const encodedCombinedValue = btoa(combinedValue);
-        const body = {
-          "con": `{\"id\":\"\",\"mode\":\"UpdateQuantity\",\"appuserid\":\"${userEmail}\"}`,
-          "f": "header (handleUpdateQuantity)",
-          p: encodedCombinedValue
-        };
-        const response = await CommonAPI(body);
-        console.log('responseresponse', response);
-        if (response.Data.rd[0].stat === 1) {
-          alert('done');
-        } else {
-          alert('Error');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        // setIsLoading(false);
-      }
   };
 
 
@@ -358,7 +283,6 @@ export default function Header() {
 
   const fetchData = () => {
     const value = localStorage.getItem('LoginUser');
-    // console.log("value",value);
     const val = value === 'true' ? true : false
     setislogin(val);
   };
@@ -366,180 +290,6 @@ export default function Header() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  // console.log("islogin",islogin);
-
-  const [cartListData, setCartListData] = useState([]);
-  const [imageURL, setImageURL] = useState('');
-  const [yKey, setYouKey] = useState('');
-  const [customerID, setCustomerID] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-
-  useEffect(() => {
-    if (openCart) {
-      getCartData();
-    }
-  }, [openCart, isLoading]);
-
-  const getCartData = async () => {
-    try {
-      const ImageURL = localStorage.getItem('UploadLogicalPath');
-      setImageURL(ImageURL);
-      const storedData = localStorage.getItem('loginUserDetail');
-      const data = JSON.parse(storedData);
-      const customerid = data.id;
-      setCustomerID(data.id);
-      const customerEmail = data.email1;
-      setUserEmail(customerEmail);
-
-      const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-      const { FrontEnd_RegNo, ukey } = storeInit;
-      setYouKey(ukey);
-
-      const combinedValue = JSON.stringify({
-        CurrentPage: "1", PageSize: "1000", ukey: `${ukey}`, CurrRate: "1", FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
-      });
-      console.log('combinedValuecombinedValue...', combinedValue);
-      const encodedCombinedValue = btoa(combinedValue);
-      const body = {
-        "con": `{\"id\":\"\",\"mode\":\"GetCartDetails\",\"appuserid\":\"${customerEmail}\"}`,
-        "f": "Header (getCartData)",
-        p: encodedCombinedValue
-      };
-      const response = await CommonAPI(body);
-      console.log('response...', response);
-
-      if (response?.Data) {
-        setCartListData(response?.Data?.rd);
-        console.log('cartListDatacartListData...', cartListData.length);
-
-        setMainRemarks(response?.Data?.rd[0].OrderRemarks);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      // setIsLoading(false);
-    }
-  }
-
-  const handleRemove = async (data) => {
-    console.log('dattaaaaaa', data);
-    try {
-      setIsLoading(true);
-      const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-      const { FrontEnd_RegNo } = storeInit;
-      const combinedValue = JSON.stringify({
-        designno: `${data.designno}`, autocode: `${data.autocode}`, metalcolorid: '0', isSolStockNo: '0', is_show_stock_website: '0', isdelete_all: '0', FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`, cartidlist: ''
-      });
-      console.log('combinedValuecombinedValue...', combinedValue);
-      console.log('userEmailuserEmail...', userEmail);
-      const encodedCombinedValue = btoa(combinedValue);
-      const body = {
-        "con": `{\"id\":\"Store\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${userEmail}\"}`,
-        "f": "myWishLisy (handleRemoveCatList)",
-        p: encodedCombinedValue
-      };
-      const response = await CommonAPI(body);
-      console.log('response...', response);
-      if (response.Data.rd[0].stat === 1) {
-        // navigation('/myWishList')
-      } else {
-        alert('Error');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setIsLoading(false);
-    }
-
-  }
-
-  const [remarks, setRemarks] = useState({});
-  const [Mainremarks, setMainRemarks] = useState('');
-
-  const handleInputChangeMainRemarks = (e) => {
-    setMainRemarks(e.target.value)
-  }
-  const submitMainRemrks = async () => {
-    if (!Mainremarks || Mainremarks.trim() === '') {
-      alert('Enter a value for remarks.');
-    } else {
-      try {
-        setIsLoading(true);
-        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-        const { FrontEnd_RegNo } = storeInit;
-        const combinedValue = JSON.stringify({
-          orderremarks: `${Mainremarks}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
-        });
-        console.log('combinedValuecombinedValue...', combinedValue);
-        const encodedCombinedValue = btoa(combinedValue);
-        const body =
-        {
-          "con": `{\"id\":\"\",\"mode\":\"SAVEORDERREMARK\",\"appuserid\":\"${userEmail}\"}`,
-          "f": "Header (handleMainRemrks)",
-          p: encodedCombinedValue
-        };
-        const response = await CommonAPI(body);
-        console.log('response...', response);
-        if (response.Data.rd[0].stat === 1) {
-          alert('done');
-        } else {
-          alert('Error');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  }
-  const handleInputChangeRemarks = (e, index) => {
-    const { value } = e.target;
-    setRemarks(prevRemarks => ({
-      ...prevRemarks,
-      [index]: value
-    }));
-  };
-
-  const handleSubmit = async (index, data) => {
-    const remark = remarks[index];
-    if (!remark || remark.trim() === '') {
-      alert('Enter a value for remarks.');
-    } else {
-
-      try {
-        setIsLoading(true);
-        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-        const { FrontEnd_RegNo } = storeInit;
-        const combinedValue = JSON.stringify({
-          designno: `${data.designno}`, autocode: `${data.autocode}`, remarks: `${remark}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
-        });
-        const encodedCombinedValue = btoa(combinedValue);
-        const body =
-        {
-          "con": `{\"id\":\"\",\"mode\":\"SAVEDESIGNREMARK\",\"appuserid\":\"${userEmail}\"}`,
-          "f": "Header (handleSingleRemaksSubmit)",
-          p: encodedCombinedValue
-        };
-        const response = await CommonAPI(body);
-        if (response.Data.rd[0].stat === 1) {
-          // setRemarks(prevRemarks => ({
-          //   ...prevRemarks,
-          //   [index]: ''
-          // }));
-          alert('done');
-        } else {
-          alert('Error');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
 
   return (
     <>
@@ -570,9 +320,8 @@ export default function Header() {
           </div>
 
           <div
-            className={`smlingSearchoverlayNew ${
-              isHeaderFixedDropShow ? "fixed" : ""
-            }`}
+            className={`smlingSearchoverlayNew ${isHeaderFixedDropShow ? "fixed" : ""
+              }`}
           >
             <div className="smlingTopSerachOver-Fixed">
               <IoSearchOutline
@@ -751,9 +500,8 @@ export default function Header() {
                 </p>
 
                 <ul
-                  className={`my-list-fineJewe ${
-                    isOpenCollection ? "open" : ""
-                  }`}
+                  className={`my-list-fineJewe ${isOpenCollection ? "open" : ""
+                    }`}
                 >
                   <li>
                     <p style={{ marginTop: "10px" }}>Ring</p>
@@ -1010,52 +758,54 @@ export default function Header() {
                   {LOGIN}
                 </li>
               )}
-              <Badge
-                badgeContent={getWishListCount}
-                overlap={"rectangular"}
-                color="secondary"
-              >
-                <Tooltip title="Add To WishList">
-                  <li onClick={() => navigation("/myWishList")}>
-                    <PiStarThin
-                      style={{
-                        height: "20px",
-                        cursor: "pointer",
-                        width: "20px",
-                      }}
-                    />
-                  </li>
-                </Tooltip>
-              </Badge>
-              <li onClick={toggleOverlay} style={{}}>
-                <IoSearchOutline
-                  style={{ height: "15px", cursor: "pointer", width: "15px" }}
-                />
-              </li>
-              <Badge
-                badgeContent={getCartListCount}
-                overlap={"rectangular"}
-                color="secondary"
-              >
-                <Tooltip title="Add To Cart">
-                  <li
-                    onClick={toggleCartDrawer(true)}
-                    style={{
-                      marginLeft: "-10px",
-                      cursor: "pointer",
-                      marginTop: "0px",
-                    }}
+              {islogin &&
+                <>
+                  <Badge
+                    badgeContent={getWishListCount}
+                    overlap={"rectangular"}
+                    color="secondary"
                   >
-                    <PiStarFourThin
-                      style={{
-                        cursor: "pointer",
-                        height: "35px",
-                        width: "35px",
-                      }}
+                    <Tooltip title="Add To WishList">
+                      <li onClick={() => navigation("/myWishList")}>
+                        <PiStarThin
+                          style={{
+                            height: "20px",
+                            cursor: "pointer",
+                            width: "20px",
+                          }}
+                        />
+                      </li>
+                    </Tooltip>
+                  </Badge>
+                  <li onClick={toggleOverlay} style={{}}>
+                    <IoSearchOutline
+                      style={{ height: "15px", cursor: "pointer", width: "15px" }}
                     />
                   </li>
-                </Tooltip>
-              </Badge>
+                  <Badge
+                    badgeContent={getCartListCount}
+                    overlap={"rectangular"}
+                    color="secondary"
+                  >
+                    <Tooltip title="Add To Cart">
+                      <li
+                        onClick={toggleCartDrawer(true)}
+                        style={{
+                          marginLeft: "-10px",
+                          cursor: "pointer",
+                          marginTop: "0px",
+                        }}
+                      >
+                        <PiStarFourThin
+                          style={{
+                            cursor: "pointer",
+                            height: "35px",
+                            width: "35px",
+                          }}
+                        />
+                      </li>
+                    </Tooltip>
+                  </Badge></>}
             </ul>
           </div>
         </div>
@@ -1063,9 +813,8 @@ export default function Header() {
         <div
           onMouseEnter={handleDropdownOpen}
           onMouseLeave={handleDropdownClose}
-          className={`shop-dropdown ${isDropdownOpen ? "open" : ""} ${
-            isHeaderFixed ? "fixed" : ""
-          }`}
+          className={`shop-dropdown ${isDropdownOpen ? "open" : ""} ${isHeaderFixed ? "fixed" : ""
+            }`}
         >
           <div
             style={{
@@ -1075,12 +824,12 @@ export default function Header() {
               backgroundColor: "white",
               flexDirection: "row",
               gap: "50px",
-             }}
+            }}
             onMouseEnter={handleDropdownOpen}
             onMouseLeave={handleDropdownClose}
           >
 
-            <div style={{display:'flex',flexDirection:'column',gap:'8px'}}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {finalData.map((fd,i) => (
                 <span 
                     className="level0Menu" 
@@ -1131,9 +880,8 @@ export default function Header() {
         </div>
 
         <div
-          className={`Smining-Top-Header-fixed-main ${
-            isHeaderFixed ? "fixed" : ""
-          } ${serachsShowOverlay ? "searchoverly" : ""}`}
+          className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? "fixed" : ""
+            } ${serachsShowOverlay ? "searchoverly" : ""}`}
         >
           <div className="Smining-Top-Header-fixed">
             <div
@@ -1276,52 +1024,56 @@ export default function Header() {
                   </li>
                 )}
 
-                <Badge
-                  badgeContent={getWishListCount}
-                  overlap={"rectangular"}
-                  color="secondary"
-                >
-                  <Tooltip title="Add To WishList">
-                    <li onClick={() => navigation("/myWishList")}>
-                      <PiStarThin
-                        style={{
-                          height: "20px",
-                          cursor: "pointer",
-                          width: "20px",
-                        }}
-                      />
-                    </li>
-                  </Tooltip>
-                </Badge>
-                <li onClick={toggleOverlay} style={{}}>
-                  <IoSearchOutline
-                    style={{ height: "15px", cursor: "pointer", width: "15px" }}
-                  />
-                </li>
-                <Badge
-                  badgeContent={getCartListCount}
-                  overlap={"rectangular"}
-                  color="secondary"
-                >
-                  <Tooltip title="Add To Cart">
-                    <li
-                      onClick={toggleCartDrawer(true)}
-                      style={{
-                        marginLeft: "-10px",
-                        marginTop: "0px",
-                        cursor: "pointer",
-                      }}
+                {islogin &&
+                  <>
+                    <Badge
+                      badgeContent={getWishListCount}
+                      overlap={"rectangular"}
+                      color="secondary"
                     >
-                      <PiStarFourThin
-                        style={{
-                          cursor: "pointer",
-                          height: "30px",
-                          width: "30px",
-                        }}
+                      <Tooltip title="Add To WishList">
+                        <li onClick={() => navigation("/myWishList")}>
+                          <PiStarThin
+                            style={{
+                              height: "20px",
+                              cursor: "pointer",
+                              width: "20px",
+                            }}
+                          />
+                        </li>
+                      </Tooltip>
+                    </Badge>
+                    <li onClick={toggleOverlay} style={{}}>
+                      <IoSearchOutline
+                        style={{ height: "15px", cursor: "pointer", width: "15px" }}
                       />
                     </li>
-                  </Tooltip>
-                </Badge>
+                    <Badge
+                      badgeContent={getCartListCount}
+                      overlap={"rectangular"}
+                      color="secondary"
+                    >
+                      <Tooltip title="Add To Cart">
+                        <li
+                          onClick={toggleCartDrawer(true)}
+                          style={{
+                            marginLeft: "-10px",
+                            marginTop: "0px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <PiStarFourThin
+                            style={{
+                              cursor: "pointer",
+                              height: "30px",
+                              width: "30px",
+                            }}
+                          />
+                        </li>
+                      </Tooltip>
+                    </Badge>
+                  </>
+                }
               </ul>
             </div>
           </div>
@@ -1446,9 +1198,8 @@ export default function Header() {
         {!drawerShowOverlay && (
           <div
             div
-            className={`Smining-Top-Header-fixed-main ${
-              isHeaderFixed ? "fixed" : ""
-            } ${serachsShowOverlay ? "searchoverly" : ""}`}
+            className={`Smining-Top-Header-fixed-main ${isHeaderFixed ? "fixed" : ""
+              } ${serachsShowOverlay ? "searchoverly" : ""}`}
           >
             <div
               className="Smining-Top-Header-fixed"
@@ -1563,241 +1314,7 @@ export default function Header() {
         )}
       </div>
 
-      <Drawer
-        anchor="right"
-        open={openCart}
-        onClose={toggleCartDrawer(false)}
-        transitionDuration={500}
-        sx={{
-          "& .MuiDrawer-paper": {
-            width: "40%",
-            maxWidth: "40%",
-          },
-        }}
-      >
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              margin: "20px",
-            }}
-          >
-            <CloseIcon
-              onClick={toggleCartDrawer(false)}
-              style={{ cursor: "pointer", color: "#7d7f85" }}
-            />
-          </div>
-          <p
-            style={{
-              fontSize: "40px",
-              color: "#7d7f85",
-              textAlign: "center",
-              fontFamily: "FreightDispProBook-Regular,Times New Roman,serif",
-            }}
-          >
-            Your Cart
-          </p>
-        </div>
-        <div style={{ paddingBottom: "150px" }}>
-          {cartListData?.length === 0 ? (
-            <div
-              style={{
-                backgroundColor: "lightgray",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "150px",
-              }}
-            >
-              <p style={{ margin: "0px", fontSize: "20px", fontWeight: 500 }}>
-                No Data Available
-              </p>
-              <p>Please First Add To Cart Data</p>
-            </div>
-          ) : (
-            <div>
-              {cartListData?.map((item, index) => (
-                <div key={item.id} className="smiling-cartBoxMain">
-                  <div
-                    style={{
-                      position: "absolute",
-                      right: "25px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleRemove(item)}
-                  >
-                    <CloseIcon />
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignContent: "center",
-                      width: "30%",
-                    }}
-                  >
-                    <img
-                      src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
-                      className="smiling-cartBoxImg"
-                    />
-                  </div>
-                  <div style={{ width: "65%", margin: "20px" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <p style={{ fontSize: "14px", color: "#7d7f85" }}>
-                        {item.designno}
-                      </p>
-                      <p className="CartPageShipingIn">Ships in 14 days</p>
-                      <p style={{ color: "#7d7f85", marginRight: "50px" }}>
-                        ${item.TotalUnitCost}
-                      </p>
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "14px",
-                        marginTop: "-20px",
-                        color: "#7d7f85",
-                      }}
-                    >
-                      {item.Mastermanagement_CategoryName}
-                      <br />
-                      {item.DefaultImageName1}
-                    </div>
-                    <p style={{ fontSize: "12px", color: "#7d7f85" }}>
-                      White Gold / 18 Inches / {item.Quantity}
-                    </p>
-                    <p className="CartPageShipingInSmall">Ships in 14 days</p>
-                    <div style={{ display: "flex", alignItems: 'center' }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          height: "40px",
-                          border: "1px solid #7d7f85",
-                        }}
-                      >
-                        <p
-                          style={{
-                            margin: "5px",
-                            fontSize: "20px",
-                            fontWeight: 500,
-                            cursor: "pointer",
-                          }}
-                          onClick={handleDecrement}
-                        >
-                          -
-                        </p>
-                        <input
-                         
-                          type="text"
-                         
-                          style={{
-                            border: "0px",
-                            textAlign: "center",
-                            outline: "none",
-                            width: "50px",
-                          }}
-                         
-                          maxLength={2}
-                         
-                          inputMode="numeric"
-                         
-                          value={item.Quantity}
-                          // This should be item.Quantity
-                          onChange={(event) => handleInputChange(event, index)}
-                       
-                        />
-                        <p
-                          style={{
-                            margin: "5px",
-                            fontSize: "20px",
-                            fontWeight: 500,
-                            cursor: "pointer",
-                          }}
-                          onClick={() => handleIncrement(index)}
-                        >
-                          +
-                        </p>
-                      </div>
-                      <p
-                        style={{
-                          color: "blue",
-                          cursor: "pointer",
-                          textDecoration: "underline",
-                        }}
-                      >
-                        UPDATE QUANTITY
-                      </p>
-                      <p style={{ color: 'blue', cursor: 'pointer', margin: '0px', textDecoration: 'underline' }} onClick={() => handleUpdateQuantity(item.designno)}>UPDATE QUANTITY</p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                         justifyContent:  "flex-end",
-                        marginTop: "10px",
-                      }}
-                    >
-                      <textarea
-                        type="text"
-                        placeholder="Enter Remarks..."
-                        value={item.Remarks || ""}
-                        onChange={(e) => {
-                          const updatedCartListData = [...cartListData];
-                          updatedCartListData[index].Remarks = e.target.value;
-                          setCartListData(updatedCartListData);
-                          setRemarks((prevRemarks) => ({
-                            ...prevRemarks,
-                            [index]: e.target.value,
-                          }));
-                        }}
-                        className="YourCartMainRemkarBoxSingle"
-                      />
-                      <button
-                        onClick={() => handleSubmit(index, item)}
-                        className="SmilingAddSingleRemkarBtn"
-                      >
-                        Add Remarks
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              <textarea
-                label="Enter Remarks"
-                variant="outlined"
-                placeholder="Enter Main Remark"
-                value={Mainremarks}
-                rows={4}
-                onChange={(e) => handleInputChangeMainRemarks(e)}
-                className="YourCartMainRemkarBox"
-                style={{ marginTop: "30px" }}
-              />
-              <div className="addRemkarMain">
-                <button
-                  onClick={submitMainRemrks}
-                  className="SmilingAddRemkarBtn"
-                >
-                  Add Main Remark
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="placeOrderBtnMain">
-          <button
-            className="placeOrderBtn"
-            onClick={() => navigation("/Delivery")}
-          >
-            Place Order
-          </button>
-        </div>
-      </Drawer>
+      <Cart open={openCart} toggleCartDrawer={toggleCartDrawer} />
     </>
   );
 }
