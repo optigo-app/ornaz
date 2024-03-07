@@ -74,7 +74,6 @@ const ProductList = () => {
     ).then(
       (res)=>
         {
-          // console.log(res?.data)
           setProductApiData(res?.data)
         })
     .catch((err)=>console.log("err",err))
@@ -262,7 +261,8 @@ return productData
 
 diffCartData()
 
-// console.log("productData",productData)
+console.log("WishData",WishData);
+
 
 const diffWishData = useCallback(()=>{
 
@@ -504,7 +504,7 @@ removefromCart()
 
   const getCartAndWishListData = async() =>{
   
-    const UserEmail = localStorage.getItem("userEmail")
+    const UserEmail = localStorage.getItem("registerEmail")
     const storeInit = JSON.parse(localStorage.getItem("storeInit"))
     const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
@@ -546,13 +546,11 @@ removefromCart()
       if(event.target.checked === true){
 
         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-        const ukey = localStorage.getItem("ukey")
-        const UserEmail = localStorage.getItem("userEmail")
+        const UserEmail = localStorage.getItem("registerEmail")
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
         const product =  prod 
 
-        console.log("prod",prod);
   
         const finalJSON = {
           "stockweb_event": "",
@@ -637,10 +635,9 @@ removefromCart()
           "DQuality": `${product?.diamondquality.split(",")[0]}`,
           "DColor":`${product?.diamondcolorname}`,
           "UploadLogicalPath":`${product?.UploadLogicalPath ?? ""}`,
-          "ukey": `${ukey}`
+          "ukey": `${storeInit?.ukey}`
         }
 
-        console.log("finalJSON",finalJSON);
 
         const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
   
@@ -654,7 +651,6 @@ removefromCart()
 
           if(res?.Data?.rd[0]?.msg === "success"){
             
-            console.log("wishlistApiCalling",res)
 
             await getCartAndWishListData()
             // await getCountApi()
@@ -668,13 +664,12 @@ removefromCart()
 
 
         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-        const UserEmail = localStorage.getItem("userEmail")
+        const UserEmail = localStorage.getItem("registerEmail")
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
         
         
         setWishListRemoveData(prod.designno)
   
-        console.log(prod.designno);
   
         let Data = {"designlist":`'${prod?.designno}'`,"isselectall":"0","FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`}
   
@@ -718,14 +713,13 @@ const handelCartList = async(event,prod)=>{
 
       if(event.target.checked === true){
         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-      const UserEmail = localStorage.getItem("userEmail")
+      const UserEmail = localStorage.getItem("registerEmail")
       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
   
       const product =  prod 
 
       let isWishHasCartData = WishData?.filter((pd)=> product.autocode===pd.autocode)
       console.log("isWishHasCartData",isWishHasCartData)
-
 
       let wishToCartEncData = {"autocodelist":`${isWishHasCartData[0]?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
       
@@ -856,7 +850,7 @@ const handelCartList = async(event,prod)=>{
     else{
       const storeInit = JSON.parse(localStorage.getItem("storeInit"))
       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-      const UserEmail = localStorage.getItem("userEmail")
+      const UserEmail = localStorage.getItem("registerEmail")
       
       setCartRemoveData(prod.designno)
 

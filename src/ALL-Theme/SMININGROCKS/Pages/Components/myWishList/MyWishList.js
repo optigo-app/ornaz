@@ -27,7 +27,7 @@ export default function MyWishList() {
                 const data = JSON.parse(storedData);
                 const customerid = data.id;
                 setCustomerID(data.id);
-                const customerEmail = data.email1;
+                const customerEmail = data.userid;
                 setUserEmail(customerEmail);
                 const storeInit = JSON.parse(localStorage.getItem('storeInit'));
                 const { FrontEnd_RegNo, ukey } = storeInit;
@@ -35,8 +35,6 @@ export default function MyWishList() {
                 const combinedValue = JSON.stringify({
                     is_show_stock_website: "0", PageSize: "1000", CurrentPage: "1", FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`, UploadLogicalPath: "", ukey: `${ukey}`, ThumDefImg: "", CurrencyRate: '1'
                 });
-                console.log('combinedValuecombinedValue...', combinedValue);
-
                 const encodedCombinedValue = btoa(combinedValue);
                 const body = {
                     "con": `{\"id\":\"Store\",\"mode\":\"GetWishList\",\"appuserid\":\"${customerEmail}\"}`,
@@ -44,7 +42,6 @@ export default function MyWishList() {
                     p: encodedCombinedValue
                 };
                 const response = await CommonAPI(body);
-                console.log('response...', response);
                 if (response.Data) {
                     setWishlistData(response.Data.rd);
                 }
@@ -73,7 +70,6 @@ export default function MyWishList() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...', response);
             if (response.Data.rd[0].stat === 1) {
                 navigation('/myWishList')
             } else {
@@ -101,7 +97,6 @@ export default function MyWishList() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...', response);
             if (response.Data.rd[0].stat === 1) {
                 navigation('/myWishList')
             } else {
@@ -115,8 +110,6 @@ export default function MyWishList() {
     }
 
     const handleRemoveWichList = async (data) => {
-        console.log('dataaaaaaaJ', JSON.stringify(data));
-
         try {
             setIsLoading(true);
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
@@ -124,8 +117,6 @@ export default function MyWishList() {
             const combinedValue = JSON.stringify({
                 designlist: `'${data.designno}'`, isselectall: '0', FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
             });
-            console.log('combinedValuecombinedValue...', combinedValue);
-            console.log('userEmailuserEmail...', userEmail);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
                 "con": `{\"id\":\"Store\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${userEmail}\"}`,
@@ -133,7 +124,6 @@ export default function MyWishList() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...', response);
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
@@ -156,8 +146,6 @@ export default function MyWishList() {
             const combinedValue = JSON.stringify({
                 designlist: '', isselectall: '1', FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
             });
-            console.log('combinedValuecombinedValue...', combinedValue);
-            console.log('userEmailuserEmail...', userEmail);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
                 "con": `{\"id\":\"Store\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${userEmail}\"}`,
@@ -165,7 +153,6 @@ export default function MyWishList() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...', response);
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
@@ -193,11 +180,11 @@ export default function MyWishList() {
             <div>
                 <div className='smiling-wishlist'>
                     <p className='SmiWishListTitle'>My Wishlist</p>
-                    <div className='smilingListTopButton'>
+                    {wishlistData?.length !== 0 && <div className='smilingListTopButton'>
                         <button className='smiTopShareBtn'>SHARE WISHLIST</button>
                         <button className='smiTopClearBtn' onClick={handleRemoveAllWishList}>CLEAR ALL</button>
                         <button className='smiTopAddAllBtn' onClick={handleAddAll}>ADD TO CART ALL</button>
-                    </div>
+                    </div>}
 
                     <div className='smiWishLsitBoxMain'>
                         {wishlistData?.length === 0 ?

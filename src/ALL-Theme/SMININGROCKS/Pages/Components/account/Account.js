@@ -83,8 +83,16 @@ export default function Account() {
     const handleLogout = () => {
         setIsLoginState(false)
         localStorage.setItem('LoginUser', 'false');
+        localStorage.removeItem('storeInit');
+        localStorage.removeItem('loginUserDetail');
+        localStorage.removeItem('remarks');
+        localStorage.removeItem('selectedAddressId');
+        localStorage.removeItem('orderNumber');
+        localStorage.removeItem('registerEmail');
+        localStorage.removeItem('UploadLogicalPath');
+        localStorage.removeItem('remarks');
+        localStorage.removeItem('registerMobile');
         naviagation('/')
-        // window.location.reload()
     }
 
 

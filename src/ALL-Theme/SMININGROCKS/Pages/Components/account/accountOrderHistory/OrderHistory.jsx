@@ -45,7 +45,7 @@ const OrderHistory = () => {
   const getData = async () => {
     let storeinit = JSON.parse(localStorage.getItem("storeInit"));
     let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"));
-    const UserEmail = localStorage.getItem("userEmail");
+    const UserEmail = localStorage.getItem("registerEmail");
     setUkey(storeinit?.ukey);
     setImagePath(storeinit?.UploadLogicalPath)
     // setImagePath()
