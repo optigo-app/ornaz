@@ -32,6 +32,7 @@ export default function Home() {
         Authorization: 'Bearer optigo_json_api',
         domain: 'gstore.orail.co.in',
         version: 'V4',
+        sp:"1"
         // domain: 'zen',
       };
       // const header = {

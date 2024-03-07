@@ -9,7 +9,7 @@ export const GetCount = async() => {
        
             const storeInit = JSON.parse(localStorage.getItem("storeInit"))
             const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-            const UserEmail = localStorage.getItem("userEmail")
+            const UserEmail = localStorage.getItem("registerEmail")
     
     
     
