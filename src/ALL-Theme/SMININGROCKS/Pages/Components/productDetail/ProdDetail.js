@@ -9,6 +9,10 @@ import StarIcon from '@mui/icons-material/Star';
 import filterData from '../../jsonFile/M_4_95oztttesi0o50vr.json'
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
+import { CommonAPI } from '../../../Utils/API/CommonAPI'
+import { GetCount } from '../../../Utils/API/GetCount'
+import { CartListCounts, WishListCounts } from '../../../../../Recoil/atom'
+import { useSetRecoilState } from 'recoil'
 
 const ProdDetail = () => {
 
@@ -17,9 +21,14 @@ const ProdDetail = () => {
     const [imgLoading, setImgLoading] = useState(true);
     const [cartFlag,setCartFlag] = useState(false);
     const [WishListFlag,setWishListFlag] = useState(false);
+    const[cartData,setCartData] = useState([]);
+    const[WishData,setWishData] = useState([]);
 
     const[productData,setProductData]=useState();
     const[thumbImg,setThumbImg]=useState();
+
+    const setCartCount = useSetRecoilState(CartListCounts)
+    const setWishCount = useSetRecoilState(WishListCounts)
 
     const handelImgLoad = () =>{
       setImgLoading(false)
@@ -60,191 +69,230 @@ const ProdDetail = () => {
     }
 
 
-  //   const handelCartList = async(event)=>{
+    const getCountFunc = async() =>{
 
-  //     try{
-  //       setCartFlag(event.target.checked)
+      await GetCount().then((res)=>{
+        if(res){
+          setCartCount(res.CountCart)
+          setWishCount(res.WishCount)
+        }
+      })
   
-  //       if(event.target.checked === true){
-  //         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-  //       const UserEmail = localStorage.getItem("userEmail")
-  //       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-    
-  //       const product =  productData 
-  
-  //       // let isWishHasCartData = WishData?.filter((pd)=> productData.find((wd)=>wd.autocode===pd.autocode))
-  //       // console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
-  
-  
-  //       let wishToCartEncData = {"autocodelist":`${productData?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
-        
-  
-    
-  //       const finalJSON = {
-  //           "stockweb_event": "",
-  //           "designno": `${product?.designno}`,
-  //           "autocode": `${product?.autocode}`,
-  //           "imgrandomno": `${product?.imgrandomno}`,
-  //           "producttypeid": `${product?.Producttypeid}`,
-  //           "metaltypeid": `${product?.MetalTypeid}`,
-  //           "metalcolorid": `${product?.MetalColorid}`,
-  //           "stockno": "",
-  //           "DQuality": `${product?.diamondquality.split(",")[0]}`,
-  //           "DColor":`${product?.diamondcolorname}`,
-  //           "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
-  //           "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
-  //           "BrandName":`${product?.BrandName ?? ""}`,
-  //           "Brandid":Number(`${product?.Brandid}`),
-  //           "CategoryName":`${product?.CategoryName}`,
-  //           "Categoryid":Number(`${product?.Categoryid}`),
-  //           "CenterStoneId":Number(`${product?.CenterStoneId}`),
-  //           "CenterStonePieces":Number(`${product?.CenterStonePieces}`),
-  //           "CollectionName":`${product?.CollectionName}`,
-  //           "Collectionid":Number(`${product?.Collectionid}`),
-  //           "ColorWiseRollOverImageName":`${product?.ColorWiseRollOverImageName}`,
-  //           "DefaultImageName":`${product?.DefaultImageName}`,
-  //           "DisplayOrder":Number(`${product?.DisplayOrder}`),
-  //           "FrontEnd_OrderCnt":Number(`${product?.FrontEnd_OrderCnt}`),
-  //           "GenderName":`${product?.GenderName}`,
-  //           "Genderid":Number(`${product?.Genderid}`),
-  //           "Grossweight":Number(`${product?.Grossweight}`),
-  //           "InReadyStockCnt":Number(`${product?.InReadyStockCnt}`),
-  //           "IsBestSeller":Number(`${product?.IsBestSeller}`),
-  //           "IsColorWiseImageExists":`${product?.IsColorWiseImageExists ?? 0}`,
-  //           "IsInReadyStock":Number(`${product?.IsInReadyStock}`),
-  //           "IsNewArrival":`${product?.IsNewArrival}`,
-  //           "IsRollOverColorWiseImageExists":`${product?.IsRollOverColorWiseImageExists}`,
-  //           "IsTrending":Number(`${product?.IsTrending}`),
-  //           "MasterManagement_labid":Number(`${product?.MasterManagement_labid}`),
-  //           "MasterManagement_labname": "",
-  //           "MetalColorName": `${product?.MetalColorName}`,
-  //           "MetalColorid": Number(`${product?.MetalColorid}`),
-  //           "MetalPurity": `${product?.MetalPurity}`,
-  //           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-  //           "MetalTypeName": `${product?.MetalTypeName}`,
-  //           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
-  //           "MetalWeight": Number(`${product?.MetalWeight}`),
-  //           "OcassionName": `${product?.OcassionName ?? ""}`,
-  //           "Ocassionid": Number(`${product?.Ocassionid}`),
-  //           "ProducttypeName":`${product?.ProducttypeName}`,
-  //           "Producttypeid": Number(`${product?.Producttypeid}`),
-  //           "RollOverImageName":`${product?.RollOverImageName}`,
-  //           "SubCategoryName":`${product?.SubCategoryName ?? ""}`,
-  //           "SubCategoryid":Number(`${product?.SubCategoryid}`),
-  //           "ThemeName":`${product?.ThemeName ?? ""}`,
-  //           "Themeid":Number(`${product?.Themeid}`),
-  //           "TitleLine":`${product?.TitleLine}`,
-  //           "UnitCost": Number(`${product?.UnitCost}`),
-  //           "UnitCostWithmarkup":Number( `${product?.UnitCostWithmarkup}`),
-  //           "colorstonecolorname": `${product?.colorstonecolorname}`,
-  //           "colorstonequality": `${product?.colorstonequality}`,
-  //           "diamondcolorname": `${product?.diamondcolorname}`,
-  //           "diamondpcs":Number(`${product?.diamondpcs}`),
-  //           "diamondquality":`${product?.diamondquality.split(",")[0]}`,
-  //           "diamondsetting":`${product?.diamondsetting}`,
-  //           "diamondshape": `${product?.diamondshape}`,
-  //           "diamondweight": Number(`${product?.diamondweight}`),
-  //           "encrypted_designno":`${product?.encrypted_designno}`,
-  //           "hashtagid":`${product?.hashtagid}`,
-  //           "hashtagname": `${product?.hashtagname}`,
-  //           "imagepath": `${product?.imagepath}`,
-  //           "mediumimage":`${product?.mediumimage ?? ""}`,
-  //           "originalimage":`${product?.originalimage}`,
-  //           "storyline_html": `${product?.storyline_html}`,
-  //           "storyline_video": `${product?.storyline_video}`,
-  //           "thumbimage":`${product?.thumbimage}`,
-  //           "totaladditionalvalueweight":Number(`${product?.totaladditionalvalueweight}`),
-  //           "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
-  //           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
-  //           "updatedate": `${product?.updatedate}`,
-  //           "videoname":`${product?.videoname ?? ""}`,
-  //           "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
-  //           "Customerid": `${Customer_id?.id}`,
-  //           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
-  //           "quantity": `${product?.quantity ?? "1"}`
-  //       }
-  
-  //       const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
-  //       const wishToCartEncData1 =  btoa(JSON.stringify(wishToCartEncData));
-  
-  //       const body = {
-  //         con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${UserEmail}\"}`,
-  //         f: "AddToCartIconClick (addcartlist)",
-  //         p: encodedCombinedValue,
-  //       };
-  
-  //       let body1 = {
-  //         con:`{\"id\":\"Store\",\"mode\":\"addwishlisttocart\",\"appuserid\":\"${UserEmail}\"}`,
-  //         f:"iconclick (addwishlisttocart)",
-  //         p: wishToCartEncData1
-  //       }
-  
-    
-        
-        
-  //       await CommonAPI(isWishHasCartData.length? body1 : body).then(async(res)=>{
-  //           // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
-  //           if(!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success"){
-  //             await getCartAndWishListData()
-  //             await getCountApi()
-  //             // prod.checkFlag=false
-  //           }
-  
-  //           if(isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success"){
-  //             await getCartAndWishListData()
-  //             await getCountApi()
-  //           }
-  //       })
-  
-  //       // let isWishHasCartData = WishData?.filter((wd)=> wd.autocode === prod.autocode)
-  //       //  console.log("isWishHasCartData",isWishHasCartData)
-  
-  //     }
-  //     else{
-  //       const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-  //       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-  //       const UserEmail = localStorage.getItem("userEmail")
-        
-  //       let prod = productData
+    }
 
-  //       // setCartRemoveData(prod.designno)
+    const getCartAndWishListData = async() =>{
   
-  //       let Data = {"designno":`${prod?.designno}`,"autocode":`${prod?.autocode}`,"metalcolorid":0,"isSolStockNo":0,"is_show_stock_website":"0","isdelete_all":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`,"cartidlist":""}
+      const UserEmail = localStorage.getItem("userEmail")
+      const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+      const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
   
-  //       let encodedCombinedValue = btoa(JSON.stringify(Data))
-  //       const body = {
-  //         con: `{\"id\":\"\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${UserEmail}\"}`,
-  //         f: "RemoveFromCartIconClick (removeFromCartList)",
-  //         p: encodedCombinedValue,
-  //       }
+      let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
   
-  //       await CommonAPI(body).then(async(res)=>{
-  //         // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
-  //         if(res?.Data?.rd[0]?.stat_msg === "success"){
-  //           // removefromCart()
-  //           await getCartAndWishListData()
-  //           await getCountApi()
-  //           // removefromCart(prod)
-  //         }
-  //     })
+      const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
   
-  //     }
+      const body = {
+          "con":`{\"id\":\"Store\",\"mode\":\"getdesignnolist\",\"appuserid\":\"${UserEmail}\"}`,
+          "f":" useEffect_login ( getdataofcartandwishlist )",
+          "p":encodedCombinedValue
+      }
   
-  //     }
-  //     catch(error){
-  //       console.log("error",error);
-  //     }
+      await CommonAPI(body).then((res)=>{
+        if(res?.Message === "Success"){
+          setCartData(res?.Data?.rd)
+          setWishData(res?.Data?.rd1)
+        }
+      })
+  
+    }
+
+    const handelCart = async(event)=>{
+
+      try{
+        setCartFlag(event.target.checked)
+        
+        if(event.target.checked === true){
+          const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+          const UserEmail = localStorage.getItem("userEmail")
+          const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+          
+          productData.wishCheck = event.target.checked;
+          localStorage.setItem("srProductsData",JSON.stringify(productData))
+          const product =  productData 
+  
+        // let isWishHasCartData = WishData?.filter((pd)=> productData.find((wd)=>wd.autocode===pd.autocode))
+        // console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
+
+        let isWishHasCartData = WishData?.filter((pd)=> product.autocode===pd.autocode)
+  
+  
+        let wishToCartEncData = {"autocodelist":`${productData?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
+        
+        const finalJSON = {
+            "stockweb_event": "",
+            "designno": `${product?.designno}`,
+            "autocode": `${product?.autocode}`,
+            "imgrandomno": `${product?.imgrandomno}`,
+            "producttypeid": `${product?.Producttypeid}`,
+            "metaltypeid": `${product?.MetalTypeid}`,
+            "metalcolorid": `${product?.MetalColorid}`,
+            "stockno": "",
+            "DQuality": `${product?.diamondquality.split(",")[0]}`,
+            "DColor":`${product?.diamondcolorname}`,
+            "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
+            "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
+            "BrandName":`${product?.BrandName ?? ""}`,
+            "Brandid":Number(`${product?.Brandid}`),
+            "CategoryName":`${product?.CategoryName}`,
+            "Categoryid":Number(`${product?.Categoryid}`),
+            "CenterStoneId":Number(`${product?.CenterStoneId}`),
+            "CenterStonePieces":Number(`${product?.CenterStonePieces}`),
+            "CollectionName":`${product?.CollectionName}`,
+            "Collectionid":Number(`${product?.Collectionid}`),
+            "ColorWiseRollOverImageName":`${product?.ColorWiseRollOverImageName}`,
+            "DefaultImageName":`${product?.DefaultImageName}`,
+            "DisplayOrder":Number(`${product?.DisplayOrder}`),
+            "FrontEnd_OrderCnt":Number(`${product?.FrontEnd_OrderCnt}`),
+            "GenderName":`${product?.GenderName}`,
+            "Genderid":Number(`${product?.Genderid}`),
+            "Grossweight":Number(`${product?.Grossweight}`),
+            "InReadyStockCnt":Number(`${product?.InReadyStockCnt}`),
+            "IsBestSeller":Number(`${product?.IsBestSeller}`),
+            "IsColorWiseImageExists":`${product?.IsColorWiseImageExists ?? 0}`,
+            "IsInReadyStock":Number(`${product?.IsInReadyStock}`),
+            "IsNewArrival":`${product?.IsNewArrival}`,
+            "IsRollOverColorWiseImageExists":`${product?.IsRollOverColorWiseImageExists}`,
+            "IsTrending":Number(`${product?.IsTrending}`),
+            "MasterManagement_labid":Number(`${product?.MasterManagement_labid}`),
+            "MasterManagement_labname": "",
+            "MetalColorName": `${product?.MetalColorName}`,
+            "MetalColorid": Number(`${product?.MetalColorid}`),
+            "MetalPurity": `${product?.MetalPurity}`,
+            "MetalPurityid": Number(`${product?.MetalTypeid}`),
+            "MetalTypeName": `${product?.MetalTypeName}`,
+            "MetalTypeid": Number(`${product?.IsInReadyStock}`),
+            "MetalWeight": Number(`${product?.MetalWeight}`),
+            "OcassionName": `${product?.OcassionName ?? ""}`,
+            "Ocassionid": Number(`${product?.Ocassionid}`),
+            "ProducttypeName":`${product?.ProducttypeName}`,
+            "Producttypeid": Number(`${product?.Producttypeid}`),
+            "RollOverImageName":`${product?.RollOverImageName}`,
+            "SubCategoryName":`${product?.SubCategoryName ?? ""}`,
+            "SubCategoryid":Number(`${product?.SubCategoryid}`),
+            "ThemeName":`${product?.ThemeName ?? ""}`,
+            "Themeid":Number(`${product?.Themeid}`),
+            "TitleLine":`${product?.TitleLine}`,
+            "UnitCost": Number(`${product?.UnitCost}`),
+            "UnitCostWithmarkup":Number( `${product?.UnitCostWithmarkup}`),
+            "colorstonecolorname": `${product?.colorstonecolorname}`,
+            "colorstonequality": `${product?.colorstonequality}`,
+            "diamondcolorname": `${product?.diamondcolorname}`,
+            "diamondpcs":Number(`${product?.diamondpcs}`),
+            "diamondquality":`${product?.diamondquality.split(",")[0]}`,
+            "diamondsetting":`${product?.diamondsetting}`,
+            "diamondshape": `${product?.diamondshape}`,
+            "diamondweight": Number(`${product?.diamondweight}`),
+            "encrypted_designno":`${product?.encrypted_designno}`,
+            "hashtagid":`${product?.hashtagid}`,
+            "hashtagname": `${product?.hashtagname}`,
+            "imagepath": `${product?.imagepath}`,
+            "mediumimage":`${product?.mediumimage ?? ""}`,
+            "originalimage":`${product?.originalimage}`,
+            "storyline_html": `${product?.storyline_html}`,
+            "storyline_video": `${product?.storyline_video}`,
+            "thumbimage":`${product?.thumbimage}`,
+            "totaladditionalvalueweight":Number(`${product?.totaladditionalvalueweight}`),
+            "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
+            "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
+            "updatedate": `${product?.updatedate}`,
+            "videoname":`${product?.videoname ?? ""}`,
+            "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
+            "Customerid": `${Customer_id?.id}`,
+            "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
+            "quantity": `${product?.quantity ?? "1"}`
+        }
+  
+        const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
+        const wishToCartEncData1 =  btoa(JSON.stringify(wishToCartEncData));
+  
+        const body = {
+          con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${UserEmail}\"}`,
+          f: "AddToCartIconClick (addcartlist)",
+          p: encodedCombinedValue,
+        };
+  
+        let body1 = {
+          con:`{\"id\":\"Store\",\"mode\":\"addwishlisttocart\",\"appuserid\":\"${UserEmail}\"}`,
+          f:"iconclick (addwishlisttocart)",
+          p: wishToCartEncData1
+        }
+  
+        await CommonAPI(isWishHasCartData.length? body1 : body).then(async(res)=>{
+            // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+            if(!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success"){
+              await getCartAndWishListData()
+              getCountFunc()
+              // prod.checkFlag=false
+            }
+  
+            if(isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success"){
+              await getCartAndWishListData()
+              getCountFunc()
+            }
+        })
+  
+        // let isWishHasCartData = WishData?.filter((wd)=> wd.autocode === prod.autocode)
+        //  console.log("isWishHasCartData",isWishHasCartData)
+  
+      }
+      else{
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+        const UserEmail = localStorage.getItem("userEmail")
+
+        productData.wishCheck = false;
+        localStorage.setItem("srProductsData",JSON.stringify(productData))
+        
+        let prod = productData
+
+        // setCartRemoveData(prod.designno)
+  
+        let Data = {"designno":`${prod?.designno}`,"autocode":`${prod?.autocode}`,"metalcolorid":0,"isSolStockNo":0,"is_show_stock_website":"0","isdelete_all":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`,"cartidlist":""}
+  
+        let encodedCombinedValue = btoa(JSON.stringify(Data))
+        const body = {
+          con: `{\"id\":\"\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${UserEmail}\"}`,
+          f: "RemoveFromCartIconClick (removeFromCartList)",
+          p: encodedCombinedValue,
+        }
+  
+        await CommonAPI(body).then(async(res)=>{
+          // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+          if(res?.Data?.rd[0]?.stat_msg === "success"){
+            // removefromCart()
+            await getCartAndWishListData()
+            getCountFunc()
+            // removefromCart(prod)
+          }
+      })
+  
+      }
+  
+      }
+      catch(error){
+        console.log("error",error);
+      }
       
-  // }
-
-
-  const handelCart = (e) =>{
-    handelLocalStorage()
-    setCartFlag(e.target.checked)
-
-
-
   }
+
+
+  // const handelCart = (e) =>{
+  //   productData.wishCheck = e.target.checked;
+  //   setCartFlag(e.target.checked)
+  //   localStorage.setItem("srProductsData",JSON.stringify(productData))
+
+
+
+  // }
 
   const handelWishList = (e) =>{
 
@@ -587,9 +635,9 @@ const ProdDetail = () => {
                   </button>
                 </div> */}
 
-                <div style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',alignItems:'center'}}>
+                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
                   
-                <div style={{ display:'flex',alignItems:'center'}}>
+                <div style={{ marginLeft: "-12px",display:'flex',alignItems:'center'}}>
                   <Checkbox
                     icon={
                       <StarBorderIcon
@@ -618,7 +666,7 @@ const ProdDetail = () => {
                     }}
                   /> */}
 
-                <div style={{marginLeft: "-12px",display:'flex',alignItems:'center',gap:'7px'}}>
+                <div style={{display:'flex',alignItems:'center',gap:'7px'}}>
                   <Checkbox
                     icon={
                       <LocalMallOutlinedIcon
@@ -631,7 +679,7 @@ const ProdDetail = () => {
                       />
                     }
                     disableRipple={true}
-                    sx={{ padding: "5px" }}
+                    // sx={{ padding: "5px" }}
                     checked={cartFlag}
                     onChange={(e)=>handelCart(e)}
                     // onClick={()=>}

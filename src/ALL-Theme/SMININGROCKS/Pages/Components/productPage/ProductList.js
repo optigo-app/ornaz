@@ -39,6 +39,7 @@ const ProductList = () => {
   const [cartRemoveData,setCartRemoveData] = useState("");
   const [wishListRemoveData,setWishListRemoveData] = useState("");
 
+  console.log("wishData",cartData);
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -722,8 +723,8 @@ const handelCartList = async(event,prod)=>{
   
       const product =  prod 
 
-      let isWishHasCartData = WishData?.filter((pd)=> productData.find((wd)=>wd.autocode===pd.autocode))
-      console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
+      let isWishHasCartData = WishData?.filter((pd)=> product.autocode===pd.autocode)
+      console.log("isWishHasCartData",isWishHasCartData)
 
 
       let wishToCartEncData = {"autocodelist":`${isWishHasCartData[0]?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
