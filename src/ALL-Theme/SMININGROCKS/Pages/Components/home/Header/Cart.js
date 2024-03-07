@@ -51,7 +51,6 @@ export default function Cart({ open, toggleCartDrawer }) {
         }
     }, []);
 
-    console.log('cartddddddd', cartListData);
     const getSizeData = async (item, index) => {
 
         const newShowDropdowns = [...showDropdowns];
