@@ -122,8 +122,12 @@ export default function SMININGROCKS_App() {
                 </div>
             </Dialog>
             {console.log(location.pathname)}
-             {/* { location.pathname === "/accountledgertable" ? null : <Header /> }  */}
-             <Header />
+             { (location.pathname === "/accountledgertable" ||
+                location.pathname === "/accountledgerexcel" ||
+                location.pathname === "/accountledgerdebit" ||
+                location.pathname === "/accountledgercredit"  ) ?
+                null : <Header /> } 
+             {/* <Header /> */}
             <div>
                 <Routes>
                     <Route path="/" element={<Home />} />
