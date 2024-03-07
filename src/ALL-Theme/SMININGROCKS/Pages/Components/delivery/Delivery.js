@@ -96,22 +96,20 @@ export default function Delivery() {
                 const storedData = localStorage.getItem('loginUserDetail');
                 const data = JSON.parse(storedData);
                 const customerid = data.id;
-                // const customerEmail = data.email1;
+                // const customerEmail = data.userid;
                 // setUserEmail(customerEmail);
                 const storeInit = JSON.parse(localStorage.getItem('storeInit'));
                 const { FrontEnd_RegNo } = storeInit;
                 const combinedValue = JSON.stringify({
                     FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
                 });
-                console.log('combinedValuecombinedValue...', combinedValue);
                 const encodedCombinedValue = btoa(combinedValue);
                 const body = {
-                    "con": `{\"id\":\"\",\"mode\":\"GETSHIPINGADDRESS\",\"appuserid\":\"${data.email1}\"}`,
+                    "con": `{\"id\":\"\",\"mode\":\"GETSHIPINGADDRESS\",\"appuserid\":\"${data.userid}\"}`,
                     "f": "Delivery (fetchData)",
                     p: encodedCombinedValue
                 };
                 const response = await CommonAPI(body);
-                console.log('response...', response);
                 if (response.Data?.rd) {
                     setAddressData(response.Data.rd);
                 } else {
@@ -228,12 +226,11 @@ export default function Delivery() {
                     });
                     const encodedCombinedValue = btoa(combinedValue);
                     const body = {
-                        "con": `{\"id\":\"\",\"mode\":\"EDITADDRESS\",\"appuserid\":\"${data.email1}\"}`,
+                        "con": `{\"id\":\"\",\"mode\":\"EDITADDRESS\",\"appuserid\":\"${data.userid}\"}`,
                         "f": "Delivery (EditAddress)",
                         p: encodedCombinedValue
                     };
                     const response = await CommonAPI(body);
-                    console.log('edit response...', response);
                     if (response.Data.rd[0].stat === 1) {
                         toast.success('Edit success');
                         const editedAddress = {
@@ -277,13 +274,11 @@ export default function Delivery() {
 
                     const encodedCombinedValue = btoa(combinedValue);
                     const body = {
-                        "con": `{\"id\":\"\",\"mode\":\"addAddress\",\"appuserid\":\"${data.email1}\"}`,
+                        "con": `{\"id\":\"\",\"mode\":\"addAddress\",\"appuserid\":\"${data.userid}\"}`,
                         "f": "Delivery (addAddress)",
                         p: encodedCombinedValue
                     };
                     const response = await CommonAPI(body);
-                    console.log('response...', response);
-
                     if (response.Data.rd[0].stat === 1) {
                         toast.success('Add success');
                         let updatedAddressData = [...addressData];
@@ -331,10 +326,9 @@ export default function Delivery() {
             const combinedValue = JSON.stringify({
                 addrid: `${deleteId}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
             });
-            console.log('edit..... combinedValuecombinedValue...', combinedValue);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
-                "con": `{\"id\":\"\",\"mode\":\"DELADDRESS\",\"appuserid\":\"${data.email1}\"}`,
+                "con": `{\"id\":\"\",\"mode\":\"DELADDRESS\",\"appuserid\":\"${data.userid}\"}`,
                 "f": "Delivery (removeFromCartList)",
                 p: encodedCombinedValue
             };
@@ -347,7 +341,6 @@ export default function Delivery() {
                 toast.error('error');
             }
             setOpenDelete(false);
-            console.log('dele. response...', response);
         } catch (error) {
             console.error('Error:', error);
         } finally {

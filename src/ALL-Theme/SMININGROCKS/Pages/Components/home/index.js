@@ -18,8 +18,11 @@ import { IoMdMail } from "react-icons/io";
 import { FaMobileAlt } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import { CommonAPI } from '../../../Utils/API/CommonAPI';
 
 export default function Home() {
+
+
   useEffect(() => {
     const fetchData = async () => {
       // const APIURL = 'http://zen/api/';
@@ -29,6 +32,7 @@ export default function Home() {
         Authorization: 'Bearer optigo_json_api',
         domain: 'gstore.orail.co.in',
         version: 'V4',
+        sp:"1"
         // domain: 'zen',
       };
       // const header = {
@@ -47,7 +51,7 @@ export default function Home() {
           "sp":"1"
         };
         const response = await axios.post(APIURL, body, { headers: header });
-        console.log('ressssssssssssss',response);
+        console.log('rrrrrrrrr',response);
         if (response.status === 200) {
           localStorage.setItem('UploadLogicalPath', response.data.Data.rd[0].UploadLogicalPath);
           localStorage.setItem('storeInit', JSON.stringify(response.data.Data.rd[0]));
@@ -56,18 +60,20 @@ export default function Home() {
         console.error('Error:', error);
       }
     }
+
+
     fetchData();
+    // getMetalTypeData();
+    // getQualityColor();
+    // getColorStoneQualityData();
+    // getMetalColor();
   }, []);
 
 
 
 
   return (
-    <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
-
-      {/* <div className='smining-header'>
-        <Header onLoginClick={openLoginDailogBox} />
-      </div> */}
+    <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
       <div className='homeMain'>
         <Video />
         <SmilingRock />

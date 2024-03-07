@@ -15,7 +15,16 @@
 .YourCartMainRemkarBoxSingle{
     height: 40px;
     width: 240px;
-    margin-top: 15px;
+}
+
+.SmilingUpdateQuantityBtn{
+    height: 40px;
+    width: 200
+    px;
+    background-color: #f1d8c6;
+    border: none;
+    outline: none;
+    font-weight: 500;
 }
 .SmilingAddSingleRemkarBtn{
     height: 40px;
@@ -24,12 +33,11 @@
     border: none;
     outline: none;
     font-weight: 500;
-    margin-top: 15px;
 }
-.SmilingAddSingleRemkarBtn:hover{
+/* .SmilingAddSingleRemkarBtn:hover{
     background-color: white;
     border: 1px solid #f1d8c6;
-}
+} */
 .SmilingAddRemkarBtn{
     height: 40px;
     width: 200px;
@@ -202,7 +210,6 @@
 
 
 .smiling-cartBoxMain {
-    display: flex;
     border: 1px solid lightgray;
     border-radius: 10px;
     margin: 10px;
@@ -462,7 +469,31 @@
     font-weight: 500;
 }
 
+.level1Menu{
+    transition: 'opacity .25s ease-in-out';
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.level2Menu{
+    transition: 'opacity .25s ease-in-out';
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
 .level0Menu:hover{
+    opacity: .6;
+}
+.level1Menu:active{
+    opacity: .6;
+    text-decoration: underline;
+    text-underline-offset: 2;
+}
+.level2Menu:hover{
     opacity: .6;
 }
 

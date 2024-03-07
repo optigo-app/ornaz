@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Route, Routes, useLocation, useNavigate, redirect } from 'react-router-dom'
 import Home from './Pages/Components/home'
 import Impact from './Pages/Components/Impact'
@@ -35,18 +35,44 @@ import AccountLedgerExcel from './Pages/Components/account/accountLedgerExcelDow
 import AccountLedger from './Pages/Components/account/accountLedger/AccountLedger';
 import DebitVoucher from './Pages/Components/account/accountLedgerVouchers/debitVoucher/DebitVoucher';
 import CreditVoucher from './Pages/Components/account/accountLedgerVouchers/creditVoucher/CreditVoucher';
-import { openSignInModal } from '../../Recoil/atom'
-import { useRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts, openSignInModal } from '../../Recoil/atom'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import Payment from './Pages/Components/Payment/Payment'
 import Confirmation from './Pages/Components/confirmation/Confirmation'
+import { GetCount } from './Utils/API/GetCount'
+// import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
 
 export default function SMININGROCKS_App() {
 
     const [openLoginDailog, setOpenLoginDailog] = useRecoilState(openSignInModal);
 
+    const setCartCount = useSetRecoilState(CartListCounts)
+    const setWishCount = useSetRecoilState(WishListCounts)
+
     const navigation = useNavigate();
     const location =  useLocation();
     
+    const prevLocationRef = useRef(null);
+    const navigate = useNavigate();
+
+ 
+    
+    useEffect(() => {
+        const originalUrl = window.location.pathname;
+
+        const handleUrlChange = () => {
+            if (window.location.pathname !== originalUrl) {
+                navigate(originalUrl);
+            }
+        };
+
+        window.addEventListener('popstate', handleUrlChange);
+
+        return () => {
+            window.removeEventListener('popstate', handleUrlChange);
+        };
+    }, [navigate]);
+
     const openLoginDailogBox = () => {
         setOpenLoginDailog(true);
     };
@@ -54,6 +80,22 @@ export default function SMININGROCKS_App() {
         setOpenLoginDailog(false);
     };
 
+    const getCountFunc = async() =>{
+
+        await GetCount().then((res)=>{
+          if(res){
+            setCartCount(res.CountCart)
+            setWishCount(res.WishCount)
+          }
+        })
+    
+      }
+
+      useEffect(()=>{
+        getCountFunc();
+      },[])
+
+    
 
     return (
         <div>
