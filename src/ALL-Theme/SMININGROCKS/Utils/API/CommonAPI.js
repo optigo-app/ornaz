@@ -11,7 +11,7 @@ export const CommonAPI = async (body) => {
             Authorization: `Bearer ${token}`,
             Yearcode: YearCode,
             Version: version,
-            spid: '1'
+            sp: '1'
         };
         const response = await axios.post(APIURL, body, { headers: header });
         return response?.data;
