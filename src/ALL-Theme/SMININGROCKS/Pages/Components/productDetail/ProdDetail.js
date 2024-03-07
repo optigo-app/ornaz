@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState,useEffect} from 'react'
 import './proddetail.css'
 import Header from '../home/Header/Header'
 import Footer from '../home/Footer/Footer'
@@ -24,8 +24,8 @@ const ProdDetail = () => {
     const[cartData,setCartData] = useState([]);
     const[WishData,setWishData] = useState([]);
 
-  const [productData, setProductData] = useState();
-  const [thumbImg, setThumbImg] = useState();
+    const[productData,setProductData]=useState();
+    const[thumbImg,setThumbImg]=useState();
 
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
@@ -45,25 +45,25 @@ const ProdDetail = () => {
     handelLocalStorage();
   }, [])
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    useEffect(()=>{
+      window.scrollTo(0,0)
+    },[])
 
 
-  let imgData = [
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
-  ]
+    let imgData=[
+        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
+        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
+        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
+        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
+        {links:'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318'},
+        {links:'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045'},
+        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
+    ]
 
-  const handelmainImg = () => {
-    let filterImg = productData?.originalimage.split(",").filter((ele, i) => {
-      return i === thumbImg
-    })
+    const handelmainImg = () =>{
+      let filterImg=productData?.originalimage.split(",").filter((ele,i)=>{
+       return i === thumbImg 
+      })
 
     return filterImg
   }
@@ -633,7 +633,7 @@ const ProdDetail = () => {
                   <button className="prodetailbtn">
                     Inquire about product
                   </button>
-                </div>
+                </div> */}
 
                 <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
                   
@@ -795,89 +795,90 @@ const ProdDetail = () => {
                     please email us at order@smilingrocks.com.
                   </p>
                 </div> */}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="Acc-container">
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              flexDirection: "column",
-            }}
-          >
-            <p
+          <div className="Acc-container">
+            <div
               style={{
-                fontSize: "30px",
-                fontFamily: "FreightDisp Pro Medium",
-                color: "#7d7f85",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                flexDirection: "column",
               }}
             >
-              Tell Me More
-            </p>
-            <ul className="srAccul">
-              <li
-                className="tellmoreli"
-                onClick={() => {
-                  setAccNo("");
-                  setAccNo("1");
-                  setAcc(!acc);
+              <p
+                style={{
+                  fontSize: "30px",
+                  fontFamily: "FreightDisp Pro Medium",
+                  color: "#7d7f85",
                 }}
-                style={{ userSelect: "none" }}
               >
-                <span className="tellmorep">
-                  PRODUCT DETAILS
-                  <span style={{ fontSize: "24px" }}>
-                    {acc && accNo === "1" ? "-" : "+"}
-                  </span>
-                </span>
-                {/* <div style={{display:acc && accNo === '1' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
-                <div
-                  className={`my-list-fineJewe ${acc && accNo === "1" ? "openAcc" : ""
-                    }`}
+                Tell Me More
+              </p>
+              <ul className="srAccul">
+                <li
+                  className="tellmoreli"
+                  onClick={() => {
+                    setAccNo("");
+                    setAccNo("1");
+                    setAcc(!acc);
+                  }}
+                  style={{ userSelect: "none" }}
                 >
-                  <div>
-                    <div className="srAccContainer">
-                      <div className="srFloat">
-                        <span>
-                          <b>MetalPurity</b>: {productData?.MetalPurity}
-                        </span>
-                        <span>
-                          <b>MetalWeight</b>: {productData?.MetalWeight}
-                        </span>
-                        <span>
-                          <b>GrossWeight</b>: {productData?.Grossweight}
-                        </span>
-                        <span>
-                          <b>DiamondWeight</b>: {productData?.diamondweight}
-                        </span>
-                        <span>
-                          <b>NumberOfDiamonds</b>: {productData?.diamondpcs}
-                        </span>
+                  <span className="tellmorep">
+                    PRODUCT DETAILS
+                    <span style={{ fontSize: "24px" }}>
+                      {acc && accNo === "1" ? "-" : "+"}
+                    </span>
+                  </span>
+                  {/* <div style={{display:acc && accNo === '1' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
+                  <div
+                    className={`my-list-fineJewe ${
+                      acc && accNo === "1" ? "openAcc" : ""
+                    }`}
+                  >
+                    <div>
+                      <div className="srAccContainer">
+                        <div className="srFloat">
+                          <span>
+                            <b>MetalPurity</b>: {productData?.MetalPurity}
+                          </span>
+                          <span>
+                            <b>MetalWeight</b>: {productData?.MetalWeight}
+                          </span>
+                          <span>
+                            <b>GrossWeight</b>: {productData?.Grossweight}
+                          </span>
+                          <span>
+                            <b>DiamondWeight</b>: {productData?.diamondweight}
+                          </span>
+                          <span>
+                            <b>NumberOfDiamonds</b>: {productData?.diamondpcs}
+                          </span>
+                        </div>
+                        <div className="srFloat">
+                          <span>
+                            <b>Netwt</b>: {productData?.netwt}
+                          </span>
+                          <span>
+                            <b>DiamondQuality</b>: {productData?.diamondquality}
+                          </span>
+                          <span>
+                            <b>DiamondColorname</b>:{" "}
+                            {productData?.diamondcolorname}
+                          </span>
+                          <span>
+                            <b>TotalDiamondWeight</b>:{" "}
+                            {productData?.totaldiamondweight}
+                          </span>
+                          <span>
+                            <b>DiamondSetting</b>: {productData?.diamondsetting}
+                          </span>
+                        </div>
                       </div>
-                      <div className="srFloat">
-                        <span>
-                          <b>Netwt</b>: {productData?.netwt}
-                        </span>
-                        <span>
-                          <b>DiamondQuality</b>: {productData?.diamondquality}
-                        </span>
-                        <span>
-                          <b>DiamondColorname</b>:{" "}
-                          {productData?.diamondcolorname}
-                        </span>
-                        <span>
-                          <b>TotalDiamondWeight</b>:{" "}
-                          {productData?.totaldiamondweight}
-                        </span>
-                        <span>
-                          <b>DiamondSetting</b>: {productData?.diamondsetting}
-                        </span>
-                      </div>
-                    </div>
-                    {/* <div style={{marginBottom:'15px'}}>
+                      {/* <div style={{marginBottom:'15px'}}>
                         <span style={{fontSize:'13px',fontWeight:'normal'}}>
                           Total carat weight (ctw) represents the approximate
                           total weight of all diamonds in each jewelry and may
@@ -952,9 +953,8 @@ const ProdDetail = () => {
                     <span style={{fontSize:'12px'}}>All our rings can be resized by one size up or down, except for Eternity Bands.</span>
                   </div>
                 </li> */}
-              {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
-              {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
-              {/* <li
+                {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
+                {/* <li
                   className="tellmoreli"
                   onClick={() => {
                     setAccNo("");
