@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './proddetail.css'
 import Header from '../home/Header/Header'
 import Footer from '../home/Footer/Footer'
@@ -16,94 +16,94 @@ import { useSetRecoilState } from 'recoil'
 
 const ProdDetail = () => {
 
-    const[acc,setAcc]=useState(false);
-    const[accNo,setAccNo]=useState('');
-    const [imgLoading, setImgLoading] = useState(true);
-    const [cartFlag,setCartFlag] = useState(false);
-    const [WishListFlag,setWishListFlag] = useState(false);
-    const[cartData,setCartData] = useState([]);
-    const[WishData,setWishData] = useState([]);
+  const [acc, setAcc] = useState(false);
+  const [accNo, setAccNo] = useState('');
+  const [imgLoading, setImgLoading] = useState(true);
+  const [cartFlag, setCartFlag] = useState(false);
+  const [WishListFlag, setWishListFlag] = useState(false);
+  const [cartData, setCartData] = useState([]);
+  const [WishData, setWishData] = useState([]);
 
-    const[productData,setProductData]=useState();
-    const[thumbImg,setThumbImg]=useState();
+  const [productData, setProductData] = useState();
+  const [thumbImg, setThumbImg] = useState();
 
-    const setCartCount = useSetRecoilState(CartListCounts)
-    const setWishCount = useSetRecoilState(WishListCounts)
+  const setCartCount = useSetRecoilState(CartListCounts)
+  const setWishCount = useSetRecoilState(WishListCounts)
 
-    const handelImgLoad = () =>{
-      setImgLoading(false)
-    }
+  const handelImgLoad = () => {
+    setImgLoading(false)
+  }
 
-    const handelLocalStorage = () =>{
-      let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
-      setProductData(localProductData)
-      setWishListFlag(localProductData?.wishCheck)
-      setCartFlag(localProductData?.checkFlag)
-    }
+  const handelLocalStorage = () => {
+    let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
+    setProductData(localProductData)
+    setWishListFlag(localProductData?.wishCheck)
+    setCartFlag(localProductData?.checkFlag)
+  }
 
-    useEffect(() => {
-      handelLocalStorage();
-    }, [])
+  useEffect(() => {
+    handelLocalStorage();
+  }, [])
 
-    useEffect(()=>{
-      window.scrollTo(0,0)
-    },[])
-
-
-    let imgData=[
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
-    ]
-
-    const handelmainImg = () =>{
-      let filterImg=productData?.originalimage.split(",").filter((ele,i)=>{
-       return i === thumbImg 
-      })
-
-      return filterImg 
-    }
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
 
-    const getCountFunc = async() =>{
+  let imgData = [
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
+  ]
 
-      await GetCount().then((res)=>{
-        if(res){
-          setCartCount(res.CountCart)
-          setWishCount(res.WishCount)
-        }
-      })
-  
-    }
+  const handelmainImg = () => {
+    let filterImg = productData?.originalimage.split(",").filter((ele, i) => {
+      return i === thumbImg
+    })
 
-    const getCartAndWishListData = async() =>{
-  
-      const UserEmail = localStorage.getItem("userEmail")
-      const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-      const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-  
-      let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
-  
-      const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
-  
-      const body = {
-          "con":`{\"id\":\"Store\",\"mode\":\"getdesignnolist\",\"appuserid\":\"${UserEmail}\"}`,
-          "f":" useEffect_login ( getdataofcartandwishlist )",
-          "p":encodedCombinedValue
+    return filterImg
+  }
+
+
+  const getCountFunc = async () => {
+
+    await GetCount().then((res) => {
+      if (res) {
+        setCartCount(res.CountCart)
+        setWishCount(res.WishCount)
       }
-  
-      await CommonAPI(body).then((res)=>{
-        if(res?.Message === "Success"){
-          setCartData(res?.Data?.rd)
-          setWishData(res?.Data?.rd1)
-        }
-      })
-  
+    })
+
+  }
+
+  const getCartAndWishListData = async () => {
+
+    const UserEmail = localStorage.getItem("userEmail")
+    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+    const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+    let EncodeData = { FrontEnd_RegNo: `${storeInit?.FrontEnd_RegNo}`, Customerid: `${Customer_id?.id}` }
+
+    const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
+
+    const body = {
+      "con": `{\"id\":\"Store\",\"mode\":\"getdesignnolist\",\"appuserid\":\"${UserEmail}\"}`,
+      "f": " useEffect_login ( getdataofcartandwishlist )",
+      "p": encodedCombinedValue
     }
+
+    await CommonAPI(body).then((res) => {
+      if (res?.Message === "Success") {
+        setCartData(res?.Data?.rd)
+        setWishData(res?.Data?.rd1)
+      }
+    })
+
+  }
 
 
     useEffect(()=>{
@@ -112,28 +112,28 @@ const ProdDetail = () => {
 
     },[])
 
-    const handelCart = async(event)=>{
+  const handelCart = async (event) => {
 
-      try{
-        setCartFlag(event.target.checked)
-        
-        if(event.target.checked === true){
-          const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-          const UserEmail = localStorage.getItem("userEmail")
-          const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-          
-          productData.wishCheck = event.target.checked;
-          localStorage.setItem("srProductsData",JSON.stringify(productData))
-          const product =  productData 
-  
+    try {
+      setCartFlag(event.target.checked)
+
+      if (event.target.checked === true) {
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+        const UserEmail = localStorage.getItem("userEmail")
+        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+        productData.wishCheck = event.target.checked;
+        localStorage.setItem("srProductsData", JSON.stringify(productData))
+        const product = productData
+
         // let isWishHasCartData = WishData?.filter((pd)=> productData.find((wd)=>wd.autocode===pd.autocode))
         // console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
 
-        let isWishHasCartData = WishData?.filter((pd)=> product.autocode===pd.autocode)
-  
-  
-        let wishToCartEncData = {"autocodelist":`${productData?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
-        
+        let isWishHasCartData = WishData?.filter((pd) => product.autocode === pd.autocode)
+
+
+        let wishToCartEncData = { "autocodelist": `${productData?.autocode}`, "ischeckall": 0, "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` }
+
         const finalJSON = {
             "stockweb_event": "",
             "designno": `${product?.designno}`,
@@ -222,8 +222,8 @@ const ProdDetail = () => {
         const wishToCartEncData1 =  btoa(JSON.stringify(wishToCartEncData));
   
         const body = {
-          con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${UserEmail}\"}`,
-          f: "AddToCartIconClick (addcartlist)",
+          con: `{\"id\":\"\",\"mode\":\"addwishlist\",\"appuserid\":\"${UserEmail}\"}`,
+          f: "AddToWishListIconClick (addwishlist)",
           p: encodedCombinedValue,
         };
   
@@ -253,8 +253,8 @@ const ProdDetail = () => {
       }
       else{
         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+        const UserEmail = localStorage.getItem("registerEmail")
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-        const UserEmail = localStorage.getItem("userEmail")
 
         productData.wishCheck = false;
         localStorage.setItem("srProductsData",JSON.stringify(productData))
@@ -267,8 +267,8 @@ const ProdDetail = () => {
   
         let encodedCombinedValue = btoa(JSON.stringify(Data))
         const body = {
-          con: `{\"id\":\"\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${UserEmail}\"}`,
-          f: "RemoveFromCartIconClick (removeFromCartList)",
+          con: `{\"id\":\"\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${UserEmail}\"}`,
+          f: "RemoveFromWishlistIconClick (removeFromWishList)",
           p: encodedCombinedValue,
         }
   
@@ -277,6 +277,7 @@ const ProdDetail = () => {
           if(res?.Data?.rd[0]?.stat_msg === "success"){
             // removefromCart()
             await getCartAndWishListData()
+            // await getCountApi()
             getCountFunc()
             // removefromCart(prod)
           }
@@ -792,7 +793,7 @@ const ProdDetail = () => {
 
                 <div style={{ marginTop: "23px" }}>
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
-                    Price: <span style={{fontWeight:'500',fontSize:'16px'}}>{`$${productData?.price}`}</span>
+                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{`$${productData?.price}`}</span>
                   </p>
                 </div>
 
@@ -802,28 +803,28 @@ const ProdDetail = () => {
                   </button>
                 </div> */}
 
-                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-                  
-                <div style={{ marginLeft: "-12px",display:'flex',alignItems:'center'}}>
-                  <Checkbox
-                    icon={
-                      <StarBorderIcon
-                        sx={{ fontSize: "25px", color: "#ffd200" }}
-                      />
-                    }
-                    checkedIcon={
-                      <StarIcon sx={{ fontSize: "25px", color: "#ffd200" }} />
-                    }
-                    disableRipple={true}
-                    checked={WishListFlag}
-                    onChange={(e)=>handelWishList(e)}
-                  />
-                  <span style={{ fontSize: "16px", color: "#7d7f85" }}>
-                    Add To Wishlist
-                  </span>
-                </div>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
 
-                {/* <Divider
+                  <div style={{ marginLeft: "-12px", display: 'flex', alignItems: 'center' }}>
+                    <Checkbox
+                      icon={
+                        <StarBorderIcon
+                          sx={{ fontSize: "25px", color: "#ffd200" }}
+                        />
+                      }
+                      checkedIcon={
+                        <StarIcon sx={{ fontSize: "25px", color: "#ffd200" }} />
+                      }
+                      disableRipple={true}
+                      checked={WishListFlag}
+                      onChange={(e) => handelWishList(e)}
+                    />
+                    <span style={{ fontSize: "16px", color: "#7d7f85" }}>
+                      Add To Wishlist
+                    </span>
+                  </div>
+
+                  {/* <Divider
                     orientation="vertical"
                     flexItem
                     style={{
@@ -833,31 +834,31 @@ const ProdDetail = () => {
                     }}
                   /> */}
 
-                <div style={{display:'flex',alignItems:'center',gap:'7px'}}>
-                  <Checkbox
-                    icon={
-                      <LocalMallOutlinedIcon
-                        sx={{ fontSize: "22px", color: "#ffd200" }}
-                      />
-                    }
-                    checkedIcon={
-                      <LocalMallIcon
-                        sx={{ fontSize: "22px", color: "#ffd200" }}
-                      />
-                    }
-                    disableRipple={true}
-                    // sx={{ padding: "5px" }}
-                    checked={cartFlag}
-                    onChange={(e)=>handelCart(e)}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                    <Checkbox
+                      icon={
+                        <LocalMallOutlinedIcon
+                          sx={{ fontSize: "22px", color: "#ffd200" }}
+                        />
+                      }
+                      checkedIcon={
+                        <LocalMallIcon
+                          sx={{ fontSize: "22px", color: "#ffd200" }}
+                        />
+                      }
+                      disableRipple={true}
+                      // sx={{ padding: "5px" }}
+                      checked={cartFlag}
+                      onChange={(e) => handelCart(e)}
                     // onClick={()=>}
                     // value={cartFlag}
                     // checked={products?.checkFlag}
                     // onChange={(e) => handelCartList(e, products)}
-                  />
-                  <span style={{ fontSize: "16px", color: "#7d7f85" }}>
-                    Add To Cart
-                  </span>
-                </div>
+                    />
+                    <span style={{ fontSize: "16px", color: "#7d7f85" }}>
+                      Add To Cart
+                    </span>
+                  </div>
                 </div>
 
                 {/* <div
@@ -1002,9 +1003,8 @@ const ProdDetail = () => {
                   </span>
                   {/* <div style={{display:acc && accNo === '1' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                   <div
-                    className={`my-list-fineJewe ${
-                      acc && accNo === "1" ? "openAcc" : ""
-                    }`}
+                    className={`my-list-fineJewe ${acc && accNo === "1" ? "openAcc" : ""
+                      }`}
                   >
                     <div>
                       <div className="srAccContainer">

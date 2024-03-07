@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
-import { Divider, Drawer } from '@mui/material';
+import { CircularProgress, Divider, Drawer } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -27,7 +27,7 @@ export default function Cart({ open, toggleCartDrawer }) {
         if (open) {
             getCartData();
         }
-    }, [open, isLoading]);
+    }, [open]);
 
     useEffect(() => {
         const storedData = JSON.parse(localStorage.getItem('QualityColor'));
@@ -111,6 +111,7 @@ export default function Cart({ open, toggleCartDrawer }) {
 
     const getCartData = async () => {
         try {
+            // cartListData.length === 0 && setIsLoading(true);
             const ImageURL = localStorage.getItem('UploadLogicalPath');
             setImageURL(ImageURL);
             const storedData = localStorage.getItem('loginUserDetail');
@@ -143,13 +144,13 @@ export default function Cart({ open, toggleCartDrawer }) {
         } catch (error) {
             console.error('Error:', error);
         } finally {
-            // setIsLoading(false);
+            setIsLoading(false);
         }
     }
 
     const handleRemove = async (data) => {
         try {
-            setIsLoading(true);
+            // setIsLoading(true);
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
             const { FrontEnd_RegNo } = storeInit;
             const combinedValue = JSON.stringify({
@@ -392,14 +393,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                     >
                                         <CloseIcon />
                                     </div>
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignContent: "center",
-                                            width: "30%",
-                                        }}
-                                    >
+                                    <div className='smilingCartImage'>
                                         <img
                                             src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
                                             className="smiling-cartBoxImg"
@@ -427,15 +421,14 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                 color: "#7d7f85",
                                             }}
                                         >
-                                            <p style={{margin: '0px'}}>Category : <span style={{fontWeight: 500}}>{item.Mastermanagement_CategoryName}</span></p>
-                                            <div style={{display: 'flex'}}>
-                                                <p style={{marginBlock: '5px'}}>GWT : <span style={{fontWeight: 500}}>{item.grossweight}</span></p>
-                                                <p style={{marginLeft: '50px' ,marginBlock: '5px'}}>NETW : <span style={{fontWeight: 500}}>{item.Rec_NetWeight}</span></p>
+                                            <p style={{ margin: '0px' }}>Category : <span style={{ fontWeight: 500 }}>{item.Mastermanagement_CategoryName}</span></p>
+                                            <div style={{ display: 'flex' }}>
+                                                <p style={{ marginBlock: '5px' }}>GWT : <span style={{ fontWeight: 500 }}>{item.grossweight}</span></p>
+                                                <p style={{ marginLeft: '50px', marginBlock: '5px' }}>NETW : <span style={{ fontWeight: 500 }}>{item.Rec_NetWeight}</span></p>
                                             </div>
-                                            <p>MTYPE / MCOLOR : <span style={{fontWeight: 500}}>{item.metaltypename} / {item.metalcolorname}</span></p>
+                                            <p>MTYPE / MCOLOR : <span style={{ fontWeight: 500 }}>{item.metaltypename} / {item.metalcolorname}</span></p>
                                             <br />
                                         </div>
-                                        {/* <p className="CartPageShipingInSmall">Ships in 14 days</p> */}
                                         {showDropdowns[index] ? (<div>
                                             <div
                                                 style={{ display: "flex", width: "100%", marginTop: "12px" }}
