@@ -35,15 +35,19 @@ import AccountLedgerExcel from './Pages/Components/account/accountLedgerExcelDow
 import AccountLedger from './Pages/Components/account/accountLedger/AccountLedger';
 import DebitVoucher from './Pages/Components/account/accountLedgerVouchers/debitVoucher/DebitVoucher';
 import CreditVoucher from './Pages/Components/account/accountLedgerVouchers/creditVoucher/CreditVoucher';
-import { openSignInModal } from '../../Recoil/atom'
-import { useRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts, openSignInModal } from '../../Recoil/atom'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import Payment from './Pages/Components/Payment/Payment'
 import Confirmation from './Pages/Components/confirmation/Confirmation'
+import { GetCount } from './Utils/API/GetCount'
 // import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
 
 export default function SMININGROCKS_App() {
 
     const [openLoginDailog, setOpenLoginDailog] = useRecoilState(openSignInModal);
+
+    const setCartCount = useSetRecoilState(CartListCounts)
+    const setWishCount = useSetRecoilState(WishListCounts)
 
     const navigation = useNavigate();
     const location =  useLocation();
@@ -75,6 +79,21 @@ export default function SMININGROCKS_App() {
     const closeLoginDailog = () => {
         setOpenLoginDailog(false);
     };
+
+    const getCountFunc = async() =>{
+
+        await GetCount().then((res)=>{
+          if(res){
+            setCartCount(res.CountCart)
+            setWishCount(res.WishCount)
+          }
+        })
+    
+      }
+
+      useEffect(()=>{
+        getCountFunc();
+      },[])
 
     
 

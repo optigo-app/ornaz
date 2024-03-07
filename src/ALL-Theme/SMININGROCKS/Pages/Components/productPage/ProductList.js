@@ -17,11 +17,12 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { event } from "jquery";
-import { CommonAPI } from "../../../Utils/API/CommonAPI";
+import { CommonAPI} from "../../../Utils/API/CommonAPI";
 import { async } from "q";
 import axios from "axios";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { CartListCounts, WishListCounts } from "../../../../../Recoil/atom";
+import { GetCount } from "../../../Utils/API/GetCount";
 
  
 const ProductList = () => {
@@ -42,12 +43,24 @@ const ProductList = () => {
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
 
-
   const navigate = useNavigate();
 
   const toggleDeatilList = () => {
-    setIsOpenDetail(!isOpenDetail);
+    setIsOpenDetail(!isOpenDetail)
   };
+
+  const getCountFunc = async() =>{
+
+    await GetCount().then((res)=>{
+      if(res){
+        setCartCount(res.CountCart)
+        setWishCount(res.WishCount)
+      }
+    })
+
+  }
+
+
 
 
   const fetchFile = async () => {
@@ -70,13 +83,9 @@ const ProductList = () => {
     fetchFile()
   },[])
 
-
-
   const toggleDrawerOverlay = () => {
     setDrawerShowOverlay(!drawerShowOverlay);
   };
-
-  
 
   let productData = [];
 
@@ -99,8 +108,6 @@ const ProductList = () => {
   //   });
   //   product2Data.push(obj);
   // });
-
-
 
   // console.log("product2Data",ProductApiData?.data[0]?.map((ele)=>ele))
 
@@ -173,9 +180,22 @@ const ProductList = () => {
       const gendertype = filterData.GenderList.find(
         (gen) => gen.Genderid === product.Genderid
       );
+      const Berandtype = filterData.BrandList.find(
+        (brand) => brand.Brandid === product.Brandid
+      )
+      const MetalType = filterData.MetalTypeList.find(
+        (mt)=> mt.MetalTypeid === product.MetalTypeid
+      )
+      const OcassionType = filterData.OcassionList.find(
+        (ocs)=> ocs.Ocassionid === product.Ocassionid
+      )
+      const SubCategoryType = filterData.SubCategoryList.find(
+        (sct)=>sct.SubCategoryid === product.SubCategoryid
+      )
+      const ThemeType = filterData.ThemeList.find(
+        (tl)=>tl.Themeid === product.Themeid
+      )
 
-    
-      
       if (metalColor) {
         product.MetalColorName = metalColor.MetalColorName;
       }
@@ -193,6 +213,21 @@ const ProductList = () => {
       }
       if (gendertype) {
         product.GenderName = gendertype.GenderName;
+      }
+      if(Berandtype){
+        product.Berandid = Berandtype.BrandName
+      }
+      if(MetalType){
+        product.MetalTypeName = MetalType.MetalTypeName
+      }
+      if(OcassionType){
+        product.OcassionName = OcassionType.OcassionName
+      }
+      if(SubCategoryType){
+        product.SubCategoryName = SubCategoryType.SubCategoryName
+      }
+      if(ThemeType){
+        product.Themeid = ThemeType.Themeid
       }
     });
 
@@ -225,6 +260,7 @@ return productData
 
 diffCartData()
 
+console.log("WishData",WishData);
 
 
 const diffWishData = useCallback(()=>{
@@ -435,35 +471,35 @@ removefromCart()
   // console.log("finalDataOfDisplaying",finalDataOfDisplaying());
 
   
-  const getCountApi = async()=>{
+  // const getCountApi = async()=>{
 
-        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-        const UserEmail = localStorage.getItem("registerEmail")
+  //       const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+  //       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+  //       const UserEmail = localStorage.getItem("userEmail")
 
 
-    let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
+  //   let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
 
-    const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
+  //   const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
 
-    let body = {
-        "con":`{\"id\":\"\",\"mode\":\"Getcount\",\"appuserid\":\"${UserEmail}\"}`,
-        "f":"onAddToCart-AddToWishList-Reload (cartcount)",
-        "p":encodedCombinedValue
-        }
+  //   let body = {
+  //       "con":`{\"id\":\"\",\"mode\":\"Getcount\",\"appuserid\":\"${UserEmail}\"}`,
+  //       "f":"onAddToCart-AddToWishList-Reload (cartcount)",
+  //       "p":encodedCombinedValue
+  //       }
 
-    await CommonAPI(body).then((res)=>{
-      if(res?.Data?.rd[0]?.msg === "success"){
-        const CountCart = res?.Data?.rd[0]?.cartcount
-        const WishCount = res?.Data?.rd[0]?.wishcount
+  //   await CommonAPI(body).then((res)=>{
+  //     if(res?.Data?.rd[0]?.stat_msg === "success"){
+  //       const CountCart = res?.Data?.rd[0]?.cartcount
+  //       const WishCount = res?.Data?.rd[0]?.wishcount
 
-        setCartCount(CountCart)
-        setWishCount(WishCount)
+  //       setCartCount(CountCart)
+  //       setWishCount(WishCount)
 
-      }
-    })
+  //     }
+  //   })
 
-  }
+  // }
 
   const getCartAndWishListData = async() =>{
   
@@ -494,7 +530,8 @@ removefromCart()
   useEffect(()=>{
 
     getCartAndWishListData();
-    getCountApi();
+    // getCountApi()
+    getCountFunc()
 
   },[])
 
@@ -521,7 +558,7 @@ removefromCart()
           "stockno": "",
           "is_show_stock_website": "0",
           "cmboDiaQualityColor": "C-VS#@#FG",
-          "cmboMetalType": "GOLD 10K",
+          "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
           "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
           "BrandName":`${product?.BrandName ?? ""}`,
           "Brandid": 5,
@@ -551,7 +588,7 @@ removefromCart()
           "MetalColorid": Number(`${product?.MetalColorid}`),
           "MetalPurity": `${product?.MetalPurity}`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-          "MetalTypeName": "",
+          "MetalTypeName":`${product?.MetalTypeName ?? ""}`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
           "MetalWeight": Number(`${product?.MetalWeight}`),
           "OcassionName": `${product?.OcassionName ?? ""}`,
@@ -572,7 +609,7 @@ removefromCart()
           "designno": `${product?.designno}`,
           "diamondcolorname": `${product?.diamondcolorname}`,
           "diamondpcs":Number(`${product?.diamondpcs}`),
-          "diamondquality":`${product?.diamondquality}`,
+          "diamondquality":`${product?.diamondquality.split(",")[0]}`,
           "diamondsetting":`${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
@@ -594,7 +631,7 @@ removefromCart()
           "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
-          "DQuality": `${product?.diamondquality}`,
+          "DQuality": `${product?.diamondquality.split(",")[0]}`,
           "DColor":`${product?.diamondcolorname}`,
           "UploadLogicalPath":`${product?.UploadLogicalPath ?? ""}`,
           "ukey": `${storeInit?.ukey}`
@@ -615,7 +652,8 @@ removefromCart()
             
 
             await getCartAndWishListData()
-            await getCountApi()
+            // await getCountApi()
+            getCountFunc()
             
           }
       })
@@ -646,7 +684,8 @@ removefromCart()
           if(res?.Data?.rd[0]?.stat_msg === "success"){
             // removefromCart()
             await getCartAndWishListData()
-            await getCountApi()
+            // await getCountApi()
+            getCountFunc()
             // removefromCart(prod)
           }
       })
@@ -693,9 +732,9 @@ const handelCartList = async(event,prod)=>{
           "metaltypeid": `${product?.MetalTypeid}`,
           "metalcolorid": `${product?.MetalColorid}`,
           "stockno": "",
-          "DQuality": `${product?.diamondquality}`,
+          "DQuality": `${product?.diamondquality.split(",")[0]}`,
           "DColor":`${product?.diamondcolorname}`,
-          "cmboMetalType":"",
+          "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
           "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
           "BrandName":`${product?.BrandName ?? ""}`,
           "Brandid":Number(`${product?.Brandid}`),
@@ -714,7 +753,7 @@ const handelCartList = async(event,prod)=>{
           "Grossweight":Number(`${product?.Grossweight}`),
           "InReadyStockCnt":Number(`${product?.InReadyStockCnt}`),
           "IsBestSeller":Number(`${product?.IsBestSeller}`),
-          "IsColorWiseImageExists":`${product?.IsColorWiseImageExists}`,
+          "IsColorWiseImageExists":`${product?.IsColorWiseImageExists ?? 0}`,
           "IsInReadyStock":Number(`${product?.IsInReadyStock}`),
           "IsNewArrival":`${product?.IsNewArrival}`,
           "IsRollOverColorWiseImageExists":`${product?.IsRollOverColorWiseImageExists}`,
@@ -725,7 +764,7 @@ const handelCartList = async(event,prod)=>{
           "MetalColorid": Number(`${product?.MetalColorid}`),
           "MetalPurity": `${product?.MetalPurity}`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-          "MetalTypeName": "",
+          "MetalTypeName": `${product?.MetalTypeName}`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
           "MetalWeight": Number(`${product?.MetalWeight}`),
           "OcassionName": `${product?.OcassionName ?? ""}`,
@@ -734,7 +773,7 @@ const handelCartList = async(event,prod)=>{
           "Producttypeid": Number(`${product?.Producttypeid}`),
           "RollOverImageName":`${product?.RollOverImageName}`,
           "SubCategoryName":`${product?.SubCategoryName ?? ""}`,
-          "SubCategoryid":Number(`${product?.SubCategoryid ?? ""}`),
+          "SubCategoryid":Number(`${product?.SubCategoryid}`),
           "ThemeName":`${product?.ThemeName ?? ""}`,
           "Themeid":Number(`${product?.Themeid}`),
           "TitleLine":`${product?.TitleLine}`,
@@ -744,7 +783,7 @@ const handelCartList = async(event,prod)=>{
           "colorstonequality": `${product?.colorstonequality}`,
           "diamondcolorname": `${product?.diamondcolorname}`,
           "diamondpcs":Number(`${product?.diamondpcs}`),
-          "diamondquality":`${product?.diamondquality}`,
+          "diamondquality":`${product?.diamondquality.split(",")[0]}`,
           "diamondsetting":`${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
@@ -790,13 +829,15 @@ const handelCartList = async(event,prod)=>{
           // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
           if(!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success"){
             await getCartAndWishListData()
-            await getCountApi()
+            // await getCountApi()
+            getCountFunc()
             // prod.checkFlag=false
           }
 
           if(isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success"){
             await getCartAndWishListData()
-            await getCountApi()
+            // await getCountApi()
+            getCountFunc()
           }
       })
 
@@ -825,7 +866,8 @@ const handelCartList = async(event,prod)=>{
         if(res?.Data?.rd[0]?.stat_msg === "success"){
           // removefromCart()
           await getCartAndWishListData()
-          await getCountApi()
+          // await getCountApi()
+          getCountFunc()
           // removefromCart(prod)
         }
     })

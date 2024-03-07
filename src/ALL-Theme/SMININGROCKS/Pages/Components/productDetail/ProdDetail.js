@@ -7,12 +7,16 @@ import { Checkbox, Divider, Skeleton } from '@mui/material'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import filterData from '../../jsonFile/M_4_95oztttesi0o50vr.json'
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
 
 const ProdDetail = () => {
 
-  const [acc, setAcc] = useState(false);
-  const [accNo, setAccNo] = useState('');
-  const [imgLoading, setImgLoading] = useState(true);
+    const[acc,setAcc]=useState(false);
+    const[accNo,setAccNo]=useState('');
+    const [imgLoading, setImgLoading] = useState(true);
+    const [cartFlag,setCartFlag] = useState(false);
+    const [WishListFlag,setWishListFlag] = useState(false);
 
   const [productData, setProductData] = useState();
   const [thumbImg, setThumbImg] = useState();
@@ -21,10 +25,16 @@ const ProdDetail = () => {
     setImgLoading(false)
   }
 
-  useEffect(() => {
-    let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
-    setProductData(localProductData)
-  }, [])
+    const handelLocalStorage = () =>{
+      let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
+      setProductData(localProductData)
+      setWishListFlag(localProductData?.wishCheck)
+      setCartFlag(localProductData?.checkFlag)
+    }
+
+    useEffect(() => {
+      handelLocalStorage();
+    }, [])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -46,7 +56,202 @@ const ProdDetail = () => {
       return i === thumbImg
     })
 
-    return filterImg
+      return filterImg 
+    }
+
+
+  //   const handelCartList = async(event)=>{
+
+  //     try{
+  //       setCartFlag(event.target.checked)
+  
+  //       if(event.target.checked === true){
+  //         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+  //       const UserEmail = localStorage.getItem("userEmail")
+  //       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+    
+  //       const product =  productData 
+  
+  //       // let isWishHasCartData = WishData?.filter((pd)=> productData.find((wd)=>wd.autocode===pd.autocode))
+  //       // console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
+  
+  
+  //       let wishToCartEncData = {"autocodelist":`${productData?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
+        
+  
+    
+  //       const finalJSON = {
+  //           "stockweb_event": "",
+  //           "designno": `${product?.designno}`,
+  //           "autocode": `${product?.autocode}`,
+  //           "imgrandomno": `${product?.imgrandomno}`,
+  //           "producttypeid": `${product?.Producttypeid}`,
+  //           "metaltypeid": `${product?.MetalTypeid}`,
+  //           "metalcolorid": `${product?.MetalColorid}`,
+  //           "stockno": "",
+  //           "DQuality": `${product?.diamondquality.split(",")[0]}`,
+  //           "DColor":`${product?.diamondcolorname}`,
+  //           "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
+  //           "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
+  //           "BrandName":`${product?.BrandName ?? ""}`,
+  //           "Brandid":Number(`${product?.Brandid}`),
+  //           "CategoryName":`${product?.CategoryName}`,
+  //           "Categoryid":Number(`${product?.Categoryid}`),
+  //           "CenterStoneId":Number(`${product?.CenterStoneId}`),
+  //           "CenterStonePieces":Number(`${product?.CenterStonePieces}`),
+  //           "CollectionName":`${product?.CollectionName}`,
+  //           "Collectionid":Number(`${product?.Collectionid}`),
+  //           "ColorWiseRollOverImageName":`${product?.ColorWiseRollOverImageName}`,
+  //           "DefaultImageName":`${product?.DefaultImageName}`,
+  //           "DisplayOrder":Number(`${product?.DisplayOrder}`),
+  //           "FrontEnd_OrderCnt":Number(`${product?.FrontEnd_OrderCnt}`),
+  //           "GenderName":`${product?.GenderName}`,
+  //           "Genderid":Number(`${product?.Genderid}`),
+  //           "Grossweight":Number(`${product?.Grossweight}`),
+  //           "InReadyStockCnt":Number(`${product?.InReadyStockCnt}`),
+  //           "IsBestSeller":Number(`${product?.IsBestSeller}`),
+  //           "IsColorWiseImageExists":`${product?.IsColorWiseImageExists ?? 0}`,
+  //           "IsInReadyStock":Number(`${product?.IsInReadyStock}`),
+  //           "IsNewArrival":`${product?.IsNewArrival}`,
+  //           "IsRollOverColorWiseImageExists":`${product?.IsRollOverColorWiseImageExists}`,
+  //           "IsTrending":Number(`${product?.IsTrending}`),
+  //           "MasterManagement_labid":Number(`${product?.MasterManagement_labid}`),
+  //           "MasterManagement_labname": "",
+  //           "MetalColorName": `${product?.MetalColorName}`,
+  //           "MetalColorid": Number(`${product?.MetalColorid}`),
+  //           "MetalPurity": `${product?.MetalPurity}`,
+  //           "MetalPurityid": Number(`${product?.MetalTypeid}`),
+  //           "MetalTypeName": `${product?.MetalTypeName}`,
+  //           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
+  //           "MetalWeight": Number(`${product?.MetalWeight}`),
+  //           "OcassionName": `${product?.OcassionName ?? ""}`,
+  //           "Ocassionid": Number(`${product?.Ocassionid}`),
+  //           "ProducttypeName":`${product?.ProducttypeName}`,
+  //           "Producttypeid": Number(`${product?.Producttypeid}`),
+  //           "RollOverImageName":`${product?.RollOverImageName}`,
+  //           "SubCategoryName":`${product?.SubCategoryName ?? ""}`,
+  //           "SubCategoryid":Number(`${product?.SubCategoryid}`),
+  //           "ThemeName":`${product?.ThemeName ?? ""}`,
+  //           "Themeid":Number(`${product?.Themeid}`),
+  //           "TitleLine":`${product?.TitleLine}`,
+  //           "UnitCost": Number(`${product?.UnitCost}`),
+  //           "UnitCostWithmarkup":Number( `${product?.UnitCostWithmarkup}`),
+  //           "colorstonecolorname": `${product?.colorstonecolorname}`,
+  //           "colorstonequality": `${product?.colorstonequality}`,
+  //           "diamondcolorname": `${product?.diamondcolorname}`,
+  //           "diamondpcs":Number(`${product?.diamondpcs}`),
+  //           "diamondquality":`${product?.diamondquality.split(",")[0]}`,
+  //           "diamondsetting":`${product?.diamondsetting}`,
+  //           "diamondshape": `${product?.diamondshape}`,
+  //           "diamondweight": Number(`${product?.diamondweight}`),
+  //           "encrypted_designno":`${product?.encrypted_designno}`,
+  //           "hashtagid":`${product?.hashtagid}`,
+  //           "hashtagname": `${product?.hashtagname}`,
+  //           "imagepath": `${product?.imagepath}`,
+  //           "mediumimage":`${product?.mediumimage ?? ""}`,
+  //           "originalimage":`${product?.originalimage}`,
+  //           "storyline_html": `${product?.storyline_html}`,
+  //           "storyline_video": `${product?.storyline_video}`,
+  //           "thumbimage":`${product?.thumbimage}`,
+  //           "totaladditionalvalueweight":Number(`${product?.totaladditionalvalueweight}`),
+  //           "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
+  //           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
+  //           "updatedate": `${product?.updatedate}`,
+  //           "videoname":`${product?.videoname ?? ""}`,
+  //           "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
+  //           "Customerid": `${Customer_id?.id}`,
+  //           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
+  //           "quantity": `${product?.quantity ?? "1"}`
+  //       }
+  
+  //       const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
+  //       const wishToCartEncData1 =  btoa(JSON.stringify(wishToCartEncData));
+  
+  //       const body = {
+  //         con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${UserEmail}\"}`,
+  //         f: "AddToCartIconClick (addcartlist)",
+  //         p: encodedCombinedValue,
+  //       };
+  
+  //       let body1 = {
+  //         con:`{\"id\":\"Store\",\"mode\":\"addwishlisttocart\",\"appuserid\":\"${UserEmail}\"}`,
+  //         f:"iconclick (addwishlisttocart)",
+  //         p: wishToCartEncData1
+  //       }
+  
+    
+        
+        
+  //       await CommonAPI(isWishHasCartData.length? body1 : body).then(async(res)=>{
+  //           // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+  //           if(!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success"){
+  //             await getCartAndWishListData()
+  //             await getCountApi()
+  //             // prod.checkFlag=false
+  //           }
+  
+  //           if(isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success"){
+  //             await getCartAndWishListData()
+  //             await getCountApi()
+  //           }
+  //       })
+  
+  //       // let isWishHasCartData = WishData?.filter((wd)=> wd.autocode === prod.autocode)
+  //       //  console.log("isWishHasCartData",isWishHasCartData)
+  
+  //     }
+  //     else{
+  //       const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+  //       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+  //       const UserEmail = localStorage.getItem("userEmail")
+        
+  //       let prod = productData
+
+  //       // setCartRemoveData(prod.designno)
+  
+  //       let Data = {"designno":`${prod?.designno}`,"autocode":`${prod?.autocode}`,"metalcolorid":0,"isSolStockNo":0,"is_show_stock_website":"0","isdelete_all":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`,"cartidlist":""}
+  
+  //       let encodedCombinedValue = btoa(JSON.stringify(Data))
+  //       const body = {
+  //         con: `{\"id\":\"\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${UserEmail}\"}`,
+  //         f: "RemoveFromCartIconClick (removeFromCartList)",
+  //         p: encodedCombinedValue,
+  //       }
+  
+  //       await CommonAPI(body).then(async(res)=>{
+  //         // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+  //         if(res?.Data?.rd[0]?.stat_msg === "success"){
+  //           // removefromCart()
+  //           await getCartAndWishListData()
+  //           await getCountApi()
+  //           // removefromCart(prod)
+  //         }
+  //     })
+  
+  //     }
+  
+  //     }
+  //     catch(error){
+  //       console.log("error",error);
+  //     }
+      
+  // }
+
+
+  const handelCart = (e) =>{
+    handelLocalStorage()
+    setCartFlag(e.target.checked)
+
+
+
+  }
+
+  const handelWishList = (e) =>{
+
+    productData.wishCheck = e.target.checked;
+    setWishListFlag(e.target.checked)
+    localStorage.setItem("srProductsData",JSON.stringify(productData))
+
   }
 
   return (
@@ -56,7 +261,7 @@ const ProdDetail = () => {
         height: "100%",
         width: "100%",
         paddingBottom: "100px",
-        paddingTop: '110px'
+        paddingTop: "110px",
       }}
     >
       <div
@@ -66,27 +271,32 @@ const ProdDetail = () => {
           alignItems: "center",
         }}
       >
-        <div className='prodDetailWhitecont' >
-          <div className="product-detail-container" >
-            <div className='srprodetail1' >
+        <div className="prodDetailWhitecont">
+          <div className="product-detail-container">
+            <div className="srprodetail1">
               {/* {!imgLoading */}
 
-              {imgLoading &&
-                <Skeleton sx={{
-                  width: "100%",
-                  // zindex: 11111,
-                  // position: "relative",
-                  // objectFit: "cover",
-                  marginLeft: '51px',
-                  marginTop: '5%',
-                  height: '90%'
-                  // display: !imgLoading ? "none": "block"
-                }}
-                  variant="rounded" />
-              }
+              {imgLoading && (
+                <Skeleton
+                  sx={{
+                    width: "100%",
+                    // zindex: 11111,
+                    // position: "relative",
+                    // objectFit: "cover",
+                    marginLeft: "51px",
+                    marginTop: "5%",
+                    height: "90%",
+                    // display: !imgLoading ? "none": "block"
+                  }}
+                  variant="rounded"
+                />
+              )}
               <img
                 src={
-                  productData?.imagepath + (!handelmainImg()?.length ? productData?.originalimage.split(",")[0] : handelmainImg())
+                  productData?.imagepath +
+                  (!handelmainImg()?.length
+                    ? productData?.originalimage.split(",")[0]
+                    : handelmainImg())
                 }
                 alt={""}
                 style={{
@@ -94,26 +304,25 @@ const ProdDetail = () => {
                   zindex: -1,
                   position: "relative",
                   objectFit: "cover",
-                  marginLeft: '51px',
-                  display: imgLoading ? "none" : "block"
+                  marginLeft: "51px",
+                  display: imgLoading ? "none" : "block",
                 }}
-
                 onLoad={handelImgLoad}
               />
               {/* } */}
-              <div className='srthumb_images' >
+              <div className="srthumb_images">
                 {productData?.thumbimage.split(",").map((data, i) => (
                   <img
                     src={productData?.imagepath + data}
                     alt={""}
-                    className='srthumb_images_el'
+                    className="srthumb_images_el"
                     onClick={() => setThumbImg(i)}
                   />
                 ))}
               </div>
             </div>
-            <div className='srprodetail2' >
-              <div className='srprodetail2-cont'>
+            <div className="srprodetail2">
+              <div className="srprodetail2-cont">
                 <p
                   style={{
                     fontSize: "40px",
@@ -174,11 +383,12 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                       }}
                     >
-                      Diamond Quality Color: {`${productData?.diamondquality}-${productData?.diamondcolorname}`}
+                      Diamond Quality Color:{" "}
+                      {`${productData?.diamondquality}-${productData?.diamondcolorname}`}
                     </sapn>
                   </div>
-                  {productData?.IsColorWiseImageExists
-                    !== null && <div
+                  {productData?.IsColorWiseImageExists !== null && (
+                    <div
                       style={{ display: "flex", gap: "5px" }}
                       className="part2"
                     >
@@ -230,7 +440,8 @@ const ProdDetail = () => {
                           }}
                         ></div>
                       </div>
-                    </div>}
+                    </div>
+                  )}
                 </div>
 
                 <div
@@ -301,7 +512,7 @@ const ProdDetail = () => {
                   </div>
                 </div>
 
-                <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
+                <Divider sx={{ marginTop: "20px", background: "#a9a7a7" }} />
 
                 <div
                   style={{ display: "flex", width: "100%", marginTop: "12px" }}
@@ -325,11 +536,9 @@ const ProdDetail = () => {
                         fontSize: "12.5px",
                       }}
                     >
-                      {
-                        filterData.MetalColorList.map((mtcol) => (
-                          <option>{mtcol.MetalColorName}</option>
-                        ))
-                      }
+                      {filterData.MetalColorList.map((mtcol) => (
+                        <option>{mtcol.MetalColorName}</option>
+                      ))}
                     </select>
                   </div>
                   <Divider
@@ -359,46 +568,84 @@ const ProdDetail = () => {
                         fontSize: "12.5px",
                       }}
                     >
-                      {
-                        filterData.MetalTypeList.map((mtype) => (
-                          <option>{mtype.MetalTypeName}</option>
-                        ))
-                      }
+                      {filterData.MetalTypeList.map((mtype) => (
+                        <option>{mtype.MetalTypeName}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
 
-
                 <div style={{ marginTop: "23px" }}>
-                  <p style={{ color: "#7d7f85", fontSize: "12px" }}>
-                    Price: {`$${productData?.price}`}
+                  <p style={{ color: "#7d7f85", fontSize: "14px" }}>
+                    Price: <span style={{fontWeight:'500',fontSize:'16px'}}>{`$${productData?.price}`}</span>
                   </p>
                 </div>
 
-                <div>
+                {/* <div>
                   <button className="prodetailbtn">
                     Inquire about product
                   </button>
                 </div>
 
-                <div style={{ marginLeft: "-12px" }}>
+                <div style={{display:'flex',flexDirection:'row-reverse',justifyContent:'space-between',alignItems:'center'}}>
+                  
+                <div style={{ display:'flex',alignItems:'center'}}>
                   <Checkbox
                     icon={
                       <StarBorderIcon
+                        sx={{ fontSize: "25px", color: "#ffd200" }}
+                      />
+                    }
+                    checkedIcon={
+                      <StarIcon sx={{ fontSize: "25px", color: "#ffd200" }} />
+                    }
+                    disableRipple={true}
+                    checked={WishListFlag}
+                    onChange={(e)=>handelWishList(e)}
+                  />
+                  <span style={{ fontSize: "16px", color: "#7d7f85" }}>
+                    Add To Wishlist
+                  </span>
+                </div>
+
+                {/* <Divider
+                    orientation="vertical"
+                    flexItem
+                    style={{
+                      opacity: 1,
+                      height: "50px",
+                      margin: "10px 10px 0px 10px",
+                    }}
+                  /> */}
+
+                <div style={{marginLeft: "-12px",display:'flex',alignItems:'center',gap:'7px'}}>
+                  <Checkbox
+                    icon={
+                      <LocalMallOutlinedIcon
                         sx={{ fontSize: "22px", color: "#ffd200" }}
                       />
                     }
                     checkedIcon={
-                      <StarIcon sx={{ fontSize: "22px", color: "#ffd200" }} />
+                      <LocalMallIcon
+                        sx={{ fontSize: "22px", color: "#ffd200" }}
+                      />
                     }
                     disableRipple={true}
+                    sx={{ padding: "5px" }}
+                    checked={cartFlag}
+                    onChange={(e)=>handelCart(e)}
+                    // onClick={()=>}
+                    // value={cartFlag}
+                    // checked={products?.checkFlag}
+                    // onChange={(e) => handelCartList(e, products)}
                   />
-                  <span style={{ fontSize: "12px", color: "#7d7f85" }}>
-                    Wishlist
+                  <span style={{ fontSize: "16px", color: "#7d7f85" }}>
+                    Add To Cart
                   </span>
                 </div>
+                </div>
 
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
@@ -499,13 +746,11 @@ const ProdDetail = () => {
                     Custom Jewelry: If you would like to customize this jewelry,
                     please email us at order@smilingrocks.com.
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
-          <div
-            className='Acc-container'
-          >
+          <div className="Acc-container">
             <div
               style={{
                 display: "flex",
@@ -524,7 +769,7 @@ const ProdDetail = () => {
               >
                 Tell Me More
               </p>
-              <ul className='srAccul'>
+              <ul className="srAccul">
                 <li
                   className="tellmoreli"
                   onClick={() => {
@@ -572,10 +817,12 @@ const ProdDetail = () => {
                             <b>DiamondQuality</b>: {productData?.diamondquality}
                           </span>
                           <span>
-                            <b>DiamondColorname</b>: {productData?.diamondcolorname}
+                            <b>DiamondColorname</b>:{" "}
+                            {productData?.diamondcolorname}
                           </span>
                           <span>
-                            <b>TotalDiamondWeight</b>: {productData?.totaldiamondweight}
+                            <b>TotalDiamondWeight</b>:{" "}
+                            {productData?.totaldiamondweight}
                           </span>
                           <span>
                             <b>DiamondSetting</b>: {productData?.diamondsetting}
@@ -657,6 +904,7 @@ const ProdDetail = () => {
                     <span style={{fontSize:'12px'}}>All our rings can be resized by one size up or down, except for Eternity Bands.</span>
                   </div>
                 </li> */}
+                {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                 {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                 {/* <li
                   className="tellmoreli"

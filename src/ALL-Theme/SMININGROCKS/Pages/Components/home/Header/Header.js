@@ -23,8 +23,9 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { CartListCounts, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import Cart from "./Cart";
+import titleImg from "../../../assets/title/sonasons.png"
 
-export default function Header({ onLoginClick }) {
+export default function Header() {
   const navigation = useNavigate();
   const [inputValue, setInputValue] = useState(1);
   const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
@@ -34,6 +35,9 @@ export default function Header({ onLoginClick }) {
   const [isOpenCollection, setIsOpenCollection] = useState(false);
   const [isOpenBouti, setIsOpenBouti] = useState(false);
   const [finalData, setFinalData] = useState([]);
+  const [menu1Index,setMenu1Index] = useState(null);
+  const [menu2Index,setMenu2Index] = useState(null);
+
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
   const setSigninPopupOpen = useSetRecoilState(openSignInModal)
@@ -243,6 +247,8 @@ export default function Header({ onLoginClick }) {
 
   const handleDropdownClose = () => {
     setIsDropdownOpen(false);
+    setMenu1Index(null)
+    setMenu2Index(null)
   };
 
   const [openCart, setOpenCart] = useState(false);
@@ -687,7 +693,7 @@ export default function Header({ onLoginClick }) {
             }}
           >
             <a href="/">
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="#7d7f85"
                 width="80%"
@@ -709,7 +715,8 @@ export default function Header({ onLoginClick }) {
                     <path fill="currentColor" d="M0 0h650.66v137.01H0z"></path>
                   </clipPath>
                 </defs>
-              </svg>
+              </svg> */}
+              <img src={titleImg}/>
             </a>
           </div>
           <div
@@ -823,16 +830,49 @@ export default function Header({ onLoginClick }) {
           >
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {finalData.map((fd) => (
-                <span className="level0Menu">{fd?.menuname}</span>
+              {finalData.map((fd,i) => (
+                <span 
+                    className="level0Menu" 
+                    onMouseEnter={()=>setMenu1Index(i)} 
+                    // onMouseLeave={()=>setMenu1Index(null)}
+                >
+                      {fd?.menuname}
+                </span>
               ))}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {finalData?.map((fd) => (
-                fd.param1?.map((fd1) => (
-                  <span className="level0Menu">{fd1?.param1dataname}</span>
-                ))
+            <div  style={{
+              display:'flex',
+              flexDirection:'column',
+              gap:'12px',
+              // borderLeft:menu1Index !== null && '1px solid #e1e1e1',
+              paddingLeft:'20px'}}
+              >
+            {finalData[menu1Index]?.param1.map((fd,i) => (
+              <div>
+                <div></div>
+                <span 
+                    className="level1Menu" 
+                    onMouseEnter={()=>setMenu2Index(i)} 
+                    // onMouseLeave={()=>setMenu2Index(null)}
+                    >
+                      {fd?.param1dataname}
+                </span>
+              </div>
+             ))}
+            </div>
+
+            <div  
+              style={{
+                display:'flex',
+                flexDirection:'column',
+                gap:'12px',
+                // borderLeft: menu2Index !== null && '1px solid #e1e1e1',
+                paddingLeft:'20px'
+              }}
+                >
+            {finalData[menu1Index]?.param1?.map((fd)=>fd)[menu2Index]?.param2?.map((fd1)=>(
+              <span className="level2Menu" >{fd1?.param2dataname}</span>
               ))}
             </div>
 
@@ -915,7 +955,7 @@ export default function Header({ onLoginClick }) {
               }}
             >
               <a href="/">
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="#7d7f85"
                   width="80%"
@@ -940,7 +980,8 @@ export default function Header({ onLoginClick }) {
                       ></path>
                     </clipPath>
                   </defs>
-                </svg>
+                </svg> */}
+                <img src={titleImg}/>
               </a>
             </div>
             <div
