@@ -28,8 +28,8 @@ const AccountLedgerTable = () => {
                     <table className='w-100'>
                         <thead className='w-100 border'>
                             <tr className='w-100 border-bottom fs_alt'>
-                                <td className='fw-bold text-center border-end' colSpan={7}>DEBIT</td>
-                                <td className='fw-bold text-center' colSpan={7}>CREDIT</td>
+                                <td className='fw-bold text-center border-end' colSpan={9}>DEBIT</td>
+                                <td className='fw-bold text-center' colSpan={9}>CREDIT</td>
                             </tr>
                             <tr className='w-100 border-bottom-0 fw-bold fs_alt'>
                                 <td className='border-end p-1 text-center w_al'>DATE</td>
@@ -37,6 +37,8 @@ const AccountLedgerTable = () => {
                                 <td className='border-end p-1 text-center w_al'>VOUCHER</td>
                                 <td className='border-end p-1 text-center w_al'>METAL</td>
                                 <td className='border-end p-1 text-center w_al'>DIAM.</td>
+                                <td className='border-end p-1 text-center w_al'>RATE</td>
+                                <td className='border-end p-1 text-center w_al'>CURRENCY RATE</td>
                                 <td className='border-end p-1 text-center w_al'>AMOUNT</td>
                                 <td className='border-end p-1 text-center w_al'>VERIFIED</td>
                                 <td className='border-end p-1 text-center w_al'>DATE</td>
@@ -44,6 +46,8 @@ const AccountLedgerTable = () => {
                                 <td className='border-end p-1 text-center w_al'>VOUCHER</td>
                                 <td className='border-end p-1 text-center w_al'>METAL</td>
                                 <td className='border-end p-1 text-center w_al'>DIAM.</td>
+                                <td className='border-end p-1 text-center w_al'>RATE</td>
+                                <td className='border-end p-1 text-center w_al'>CURRENCY RATE</td>
                                 <td className='border-end p-1 text-center w_al'>AMOUNT</td>
                                 <td className='p-1 text-center w_al'>VERIFIED</td>
                             </tr>
@@ -58,6 +62,8 @@ const AccountLedgerTable = () => {
                                             <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline'>CRO158</td>
                                             <td className='border-end p-1 text-end pe-1'>0.540</td>
                                             <td className='border-end p-1 text-end pe-1'>5.00</td>
+                                            <td className='border-end p-1 text-end pe-1'>rate</td>
+                                            <td className='border-end p-1 text-end pe-1'>crate</td>
                                             <td className='border-end p-1 text-end pe-1'>7500</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'>04 Mar 24</td>
@@ -65,6 +71,8 @@ const AccountLedgerTable = () => {
                                             <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline'>CRI683</td>
                                             <td className='border-end p-1 text-end pe-1'>10.000</td>
                                             <td className='border-end p-1 text-end pe-1'>100.00</td>
+                                            <td className='border-end p-1 text-end pe-1'>rate</td>
+                                            <td className='border-end p-1 text-end pe-1'>crate</td>
                                             <td className='border-end p-1 text-end pe-1'>10,000</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr>
@@ -77,6 +85,8 @@ const AccountLedgerTable = () => {
                                             <td className='border-end p-1 text-start ps-1'></td>
                                             <td className='border-end p-1 text-end pe-1'>0.540</td>
                                             <td className='border-end p-1 text-end pe-1'>5.00</td>
+                                            <td className='border-end p-1 text-end pe-1'>rate</td>
+                                            <td className='border-end p-1 text-end pe-1'>crate</td>
                                             <td className='border-end p-1 text-end pe-1'>7500</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
@@ -84,6 +94,8 @@ const AccountLedgerTable = () => {
                                             <td className='border-end p-1 text-start ps-1'></td>
                                             <td className='border-end p-1 text-end pe-1'>10.000</td>
                                             <td className='border-end p-1 text-end pe-1'>100.00</td>
+                                            <td className='border-end p-1 text-end pe-1'>rate</td>
+                                            <td className='border-end p-1 text-end pe-1'>crate</td>
                                             <td className='border-end p-1 text-end pe-1'>10,000</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr>

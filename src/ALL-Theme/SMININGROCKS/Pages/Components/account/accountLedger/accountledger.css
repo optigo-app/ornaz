@@ -26,6 +26,9 @@
 .daybtn:hover{
     background-color: rgb(210, 213, 213);
 }
+.selected {
+    border: 1px solid darkgray !important;
+}
 /* .header_al{
     display: none;
 } */

@@ -863,8 +863,8 @@ export default function Header({ onLoginClick }) {
         </>
       )}
 
-      <div className="sminingHeaderWeb">
-        <div className="Smining-Top-Header">
+      <div className="sminingHeaderWeb ">
+        <div className="Smining-Top-Header ">
           <div
             style={{
               width: "33.33%",

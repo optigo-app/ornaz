@@ -39,7 +39,6 @@ import { openSignInModal } from '../../Recoil/atom'
 import { useRecoilState } from 'recoil'
 import Payment from './Pages/Components/Payment/Payment'
 import Confirmation from './Pages/Components/confirmation/Confirmation'
-// import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
 
 export default function SMININGROCKS_App() {
 
@@ -55,7 +54,6 @@ export default function SMININGROCKS_App() {
         setOpenLoginDailog(false);
     };
 
-    
 
     return (
         <div>
@@ -81,12 +79,14 @@ export default function SMININGROCKS_App() {
                     <p style={{ marginTop: '20px', fontSize: '14px' }}>By continuing, you agree to our Terms of Use. Read our Privacy Policy.</p>
                 </div>
             </Dialog>
-            <Header />
+            {console.log(location.pathname)}
+             {/* { location.pathname === "/accountledgertable" ? null : <Header /> }  */}
+             <Header />
             <div>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/impact" element={<Impact />} />
-                    <Route path="/aboutUs" element={<AboutUs />} />
+                    <Route path="/aboutUs" element={<AboutUs />} /> 
                     <Route path="/labGrowDaimonds" element={<LabGroDiamonds />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgotPass" element={<ForgotPass />} />
@@ -106,7 +106,7 @@ export default function SMININGROCKS_App() {
                     <Route path="/accountledgertable" element={<AccountLedgerTable />} />
                     <Route path="/accountledgerexcel" element={<AccountLedgerExcel />} />
                     <Route path="/accountledgerdebit" element={<DebitVoucher />} />
-                    <Route path="/accountledgercrebit" element={<CreditVoucher />} />
+                    <Route path="/accountledgercredit" element={<CreditVoucher />} />
                     <Route path="/searchResult" element={<SearchResult />} />
                     <Route path="/celeb" element={<Celeb />} />
                     <Route path="/blog" element={<Blog />} />
@@ -115,7 +115,6 @@ export default function SMININGROCKS_App() {
                     <Route path="/Delivery" element={<Delivery />} />
                     <Route path="/Payment" element={<Payment />} />
                     <Route path="/Confirmation" element={<Confirmation />} />
-
                 </Routes>
             </div>
         </div>
