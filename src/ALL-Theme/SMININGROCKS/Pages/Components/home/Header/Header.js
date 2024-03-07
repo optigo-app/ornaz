@@ -35,8 +35,8 @@ export default function Header() {
   const [isOpenCollection, setIsOpenCollection] = useState(false);
   const [isOpenBouti, setIsOpenBouti] = useState(false);
   const [finalData, setFinalData] = useState([]);
-  const [menu1Index,setMenu1Index] = useState(null);
-  const [menu2Index,setMenu2Index] = useState(null);
+  const [menu1Index, setMenu1Index] = useState(null);
+  const [menu2Index, setMenu2Index] = useState(null);
 
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
@@ -102,7 +102,7 @@ export default function Header() {
     // }, []);
 
 
-    const transformedData = data.reduce((acc, item) => {
+    const transformedData = data?.reduce((acc, item) => {
       const existingItem = acc.find(i => i.lavelid === item.levelid);
       if (existingItem) {
         const existingParam1 = existingItem.param1.find(p => p.param1dataid === item.param1dataid);
@@ -179,24 +179,23 @@ export default function Header() {
 
   const getMenuApi = async () => {
 
-    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-    const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+    const storeInit = JSON.parse(localStorage.getItem("storeInit")) ?? ""
+    const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail")) ?? ""
+    // if (storeInit && Customer_id) {
+      let pData = JSON.stringify({ "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id ?? 0}` })
 
-    let pData = JSON.stringify({ "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` })
+      let pEnc = btoa(pData)
 
-    let pEnc = btoa(pData)
+      const body = {
+        con: "{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
+        f: "onload (GETMENU)",
+        p: pEnc
+      }
 
-    const body = {
-      con: "{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
-      f: "onload (GETMENU)",
-      p: pEnc
-    }
-
-    await CommonAPI(body).then((res) => {
-      transformData(res?.Data?.rd)
-    })
-
-
+      await CommonAPI(body).then((res) => {
+        transformData(res?.Data?.rd)
+      })
+    // }
   }
 
   useEffect(() => {
@@ -716,7 +715,7 @@ export default function Header() {
                   </clipPath>
                 </defs>
               </svg> */}
-              <img src={titleImg}/>
+              <img src={titleImg} />
             </a>
           </div>
           <div
@@ -830,49 +829,50 @@ export default function Header() {
           >
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {finalData.map((fd,i) => (
-                <span 
-                    className="level0Menu" 
-                    onMouseEnter={()=>setMenu1Index(i)} 
-                    // onMouseLeave={()=>setMenu1Index(null)}
+              {finalData?.map((fd, i) => (
+                <span
+                  className="level0Menu"
+                  onMouseEnter={() => setMenu1Index(i)}
+                // onMouseLeave={()=>setMenu1Index(null)}
                 >
-                      {fd?.menuname}
+                  {fd?.menuname}
                 </span>
               ))}
             </div>
 
-            <div  style={{
-              display:'flex',
-              flexDirection:'column',
-              gap:'12px',
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
               // borderLeft:menu1Index !== null && '1px solid #e1e1e1',
-              paddingLeft:'20px'}}
-              >
-            {finalData[menu1Index]?.param1.map((fd,i) => (
-              <div>
-                <div></div>
-                <span 
-                    className="level1Menu" 
-                    onMouseEnter={()=>setMenu2Index(i)} 
-                    // onMouseLeave={()=>setMenu2Index(null)}
-                    >
-                      {fd?.param1dataname}
-                </span>
-              </div>
-             ))}
+              paddingLeft: '20px'
+            }}
+            >
+              {finalData[menu1Index]?.param1?.map((fd, i) => (
+                <div>
+                  <div></div>
+                  <span
+                    className="level1Menu"
+                    onMouseEnter={() => setMenu2Index(i)}
+                  // onMouseLeave={()=>setMenu2Index(null)}
+                  >
+                    {fd?.param1dataname}
+                  </span>
+                </div>
+              ))}
             </div>
 
-            <div  
+            <div
               style={{
-                display:'flex',
-                flexDirection:'column',
-                gap:'12px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
                 // borderLeft: menu2Index !== null && '1px solid #e1e1e1',
-                paddingLeft:'20px'
+                paddingLeft: '20px'
               }}
-                >
-            {finalData[menu1Index]?.param1?.map((fd)=>fd)[menu2Index]?.param2?.map((fd1)=>(
-              <span className="level2Menu" >{fd1?.param2dataname}</span>
+            >
+              {finalData[menu1Index]?.param1?.map((fd) => fd)[menu2Index]?.param2?.map((fd1) => (
+                <span className="level2Menu" >{fd1?.param2dataname}</span>
               ))}
             </div>
 
@@ -981,7 +981,7 @@ export default function Header() {
                     </clipPath>
                   </defs>
                 </svg> */}
-                <img src={titleImg}/>
+                <img src={titleImg} />
               </a>
             </div>
             <div
