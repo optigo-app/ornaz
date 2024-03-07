@@ -108,7 +108,6 @@ export default function ForgotPass() {
                 const response = await CommonAPI(body);
                 if (response.Data.rd[0].stat === 1) {
                     localStorage.setItem('LoginUser', 'true')
-                    localStorage.setItem('userEmail', email);
                     alert('Register Sucssessfully');
                     navigation('/');
                 } else {
@@ -158,6 +157,7 @@ export default function ForgotPass() {
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField
+                            autoFocus
                             id="outlined-password-input"
                             label="Password"
                             type={showPassword ? 'text' : 'password'}
@@ -166,6 +166,11 @@ export default function ForgotPass() {
                             style={{ margin: '15px' }}
                             value={password}
                             onChange={handlePasswordChange}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    handleSubmit();
+                                }
+                            }}
                             error={!!passwordError}
                             helperText={passwordError}
                             InputProps={{

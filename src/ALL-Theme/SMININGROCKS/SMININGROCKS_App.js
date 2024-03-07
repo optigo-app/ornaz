@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Route, Routes, useLocation, useNavigate, redirect } from 'react-router-dom'
 import Home from './Pages/Components/home'
 import Impact from './Pages/Components/Impact'
@@ -48,6 +48,27 @@ export default function SMININGROCKS_App() {
     const navigation = useNavigate();
     const location =  useLocation();
     
+    const prevLocationRef = useRef(null);
+    const navigate = useNavigate();
+
+ 
+    
+    useEffect(() => {
+        const originalUrl = window.location.pathname;
+
+        const handleUrlChange = () => {
+            if (window.location.pathname !== originalUrl) {
+                navigate(originalUrl);
+            }
+        };
+
+        window.addEventListener('popstate', handleUrlChange);
+
+        return () => {
+            window.removeEventListener('popstate', handleUrlChange);
+        };
+    }, [navigate]);
+
     const openLoginDailogBox = () => {
         setOpenLoginDailog(true);
     };

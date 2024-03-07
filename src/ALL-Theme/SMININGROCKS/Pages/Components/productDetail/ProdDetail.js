@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './proddetail.css'
 import Header from '../home/Header/Header'
 import Footer from '../home/Footer/Footer'
@@ -10,44 +10,44 @@ import filterData from '../../jsonFile/M_4_95oztttesi0o50vr.json'
 
 const ProdDetail = () => {
 
-    const[acc,setAcc]=useState(false);
-    const[accNo,setAccNo]=useState('');
-    const [imgLoading, setImgLoading] = useState(true);
+  const [acc, setAcc] = useState(false);
+  const [accNo, setAccNo] = useState('');
+  const [imgLoading, setImgLoading] = useState(true);
 
-    const[productData,setProductData]=useState();
-    const[thumbImg,setThumbImg]=useState();
+  const [productData, setProductData] = useState();
+  const [thumbImg, setThumbImg] = useState();
 
-    const handelImgLoad = () =>{
-      setImgLoading(false)
-    }
+  const handelImgLoad = () => {
+    setImgLoading(false)
+  }
 
-    useEffect(() => {
-      let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
-      setProductData(localProductData)
-    }, [])
+  useEffect(() => {
+    let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
+    setProductData(localProductData)
+  }, [])
 
-    useEffect(()=>{
-      window.scrollTo(0,0)
-    },[])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
 
-    let imgData=[
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045'},
-        {links:'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318'},
-    ]
+  let imgData = [
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045' },
+    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
+  ]
 
-    const handelmainImg = () =>{
-      let filterImg=productData?.originalimage.split(",").filter((ele,i)=>{
-       return i === thumbImg 
-      })
+  const handelmainImg = () => {
+    let filterImg = productData?.originalimage.split(",").filter((ele, i) => {
+      return i === thumbImg
+    })
 
-      return filterImg 
-    }
+    return filterImg
+  }
 
   return (
     <div
@@ -70,23 +70,23 @@ const ProdDetail = () => {
           <div className="product-detail-container" >
             <div className='srprodetail1' >
               {/* {!imgLoading */}
-              
-              {imgLoading && 
-              <Skeleton sx={{
+
+              {imgLoading &&
+                <Skeleton sx={{
                   width: "100%",
                   // zindex: 11111,
                   // position: "relative",
                   // objectFit: "cover",
-                  marginLeft:'51px',
-                  marginTop:'5%',
-                  height:'90%'
+                  marginLeft: '51px',
+                  marginTop: '5%',
+                  height: '90%'
                   // display: !imgLoading ? "none": "block"
-                }} 
-                variant="rounded"  />
-                }
+                }}
+                  variant="rounded" />
+              }
               <img
                 src={
-                  productData?.imagepath +( !handelmainImg()?.length?productData?.originalimage.split(",")[0] :handelmainImg())
+                  productData?.imagepath + (!handelmainImg()?.length ? productData?.originalimage.split(",")[0] : handelmainImg())
                 }
                 alt={""}
                 style={{
@@ -94,20 +94,20 @@ const ProdDetail = () => {
                   zindex: -1,
                   position: "relative",
                   objectFit: "cover",
-                  marginLeft:'51px',
-                  display: imgLoading ? "none": "block"
+                  marginLeft: '51px',
+                  display: imgLoading ? "none" : "block"
                 }}
 
                 onLoad={handelImgLoad}
               />
               {/* } */}
               <div className='srthumb_images' >
-                {productData?.thumbimage.split(",").map((data,i) => (
+                {productData?.thumbimage.split(",").map((data, i) => (
                   <img
-                    src={productData?.imagepath+data}
+                    src={productData?.imagepath + data}
                     alt={""}
                     className='srthumb_images_el'
-                    onClick={()=>setThumbImg(i)}
+                    onClick={() => setThumbImg(i)}
                   />
                 ))}
               </div>
@@ -174,63 +174,63 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                       }}
                     >
-                      Diamond Quality Color: {`${productData?.diamondquality}-${productData?.diamondcolorname}` }
+                      Diamond Quality Color: {`${productData?.diamondquality}-${productData?.diamondcolorname}`}
                     </sapn>
                   </div>
-                  {productData?.IsColorWiseImageExists 
-                  !==null && <div
-                    style={{ display: "flex", gap: "5px" }}
-                    className="part2"
-                  >
-                    <div
-                      style={{
-                        border: "1px solid #c8c8c8",
-                        borderRadius: "50%",
-                      }}
+                  {productData?.IsColorWiseImageExists
+                    !== null && <div
+                      style={{ display: "flex", gap: "5px" }}
+                      className="part2"
                     >
                       <div
                         style={{
-                          width: "12px",
-                          height: "12px",
-                          backgroundColor: "#c8c8c8",
+                          border: "1px solid #c8c8c8",
                           borderRadius: "50%",
-                          margin: "1px",
                         }}
-                      ></div>
-                    </div>
-                    <div
-                      style={{
-                        border: "1px solid #ffcfbc",
-                        borderRadius: "50%",
-                      }}
-                    >
+                      >
+                        <div
+                          style={{
+                            width: "12px",
+                            height: "12px",
+                            backgroundColor: "#c8c8c8",
+                            borderRadius: "50%",
+                            margin: "1px",
+                          }}
+                        ></div>
+                      </div>
                       <div
                         style={{
-                          width: "12px",
-                          height: "12px",
-                          backgroundColor: "#ffcfbc",
+                          border: "1px solid #ffcfbc",
                           borderRadius: "50%",
-                          margin: "1px",
                         }}
-                      ></div>
-                    </div>
-                    <div
-                      style={{
-                        border: "1px solid #e0be77",
-                        borderRadius: "50%",
-                      }}
-                    >
+                      >
+                        <div
+                          style={{
+                            width: "12px",
+                            height: "12px",
+                            backgroundColor: "#ffcfbc",
+                            borderRadius: "50%",
+                            margin: "1px",
+                          }}
+                        ></div>
+                      </div>
                       <div
                         style={{
-                          width: "12px",
-                          height: "12px",
-                          backgroundColor: "#e0be77",
+                          border: "1px solid #e0be77",
                           borderRadius: "50%",
-                          margin: "1px",
                         }}
-                      ></div>
-                    </div>
-                  </div>}
+                      >
+                        <div
+                          style={{
+                            width: "12px",
+                            height: "12px",
+                            backgroundColor: "#e0be77",
+                            borderRadius: "50%",
+                            margin: "1px",
+                          }}
+                        ></div>
+                      </div>
+                    </div>}
                 </div>
 
                 <div
@@ -300,8 +300,8 @@ const ProdDetail = () => {
                     </select>
                   </div>
                 </div>
-                 
-                <Divider sx={{marginTop:'20px',background:'#a9a7a7'}}/>
+
+                <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
 
                 <div
                   style={{ display: "flex", width: "100%", marginTop: "12px" }}
@@ -326,7 +326,7 @@ const ProdDetail = () => {
                       }}
                     >
                       {
-                        filterData.MetalColorList.map((mtcol)=>(
+                        filterData.MetalColorList.map((mtcol) => (
                           <option>{mtcol.MetalColorName}</option>
                         ))
                       }
@@ -360,7 +360,7 @@ const ProdDetail = () => {
                       }}
                     >
                       {
-                        filterData.MetalTypeList.map((mtype)=>(
+                        filterData.MetalTypeList.map((mtype) => (
                           <option>{mtype.MetalTypeName}</option>
                         ))
                       }
@@ -542,9 +542,8 @@ const ProdDetail = () => {
                   </span>
                   {/* <div style={{display:acc && accNo === '1' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                   <div
-                    className={`my-list-fineJewe ${
-                      acc && accNo === "1" ? "openAcc" : ""
-                    }`}
+                    className={`my-list-fineJewe ${acc && accNo === "1" ? "openAcc" : ""
+                      }`}
                   >
                     <div>
                       <div className="srAccContainer">
@@ -570,7 +569,7 @@ const ProdDetail = () => {
                             <b>Netwt</b>: {productData?.netwt}
                           </span>
                           <span>
-                          <b>DiamondQuality</b>: {productData?.diamondquality}
+                            <b>DiamondQuality</b>: {productData?.diamondquality}
                           </span>
                           <span>
                             <b>DiamondColorname</b>: {productData?.diamondcolorname}
@@ -658,7 +657,7 @@ const ProdDetail = () => {
                     <span style={{fontSize:'12px'}}>All our rings can be resized by one size up or down, except for Eternity Bands.</span>
                   </div>
                 </li> */}
-                  {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
+                {/* <div style={{display:acc && accNo === '3' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                 {/* <li
                   className="tellmoreli"
                   onClick={() => {

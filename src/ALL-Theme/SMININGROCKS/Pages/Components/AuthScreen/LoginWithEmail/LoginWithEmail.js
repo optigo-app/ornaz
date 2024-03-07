@@ -3,7 +3,7 @@ import Header from '../../home/Header/Header';
 import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CryptoJS from 'crypto-js';
 import { useSetRecoilState } from 'recoil';
@@ -16,19 +16,15 @@ export default function LoginWithEmail() {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const navigation = useNavigate();
+    const location = useLocation();
+
 
     const setIsLoginState = useSetRecoilState(loginState)
 
     useEffect(() => {
-        const storedEmail = localStorage.getItem('registerEmail');
+        const storedEmail = location.state?.email; ;
         if (storedEmail) setEmail(storedEmail);
-    }, []); // 
-
-
-    const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
+    }, []); 
 
 
     const handleInputChange = (e, setter, fieldName) => {
@@ -73,13 +69,11 @@ export default function LoginWithEmail() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...',response);
             if (response.Data.rd[0].stat === 1) {
+                localStorage.setItem('registerEmail', email)
                 setIsLoginState(true)
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
-                localStorage.setItem('userEmail', email);
-                // alert('Register Sucssessfully');
                 navigation('/');
             } else {
                 errors.confirmPassword = 'Password is Invalid'
@@ -128,6 +122,7 @@ export default function LoginWithEmail() {
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField
+                            autoFocus
                             id="outlined-confirm-password-input"
                             label="Password"
                             type={showConfirmPassword ? 'text' : 'password'}
@@ -138,6 +133,11 @@ export default function LoginWithEmail() {
                             onChange={(e) => handleInputChange(e, setConfirmPassword, 'confirmPassword')}
                             error={!!errors.confirmPassword}
                             helperText={errors.confirmPassword}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    handleSubmit();
+                                }
+                            }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
