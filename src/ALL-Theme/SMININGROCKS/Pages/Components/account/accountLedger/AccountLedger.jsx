@@ -6,7 +6,10 @@ import { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
+import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 const AccountLedger = () => {
+    const [resultArray, setResultArray] = useState([]);
+    const [filterArray, setFilterArray] = useState([]);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [filterVisible, setFilterVisible] = useState(false);
@@ -23,8 +26,69 @@ const AccountLedger = () => {
         const userName = JSON.parse(localStorage.getItem('loginUserDetail'));
         setUserName(userName?.customercode)
 
+        getLedgerData();
+
       }, []);
 
+      const getLedgerData = async() => {
+
+        let storeinit = JSON.parse(localStorage.getItem("storeInit"));
+        let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"));
+        const UserEmail = localStorage.getItem("userEmail");
+
+        try {
+            
+        let EncodeData = {
+            FrontEnd_RegNo: `${storeinit?.FrontEnd_RegNo}`,
+            Customerid: `${loginInfo?.id}`,
+          };
+    
+          const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
+    
+          const body_currencycombo = {
+            con: `{\"id\":\"Store\",\"mode\":\"CURRENCYCOMBO\",\"appuserid\":\"${UserEmail}\"}`,
+            f: "m-test2.orail.co.in (getcategorysize)",
+            p: `${encodedCombinedValue}`,
+          };
+    
+          const response = await CommonAPI(body_currencycombo);
+
+          const CurrencyRate = response?.Data?.rd[0]?.CurrencyRate;
+
+          const forendcode = {"CurrencyRate":`${CurrencyRate}`,"FrontEnd_RegNo":`${storeinit?.FrontEnd_RegNo}`,"Customerid":`${loginInfo?.id}`};
+
+          const encodedCombinedValue2 = btoa(JSON.stringify(forendcode));
+
+          const body = {
+                "con":"{\"id\":\"Store\",\"mode\":\"getledger\",\"appuserid\":\"nimesh@ymail.in\"}",
+                "f":"zen (cartcount)",
+                "p":`${encodedCombinedValue2}`
+            }
+            
+          const response2 = await CommonAPI(body);
+
+          if(response2?.Status === '200'){
+
+              if(response2?.Data?.rd?.length > 0){
+
+                    const mainData = response2?.Data?.rd;
+
+                    mainData?.sort((a, b) => {
+                        const dateA = new Date(a?.EntryDate);
+                        const dateB = new Date(b?.EntryDate);
+                        // Compare the Date objects
+                        return dateA - dateB;
+                    })
+
+                    setResultArray(mainData)
+                    setFilterArray(mainData)
+                }
+          }
+
+        } catch (error) {
+            console.log(error);
+        }
+      }
       const toggleFilter = () => {
         setFilterVisible(!filterVisible);
         
@@ -208,11 +272,12 @@ const AccountLedger = () => {
                         </thead>
                         <tbody className='fs_td'>
                             {
-                                arr?.map((e) => {
+                                filterArray?.length > 0 && filterArray?.map((e) => {
+                                    console.log(e);
                                     return(
                                         <tr className='border' key={e}>
-                                            <td className='border-end p-1 text-center'>04 Mar 24</td>
-                                            <td className='border-end p-1 text-start ps-1'>Party Return</td>
+                                            <td className='border-end p-1 text-center'>{e?.EntryDate}</td>
+                                            <td className='border-end p-1 text-start ps-1'>{e?.particular}</td>
                                             <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' style={{cursor:'pointer'}} onClick={() => window.open("http://localhost:3000/accountledgerdebit")}>CRO158</td>
                                             <td className='border-end p-1 text-end pe-1'>0.540</td>
                                             <td className='border-end p-1 text-end pe-1'>5.00</td>
