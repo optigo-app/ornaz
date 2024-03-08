@@ -177,6 +177,17 @@ export default function Header() {
   };
 
 
+  const [islogin, setislogin] = useRecoilState(loginState);
+  const fetchData = () => {
+    const value = localStorage.getItem('LoginUser');
+    const val = value === 'true' ? true : false
+    setislogin(val);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const getMenuApi = async () => {
 
     const storeInit = JSON.parse(localStorage.getItem("storeInit")) ?? ""
@@ -198,9 +209,12 @@ export default function Header() {
     // }
   }
 
+
   useEffect(() => {
-    getMenuApi()
+    islogin && getMenuApi()
   }, [])
+
+
 
 
   const toggleList = () => {
@@ -278,17 +292,8 @@ export default function Header() {
     })
   };
 
-  const [islogin, setislogin] = useRecoilState(loginState);
 
-  const fetchData = () => {
-    const value = localStorage.getItem('LoginUser');
-    const val = value === 'true' ? true : false
-    setislogin(val);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+ 
 
   return (
     <>
@@ -733,13 +738,13 @@ export default function Header() {
               >
                 {ABOUT_US}
               </li>
-              <li
+              {/* <li
                 className="nav-li-smining"
                 style={{ cursor: "pointer" }}
                 onClick={() => navigation("/labGrowDaimonds")}
               >
                 {LAB_GROWN}
-              </li>
+              </li> */}
               {islogin ? (
                 <li
                   className="nav-li-smining"
@@ -999,13 +1004,13 @@ export default function Header() {
                 >
                   {ABOUT_US}
                 </li>
-                <li
+                {/* <li
                   className="nav-li-smining-fixed"
                   style={{ cursor: "pointer" }}
                   onClick={() => navigation("/labGrowDaimonds")}
                 >
                   {LAB_GROWN}
-                </li>
+                </li> */}
                 {islogin ? (
                   <li
                     className="nav-li-smining-fixed"

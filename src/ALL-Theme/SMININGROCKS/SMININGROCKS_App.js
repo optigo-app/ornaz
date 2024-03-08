@@ -50,28 +50,6 @@ export default function SMININGROCKS_App() {
     const setWishCount = useSetRecoilState(WishListCounts)
 
     const navigation = useNavigate();
-    const location =  useLocation();
-    
-    const prevLocationRef = useRef(null);
-    const navigate = useNavigate();
-
- 
-    
-    useEffect(() => {
-        const originalUrl = window.location.pathname;
-
-        const handleUrlChange = () => {
-            if (window.location.pathname !== originalUrl) {
-                navigate(originalUrl);
-            }
-        };
-
-        window.addEventListener('popstate', handleUrlChange);
-
-        return () => {
-            window.removeEventListener('popstate', handleUrlChange);
-        };
-    }, [navigate]);
 
     const openLoginDailogBox = () => {
         setOpenLoginDailog(true);
@@ -80,22 +58,22 @@ export default function SMININGROCKS_App() {
         setOpenLoginDailog(false);
     };
 
-    const getCountFunc = async() =>{
-
-        await GetCount().then((res)=>{
-          if(res){
-            setCartCount(res.CountCart)
-            setWishCount(res.WishCount)
-          }
+    const getCountFunc = async () => {
+        await GetCount().then((res) => {
+            if (res) {
+                setCartCount(res.CountCart)
+                setWishCount(res.WishCount)
+            }
         })
-    
-      }
 
-      useEffect(()=>{
+    }
+
+    useEffect(() => {
+        
         getCountFunc();
-      },[])
+    }, [])
 
-    
+
 
     return (
         <div>

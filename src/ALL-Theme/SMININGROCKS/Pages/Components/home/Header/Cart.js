@@ -3,6 +3,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { CircularProgress, Divider, Drawer } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { CartListCounts, WishListCounts } from '../../../../../../Recoil/atom';
+import { GetCount } from '../../../../Utils/API/GetCount';
 
 
 export default function Cart({ open, toggleCartDrawer }) {
@@ -19,16 +22,32 @@ export default function Cart({ open, toggleCartDrawer }) {
     const [DaimondQualityColor, setDaimondQualityColor] = useState([]);
     const [showDropdowns, setShowDropdowns] = useState(Array(cartListData.length).fill(false));
 
+    const setCartCount = useSetRecoilState(CartListCounts)
+    const setWishCount = useSetRecoilState(WishListCounts)
+
     const navigation = useNavigate();
 
 
+    const getCountFunc = async () => {
+        await GetCount().then((res) => {
+            if (res) {
+                setCartCount(res.CountCart)
+                setWishCount(res.WishCount)
+            }
+        })
+
+    }
+
+
+    useEffect(() => {
+        getCountFunc()
+    }, [])
 
     useEffect(() => {
         if (open) {
             getCartData();
         }
     }, [open]);
-
     useEffect(() => {
         const storedData = JSON.parse(localStorage.getItem('QualityColor'));
         if (storedData) {
@@ -39,8 +58,6 @@ export default function Cart({ open, toggleCartDrawer }) {
         if (storedData1) {
             setDaimondQualityColor(storedData1);
         }
-        console.log('DaimondQualityColorDaimondQualityColorDaimondQualityColor', DaimondQualityColor);
-
 
         const storedData2 = JSON.parse(localStorage.getItem('MetalTypeData'));
         if (storedData2) {
@@ -53,19 +70,13 @@ export default function Cart({ open, toggleCartDrawer }) {
         }
     }, []);
 
-    console.log('cartddddddd', cartListData);
     const getSizeData = async (item, index) => {
 
         const newShowDropdowns = [...showDropdowns];
         newShowDropdowns[index] = true;
         setShowDropdowns(newShowDropdowns);
-
-        console.log('desssssssss', item.designno);
-
         try {
-
             const storedEmail = localStorage.getItem('registerEmail') || '';
-
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
             const { FrontEnd_RegNo } = storeInit;
 
@@ -76,8 +87,6 @@ export default function Cart({ open, toggleCartDrawer }) {
             const combinedValue = JSON.stringify({
                 autocode: `${autoC}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
             });
-            console.log('combinedValuecombinedValue', combinedValue);
-
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
                 "con": `{\"id\":\"\",\"mode\":\"CATEGORYSIZECOMBO\",\"appuserid\":\"${storedEmail}\"}`,
@@ -85,8 +94,6 @@ export default function Cart({ open, toggleCartDrawer }) {
                 "p": encodedCombinedValue
             }
             const response = await CommonAPI(body);
-            console.log('responseresponseresponse', response);
-
             if (response.Data?.rd) {
                 const sizeDropdownData = response.Data.rd;
                 const selectElement = document.getElementById(`sizeDropdown_${index}`);
@@ -103,7 +110,7 @@ export default function Cart({ open, toggleCartDrawer }) {
         } catch (error) {
             console.error('Error:', error);
         } finally {
-            // setIsLoading(false);
+            setIsLoading(false);
         }
     }
 
@@ -117,6 +124,7 @@ export default function Cart({ open, toggleCartDrawer }) {
     const getCartData = async () => {
         try {
             // cartListData.length === 0 && setIsLoading(true);
+            cartListData.length === 0 && setIsLoading(true);
             const ImageURL = localStorage.getItem('UploadLogicalPath');
             setImageURL(ImageURL);
             const storedData = localStorage.getItem('loginUserDetail');
@@ -155,7 +163,7 @@ export default function Cart({ open, toggleCartDrawer }) {
 
     const handleRemove = async (data) => {
         try {
-            // setIsLoading(true);
+            setIsLoading(true);
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
             const { FrontEnd_RegNo } = storeInit;
             const combinedValue = JSON.stringify({
@@ -169,7 +177,8 @@ export default function Cart({ open, toggleCartDrawer }) {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
-                // navigation('/myWishList')
+                getCartData();
+                getCountFunc()
             } else {
                 alert('Error');
             }
@@ -218,13 +227,6 @@ export default function Cart({ open, toggleCartDrawer }) {
             }
         }
     }
-    const handleInputChangeRemarks = (e, index) => {
-        const { value } = e.target;
-        setRemarks(prevRemarks => ({
-            ...prevRemarks,
-            [index]: value
-        }));
-    };
 
     const handleSubmit = async (index, data) => {
         const remark = remarks[index];
@@ -264,27 +266,8 @@ export default function Cart({ open, toggleCartDrawer }) {
         }
     };
 
-
     const [lastEnteredQuantityIndex, setLastEnteredQuantityIndex] = useState(null);
     const [lastEnteredQuantity, setLastEnteredQuantity] = useState('');
-
-    const handleIncrement = (index) => {
-        if (index >= 0 && index < cartListData.length && cartListData[index]) {
-            const updatedCartList = [...cartListData];
-            const currentQuantity = parseInt(updatedCartList[index].Quantity, 10) || 0;
-            updatedCartList[index].Quantity = Math.min(currentQuantity + 1, 99);
-            setCartListData(updatedCartList);
-        }
-    };
-
-    const handleDecrement = (index) => {
-        if (index >= 0 && index < cartListData.length && cartListData[index]) {
-            const updatedCartList = [...cartListData];
-            const currentQuantity = parseInt(updatedCartList[index].Quantity, 10) || 0;
-            updatedCartList[index].Quantity = Math.max(currentQuantity - 1, 1);
-            setCartListData(updatedCartList);
-        }
-    };
 
     const handleInputChange = (event, index) => {
         let { value } = event.target;
@@ -331,7 +314,7 @@ export default function Cart({ open, toggleCartDrawer }) {
         }
     };
 
-   
+
     return (
         <Drawer
             anchor="right"
@@ -345,6 +328,25 @@ export default function Cart({ open, toggleCartDrawer }) {
                 },
             }}
         >
+            {/* <div style={{ position: 'relative' }}> */}
+            {isLoading && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        paddingTop: '50%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        zIndex: 1
+                    }}
+                >
+                    <CircularProgress className='loadingBarManage' />
+                </div>
+            )}
             <div>
                 <div
                     style={{
@@ -407,35 +409,54 @@ export default function Cart({ open, toggleCartDrawer }) {
                                         />
                                     </div>
                                     <div style={{ width: "65%", margin: "20px" }}>
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                            }}
-                                        >
-                                            <p style={{ fontSize: "14px", color: "#7d7f85" }}>
-                                                {item.designno}
-                                            </p>
-                                            {/* <p className="CartPageShipingIn">Ships in 14 days</p> */}
-                                            <p style={{ color: "#7d7f85", marginRight: "50px" }}>
-                                                ${item.TotalUnitCost}
-                                            </p>
-                                        </div>
-                                        <div
-                                            style={{
-                                                fontSize: "14px",
-                                                marginTop: "-20px",
-                                                color: "#7d7f85",
-                                            }}
-                                        >
-                                            <p style={{ margin: '0px' }}>Category : <span style={{ fontWeight: 500 }}>{item.Mastermanagement_CategoryName}</span></p>
-                                            <div style={{ display: 'flex' }}>
-                                                <p style={{ marginBlock: '5px' }}>GWT : <span style={{ fontWeight: 500 }}>{item.grossweight}</span></p>
-                                                <p style={{ marginLeft: '50px', marginBlock: '5px' }}>NETW : <span style={{ fontWeight: 500 }}>{item.Rec_NetWeight}</span></p>
+                                        <p style={{ margin: '10px 70px 10px 10px' }}>
+                                            <span style={{ fontWeight: 600 }}>{item.metalcolorname} {item.metaltypename}</span> with
+                                            <span style={{ fontWeight: 600 }}> {item.Rec_NetWeight}</span> with gross wt of
+                                            <span style={{ fontWeight: 600 }}> {item.grossweight}</span> including
+                                            <span style={{ fontWeight: 600 }}>  {item.totalDiaWt}({item.totaldiamondpcs})</span> of daimonds in
+                                            <span style={{ fontWeight: 600 }}> {item.diamondcolor} </span>
+                                            {
+                                                item.totalCSWt !== 0 && (
+                                                    <>
+                                                        and
+                                                        <span style={{ fontWeight: 600 }}> {item.totalCSWt}({item.totalcolorstonepcs})</span>
+                                                    </>
+                                                )
+                                            }
+                                            {item.colorstonequality !== "" && (
+                                                <>of CS in <span style={{ fontWeight: 600 }}>
+                                                    {item.colorstonequality}({item.colorstonecolor})
+                                                </span></>
+                                            )}
+                                        </p>
+                                        {/* <div
+                                                style={{
+                                                    display: "flex",
+                                                    justifyContent: "space-between",
+                                                }}
+                                            >
+                                                <p style={{ fontSize: "14px", color: "#7d7f85" }}>
+                                                    {item.designno}
+                                                </p>
+                                                <p style={{ color: "#7d7f85", marginRight: "50px" }}>
+                                                    ${item.TotalUnitCost}
+                                                </p>
                                             </div>
-                                            <p>MTYPE / MCOLOR : <span style={{ fontWeight: 500 }}>{item.metaltypename} / {item.metalcolorname}</span></p>
-                                            <br />
-                                        </div>
+                                            <div
+                                                style={{
+                                                    fontSize: "14px",
+                                                    marginTop: "-20px",
+                                                    color: "#7d7f85",
+                                                }}
+                                            >
+                                                <p style={{ margin: '0px' }}>Category : <span style={{ fontWeight: 500 }}>{item.Mastermanagement_CategoryName}</span></p>
+                                                <div style={{ display: 'flex' }}>
+                                                    <p style={{ marginBlock: '5px' }}>GWT : <span style={{ fontWeight: 500 }}>{item.grossweight}</span></p>
+                                                    <p style={{ marginLeft: '50px', marginBlock: '5px' }}>NETW : <span style={{ fontWeight: 500 }}>{item.Rec_NetWeight}</span></p>
+                                                </div>
+                                                <p>MTYPE / MCOLOR : <span style={{ fontWeight: 500 }}>{item.metaltypename} / {item.metalcolorname}</span></p>
+                                                <br />
+                                            </div> */}
                                         {showDropdowns[index] ? (<div>
                                             <div
                                                 style={{ display: "flex", width: "100%", marginTop: "12px" }}
@@ -589,11 +610,11 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                     ))}
                                                 </select>
                                             </div>
-                                            <button className="SmilingAddRemkarBtn" style={{ marginTop: '10px' }} onClick={() => handleSave(index)}>Save</button>
+                                            <button className="SmilingCustomzeSaveBtn" style={{ marginTop: '10px' }} onClick={() => handleSave(index)}>Save</button>
                                         </div>
                                         ) : (
                                             <div className="addRemkarMain">
-                                                <button className="SmilingAddRemkarBtn" onClick={() => getSizeData(item, index)}>
+                                                <button className="SmilingAddRemkarBtn" style={{marginTop: '20px'}} onClick={() => getSizeData(item, index)}>
                                                     customization
                                                 </button>
                                             </div>
@@ -681,14 +702,15 @@ export default function Cart({ open, toggleCartDrawer }) {
                         className="placeOrderBtn"
 
                         onClick={(event) => {
-                            toggleCartDrawer(false)(event); 
-                            navigation('/Delivery');  
+                            toggleCartDrawer(false)(event);
+                            navigation('/Delivery');
                         }}
                     >
                         Place Order
                     </button>
                 </div>
             )}
+            {/* </div> */}
         </Drawer>
     )
 }

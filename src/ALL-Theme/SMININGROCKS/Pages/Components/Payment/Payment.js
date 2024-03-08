@@ -4,6 +4,7 @@ import Footer from '../home/Footer/Footer'
 import { CommonAPI } from '../../../Utils/API/CommonAPI';
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { IoArrowBackOutline } from "react-icons/io5";
 
 export default function Payment() {
 
@@ -107,12 +108,14 @@ export default function Payment() {
         <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <div className='smilingPaymentMain'>
                 <div>
                     <div className='smilingPaySub1'>
+                    <IoArrowBackOutline  style={{height: '40px' ,width: '60px', cursor: 'pointer'}} onClick={() => navigation('/Delivery')}/>
+
                         <div className='smilingPaySub1Box1'>
                             <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Payment Card Method</p>
                             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
@@ -152,9 +155,9 @@ export default function Payment() {
                             </div>
                         </div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center',marginTop: '-100px' }}>
+                    {/* <div style={{ display: 'flex', justifyContent: 'center',marginTop: '-100px' }}>
                         <img src='http://gstore.orail.co.in/assets/newfolder/images/account/blue-box.jpg' className='smilingPayentImg' />
-                    </div>
+                    </div> */}
                 </div>
                 <Footer />
             </div>

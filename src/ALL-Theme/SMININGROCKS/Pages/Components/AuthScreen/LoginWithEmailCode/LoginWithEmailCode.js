@@ -157,7 +157,7 @@ export default function LoginWithEmailCode() {
         <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <div style={{ backgroundColor: '#c0bbb1' }}>

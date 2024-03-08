@@ -50,6 +50,20 @@
     background-color: white;
     border: 1px solid #f1d8c6;
 }
+
+.SmilingCustomzeSaveBtn{
+    height: 35px;
+    width: 100px;
+    background-color: #f1d8c6;
+    border: none;
+    outline: none;
+    font-weight: 500;
+}
+.SmilingCustomzeSaveBtn:hover{
+    background-color: white;
+    border: 1px solid #f1d8c6;
+}
+
 .addRemkarMain{
     display: flex;
     justify-content: flex-end;
