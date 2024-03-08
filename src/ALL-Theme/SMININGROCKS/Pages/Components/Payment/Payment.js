@@ -147,7 +147,7 @@ export default function Payment() {
 
                             <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Shipping Address</p>
                             <div style={{ marginTop: '0px' }}>
-                                <p style={{fontSize: '25px' ,margin:'0px', fontWeight: 500}}>{selectedAdd.shippingfirstname} {selectedAdd.shippinglastname}</p>
+                                <p style={{fontSize: '25px' ,margin:'0px', fontWeight: 500 , color: '#5e5e5e'}}>{selectedAdd.shippingfirstname} {selectedAdd.shippinglastname}</p>
                                 <p className='AddressTitle'><span className='AdressData'>{selectedAdd.street}</span></p>
                                 <p className='AddressTitle'><span className='AdressData'>{selectedAdd.city}-{selectedAdd.zip}</span></p>
                                 <p className='AddressTitle'><span className='AdressData'>{selectedAdd.state},{selectedAdd.country}</span></p>
