@@ -6,6 +6,9 @@ import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { useNavigate } from 'react-router-dom'
 import { IoClose } from "react-icons/io5";
 import { CircularProgress } from '@mui/material'
+import { useSetRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts } from '../../../../../Recoil/atom'
+import { GetCount } from '../../../Utils/API/GetCount'
 
 export default function MyWishList() {
 
@@ -15,12 +18,24 @@ export default function MyWishList() {
     const [customerID, setCustomerID] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
+    const setCartCount = useSetRecoilState(CartListCounts)
+    const setWishCount = useSetRecoilState(WishListCounts)
     const navigation = useNavigate();
 
+
+    const getCountFunc = async () => {
+        await GetCount().then((res) => {
+            if (res) {
+                setCartCount(res.CountCart)
+                setWishCount(res.WishCount)
+            }
+        })
+
+    }
     useEffect(() => {
         const fetchData = async () => {
             try {
+                wishlistData.length === 0 && setIsLoading(true);
                 const storedData = localStorage.getItem('loginUserDetail');
                 const ImageURL = localStorage.getItem('UploadLogicalPath');
                 setImageURL(ImageURL);
@@ -43,16 +58,17 @@ export default function MyWishList() {
                 };
                 const response = await CommonAPI(body);
                 if (response.Data) {
+                    wishlistData.length === 0 && setIsLoading(false);
                     setWishlistData(response.Data.rd);
                 }
             } catch (error) {
                 console.error('Error:', error);
             } finally {
-                // setIsLoading(false);
+                setIsLoading(false);
             }
         };
         fetchData();
-    }, [isLoading]);
+    }, []);
 
 
     const handleAddToCart = async (autoCode) => {
@@ -71,6 +87,7 @@ export default function MyWishList() {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
+                getCountFunc();
                 navigation('/myWishList')
             } else {
                 alert('Error');
@@ -98,6 +115,7 @@ export default function MyWishList() {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
+                getCountFunc();
                 navigation('/myWishList')
             } else {
                 alert('Error');
@@ -127,6 +145,7 @@ export default function MyWishList() {
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
+                getCountFunc();
                 navigation('/myWishList')
             } else {
                 alert('Error');
@@ -156,6 +175,7 @@ export default function MyWishList() {
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
+                getCountFunc();
                 navigation('/myWishList')
             } else {
                 alert('Error');
@@ -174,7 +194,7 @@ export default function MyWishList() {
         }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <div>
@@ -200,7 +220,7 @@ export default function MyWishList() {
                                     </div>
                                     <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' alt='Wishlist item' />
                                     <p className='smiWishLsitBoxDesc1'>{item.designno}</p>
-                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} $ {item.TotalUnitCost}</p>
+                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} <br/> $ {item.TotalUnitCost}</p>
                                     <p className='smiWishLsitBoxDesc3' onClick={() => handleAddToCart(item.autocode)}>ADD TO CART +</p>
                                 </div>
                             ))}

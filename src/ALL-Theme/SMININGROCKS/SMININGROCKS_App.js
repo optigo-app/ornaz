@@ -46,32 +46,11 @@ export default function SMININGROCKS_App() {
 
     const [openLoginDailog, setOpenLoginDailog] = useRecoilState(openSignInModal);
 
+    const location = useLocation();
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
 
     const navigation = useNavigate();
-    const location =  useLocation();
-    
-    const prevLocationRef = useRef(null);
-    const navigate = useNavigate();
-
- 
-    
-    useEffect(() => {
-        const originalUrl = window.location.pathname;
-
-        const handleUrlChange = () => {
-            if (window.location.pathname !== originalUrl) {
-                navigate(originalUrl);
-            }
-        };
-
-        window.addEventListener('popstate', handleUrlChange);
-
-        return () => {
-            window.removeEventListener('popstate', handleUrlChange);
-        };
-    }, [navigate]);
 
     const openLoginDailogBox = () => {
         setOpenLoginDailog(true);
@@ -80,22 +59,22 @@ export default function SMININGROCKS_App() {
         setOpenLoginDailog(false);
     };
 
-    const getCountFunc = async() =>{
-
-        await GetCount().then((res)=>{
-          if(res){
-            setCartCount(res.CountCart)
-            setWishCount(res.WishCount)
-          }
+    const getCountFunc = async () => {
+        await GetCount().then((res) => {
+            if (res) {
+                setCartCount(res.CountCart)
+                setWishCount(res.WishCount)
+            }
         })
-    
-      }
 
-      useEffect(()=>{
+    }
+
+    useEffect(() => {
+
         getCountFunc();
-      },[])
+    }, [])
 
-    
+
 
     return (
         <div>
@@ -122,17 +101,16 @@ export default function SMININGROCKS_App() {
                 </div>
             </Dialog>
             {console.log(location.pathname)}
-             { (location.pathname === "/accountledgertable" ||
+            {(location.pathname === "/accountledgertable" ||
                 location.pathname === "/accountledgerexcel" ||
                 location.pathname === "/accountledgerdebit" ||
-                location.pathname === "/accountledgercredit"  ) ?
-                null : <Header /> } 
-             {/* <Header /> */}
+                location.pathname === "/accountledgercredit") ?
+                null : <Header />}
             <div>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/impact" element={<Impact />} />
-                    <Route path="/aboutUs" element={<AboutUs />} /> 
+                    <Route path="/aboutUs" element={<AboutUs />} />
                     <Route path="/labGrowDaimonds" element={<LabGroDiamonds />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgotPass" element={<ForgotPass />} />

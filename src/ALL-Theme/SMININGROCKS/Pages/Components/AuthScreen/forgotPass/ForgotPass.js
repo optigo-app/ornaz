@@ -131,7 +131,7 @@ export default function ForgotPass() {
         }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
 

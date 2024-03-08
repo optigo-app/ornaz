@@ -376,7 +376,7 @@ export default function Delivery() {
         }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <ToastContainer />
