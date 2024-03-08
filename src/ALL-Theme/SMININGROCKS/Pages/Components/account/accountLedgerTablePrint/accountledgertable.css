@@ -1,5 +1,5 @@
 .containerALT{
-    max-width: 1200px;
+    max-width: 1310px;
     margin: 0 auto;
 }
 .headline_alt{
@@ -18,7 +18,9 @@
 /* .sminingHeaderWeb{
     display: none;
 } */
-
+.hideSmilingRockHead{
+    display: none !important;
+}
 .lh_alt{
     line-height: 14px;
     font-size: 14px;
@@ -33,22 +35,28 @@
 @media print {
     .containerALT{
         margin-top: 0px;
-        padding: 10px;
+        padding: 5px;
     }
     .lh_alt{
-        line-height: 12px;
-        font-size: 12px;
+        line-height: 10px;
+        font-size: 10px;
     }
     .sminingHeaderWeb{
         display: none !important;
     }
     .fs_alt{
-        font-size: 9px;
+        font-size: 7px;
     }
     .firmnamealt{
-        font-size: 12px !important;
+        font-size: 9px !important;
     }
     .mobileHeaderSmining{
+        display: none !important;
+    }
+    .headline_alt{
+        font-size: 16px;
+    }
+    .hideSmilingRockHead{
         display: none !important;
     }
 }

@@ -146,7 +146,7 @@ const ProdDetail = () => {
 
   const getCartAndWishListData = async () => {
 
-    const UserEmail = localStorage.getItem("userEmail")
+    const UserEmail = localStorage.getItem("registerEmail")
     const storeInit = JSON.parse(localStorage.getItem("storeInit"))
     const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
@@ -162,6 +162,7 @@ const ProdDetail = () => {
 
     await CommonAPI(body).then((res) => {
       if (res?.Message === "Success") {
+        // console.log("res?.Data?.rd1",res?.Data?.rd1);
         setCartData(res?.Data?.rd)
         setWishData(res?.Data?.rd1)
       }
@@ -183,7 +184,7 @@ const ProdDetail = () => {
 
       if (event.target.checked === true) {
         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-        const UserEmail = localStorage.getItem("userEmail")
+        const UserEmail = localStorage.getItem("registerEmail")
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
         productData.wishCheck = event.target.checked;
@@ -194,6 +195,18 @@ const ProdDetail = () => {
         // console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
 
         let isWishHasCartData = WishData?.filter((pd) => product.autocode === pd.autocode)
+
+        let WishedData = isWishHasCartData.map((wcd)=> wcd.autocode === product.autocode ? product : null)
+
+        if(WishedData.length){
+          console.log("WishedData",WishedData)
+
+          WishedData[0].checkFlag = true;
+          WishedData[0].wishCheck = false;
+  
+          localStorage.setItem("srProductsData", JSON.stringify(WishedData[0]))
+          handelLocalStorage()
+        }
 
 
         let wishToCartEncData = { "autocodelist": `${productData?.autocode}`, "ischeckall": 0, "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` }
@@ -297,7 +310,7 @@ const ProdDetail = () => {
           p: wishToCartEncData1
         }
 
-        await CommonAPI(isWishHasCartData.length ? body1 : body).then(async (res) => {
+        await CommonAPI(isWishHasCartData.length  ? body1 : body).then(async (res) => {
           // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
           if (!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success") {
             await getCartAndWishListData()
@@ -366,7 +379,7 @@ const ProdDetail = () => {
 
         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
         const UserEmail = localStorage.getItem("registerEmail")
-        const Customer_id = JSON.parse(localStorage.getItem("loginUserDeta    il"));
+        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
 
         productData.wishCheck = event.target.checked;

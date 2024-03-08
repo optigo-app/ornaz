@@ -47,7 +47,8 @@ export default function Home() {
         const body = {
           "con": "{\"id\":\"\",\"mode\":\"store_init\"}",
           "p": "",
-          "f": "formname (init)"
+          "f": "formname (init)",
+          "sp":"1"
         };
         const response = await axios.post(APIURL, body, { headers: header });
         console.log('rrrrrrrrr',response);

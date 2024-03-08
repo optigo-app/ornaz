@@ -623,8 +623,8 @@ export default function Header() {
         </>
       )}
 
-      <div className="sminingHeaderWeb">
-        <div className="Smining-Top-Header">
+      <div className="sminingHeaderWeb ">
+        <div className="Smining-Top-Header ">
           <div
             style={{
               width: "33.33%",
