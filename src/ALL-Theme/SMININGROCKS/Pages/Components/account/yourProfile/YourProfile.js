@@ -42,7 +42,7 @@ export default function YourProfile() {
             const { FrontEnd_RegNo } = storeInit;
 
             const combinedValue = JSON.stringify({
-                firstname: `${editedUserData.defaddress_shippingfirstname}`, lastname: `${editedUserData.defaddress_shippinglastname}`, street: `${editedUserData.defaddress_state}`, addressprofile: `${editedUserData.defaddress_shippingfirstname + editedUserData.defaddress_shippinglastname}`, city: `${editedUserData.city}`, state: `${editedUserData.state}`, country: `${editedUserData.country}`, zip: `${editedUserData.zipCode}`, mobile: `${editedUserData.mobileNo}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${editedUserData.id}`
+                firstname: `${editedUserData.defaddress_shippingfirstname}`, lastname: `${editedUserData.defaddress_shippinglastname}`, street: `${editedUserData.defaddress_state}`, addressprofile: `${editedUserData.defaddress_shippingfirstname + editedUserData.defaddress_shippinglastname}`, city: `${editedUserData.city}`, state: `${editedUserData.state}`, country: `${editedUserData.country}`, zip: `${editedUserData.zipCode}`, mobile: `${userData.defaddress_shippingmobile}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${editedUserData.id}`
             });
             console.log('combinedValuecombinedValue', combinedValue);
 
@@ -153,7 +153,6 @@ export default function YourProfile() {
                 </div>
             </div>
 
-
             <Modal
                 open={editMode}
                 onClose={handleClose}
@@ -168,7 +167,7 @@ export default function YourProfile() {
                                     label="First Name"
                                     variant="outlined"
                                     style={{ margin: '15px' }}
-                                    value={userData.defaddress_shippingfirstname !== "undefined" ? userData.defaddress_shippingfirstname : ""}
+                                    value={editedUserData.defaddress_shippingfirstname !== "undefined" ? editedUserData.defaddress_shippingfirstname : ""}
                                     onChange={handleInputChange}
                                 />
                                 <TextField
@@ -176,7 +175,7 @@ export default function YourProfile() {
                                     label="Last Name"
                                     variant="outlined"
                                     style={{ margin: '15px' }}
-                                    value={userData.defaddress_shippinglastname !== "undefined" ? userData.defaddress_shippinglastname : ""}
+                                    value={editedUserData.defaddress_shippinglastname !== "undefined" ? editedUserData.defaddress_shippinglastname : ""}
                                     onChange={handleInputChange}
                                 />
                                 <TextField
@@ -184,7 +183,7 @@ export default function YourProfile() {
                                     label="Email"
                                     variant="outlined"
                                     style={{ margin: '15px' }}
-                                    value={userData.userid !== "undefined" ? userData.userid : ""}
+                                    value={editedUserData.userid !== "undefined" ? editedUserData.userid : ""}
                                     onChange={handleInputChange}
                                 />
                                 <TextField
@@ -192,7 +191,7 @@ export default function YourProfile() {
                                     label="Mobile No."
                                     variant="outlined"
                                     style={{ margin: '15px' }}
-                                    value={userData.defaddress_shippingmobile !== "undefined" ? userData.defaddress_shippingmobile : ""}
+                                    value={editedUserData.defaddress_shippingmobile !== "undefined" ? editedUserData.defaddress_shippingmobile : ""}
                                     onChange={handleInputChange}
                                 />
                                 <TextField
@@ -200,7 +199,7 @@ export default function YourProfile() {
                                     label="Address"
                                     variant="outlined"
                                     style={{ margin: '15px' }}
-                                    value={userData.defaddress_street !== "undefined" ? userData.defaddress_street : ""}
+                                    value={editedUserData.defaddress_street !== "undefined" ? editedUserData.defaddress_street : ""}
                                     onChange={handleInputChange}
                                 />
                             </>
