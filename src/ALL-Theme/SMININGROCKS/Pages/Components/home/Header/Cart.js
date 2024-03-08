@@ -39,6 +39,8 @@ export default function Cart({ open, toggleCartDrawer }) {
         if (storedData1) {
             setDaimondQualityColor(storedData1);
         }
+        console.log('DaimondQualityColorDaimondQualityColorDaimondQualityColor', DaimondQualityColor);
+
 
         const storedData2 = JSON.parse(localStorage.getItem('MetalTypeData'));
         if (storedData2) {
@@ -51,13 +53,13 @@ export default function Cart({ open, toggleCartDrawer }) {
         }
     }, []);
 
-    console.log('cartddddddd', cartListData);
     const getSizeData = async (item, index) => {
 
         const newShowDropdowns = [...showDropdowns];
         newShowDropdowns[index] = true;
         setShowDropdowns(newShowDropdowns);
-        console.log('responseresponse', item.designno);
+
+        console.log('desssssssss', item.designno);
 
         try {
 
@@ -73,6 +75,7 @@ export default function Cart({ open, toggleCartDrawer }) {
             const combinedValue = JSON.stringify({
                 autocode: `${autoC}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
             });
+            console.log('combinedValuecombinedValue', combinedValue);
 
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
@@ -81,6 +84,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                 "p": encodedCombinedValue
             }
             const response = await CommonAPI(body);
+            console.log('responseresponseresponse', response);
 
             if (response.Data?.rd) {
                 const sizeDropdownData = response.Data.rd;
@@ -294,37 +298,39 @@ export default function Cart({ open, toggleCartDrawer }) {
     };
 
     const handleUpdateQuantity = async (num) => {
-        try {
-            const updatedQuantity = cartListData[lastEnteredQuantityIndex].Quantity;
-            const firstItemQuantity = cartListData.length > 0 ? cartListData[0].Quantity : null;
-
-            // setIsLoading(true);
-            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-            const { FrontEnd_RegNo } = storeInit;
-            const combinedValue = JSON.stringify({
-                designno: `${num}`, Quantity: `${updatedQuantity}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
-            });
-            const encodedCombinedValue = btoa(combinedValue);
-            const body = {
-                "con": `{\"id\":\"\",\"mode\":\"UpdateQuantity\",\"appuserid\":\"${userEmail}\"}`,
-                "f": "header (handleUpdateQuantity)",
-                p: encodedCombinedValue
-            };
-            const response = await CommonAPI(body);
-            if (response.Data.rd[0].stat === 1) {
-                alert('done');
-            } else {
-                alert('Error');
+        if (lastEnteredQuantity.length === 0) {
+            alert('enter value first');
+        } else {
+            try {
+                const updatedQuantity = cartListData[lastEnteredQuantityIndex].Quantity;
+                const firstItemQuantity = cartListData.length > 0 ? cartListData[0].Quantity : null;
+                const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+                const { FrontEnd_RegNo } = storeInit;
+                const combinedValue = JSON.stringify({
+                    designno: `${num}`, Quantity: `${updatedQuantity}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
+                });
+                const encodedCombinedValue = btoa(combinedValue);
+                const body = {
+                    "con": `{\"id\":\"\",\"mode\":\"UpdateQuantity\",\"appuserid\":\"${userEmail}\"}`,
+                    "f": "header (handleUpdateQuantity)",
+                    p: encodedCombinedValue
+                };
+                const response = await CommonAPI(body);
+                if (response.Data.rd[0].stat === 1) {
+                    alert('done');
+                } else {
+                    alert('Error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                // Uncomment if needed:
+                // setIsLoading(false);
             }
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            // setIsLoading(false);
         }
     };
 
-
-
+   
     return (
         <Drawer
             anchor="right"
@@ -617,7 +623,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                 onChange={(event) => handleInputChange(event, index)}
                                             />
                                         </div>
-                                        <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(item.designno)}>QUANTITY</button>
+                                        <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(item.designno)}>QTY</button>
                                     </div>
 
                                     <div style={{ display: "flex", alignItems: 'center', marginLeft: '30px' }}>
@@ -672,7 +678,11 @@ export default function Cart({ open, toggleCartDrawer }) {
                 <div className="placeOrderBtnMain">
                     <button
                         className="placeOrderBtn"
-                        onClick={() => { toggleCartDrawer(false); navigation("/Delivery"); }}
+
+                        onClick={(event) => {
+                            toggleCartDrawer(false)(event); 
+                            navigation('/Delivery');  
+                        }}
                     >
                         Place Order
                     </button>
