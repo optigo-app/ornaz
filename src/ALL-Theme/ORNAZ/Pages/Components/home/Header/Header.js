@@ -30,8 +30,6 @@ export default function Header({ name }) {
   const [isOpenFineJewellaryGift, setFineJewellaryGift] = useState(false);
   const [isOpenInr, setIsInr] = useState(false);
 
-  console.log('i1',i1);
-
   const openDrawer = () => {
     setDrawerOpen(true);
   };

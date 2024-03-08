@@ -1,10 +1,68 @@
 .sminingHeaderWeb {
     height: 110px;
+    position: absolute;
+    width: 100%;
 }
 
-.Smining-Top-Header {
+
+.smilingCartRemoveBtn{
+    height: 40px;
+    width: 100px;
+    border: none;
+    background-color: lightgray;
+    font-weight: 500;
+}
+.YourCartMainRemkarBoxSingle{
+    height: 40px;
+    width: 240px;
+}
+
+.SmilingUpdateQuantityBtn{
+    height: 40px;
+    width: 200
+    px;
+    background-color: #f1d8c6;
+    border: none;
+    outline: none;
+    font-weight: 500;
+}
+.SmilingAddSingleRemkarBtn{
+    height: 40px;
+    width: 150px;
+    background-color: #f1d8c6;
+    border: none;
+    outline: none;
+    font-weight: 500;
+}
+/* .SmilingAddSingleRemkarBtn:hover{
+    background-color: white;
+    border: 1px solid #f1d8c6;
+} */
+.SmilingAddRemkarBtn{
+    height: 40px;
+    width: 200px;
+    background-color: #f1d8c6;
+    border: none;
+    outline: none;
+    font-weight: 500;
+}
+.SmilingAddRemkarBtn:hover{
+    background-color: white;
+    border: 1px solid #f1d8c6;
+}
+.addRemkarMain{
     display: flex;
-    background-color: transparent;
+    justify-content: flex-end;
+    margin-inline: 15px;
+}
+.YourCartMainRemkarBox{
+    width: 97%;
+    margin-inline: 10px;
+    border-radius: 5px;
+}
+.Smining-Top-Header {
+    
+    display: flex;
     top: 0px;
     padding: 0px;
     z-index: 1;
@@ -14,7 +72,7 @@
 
 .Smining-Top-Header-fixed {
     display: flex;
-    background-color: transparent;
+    background-color: transparent!important;
     top: 0px;
     padding: 0px;
     z-index: 1;
@@ -103,8 +161,20 @@
     font-weight: 500;
 }
 
+.placeOrderBtn {
+    height: 50px;
+    width: 40%;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    font-weight: 500;
+}
 
-
+.placeOrderBtnMain {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
 
 
 .Smining-Top-Header-fixed-main {
@@ -140,7 +210,9 @@
 
 
 .smiling-cartBoxMain {
-    display: flex;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin: 10px;
 }
 
 .smiling-cartBoxImg {
@@ -382,12 +454,49 @@
     z-index: -500 !important;
 }
 
-.CartPageShipingIn{
+.CartPageShipingIn {
     color: #7d7f85;
 }
-.CartPageShipingInSmall{
+
+.CartPageShipingInSmall {
     display: none;
 }
+
+.level0Menu{
+    transition: 'opacity .25s ease-in-out';
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.level1Menu{
+    transition: 'opacity .25s ease-in-out';
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.level2Menu{
+    transition: 'opacity .25s ease-in-out';
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.level0Menu:hover{
+    opacity: .6;
+}
+.level1Menu:active{
+    opacity: .6;
+    text-decoration: underline;
+    text-underline-offset: 2;
+}
+.level2Menu:hover{
+    opacity: .6;
+}
+
 @media screen and (min-width:1441px) {
     .mobileHeaderSmining {
         display: none;
@@ -395,7 +504,9 @@
 }
 
 @media screen and (max-width:1440px) {
-
+    .placeOrderBtn {
+        width: 100% !important;
+    }
     .sminingHeaderWeb {
         display: none;
     }
@@ -411,12 +522,16 @@
     .nav-bottom-header {
         display: none;
     }
-    .smiling-cartBoxImg{
+
+    .smiling-cartBoxImg {
         width: 60%;
     }
 }
 
 @media screen and (max-width:599px) {
+    .placeOrderBtn {
+        width: 100% !important;
+    }
 
     .PiStarThinTopIcone {
         display: none !important;
@@ -426,30 +541,34 @@
         display: none !important;
 
     }
-    .CartPageShipingIn{
+
+    .CartPageShipingIn {
         display: none;
     }
-    .CartPageShipingInSmall{
+
+    .CartPageShipingInSmall {
         color: #7d7f85;
         display: block;
     }
-    .smiling-cartBoxImg{
+
+    .smiling-cartBoxImg {
         width: 100%;
         height: 40%;
     }
 }
 
 @media screen and (max-width:1300px) {
-    .css-i8mxf8-MuiModal-root-MuiDrawer-root .MuiDrawer-paper{
-        width: 80%!important;
-        max-width: 80%!important;
+    .css-i8mxf8-MuiModal-root-MuiDrawer-root .MuiDrawer-paper {
+        width: 80% !important;
+        max-width: 80% !important;
     }
-  
+
 }
+
 @media screen and (max-width: 850px) {
-    .css-i8mxf8-MuiModal-root-MuiDrawer-root .MuiDrawer-paper{
-        width: 100%!important;
-        max-width: 100%!important;
+    .css-i8mxf8-MuiModal-root-MuiDrawer-root .MuiDrawer-paper {
+        width: 100% !important;
+        max-width: 100% !important;
     }
-  
+
 }

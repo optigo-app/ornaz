@@ -6,9 +6,9 @@ import Footer from '../home/Footer/Footer'
 export default function ServicePolicy() {
     return (
         <div style={{
-            backgroundColor: '#aab4b7'
+            backgroundColor: '#aab4b7',
+            paddingTop: '110px'
         }}>
-            <Header />
             <div>
                 <div style={{ paddingBlock: '60px' }}>
                     <p style={{ fontSize: '40px', color: 'white', textAlign: 'center', fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif' }}>SERVICE POLICY</p>

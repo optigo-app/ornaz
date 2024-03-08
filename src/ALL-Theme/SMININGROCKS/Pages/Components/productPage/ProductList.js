@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Header from "../home/Header/Header";
 import Footer from "../home/Footer/Footer";
 import SmilingRock from "../home/smiling_Rock/SmilingRock";
@@ -16,20 +16,73 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
+import { event } from "jquery";
+import { CommonAPI} from "../../../Utils/API/CommonAPI";
+import { async } from "q";
+import axios from "axios";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { CartListCounts, WishListCounts } from "../../../../../Recoil/atom";
+import { GetCount } from "../../../Utils/API/GetCount";
 
-
+ 
 const ProductList = () => {
   const [isOpenDetail, setIsOpenDetail] = useState(false);
+  const [ProductApiData,setProductApiData] =useState([])
   const [drawerShowOverlay, setDrawerShowOverlay] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [HoveredID, setHoveredID] = useState();
   const [filterChecked, setFilterChecked] = useState({});
+  const [wishFlag,setWishFlag] = useState(false)
+  const [cartFlag,setCartFlag] = useState(false)
+  const[cartData,setCartData] = useState([]);
+  const[WishData,setWishData] = useState([]);
+  const [cartRemoveData,setCartRemoveData] = useState("");
+  const [wishListRemoveData,setWishListRemoveData] = useState("");
+
+  console.log("wishData",cartData);
+
+  const setCartCount = useSetRecoilState(CartListCounts)
+  const setWishCount = useSetRecoilState(WishListCounts)
 
   const navigate = useNavigate();
 
   const toggleDeatilList = () => {
-    setIsOpenDetail(!isOpenDetail);
+    setIsOpenDetail(!isOpenDetail)
   };
+
+  const getCountFunc = async() =>{
+
+    await GetCount().then((res)=>{
+      if(res){
+        setCartCount(res.CountCart)
+        setWishCount(res.WishCount)
+      }
+    })
+
+  }
+
+
+
+
+  const fetchFile = async () => {
+
+    let storeinit=JSON.parse(localStorage.getItem("storeInit"))
+    let loginInfo=JSON.parse(localStorage.getItem("loginUserDetail"))
+
+    await axios.get(
+      `https://${storeinit?.domain}/assets/${storeinit?.FrontEnd_RegNo}/Store_Data/Productlist/Productlist_${loginInfo?.PackageId}_${storeinit?.FrontEnd_RegNo}.txt`
+    ).then(
+      (res)=>
+        {
+          setProductApiData(res?.data)
+        })
+    .catch((err)=>console.log("err",err))
+   
+  }; 
+
+  useEffect(()=>{
+    fetchFile()
+  },[])
 
   const toggleDrawerOverlay = () => {
     setDrawerShowOverlay(!drawerShowOverlay);
@@ -37,15 +90,38 @@ const ProductList = () => {
 
   let productData = [];
 
-  prodListData.data[0].map((ele) => {
-    let obj = {};
-    Object.entries(prodListData.ProductsList).map((objele) => {
-      obj[objele[0]] = ele[objele[1]];
+  if (ProductApiData?.data?.[0]) {
+    ProductApiData.data[0].map((ele) => {
+      let obj = {};
+      Object.entries(prodListData.ProductsList).map((objele) => {
+        obj[objele[0]] = ele[objele[1]];
+      });
+      productData.push(obj);
     });
-    productData.push(obj);
-  });
+  }
 
-  console.log("arr", productData);
+  // let product2Data = [];
+
+  // ProductApiData.data[0].map((ele) => {
+  //   let obj = {};
+  //   Object.entries(prodListData.ProductsList).map((objele) => {
+  //     obj[objele[0]] = ele[objele[1]];
+  //   });
+  //   product2Data.push(obj);
+  // });
+
+  // console.log("product2Data",ProductApiData?.data[0]?.map((ele)=>ele))
+
+  useEffect(() => {
+    // if(ProductApiData.length){
+      // window.scrollTo(0,0);
+      const element = document.getElementById("finejwelery")
+      element.scrollIntoView()
+    // }
+  }, []); 
+
+
+
 
   // let collectionsfilter = () =>{
   //   let arr1=[]
@@ -105,8 +181,21 @@ const ProductList = () => {
       const gendertype = filterData.GenderList.find(
         (gen) => gen.Genderid === product.Genderid
       );
-
-
+      const Berandtype = filterData.BrandList.find(
+        (brand) => brand.Brandid === product.Brandid
+      )
+      const MetalType = filterData.MetalTypeList.find(
+        (mt)=> mt.MetalTypeid === product.MetalTypeid
+      )
+      const OcassionType = filterData.OcassionList.find(
+        (ocs)=> ocs.Ocassionid === product.Ocassionid
+      )
+      const SubCategoryType = filterData.SubCategoryList.find(
+        (sct)=>sct.SubCategoryid === product.SubCategoryid
+      )
+      const ThemeType = filterData.ThemeList.find(
+        (tl)=>tl.Themeid === product.Themeid
+      )
 
       if (metalColor) {
         product.MetalColorName = metalColor.MetalColorName;
@@ -126,10 +215,122 @@ const ProductList = () => {
       if (gendertype) {
         product.GenderName = gendertype.GenderName;
       }
+      if(Berandtype){
+        product.Berandid = Berandtype.BrandName
+      }
+      if(MetalType){
+        product.MetalTypeName = MetalType.MetalTypeName
+      }
+      if(OcassionType){
+        product.OcassionName = OcassionType.OcassionName
+      }
+      if(SubCategoryType){
+        product.SubCategoryName = SubCategoryType.SubCategoryName
+      }
+      if(ThemeType){
+        product.Themeid = ThemeType.Themeid
+      }
     });
 
     return productData;
   }
+
+
+  const diffCartData = useCallback(() =>{
+
+  // let pdata;
+  
+  productData.forEach((pd)=>{
+    const pdata = cartData.find((cd)=>pd.designno === cd.DesignNo)
+    
+    // console.log("pdata",pdata);
+
+    if(pdata && !pd?.checkFlag){
+      pd.checkFlag = true
+    }
+    else{
+      pd.checkFlag = false
+    }
+  })
+
+
+return productData
+  
+},[productData,cartData])
+
+
+diffCartData()
+
+console.log("WishData",WishData);
+
+
+const diffWishData = useCallback(()=>{
+
+  productData.forEach((pd)=>{
+    const pdata = WishData.find((cd)=>pd.designno === cd.DesignNo)
+    
+
+    if(pdata && !pd?.wishCheck){
+      pd.wishCheck = true
+    }
+    else{
+      pd.wishCheck = false
+    }
+  })
+
+
+return productData
+
+},[productData,WishData])
+
+
+diffWishData()
+
+const removefromCart=()=>{
+  productData.map((pd)=>{
+ 
+
+    if(cartRemoveData && pd.designno === cartRemoveData){
+        pd.checkFlag = false
+    }
+    
+    if(wishListRemoveData  && pd.designno === wishListRemoveData){
+      pd.wishCheck = false
+    }
+
+  })
+
+
+return productData
+// // console.log("prodddd",product);
+// let prodD;
+// productData.forEach((pd)=>{
+
+//   // let prodD = productData.find((p)=>p?.designno === product?.designno && p?.checkFlag === true)
+
+//   // if(prodD){
+//   //   pd.checkFlag = false
+//   // }
+
+// if(pd?.designno===product?.designno){
+//    prodD = pd
+// }
+// if(prodD){
+//   pd.checkFlag = false
+// }
+
+// })
+
+// console.log("prodD",prodD);
+// return productData
+}
+
+removefromCart()
+
+
+
+
+  
 
   // let GetPrice = () =>{
   //   // let PriceDataChange=[]
@@ -143,6 +344,16 @@ const ProductList = () => {
   //   return updateProductsWithMetalColorName()
 
   // }
+
+
+  // useEffect(()=>{
+
+  //   let isWishHasCartData = productData?.filter((pd)=> WishData.find((wd)=>wd.autocode===pd.autocode))
+  //   console.log("isWishHasCartData",isWishHasCartData)
+
+  // },[WishData])
+
+
 
   updateProductsWithMetalColorName()?.forEach((product) => {
     const priceData = PriceData?.find(
@@ -179,7 +390,6 @@ const ProductList = () => {
   });
 
   const handelProductSubmit = (product) => {
-    console.log("product", product);
     localStorage.setItem("srProductsData", JSON.stringify(product));
     navigate("/productdetail");
   };
@@ -235,8 +445,6 @@ const ProductList = () => {
     return {type:ele[1].type,value:ele[1].value}
   })
 
-  console.log("filterChecked",sepeTypeVal);
-
   // const filteredProducts = productData.filter(product => {
   //   return sepeTypeVal.every(filter => {
   //     return product[filter.type] === filter.value 
@@ -251,17 +459,7 @@ const ProductList = () => {
     });
 });
 
-
-
-
-
-
-
   const mergedArray = filteredProducts.reduce((acc, curr) => acc.concat(curr), []);
-
-  console.log("filteredProducts",filteredProducts);
-  // console.log("ArrFil",ArrFil);
-
   const finalDataOfDisplaying = () =>{
     if(mergedArray.length && mergedArray){
       return mergedArray
@@ -271,108 +469,442 @@ const ProductList = () => {
     }
   }
 
+  // console.log("finalDataOfDisplaying",finalDataOfDisplaying());
+
+  
+  // const getCountApi = async()=>{
+
+  //       const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+  //       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+  //       const UserEmail = localStorage.getItem("userEmail")
+
+
+  //   let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
+
+  //   const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
+
+  //   let body = {
+  //       "con":`{\"id\":\"\",\"mode\":\"Getcount\",\"appuserid\":\"${UserEmail}\"}`,
+  //       "f":"onAddToCart-AddToWishList-Reload (cartcount)",
+  //       "p":encodedCombinedValue
+  //       }
+
+  //   await CommonAPI(body).then((res)=>{
+  //     if(res?.Data?.rd[0]?.stat_msg === "success"){
+  //       const CountCart = res?.Data?.rd[0]?.cartcount
+  //       const WishCount = res?.Data?.rd[0]?.wishcount
+
+  //       setCartCount(CountCart)
+  //       setWishCount(WishCount)
+
+  //     }
+  //   })
+
+  // }
+
+  const getCartAndWishListData = async() =>{
+  
+    const UserEmail = localStorage.getItem("registerEmail")
+    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+    const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+    let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
+
+    const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
+
+    const body = {
+        "con":`{\"id\":\"Store\",\"mode\":\"getdesignnolist\",\"appuserid\":\"${UserEmail}\"}`,
+        "f":" useEffect_login ( getdataofcartandwishlist )",
+        "p":encodedCombinedValue
+    }
+
+    await CommonAPI(body).then((res)=>{
+      if(res?.Message === "Success"){
+        setCartData(res?.Data?.rd)
+        setWishData(res?.Data?.rd1)
+      }
+    })
+
+  }
+
+
+  useEffect(()=>{
+
+    getCartAndWishListData();
+    // getCountApi()
+    getCountFunc()
+
+  },[])
+
+
+
+  const handelWishList = async(event,prod) =>{
+
+    try{
+      setWishFlag(event.target.checked)
+
+      if(event.target.checked === true){
+
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+        const UserEmail = localStorage.getItem("registerEmail")
+        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+
+        const product =  prod 
+
+  
+        const finalJSON = {
+          "stockweb_event": "",
+          "Mastermanagement_CategorySize": "",
+          "sizeamountpersentage": "",
+          "stockno": "",
+          "is_show_stock_website": "0",
+          "cmboDiaQualityColor": "C-VS#@#FG",
+          "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
+          "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
+          "BrandName":`${product?.BrandName ?? ""}`,
+          "Brandid": 5,
+          "CategoryName":`${product?.CategoryName}`,
+          "Categoryid":Number(`${product?.Categoryid}`),
+          "CenterStoneId":Number(`${product?.CenterStoneId}`),
+          "CenterStonePieces":Number(`${product?.CenterStonePieces}`),
+          "CollectionName":`${product?.CollectionName}`,
+          "Collectionid":Number(`${product?.Collectionid}`),
+          "ColorWiseRollOverImageName":`${product?.ColorWiseRollOverImageName}`,
+          "DefaultImageName":`${product?.DefaultImageName}`,
+          "DisplayOrder":Number(`${product?.DisplayOrder}`),
+          "FrontEnd_OrderCnt":Number(`${product?.FrontEnd_OrderCnt}`),
+          "GenderName":`${product?.GenderName}`,
+          "Genderid":Number(`${product?.Genderid}`),
+          "Grossweight":Number(`${product?.Grossweight}`),
+          "InReadyStockCnt":Number(`${product?.InReadyStockCnt}`),
+          "IsBestSeller":Number(`${product?.IsBestSeller}`),
+          "IsColorWiseImageExists":`${product?.IsColorWiseImageExists}`,
+          "IsInReadyStock":Number(`${product?.IsInReadyStock}`),
+          "IsNewArrival":`${product?.IsNewArrival}`,
+          "IsRollOverColorWiseImageExists":`${product?.IsRollOverColorWiseImageExists}`,
+          "IsTrending":Number(`${product?.IsTrending}`),
+          "MasterManagement_labid":Number(`${product?.MasterManagement_labid}`),
+          "MasterManagement_labname": "",
+          "MetalColorName": `${product?.MetalColorName}`,
+          "MetalColorid": Number(`${product?.MetalColorid}`),
+          "MetalPurity": `${product?.MetalPurity}`,
+          "MetalPurityid": Number(`${product?.MetalTypeid}`),
+          "MetalTypeName":`${product?.MetalTypeName ?? ""}`,
+          "MetalTypeid": Number(`${product?.IsInReadyStock}`),
+          "MetalWeight": Number(`${product?.MetalWeight}`),
+          "OcassionName": `${product?.OcassionName ?? ""}`,
+          "Ocassionid": Number(`${product?.Ocassionid}`),
+          "ProducttypeName":`${product?.ProducttypeName}`,
+          "Producttypeid": Number(`${product?.Producttypeid}`),
+          "RollOverImageName":`${product?.RollOverImageName}`,
+          "SubCategoryName":`${product?.SubCategoryName ?? ""}`,
+          "SubCategoryid":Number(`${product?.SubCategoryid ?? ""}`),
+          "ThemeName":`${product?.ThemeName ?? ""}`,
+          "Themeid":Number(`${product?.Themeid}`),
+          "TitleLine":`${product?.TitleLine}`,
+          "UnitCost": Number(`${product?.UnitCost}`),
+          "UnitCostWithmarkup":Number( `${product?.UnitCostWithmarkup}`),
+          "autocode": `${product?.autocode}`,
+          "colorstonecolorname": `${product?.colorstonecolorname}`,
+          "colorstonequality": `${product?.colorstonequality}`,
+          "designno": `${product?.designno}`,
+          "diamondcolorname": `${product?.diamondcolorname}`,
+          "diamondpcs":Number(`${product?.diamondpcs}`),
+          "diamondquality":`${product?.diamondquality.split(",")[0]}`,
+          "diamondsetting":`${product?.diamondsetting}`,
+          "diamondshape": `${product?.diamondshape}`,
+          "diamondweight": Number(`${product?.diamondweight}`),
+          "encrypted_designno":`${product?.encrypted_designno}`,
+          "hashtagid":`${product?.hashtagid}`,
+          "hashtagname": `${product?.hashtagname}`,
+          "imagepath": `${product?.imagepath}`,
+          "imgrandomno": `${product?.imgrandomno}`,
+          "mediumimage":`${product?.mediumimage ?? ""}`,
+          "originalimage":`${product?.originalimage}`,
+          "storyline_html": `${product?.storyline_html}`,
+          "storyline_video": `${product?.storyline_video}`,
+          "thumbimage":`${product?.thumbimage}`,
+          "totaladditionalvalueweight": 0,
+          "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
+          "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
+          "updatedate": `${product?.updatedate}`,
+          "videoname":`${product?.videoname ?? ""}`,
+          "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
+          "Customerid": `${Customer_id?.id}`,
+          "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
+          "DQuality": `${product?.diamondquality.split(",")[0]}`,
+          "DColor":`${product?.diamondcolorname}`,
+          "UploadLogicalPath":`${product?.UploadLogicalPath ?? ""}`,
+          "ukey": `${storeInit?.ukey}`
+        }
+
+
+        const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
+  
+        const body = {
+          con: `{\"id\":\"\",\"mode\":\"addwishlist\",\"appuserid\":\"${UserEmail}\"}`,
+          f: "AddToWishListIconClick (addwishlist)",
+          p: encodedCombinedValue,
+        };
+    
+        await CommonAPI(body).then(async(res)=>{
+
+          if(res?.Data?.rd[0]?.msg === "success"){
+            
+
+            await getCartAndWishListData()
+            // await getCountApi()
+            getCountFunc()
+            
+          }
+      })
+      }
+      else{
+        // {"designlist":"'MCJ10'","isselectall":"0","FrontEnd_RegNo":"95oztttesi0o50vr","Customerid":"856"}
+
+
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+        const UserEmail = localStorage.getItem("registerEmail")
+        const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+        
+        
+        setWishListRemoveData(prod.designno)
+  
+  
+        let Data = {"designlist":`'${prod?.designno}'`,"isselectall":"0","FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`}
+  
+        let encodedCombinedValue = btoa(JSON.stringify(Data))
+        const body = {
+          con: `{\"id\":\"\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${UserEmail}\"}`,
+          f: "RemoveFromWishlistIconClick (removeFromWishList)",
+          p: encodedCombinedValue,
+        }
+  
+        await CommonAPI(body).then(async(res)=>{
+          // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+          if(res?.Data?.rd[0]?.stat_msg === "success"){
+            // removefromCart()
+            await getCartAndWishListData()
+            // await getCountApi()
+            getCountFunc()
+            // removefromCart(prod)
+          }
+      })
+
+      }
+
+
+
+    } 
+    catch(error){
+      console.log("error",error);
+    }
+    // console.log("productsWish",prod)
+    // prod["checkFlag"] = event.target.checked
+  }
+
+
+
+
+const handelCartList = async(event,prod)=>{
+
+    try{
+      setCartFlag(event.target.checked)
+
+      if(event.target.checked === true){
+        const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+      const UserEmail = localStorage.getItem("registerEmail")
+      const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+  
+      const product =  prod 
+
+      let isWishHasCartData = WishData?.filter((pd)=> product.autocode===pd.autocode)
+      console.log("isWishHasCartData",isWishHasCartData)
+
+      let wishToCartEncData = {"autocodelist":`${isWishHasCartData[0]?.autocode}`,"ischeckall":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`} 
+      
+
+  
+      const finalJSON = {
+          "stockweb_event": "",
+          "designno": `${product?.designno}`,
+          "autocode": `${product?.autocode}`,
+          "imgrandomno": `${product?.imgrandomno}`,
+          "producttypeid": `${product?.Producttypeid}`,
+          "metaltypeid": `${product?.MetalTypeid}`,
+          "metalcolorid": `${product?.MetalColorid}`,
+          "stockno": "",
+          "DQuality": `${product?.diamondquality.split(",")[0]}`,
+          "DColor":`${product?.diamondcolorname}`,
+          "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
+          "AdditionalValWt":Number(`${product?.AdditionalValWt}`),
+          "BrandName":`${product?.BrandName ?? ""}`,
+          "Brandid":Number(`${product?.Brandid}`),
+          "CategoryName":`${product?.CategoryName}`,
+          "Categoryid":Number(`${product?.Categoryid}`),
+          "CenterStoneId":Number(`${product?.CenterStoneId}`),
+          "CenterStonePieces":Number(`${product?.CenterStonePieces}`),
+          "CollectionName":`${product?.CollectionName}`,
+          "Collectionid":Number(`${product?.Collectionid}`),
+          "ColorWiseRollOverImageName":`${product?.ColorWiseRollOverImageName}`,
+          "DefaultImageName":`${product?.DefaultImageName}`,
+          "DisplayOrder":Number(`${product?.DisplayOrder}`),
+          "FrontEnd_OrderCnt":Number(`${product?.FrontEnd_OrderCnt}`),
+          "GenderName":`${product?.GenderName}`,
+          "Genderid":Number(`${product?.Genderid}`),
+          "Grossweight":Number(`${product?.Grossweight}`),
+          "InReadyStockCnt":Number(`${product?.InReadyStockCnt}`),
+          "IsBestSeller":Number(`${product?.IsBestSeller}`),
+          "IsColorWiseImageExists":`${product?.IsColorWiseImageExists ?? 0}`,
+          "IsInReadyStock":Number(`${product?.IsInReadyStock}`),
+          "IsNewArrival":`${product?.IsNewArrival}`,
+          "IsRollOverColorWiseImageExists":`${product?.IsRollOverColorWiseImageExists}`,
+          "IsTrending":Number(`${product?.IsTrending}`),
+          "MasterManagement_labid":Number(`${product?.MasterManagement_labid}`),
+          "MasterManagement_labname": "",
+          "MetalColorName": `${product?.MetalColorName}`,
+          "MetalColorid": Number(`${product?.MetalColorid}`),
+          "MetalPurity": `${product?.MetalPurity}`,
+          "MetalPurityid": Number(`${product?.MetalTypeid}`),
+          "MetalTypeName": `${product?.MetalTypeName}`,
+          "MetalTypeid": Number(`${product?.IsInReadyStock}`),
+          "MetalWeight": Number(`${product?.MetalWeight}`),
+          "OcassionName": `${product?.OcassionName ?? ""}`,
+          "Ocassionid": Number(`${product?.Ocassionid}`),
+          "ProducttypeName":`${product?.ProducttypeName}`,
+          "Producttypeid": Number(`${product?.Producttypeid}`),
+          "RollOverImageName":`${product?.RollOverImageName}`,
+          "SubCategoryName":`${product?.SubCategoryName ?? ""}`,
+          "SubCategoryid":Number(`${product?.SubCategoryid}`),
+          "ThemeName":`${product?.ThemeName ?? ""}`,
+          "Themeid":Number(`${product?.Themeid}`),
+          "TitleLine":`${product?.TitleLine}`,
+          "UnitCost": Number(`${product?.UnitCost}`),
+          "UnitCostWithmarkup":Number( `${product?.UnitCostWithmarkup}`),
+          "colorstonecolorname": `${product?.colorstonecolorname}`,
+          "colorstonequality": `${product?.colorstonequality}`,
+          "diamondcolorname": `${product?.diamondcolorname}`,
+          "diamondpcs":Number(`${product?.diamondpcs}`),
+          "diamondquality":`${product?.diamondquality.split(",")[0]}`,
+          "diamondsetting":`${product?.diamondsetting}`,
+          "diamondshape": `${product?.diamondshape}`,
+          "diamondweight": Number(`${product?.diamondweight}`),
+          "encrypted_designno":`${product?.encrypted_designno}`,
+          "hashtagid":`${product?.hashtagid}`,
+          "hashtagname": `${product?.hashtagname}`,
+          "imagepath": `${product?.imagepath}`,
+          "mediumimage":`${product?.mediumimage ?? ""}`,
+          "originalimage":`${product?.originalimage}`,
+          "storyline_html": `${product?.storyline_html}`,
+          "storyline_video": `${product?.storyline_video}`,
+          "thumbimage":`${product?.thumbimage}`,
+          "totaladditionalvalueweight":Number(`${product?.totaladditionalvalueweight}`),
+          "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
+          "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
+          "updatedate": `${product?.updatedate}`,
+          "videoname":`${product?.videoname ?? ""}`,
+          "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
+          "Customerid": `${Customer_id?.id}`,
+          "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
+          "quantity": `${product?.quantity ?? "1"}`
+      }
+
+      const encodedCombinedValue =  btoa(JSON.stringify(finalJSON));
+      const wishToCartEncData1 =  btoa(JSON.stringify(wishToCartEncData));
+
+      const body = {
+        con: `{\"id\":\"\",\"mode\":\"ADDTOCART\",\"appuserid\":\"${UserEmail}\"}`,
+        f: "AddToCartIconClick (addcartlist)",
+        p: encodedCombinedValue,
+      };
+
+      let body1 = {
+        con:`{\"id\":\"Store\",\"mode\":\"addwishlisttocart\",\"appuserid\":\"${UserEmail}\"}`,
+        f:"iconclick (addwishlisttocart)",
+        p: wishToCartEncData1
+      }
+
+  
+      
+      
+      await CommonAPI(isWishHasCartData.length? body1 : body).then(async(res)=>{
+          // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+          if(!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success"){
+            await getCartAndWishListData()
+            // await getCountApi()
+            getCountFunc()
+            // prod.checkFlag=false
+          }
+
+          if(isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success"){
+            await getCartAndWishListData()
+            // await getCountApi()
+            getCountFunc()
+          }
+      })
+
+      // let isWishHasCartData = WishData?.filter((wd)=> wd.autocode === prod.autocode)
+      //  console.log("isWishHasCartData",isWishHasCartData)
+
+    }
+    else{
+      const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+      const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
+      const UserEmail = localStorage.getItem("registerEmail")
+      
+      setCartRemoveData(prod.designno)
+
+      let Data = {"designno":`${prod?.designno}`,"autocode":`${prod?.autocode}`,"metalcolorid":0,"isSolStockNo":0,"is_show_stock_website":"0","isdelete_all":0,"FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,"Customerid":`${Customer_id?.id}`,"cartidlist":""}
+
+      let encodedCombinedValue = btoa(JSON.stringify(Data))
+      const body = {
+        con: `{\"id\":\"\",\"mode\":\"removeFromCartList\",\"appuserid\":\"${UserEmail}\"}`,
+        f: "RemoveFromCartIconClick (removeFromCartList)",
+        p: encodedCombinedValue,
+      }
+
+      await CommonAPI(body).then(async(res)=>{
+        // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
+        if(res?.Data?.rd[0]?.stat_msg === "success"){
+          // removefromCart()
+          await getCartAndWishListData()
+          // await getCountApi()
+          getCountFunc()
+          // removefromCart(prod)
+        }
+    })
+
+    }
+
+    }
+    catch(error){
+      console.log("error",error);
+    }
+    
+}
+
 
 
   return (
     <div>
-      {drawerShowOverlay && (
-        <>
-          <div className="mobileSmlingProductFilterOverly">
-            <div
-              style={{
-                display: "flex",
-                margin: "20px",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <IoClose
-                  style={{
-                    height: "30px",
-                    width: "30px",
-                    color: "white",
-                    cursor: "pointer",
-                  }}
-                  onClick={toggleDrawerOverlay}
-                />
-              </div>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "white",
-                  fontWeight: 500,
-                }}
-              >
-                Clear Filter
-              </p>
-            </div>
-            <div>{/* content....... */}</div>
-            <div
-              style={{
-                backgroundColor: "#7d7f85",
-                position: "fixed",
-                bottom: "0px",
-                width: "100%",
-              }}
-            >
-              <p
-                style={{
-                  color: "white",
-                  textAlign: "center",
-                  paddingTop: "15px",
-                }}
-              >
-                APPLY FILTERS
-              </p>
-            </div>
-          </div>
-        </>
-      )}
       <div
         style={{
           backgroundColor: "#c0bbb1",
           height: "100%",
           width: "100%",
           paddingBottom: "100px",
+
         }}
       >
-        {!drawerShowOverlay && <Header />}
-        {/* <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            textAlign: "center",
-            gap: "12px",
-            padding: "40px 20px 70px",
-          }}
-        >
-          <h1 style={{ fontFamily: "FreightDisp Pro Medium", color: "white" }}>
-            Rings
-          </h1>
-
-          <p
-            style={{
-              width: "346px",
-              fontSize: "14px",
-              color: "#fff",
-              fontWeight: "500",
-            }}
-          >
-            From uncompromising minimalism to ultra-femme, these are lab grown
-            diamond rings are to revel in.
-          </p>
-        </div> */}
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            paddingTop: '110px'
           }}
         >
-          <div className="smilingProductMain">
+          <div className="smilingProductMain" id="smilingProductMain">
             <div
               className="smilingProductSubMain"
               style={{ width: "100%", display: "flex" }}
@@ -386,7 +918,7 @@ const ProductList = () => {
                 className="smilingWebProductListSideBar"
               >
                 <ul>
-                  <li className="finejwelery">Filters</li>
+                  <li className="finejwelery" id="finejwelery">Filters</li>
                   {/* <li className="finejli">Rings</li>
                   <li className="finejli">Necklaces</li>
                   <li className="finejli">Earrings</li>
@@ -491,7 +1023,7 @@ const ProductList = () => {
                   ))}
                 </div>
               </div>
-              <div className="smilingMobileProductListSideBar">
+              <div className="smilingMobileProductListSideBar"> 
                 <div onClick={toggleDeatilList} style={{ padding: "15px" }}>
                   <p
                     style={{
@@ -577,6 +1109,7 @@ const ProductList = () => {
                   margin: "40px 50px 0px 0px",
                 }}
                 className="smilingProductImageMain"
+                id="smilingProductImageMain"
               >
                 <div
                   style={{
@@ -662,6 +1195,10 @@ const ProductList = () => {
                             }
                             disableRipple={true}
                             sx={{padding:"5px"}}
+                            // onClick={()=>handelWishList(products)}
+                            // value={wishFlag}
+                            checked={products?.wishCheck}
+                            onChange={(e)=>handelWishList(e,products)}
                           />
                        
                         </div>
@@ -679,6 +1216,10 @@ const ProductList = () => {
                             }
                             disableRipple={true}
                             sx={{padding:"5px"}}
+                            // onClick={()=>}
+                            // value={cartFlag}
+                            checked={products?.checkFlag}
+                            onChange={(e)=>handelCartList(e,products)}
                           />
                         </div>
                       </div>
