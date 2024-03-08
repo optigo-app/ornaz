@@ -46,6 +46,7 @@ export default function SMININGROCKS_App() {
 
     const [openLoginDailog, setOpenLoginDailog] = useRecoilState(openSignInModal);
 
+    const location = useLocation();
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
 
@@ -69,7 +70,7 @@ export default function SMININGROCKS_App() {
     }
 
     useEffect(() => {
-        
+
         getCountFunc();
     }, [])
 
@@ -100,17 +101,16 @@ export default function SMININGROCKS_App() {
                 </div>
             </Dialog>
             {console.log(location.pathname)}
-             { (location.pathname === "/accountledgertable" ||
+            {(location.pathname === "/accountledgertable" ||
                 location.pathname === "/accountledgerexcel" ||
                 location.pathname === "/accountledgerdebit" ||
-                location.pathname === "/accountledgercredit"  ) ?
-                null : <Header /> } 
-             {/* <Header /> */}
+                location.pathname === "/accountledgercredit") ?
+                null : <Header />}
             <div>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/impact" element={<Impact />} />
-                    <Route path="/aboutUs" element={<AboutUs />} /> 
+                    <Route path="/aboutUs" element={<AboutUs />} />
                     <Route path="/labGrowDaimonds" element={<LabGroDiamonds />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgotPass" element={<ForgotPass />} />
