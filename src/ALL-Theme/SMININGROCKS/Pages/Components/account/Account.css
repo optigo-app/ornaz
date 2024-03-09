@@ -116,6 +116,11 @@
     color: #000;
 }
 
+.salesPage > div{
+    padding-left: 0;
+    padding-right: 0;
+}
+
 
 @media screen and (max-width: 1441px) {
 
@@ -176,6 +181,25 @@
         font-size: calc(1.375rem + 1.5vw) !important;
         padding-bottom: 10px;
     }
+
+    .accountTabSection .MuiTabs-scrollButtons{
+        display: -webkit-inline-box !important;
+        /* width: 20px !important; */
+    }
+
+    .accountTabSection .Mui-disabled.MuiTabs-scrollButtons{
+        display: none !important;
+    }
+
+   .accountTabSection .MuiTab-root.MuiTab-textColorPrimary{
+    padding: 0 10px !important;
+    min-width: max-content;
+   }
+
+   .accountSalesPage > div{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+   }
 }
 
 /* 1px solid #e1e1e1 */

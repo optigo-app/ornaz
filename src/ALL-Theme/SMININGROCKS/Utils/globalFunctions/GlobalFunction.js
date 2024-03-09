@@ -118,3 +118,8 @@ export const getLocalStorageItems = () => {
         data: data, FrontEnd_RegNo: FrontEnd_RegNo
     }
 }
+
+export const accountValidation = () => {
+    let getVal = JSON.parse(localStorage.getItem("storeInit"));
+    console.log(getVal);
+}

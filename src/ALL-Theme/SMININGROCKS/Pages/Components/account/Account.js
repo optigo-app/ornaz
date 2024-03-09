@@ -17,6 +17,7 @@ import SalesReport from '../sales/salesReport/SalesReport';
 import QuotationJob from './quotationFilters/QuotationJob';
 import QuotationQuote from './QuotationQuote/QuotationQuote';
 import Sales from '../sales/Sales/Sales';
+import { accountValidation } from '../../../Utils/globalFunctions/GlobalFunction';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -108,7 +109,7 @@ export default function Account() {
                 </div>
             )} */}
 
-            <div>
+            <div>{console.log(accountValidation())}
                 <div className='Smiling-AccountMain'>
                     <p className='SmilingAccountTitle youraccountpagesec'>Your Account</p>
                     <div className='smling-AccountTabMain'>
@@ -155,10 +156,10 @@ export default function Account() {
                                 <ManageAddress />
                             </CustomTabPanel>
 
-                            <CustomTabPanel value={value} index={3}>
+                            <CustomTabPanel value={value} index={3} className="accountSalesPage">
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value1} variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator  }} scrollButtons="auto">
+                                    <Tabs value={value1} className='accountTabSection' variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator  }} scrollButtons="auto">
                                         <Tab label="Quote" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />
                                         <Tab label="Job" {...a11yProps(1)} sx={{  color: "#7d7f85"  }} />
                                         <Tab label="Sales" {...a11yProps(2)} sx={{  color: "#7d7f85"  }} />
@@ -173,7 +174,7 @@ export default function Account() {
                                 <CustomTabPanel value={value1} index={1} className="quotationFilters">
                                     <QuotationJob />
                                 </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={2} className="">
+                                <CustomTabPanel value={value1} index={2} className="salesPage">
                                     <Sales />
                                 </CustomTabPanel>
                                 <CustomTabPanel value={value1} index={3} className="salesReport">
