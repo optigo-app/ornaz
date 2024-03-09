@@ -15,6 +15,10 @@ export default function Cart({ open, toggleCartDrawer }) {
     const [yKey, setYouKey] = useState('');
     const [customerID, setCustomerID] = useState('');
     const [userEmail, setUserEmail] = useState('');
+    const [isProductCuFlag, setIsProductCuFlag] = useState('');
+    const [isMetalCutoMizeFlag, setIsMetalCutoMizeFlag] = useState('');
+    const [isDaimondCstoFlag, setIsDaimondCstoFlag] = useState('');
+    const [isCColrStoneCustFlag, setIsCColrStoneCustFlag] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [colorData, setColorData] = useState([]);
     const [metalColorData, setMetalColorData] = useState([]);
@@ -130,6 +134,10 @@ export default function Cart({ open, toggleCartDrawer }) {
             const storedData = localStorage.getItem('loginUserDetail');
             const data = JSON.parse(storedData);
             const customerid = data.id;
+            setIsProductCuFlag(data.IsProductWebCustomization);
+            setIsMetalCutoMizeFlag(data.IsMetalCustomization);
+            setIsDaimondCstoFlag(data.IsDiamondCustomization)
+            setIsCColrStoneCustFlag(data.IsCsCustomization)
             setCustomerID(data.id);
             const customerEmail = data.userid;
             setUserEmail(customerEmail);
@@ -429,7 +437,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                 </span></>
                                             )}
                                         </p>
-                                       
+
                                         {showDropdowns[index] ? (<div>
                                             <div
                                                 style={{ display: "flex", width: "100%", marginTop: "12px" }}
@@ -466,38 +474,39 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                         margin: "10px 10px 0px 10px",
                                                     }}
                                                 />
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        flexDirection: "column",
-                                                        width: "47.5%",
-                                                    }}
-                                                >
-                                                    <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                                                        METAL COLOR:
-                                                    </label>
-                                                    <select
+                                                {isMetalCutoMizeFlag == 1 &&
+                                                    <div
                                                         style={{
-                                                            border: "none",
-                                                            outline: "none",
-                                                            color: "#7d7f85",
-                                                            fontSize: "12.5px",
+                                                            display: "flex",
+                                                            flexDirection: "column",
+                                                            width: "47.5%",
                                                         }}
                                                     >
-                                                        {metalColorData.map((colorItem) => (
-                                                            <option key={colorItem.ColorId} value={colorItem.ColorId}>
-                                                                {colorItem.metalcolorname}
-                                                            </option>
-                                                        ))}
-                                                    </select>
-                                                </div>
+                                                        <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                                                            METAL COLOR:
+                                                        </label>
+                                                        <select
+                                                            style={{
+                                                                border: "none",
+                                                                outline: "none",
+                                                                color: "#7d7f85",
+                                                                fontSize: "12.5px",
+                                                            }}
+                                                        >
+                                                            {metalColorData.map((colorItem) => (
+                                                                <option key={colorItem.ColorId} value={colorItem.ColorId}>
+                                                                    {colorItem.metalcolorname}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>}
                                             </div>
                                             <Divider sx={{ marginTop: '10px', background: '#a9a7a7' }} />
                                             <div
                                                 style={{ display: "flex", width: "100%", marginTop: "12px" }}
                                                 className="srcolorsizecarat"
                                             >
-                                                <div
+                                                {isDaimondCstoFlag == 1 && <div
                                                     style={{
                                                         display: "flex",
                                                         flexDirection: "column",
@@ -521,7 +530,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             </option>
                                                         ))}
                                                     </select>
-                                                </div>
+                                                </div>}
                                                 <Divider
                                                     orientation="vertical"
                                                     flexItem
@@ -531,7 +540,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                         margin: "0px 10px 0px 10px",
                                                     }}
                                                 />
-                                                <div
+                                                {isMetalCutoMizeFlag == 1 && <div
                                                     style={{
                                                         display: "flex",
                                                         flexDirection: "column",
@@ -555,10 +564,10 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             </option>
                                                         ))}
                                                     </select>
-                                                </div>
+                                                </div>}
                                             </div>
                                             <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
-                                            <div
+                                            {isCColrStoneCustFlag == 1 && <div
                                                 style={{
                                                     display: "flex",
                                                     flexDirection: "column",
@@ -582,12 +591,13 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                         </option>
                                                     ))}
                                                 </select>
-                                            </div>
+                                            </div>}
                                             <button className="SmilingCustomzeSaveBtn" style={{ marginTop: '10px' }} onClick={() => handleSave(index)}>Save</button>
                                         </div>
                                         ) : (
+                                            isProductCuFlag == 1 &&
                                             <div className="addRemkarMain">
-                                                <button className="SmilingAddRemkarBtn" style={{marginTop: '20px'}} onClick={() => getSizeData(item, index)}>
+                                                <button className="SmilingAddRemkarBtn" style={{ marginTop: '20px' }} onClick={() => getSizeData(item, index)}>
                                                     Customization
                                                 </button>
                                             </div>

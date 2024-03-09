@@ -1118,9 +1118,11 @@ export default function Header() {
               display: "flex",
               alignItems: "center",
             }}
+            className="mobileViewFirstDiv"
           >
             <MenuIcon
               style={{ fontSize: "40px", color: "white" }}
+              className="muIconeMobileHeader"
               onClick={toggleDrawerOverlay}
             />
           </div>
@@ -1137,6 +1139,7 @@ export default function Header() {
                 width="80%"
                 viewBox="0 0 651 138"
                 style={{ height: "45px" }}
+                className="centerSVGMobileImage"
               >
                 <g clipPath="url(#a)">
                   <path
@@ -1193,6 +1196,7 @@ export default function Header() {
                           width: "25px",
                           color: "white",
                         }}
+                        className="mobileViewSmilingTop1Icone"
                       />
                     </li>
                   </Tooltip>
@@ -1204,6 +1208,8 @@ export default function Header() {
                       height: "25px", cursor: "pointer", width: "25px",
                       color: "white",
                     }}
+                    className="mobileViewSmilingTop2Icone"
+
                   />
                 </li>
 
@@ -1232,6 +1238,8 @@ export default function Header() {
                           color: "white",
 
                         }}
+                        className="mobileViewSmilingTop3Icone"
+
                       />
                     </li>
                   </Tooltip>
