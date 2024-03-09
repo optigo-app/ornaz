@@ -433,6 +433,8 @@ removefromCart()
     }
   }
 
+  console.log("filterChecked11111",filterChecked);
+
   const filteredObjects = Object.entries(filterChecked)
   .filter(([key, value]) => value.checked)
   .reduce((acc, [key, value]) => {
@@ -453,11 +455,15 @@ removefromCart()
 
   // let ArrFil = []
 
+  // console.log("sepeTypeVal",sepeTypeVal.map((st)=>productData.map((pd)=>{if(pd[st.type]=== st.value)})))
+  // console.log("sepeTypeVal",sepeTypeVal)
+
   const filteredProducts = (productData).filter(product => {
-    return sepeTypeVal.every(condition => {
+    return sepeTypeVal.some(condition => {
         return product[condition.type] === condition.value
     });
 });
+
 
   const mergedArray = filteredProducts.reduce((acc, curr) => acc.concat(curr), []);
   const finalDataOfDisplaying = () =>{

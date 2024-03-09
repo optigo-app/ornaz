@@ -204,6 +204,7 @@ export default function Header() {
       }
 
       await CommonAPI(body).then((res) => {
+        // console.log("res",res)
         transformData(res?.Data?.rd)
       })
     // }
@@ -211,8 +212,8 @@ export default function Header() {
 
 
   useEffect(() => {
-    islogin && getMenuApi()
-  }, [])
+    islogin === true && getMenuApi()
+  }, [islogin])
 
 
 
