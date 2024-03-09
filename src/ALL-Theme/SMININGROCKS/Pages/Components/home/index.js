@@ -51,7 +51,6 @@ export default function Home() {
           "sp":"1"
         };
         const response = await axios.post(APIURL, body, { headers: header });
-        console.log('rrrrrrrrr',response);
         if (response.status === 200) {
           localStorage.setItem('UploadLogicalPath', response.data.Data.rd[0].UploadLogicalPath);
           localStorage.setItem('storeInit', JSON.stringify(response.data.Data.rd[0]));

@@ -190,8 +190,6 @@ export default function MyWishList() {
         }
     }
 
-    console.log('cartddddddd', wishlistData);
-
     return (
         <div className='paddingTopMobileSet' style={{
             backgroundColor: '#c0bbb1',
