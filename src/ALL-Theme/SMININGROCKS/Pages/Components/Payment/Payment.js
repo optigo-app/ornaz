@@ -4,6 +4,7 @@ import Footer from '../home/Footer/Footer'
 import { CommonAPI } from '../../../Utils/API/CommonAPI';
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { IoArrowBackOutline } from "react-icons/io5";
 
 export default function Payment() {
 
@@ -37,7 +38,7 @@ export default function Payment() {
 
                 const encodedCombinedValue = btoa(combinedValue);
                 const body = {
-                    "con": `{\"id\":\"Store\",\"mode\":\"CURRENCYCOMBO\",\"appuserid\":\"${data.email1}\"}`,
+                    "con": `{\"id\":\"Store\",\"mode\":\"CURRENCYCOMBO\",\"appuserid\":\"${data.userid}\"}`,
                     "f": "payment (getTheId)",
                     p: encodedCombinedValue
                 };
@@ -81,20 +82,20 @@ export default function Payment() {
 
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
-                "con": `{\"id\":\"Store\",\"mode\":\"PlaceOrder\",\"appuserid\":\"${data.email1}\"}`,
+                "con": `{\"id\":\"Store\",\"mode\":\"PlaceOrder\",\"appuserid\":\"${data.userid}\"}`,
                 "f": "m-test2.orail.co.in (PlaceOrder)",
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
 
             console.log('response...', response);
-            if (response.Data.rd[0]) {
+            if (response.Data?.rd[0]?.stat == 1 ) {
                 let num = response.Data?.rd[0]?.orderno
                 localStorage.setItem('orderNumber', num)
                 navigation('/Confirmation')
 
             } else {
-
+                alert('error')
             }
 
         } catch (error) {
@@ -107,12 +108,14 @@ export default function Payment() {
         <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <div className='smilingPaymentMain'>
                 <div>
                     <div className='smilingPaySub1'>
+                    <IoArrowBackOutline  style={{height: '40px' ,width: '60px', cursor: 'pointer'}} onClick={() => navigation('/Delivery')}/>
+
                         <div className='smilingPaySub1Box1'>
                             <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Payment Card Method</p>
                             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
@@ -144,7 +147,7 @@ export default function Payment() {
 
                             <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Shipping Address</p>
                             <div style={{ marginTop: '0px' }}>
-                                <p style={{fontSize: '25px' ,margin:'0px', fontWeight: 500}}>{selectedAdd.shippingfirstname} {selectedAdd.shippinglastname}</p>
+                                <p style={{fontSize: '25px' ,margin:'0px', fontWeight: 500 , color: '#5e5e5e'}}>{selectedAdd.shippingfirstname} {selectedAdd.shippinglastname}</p>
                                 <p className='AddressTitle'><span className='AdressData'>{selectedAdd.street}</span></p>
                                 <p className='AddressTitle'><span className='AdressData'>{selectedAdd.city}-{selectedAdd.zip}</span></p>
                                 <p className='AddressTitle'><span className='AdressData'>{selectedAdd.state},{selectedAdd.country}</span></p>
@@ -152,9 +155,9 @@ export default function Payment() {
                             </div>
                         </div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center',marginTop: '-100px' }}>
+                    {/* <div style={{ display: 'flex', justifyContent: 'center',marginTop: '-100px' }}>
                         <img src='http://gstore.orail.co.in/assets/newfolder/images/account/blue-box.jpg' className='smilingPayentImg' />
-                    </div>
+                    </div> */}
                 </div>
                 <Footer />
             </div>

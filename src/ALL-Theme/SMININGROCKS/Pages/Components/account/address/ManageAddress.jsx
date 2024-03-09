@@ -53,10 +53,12 @@ const ManageAddress = () => {
             const combinedValue = JSON.stringify({
                 addrid: `${deleteId}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
             });
+
+
             // console.log('edit..... combinedValuecombinedValue...', combinedValue);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
-                "con": `{\"id\":\"\",\"mode\":\"DELADDRESS\",\"appuserid\":\"${data.email1}\"}`,
+                "con": `{\"id\":\"\",\"mode\":\"DELADDRESS\",\"appuserid\":\"${data.userid}\"}`,
                 "f": "Delivery (removeFromCartList)",
                 p: encodedCombinedValue
             };
@@ -168,7 +170,7 @@ const ManageAddress = () => {
 
                     const encodedCombinedValue = btoa(combinedValue);
                     const body = {
-                        "con": `{\"id\":\"\",\"mode\":\"EDITADDRESS\",\"appuserid\":\"${data.email1}\"}`,
+                        "con": `{\"id\":\"\",\"mode\":\"EDITADDRESS\",\"appuserid\":\"${data.userid}\"}`,
                         "f": "Delivery (EditAddress)",
                         p: encodedCombinedValue
                     };
@@ -215,7 +217,7 @@ const ManageAddress = () => {
 
                     const encodedCombinedValue = btoa(combinedValue);
                     const body = {
-                        "con": `{\"id\":\"\",\"mode\":\"addAddress\",\"appuserid\":\"${data.email1}\"}`,
+                        "con": `{\"id\":\"\",\"mode\":\"addAddress\",\"appuserid\":\"${data.userid}\"}`,
                         "f": "Delivery (addAddress)",
                         p: encodedCombinedValue
                     };
@@ -319,7 +321,7 @@ const ManageAddress = () => {
     const loginDetail = () => {
         const storedData = localStorage.getItem('loginUserDetail');
         const data = JSON.parse(storedData);
-        return {id: data.id, emai: data.email1}
+        return {id: data.id, emai: data.userid}
     }
 
     const storeInit = () => {
@@ -365,7 +367,7 @@ const ManageAddress = () => {
             const storedData = localStorage.getItem('loginUserDetail');
             const data = JSON.parse(storedData);
             const customerid = data.id;
-            // const customerEmail = data.email1;
+            // const customerEmail = data.userid;
             // setUserEmail(customerEmail);
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
             const { FrontEnd_RegNo } = storeInit;
@@ -374,7 +376,7 @@ const ManageAddress = () => {
             });
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
-                "con": `{\"id\":\"\",\"mode\":\"GETTBLADDRESSDATA\",\"appuserid\":\"${data.email1}\"}`,
+                "con": `{\"id\":\"\",\"mode\":\"GETTBLADDRESSDATA\",\"appuserid\":\"${data.userid}\"}`,
                 "f": "Delivery (fetchData)",
                 p: encodedCombinedValue
             };

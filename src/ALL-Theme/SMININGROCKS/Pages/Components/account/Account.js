@@ -6,12 +6,13 @@ import Footer from '../home/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import ManageAddress from './address/ManageAddress';
 import OrderHistory from './accountOrderHistory/OrderHistory';
-import CryptoJS from 'crypto-js';
-import { CommonAPI } from '../../../Utils/API/CommonAPI';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 import AccountLedger from './accountLedger/AccountLedger';
 import DesignWiseSalesReport from '../sales/DesignWiseSalesReport/DesignWiseSalesReport';
+import { loginState } from '../../../../../Recoil/atom';
+import { useSetRecoilState } from 'recoil';
+import YourProfile from './yourProfile/YourProfile';
+import ChangePassword from './changePassword/ChangePassword';
 import SalesReport from '../sales/salesReport/SalesReport';
 import QuotationJob from './quotationFilters/QuotationJob';
 import QuotationQuote from './QuotationQuote/QuotationQuote';
@@ -21,7 +22,9 @@ function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
     useEffect(() => {
         a11yProps(1)
-    },[])
+    }, [])
+
+
     return (
         <div
             role="tabpanel"
@@ -45,7 +48,7 @@ function CustomTabPanel(props) {
 //     value: PropTypes.number.isRequired,
 //   };
 
- function a11yProps(index) {
+function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
         'aria-controls': `simple-tabpanel-${index}`,
@@ -67,6 +70,9 @@ export default function Account() {
     const [value, setValue] = useState(0);
     const [value1, setValue1] = useState(0);
     const naviagation = useNavigate();
+    const setIsLoginState = useSetRecoilState(loginState)
+    const navigation = useNavigate();
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -77,152 +83,19 @@ export default function Account() {
     }
 
     const handleLogout = () => {
+        setIsLoginState(false)
         localStorage.setItem('LoginUser', 'false');
+        localStorage.removeItem('storeInit');
+        localStorage.removeItem('loginUserDetail');
+        localStorage.removeItem('remarks');
+        localStorage.removeItem('selectedAddressId');
+        localStorage.removeItem('orderNumber');
+        localStorage.removeItem('registerEmail');
+        localStorage.removeItem('UploadLogicalPath');
+        localStorage.removeItem('remarks');
+        localStorage.removeItem('registerMobile');
         naviagation('/')
-        window.location.reload()
     }
-
-
-
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [oldPassword, setOldPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [showOldPassword, setShowOldPassword] = useState(false);
-    const [email, setEmail] = useState('');
-    const [errors, setErrors] = useState({});
-    const [passwordError, setPasswordError] = useState('');
-    const navigation = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
-    const [customerID, setCustomerID] = useState('');
-
-    useEffect(() => {
-        const storedEmail = localStorage.getItem('registerEmail');
-        if (storedEmail) setEmail(storedEmail);
-
-        const storedData = localStorage.getItem('loginUserDetail');
-        const data = JSON.parse(storedData);
-        setCustomerID(data?.id);
-
-    }, []); // 
-
-
-
-    const handleInputChange = (e, setter, fieldName) => {
-        const { value } = e.target;
-        setter(value);
-        if (fieldName === 'confirmPassword') { // Handle confirm password validation
-            if (!value.trim()) {
-                setErrors(prevErrors => ({ ...prevErrors, confirmPassword: 'Confirm Password is required' }));
-            } else if (value !== password) {
-                setErrors(prevErrors => ({ ...prevErrors, confirmPassword: 'Passwords do not match' }));
-            } else {
-                setErrors(prevErrors => ({ ...prevErrors, confirmPassword: '' }));
-            }
-        } else if (fieldName === 'oldPassword') {
-            if (!value.trim()) {
-                setErrors(prevErrors => ({ ...prevErrors, oldPassword: 'oldPassword is required' }));
-            } else {
-                setErrors(prevErrors => ({ ...prevErrors, oldPassword: '' }));
-            }
-        }
-    };
-
-    const handlePasswordChange = (event) => {
-        const { value } = event.target;
-        setPassword(value);
-        // if (!validatePassword(value)) {
-        //     setPasswordError('Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, and one number.');
-        // } else {
-        //     setPasswordError('');
-        // }
-    };
-
-
-    const handleTogglePasswordVisibility = (fieldName) => {
-        if (fieldName === 'password') {
-            setShowPassword(!showPassword);
-        } else if (fieldName === 'confirmPassword') {
-            setShowConfirmPassword(!showConfirmPassword);
-        } else if (fieldName === 'oldPassword') {
-            setShowOldPassword(!showOldPassword);
-        }
-
-    };
-
-    function hashPasswordSHA1(password) {
-        const hashedPassword = CryptoJS.SHA1(password).toString(CryptoJS.enc.Hex);
-        return hashedPassword;
-    }
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
-    const handleMouseDownConfirmPassword = (event) => {
-        event.preventDefault();
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const errors = {};
-
-        if (!oldPassword.trim()) {
-            errors.oldPassword = 'oldPassword is required';
-        }
-
-        if (!password.trim()) {
-            setPasswordError('Password is required');
-            errors.password = 'Password is required';
-        }
-
-        if (!confirmPassword.trim()) {
-            errors.confirmPassword = 'Confirm Password is required';
-        } else if (confirmPassword !== password) {
-            errors.confirmPassword = 'Passwords do not match';
-        }
-
-        if (Object.keys(errors).length === 0) {
-
-            const hashedOldPassword = hashPasswordSHA1(oldPassword);
-            const hashedPassword = hashPasswordSHA1(password);
-            const hashedConfirmPassword = hashPasswordSHA1(confirmPassword);
-            setIsLoading(true);
-            try {
-                const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-                const { FrontEnd_RegNo } = storeInit;
-                const combinedValue = JSON.stringify({
-                    oldpassword: `${hashedOldPassword}`, newpassword: `${hashedPassword}`, confirmpassword: `${hashedConfirmPassword}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
-                });
-                console.log('combinedValuecombinedValue', combinedValue);
-                const encodedCombinedValue = btoa(combinedValue);
-                const body = {
-                    "con": `{\"id\":\"\",\"mode\":\"CHANGEPASS\",\"appuserid\":\"${email}\"}`,
-                    "f": "Account (changePassword)",
-                    "p": encodedCombinedValue
-                }
-                const response = await CommonAPI(body);
-
-                console.log('responseresponseresponse', response);
-
-                if (response.Data.rd[0].stat === 1) {
-                    localStorage.setItem('LoginUser', 'false');
-                    naviagation('/')
-                    window.location.reload()
-                } else {
-                    alert(response.Data.rd[0].stat_msg);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        } else {
-            setErrors(errors);
-        }
-    };
-
 
     return (
         <div style={{
@@ -242,22 +115,24 @@ export default function Account() {
                         <Box sx={{ width: '100%' }}>
                             <div className='smlingAccountTabWebView'>
                                 <Box sx={{ display: 'flex', justifyContent: 'center', borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable" >   {/*  orientation="vertical" indicatorColor="#7d7f85" */}
-                                        <Tab label="ORDER HISTORY" {...a11yProps(0)} />
-                                        <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
-                                        <Tab label="ACCOUNT" {...a11yProps(2)} />
-                                        <Tab label="CHANGE PASSWORD" {...a11yProps(3)} />
+                                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"  >   {/*  orientation="vertical" indicatorColor="#7d7f85" */}
+                                        <Tab label="Your Profile" {...a11yProps(0)} />
+                                        <Tab label="ORDER HISTORY" {...a11yProps(1)} />
+                                        <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
+                                        <Tab label="ACCOUNT" {...a11yProps(3)} />
+                                        <Tab label="CHANGE PASSWORD" {...a11yProps(5)} />
                                     </Tabs>
                                     <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
                                 </Box>
                             </div>
                             <div className='smlingAccountTabMobileView YourAccountPageTabs'>
                                 <Box sx={{ display: 'flex', justifyContent: 'flex-start', borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{ width: '100%' }}variant="scrollable" >   {/*  indicatorColor="#7d7f85" */}
-                                        <Tab label="ORDER HISTORY" {...a11yProps(0)} sx={{ textAlign: 'start', borderBottom: 1, width: '90%', borderColor: 'divider' }} />
-                                        <Tab label="MANAGE ADDRESSES" {...a11yProps(1)} />
-                                        <Tab label="ACCOUNT" {...a11yProps(2)} />
-                                        <Tab label="CHANGE PASSWORD" {...a11yProps(3)} />
+                                    <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{ width: '100%' }} >   {/*  indicatorColor="#7d7f85" */}
+                                        <Tab label="Your Profile" {...a11yProps(0)} sx={{ textAlign: 'start', borderBottom: 1, width: '90%', borderColor: 'divider' }} />
+                                        <Tab label="ORDER HISTORY" {...a11yProps(1)} />
+                                        <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
+                                        <Tab label="ACCOUNT" {...a11yProps(3)} />
+                                        <Tab label="CHANGE PASSWORD" {...a11yProps(5)} />
                                     </Tabs>
                                 </Box>
                                 <div onClick={() => alert('dddd')}>
@@ -267,14 +142,20 @@ export default function Account() {
 
                             <CustomTabPanel value={value} index={0}>
                                 <div>
+                                    <YourProfile />
+                                </div>
+                            </CustomTabPanel>
+
+                            <CustomTabPanel value={value} index={1}>
+                                <div>
                                     <OrderHistory />
                                 </div>
                             </CustomTabPanel>
-                            <CustomTabPanel value={value} index={1} className="manageAddressSec">
+                            <CustomTabPanel value={value} index={2} className="manageAddressSec">
                                 <ManageAddress />
-
                             </CustomTabPanel>
-                            <CustomTabPanel value={value} index={2}>
+
+                            <CustomTabPanel value={value} index={3}>
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value1} variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator  }} scrollButtons="auto">
@@ -305,92 +186,14 @@ export default function Account() {
                                     <AccountLedger />
                                 </CustomTabPanel>
                             </CustomTabPanel>
-                            <CustomTabPanel value={value} index={3}>
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <TextField
-                                        id="outlined-confirm-password-input"
-                                        label="Old Password"
-                                        type={showOldPassword ? 'text' : 'password'}
-                                        autoComplete="current-password"
-                                        className='labgrowRegister'
-                                        style={{ margin: '15px' }}
-                                        value={oldPassword}
-                                        onChange={(e) => handleInputChange(e, setOldPassword, 'oldPassword')}
-                                        error={!!errors.oldPassword}
-                                        helperText={errors.oldPassword}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={() => handleTogglePasswordVisibility('oldPassword')}
-                                                        onMouseDown={handleMouseDownConfirmPassword}
-                                                        edge="end"
-                                                    >
-                                                        {showOldPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
 
-                                    <TextField
-                                        id="outlined-password-input"
-                                        label="Password"
-                                        type={showPassword ? 'text' : 'password'}
-                                        autoComplete="current-password"
-                                        className='labgrowRegister'
-                                        style={{ margin: '15px' }}
-                                        value={password}
-                                        onChange={handlePasswordChange}
-                                        error={!!passwordError}
-                                        helperText={passwordError}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={() => handleTogglePasswordVisibility('password')}
-                                                        onMouseDown={handleMouseDownPassword}
-                                                        edge="end"
-                                                    >
-                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-
-                                    <TextField
-                                        id="outlined-confirm-password-input"
-                                        label="Confirm Password"
-                                        type={showConfirmPassword ? 'text' : 'password'}
-                                        autoComplete="current-password"
-                                        className='labgrowRegister'
-                                        style={{ margin: '15px' }}
-                                        value={confirmPassword}
-                                        onChange={(e) => handleInputChange(e, setConfirmPassword, 'confirmPassword')}
-                                        error={!!errors.confirmPassword}
-                                        helperText={errors.confirmPassword}
-                                        InputProps={{ // Set InputProps for icon
-                                            endAdornment: (
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        aria-label="toggle password visibility"
-                                                        onClick={() => handleTogglePasswordVisibility('confirmPassword')}
-                                                        onMouseDown={handleMouseDownConfirmPassword}
-                                                        edge="end"
-                                                    >
-                                                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-
-                                    <button className='createBtnRegister' onClick={handleSubmit}>Forgot Password</button>
-                                </div>
+                            <CustomTabPanel value={value} index={5}>
+                               <div>
+                                    <ChangePassword />
+                               </div>
                             </CustomTabPanel>
+
+                          
                         </Box>
                     </div>
 

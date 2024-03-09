@@ -114,7 +114,6 @@ export default function LoginWithEmailCode() {
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
                 localStorage.setItem('LoginUser', 'true')
-                localStorage.setItem('userEmail', email);
                 alert('Register Sucssessfully');
                 navigation('/');
             } else {
@@ -155,10 +154,10 @@ export default function LoginWithEmailCode() {
     };
 
     return (
-        <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
+        <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <div style={{ backgroundColor: '#c0bbb1' }}>
@@ -181,11 +180,17 @@ export default function LoginWithEmailCode() {
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
                         <TextField
+                            autoFocus
                             id="outlined-basic"
                             label="Enter Code"
                             variant="outlined"
                             className='labgrowRegister'
                             style={{ margin: '15px' }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    handleSubmit();
+                                }
+                            }}
                             value={mobileNo}
                             onChange={(e) => handleInputChange(e, setMobileNo, 'mobileNo')}
                             error={!!errors.mobileNo}

@@ -60,7 +60,9 @@ export default function ContimueWithMobile() {
                 navigation('/LoginWithMobileCode', { mobileNo: mobileNo });
                 localStorage.setItem('registerMobile', mobileNo)
             } else {
-                navigation('/register', { mobileNo: mobileNo });
+                console.log('send mobleeeee', mobileNo);
+                navigation('/register', { state: { mobileNo: mobileNo } });
+
                 localStorage.setItem('registerMobile', mobileNo)
             }
         } catch (error) {
@@ -71,10 +73,10 @@ export default function ContimueWithMobile() {
     };
 
     return (
-        <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
+        <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <div style={{ backgroundColor: '#c0bbb1' }}>
@@ -97,10 +99,16 @@ export default function ContimueWithMobile() {
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField
+                            autoFocus
                             id="outlined-basic"
                             label="Enetr Mobile No"
                             variant="outlined"
                             className='labgrowRegister'
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    handleSubmit();
+                                }
+                            }}
                             style={{ margin: '15px' }}
                             value={mobileNo}
                             onChange={(e) => handleInputChange(e, setMobileNo, 'mobileNo')}

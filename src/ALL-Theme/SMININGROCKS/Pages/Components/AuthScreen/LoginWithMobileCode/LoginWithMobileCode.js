@@ -62,14 +62,12 @@ export default function LoginWithMobileCode() {
                 userid: '', mobileno: `${mobileNo}`, pass: `${enterOTP}`, mobiletoken: 'otp_mobile_login', FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
             const encodedCombinedValue = btoa(combinedValue);
-            console.log('combinedValuecombinedValuecombinedValue', combinedValue);
             const body = {
                 "con": "{\"id\":\"\",\"mode\":\"WEBLOGIN\"}",
                 "f": "LoginWithMobileOTP (handleSubmit)",
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('responseresponse', response);
             if (response.Data.rd[0].stat === 1) {
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
@@ -102,7 +100,6 @@ export default function LoginWithMobileCode() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('ressssssss', response);
             if (response.Data.Table1[0].stat === '1') {
                 alert('done..')
             } else {
@@ -119,7 +116,7 @@ export default function LoginWithMobileCode() {
         <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <div style={{ backgroundColor: '#c0bbb1' }}>
@@ -142,11 +139,17 @@ export default function LoginWithMobileCode() {
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
                         <TextField
+                            autoFocus
                             id="outlined-basic"
                             label="Enter Code"
                             variant="outlined"
                             className='labgrowRegister'
                             style={{ margin: '15px' }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    handleSubmit();
+                                }
+                            }}
                             onChange={(e) => handleInputChange(e, setEnterOTP, 'mobileNo')}
                             error={!!errors.otp}
                             helperText={errors.otp}

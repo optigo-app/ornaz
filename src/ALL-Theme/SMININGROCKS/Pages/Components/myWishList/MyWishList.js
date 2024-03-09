@@ -6,6 +6,9 @@ import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { useNavigate } from 'react-router-dom'
 import { IoClose } from "react-icons/io5";
 import { CircularProgress } from '@mui/material'
+import { useSetRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts } from '../../../../../Recoil/atom'
+import { GetCount } from '../../../Utils/API/GetCount'
 
 export default function MyWishList() {
 
@@ -15,19 +18,31 @@ export default function MyWishList() {
     const [customerID, setCustomerID] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
+    const setCartCount = useSetRecoilState(CartListCounts)
+    const setWishCount = useSetRecoilState(WishListCounts)
     const navigation = useNavigate();
 
+
+    const getCountFunc = async () => {
+        await GetCount().then((res) => {
+            if (res) {
+                setCartCount(res.CountCart)
+                setWishCount(res.WishCount)
+            }
+        })
+
+    }
     useEffect(() => {
         const fetchData = async () => {
             try {
+                wishlistData.length === 0 && setIsLoading(true);
                 const storedData = localStorage.getItem('loginUserDetail');
                 const ImageURL = localStorage.getItem('UploadLogicalPath');
                 setImageURL(ImageURL);
                 const data = JSON.parse(storedData);
                 const customerid = data.id;
                 setCustomerID(data.id);
-                const customerEmail = data.email1;
+                const customerEmail = data.userid;
                 setUserEmail(customerEmail);
                 const storeInit = JSON.parse(localStorage.getItem('storeInit'));
                 const { FrontEnd_RegNo, ukey } = storeInit;
@@ -35,8 +50,6 @@ export default function MyWishList() {
                 const combinedValue = JSON.stringify({
                     is_show_stock_website: "0", PageSize: "1000", CurrentPage: "1", FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`, UploadLogicalPath: "", ukey: `${ukey}`, ThumDefImg: "", CurrencyRate: '1'
                 });
-                console.log('combinedValuecombinedValue...', combinedValue);
-
                 const encodedCombinedValue = btoa(combinedValue);
                 const body = {
                     "con": `{\"id\":\"Store\",\"mode\":\"GetWishList\",\"appuserid\":\"${customerEmail}\"}`,
@@ -44,18 +57,18 @@ export default function MyWishList() {
                     p: encodedCombinedValue
                 };
                 const response = await CommonAPI(body);
-                console.log('response...', response);
                 if (response.Data) {
+                    wishlistData.length === 0 && setIsLoading(false);
                     setWishlistData(response.Data.rd);
                 }
             } catch (error) {
                 console.error('Error:', error);
             } finally {
-                // setIsLoading(false);
+                setIsLoading(false);
             }
         };
         fetchData();
-    }, [isLoading]);
+    }, []);
 
 
     const handleAddToCart = async (autoCode) => {
@@ -73,8 +86,8 @@ export default function MyWishList() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...', response);
             if (response.Data.rd[0].stat === 1) {
+                getCountFunc();
                 navigation('/myWishList')
             } else {
                 alert('Error');
@@ -101,8 +114,8 @@ export default function MyWishList() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...', response);
             if (response.Data.rd[0].stat === 1) {
+                getCountFunc();
                 navigation('/myWishList')
             } else {
                 alert('Error');
@@ -115,8 +128,6 @@ export default function MyWishList() {
     }
 
     const handleRemoveWichList = async (data) => {
-        console.log('dataaaaaaaJ', JSON.stringify(data));
-
         try {
             setIsLoading(true);
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
@@ -124,8 +135,6 @@ export default function MyWishList() {
             const combinedValue = JSON.stringify({
                 designlist: `'${data.designno}'`, isselectall: '0', FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
             });
-            console.log('combinedValuecombinedValue...', combinedValue);
-            console.log('userEmailuserEmail...', userEmail);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
                 "con": `{\"id\":\"Store\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${userEmail}\"}`,
@@ -133,10 +142,10 @@ export default function MyWishList() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...', response);
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
+                getCountFunc();
                 navigation('/myWishList')
             } else {
                 alert('Error');
@@ -156,8 +165,6 @@ export default function MyWishList() {
             const combinedValue = JSON.stringify({
                 designlist: '', isselectall: '1', FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
             });
-            console.log('combinedValuecombinedValue...', combinedValue);
-            console.log('userEmailuserEmail...', userEmail);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
                 "con": `{\"id\":\"Store\",\"mode\":\"removeFromWishList\",\"appuserid\":\"${userEmail}\"}`,
@@ -165,10 +172,10 @@ export default function MyWishList() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('response...', response);
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
+                getCountFunc();
                 navigation('/myWishList')
             } else {
                 alert('Error');
@@ -187,17 +194,17 @@ export default function MyWishList() {
         }}>
             {isLoading && (
                 <div className="loader-overlay">
-                    <CircularProgress />
+                    <CircularProgress className='loadingBarManage' />
                 </div>
             )}
             <div>
                 <div className='smiling-wishlist'>
                     <p className='SmiWishListTitle'>My Wishlist</p>
-                    <div className='smilingListTopButton'>
+                    {wishlistData?.length !== 0 && <div className='smilingListTopButton'>
                         <button className='smiTopShareBtn'>SHARE WISHLIST</button>
                         <button className='smiTopClearBtn' onClick={handleRemoveAllWishList}>CLEAR ALL</button>
                         <button className='smiTopAddAllBtn' onClick={handleAddAll}>ADD TO CART ALL</button>
-                    </div>
+                    </div>}
 
                     <div className='smiWishLsitBoxMain'>
                         {wishlistData?.length === 0 ?
@@ -213,7 +220,7 @@ export default function MyWishList() {
                                     </div>
                                     <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' alt='Wishlist item' />
                                     <p className='smiWishLsitBoxDesc1'>{item.designno}</p>
-                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} $ {item.TotalUnitCost}</p>
+                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} <br/> $ {item.TotalUnitCost}</p>
                                     <p className='smiWishLsitBoxDesc3' onClick={() => handleAddToCart(item.autocode)}>ADD TO CART +</p>
                                 </div>
                             ))}

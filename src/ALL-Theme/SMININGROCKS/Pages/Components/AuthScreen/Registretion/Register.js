@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from '../../home/Header/Header';
 import './Register.css';
 import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
@@ -21,14 +21,29 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [passwordError, setPasswordError] = useState('');
+  const firstNameRef = useRef(null);
+  const lastNameRef = useRef(null);
+  const mobileNoRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const confirmPasswordRef = useRef(null);
+
+  const handleKeyDown = (event, nextRef) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      nextRef.current.focus();
+    }
+  };
+
+  const location = useLocation();
 
   useEffect(() => {
-    const storedEmail = localStorage.getItem('registerEmail');
-    const storedMobileNo = localStorage.getItem('registerMobile');
+    const storedEmail = location.state?.email; ;
+    const routeMobileNo = location.state?.mobileNo; 
 
     if (storedEmail) setEmail(storedEmail);
-    if (storedMobileNo) setMobileNo(storedMobileNo);
-  }, []); // 
+    if (routeMobileNo) setMobileNo(routeMobileNo);
+  }, []);
 
   const handleInputChange = (e, setter, fieldName) => {
     const { value } = e.target;
@@ -153,9 +168,8 @@ export default function Register() {
         }
         const response = await CommonAPI(body);
         if (response.Data.rd[0].stat === 1) {
+          localStorage.setItem('registerEmail', email)
           localStorage.setItem('LoginUser', 'true')
-          localStorage.setItem('userEmail', email);
-          alert('Register Sucssessfully');
           navigation('/');
         } else {
           alert(response.Data.rd[0].stat_msg);
@@ -174,10 +188,10 @@ export default function Register() {
   };
 
   return (
-    <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
+    <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
       {isLoading && (
         <div className="loader-overlay">
-          <CircularProgress />
+          <CircularProgress className='loadingBarManage' />
         </div>
       )}
       <div style={{ backgroundColor: '#c0bbb1' }}>
@@ -193,12 +207,15 @@ export default function Register() {
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <TextField
+              autoFocus
               id="outlined-basic"
               label="First Name"
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
               value={firstName}
+              inputRef={firstNameRef}
+              onKeyDown={(e) => handleKeyDown(e, lastNameRef)}
               onChange={(e) => handleInputChange(e, setFirstName, 'firstName')}
               error={!!errors.firstName}
               helperText={errors.firstName}
@@ -211,6 +228,8 @@ export default function Register() {
               className='labgrowRegister'
               style={{ margin: '15px' }}
               value={lastName}
+              inputRef={lastNameRef}
+              onKeyDown={(e) => handleKeyDown(e, mobileNoRef)}
               onChange={(e) => handleInputChange(e, setLastName, 'lastName')}
               error={!!errors.lastName}
               helperText={errors.lastName}
@@ -223,6 +242,8 @@ export default function Register() {
               className='labgrowRegister'
               style={{ margin: '15px' }}
               value={mobileNo}
+              inputRef={mobileNoRef}
+              onKeyDown={(e) => handleKeyDown(e, emailRef)}
               onChange={(e) => handleInputChange(e, setMobileNo, 'mobileNo')}
               error={!!errors.mobileNo}
               helperText={errors.mobileNo}
@@ -235,6 +256,8 @@ export default function Register() {
               className='labgrowRegister'
               style={{ margin: '15px' }}
               value={email}
+              inputRef={emailRef}
+              onKeyDown={(e) => handleKeyDown(e, passwordRef)}
               onChange={(e) => handleInputChange(e, setEmail, 'email')}
               error={!!errors.email}
               helperText={errors.email}
@@ -252,6 +275,8 @@ export default function Register() {
               onChange={handlePasswordChange}
               error={!!passwordError}
               helperText={passwordError}
+              inputRef={passwordRef}
+              onKeyDown={(e) => handleKeyDown(e, confirmPasswordRef)}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -276,6 +301,12 @@ export default function Register() {
               className='labgrowRegister'
               style={{ margin: '15px' }}
               value={confirmPassword}
+              inputRef={confirmPasswordRef}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  handleSubmit();
+                }
+              }}
               onChange={(e) => handleInputChange(e, setConfirmPassword, 'confirmPassword')}
               error={!!errors.confirmPassword}
               helperText={errors.confirmPassword}
@@ -297,10 +328,10 @@ export default function Register() {
 
             <button className='createBtnRegister' onClick={handleSubmit}>CREATE ACCOUNT</button>
 
-            <div style={{ display: 'flex', marginTop: '10px' }}>
+            {/* <div style={{ display: 'flex', marginTop: '10px' }}>
               <input type='checkbox' />
               <p style={{ margin: '5px' }}>Subscribe to our newsletter</p>
-            </div>
+            </div> */}
             <p className='SmilingSignInHere' onClick={() => navigation('/')}>BACK</p>
 
           </div>
