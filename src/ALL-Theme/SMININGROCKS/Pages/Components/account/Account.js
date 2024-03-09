@@ -120,7 +120,7 @@ export default function Account() {
                                         <Tab label="Your Profile" {...a11yProps(0)} />
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                                        {!accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
+                                        {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
                                         <Tab label="CHANGE PASSWORD" {...a11yProps(5)} />
                                     </Tabs>
                                     <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
@@ -132,7 +132,7 @@ export default function Account() {
                                         <Tab label="Your Profile" {...a11yProps(0)} sx={{ textAlign: 'start', borderBottom: 1, width: '90%', borderColor: 'divider' }} />
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                                        {!accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
+                                        {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
                                         <Tab label="CHANGE PASSWORD" {...a11yProps(4)} />
                                     </Tabs>
                                 </Box>
@@ -156,7 +156,7 @@ export default function Account() {
                                 <ManageAddress />
                             </CustomTabPanel>
 
-                            {!accountValidation() && <CustomTabPanel value={value} index={3} className="accountSalesPage">
+                            {accountValidation() && <CustomTabPanel value={value} index={3} className="accountSalesPage">
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value1} className='accountTabSection' variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
