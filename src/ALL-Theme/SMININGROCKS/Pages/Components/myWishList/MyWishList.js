@@ -145,6 +145,7 @@ export default function MyWishList() {
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
+                setWishlistData(prevData => prevData.filter(item => item.designno !== data.designno));
                 getCountFunc();
                 navigation('/myWishList')
             } else {
@@ -188,7 +189,7 @@ export default function MyWishList() {
     }
 
     return (
-        <div style={{
+        <div className='paddingTopMobileSet' style={{
             backgroundColor: '#c0bbb1',
             paddingTop: '110px'
         }}>
