@@ -31,6 +31,7 @@
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
+    position: relative;
 }
 .addressData{
     margin: 0px;
@@ -120,4 +121,30 @@
     height: 130px;
     width: 400px;
     padding: 10px;
+}
+
+
+
+@media screen and (max-width: 900px) {
+
+    .smilingdeliverBox1{
+        width: 100%!important;
+    }
+
+    .smilingDeliveyAddressMain{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center!important;
+    }
+
+    .smilingMobileDeliveryBtnMain{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .smilingAddressPopupMain{
+        width: 100%!important;
+    }
 }

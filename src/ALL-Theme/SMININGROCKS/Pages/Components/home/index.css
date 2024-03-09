@@ -89,5 +89,9 @@
 
     }
 
+    .paddingTopMobileSet{
+        padding-top: 0px!important;
+    }
+
 
 }

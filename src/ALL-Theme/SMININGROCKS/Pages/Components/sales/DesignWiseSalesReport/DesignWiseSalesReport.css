@@ -54,7 +54,7 @@
     list-style-type: none;
 }
 
-.reactPaginationDesignWise{
+.reactPaginationDesignWise {
     padding-top: 25px;
 }
 
@@ -63,13 +63,14 @@
     font-size: 22px !important;
 }
 
-.reactPaginationDesignWise>li{
+.reactPaginationDesignWise>li {
     padding: 0 10px;
     margin: 0 5px;
     cursor: pointer;
 }
 
-.reactPaginationDesignWise>li:hover, .reactPaginationDesignWise>li.active{
+.reactPaginationDesignWise>li:hover,
+.reactPaginationDesignWise>li.active {
     background-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -87,7 +88,3 @@
 /* .designWiseSalesReportProduct *{
     font-size: 14px !important;
 } */
-
-@media(max-width: 576px){
-    
-}

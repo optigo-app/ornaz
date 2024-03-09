@@ -18,6 +18,7 @@ export default function MyWishList() {
     const [customerID, setCustomerID] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isPriseShow, setIsPriceShow] = useState('');
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
     const navigation = useNavigate();
@@ -41,6 +42,8 @@ export default function MyWishList() {
                 setImageURL(ImageURL);
                 const data = JSON.parse(storedData);
                 const customerid = data.id;
+                const priseShow = data.IsPriceShow;
+                setIsPriceShow(priseShow);
                 setCustomerID(data.id);
                 const customerEmail = data.userid;
                 setUserEmail(customerEmail);
@@ -87,6 +90,7 @@ export default function MyWishList() {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
+                setWishlistData(prevData => prevData.filter(item => item.autocode !== autoCode));
                 getCountFunc();
                 navigation('/myWishList')
             } else {
@@ -143,8 +147,7 @@ export default function MyWishList() {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
-                // alert('Remove Success');
-                // window.location.reload();
+                setWishlistData(prevData => prevData.filter(item => item.designno !== data.designno));
                 getCountFunc();
                 navigation('/myWishList')
             } else {
@@ -187,8 +190,10 @@ export default function MyWishList() {
         }
     }
 
+    console.log('cartddddddd', wishlistData);
+
     return (
-        <div style={{
+        <div className='paddingTopMobileSet' style={{
             backgroundColor: '#c0bbb1',
             paddingTop: '110px'
         }}>
@@ -207,7 +212,7 @@ export default function MyWishList() {
                     </div>}
 
                     <div className='smiWishLsitBoxMain'>
-                        {wishlistData?.length === 0 ?
+                        {wishlistData?.length === 0 ? !isLoading &&
                             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                 <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500 }}>No Data Available</p>
                                 <p>Please First Add To Wishlist Data</p>
@@ -220,7 +225,7 @@ export default function MyWishList() {
                                     </div>
                                     <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' alt='Wishlist item' />
                                     <p className='smiWishLsitBoxDesc1'>{item.designno}</p>
-                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} <br/> $ {item.TotalUnitCost}</p>
+                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} <br /> {isPriseShow == 1 && <p>$ {item.TotalUnitCost}</p>}</p>
                                     <p className='smiWishLsitBoxDesc3' onClick={() => handleAddToCart(item.autocode)}>ADD TO CART +</p>
                                 </div>
                             ))}

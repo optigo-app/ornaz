@@ -12,6 +12,7 @@
     padding: 50px;
     display: flex;
 }
+
 .smilingPaySub1Box1 {
     width: 65%;
     padding: 50px;
@@ -46,4 +47,24 @@
 .AdressData {
     font-size: 16px;
     margin: 0px;
+}
+
+.smilingPaymentBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+@media screen and (min-width:1001px) {
+    .smilingPaymentMainMobile {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width:1000px) {
+
+    .smilingPaymentMainWeb {
+        display: none;
+    }
 }

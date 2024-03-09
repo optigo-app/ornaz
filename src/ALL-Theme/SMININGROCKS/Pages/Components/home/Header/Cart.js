@@ -338,7 +338,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                         width: '100%',
                         height: '100%',
                         paddingTop: '50%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.2)',
                         display: 'flex',
                         justifyContent: 'center',
                         zIndex: 1
@@ -372,7 +372,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                 </p>
             </div>
             <div style={{ paddingBottom: "150px" }}>
-                {cartListData?.length === 0 ? (
+                {cartListData?.length === 0 ? !isLoading && (
                     <div
                         style={{
                             display: "flex",
@@ -391,7 +391,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                     <div>
                         {cartListData?.map((item, index) => (
                             <div key={item.id} className="smiling-cartBoxMain">
-                                <div style={{ display: 'flex' }}>
+                                <div className='smilingCartMobileMain' style={{ display: 'flex' }}>
                                     <div
                                         style={{
                                             position: "absolute",
@@ -408,8 +408,8 @@ export default function Cart({ open, toggleCartDrawer }) {
                                             className="smiling-cartBoxImg"
                                         />
                                     </div>
-                                    <div style={{ width: "65%", margin: "20px" }}>
-                                        <p style={{ margin: '10px 70px 10px 10px' }}>
+                                    <div className='smilingCartBox1' style={{ width: "65%", margin: "20px" }}>
+                                        <p className='smilingMobileCartDeatil' style={{ margin: '10px 70px 10px 10px' }}>
                                             <span style={{ fontWeight: 600 }}>{item.metalcolorname} {item.metaltypename}</span> with
                                             <span style={{ fontWeight: 600 }}> {item.Rec_NetWeight}</span> with gross wt of
                                             <span style={{ fontWeight: 600 }}> {item.grossweight}</span> including
@@ -429,34 +429,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                 </span></>
                                             )}
                                         </p>
-                                        {/* <div
-                                                style={{
-                                                    display: "flex",
-                                                    justifyContent: "space-between",
-                                                }}
-                                            >
-                                                <p style={{ fontSize: "14px", color: "#7d7f85" }}>
-                                                    {item.designno}
-                                                </p>
-                                                <p style={{ color: "#7d7f85", marginRight: "50px" }}>
-                                                    ${item.TotalUnitCost}
-                                                </p>
-                                            </div>
-                                            <div
-                                                style={{
-                                                    fontSize: "14px",
-                                                    marginTop: "-20px",
-                                                    color: "#7d7f85",
-                                                }}
-                                            >
-                                                <p style={{ margin: '0px' }}>Category : <span style={{ fontWeight: 500 }}>{item.Mastermanagement_CategoryName}</span></p>
-                                                <div style={{ display: 'flex' }}>
-                                                    <p style={{ marginBlock: '5px' }}>GWT : <span style={{ fontWeight: 500 }}>{item.grossweight}</span></p>
-                                                    <p style={{ marginLeft: '50px', marginBlock: '5px' }}>NETW : <span style={{ fontWeight: 500 }}>{item.Rec_NetWeight}</span></p>
-                                                </div>
-                                                <p>MTYPE / MCOLOR : <span style={{ fontWeight: 500 }}>{item.metaltypename} / {item.metalcolorname}</span></p>
-                                                <br />
-                                            </div> */}
+                                       
                                         {showDropdowns[index] ? (<div>
                                             <div
                                                 style={{ display: "flex", width: "100%", marginTop: "12px" }}
@@ -615,14 +588,14 @@ export default function Cart({ open, toggleCartDrawer }) {
                                         ) : (
                                             <div className="addRemkarMain">
                                                 <button className="SmilingAddRemkarBtn" style={{marginTop: '20px'}} onClick={() => getSizeData(item, index)}>
-                                                    customization
+                                                    Customization
                                                 </button>
                                             </div>
                                         )}
                                     </div>
                                 </div>
-                                <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center', padding: '0px 10px 10px 10px' }}>
-                                    <div style={{ display: "flex", alignItems: 'center', }}>
+                                <div className='similingCartBotttomMain'>
+                                    <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center', }}>
                                         <div
                                             style={{
                                                 display: "flex",
@@ -637,9 +610,10 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                     border: "0px",
                                                     textAlign: "center",
                                                     outline: "none",
-                                                    width: "100px",
+                                                    width: "130px",
                                                 }}
                                                 maxLength={2}
+                                                className='simlingQualityBox'
                                                 inputMode="numeric"
                                                 value={item.Quantity}
                                                 onChange={(event) => handleInputChange(event, index)}
@@ -648,7 +622,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                         <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(item.designno)}>QTY</button>
                                     </div>
 
-                                    <div style={{ display: "flex", alignItems: 'center', marginLeft: '30px' }}>
+                                    <div className='smilingAddresingleMobileMain' style={{ display: "flex", alignItems: 'center', marginLeft: '30px' }}>
                                         <textarea
                                             type="text"
                                             placeholder="Enter Remarks..."
@@ -690,7 +664,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 onClick={submitMainRemrks}
                                 className="SmilingAddRemkarBtn"
                             >
-                                Add Main Remark
+                                Add Order Remark
                             </button>
                         </div>
                     </div>
