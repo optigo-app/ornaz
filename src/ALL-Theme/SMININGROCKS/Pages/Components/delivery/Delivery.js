@@ -313,7 +313,7 @@ export default function Delivery() {
         setDeleteId(item);
         setOpenDelete(true);
     }
-    
+
     const handleDeleteAddress = async () => {
         try {
             setOpenDelete(false);
@@ -358,19 +358,19 @@ export default function Delivery() {
             setSelectedAdderssId(null);
         }
     }, [addressData]);
-    
+
     localStorage.setItem('selectedAddressId', selectedAddressId)
 
     const handleContinue = () => {
         if (selectedAddressId) {
-          navigation('/Payment');
+            navigation('/Payment');
         } else {
-          alert('Please select an address before continuing.');
+            alert('Please select an address before continuing.');
         }
-      };
+    };
 
     return (
-        <div style={{
+        <div className='paddingTopMobileSet' style={{
             backgroundColor: '#c0bbb1',
             paddingTop: '110px'
         }}>
@@ -506,7 +506,7 @@ export default function Delivery() {
                             helperText={errors.mobileNo || ''}
                         />
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' ,marginBottom: '20px' }}>
                                 <button type="submit" className='smilingDeleveryformSaveBtn'>
                                     {isEditMode ? 'Edit' : 'Add'}
                                 </button>
@@ -523,7 +523,7 @@ export default function Delivery() {
                     <div className='smilingdeliverBox1'>
                         <p style={{ fontSize: '30px', fontWeight: 500, color: 'gray' }}>Delivery</p>
                         <p>Order Will be delivered to selected address</p>
-                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <div className='smilingDeliveyAddressMain' style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {
                                 addressData?.map((item, index) => (
                                     <div key={item.id} className='AddressMain'>
@@ -551,13 +551,15 @@ export default function Delivery() {
                                 ))
                             }
                         </div>
-                        <button className='smilingAddToAddressBtn' onClick={handleOpen}>ADD NEW ADDRESS</button>
-                        <button style={{ marginInline: '20px' }} className='smilingAddToAddressBtn'  onClick={handleContinue}>Continue</button>
+                        <div className='smilingMobileDeliveryBtnMain'>
+                            <button className='smilingAddToAddressBtn' onClick={handleOpen}>ADD NEW ADDRESS</button>
+                            <button style={{ marginInline: '20px' }} className='smilingAddToAddressBtn' onClick={handleContinue}>Continue</button>
+                        </div>
                     </div>
-                    <div className='smilingdeliverBox2'>
-                        <p style={{ fontSize: '30px', fontWeight: 500, color: 'gray' }}>Order Summary</p>
-                        <img src='http://gstore.orail.co.in/assets/newfolder/images/account/blue-box.jpg' className='smilingDeliverImg' />
-                    </div>
+                    {/* <div className='smilingdeliverBox2'> */}
+                    {/* <p style={{ fontSize: '30px', fontWeight: 500, color: 'gray' }}>Order Summary</p>
+                        <img src='http://gstore.orail.co.in/assets/newfolder/images/account/blue-box.jpg' className='smilingDeliverImg' /> */}
+                    {/* </div> */}
                 </div>
                 <Footer />
             </div>

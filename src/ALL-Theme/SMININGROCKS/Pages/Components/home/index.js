@@ -200,7 +200,7 @@ export default function Home() {
 
 
   return (
-    <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+    <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
       <div className='homeMain'>
         <Video />
         <SmilingRock />

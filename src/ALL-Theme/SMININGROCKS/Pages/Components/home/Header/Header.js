@@ -193,19 +193,19 @@ export default function Header() {
     const storeInit = JSON.parse(localStorage.getItem("storeInit")) ?? ""
     const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail")) ?? ""
     // if (storeInit && Customer_id) {
-      let pData = JSON.stringify({ "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id ?? 0}` })
+    let pData = JSON.stringify({ "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id ?? 0}` })
 
-      let pEnc = btoa(pData)
+    let pEnc = btoa(pData)
 
-      const body = {
-        con: "{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
-        f: "onload (GETMENU)",
-        p: pEnc
-      }
+    const body = {
+      con: "{\"id\":\"\",\"mode\":\"GETMENU\",\"appuserid\":\"nimesh@ymail.in\"}",
+      f: "onload (GETMENU)",
+      p: pEnc
+    }
 
-      await CommonAPI(body).then((res) => {
-        transformData(res?.Data?.rd)
-      })
+    await CommonAPI(body).then((res) => {
+      transformData(res?.Data?.rd)
+    })
     // }
   }
 
@@ -293,7 +293,7 @@ export default function Header() {
   };
 
 
- 
+
 
   return (
     <>
@@ -573,7 +573,18 @@ export default function Header() {
               <div onClick={() => navigation("/lookbook")}>
                 <p className="drawrTitle">LOOKBOOK</p>
               </div>
-              <div
+
+              {islogin && (
+                <div
+                  style={{ cursor: "pointer", color: 'white' }}
+                  onClick={() => navigation("/account")}
+                >
+                  <p className="drawrTitle">{ACCOUNT}</p>
+                </div>
+              )
+              }
+
+              {/* <div
                 style={{
                   marginTop: "20px",
                 }}
@@ -585,7 +596,7 @@ export default function Header() {
                 >
                   Wishlist
                 </p>
-              </div>
+              </div> */}
               <div
                 style={{
                   display: "flex",
@@ -1099,6 +1110,7 @@ export default function Header() {
             justifyContent: "space-between",
             padding: "20px",
           }}
+          className="smilingMobileSubDiv"
         >
           <div
             style={{
@@ -1152,51 +1164,81 @@ export default function Header() {
               justifyContent: "flex-end",
             }}
           >
-            <li
-              onClick={() => navigation("/myWishList")}
-              style={{ listStyle: "none" }}
-              className="PiStarThinTopIcone"
-            >
-              <PiStarThin
-                style={{
-                  height: "20px",
-                  color: "white",
-                  cursor: "pointer",
-                  width: "20px",
-                  marginInline: "5px",
-                }}
-              />
-            </li>
-            <li
-              onClick={toggleOverlay}
-              style={{ listStyle: "none" }}
-              className="IoSearchOutlineTopIcone"
-            >
-              <IoSearchOutline
-                style={{
-                  height: "20px",
-                  cursor: "pointer",
-                  color: "white",
-                  width: "20px",
-                  marginInline: "5px",
-                }}
-              />
-            </li>
-            <li
-              onClick={toggleCartDrawer(true)}
-              style={{ marginTop: "0px", listStyle: "none" }}
-            >
-              <PiStarFourThin
-                style={{
-                  cursor: "pointer",
-                  color: "white",
-                  paddingInline: "0px",
-                  padding: "5px",
-                  height: "30px",
-                  width: "30px",
-                }}
-              />
-            </li>
+
+            {!islogin && (
+              <li
+                className="nav-li-smining"
+                style={{ cursor: "pointer", color: 'white' }}
+                onClick={() => setSigninPopupOpen(true)}
+              >
+                {LOGIN}
+              </li>
+            )}
+
+
+            {islogin &&
+              <div style={{ display: 'flex' }}>
+                <Badge
+                  badgeContent={getWishListCount}
+                  overlap={"rectangular"}
+                  color="secondary"
+                  style={{ marginInline: '5px' }}
+                >
+                  <Tooltip title="Add To WishList">
+                    <li style={{ listStyle: 'none' }} onClick={() => navigation("/myWishList")}>
+                      <PiStarThin
+                        style={{
+                          height: "25px",
+                          cursor: "pointer",
+                          width: "25px",
+                          color: "white",
+                        }}
+                      />
+                    </li>
+                  </Tooltip>
+                </Badge>
+
+                <li onClick={toggleOverlay} style={{ listStyle: 'none', width: '40px', textAlign: 'center' }}>
+                  <IoSearchOutline
+                    style={{
+                      height: "25px", cursor: "pointer", width: "25px",
+                      color: "white",
+                    }}
+                  />
+                </li>
+
+
+                <Badge
+                  badgeContent={getCartListCount}
+                  overlap={"rectangular"}
+                  color="secondary"
+                  style={{ marginInline: '10px' }}
+                >
+                  <Tooltip title="Add To Cart">
+                    <li
+                      onClick={toggleCartDrawer(true)}
+                      style={{
+                        marginLeft: "-10px",
+                        cursor: "pointer",
+                        listStyle: 'none',
+                        marginTop: "0px",
+                      }}
+                    >
+                      <PiStarFourThin
+                        style={{
+                          cursor: "pointer",
+                          height: "30px",
+                          width: "30px",
+                          color: "white",
+
+                        }}
+                      />
+                    </li>
+                  </Tooltip>
+                </Badge>
+
+              </div>
+            }
           </div>
         </div>
 
@@ -1211,7 +1253,7 @@ export default function Header() {
               style={{ display: "flex", justifyContent: "space-between" }}
             >
               <div
-                style={{ display: "flex", margin: "5px", alignItems: "center" }}
+                style={{ display: "flex", margin: "5px", alignItems: "center",width:'28%' }}
               >
                 {drawerShowOverlay ? (
                   <IoClose
@@ -1267,53 +1309,77 @@ export default function Header() {
                   </svg>
                 </a>
               </div>
-              <div style={{ display: "flex" }}>
+              {!islogin && (
                 <li
-                  onClick={() => navigation("/myWishList")}
-                  style={{ listStyle: "none" }}
-                  className="PiStarThinTopIcone"
+                  className="nav-li-smining"
+                  style={{ cursor: "pointer", color: 'white' }}
+                  onClick={() => setSigninPopupOpen(true)}
                 >
-                  <PiStarThin
-                    style={{
-                      height: "20px",
-                      color: "#7d7f85",
-                      cursor: "pointer",
-                      width: "20px",
-                      marginInline: "5px",
-                    }}
-                  />
+                  {LOGIN}
                 </li>
-                <li
-                  onClick={toggleOverlay}
-                  style={{ listStyle: "none" }}
-                  className="IoSearchOutlineTopIcone"
-                >
-                  <IoSearchOutline
-                    style={{
-                      height: "20px",
-                      cursor: "pointer",
-                      color: "#7d7f85",
-                      width: "20px",
-                      marginInline: "5px",
-                    }}
-                  />
-                </li>
-                <li
-                  onClick={toggleCartDrawer(true)}
-                  style={{ marginTop: "0px", listStyle: "none" }}
-                >
-                  <PiStarFourThin
-                    style={{
-                      cursor: "pointer",
-                      color: "#7d7f85",
-                      paddingInline: "0px",
-                      padding: "5px",
-                      height: "30px",
-                      width: "30px",
-                    }}
-                  />
-                </li>
-              </div>
+              )}
+              {islogin &&
+                <div style={{ display: 'flex' }}>
+                  <Badge
+                    badgeContent={getWishListCount}
+                    overlap={"rectangular"}
+                    color="secondary"
+                    style={{ marginInline: '5px' }}
+                  >
+                    <Tooltip title="Add To WishList">
+                      <li style={{ listStyle: 'none' }} onClick={() => navigation("/myWishList")}>
+                        <PiStarThin
+                          style={{
+                            height: "25px",
+                            cursor: "pointer",
+                            width: "25px",
+                            color: "#7d7f85",
+                          }}
+                        />
+                      </li>
+                    </Tooltip>
+                  </Badge>
+
+                  <li onClick={toggleOverlay} style={{ listStyle: 'none', width: '40px', textAlign: 'center' }}>
+                    <IoSearchOutline
+                      style={{
+                        height: "25px", cursor: "pointer", width: "25px",
+                        color: "#7d7f85",
+                      }}
+                    />
+                  </li>
+
+
+                  <Badge
+                    badgeContent={getCartListCount}
+                    overlap={"rectangular"}
+                    color="secondary"
+                    style={{ marginInline: '10px' }}
+                  >
+                    <Tooltip title="Add To Cart">
+                      <li
+                        onClick={toggleCartDrawer(true)}
+                        style={{
+                          marginLeft: "-10px",
+                          cursor: "pointer",
+                          listStyle: 'none',
+                          marginTop: "0px",
+                        }}
+                      >
+                        <PiStarFourThin
+                          style={{
+                            cursor: "pointer",
+                            height: "30px",
+                            width: "30px",
+                            color: "#7d7f85",
+                          }}
+                        />
+                      </li>
+                    </Tooltip>
+                  </Badge>
+
+                </div>
+              }
             </div>
           </div>
         )}

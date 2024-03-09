@@ -28,9 +28,9 @@
 .firmnamealt{
     font-size: 16px;
 }
-.mobileHeaderSmining{
+/* .mobileHeaderSmining{
     display: none !important;
-}
+} */
 
 @media print {
     .containerALT{
@@ -50,9 +50,9 @@
     .firmnamealt{
         font-size: 9px !important;
     }
-    .mobileHeaderSmining{
+    /* .mobileHeaderSmining{
         display: none !important;
-    }
+    } */
     .headline_alt{
         font-size: 16px;
     }
