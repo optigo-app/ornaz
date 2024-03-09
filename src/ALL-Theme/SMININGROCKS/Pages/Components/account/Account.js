@@ -102,11 +102,11 @@ export default function Account() {
             backgroundColor: '#c0bbb1',
             paddingTop: '110px'
         }} className='accountPagTabSection'>
-            {isLoading && (
+            {/* {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress />
                 </div>
-            )}
+            )} */}
 
             <div>
                 <div className='Smiling-AccountMain'>
