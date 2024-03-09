@@ -302,7 +302,7 @@ const DesignWiseSalesReport = () => {
                     flags.purchaseCount = true;
                     break;
                 case "0-5":
-                    if (0 <=e?.salescount && e?.salescount  <= 5) {
+                    if (0 <= e?.salescount && e?.salescount <= 5) {
                         console.log(e?.salescount);
                         flags.purchaseCount = true;
                     }
@@ -331,7 +331,7 @@ const DesignWiseSalesReport = () => {
                         flags.purchaseCount = true;
                     }
                     break;
-                    case "25 above":
+                case "25 above":
                     if (25 <= e?.salescount) {
                         console.log(e?.salescount);
                         flags.purchaseCount = true;
@@ -834,86 +834,88 @@ const DesignWiseSalesReport = () => {
                 </Box>
             </Box>
 
-            <Box sx={{ display: "grid", gap: "15px", gridTemplateColumns: "repeat(4, 1fr)", }} className="designWiseSalesProducts">
+            <Box sx={{ display: "grid", gap: "15px",  gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", }} className="designWiseSalesProducts">
 
-                {isLoading ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : filteredDataPaginated?.map((products, i) => (
-                    <div
-                        style={{
-                            width: "100%",
-                            border: "1px solid #e1e1e1",
-                            textAlign: "center",
-                            color: "#7d7f85",
-                            position: "relative",
-                            zIndex: 0,
-                            background: "#c0bbb133",
-                        }}
-                        className="smilingProductImageBox designWiseSalesReportProduct"
-                    >
-                        <Box sx={{
-                            // padding: "10px"
-                            paddingBottom: "10px"
-                        }}>
-                            {/* onClick={() => handelProductSubmit(products)} */}
-                            {/* <Stack spacing={1}>
+                {isLoading ?
+                    <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> :
+                    filteredDataPaginated?.map((products, i) => (
+                        <div
+                            style={{
+                                minWidth: "100%",
+                                border: "1px solid #e1e1e1",
+                                textAlign: "center",
+                                color: "#7d7f85",
+                                position: "relative",
+                                zIndex: 0,
+                                background: "#c0bbb133",
+                            }}
+                            className="smilingProductImageBox designWiseSalesReportProduct"
+                        >
+                            <Box sx={{
+                                // padding: "10px"
+                                paddingBottom: "10px"
+                            }}>
+                                {/* onClick={() => handelProductSubmit(products)} */}
+                                {/* <Stack spacing={1}>
                                 <Skeleton variant="rectangular" width={210} height={60} />
                                 <img className="prod_img" src={products?.imgsrc} alt='' style={{ objectFit: "contain", height: "auto" }} />
                             </Stack> */}
 
-                            <Box sx={{ height: "271px" }}>
-                                {products?.imgsrc ? (
-                                    <img className="prod_img" src={products?.imgsrc} alt='' style={{ objectFit: "contain", height: "auto" }} />
-                                ) : (
-                                    <Skeleton variant="rectangular" width={"100%"} height={271} />
-                                )}
-                            </Box>
+                                <Box sx={{ maxheight: "271px" }}>
+                                    {products?.imgsrc ? (
+                                        <img className="prod_img" src={products?.imgsrc} alt='' style={{ objectFit: "contain", height: "100%" }} />
+                                    ) : (
+                                        <Skeleton variant="rectangular" width={"100%"} height={271} />
+                                    )}
+                                </Box>
 
-                        </Box>
-                        <Box sx={{ padding: "0 5px", display: "flex", justifyContent: "space-between" }}>
-                            {/* onClick={() => handelProductSubmit(products)} */}
-                            <Typography
-                                style={{
-                                    fontSize: "13px",
-                                    // color: "#000",
-                                    textTransform: "uppercase",
-                                    cursor: "pointer",
-                                    fontWeight: "bold",
-                                    textAlign: "start"
-                                }}
-                            >
-                                {products?.designno}
-                            </Typography>
-                            <Typography
-                                style={{
-                                    fontSize: "13px",
-                                    // color: "#000",
-                                    textTransform: "uppercase",
-                                    cursor: "pointer",
-                                    fontWeight: "bold",
-                                    textAlign: "start"
-                                }}
-                            >
-                                NetWt: {products?.DesignNetWt}
-                            </Typography>
-                        </Box>
-                        <Box sx={{ padding: "0 5px", display: "flex", justifyContent: "space-between" }}>
-                            <Typography style={{ fontSize: "12px", textAlign: "start", }}>
-                                Dia Pcs/Wt: {NumberWithCommas(products?.diamondpcs, 0)} / {NumberWithCommas(products?.diamondwt, 3)}
-                            </Typography>
-                            <Typography style={{ fontSize: "12px", textAlign: "start", }}>
-                                Cs Pcs/Wt: {NumberWithCommas(products?.colorstonepcs, 0)} / {NumberWithCommas(products?.colorstonewt, 0)}
-                            </Typography>
-                        </Box>
-                        <Box sx={{ padding: "0 5px 5px", display: "flex", justifyContent: "space-between" }}>
-                            <Typography style={{ fontSize: "12px", textAlign: "start", }}>
-                                Purchase Count: {NumberWithCommas(products?.salescount, 0)}
-                            </Typography>
-                            {/* <Typography style={{ fontSize: "12px", textAlign: "start" }}>
+                            </Box>
+                            <Box sx={{ padding: "0 5px", display: "flex", justifyContent: "space-between" }}>
+                                {/* onClick={() => handelProductSubmit(products)} */}
+                                <Typography
+                                    style={{
+                                        fontSize: "13px",
+                                        // color: "#000",
+                                        textTransform: "uppercase",
+                                        cursor: "pointer",
+                                        fontWeight: "bold",
+                                        textAlign: "start"
+                                    }}
+                                >
+                                    {products?.designno}
+                                </Typography>
+                                <Typography
+                                    style={{
+                                        fontSize: "13px",
+                                        // color: "#000",
+                                        textTransform: "uppercase",
+                                        cursor: "pointer",
+                                        fontWeight: "bold",
+                                        textAlign: "start"
+                                    }}
+                                >
+                                    NetWt: {products?.DesignNetWt}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ padding: "0 5px", display: "flex", justifyContent: "space-between" }}>
+                                <Typography style={{ fontSize: "12px", textAlign: "start", }}>
+                                    Dia Pcs/Wt: {NumberWithCommas(products?.diamondpcs, 0)} / {NumberWithCommas(products?.diamondwt, 3)}
+                                </Typography>
+                                <Typography style={{ fontSize: "12px", textAlign: "start", }}>
+                                    Cs Pcs/Wt: {NumberWithCommas(products?.colorstonepcs, 0)} / {NumberWithCommas(products?.colorstonewt, 0)}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ padding: "0 5px 5px", display: "flex", justifyContent: "space-between" }}>
+                                <Typography style={{ fontSize: "12px", textAlign: "start", }}>
+                                    Purchase Count: {NumberWithCommas(products?.salescount, 0)}
+                                </Typography>
+                                {/* <Typography style={{ fontSize: "12px", textAlign: "start" }}>
                                 Cs Pcs/Wt: 5 / {products?.cs_wt}
                             </Typography> */}
-                        </Box>
+                            </Box>
 
-                    </div>
-                ))}
+                        </div>
+                    ))}
 
             </Box>
 
