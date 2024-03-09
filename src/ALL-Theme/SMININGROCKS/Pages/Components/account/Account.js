@@ -132,7 +132,7 @@ export default function Account() {
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
                                         <Tab label="ACCOUNT" {...a11yProps(3)} />
-                                        <Tab label="CHANGE PASSWORD" {...a11yProps(5)} />
+                                        <Tab label="CHANGE PASSWORD" {...a11yProps(4)} />
                                     </Tabs>
                                 </Box>
                                 <div onClick={() => alert('dddd')}>
@@ -187,7 +187,7 @@ export default function Account() {
                                 </CustomTabPanel>
                             </CustomTabPanel>
 
-                            <CustomTabPanel value={value} index={5}>
+                            <CustomTabPanel value={value} index={4}>
                                <div>
                                     <ChangePassword />
                                </div>

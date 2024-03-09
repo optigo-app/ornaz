@@ -14,7 +14,7 @@ export default function Confirmation() {
     }, [])
 
     return (
-        <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+        <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             <div className='simlimgCofirmationMain'>
                 <div className='confritmSubmain'>
                     <img src='https://gstore.orail.co.in/assets/newfolder/images/account/thankyou.svg' className='SmilingthanksImg' />

@@ -915,6 +915,8 @@ const handelCartList = async(event,prod)=>{
             alignItems: "center",
             paddingTop: '110px'
           }}
+      className='paddingTopMobileSet'
+
         >
           <div className="smilingProductMain" id="smilingProductMain">
             <div
