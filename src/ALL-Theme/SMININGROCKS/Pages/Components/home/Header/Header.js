@@ -37,10 +37,15 @@ export default function Header() {
   const [finalData, setFinalData] = useState([]);
   const [menu1Index, setMenu1Index] = useState(null);
   const [menu2Index, setMenu2Index] = useState(null);
+  const [menu1Data,setMenu1Data] = useState()
+  const [menu2Data,setMenu2Data] = useState([])
 
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
   const setSigninPopupOpen = useSetRecoilState(openSignInModal)
+
+  console.log("menu1Data",menu1Data)
+  console.log("menu2Data",menu2Data)
 
   const transformData = (data) => {
 
@@ -840,6 +845,7 @@ export default function Header() {
                   className="level0Menu"
                   onMouseEnter={() => setMenu1Index(i)}
                 // onMouseLeave={()=>setMenu1Index(null)}
+                onClick={()=>{console.log("menuname",fd)}}
                 >
                   {fd?.menuname}
                 </span>
@@ -859,8 +865,13 @@ export default function Header() {
                   <div></div>
                   <span
                     className="level1Menu"
-                    onMouseEnter={() => setMenu2Index(i)}
+                    onMouseEnter={() =>{
+                      setMenu2Index(i)
+                      setMenu1Data(fd)
+                    }
+                    }
                   // onMouseLeave={()=>setMenu2Index(null)}
+                  onClick={()=>{setMenu1Data(fd)}}
                   >
                     {fd?.param1dataname}
                   </span>
@@ -878,7 +889,10 @@ export default function Header() {
               }}
             >
               {finalData[menu1Index]?.param1?.map((fd) => fd)[menu2Index]?.param2?.map((fd1) => (
-                <span className="level2Menu" >{fd1?.param2dataname}</span>
+                <span className="level2Menu"  
+                      onClick={()=>{
+                        setMenu2Data({data:finalData[menu1Index],label2:fd1?.param2name,value2:fd1?.param2dataname})
+                      }}>{fd1?.param2dataname}</span>
               ))}
             </div>
 

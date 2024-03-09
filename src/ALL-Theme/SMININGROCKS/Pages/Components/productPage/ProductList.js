@@ -216,7 +216,7 @@ const ProductList = () => {
         product.GenderName = gendertype.GenderName;
       }
       if(Berandtype){
-        product.Berandid = Berandtype.BrandName
+        product.BrandName = Berandtype.BrandName
       }
       if(MetalType){
         product.MetalTypeName = MetalType.MetalTypeName
@@ -228,7 +228,7 @@ const ProductList = () => {
         product.SubCategoryName = SubCategoryType.SubCategoryName
       }
       if(ThemeType){
-        product.Themeid = ThemeType.Themeid
+        product.ThemeName = ThemeType.ThemeName
       }
     });
 
@@ -455,17 +455,23 @@ removefromCart()
 
   // let ArrFil = []
 
-  // console.log("sepeTypeVal",sepeTypeVal.map((st)=>productData.map((pd)=>{if(pd[st.type]=== st.value)})))
+  // console.log("sepeTypeVal",sepeTypeVal.map((st)=>productData.filter((pd)=>pd[st.type]=== st.value)))
   // console.log("sepeTypeVal",sepeTypeVal)
 
-  const filteredProducts = (productData).filter(product => {
-    return sepeTypeVal.some(condition => {
-        return product[condition.type] === condition.value
-    });
-});
+//   const filteredProducts = (productData).filter(product => {
+//     return sepeTypeVal.some(condition => {
+//         return product[condition.type] === condition.value
+//     });
+// });
 
+    
+    const filteredProducts = sepeTypeVal.map((st)=>productData.filter((pd)=>pd[st.type]=== st.value)).reverse()
 
-  const mergedArray = filteredProducts.reduce((acc, curr) => acc.concat(curr), []);
+    console.log("filteredProducts",filteredProducts)
+
+    
+
+  const mergedArray = [...filteredProducts].reduce((acc, curr) => acc.concat(curr), []);
   const finalDataOfDisplaying = () =>{
     if(mergedArray.length && mergedArray){
       return mergedArray
