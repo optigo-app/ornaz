@@ -120,6 +120,11 @@ export const getLocalStorageItems = () => {
 }
 
 export const accountValidation = () => {
-    let getVal = JSON.parse(localStorage.getItem("storeInit"));
-    console.log(getVal);
+    let getVal = JSON?.parse(localStorage.getItem("storeInit"))?.["IsMyaccount"];
+    return getVal === 1 ? true : false;
+}
+
+export const accountDetailPage = (pageId) => {
+    let getVal = JSON?.parse(localStorage?.getItem("myAccountFlags"))?.find(ele=>ele?.pageid === pageId);
+    return getVal !== undefined ? (getVal?.isvisible === 1 ? true : false) : false;
 }

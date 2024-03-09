@@ -17,7 +17,7 @@ import SalesReport from '../sales/salesReport/SalesReport';
 import QuotationJob from './quotationFilters/QuotationJob';
 import QuotationQuote from './QuotationQuote/QuotationQuote';
 import Sales from '../sales/Sales/Sales';
-import { accountValidation } from '../../../Utils/globalFunctions/GlobalFunction';
+import { accountDetailPage, accountValidation } from '../../../Utils/globalFunctions/GlobalFunction';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -109,7 +109,7 @@ export default function Account() {
                 </div>
             )} */}
 
-            <div>{console.log(accountValidation())}
+            <div>
                 <div className='Smiling-AccountMain'>
                     <p className='SmilingAccountTitle youraccountpagesec'>Your Account</p>
                     <div className='smling-AccountTabMain'>
@@ -120,7 +120,7 @@ export default function Account() {
                                         <Tab label="Your Profile" {...a11yProps(0)} />
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                                        <Tab label="ACCOUNT" {...a11yProps(3)} />
+                                        {!accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
                                         <Tab label="CHANGE PASSWORD" {...a11yProps(5)} />
                                     </Tabs>
                                     <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
@@ -132,7 +132,7 @@ export default function Account() {
                                         <Tab label="Your Profile" {...a11yProps(0)} sx={{ textAlign: 'start', borderBottom: 1, width: '90%', borderColor: 'divider' }} />
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                                        <Tab label="ACCOUNT" {...a11yProps(3)} />
+                                        {!accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
                                         <Tab label="CHANGE PASSWORD" {...a11yProps(4)} />
                                     </Tabs>
                                 </Box>
@@ -156,45 +156,45 @@ export default function Account() {
                                 <ManageAddress />
                             </CustomTabPanel>
 
-                            <CustomTabPanel value={value} index={3} className="accountSalesPage">
+                            {!accountValidation() && <CustomTabPanel value={value} index={3} className="accountSalesPage">
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value1} className='accountTabSection' variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator  }} scrollButtons="auto">
-                                        <Tab label="Quote" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />
-                                        <Tab label="Job" {...a11yProps(1)} sx={{  color: "#7d7f85"  }} />
-                                        <Tab label="Sales" {...a11yProps(2)} sx={{  color: "#7d7f85"  }} />
-                                        <Tab label="Sales Report" {...a11yProps(3)} sx={{  color: "#7d7f85"  }} />
-                                        <Tab label="Design Wise Sales Report" {...a11yProps(4)} sx={{  color: "#7d7f85"  }} />
-                                        <Tab label="Account Ledger" {...a11yProps(5)} sx={{  color: "#7d7f85"  }} />
+                                    <Tabs value={value1} className='accountTabSection' variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
+                                        {accountDetailPage(1163) && <Tab label="Quote" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1164) && <Tab label="Job" {...a11yProps(1)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1157) && <Tab label="Sales" {...a11yProps(2)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1314) && <Tab label="Sales Report" {...a11yProps(3)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(17020) && <Tab label="Design Wise Sales Report" {...a11yProps(4)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1159) && <Tab label="Account Ledger" {...a11yProps(5)} sx={{ color: "#7d7f85" }} />}
                                     </Tabs>
                                 </Box>
-                                <CustomTabPanel value={value1} index={0} className="AcountSales">
+                                {accountDetailPage(1163) && <CustomTabPanel value={value1} index={0} className="AcountSales">
                                     <QuotationQuote />
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={1} className="quotationFilters">
+                                </CustomTabPanel>}
+                                {accountDetailPage(1164) && <CustomTabPanel value={value1} index={1} className="quotationFilters">
                                     <QuotationJob />
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={2} className="salesPage">
+                                </CustomTabPanel>}
+                                {accountDetailPage(1157) && <CustomTabPanel value={value1} index={2} className="salesPage">
                                     <Sales />
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={3} className="salesReport">
-                                    <SalesReport/>
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={4} className="DesignWiseSalesReport">
+                                </CustomTabPanel>}
+                                {accountDetailPage(1314) && <CustomTabPanel value={value1} index={3} className="salesReport">
+                                    <SalesReport />
+                                </CustomTabPanel>}
+                                {accountDetailPage(17020) && <CustomTabPanel value={value1} index={4} className="DesignWiseSalesReport">
                                     <DesignWiseSalesReport />
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={5}>
+                                </CustomTabPanel>}
+                                {accountDetailPage(1159) && <CustomTabPanel value={value1} index={5}>
                                     <AccountLedger />
-                                </CustomTabPanel>
-                            </CustomTabPanel>
+                                </CustomTabPanel>}
+                            </CustomTabPanel>}
 
                             <CustomTabPanel value={value} index={4}>
-                               <div>
+                                <div>
                                     <ChangePassword />
-                               </div>
+                                </div>
                             </CustomTabPanel>
 
-                          
+
                         </Box>
                     </div>
 
