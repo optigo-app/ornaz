@@ -31,6 +31,7 @@
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
+    position: relative;
 }
 .addressData{
     margin: 0px;

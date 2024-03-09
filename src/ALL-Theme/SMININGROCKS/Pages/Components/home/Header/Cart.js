@@ -338,7 +338,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                         width: '100%',
                         height: '100%',
                         paddingTop: '50%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.2)',
                         display: 'flex',
                         justifyContent: 'center',
                         zIndex: 1
@@ -372,7 +372,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                 </p>
             </div>
             <div style={{ paddingBottom: "150px" }}>
-                {cartListData?.length === 0 ? (
+                {cartListData?.length === 0 ? !isLoading && (
                     <div
                         style={{
                             display: "flex",
@@ -588,7 +588,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                         ) : (
                                             <div className="addRemkarMain">
                                                 <button className="SmilingAddRemkarBtn" style={{marginTop: '20px'}} onClick={() => getSizeData(item, index)}>
-                                                    customization
+                                                    Customization
                                                 </button>
                                             </div>
                                         )}
@@ -610,7 +610,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                     border: "0px",
                                                     textAlign: "center",
                                                     outline: "none",
-                                                    width: "100px",
+                                                    width: "130px",
                                                 }}
                                                 maxLength={2}
                                                 className='simlingQualityBox'
@@ -664,7 +664,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 onClick={submitMainRemrks}
                                 className="SmilingAddRemkarBtn"
                             >
-                                Add Main Remark
+                                Add Order Remark
                             </button>
                         </div>
                     </div>

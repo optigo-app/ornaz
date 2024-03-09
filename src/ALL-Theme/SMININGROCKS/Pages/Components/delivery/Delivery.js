@@ -538,8 +538,8 @@ export default function Delivery() {
                                         <p className='addressData'>{item.street}</p>
                                         <p className='addressData'>{item.city}-{item.zip}</p>
                                         <p className='addressData'>{item.state}</p>
-                                        <p className='addressData'>{item.shippingmobile}</p>
-                                        <div style={{ display: 'flex', marginTop: '10px' }}>
+                                        <p className='addressData' style={{marginBottom: '35px'}}>{item.shippingmobile}</p>
+                                        <div style={{position:'absolute',bottom:'5px',width:'95%', display: 'flex', marginTop: '10px' }}>
                                             <div onClick={() => handleOpen(item, index)} className='deliveryAddressEdit' style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                 <MdEdit />
                                             </div>
