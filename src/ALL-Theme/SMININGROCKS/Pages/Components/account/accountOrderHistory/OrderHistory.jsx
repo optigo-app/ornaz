@@ -46,22 +46,25 @@ const OrderHistory = () => {
 
   return (
     <div>
-        <div className='text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-4'>Your Order History</div>
+        <div className='text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-4 yourOrderHistory'>Your Order History</div>
         <div className='orderedItems'>
             {
                 AccountOrderHistory?.length > 0 && AccountOrderHistory?.map((e) => {
                     return(
                         <div className='border orderHistory p-1 px-0 my-4' key={e?.id}>
                         <div className=' d-flex w-100 justify-content-between align-items-center p-1'>
-                            <div className='w-25'>
-                                <div className='d-flex justify-content-start w-100 align-items-center py-2'>
-                                    <div className='text-secondary fw-bold fs-5 ps-3 pe-5'>A55070</div>
-                                    <div className={`d-flex align-items-center  ${getStatusColor(e?.order_type)} fs-5`}><div className='px-2'><CircleIcon sx={{fontSize:"10px"}} /></div>{e?.order_type}</div>
+                            <div className=' notShippedOrShippedYetWidth'>
+                                <div className='d-flex justify-content-start w-100 align-items-center py-2 orderShippedIdNumberSec'>
+                                    <div className='text-secondary fw-bold fs-5 ps-3 pe-5 orderShippedIdNumber'>A55070</div>
+                                    <div className={`d-flex align-items-center notShippedOrShippedYet  ${getStatusColor(e?.order_type)} fs-5`}><div className='px-2'><CircleIcon sx={{fontSize:"10px"}} /></div>{e?.order_type}</div>
                                 </div>
-                                <div className='py-2 text-secondary ps-3'>Date &nbsp;&nbsp;:&nbsp;&nbsp; <span className='text-danger'>{e?.ordered_on}</span></div>
-                                <div className='py-2 text-secondary ps-3'>items&nbsp;&nbsp; : &nbsp;&nbsp;(<span className='text-danger'>1</span>)</div>
+                                <div className='d-flex justify-content-between'>
+                                <div className='py-2 text-secondary ps-3 orderShippedDate'>Date &nbsp;&nbsp;:&nbsp;&nbsp; <span className='text-danger'>{e?.ordered_on}</span></div>
+                                <div className='py-2 pe-5 fs-4 w-50 orderShippedPayment'>$ 7200</div>
+                                </div>
+                                <div className='py-2 text-secondary ps-3 orderShippedItems'>items&nbsp;&nbsp; : &nbsp;&nbsp;(<span className='text-danger'>1</span>)</div>
                             </div>
-                            <div className='py-2 pe-5 fs-4 w-50'>$ 7200</div>
+                
                         </div>
                         <Accordion sx={{boxShadow:'none'}}>
                             <AccordionSummary>
