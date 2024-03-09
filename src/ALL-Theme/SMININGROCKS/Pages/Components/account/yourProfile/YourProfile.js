@@ -42,7 +42,7 @@ export default function YourProfile() {
             const { FrontEnd_RegNo } = storeInit;
 
             const combinedValue = JSON.stringify({
-                firstname: `${editedUserData.defaddress_shippingfirstname}`, lastname: `${editedUserData.defaddress_shippinglastname}`, street: `${editedUserData.defaddress_state}`, addressprofile: `${editedUserData.defaddress_shippingfirstname + editedUserData.defaddress_shippinglastname}`, city: `${editedUserData.city}`, state: `${editedUserData.state}`, country: `${editedUserData.country}`, zip: `${editedUserData.zipCode}`, mobile: `${userData.defaddress_shippingmobile}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${editedUserData.id}`
+                firstname: `${editedUserData.defaddress_shippingfirstname}`, lastname: `${editedUserData.defaddress_shippinglastname}`, street: `${editedUserData.defaddress_state}`, addressprofile: `${editedUserData.defaddress_shippingfirstname +' '+ editedUserData.defaddress_shippinglastname}`, city: `${editedUserData.city}`, state: `${editedUserData.state}`, country: `${userData.defaddress_country}`, zip: `${userData.defaddress_zip}`, mobile: `${userData.defaddress_shippingmobile}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${editedUserData.id}`
             });
             console.log('combinedValuecombinedValue', combinedValue);
 
@@ -157,7 +157,7 @@ export default function YourProfile() {
                 open={editMode}
                 onClose={handleClose}
             >
-                <div style={{ position: 'absolute', backgroundColor: 'white', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 450, boxShadow: 24, p: 4 }}>
+                <div className='smilingEditProfilePopup' style={{ position: 'absolute', backgroundColor: 'white', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 450, boxShadow: 24, p: 4 }}>
                     <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
                         <h2 style={{ marginBlock: '20px', textAlign: 'center' }}>Edit Address</h2>
                         {editedUserData && (

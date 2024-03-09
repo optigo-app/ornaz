@@ -19,8 +19,7 @@
 
 .SmilingUpdateQuantityBtn{
     height: 40px;
-    width: 200
-    px;
+    width: 80px;
     background-color: #f1d8c6;
     border: none;
     outline: none;
@@ -28,7 +27,7 @@
 }
 .SmilingAddSingleRemkarBtn{
     height: 40px;
-    width: 150px;
+    width:  120px;
     background-color: #f1d8c6;
     border: none;
     outline: none;
@@ -40,7 +39,8 @@
 } */
 .SmilingAddRemkarBtn{
     height: 40px;
-    width: 200px;
+    width: 160px;
+    border-radius: 5px;
     background-color: #f1d8c6;
     border: none;
     outline: none;

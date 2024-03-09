@@ -200,8 +200,6 @@ export default function Payment() {
                                 <p>Estimated Total</p>
                                 <p>0.00</p>
                             </div>
-
-
                         </div>
                         <div className='smilingPaymentBtn'>
                             <button onClick={handlePayment} className='paymentBtn'>PAY ON ACCOUNT</button>
