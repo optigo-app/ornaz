@@ -563,7 +563,7 @@ const SalesReport = () => {
                     <Typography>Total Amount</Typography>
                     <Typography sx={{ fontWeight: 700, textAlign: "center" }}>{NumberWithCommas(total?.TotalAmount, 2)}</Typography>
                 </Box>
-                <Box sx={{ width: "135px", height: "135px", paddingBottom: "20px", overflow: "hidden", }}>
+                <Box className="salesReportImgSec" sx={{ width: "135px", height: "135px", paddingBottom: "20px", overflow: "hidden", }}>
                     <Box sx={{ border: "1px solid #d6d6d6", height: "135px", }}>
                         {hoverImg !== "" && <img src={hoverImg} alt="" style={{ width: "100%", objectFit: "contain" }} />}
                     </Box>
@@ -627,7 +627,7 @@ const SalesReport = () => {
             {
                 isLoading ?
                     <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <>
-                        <Paper sx={{ width: '100%', mb: 2 }}>
+                        <Paper sx={{ width: '100%', mb: 2 }} className='salesReportTableSec'>
                             <TableContainer>
                                 <Table
                                     sx={{ minWidth: 750 }}
@@ -653,7 +653,7 @@ const SalesReport = () => {
                                                     onMouseEnter={(eve) => handleimageShow(eve, row?.imgsrc)}
                                                     onMouseLeave={(eve) => handleimageShow(eve, row?.imgsrc)}
                                                 >
-                                                    <TableCell component="th" id={labelId} scope="row" align="center"> {row.SrNo} </TableCell>
+                                                    <TableCell id={labelId} scope="row" align="center"> {row.SrNo} </TableCell>
                                                     <TableCell align="center">{row.EntryDate}</TableCell>
                                                     <TableCell align="center">{row.StockDocumentNo}</TableCell>
                                                     <TableCell align="center">{row.SKUNo}</TableCell>

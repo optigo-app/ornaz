@@ -330,12 +330,13 @@ const QuotationQuote = () => {
         fetchData();
     }, []);
 
-
     return (
         <Box className='smilingSavedAddressMain salesApiSection' sx={{ padding: "20px", }}>
             <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                <Box sx={{ paddingRight: "15px" }}> <Button variant="contained" className="muiSmilingRocksBtn" sx={{ background: "#7d7f85", display: "flex", alignItems: "center", marginBottom: 0, padding: "6px 0", }} onClick={eve => resetAllFilters(eve)}>All</Button></Box>
-                <Box sx={{ display: "flex", alignItems: "center", position: "relative", padding: "0 15px 35px 0", maxWidth: "max-content" }} className="searchbox">
+                <Box sx={{ paddingRight: "15px" }} className="AllQuoteBtn QuotePadSec"> <Button variant="contained" className="muiSmilingRocksBtn" sx={{ background: "#7d7f85", display: "flex", alignItems: "center", marginBottom: 0, padding: "6px 0", }} onClick={eve => resetAllFilters(eve)}>
+                    All
+                </Button></Box>
+                <Box sx={{ display: "flex", alignItems: "center", position: "relative", padding: "0 15px 35px 0", maxWidth: "max-content" }} className="searchbox QuotePadSec">
                     <TextField id="standard-basic" label="Search" variant="outlined" value={searchVal} onChange={eve => {
                         setSearchVal(eve?.target?.value);
                         handleSearch(eve, eve?.target?.value, fromDate, toDate);
@@ -344,7 +345,7 @@ const QuotationQuote = () => {
                         onClick={eve => handleSearch(eve, searchVal, fromDate, toDate)}><SearchIcon /></Button>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                    <Box sx={{ display: "flex", alignItems: "center", paddingRight: "15px", paddingBottom: "35px" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", paddingRight: "15px", paddingBottom: "35px" }} className="QuotePadSec">
                         <p className='fs-6 mb-0' style={{ paddingRight: "8px" }}>Date: </p>
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -359,7 +360,7 @@ const QuotationQuote = () => {
                             </LocalizationProvider>
                         </Box>
                     </Box>
-                    <Box sx={{ display: "flex", alignItems: "center", paddingBottom: "35px", paddingRight: "15px" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", paddingBottom: "35px", paddingRight: "15px" }} className="QuotePadSec">
                         <p className='fs-6 mb-0' style={{ paddingRight: "8px" }}>To: </p>
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -375,7 +376,7 @@ const QuotationQuote = () => {
                         </Box>
                     </Box>
                 </Box>
-                <Box sx={{ padding: "0 15px 35px 0", display: "flex", alignItems: "center", }}>
+                <Box sx={{ padding: "0 15px 35px 0", display: "flex", alignItems: "center", }} className="QuotePadSec">
                     <Button variant='contained' className="muiSmilingRocksBtn" sx={{ padding: "7px 10px", minWidth: "max-content", background: "#7d7f85" }} onClick={(eve) => handleSearch(eve, searchVal, fromDate, toDate)}><SearchIcon sx={{ color: "#fff !important" }} /></Button>
                 </Box>
             </Box>

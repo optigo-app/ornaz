@@ -92,17 +92,17 @@ export const checkDates = (fromDates, toDates, cutDates) => {
 }
 
 export const NumberWithCommas = (value, val) => {
-    const roundedValue = Number(value).toFixed(val || 2); 
+    const roundedValue = Number(value).toFixed(val || 2);
     const stringValue = roundedValue.toString();
     const [integerPart, decimalPart] = stringValue.split('.');
     let formattedString = integerPart
-      .split('')
-      .reverse()
-      .map((char, index) => (index > 0 && index % 2 === 0 ? ',' + char : char))
-      .reverse()
-      .join('');
+        .split('')
+        .reverse()
+        .map((char, index) => (index > 0 && index % 2 === 0 ? ',' + char : char))
+        .reverse()
+        .join('');
     if (decimalPart !== undefined && val && val !== 0) {
-      formattedString += '.' + decimalPart.padEnd(val || 2, '0'); 
+        formattedString += '.' + decimalPart.padEnd(val || 2, '0');
     }
     formattedString = formattedString.replace(/^,+/, '');
     return formattedString;
@@ -111,10 +111,32 @@ export const NumberWithCommas = (value, val) => {
 export const getLocalStorageItems = () => {
     const storedData = localStorage.getItem('loginUserDetail');
     const data = JSON.parse(storedData);
-   const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+    const storeInit = JSON.parse(localStorage.getItem('storeInit'));
     const { FrontEnd_RegNo } = storeInit;
 
     return {
         data: data, FrontEnd_RegNo: FrontEnd_RegNo
     }
+}
+
+export const accountValidation = () => {
+    let getVal = JSON?.parse(localStorage.getItem("storeInit"))?.["IsMyaccount"];
+
+    let getVals = [1163, 1164, 1157, 1314, 17020, 1159];
+    let pageIsOn = false;
+    getVals?.forEach((e, i) => {
+        let getValss = JSON?.parse(localStorage?.getItem("myAccountFlags"))?.find(ele => ele?.pageid === e);
+        if (getValss !== undefined) {
+            console.log(getValss?.isvisible);
+            if (getValss?.isvisible === 1) {
+                pageIsOn = true;
+            }
+        }
+    })
+    return (getVal === 1 && pageIsOn === true) ? true : false;
+}
+
+export const accountDetailPage = (pageId) => {
+    let getVal = JSON?.parse(localStorage?.getItem("myAccountFlags"))?.find(ele => ele?.pageid === pageId);
+    return getVal !== undefined ? (getVal?.isvisible === 1 ? true : false) : false;
 }
