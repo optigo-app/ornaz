@@ -4,7 +4,7 @@ import Footer from "../home/Footer/Footer";
 import SmilingRock from "../home/smiling_Rock/SmilingRock";
 import "./product.css";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import prodListData from "../../jsonFile/Productlist_4_95oztttesi0o50vr.json";
 // import prodListData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_Original.json";
 import filterData from "../../jsonFile/M_4_95oztttesi0o50vr.json";
@@ -45,6 +45,7 @@ const ProductList = () => {
   const setWishCount = useSetRecoilState(WishListCounts)
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
@@ -60,6 +61,15 @@ const ProductList = () => {
     })
 
   }
+
+
+    // if(location.state){
+    //   console.log("location",location.state.param1)
+    //   if(location.state.param1==="collection"){
+    //     // productData[CollectionName] === 
+    //   }
+    // }
+
 
 
 
@@ -115,7 +125,7 @@ const ProductList = () => {
   useEffect(() => {
     // if(ProductApiData.length){
       // window.scrollTo(0,0);
-      const element = document.getElementById("finejwelery")
+      const element = document.getElementById("top")
       element.scrollIntoView()
     // }
   }, []); 
@@ -898,7 +908,8 @@ const handelCartList = async(event,prod)=>{
 
 
   return (
-    <div>
+    <div id="top">
+
       <div
         style={{
           backgroundColor: "#c0bbb1",
