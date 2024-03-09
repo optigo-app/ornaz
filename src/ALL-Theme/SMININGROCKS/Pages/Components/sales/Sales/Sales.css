@@ -1,0 +1,15 @@
+@media(max-width: 576px){
+
+    .salesPartTable{
+        display: grid;
+    flex-direction: column;
+    min-width: max-content;
+    width: 100%;
+    } 
+
+    div[role="tabpanel"] >div.MuiBox-root:has(.salesApiSection) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+}

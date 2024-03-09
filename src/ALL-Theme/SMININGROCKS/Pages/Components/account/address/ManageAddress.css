@@ -40,6 +40,12 @@
     color: #7d7f85 !important;
 }
 
+.manageAddressDefault{
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    /* border: 1px solid rgba(0, 0, 0, 0.35); */
+
+}
+
 @media(max-width: 1024px){
     .AddressSec{
         width: 49%;
@@ -47,6 +53,21 @@
         /* margin-bottom: 1%; */
     }
 
+}
+
+@media(max-width: 768px){
+    .manageAddressSec > div{    
+        padding: 0 !important;
+    }
+
+    .savedAddress{
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+    }
+
+    .savedAddressManageBtn{
+        padding: 3px 10px !important;
+    }
 }
 
 @media(max-width: 576px){
