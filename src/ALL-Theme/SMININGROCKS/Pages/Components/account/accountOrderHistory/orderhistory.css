@@ -226,3 +226,92 @@
         padding: 5px !important;
     }
 }
+
+div[role="tabpanel"] >div.MuiBox-root:has(.orderedItems){
+    padding: 0 !important;
+} 
+
+.orderHistory .MuiAccordionSummary-root > .MuiAccordionSummary-content{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.orderHistory .MuiAccordionSummary-root{
+    min-height: 20px;
+}
+
+.notShippedOrShippedYet, .orderShippedPayment{
+    min-width: max-content;
+}
+
+.notShippedOrShippedYetWidth{
+    width: 100%;
+}
+
+@media(max-width: 768px){
+    .yourOrderHistory{
+        padding: 15px 10px 10px 10px !important;
+    }
+
+    .orderedItems{
+        padding-top: 0;
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .notShippedOrShippedYetWidth{
+        width: 100% !important;
+    }
+
+    .orderShippedDate{
+        display: flex;
+        flex-wrap: wrap;
+        padding-right: 15px;
+        align-items: center;
+    }
+
+    .orderShippedIdNumber{
+        padding-right: 15px !important;
+    }
+
+    .orderShippedPayment{
+        padding-right: 15px !important;
+        width: max-content !important;
+        font-size: 16px !important;
+    }
+
+    .orderShippedIdNumberSec{
+        justify-content: space-between !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .orderShippedDate, .orderShippedPayment{
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-right: 5px !important;
+    }
+
+    .notShippedOrShippedYet  {
+        padding-right: 5px !important;
+        font-size: 16px !important;
+    }
+
+    .orderShippedIdNumber, .orderShippedDate, .orderShippedItems{
+        padding-left: 5px !important;
+        line-height: 120%;
+        font-size: 16px !important;
+    }
+
+    .orderShippedItems{
+        padding-top: 0 !important;
+        /* padding-bottom: 0 !important; */
+    }
+}
+
+
+@media(max-width: 376px){
+    .notShippedOrShippedYet {
+        min-width: unset;
+    }
+}

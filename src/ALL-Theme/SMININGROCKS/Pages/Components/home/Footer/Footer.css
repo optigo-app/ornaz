@@ -209,6 +209,16 @@
     }
 }
 
+@media(max-width: 768px){
+    .footerTopMain{
+        padding-top: 10px;
+        padding-bottom: 0px;
+    }
+
+    .footerBottomMain{
+        padding-bottom: 0;
+    }
+}
 
 @media screen and (max-width: 600px) {
 

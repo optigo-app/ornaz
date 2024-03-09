@@ -176,7 +176,7 @@ const OrderHistory = () => {
 
   return (
     <div>
-      <div className="text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-4">
+      <div className="text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-4 yourOrderHistory">
         Your Order History
       </div>
       {loaderOH ? (

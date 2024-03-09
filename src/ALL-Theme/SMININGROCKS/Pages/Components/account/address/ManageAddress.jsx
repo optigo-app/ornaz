@@ -408,9 +408,9 @@ const ManageAddress = () => {
                 background: '#7d7f85',
                 color: "#fff",
                 fontWeight: "500",
-            }}>Saved Addresses</p>
+            }} className='savedAddress'>Saved Addresses</p>
             <Box sx={{ paddingLeft: "15px" }}>
-                <Button className='muiSmilingRocksBtnManage' variant="contained" sx={{ background: "#7d7f85", padding: "6px 15px", textAlign: "end", fontSize: "0.9rem", marginBottom: "10px", borderRadius: "0" }} onClick={handleOpen}>ADD NEW ADDRESS</Button></Box>
+                <Button className='muiSmilingRocksBtnManage savedAddressManageBtn' variant="contained" sx={{ background: "#7d7f85", padding: "6px 15px", textAlign: "end", fontSize: "0.9rem", marginBottom: "10px", borderRadius: "0" }} onClick={handleOpen}>ADD NEW ADDRESS</Button></Box>
             {/* <Button className='smilingAcoountAddNewBtn' sx={{marginLeft: "auto"}} >ADD NEW ADDRESS</Button> */}
             <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
@@ -422,19 +422,20 @@ const ManageAddress = () => {
                     isLoading ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <Box sx={{ display: "flex", flexWrap: "wrap", paddingTop: "10px" }} className="addressMainSec">
                         {
                             addressData?.map((item, index) => {
+                                console.log(item);
                                 return <Box className="AddressSec" key={index}>
-                                    <Box className="manageAddressBlock">
+                                    <Box className={`manageAddressBlock ${item.isdefault === 1 && `manageAddressDefault`}`}>
                                         <Box sx={{ display: "flex", flexWrap: "wrap", }}>
-                                            <Box sx={{ paddingRight: "15px", fontweight: "600", paddingBottom: "10px" }}><h6>{item?.shippingfirstname}</h6></Box>
-                                            <Box sx={{ fontweight: "600" }}><h6>{item?.shippinglastname}</h6></Box>
+                                            <Box sx={{ paddingRight: "15px", fontweight: "600", paddingBottom: "10px" }}><h6>{item?.shippingfirstname && item?.shippingfirstname}</h6></Box>
+                                            <Box sx={{ fontweight: "600" }}><h6>{item?.shippinglastname !== undefined && item?.shippinglastname}</h6></Box>
                                         </Box>
                                         <Box>
-                                            <Typography sx={{ paddingBottom: "15px" }}>{item?.street},{item?.city}-{item?.zip},{item?.state},{item?.country}</Typography>
+                                            <Typography sx={{ paddingBottom: "15px" }}>{item?.street !== undefined && item?.street},{item?.city !== undefined && item?.city}-{item?.zip !== undefined && item?.zip},{item?.state !== undefined && item?.state},{item?.country !== undefined && item?.country}</Typography>
                                         </Box>
                                         <NavLink to="" style={{ textDecoration: "unset" }}>
                                             <Box sx={{ display: "flex", paddingBottom: "15px", textDecoration: "unset", marginLeft: "-4px", }}>
                                                 <StayPrimaryPortraitIcon />
-                                                <Typography sx={{ paddingLeft: "3px", textDecoration: "unset" }}>{item?.shippingmobile}</Typography>
+                                                <Typography sx={{ paddingLeft: "3px", textDecoration: "unset" }}>{item?.shippingmobile !== undefined && item?.shippingmobile}</Typography>
                                             </Box>
                                         </NavLink>
 
