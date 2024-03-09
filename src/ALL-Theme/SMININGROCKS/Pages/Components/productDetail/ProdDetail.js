@@ -549,12 +549,14 @@ const ProdDetail = () => {
 
   return (
     <div
+    className='paddingTopMobileSet'
       style={{
         backgroundColor: "#c0bbb1",
         height: "100%",
         width: "100%",
         paddingBottom: "100px",
         paddingTop: "110px",
+
       }}
     >
       <div
