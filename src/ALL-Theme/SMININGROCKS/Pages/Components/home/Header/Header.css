@@ -647,3 +647,34 @@
     }
 
 }
+
+@media screen and (max-width: 400px) {
+
+    .mobileViewFirstDiv{
+        width: 20%!important;
+    }
+    .muIconeMobileHeader{
+        font-size: 30px!important;
+    }
+
+    .centerSVGMobileImage{
+        height: 60px!important;
+        width: 120%!important;
+    }
+
+    .mobileViewSmilingTop1Icone{
+        height: 18px!important;
+        width: 18px!important;
+    }
+
+    .mobileViewSmilingTop2Icone{
+        height: 18px!important;
+        width: 18px!important;
+    }
+
+    .mobileViewSmilingTop3Icone{
+        height: 18px!important;
+        width: 18px!important;
+    }
+
+}
