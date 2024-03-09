@@ -200,6 +200,7 @@ const QuotationJob = () => {
     { id: 'Sr#', label: 'Sr No', minWidth: 85, align: "center" },
     { id: 'Date', label: 'Date', minWidth: 110, align: "center" },
     { id: 'SKUNO', label: 'SKU#', minWidth: 110, align: "center" },
+    { id: 'PO', label: 'PO', minWidth: 110, align: "center" },
     { id: 'JobNo', label: 'Job#', minWidth: 100, align: "center" },
     { id: 'DesignNo', label: 'Design#', minWidth: 100, align: "center" },
     { id: 'Category', label: 'Category', minWidth: 110, align: "center" },
@@ -241,6 +242,7 @@ const QuotationJob = () => {
         if (e?.["Sr#"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
           e?.["Date"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
           e?.["SKUNO"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
+          e?.["PO"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
           e?.["JobNo"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
           e?.["DesignNo"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
           e?.["Category"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
@@ -450,7 +452,7 @@ const QuotationJob = () => {
   return (
     <Box className='smilingSavedAddressMain quotationFiltersText' sx={{ padding: "20px", }}>
       <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-        <Button variant="contained" sx={{ marginBottom: "35px", background: "#7d7f85" }} className='muiSmilingRocksBtn' onClick={eve => resetAllFilters(eve)}>All</Button>
+        <Button variant="contained" sx={{ marginBottom: "35px", background: "#7d7f85" }} className='muiSmilingRocksBtn QuotationJobAllBtn' onClick={eve => resetAllFilters(eve)} >All</Button>
         <Box sx={{ padding: "0 20px" }}>
           <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-group"
@@ -459,12 +461,12 @@ const QuotationJob = () => {
             onChange={handleOrderProms}
             sx={{ display: "flex", alignItems: "center", flexDirection: "unset" }}
           >
-            <FormControlLabel value="order" className='orderFrom' control={<Radio />} label="Order Date" sx={{ padding: "0 20px 35px 0", marginRight: "0" }} />
-            <FormControlLabel value="prom" className='orderFrom' control={<Radio />} label="Prom. Date" sx={{ padding: "0 10px 35px 0", marginRight: "0" }} />
+            <FormControlLabel value="order" className='orderFrom QuotationJobAllBtnSecDate' control={<Radio />} label="Order Date" sx={{ padding: "0 20px 35px 0", marginRight: "0" }} />
+            <FormControlLabel value="prom" className='orderFrom QuotationJobAllBtnSecDate' control={<Radio />} label="Prom. Date" sx={{ padding: "0 10px 35px 0", marginRight: "0" }} />
           </RadioGroup>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-          <Box sx={{ display: "flex", alignItems: "center", paddingRight: "15px", paddingBottom: "35px" }}>
+          <Box sx={{ display: "flex", alignItems: "center", paddingRight: "15px", paddingBottom: "35px" }} className="QuotationJobAllBtnSec">
             {/* <p className='fs-6 mb-0' style={{minWidth: "50px"}}>Date: </p> */}
             <Box>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -478,7 +480,7 @@ const QuotationJob = () => {
               </LocalizationProvider>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", paddingBottom: "35px", paddingRight: "15px" }}>
+          <Box sx={{ display: "flex", alignItems: "center", paddingBottom: "35px", paddingRight: "15px" }} className="QuotationJobAllBtnSec">
             {/* <p className='fs-6 mb-0' style={{minWidth: "50px"}}>To: </p> */}
             <Box>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -493,10 +495,10 @@ const QuotationJob = () => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ padding: "0 15px 35px 0", }}>
+        <Box sx={{ padding: "0 15px 35px 0", }} className="QuotationJobAllBtnSec">
           <Button variant='contained' className='muiSmilingRocksBtn' sx={{ padding: "7px 10px", minWidth: "max-content", background: "#7d7f85" }} onClick={(eve) => handleSearch(eve, searchVal, fromDate, toDate, metalPurity, MetalColor, category, statuse, orderProm)}><SearchIcon sx={{ color: "#fff !important" }} /></Button>
         </Box>
-        <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} >
+        <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} className="QuotationJobAllBtnSec" >
           <label className='lh-1 selectLabel' style={{ marginTop: "-3px", position: "absolute", left: 0, top: "-16px", }}>Status</label>
           <Select
             labelId="demo-simple-select-label"
@@ -513,7 +515,7 @@ const QuotationJob = () => {
             }
           </Select>
         </Box>
-        <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} >
+        <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} className="QuotationJobAllBtnSec" >
           <label className='lh-1 selectLabel' style={{ marginTop: "-3px", position: "absolute", left: 0, top: "-16px", }}>Category</label>
           <Select
             labelId="demo-simple-select-label"
@@ -530,7 +532,7 @@ const QuotationJob = () => {
             }
           </Select>
         </Box>
-        <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} >
+        <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} className="QuotationJobAllBtnSec" >
           <label className='lh-1 selectLabel' style={{ marginTop: "-3px", position: "absolute", left: 0, top: "-16px", }}>Metal Color</label>
           <Select
             labelId="demo-simple-select-label"
@@ -547,7 +549,7 @@ const QuotationJob = () => {
             }
           </Select>
         </Box>
-        <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} >
+        <Box sx={{ position: "relative", padding: "0 15px 35px 0", display: "flex", flexWrap: "wrap", alignitems: "center", justifyContent: "center" }} className="QuotationJobAllBtnSec" >
           <label className='lh-1 selectLabel' style={{ marginTop: "-3px", position: "absolute", left: 0, top: "-16px", }}>Metal Purity</label>
           <Select
             labelId="demo-simple-select-label"
@@ -564,21 +566,21 @@ const QuotationJob = () => {
             }
           </Select>
         </Box>
-        <Box sx={{ paddingBottom: "35px", paddingRight: "15px", marginTop: "-5px" }}><Button sx={{ padding: 0, minWidth: "max-content" }}><PrintIcon /></Button></Box>
-        <Box sx={{ display: "flex", alignItems: "center", position: "relative", padding: "0 15px 35px 0", maxWidth: "max-content" }} className="searchbox">
+        <Box sx={{ paddingBottom: "35px", paddingRight: "15px", marginTop: "-5px" }} className="QuotationJobAllBtnSec"><Button sx={{ padding: 0, minWidth: "max-content" }}><PrintIcon /></Button></Box>
+        <Box sx={{ display: "flex", alignItems: "center", position: "relative", padding: "0 15px 35px 0", maxWidth: "max-content" }} className="searchbox QuotationJobAllBtnSec">
           <TextField id="standard-basic" label="Search" variant="outlined" value={searchVal} onChange={eve => {
             setSearchVal(eve?.target?.value);
             handleSearch(eve, eve?.target?.value, fromDate, toDate, metalPurity, MetalColor, category, statuse, orderProm);
           }} />
-          <Button sx={{ padding: 0, maxWidth: "max-content", minWidth: "max-content", position: "absolute", right: "8px", color: "#757575" }}
+          <Button sx={{ padding: 0, maxWidth: "max-content", minWidth: "max-content", position: "absolute", right: "20px", color: "#757575" }}
             onClick={eve => handleSearch(eve, searchVal, fromDate, toDate, metalPurity, MetalColor, category, statuse, orderProm)}><SearchIcon /></Button>
         </Box>
       </Box>
 
       <Box sx={{ padding: "0 0 35px 0", marginTop: "-15px" }}>
         {isLoading ?
-          <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer sx={{ maxHeight: 328 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <Paper sx={{ width: '100%', overflow: 'hidden' }} className='QuoteJobtable'>
+            <TableContainer sx={{ maxHeight: 328 }} className='quotationJobSec'>
               <Table stickyHeader aria-label="sticky table" className='quotaionFiltertable'>
                 <TableHead>
                   <TableRow>

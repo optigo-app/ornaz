@@ -34,6 +34,7 @@
     position: relative;
     z-index: 1;
     background-color: #fff;
+    /* min-width: 250px !important; */
 }
 
 .designWiseSalesProducts .designWiseSalesReportProduct:hover {
@@ -86,3 +87,7 @@
 /* .designWiseSalesReportProduct *{
     font-size: 14px !important;
 } */
+
+@media(max-width: 576px){
+    
+}
