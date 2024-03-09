@@ -1,0 +1,47 @@
+.grossWtinputSecSalesReport input{
+    padding: 9.5px 15px;
+}
+
+.salesReporttable table{
+    border-collapse: collapse;
+}
+
+.salesReporttable table tr td, .salesReporttable table tr th{
+    border: 1px solid #d6d6d6;
+}
+
+.salesReporttable table td, .salesReporttable table tr th{
+    font-size: 12px;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.salesReporttable table td.fw_bold{
+    font-weight: 600;
+}
+
+
+.salesReporttable table tr:first-child td{
+    font-weight: normal;
+}
+
+.salesReporttable{
+    overflow-y: auto;
+}
+
+.salesReport > div{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* .salesReporttabelHead th{
+    position: relative;
+}
+*/
+
+.salesReporttabelHead th> span > svg{
+    position: absolute;
+    right: -25px;
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
+} 

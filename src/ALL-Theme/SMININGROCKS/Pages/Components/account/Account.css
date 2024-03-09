@@ -112,6 +112,10 @@
     background-color: #3b3c3d;
 }
 
+.YourAccountPageTabs .MuiTab-textColorPrimary.Mui-selected{
+    color: #000;
+}
+
 
 @media screen and (max-width: 1441px) {
 
@@ -158,6 +162,19 @@
     .css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
         display: flex;
         align-items: start!important;
+    }
+}
+
+@media(max-width: 768px){
+    .YourAccountPageTabs div[aria-orientation="vertical"] > .MuiTab-textColorPrimary {
+        padding: 8px 15px;
+        min-height: unset;
+        min-width: 100%;
+    }
+
+    .youraccountpagesec{
+        font-size: calc(1.375rem + 1.5vw) !important;
+        padding-bottom: 10px;
     }
 }
 
