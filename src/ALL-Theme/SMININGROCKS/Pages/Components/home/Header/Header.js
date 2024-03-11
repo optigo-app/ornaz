@@ -37,8 +37,8 @@ export default function Header() {
   const [finalData, setFinalData] = useState([]);
   const [menu1Index, setMenu1Index] = useState(null);
   const [menu2Index, setMenu2Index] = useState(null);
-  const [menu1Data,setMenu1Data] = useState()
-  const [menu2Data,setMenu2Data] = useState()
+  const [menu1Data, setMenu1Data] = useState()
+  const [menu2Data, setMenu2Data] = useState()
 
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
@@ -50,7 +50,7 @@ export default function Header() {
 
 
   const handelmenu1 = (param) => {
-    console.log("param1",param)
+    console.log("param1", param)
     localStorage.setItem('productDataShow', 'true');
     setIsDropdownOpen(false)
     navigation("/productpage")
@@ -59,13 +59,13 @@ export default function Header() {
 
 
   const handelmenu2 = (param) => {
-    console.log("param1",param)
+    console.log("param1", param)
     setIsDropdownOpen(false)
     navigation("/productpage")
     setHeaderData2(param)
   }
 
-  
+
   const transformData = (data) => {
 
     const transformedData = data?.reduce((acc, item) => {
@@ -143,19 +143,18 @@ export default function Header() {
   };
 
 
-  const islogin = useRecoilValue(loginState);
-  // const fetchData = () => {
-  //   // console.log("call");
-  //   const value = localStorage.getItem('LoginUser');
-  //   const val =( value === 'true' ? 'true' : 'false')
-  //   // setislogin(val);
-  // };
+  const [islogin, setislogin] = useRecoilState(loginState);
+  const fetchData = () => {
+    const value = localStorage.getItem('LoginUser');
+    const val = (value === 'true' ? 'true' : 'false')
+    setislogin(val);
+  };
 
-  console.log("isLogin",islogin);
+  console.log("isLogin", islogin);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const getMenuApi = async () => {
 
@@ -180,7 +179,7 @@ export default function Header() {
 
 
   useEffect(() => {
-    islogin === true && getMenuApi()
+    islogin === 'true' && getMenuApi()
   }, [islogin])
 
 
@@ -818,8 +817,8 @@ export default function Header() {
                 <span
                   className="level0Menu"
                   onMouseEnter={() => setMenu1Index(i)}
-                // onMouseLeave={()=>setMenu1Index(null)}
-                onClick={()=>{console.log("menuname",fd)}}
+                  // onMouseLeave={()=>setMenu1Index(null)}
+                  onClick={() => { console.log("menuname", fd) }}
                 >
                   {fd?.menuname}
                 </span>
@@ -839,14 +838,14 @@ export default function Header() {
                   <div></div>
                   <span
                     className="level1Menu"
-                    onMouseEnter={() =>{
+                    onMouseEnter={() => {
                       setMenu2Index(i)
                       setMenu1Data(fd)
                     }}
                     // onMouseLeave={()=>setMenu2Index(null)}
-                    onClick={()=>{
-                      setMenu1Data({label1:fd?.param1name,value1:fd?.param1dataname})
-                      handelmenu1({label1:fd?.param1name,value1:fd?.param1dataname})
+                    onClick={() => {
+                      setMenu1Data({ label1: fd?.param1name, value1: fd?.param1dataname })
+                      handelmenu1({ label1: fd?.param1name, value1: fd?.param1dataname })
                     }}
                   >
                     {fd?.param1dataname}
@@ -865,12 +864,12 @@ export default function Header() {
               }}
             >
               {finalData[menu1Index]?.param1?.map((fd) => fd)[menu2Index]?.param2?.map((fd1) => (
-                <span className="level2Menu"  
-                      onClick={()=>{
-                        setMenu2Data({label1:menu1Data.param1name,value1:menu1Data.param1dataname,label2:fd1?.param2name,value2:fd1?.param2dataname})
-                      handelmenu2({label1:menu1Data.param1name,value1:menu1Data.param1dataname,label2:fd1?.param2name,value2:fd1?.param2dataname})
+                <span className="level2Menu"
+                  onClick={() => {
+                    setMenu2Data({ label1: menu1Data.param1name, value1: menu1Data.param1dataname, label2: fd1?.param2name, value2: fd1?.param2dataname })
+                    handelmenu2({ label1: menu1Data.param1name, value1: menu1Data.param1dataname, label2: fd1?.param2name, value2: fd1?.param2dataname })
 
-                      }}>{fd1?.param2dataname}</span>
+                  }}>{fd1?.param2dataname}</span>
               ))}
             </div>
 
@@ -1244,7 +1243,7 @@ export default function Header() {
               style={{ display: "flex" }}
             >
               <div
-                style={{ display: "flex", margin: "5px", alignItems: "center", width: '28%' }}
+                style={{ display: "flex", margin: "5px", alignItems: "center", width: '35%' }}
               >
                 {drawerShowOverlay ? (
                   <IoClose
