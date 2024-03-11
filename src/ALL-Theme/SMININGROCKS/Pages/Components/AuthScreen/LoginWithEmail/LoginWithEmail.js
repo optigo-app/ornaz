@@ -39,7 +39,7 @@ export default function LoginWithEmail() {
         }
     };
     const handleMouseDownConfirmPassword = (event) => {
-        event.preventDefault();
+        event?.preventDefault();
     };
 
     function hashPasswordSHA1(password) {
@@ -71,7 +71,7 @@ export default function LoginWithEmail() {
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
                 localStorage.setItem('registerEmail', email)
-                setIsLoginState(true)
+                setIsLoginState('true')
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 navigation('/');

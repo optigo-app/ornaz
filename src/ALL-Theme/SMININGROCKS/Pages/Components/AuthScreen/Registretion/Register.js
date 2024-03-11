@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CryptoJS from 'crypto-js';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
+import { loginState } from '../../../../../../Recoil/atom';
+import { useSetRecoilState } from 'recoil';
 
 export default function Register() {
   const navigation = useNavigate();
@@ -27,6 +29,8 @@ export default function Register() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
+
+  const setIsLoginState = useSetRecoilState(loginState)
 
   const handleKeyDown = (event, nextRef) => {
     if (event.key === 'Enter') {
@@ -169,6 +173,7 @@ export default function Register() {
         const response = await CommonAPI(body);
         if (response.Data.rd[0].stat === 1) {
           localStorage.setItem('LoginUser', 'true')
+          setIsLoginState('true')
           localStorage.setItem('registerEmail', email)
           navigation('/');
         } else {
