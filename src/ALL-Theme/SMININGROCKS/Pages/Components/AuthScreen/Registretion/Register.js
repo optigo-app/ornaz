@@ -168,8 +168,8 @@ export default function Register() {
         }
         const response = await CommonAPI(body);
         if (response.Data.rd[0].stat === 1) {
-          localStorage.setItem('registerEmail', email)
           localStorage.setItem('LoginUser', 'true')
+          localStorage.setItem('registerEmail', email)
           navigation('/');
         } else {
           alert(response.Data.rd[0].stat_msg);
