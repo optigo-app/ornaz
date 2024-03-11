@@ -37,69 +37,28 @@ export default function Header() {
   const [finalData, setFinalData] = useState([]);
   const [menu1Index, setMenu1Index] = useState(null);
   const [menu2Index, setMenu2Index] = useState(null);
+  const [menu1Data,setMenu1Data] = useState()
+  const [menu2Data,setMenu2Data] = useState()
 
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
 
+  // console.log("menu1Data",menu1Data)
+  // console.log("menu2Data",menu2Data)
+
+
+  const handelmenu1 = (param) => {
+    console.log("param1",param);
+    setIsDropdownOpen(false);
+    navigation("/productpage",{state:{param1:param}})
+    // if(param.label1 === "collection"){
+
+    // }
+  }
+
+
+
   const transformData = (data) => {
-
-    // const transformedData = data.reduce((acc, item) => {
-    //   const existingItem = acc.find(i => i.lavelid === item.levelid);
-    //   if (existingItem) {
-    //     if (item.param1id) {
-    //       const param1 = {
-    //         param1id: item.param1id,
-    //         param1name: item.param1name,
-    //         param1dataid: item.param1dataid,
-    //         param1dataname: item.param1dataname,
-    //         param2: []
-    //       };
-    //       existingItem.param1.push(param1);
-    //       if (item.param2id) {
-    //         const param2 = {
-    //           param2id: item.param2id,
-    //           param2name: item.param2name,
-    //           param2dataid: item.param2dataid,
-    //           param2dataname: item.param2dataname
-    //         };
-    //         param1.param2.push(param2);
-    //       }
-    //     }
-    //   } else {
-    //     const newItem = {
-    //       lavelid: item.levelid,
-    //       menuname: item.menuname,
-    //       link: item.link || '',
-    //       param0id: item.param0id || '',
-    //       param0name: item.param0name || '',
-    //       param0dataid: item.param0dataid || '',
-    //       param0dataname: item.param0dataname || '',
-    //       param1: []
-    //     };
-    //     if (item.param1id) {
-    //       const param1 = {
-    //         param1id: item.param1id,
-    //         param1name: item.param1name,
-    //         param1dataid: item.param1dataid,
-    //         param1dataname: item.param1dataname,
-    //         param2: []
-    //       };
-    //       newItem.param1.push(param1);
-    //       if (item.param2id) {
-    //         const param2 = {
-    //           param2id: item.param2id,
-    //           param2name: item.param2name,
-    //           param2dataid: item.param2dataid,
-    //           param2dataname: item.param2dataname
-    //         };
-    //         param1.param2.push(param2);
-    //       }
-    //     }
-    //     acc.push(newItem);
-    //   }
-    //   return acc;
-    // }, []);
-
 
     const transformedData = data?.reduce((acc, item) => {
       const existingItem = acc.find(i => i.lavelid === item.levelid);
@@ -210,8 +169,8 @@ export default function Header() {
 
 
   useEffect(() => {
-    islogin && getMenuApi()
-  }, [])
+    islogin === true && getMenuApi()
+  }, [islogin])
 
 
 
@@ -849,6 +808,7 @@ export default function Header() {
                   className="level0Menu"
                   onMouseEnter={() => setMenu1Index(i)}
                 // onMouseLeave={()=>setMenu1Index(null)}
+                onClick={()=>{console.log("menuname",fd)}}
                 >
                   {fd?.menuname}
                 </span>
@@ -868,8 +828,15 @@ export default function Header() {
                   <div></div>
                   <span
                     className="level1Menu"
-                    onMouseEnter={() => setMenu2Index(i)}
-                  // onMouseLeave={()=>setMenu2Index(null)}
+                    onMouseEnter={() =>{
+                      setMenu2Index(i)
+                      setMenu1Data(fd)
+                    }}
+                    // onMouseLeave={()=>setMenu2Index(null)}
+                    onClick={()=>{
+                      setMenu1Data({label1:fd?.param1name,value1:fd?.param1dataname})
+                      handelmenu1({label1:fd?.param1name,value1:fd?.param1dataname})
+                    }}
                   >
                     {fd?.param1dataname}
                   </span>
@@ -887,7 +854,10 @@ export default function Header() {
               }}
             >
               {finalData[menu1Index]?.param1?.map((fd) => fd)[menu2Index]?.param2?.map((fd1) => (
-                <span className="level2Menu" >{fd1?.param2dataname}</span>
+                <span className="level2Menu"  
+                      onClick={()=>{
+                        setMenu2Data({label1:menu1Data.param1name,value1:menu1Data.param1dataname,label2:fd1?.param2name,value2:fd1?.param2dataname})
+                      }}>{fd1?.param2dataname}</span>
               ))}
             </div>
 

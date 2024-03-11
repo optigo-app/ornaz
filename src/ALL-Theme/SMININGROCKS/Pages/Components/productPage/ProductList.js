@@ -4,7 +4,7 @@ import Footer from "../home/Footer/Footer";
 import SmilingRock from "../home/smiling_Rock/SmilingRock";
 import "./product.css";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import prodListData from "../../jsonFile/Productlist_4_95oztttesi0o50vr.json";
 // import prodListData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_Original.json";
 import filterData from "../../jsonFile/M_4_95oztttesi0o50vr.json";
@@ -45,6 +45,7 @@ const ProductList = () => {
   const setWishCount = useSetRecoilState(WishListCounts)
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
@@ -60,6 +61,15 @@ const ProductList = () => {
     })
 
   }
+
+
+    // if(location.state){
+    //   console.log("location",location.state.param1)
+    //   if(location.state.param1==="collection"){
+    //     // productData[CollectionName] === 
+    //   }
+    // }
+
 
 
 
@@ -113,9 +123,9 @@ const ProductList = () => {
 
   useEffect(() => {
     // if(ProductApiData.length){
-    // window.scrollTo(0,0);
-    const element = document.getElementById("finejwelery")
-    element.scrollIntoView()
+      // window.scrollTo(0,0);
+      const element = document.getElementById("top")
+      element.scrollIntoView()
     // }
   }, []);
 
@@ -214,8 +224,8 @@ const ProductList = () => {
       if (gendertype) {
         product.GenderName = gendertype.GenderName;
       }
-      if (Berandtype) {
-        product.Berandid = Berandtype.BrandName
+      if(Berandtype){
+        product.BrandName = Berandtype.BrandName
       }
       if (MetalType) {
         product.MetalTypeName = MetalType.MetalTypeName
@@ -226,8 +236,8 @@ const ProductList = () => {
       if (SubCategoryType) {
         product.SubCategoryName = SubCategoryType.SubCategoryName
       }
-      if (ThemeType) {
-        product.Themeid = ThemeType.Themeid
+      if(ThemeType){
+        product.ThemeName = ThemeType.ThemeName
       }
     });
 
@@ -432,6 +442,8 @@ const ProductList = () => {
     }
   }
 
+  console.log("filterChecked11111",filterChecked);
+
   const filteredObjects = Object.entries(filterChecked)
     .filter(([key, value]) => value.checked)
     .reduce((acc, [key, value]) => {
@@ -452,15 +464,25 @@ const ProductList = () => {
 
   // let ArrFil = []
 
-  const filteredProducts = (productData).filter(product => {
-    return sepeTypeVal.every(condition => {
-      return product[condition.type] === condition.value
-    });
-  });
+  // console.log("sepeTypeVal",sepeTypeVal.map((st)=>productData.filter((pd)=>pd[st.type]=== st.value)))
+  // console.log("sepeTypeVal",sepeTypeVal)
 
-  const mergedArray = filteredProducts.reduce((acc, curr) => acc.concat(curr), []);
-  const finalDataOfDisplaying = () => {
-    if (mergedArray.length && mergedArray) {
+//   const filteredProducts = (productData).filter(product => {
+//     return sepeTypeVal.some(condition => {
+//         return product[condition.type] === condition.value
+//     });
+// });
+
+    
+    const filteredProducts = sepeTypeVal.map((st)=>productData.filter((pd)=>pd[st.type]=== st.value)).reverse()
+
+    console.log("filteredProducts",filteredProducts)
+
+    
+
+  const mergedArray = [...filteredProducts].reduce((acc, curr) => acc.concat(curr), []);
+  const finalDataOfDisplaying = () =>{
+    if(mergedArray.length && mergedArray){
       return mergedArray
     }
     else {
@@ -885,7 +907,8 @@ const ProductList = () => {
 
 
   return (
-    <div>
+    <div id="top">
+
       <div
         style={{
           backgroundColor: "#c0bbb1",
