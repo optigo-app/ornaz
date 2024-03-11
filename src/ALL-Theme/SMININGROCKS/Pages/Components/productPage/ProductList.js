@@ -17,7 +17,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { event } from "jquery";
-import { CommonAPI } from "../../../Utils/API/CommonAPI";
+import { CommonAPI, UnCommonAPI } from "../../../Utils/API/CommonAPI";
 import { async } from "q";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -922,13 +922,50 @@ const ProductList = () => {
       // console.log("location", location.state.param1.value1);
       let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
       console.log("data",data)
-      setNewProData(data)
+      setNewProData(data)       
   }
   useEffect(()=>{
     if (getHeaderData && getHeaderData.value1 && productData) {
     newMenuProdData()
   }
 
+  },[])
+
+
+  const getDesignPriceList = async() =>{
+
+    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+    const loginUserDetail = JSON.parse(localStorage.getItem("loginUserDetail"));
+    const currencyCombo = JSON.parse(localStorage.getItem("CURRENCYCOMBO"));
+    const UserEmail = localStorage.getItem("registerEmail")
+
+    const GetPriceReq = {
+                  "CurrencyRate":`${currencyCombo?.CurrencyRate}`,
+                  "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
+                  "Customerid":`${loginUserDetail?.id}`,
+                  "Laboursetid":`${loginUserDetail?.pricemanagement_laboursetid}`,
+                  "diamondpricelistname":`${loginUserDetail?.diamondpricelistname}`,
+                  "colorstonepricelistname":`${loginUserDetail?.colorstonepricelistname}`,
+                  "SettingPriceUniqueNo":`${loginUserDetail?.SettingPriceUniqueNo}`,
+                  "DesignNo":""
+                }
+
+                const encodedCombinedValue = btoa(JSON.stringify(GetPriceReq));
+
+                let body ={
+                  "con":`{\"id\":\"Store\",\"mode\":\"getdesignpricelist\",\"appuserid\":\"${UserEmail}\"}`,
+                  "f":"onloadFirstTime (getdesignpricelist)",
+                  "p":encodedCombinedValue
+                  }
+    
+    await UnCommonAPI(body).then((res) => {
+        console.log(res)
+    })
+
+  }
+  
+  useEffect(()=>{
+    getDesignPriceList()
   },[])
 
   return (

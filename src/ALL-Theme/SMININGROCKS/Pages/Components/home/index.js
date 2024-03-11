@@ -189,12 +189,46 @@ export default function Home() {
         // setIsLoading(false);
       }
     }
+
+    const currencyCombo = async() =>{
+
+      try{
+        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+        const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
+  
+        const combinedValue = JSON.stringify({
+          FrontEnd_RegNo: `${storeInit?.FrontEnd_RegNo}`, Customerid: `${loginUserDetail?.id}`
+        });
+        const encodedCombinedValue = btoa(combinedValue);
+  
+        let body = {
+          "con":"{\"id\":\"Store\",\"mode\":\"CURRENCYCOMBO\",\"appuserid\":\"nimesh@ymail.in\"}",
+          "f":"on-index(home)-call (CURRENCYCOMBO)",
+          "p":encodedCombinedValue
+        }
+
+        await CommonAPI(body).then((res)=>{
+          localStorage.setItem("CURRENCYCOMBO",JSON.stringify(res.Data.rd[0]))
+          // console.log("res",res)
+        })    
+
+      }
+      catch(error){
+        console.log("error",error)
+      }
+
+    }
+
     fetchData();
     getMetalTypeData();
     getQualityColor();
     getColorStoneQualityData();
     getMetalColor();
+    currencyCombo();
   }, []);
+
+
+
 
 
 
