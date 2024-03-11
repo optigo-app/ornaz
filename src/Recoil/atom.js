@@ -12,7 +12,7 @@ export const WishListCounts = atom({
 
 export const loginState = atom({
   key: 'loginState',
-  default: false,
+  default: 'false',
 })
 
 export const HeaderData = atom({

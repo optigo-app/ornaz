@@ -143,16 +143,19 @@ export default function Header() {
   };
 
 
-  const [islogin, setislogin] = useRecoilState(loginState);
-  const fetchData = () => {
-    const value = localStorage.getItem('LoginUser');
-    const val = value === 'true' ? true : false
-    setislogin(val);
-  };
+  const islogin = useRecoilValue(loginState);
+  // const fetchData = () => {
+  //   // console.log("call");
+  //   const value = localStorage.getItem('LoginUser');
+  //   const val =( value === 'true' ? 'true' : 'false')
+  //   // setislogin(val);
+  // };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  console.log("isLogin",islogin);
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const getMenuApi = async () => {
 
