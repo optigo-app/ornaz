@@ -1,6 +1,8 @@
 
 import axios from "axios";
 const APIURL = 'https://api.optigoapps.com/test/store.aspx';
+// const APIURL = 'http://zen/api/store.aspx';
+
 
 const storeInit = JSON.parse(localStorage.getItem('storeInit'));
 
