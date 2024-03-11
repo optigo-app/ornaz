@@ -64,13 +64,12 @@ const ProdDetail = () => {
   useEffect(() => {
 
 
-    const storedDataAll = localStorage.getItem('loginUserDetail');
+    const storedDataAll = localStorage.getItem('storeInit');
     const data = JSON.parse(storedDataAll);
     setIsMetalCutoMizeFlag(data.IsMetalCustomization);
     setIsDaimondCstoFlag(data.IsDiamondCustomization)
     setIsCColrStoneCustFlag(data.IsCsCustomization)
-    const priseShow = data.IsPriceShow;
-    setIsPriceShow(priseShow);
+    setIsPriceShow(data.IsPriceShow);
 
     const storedData = JSON.parse(localStorage.getItem('QualityColor'));
     if (storedData) {

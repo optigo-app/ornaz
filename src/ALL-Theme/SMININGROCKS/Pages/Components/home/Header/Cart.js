@@ -131,18 +131,18 @@ export default function Cart({ open, toggleCartDrawer }) {
             cartListData.length === 0 && setIsLoading(true);
             const ImageURL = localStorage.getItem('UploadLogicalPath');
             setImageURL(ImageURL);
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
             const storedData = localStorage.getItem('loginUserDetail');
             const data = JSON.parse(storedData);
             const customerid = data.id;
-            setIsProductCuFlag(data.IsProductWebCustomization);
-            setIsMetalCutoMizeFlag(data.IsMetalCustomization);
-            setIsDaimondCstoFlag(data.IsDiamondCustomization)
-            setIsCColrStoneCustFlag(data.IsCsCustomization)
+            setIsProductCuFlag(storeInit.IsProductWebCustomization);
+            setIsMetalCutoMizeFlag(storeInit.IsMetalCustomization);
+            setIsDaimondCstoFlag(storeInit.IsDiamondCustomization)
+            setIsCColrStoneCustFlag(storeInit.IsCsCustomization)
             setCustomerID(data.id);
             const customerEmail = data.userid;
             setUserEmail(customerEmail);
 
-            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
             const { FrontEnd_RegNo, ukey } = storeInit;
             setYouKey(ukey);
 

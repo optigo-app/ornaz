@@ -37,17 +37,17 @@ export default function MyWishList() {
         const fetchData = async () => {
             try {
                 wishlistData.length === 0 && setIsLoading(true);
+                const storeInit = JSON.parse(localStorage.getItem('storeInit'));
                 const storedData = localStorage.getItem('loginUserDetail');
                 const ImageURL = localStorage.getItem('UploadLogicalPath');
                 setImageURL(ImageURL);
                 const data = JSON.parse(storedData);
                 const customerid = data.id;
-                const priseShow = data.IsPriceShow;
+                const priseShow = storeInit.IsPriceShow;
                 setIsPriceShow(priseShow);
                 setCustomerID(data.id);
                 const customerEmail = data.userid;
                 setUserEmail(customerEmail);
-                const storeInit = JSON.parse(localStorage.getItem('storeInit'));
                 const { FrontEnd_RegNo, ukey } = storeInit;
                 setYouKey(ukey);
                 const combinedValue = JSON.stringify({
@@ -119,6 +119,7 @@ export default function MyWishList() {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
+                setWishlistData([]); 
                 getCountFunc();
                 navigation('/myWishList')
             } else {
@@ -178,6 +179,7 @@ export default function MyWishList() {
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
+                setWishlistData([]); 
                 getCountFunc();
                 navigation('/myWishList')
             } else {
