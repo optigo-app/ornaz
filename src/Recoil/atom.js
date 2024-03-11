@@ -12,10 +12,6 @@ export const CartListCounts = atom({
     default: 0,
   });
 
-  export const openSignInModal = atom({
-    key: 'openSignInModal',
-    default: false,
-  });
 
 
   export const loginState = atom({

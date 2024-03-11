@@ -646,6 +646,12 @@
         max-width: 100% !important;
     }
 
+    .mobileHeaderFixedMobileLastDiv{
+        display: flex!important;
+        justify-content: flex-end!important;
+        width: 45%!important;
+    }
+
 }
 
 @media screen and (max-width: 400px) {
@@ -666,6 +672,7 @@
         height: 18px!important;
         width: 18px!important;
     }
+    
 
     .mobileViewSmilingTop2Icone{
         height: 18px!important;
@@ -676,5 +683,7 @@
         height: 18px!important;
         width: 18px!important;
     }
+
+ 
 
 }
