@@ -20,7 +20,7 @@ import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
 import { IoClose } from "react-icons/io5";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import Cart from "./Cart";
 import titleImg from "../../../assets/title/sonasons.png"
@@ -42,22 +42,20 @@ export default function Header() {
 
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
+  const setHeaderData = useSetRecoilState(HeaderData)
 
   // console.log("menu1Data",menu1Data)
   // console.log("menu2Data",menu2Data)
 
 
   const handelmenu1 = (param) => {
-    console.log("param1",param);
-    setIsDropdownOpen(false);
-    navigation("/productpage",{state:{param1:param}})
-    // if(param.label1 === "collection"){
-
-    // }
+    console.log("param1",param)
+    setIsDropdownOpen(false)
+    navigation("/productpage")
+    setHeaderData(param)
   }
 
-
-
+  
   const transformData = (data) => {
 
     const transformedData = data?.reduce((acc, item) => {

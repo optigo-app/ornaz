@@ -21,7 +21,7 @@ import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import { async } from "q";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, WishListCounts } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, WishListCounts } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 
 
@@ -38,14 +38,18 @@ const ProductList = () => {
   const [WishData, setWishData] = useState([]);
   const [cartRemoveData, setCartRemoveData] = useState("");
   const [wishListRemoveData, setWishListRemoveData] = useState("");
+  const [newProData,setNewProData] = useState([]);
 
-  console.log("wishData", cartData);
+  console.log("newProData", newProData);
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
+  const getHeaderData = useRecoilValue(HeaderData)
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log("getHeaderData",getHeaderData)
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
@@ -63,15 +67,7 @@ const ProductList = () => {
   }
 
 
-    // if(location.state){
-    //   console.log("location",location.state.param1)
-    //   if(location.state.param1==="collection"){
-    //     // productData[CollectionName] === 
-    //   }
-    // }
-
-
-
+   
 
 
   const fetchFile = async () => {
@@ -120,6 +116,22 @@ const ProductList = () => {
   // });
 
   // console.log("product2Data",ProductApiData?.data[0]?.map((ele)=>ele))
+
+  // if(location.state){
+  //   console.log("location",location.state.param1.value1)
+  //   // if(location.state.param1.label1 ==="collection"){
+  //     const data = productData.filter((pd)=> pd?.CollectionName === "AURORA")
+  //     console.log("data",data)
+  //   // }
+  // }
+
+  // if (location.state && location.state.param1 && location.state.param1.value1) {
+  //   console.log("location", location.state.param1.value1);
+  // }
+  
+    // const data = productData.filter((pd) => pd && pd.CollectionName === "AURORA");
+  
+  
 
   useEffect(() => {
     // if(ProductApiData.length){
@@ -270,7 +282,7 @@ const ProductList = () => {
 
   diffCartData()
 
-  console.log("WishData", WishData);
+  // console.log("WishData", WishData);
 
 
   const diffWishData = useCallback(() => {
@@ -442,7 +454,7 @@ const ProductList = () => {
     }
   }
 
-  console.log("filterChecked11111",filterChecked);
+  // console.log("filterChecked11111",filterChecked);
 
   const filteredObjects = Object.entries(filterChecked)
     .filter(([key, value]) => value.checked)
@@ -474,7 +486,7 @@ const ProductList = () => {
 // });
 
     
-    const filteredProducts = sepeTypeVal.map((st)=>productData.filter((pd)=>pd[st.type]=== st.value)).reverse()
+    const filteredProducts = sepeTypeVal.map((st)=>(newProData.length?newProData:productData).filter((pd)=>pd[st.type]=== st.value)).reverse()
 
     console.log("filteredProducts",filteredProducts)
 
@@ -740,7 +752,7 @@ const ProductList = () => {
         const product = prod
 
         let isWishHasCartData = WishData?.filter((pd) => product.autocode === pd.autocode)
-        console.log("isWishHasCartData", isWishHasCartData)
+        // console.log("isWishHasCartData", isWishHasCartData)
 
         let wishToCartEncData = { "autocodelist": `${isWishHasCartData[0]?.autocode}`, "ischeckall": 0, "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` }
 
@@ -904,7 +916,20 @@ const ProductList = () => {
 
   }
 
+  
+  const newMenuProdData = () =>{
+    // debugger
+      // console.log("location", location.state.param1.value1);
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
+      console.log("data",data)
+      setNewProData(data)
+  }
+  useEffect(()=>{
+    if (getHeaderData && getHeaderData.value1 && productData) {
+    newMenuProdData()
+  }
 
+  },[])
 
   return (
     <div id="top">
@@ -1118,7 +1143,7 @@ const ProductList = () => {
                     flexWrap: "wrap",
                   }}
                 >
-                  {finalDataOfDisplaying()?.map((products, i) => (
+                  {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => (
                     <div
                       style={{
                         width: "33.33%",

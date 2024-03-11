@@ -29,6 +29,26 @@
 .selected {
     border: 1px solid darkgray !important;
 }
+.toggleBtn{
+    border: none;
+    font-size: 14px;
+    background-color: rgb(193, 232, 232);
+    font-weight: 500;
+    width: 100%;
+    outline: none !important;
+    border-radius: 4px;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.bal_Amt_ac{
+    padding: 8px;
+    border: 1px solid #989898;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
 /* .header_al{
     display: none;
 } */
