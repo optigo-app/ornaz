@@ -79,7 +79,21 @@
     cursor: pointer;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1700px) {
+
+    .linkingLoveImageDesign{
+        height: 100%!important;
+        width: 100%!important;
+    }
+
+
+    .likingLoveImages{
+        height: 100%!important;
+        width: 100%!important;
+    }
+
+}
+    @media screen and (max-width: 1000px) {
 
     .linkingLoveMain {
         display: flex;

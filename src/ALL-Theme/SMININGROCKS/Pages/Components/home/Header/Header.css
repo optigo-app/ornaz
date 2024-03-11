@@ -532,6 +532,10 @@
 }
 
 @media screen and (max-width:1440px) {
+    
+    .Smining-Top-Header-fixed{
+        margin-inline: 10px!important;
+    }
     .mobileHeaderSmining {
         display: block!important;
         background-color: rgb(192, 187, 177)!important;
@@ -559,6 +563,12 @@
 
     .smiling-cartBoxImg {
         width: 60%;
+    }
+
+    .mobileHeaderFixedMobileLastDiv{
+        width: 45%!important;
+        display: flex!important;
+        justify-content: flex-end!important;
     }
 }
 
