@@ -40,7 +40,6 @@ export default function Header() {
 
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
-  const setSigninPopupOpen = useSetRecoilState(openSignInModal)
 
   const transformData = (data) => {
 
@@ -768,7 +767,7 @@ export default function Header() {
                 <li
                   className="nav-li-smining"
                   style={{ cursor: "pointer" }}
-                  onClick={() => setSigninPopupOpen(true)}
+                  onClick={() => navigation('/LoginOption')}
                 >
                   {LOGIN}
                 </li>
@@ -1034,7 +1033,8 @@ export default function Header() {
                   <li
                     className="nav-li-smining-fixed"
                     style={{ cursor: "pointer" }}
-                    onClick={() => setSigninPopupOpen(true)}
+                    onClick={() => navigation('/LoginOption')}
+
                   >
                     {LOGIN}
                   </li>
@@ -1172,7 +1172,7 @@ export default function Header() {
               <li
                 className="nav-li-smining"
                 style={{ cursor: "pointer", color: 'white' }}
-                onClick={() => setSigninPopupOpen(true)}
+                onClick={() => navigation('/LoginOption')}
               >
                 {LOGIN}
               </li>
@@ -1258,10 +1258,10 @@ export default function Header() {
           >
             <div
               className="Smining-Top-Header-fixed"
-              style={{ display: "flex", justifyContent: "space-between" }}
+              style={{ display: "flex" }}
             >
               <div
-                style={{ display: "flex", margin: "5px", alignItems: "center",width:'28%' }}
+                style={{ display: "flex", margin: "5px", alignItems: "center", width: '28%' }}
               >
                 {drawerShowOverlay ? (
                   <IoClose
@@ -1277,6 +1277,7 @@ export default function Header() {
                   <MenuIcon
                     style={{ fontSize: "40px", color: "#7d7f85" }}
                     onClick={toggleDrawerOverlay}
+                    className="muIconeMobileHeader"
                   />
                 )}
               </div>
@@ -1295,6 +1296,7 @@ export default function Header() {
                     width="80%"
                     viewBox="0 0 651 138"
                     style={{ height: "60px" }}
+                    className="centerSVGMobileImage"
                   >
                     <g clipPath="url(#a)">
                       <path
@@ -1318,16 +1320,22 @@ export default function Header() {
                 </a>
               </div>
               {!islogin && (
-                <li
-                  className="nav-li-smining"
-                  style={{ cursor: "pointer", color: 'white' }}
-                  onClick={() => setSigninPopupOpen(true)}
-                >
-                  {LOGIN}
-                </li>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  width: '33.33%'
+                }}>
+                  <li
+                    className="nav-li-smining"
+                    style={{ cursor: "pointer", color: '#7d7f85' }}
+                    onClick={() => navigation('/LoginOption')}
+                  >
+                    {LOGIN}
+                  </li>
+                </div>
               )}
               {islogin &&
-                <div style={{ display: 'flex' }}>
+                <div className="mobileHeaderFixedMobileLastDiv" style={{ display: 'flex' }}>
                   <Badge
                     badgeContent={getWishListCount}
                     overlap={"rectangular"}
@@ -1343,6 +1351,7 @@ export default function Header() {
                             width: "25px",
                             color: "#7d7f85",
                           }}
+                          className="mobileViewSmilingTop1Icone"
                         />
                       </li>
                     </Tooltip>
@@ -1354,6 +1363,8 @@ export default function Header() {
                         height: "25px", cursor: "pointer", width: "25px",
                         color: "#7d7f85",
                       }}
+                      className="mobileViewSmilingTop2Icone"
+
                     />
                   </li>
 
@@ -1381,6 +1392,8 @@ export default function Header() {
                             width: "30px",
                             color: "#7d7f85",
                           }}
+                          className="mobileViewSmilingTop3Icone"
+
                         />
                       </li>
                     </Tooltip>
