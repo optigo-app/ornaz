@@ -19,8 +19,7 @@
 
 .SmilingUpdateQuantityBtn{
     height: 40px;
-    width: 200
-    px;
+    width: 80px;
     background-color: #f1d8c6;
     border: none;
     outline: none;
@@ -28,7 +27,7 @@
 }
 .SmilingAddSingleRemkarBtn{
     height: 40px;
-    width: 150px;
+    width:  120px;
     background-color: #f1d8c6;
     border: none;
     outline: none;
@@ -40,7 +39,8 @@
 } */
 .SmilingAddRemkarBtn{
     height: 40px;
-    width: 200px;
+    width: 160px;
+    border-radius: 5px;
     background-color: #f1d8c6;
     border: none;
     outline: none;
@@ -83,6 +83,16 @@
     height: 110px;
     margin-inline: 6%;
 }
+.similingCartBotttomMain{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 10px 10px 10px;
+}
+
+
+
+
 
 .Smining-Top-Header-fixed {
     display: flex;
@@ -511,13 +521,23 @@
     opacity: .6;
 }
 
+.smilingMobileCartDeatil{
+    margin: 10px 70px 10px 10px;
+}
 @media screen and (min-width:1441px) {
     .mobileHeaderSmining {
         display: none;
     }
+
 }
 
 @media screen and (max-width:1440px) {
+    .mobileHeaderSmining {
+        display: block!important;
+        background-color: rgb(192, 187, 177)!important;
+        height: 90px!important;
+    }
+
     .placeOrderBtn {
         width: 100% !important;
     }
@@ -543,17 +563,14 @@
 }
 
 @media screen and (max-width:599px) {
+
+    .smiling-cartBoxImg {
+        width: 100%!important;
+        margin: 0px!important;
+    }
+
     .placeOrderBtn {
         width: 100% !important;
-    }
-
-    .PiStarThinTopIcone {
-        display: none !important;
-    }
-
-    .IoSearchOutlineTopIcone {
-        display: none !important;
-
     }
 
     .CartPageShipingIn {
@@ -565,9 +582,53 @@
         display: block;
     }
 
-    .smiling-cartBoxImg {
-        width: 100%;
-        height: 40%;
+    .similingCartBotttomMain{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .smilingCartMobileMain{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .smilingMobileCartDeatil{
+        margin: 0px!important;
+    }
+
+    .smilingCartBox1{
+        width: 90%!important;
+    }
+
+    .YourCartMainRemkarBoxSingle{
+        width: 70%!important;
+    }
+    .SmilingAddSingleRemkarBtn{
+        width: 50%!important;
+    }
+    .smilingAddresingleMobileMain{
+        margin-top: 10px!important;
+        margin-right: 0px!important;
+        margin-left: 0px!important;
+
+    }
+
+    .simlingQualityBox{
+        width: 70%!important;
+    }
+    .SmilingUpdateQuantityBtn{
+        width: 50%!important;
+    }
+    .smilingQualityMain{
+        width: 95%!important;
+    }
+
+    .smilingMobileSubDiv{
+        padding: 4px!important;
+    }
+
+    .Smining-Top-Header-fixed{
+        margin-inline: 0px!important;
     }
 }
 
@@ -584,5 +645,45 @@
         width: 100% !important;
         max-width: 100% !important;
     }
+
+    .mobileHeaderFixedMobileLastDiv{
+        display: flex!important;
+        justify-content: flex-end!important;
+        width: 45%!important;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+
+    .mobileViewFirstDiv{
+        width: 20%!important;
+    }
+    .muIconeMobileHeader{
+        font-size: 30px!important;
+    }
+
+    .centerSVGMobileImage{
+        height: 60px!important;
+        width: 120%!important;
+    }
+
+    .mobileViewSmilingTop1Icone{
+        height: 18px!important;
+        width: 18px!important;
+    }
+    
+
+    .mobileViewSmilingTop2Icone{
+        height: 18px!important;
+        width: 18px!important;
+    }
+
+    .mobileViewSmilingTop3Icone{
+        height: 18px!important;
+        width: 18px!important;
+    }
+
+ 
 
 }

@@ -13,7 +13,6 @@ import MyWishList from './Pages/Components/myWishList/MyWishList'
 import Lookbook from './Pages/Components/Lookbook/index'
 import Press from './Pages/Components/press/Press'
 import Account from './Pages/Components/account/Account'
-import QuotationFilters from './Pages/Components/account/quotationFilters/QuotationFilters'
 import SearchResult from './Pages/Components/searchResult/SearchResult'
 import Celeb from './Pages/Components/celebrity/Celeb'
 import Blog from './Pages/Components/Blog/Blog'
@@ -35,30 +34,19 @@ import AccountLedgerExcel from './Pages/Components/account/accountLedgerExcelDow
 import AccountLedger from './Pages/Components/account/accountLedger/AccountLedger';
 import DebitVoucher from './Pages/Components/account/accountLedgerVouchers/debitVoucher/DebitVoucher';
 import CreditVoucher from './Pages/Components/account/accountLedgerVouchers/creditVoucher/CreditVoucher';
-import { CartListCounts, WishListCounts, openSignInModal } from '../../Recoil/atom'
+import { CartListCounts, WishListCounts } from '../../Recoil/atom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import Payment from './Pages/Components/Payment/Payment'
 import Confirmation from './Pages/Components/confirmation/Confirmation'
 import { GetCount } from './Utils/API/GetCount'
+import LoginOption from './Pages/Components/AuthScreen/LoginOption/LoginOption'
 // import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
 
 export default function SMININGROCKS_App() {
 
-    const [openLoginDailog, setOpenLoginDailog] = useRecoilState(openSignInModal);
-
     const location = useLocation();
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
-
-    const navigation = useNavigate();
-
-    const openLoginDailogBox = () => {
-        setOpenLoginDailog(true);
-    };
-    const closeLoginDailog = () => {
-        setOpenLoginDailog(false);
-    };
-
     const getCountFunc = async () => {
         await GetCount().then((res) => {
             if (res) {
@@ -70,7 +58,6 @@ export default function SMININGROCKS_App() {
     }
 
     useEffect(() => {
-
         getCountFunc();
     }, [])
 
@@ -78,28 +65,7 @@ export default function SMININGROCKS_App() {
 
     return (
         <div>
-            <Dialog
-                open={openLoginDailog}
-                // onClose={closeLoginDailog}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <div className='loginDailog'>
-                    <IoClose style={{ float: 'right', height: '30px', width: '30px', cursor: 'pointer', backgroundColor: '#e4e6ec' }} onClick={closeLoginDailog} />
-                    <p className='loginDiTile'>Log in or sign up in seconds</p>
-                    <p>Use your email or mobile no to continue with the organization.</p>
-
-                    <div className='loginMail' onClick={() => { navigation('/ContinueWithEmail'); setOpenLoginDailog(false) }}>
-                        <IoMdMail style={{ height: '25px', width: '25px' }} />
-                        <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500, paddingLeft: '25px' }}>Continue with email</p>
-                    </div>
-                    <div className='loginMobile' onClick={() => { navigation('/ContimueWithMobile'); setOpenLoginDailog(false) }}>
-                        <FaMobileAlt style={{ height: '25px', width: '25px', marginRight: '10px' }} />
-                        <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500, paddingLeft: '25px' }}>Log in with mobile</p>
-                    </div>
-                    <p style={{ marginTop: '20px', fontSize: '14px' }}>By continuing, you agree to our Terms of Use. Read our Privacy Policy.</p>
-                </div>
-            </Dialog>
+           
             {console.log(location.pathname)}
             {(location.pathname === "/accountledgertable" ||
                 location.pathname === "/accountledgerexcel" ||
@@ -139,6 +105,7 @@ export default function SMININGROCKS_App() {
                     <Route path="/Delivery" element={<Delivery />} />
                     <Route path="/Payment" element={<Payment />} />
                     <Route path="/Confirmation" element={<Confirmation />} />
+                    <Route path="/LoginOption" element={<LoginOption />} />
                 </Routes>
             </div>
         </div>

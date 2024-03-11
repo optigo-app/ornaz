@@ -3,9 +3,7 @@ import Header from '../home/Header/Header'
 import './Account.css'
 import { Box, CircularProgress, IconButton, InputAdornment, Tab, Tabs, TextField, Typography } from '@mui/material'
 import Footer from '../home/Footer/Footer';
-import QuotationFilters from './quotationFilters/QuotationFilters';
 import { useNavigate } from 'react-router-dom';
-import SalesApi from './salesApi/SalesApi';
 import ManageAddress from './address/ManageAddress';
 import OrderHistory from './accountOrderHistory/OrderHistory';
 
@@ -15,6 +13,11 @@ import { loginState } from '../../../../../Recoil/atom';
 import { useSetRecoilState } from 'recoil';
 import YourProfile from './yourProfile/YourProfile';
 import ChangePassword from './changePassword/ChangePassword';
+import SalesReport from '../sales/salesReport/SalesReport';
+import QuotationJob from './quotationFilters/QuotationJob';
+import QuotationQuote from './QuotationQuote/QuotationQuote';
+import Sales from '../sales/Sales/Sales';
+import { accountDetailPage, accountValidation } from '../../../Utils/globalFunctions/GlobalFunction';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -99,11 +102,16 @@ export default function Account() {
         <div style={{
             backgroundColor: '#c0bbb1',
             paddingTop: '110px'
-        }}>
+        }} className='accountPagTabSection'>
+            {/* {isLoading && (
+                <div className="loader-overlay">
+                    <CircularProgress />
+                </div>
+            )} */}
 
             <div>
                 <div className='Smiling-AccountMain'>
-                    <p className='SmilingAccountTitle'>Your Account</p>
+                    <p className='SmilingAccountTitle youraccountpagesec'>Your Account</p>
                     <div className='smling-AccountTabMain'>
                         <Box sx={{ width: '100%' }}>
                             <div className='smlingAccountTabWebView'>
@@ -112,22 +120,20 @@ export default function Account() {
                                         <Tab label="Your Profile" {...a11yProps(0)} />
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                                        <Tab label="ACCOUNT" {...a11yProps(3)} />
-                                        <Tab label="SALES" {...a11yProps(4)} />
+                                        {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
                                         <Tab label="CHANGE PASSWORD" {...a11yProps(5)} />
                                     </Tabs>
                                     <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
                                 </Box>
                             </div>
-                            <div className='smlingAccountTabMobileView'>
+                            <div className='smlingAccountTabMobileView YourAccountPageTabs'>
                                 <Box sx={{ display: 'flex', justifyContent: 'flex-start', borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{ width: '100%' }} >   {/*  indicatorColor="#7d7f85" */}
                                         <Tab label="Your Profile" {...a11yProps(0)} sx={{ textAlign: 'start', borderBottom: 1, width: '90%', borderColor: 'divider' }} />
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                                        <Tab label="ACCOUNT" {...a11yProps(3)} />
-                                        <Tab label="SALES" {...a11yProps(4)} />
-                                        <Tab label="CHANGE PASSWORD" {...a11yProps(5)} />
+                                        {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
+                                        <Tab label="CHANGE PASSWORD" {...a11yProps(4)} />
                                     </Tabs>
                                 </Box>
                                 <div onClick={() => alert('dddd')}>
@@ -146,53 +152,49 @@ export default function Account() {
                                     <OrderHistory />
                                 </div>
                             </CustomTabPanel>
-
-                            <CustomTabPanel value={value} index={2}>
+                            <CustomTabPanel value={value} index={2} className="manageAddressSec">
                                 <ManageAddress />
                             </CustomTabPanel>
 
-                            <CustomTabPanel value={value} index={3}>
+                            {accountValidation() && <CustomTabPanel value={value} index={3} className="accountSalesPage">
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
-                                        <Tab label="Quotation" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />
-                                        <Tab label="Account Ledger" {...a11yProps(1)} sx={{ color: "#7d7f85" }} />
-                                        <Tab label="Sales" {...a11yProps(3)} sx={{ color: "#7d7f85" }} />
-                                        <Tab label="Item Three" {...a11yProps(2)} sx={{ color: "#7d7f85" }} />
+                                    <Tabs value={value1} className='accountTabSection' variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
+                                        {accountDetailPage(1163) && <Tab label="Quote" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1164) && <Tab label="Job" {...a11yProps(1)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1157) && <Tab label="Sales" {...a11yProps(2)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1314) && <Tab label="Sales Report" {...a11yProps(3)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(17020) && <Tab label="Design Wise Sales Report" {...a11yProps(4)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1159) && <Tab label="Account Ledger" {...a11yProps(5)} sx={{ color: "#7d7f85" }} />}
                                     </Tabs>
                                 </Box>
-                                <CustomTabPanel value={value1} index={0} className="quotationFilters">
-                                    <QuotationFilters />
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={1}>
+                                {accountDetailPage(1163) && <CustomTabPanel value={value1} index={0} className="AcountSales">
+                                    <QuotationQuote />
+                                </CustomTabPanel>}
+                                {accountDetailPage(1164) && <CustomTabPanel value={value1} index={1} className="quotationFilters">
+                                    <QuotationJob />
+                                </CustomTabPanel>}
+                                {accountDetailPage(1157) && <CustomTabPanel value={value1} index={2} className="salesPage">
+                                    <Sales />
+                                </CustomTabPanel>}
+                                {accountDetailPage(1314) && <CustomTabPanel value={value1} index={3} className="salesReport">
+                                    <SalesReport />
+                                </CustomTabPanel>}
+                                {accountDetailPage(17020) && <CustomTabPanel value={value1} index={4} className="DesignWiseSalesReport">
+                                    <DesignWiseSalesReport />
+                                </CustomTabPanel>}
+                                {accountDetailPage(1159) && <CustomTabPanel value={value1} index={5}>
                                     <AccountLedger />
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={2} className="AcountSales">
-                                    <SalesApi />
-                                </CustomTabPanel>
-                                <CustomTabPanel value={value1} index={3}>
-                                    Item Three
-                                </CustomTabPanel>
-                            </CustomTabPanel>
+                                </CustomTabPanel>}
+                            </CustomTabPanel>}
 
                             <CustomTabPanel value={value} index={4}>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs value={value1} onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
-                                        <Tab label="Design Wise Sales Report" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />
-                                    </Tabs>
-                                </Box>
-                                <CustomTabPanel value={value1} index={0} className="DesignWiseSalesReport">
-                                    <DesignWiseSalesReport />
-                                </CustomTabPanel>
-                            </CustomTabPanel>
-
-                            <CustomTabPanel value={value} index={5}>
-                               <div>
+                                <div>
                                     <ChangePassword />
-                               </div>
+                                </div>
                             </CustomTabPanel>
 
-                          
+
                         </Box>
                     </div>
 

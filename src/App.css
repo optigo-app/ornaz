@@ -34,11 +34,30 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.MuiMenu-paper.MuiMenu-paper{
+  max-height: 250px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@media(max-width: 767px){
+  .accountPagTabSection{
+    padding-top: 20px !important;
+  }
+
+  .SmilingAccountTitle{
+    padding-top: 20px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .smling-AccountTabMain{
+    margin-left: 10px !important;
+    margin-right: 10px !important;
   }
 }
