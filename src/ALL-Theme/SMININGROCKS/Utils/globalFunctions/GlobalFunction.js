@@ -44,3 +44,13 @@ export const checkMonth = (val) => {
     }
     return month;
 }
+
+export function formatAmount(amount) {
+    const formattedAmount = parseFloat(+amount).toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  
+    return formattedAmount;
+  }
+  
