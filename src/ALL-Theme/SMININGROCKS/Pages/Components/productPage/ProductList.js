@@ -38,8 +38,9 @@ const ProductList = () => {
   const [WishData, setWishData] = useState([]);
   const [cartRemoveData, setCartRemoveData] = useState("");
   const [wishListRemoveData, setWishListRemoveData] = useState("");
+  const [newProData,setNewProData] = useState([]);
 
-  console.log("wishData", cartData);
+  console.log("newProData", newProData);
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -63,15 +64,7 @@ const ProductList = () => {
   }
 
 
-    // if(location.state){
-    //   console.log("location",location.state.param1)
-    //   if(location.state.param1==="collection"){
-    //     // productData[CollectionName] === 
-    //   }
-    // }
-
-
-
+   
 
 
   const fetchFile = async () => {
@@ -120,6 +113,22 @@ const ProductList = () => {
   // });
 
   // console.log("product2Data",ProductApiData?.data[0]?.map((ele)=>ele))
+
+  // if(location.state){
+  //   console.log("location",location.state.param1.value1)
+  //   // if(location.state.param1.label1 ==="collection"){
+  //     const data = productData.filter((pd)=> pd?.CollectionName === "AURORA")
+  //     console.log("data",data)
+  //   // }
+  // }
+
+  // if (location.state && location.state.param1 && location.state.param1.value1) {
+  //   console.log("location", location.state.param1.value1);
+  // }
+  
+    // const data = productData.filter((pd) => pd && pd.CollectionName === "AURORA");
+  
+  
 
   useEffect(() => {
     // if(ProductApiData.length){
@@ -904,7 +913,18 @@ const ProductList = () => {
 
   }
 
-
+  
+  const newMenuProdData = () =>{
+    if (location.state && location.state.param1 && location.state.param1.value1) {
+      // console.log("location", location.state.param1.value1);
+      let data = productData.filter((pd) => pd && pd.CollectionName === location.state.param1.value1)
+      setNewProData(data)
+      // console.log("data", data)
+    }
+  }
+  useEffect(()=>{
+    newMenuProdData()
+  },[location.state])
 
   return (
     <div id="top">
