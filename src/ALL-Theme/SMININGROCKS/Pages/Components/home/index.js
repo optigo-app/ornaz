@@ -48,7 +48,6 @@ export default function Home() {
           "con": "{\"id\":\"\",\"mode\":\"store_init\"}",
           "p": "",
           "f": "formname (init)",
-          "sp":"1"
         };
         const response = await axios.post(APIURL, body, { headers: header });
         if (response.status === 200) {

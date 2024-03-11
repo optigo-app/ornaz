@@ -19,3 +19,8 @@ export const HeaderData = atom({
   key: 'HeaderData',
   default: []
 })
+
+export const HeaderData2 = atom({
+  key: 'HeaderData2',
+  default: []
+})

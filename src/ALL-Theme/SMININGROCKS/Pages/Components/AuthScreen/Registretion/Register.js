@@ -38,8 +38,8 @@ export default function Register() {
   const location = useLocation();
 
   useEffect(() => {
-    const storedEmail = location.state?.email; ;
-    const routeMobileNo = location.state?.mobileNo; 
+    const storedEmail = location.state?.email;;
+    const routeMobileNo = location.state?.mobileNo;
 
     if (storedEmail) setEmail(storedEmail);
     if (routeMobileNo) setMobileNo(routeMobileNo);
@@ -156,9 +156,9 @@ export default function Register() {
       setIsLoading(true);
       try {
         const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-        const { FrontEnd_RegNo } = storeInit;
+        const { FrontEnd_RegNo, IsB2BWebsite } = storeInit;
         const combinedValue = JSON.stringify({
-          firstname: `${firstName}`, lastname: `${lastName}`, userid: `${email}`, country_code: '91', mobile: `${mobileNo}`, pass: `${hashedPassword}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: '0'
+          firstname: `${firstName}`, lastname: `${lastName}`, userid: `${email}`, country_code: '91', mobile: `${mobileNo}`, pass: `${hashedPassword}`, IsB2BWebsite: `${IsB2BWebsite}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: '0'
         });
         const encodedCombinedValue = btoa(combinedValue);
         const body = {
@@ -168,8 +168,8 @@ export default function Register() {
         }
         const response = await CommonAPI(body);
         if (response.Data.rd[0].stat === 1) {
-          localStorage.setItem('registerEmail', email)
           localStorage.setItem('LoginUser', 'true')
+          localStorage.setItem('registerEmail', email)
           navigation('/');
         } else {
           alert(response.Data.rd[0].stat_msg);

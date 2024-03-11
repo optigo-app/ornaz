@@ -20,7 +20,7 @@ import { PiStarFourThin } from "react-icons/pi";
 import { Button } from "react-bootstrap";
 import { IoClose } from "react-icons/io5";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import Cart from "./Cart";
 import titleImg from "../../../assets/title/sonasons.png"
@@ -43,6 +43,7 @@ export default function Header() {
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
   const setHeaderData = useSetRecoilState(HeaderData)
+  const setHeaderData2 = useSetRecoilState(HeaderData2)
 
   // console.log("menu1Data",menu1Data)
   // console.log("menu2Data",menu2Data)
@@ -50,9 +51,18 @@ export default function Header() {
 
   const handelmenu1 = (param) => {
     console.log("param1",param)
+    localStorage.setItem('productDataShow', 'true');
     setIsDropdownOpen(false)
     navigation("/productpage")
     setHeaderData(param)
+  }
+
+
+  const handelmenu2 = (param) => {
+    console.log("param1",param)
+    setIsDropdownOpen(false)
+    navigation("/productpage")
+    setHeaderData2(param)
   }
 
   
@@ -855,6 +865,8 @@ export default function Header() {
                 <span className="level2Menu"  
                       onClick={()=>{
                         setMenu2Data({label1:menu1Data.param1name,value1:menu1Data.param1dataname,label2:fd1?.param2name,value2:fd1?.param2dataname})
+                      handelmenu2({label1:menu1Data.param1name,value1:menu1Data.param1dataname,label2:fd1?.param2name,value2:fd1?.param2dataname})
+
                       }}>{fd1?.param2dataname}</span>
               ))}
             </div>
