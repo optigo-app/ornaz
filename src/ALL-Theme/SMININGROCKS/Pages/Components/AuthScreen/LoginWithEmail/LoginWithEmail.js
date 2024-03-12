@@ -39,7 +39,7 @@ export default function LoginWithEmail() {
         }
     };
     const handleMouseDownConfirmPassword = (event) => {
-        event.preventDefault();
+        event?.preventDefault();
     };
 
     function hashPasswordSHA1(password) {
@@ -71,7 +71,7 @@ export default function LoginWithEmail() {
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
                 localStorage.setItem('registerEmail', email)
-                setIsLoginState(true)
+                setIsLoginState('true')
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 navigation('/');
@@ -96,7 +96,7 @@ export default function LoginWithEmail() {
         navigation('/LoginWithEmailCode');
     }
     return (
-        <div style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
+        <div  className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
           {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />
@@ -111,14 +111,18 @@ export default function LoginWithEmail() {
                         fontSize: '40px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }}>Login With Password</p>
+                    }}
+                    className='AuthScreenMainTitle'
+                    >Login With Password</p>
                     <p style={{
                         textAlign: 'center',
                         marginTop: '-80px',
                         fontSize: '15px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }}>using {email}</p>
+                    }}
+                    className='AuthScreenSubTitle'
+                    >using {email}</p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField

@@ -41,6 +41,7 @@
 
 .smilingRockBox {
     position: relative;
+    width: 40%;
     /* Other styles for smilingRockBox */
 }
 
@@ -74,10 +75,18 @@
     max-height: 45px;
 }
 
+.smilingRockMobileDffres{
+    display: flex!important;
+}
+
 
 @media screen and (max-width: 1440px) {
     .smilingRock {
         margin-inline: 5px;
+    }
+    .smilingRockBox {
+        width: 70%!important;
+        margin-inline: 5px!important;
     }
 }
 
@@ -89,6 +98,10 @@
         align-items: center;
     }
     .smilingRockBox {
-        width: 40%;
+        width: 50%;
+
+    }
+    .smilingRockMobileDffres{
+        display: flex!important;
     }
 }

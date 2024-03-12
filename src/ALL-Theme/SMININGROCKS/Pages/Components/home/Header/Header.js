@@ -1,26 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Header.css'
-// import ring1 from '../../../assets/svg.svg'
 import Tooltip from '@mui/material/Tooltip';
 import { Badge, Dialog, Divider, Drawer, SwipeableDrawer, TextField } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import ContactsIcon from '@mui/icons-material/Contacts';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import SearchIcon from '@mui/icons-material/Search';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import LockIcon from '@mui/icons-material/Lock';
-import i1 from '../../../../lib/consts/Images'
 import { PiStarThin } from "react-icons/pi";
 import { IoSearchOutline } from "react-icons/io5";
 import { ABOUT_US, ACCOUNT, BLOG, CELEBRITY, CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, IMPACT, LAB_GROWN, LIFETIME_WARRANTY, LOGIN, LOGOUT_MESSAGE, LOOK_BOOK, MONEY_BACK_GUARANTEE, PRESS, SHOP } from "../../../../lib/consts/Strings";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiStarFourThin } from "react-icons/pi";
-import { Button } from "react-bootstrap";
 import { IoClose } from "react-icons/io5";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import Cart from "./Cart";
 import titleImg from "../../../assets/title/sonasons.png"
@@ -37,70 +28,36 @@ export default function Header() {
   const [finalData, setFinalData] = useState([]);
   const [menu1Index, setMenu1Index] = useState(null);
   const [menu2Index, setMenu2Index] = useState(null);
+  const [menu1Data, setMenu1Data] = useState()
+  const [menu2Data, setMenu2Data] = useState()
 
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
-  const setSigninPopupOpen = useSetRecoilState(openSignInModal)
+  const setHeaderData = useSetRecoilState(HeaderData)
+  const setHeaderData2 = useSetRecoilState(HeaderData2)
+
+  // console.log("menu1Data",menu1Data)
+  // console.log("menu2Data",menu2Data)
+
+
+  const handelmenu1 = (param) => {
+    console.log("param1", param)
+    localStorage.setItem('productDataShow', 'true');
+    setIsDropdownOpen(false)
+    navigation("/productpage")
+    setHeaderData(param)
+  }
+
+
+  const handelmenu2 = (param) => {
+    console.log("param1", param)
+    setIsDropdownOpen(false)
+    navigation("/productpage")
+    setHeaderData2(param)
+  }
+
 
   const transformData = (data) => {
-
-    // const transformedData = data.reduce((acc, item) => {
-    //   const existingItem = acc.find(i => i.lavelid === item.levelid);
-    //   if (existingItem) {
-    //     if (item.param1id) {
-    //       const param1 = {
-    //         param1id: item.param1id,
-    //         param1name: item.param1name,
-    //         param1dataid: item.param1dataid,
-    //         param1dataname: item.param1dataname,
-    //         param2: []
-    //       };
-    //       existingItem.param1.push(param1);
-    //       if (item.param2id) {
-    //         const param2 = {
-    //           param2id: item.param2id,
-    //           param2name: item.param2name,
-    //           param2dataid: item.param2dataid,
-    //           param2dataname: item.param2dataname
-    //         };
-    //         param1.param2.push(param2);
-    //       }
-    //     }
-    //   } else {
-    //     const newItem = {
-    //       lavelid: item.levelid,
-    //       menuname: item.menuname,
-    //       link: item.link || '',
-    //       param0id: item.param0id || '',
-    //       param0name: item.param0name || '',
-    //       param0dataid: item.param0dataid || '',
-    //       param0dataname: item.param0dataname || '',
-    //       param1: []
-    //     };
-    //     if (item.param1id) {
-    //       const param1 = {
-    //         param1id: item.param1id,
-    //         param1name: item.param1name,
-    //         param1dataid: item.param1dataid,
-    //         param1dataname: item.param1dataname,
-    //         param2: []
-    //       };
-    //       newItem.param1.push(param1);
-    //       if (item.param2id) {
-    //         const param2 = {
-    //           param2id: item.param2id,
-    //           param2name: item.param2name,
-    //           param2dataid: item.param2dataid,
-    //           param2dataname: item.param2dataname
-    //         };
-    //         param1.param2.push(param2);
-    //       }
-    //     }
-    //     acc.push(newItem);
-    //   }
-    //   return acc;
-    // }, []);
-
 
     const transformedData = data?.reduce((acc, item) => {
       const existingItem = acc.find(i => i.lavelid === item.levelid);
@@ -180,9 +137,11 @@ export default function Header() {
   const [islogin, setislogin] = useRecoilState(loginState);
   const fetchData = () => {
     const value = localStorage.getItem('LoginUser');
-    const val = value === 'true' ? true : false
+    const val = (value === 'true' ? 'true' : 'false')
     setislogin(val);
   };
+
+  console.log("isLogin", islogin);
 
   useEffect(() => {
     fetchData();
@@ -211,8 +170,8 @@ export default function Header() {
 
 
   useEffect(() => {
-    islogin && getMenuApi()
-  }, [])
+    islogin === 'true' && getMenuApi()
+  }, [islogin])
 
 
 
@@ -413,7 +372,7 @@ export default function Header() {
                   </svg>
                 </a>
               </div>
-              <div
+              {islogin === 'true' && ( <div
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -466,7 +425,7 @@ export default function Header() {
                     }}
                   />
                 </li>
-              </div>
+              </div>)}
             </div>
             <div className="smlingDraweOverlayMain">
               <div className="drawrTitlediv">
@@ -552,32 +511,32 @@ export default function Header() {
                   </li>
                 </ul>
               </div>
-              <div onClick={() => navigation("/impact")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/impact"); }}>
                 <p className="drawrTitle">IMPACT</p>
               </div>
               <div onClick={() => navigation("/celeb")}>
                 <p className="drawrTitle">CELEBRITY</p>
               </div>
-              <div onClick={() => navigation("/press")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/press"); }}>
                 <p className="drawrTitle">PRESS</p>
               </div>
-              <div onClick={() => navigation("/blog")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/blog"); }}>
                 <p className="drawrTitle">BLOG</p>
               </div>
-              <div onClick={() => navigation("/aboutUs")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/aboutUs"); }}>
                 <p className="drawrTitle">ABOUT US</p>
               </div>
-              <div onClick={() => navigation("/labGrowDaimonds")}>
-                <p className="drawrTitle">LAB GROWN DAIMONDS</p>
-              </div>
-              <div onClick={() => navigation("/lookbook")}>
+              {/* <div onClick={() => {toggleDrawerOverlay(); navigation("/labGrowDaimonds");}}>
+               <p className="drawrTitle">LAB GROWN DAIMONDS</p>
+              </div> */}
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/lookbook"); }}>
                 <p className="drawrTitle">LOOKBOOK</p>
               </div>
 
-              {islogin && (
+              {islogin === 'true' && (
                 <div
                   style={{ cursor: "pointer", color: 'white' }}
-                  onClick={() => navigation("/account")}
+                  onClick={() => { toggleDrawerOverlay(); navigation("/account"); }}
                 >
                   <p className="drawrTitle">{ACCOUNT}</p>
                 </div>
@@ -756,7 +715,7 @@ export default function Header() {
               >
                 {LAB_GROWN}
               </li> */}
-              {islogin ? (
+              {islogin === "true" ? (
                 <li
                   className="nav-li-smining"
                   style={{ cursor: "pointer" }}
@@ -768,12 +727,12 @@ export default function Header() {
                 <li
                   className="nav-li-smining"
                   style={{ cursor: "pointer" }}
-                  onClick={() => setSigninPopupOpen(true)}
+                  onClick={() => navigation('/LoginOption')}
                 >
                   {LOGIN}
                 </li>
               )}
-              {islogin &&
+              {islogin === "true"  &&
                 <>
                   <Badge
                     badgeContent={getWishListCount}
@@ -849,7 +808,8 @@ export default function Header() {
                 <span
                   className="level0Menu"
                   onMouseEnter={() => setMenu1Index(i)}
-                // onMouseLeave={()=>setMenu1Index(null)}
+                  // onMouseLeave={()=>setMenu1Index(null)}
+                  onClick={() => { console.log("menuname", fd) }}
                 >
                   {fd?.menuname}
                 </span>
@@ -869,8 +829,15 @@ export default function Header() {
                   <div></div>
                   <span
                     className="level1Menu"
-                    onMouseEnter={() => setMenu2Index(i)}
-                  // onMouseLeave={()=>setMenu2Index(null)}
+                    onMouseEnter={() => {
+                      setMenu2Index(i)
+                      setMenu1Data(fd)
+                    }}
+                    // onMouseLeave={()=>setMenu2Index(null)}
+                    onClick={() => {
+                      setMenu1Data({ label1: fd?.param1name, value1: fd?.param1dataname })
+                      handelmenu1({ label1: fd?.param1name, value1: fd?.param1dataname })
+                    }}
                   >
                     {fd?.param1dataname}
                   </span>
@@ -888,7 +855,12 @@ export default function Header() {
               }}
             >
               {finalData[menu1Index]?.param1?.map((fd) => fd)[menu2Index]?.param2?.map((fd1) => (
-                <span className="level2Menu" >{fd1?.param2dataname}</span>
+                <span className="level2Menu"
+                  onClick={() => {
+                    setMenu2Data({ label1: menu1Data.param1name, value1: menu1Data.param1dataname, label2: fd1?.param2name, value2: fd1?.param2dataname })
+                    handelmenu2({ label1: menu1Data.param1name, value1: menu1Data.param1dataname, label2: fd1?.param2name, value2: fd1?.param2dataname })
+
+                  }}>{fd1?.param2dataname}</span>
               ))}
             </div>
 
@@ -1022,7 +994,7 @@ export default function Header() {
                 >
                   {LAB_GROWN}
                 </li> */}
-                {islogin ? (
+                {islogin === "true"  ? (
                   <li
                     className="nav-li-smining-fixed"
                     style={{ cursor: "pointer" }}
@@ -1034,13 +1006,14 @@ export default function Header() {
                   <li
                     className="nav-li-smining-fixed"
                     style={{ cursor: "pointer" }}
-                    onClick={() => setSigninPopupOpen(true)}
+                    onClick={() => navigation('/LoginOption')}
+
                   >
                     {LOGIN}
                   </li>
                 )}
 
-                {islogin &&
+                {islogin === "true"  &&
                   <>
                     <Badge
                       badgeContent={getWishListCount}
@@ -1168,18 +1141,18 @@ export default function Header() {
             }}
           >
 
-            {!islogin && (
+            {islogin === "false"  && (
               <li
                 className="nav-li-smining"
-                style={{ cursor: "pointer", color: 'white' }}
-                onClick={() => setSigninPopupOpen(true)}
+                style={{ cursor: "pointer", color: 'white' ,marginRight: '15px' }}
+                onClick={() => navigation('/LoginOption')}
               >
                 {LOGIN}
               </li>
             )}
 
 
-            {islogin &&
+            {islogin === "true"  &&
               <div style={{ display: 'flex' }}>
                 <Badge
                   badgeContent={getWishListCount}
@@ -1258,10 +1231,10 @@ export default function Header() {
           >
             <div
               className="Smining-Top-Header-fixed"
-              style={{ display: "flex", justifyContent: "space-between" }}
+              style={{ display: "flex" }}
             >
               <div
-                style={{ display: "flex", margin: "5px", alignItems: "center",width:'28%' }}
+                style={{ display: "flex", margin: "5px", alignItems: "center", width: '35%' }}
               >
                 {drawerShowOverlay ? (
                   <IoClose
@@ -1277,6 +1250,7 @@ export default function Header() {
                   <MenuIcon
                     style={{ fontSize: "40px", color: "#7d7f85" }}
                     onClick={toggleDrawerOverlay}
+                    className="muIconeMobileHeader"
                   />
                 )}
               </div>
@@ -1295,6 +1269,7 @@ export default function Header() {
                     width="80%"
                     viewBox="0 0 651 138"
                     style={{ height: "60px" }}
+                    className="centerSVGMobileImage"
                   >
                     <g clipPath="url(#a)">
                       <path
@@ -1317,17 +1292,24 @@ export default function Header() {
                   </svg>
                 </a>
               </div>
-              {!islogin && (
-                <li
-                  className="nav-li-smining"
-                  style={{ cursor: "pointer", color: 'white' }}
-                  onClick={() => setSigninPopupOpen(true)}
-                >
-                  {LOGIN}
-                </li>
+              {islogin === "false"  && (
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  width: '33.33%',
+                  marginRight: '15px'
+                }}>
+                  <li
+                    className="nav-li-smining"
+                    style={{ cursor: "pointer", color: '#7d7f85' }}
+                    onClick={() => navigation('/LoginOption')}
+                  >
+                    {LOGIN}
+                  </li>
+                </div>
               )}
-              {islogin &&
-                <div style={{ display: 'flex' }}>
+              {islogin === "true" &&
+                <div className="mobileHeaderFixedMobileLastDiv" style={{ display: 'flex' }}>
                   <Badge
                     badgeContent={getWishListCount}
                     overlap={"rectangular"}
@@ -1343,6 +1325,7 @@ export default function Header() {
                             width: "25px",
                             color: "#7d7f85",
                           }}
+                          className="mobileViewSmilingTop1Icone"
                         />
                       </li>
                     </Tooltip>
@@ -1354,10 +1337,10 @@ export default function Header() {
                         height: "25px", cursor: "pointer", width: "25px",
                         color: "#7d7f85",
                       }}
+                      className="mobileViewSmilingTop2Icone"
+
                     />
                   </li>
-
-
                   <Badge
                     badgeContent={getCartListCount}
                     overlap={"rectangular"}
@@ -1381,6 +1364,8 @@ export default function Header() {
                             width: "30px",
                             color: "#7d7f85",
                           }}
+                          className="mobileViewSmilingTop3Icone"
+
                         />
                       </li>
                     </Tooltip>

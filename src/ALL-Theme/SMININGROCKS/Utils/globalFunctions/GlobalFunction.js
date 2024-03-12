@@ -127,7 +127,6 @@ export const accountValidation = () => {
     getVals?.forEach((e, i) => {
         let getValss = JSON?.parse(localStorage?.getItem("myAccountFlags"))?.find(ele => ele?.pageid === e);
         if (getValss !== undefined) {
-            console.log(getValss?.isvisible);
             if (getValss?.isvisible === 1) {
                 pageIsOn = true;
             }
@@ -161,3 +160,12 @@ export const accountDetailPages = () => {
     });
     return getValArr;
 }
+export function formatAmount(amount) {
+    const formattedAmount = parseFloat(+amount).toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  
+    return formattedAmount;
+  }
+  

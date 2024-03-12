@@ -113,7 +113,7 @@ export default function LoginWithMobileCode() {
     };
 
     return (
-        <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+        <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />
@@ -128,14 +128,18 @@ export default function LoginWithMobileCode() {
                         fontSize: '40px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }}>Login With Code</p>
+                    }}
+                    className='AuthScreenMainTitle'
+                    >Login With Code</p>
                     <p style={{
                         textAlign: 'center',
                         marginTop: '-80px',
                         fontSize: '15px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }}>Last step! To secure your account, enter the code we just sent to {mobileNo}.</p>
+                    }}
+                    className='AuthScreenSubTitle'
+                    >Last step! To secure your account, enter the code we just sent to {mobileNo}.</p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
                         <TextField

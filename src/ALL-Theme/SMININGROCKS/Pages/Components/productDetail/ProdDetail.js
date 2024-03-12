@@ -33,12 +33,18 @@ const ProdDetail = () => {
   const [metalType, setMetalType] = useState([]);
   const [DaimondQualityColor, setDaimondQualityColor] = useState([]);
 
+  const [isMetalCutoMizeFlag, setIsMetalCutoMizeFlag] = useState('');
+  const [isDaimondCstoFlag, setIsDaimondCstoFlag] = useState('');
+  const [isCColrStoneCustFlag, setIsCColrStoneCustFlag] = useState('');
+  const [isPriseShow, setIsPriceShow] = useState()
+
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
 
   const handelImgLoad = () => {
     setImgLoading(false)
   }
+
 
   const handelLocalStorage = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
@@ -57,6 +63,15 @@ const ProdDetail = () => {
   }, [])
 
   useEffect(() => {
+
+
+    const storedDataAll = localStorage.getItem('storeInit');
+    const data = JSON.parse(storedDataAll);
+    setIsMetalCutoMizeFlag(data.IsMetalCustomization);
+    setIsDaimondCstoFlag(data.IsDiamondCustomization)
+    setIsCColrStoneCustFlag(data.IsCsCustomization)
+    setIsPriceShow(data.IsPriceShow);
+
     const storedData = JSON.parse(localStorage.getItem('QualityColor'));
     if (storedData) {
       setColorData(storedData);
@@ -196,14 +211,14 @@ const ProdDetail = () => {
 
         let isWishHasCartData = WishData?.filter((pd) => product.autocode === pd.autocode)
 
-        let WishedData = isWishHasCartData.map((wcd)=> wcd.autocode === product.autocode ? product : null)
+        let WishedData = isWishHasCartData.map((wcd) => wcd.autocode === product.autocode ? product : null)
 
-        if(WishedData.length){
-          console.log("WishedData",WishedData)
+        if (WishedData.length) {
+          console.log("WishedData", WishedData)
 
           WishedData[0].checkFlag = true;
           WishedData[0].wishCheck = false;
-  
+
           localStorage.setItem("srProductsData", JSON.stringify(WishedData[0]))
           handelLocalStorage()
         }
@@ -310,7 +325,7 @@ const ProdDetail = () => {
           p: wishToCartEncData1
         }
 
-        await CommonAPI(isWishHasCartData.length  ? body1 : body).then(async (res) => {
+        await CommonAPI(isWishHasCartData.length ? body1 : body).then(async (res) => {
           // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
           if (!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success") {
             await getCartAndWishListData()
@@ -549,7 +564,7 @@ const ProdDetail = () => {
 
   return (
     <div
-    className='paddingTopMobileSet'
+      className='paddingTopMobileSet'
       style={{
         backgroundColor: "#c0bbb1",
         height: "100%",
@@ -776,38 +791,39 @@ const ProdDetail = () => {
                       margin: "10px 10px 0px 10px",
                     }}
                   />
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "47.5%",
-                    }}
-                  >
-                    <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                      METAL COLOR:
-                    </label>
-                    <select
+                  {isMetalCutoMizeFlag == 1 &&
+                    <div
                       style={{
-                        border: "none",
-                        outline: "none",
-                        color: "#7d7f85",
-                        fontSize: "12.5px",
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "47.5%",
                       }}
                     >
-                      {metalColorData.map((colorItem) => (
-                        <option key={colorItem.ColorId} value={colorItem.ColorId}>
-                          {colorItem.metalcolorname}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                      <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                        METAL COLOR:
+                      </label>
+                      <select
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          color: "#7d7f85",
+                          fontSize: "12.5px",
+                        }}
+                      >
+                        {metalColorData.map((colorItem) => (
+                          <option key={colorItem.ColorId} value={colorItem.ColorId}>
+                            {colorItem.metalcolorname}
+                          </option>
+                        ))}
+                      </select>
+                    </div>}
                 </div>
                 <Divider sx={{ marginTop: '10px', background: '#a9a7a7' }} />
                 <div
                   style={{ display: "flex", width: "100%", marginTop: "12px" }}
                   className="srcolorsizecarat"
                 >
-                  <div
+                  {isDaimondCstoFlag == 1 && <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
@@ -831,7 +847,7 @@ const ProdDetail = () => {
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div>}
                   <Divider
                     orientation="vertical"
                     flexItem
@@ -841,7 +857,7 @@ const ProdDetail = () => {
                       margin: "0px 10px 0px 10px",
                     }}
                   />
-                  <div
+                  {isMetalCutoMizeFlag == 1 && <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
@@ -865,10 +881,10 @@ const ProdDetail = () => {
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div>}
                 </div>
                 <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
-                <div
+                {isCColrStoneCustFlag == 1 && <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -892,13 +908,13 @@ const ProdDetail = () => {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div>}
 
-                <div style={{ marginTop: "23px" }}>
+                {isPriseShow == 0 && <div style={{ marginTop: "23px" }}>
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
                     Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{`$${productData?.price}`}</span>
                   </p>
-                </div>
+                </div>}
 
                 {/* <div>
                   <button className="prodetailbtn">

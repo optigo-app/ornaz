@@ -125,7 +125,7 @@ export default function ForgotPass() {
 
 
     return (
-        <div style={{
+        <div className='paddingTopMobileSet' style={{
             backgroundColor: '#c0bbb1',
             paddingTop: '110px'
         }}>
@@ -146,14 +146,20 @@ export default function ForgotPass() {
                         fontSize: '40px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }}>Forgot Your Password</p>
+                    }}
+                    
+                    className='AuthScreenMainTitle'
+                    >Forgot Your Password</p>
                     <p style={{
                         textAlign: 'center',
                         marginTop: '-60px',
                         fontSize: '15px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }}>Please enter your email, and we will send you a password reset link.</p>
+                    }} 
+                    
+                    className='AuthScreenSubTitle'
+                    >Please enter your email, and we will send you a password reset link.</p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField
