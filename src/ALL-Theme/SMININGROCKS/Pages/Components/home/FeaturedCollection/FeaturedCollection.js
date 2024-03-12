@@ -85,7 +85,7 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                    {/* <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p> */}
                                 </div>
                             </div>
                             <div>
@@ -94,7 +94,7 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                    {/* <p style={{ fontSize: '12px' }}>White Gold</p> */}
                                 </div>
                             </div>
 
@@ -107,7 +107,7 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                    {/* <p style={{ fontSize: '12px' }}>White Gold</p> */}
                                 </div>
                             </div>
                             <div>
@@ -116,7 +116,7 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                    {/* <p style={{ fontSize: '12px' }}>White Gold</p> */}
                                 </div>
                             </div>
                         </div>
@@ -128,7 +128,7 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                    {/* <p style={{ fontSize: '12px' }}>White Gold</p> */}
                                 </div>
                             </div>
                             <div>
@@ -137,7 +137,7 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                    {/* <p style={{ fontSize: '12px' }}>White Gold</p> */}
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,6 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                             <div>
@@ -175,7 +174,6 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
 
@@ -188,7 +186,6 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                             <div>
@@ -197,7 +194,6 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +205,6 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                             <div>
@@ -218,7 +213,7 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                    {/* <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p> */}
                                 </div>
                             </div>
                         </div>
