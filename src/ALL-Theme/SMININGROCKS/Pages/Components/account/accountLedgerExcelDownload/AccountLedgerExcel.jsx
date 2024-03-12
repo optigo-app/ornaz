@@ -20,7 +20,7 @@ const AccountLedgerExcel = () => {
       setExcelData(obj);
     }, [])
     
-    
+    console.log(excelData);
   
   return (
     <>

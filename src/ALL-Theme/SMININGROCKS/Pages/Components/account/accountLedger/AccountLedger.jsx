@@ -217,6 +217,8 @@ const AccountLedger = () => {
         });
 
       }
+
+
       
       const handleSearch = () => {
         filterData();
@@ -437,33 +439,39 @@ const AccountLedger = () => {
         return `${day} ${months[parseInt(month) - 1]} ${year}`;
       };
 
-      const handlePreviousDays = () => {
-        // let days = selectedDays;
-        const currentDate = moment(); // Get the current date
-        const previous30DaysDate = moment()?.subtract(selectedDays, 'days'); // Add 30 days to the current date
-        let lastdate = currentDate?.format('YYYY-MM-DD');
-        let prev30days = previous30DaysDate?.format('YYYY-MM-DD');
-        // console.log("Current Date:", currentDate?.format('YYYY-MM-DD'));
-        // console.log("Next 30 Days Date:", previous30DaysDate?.format('YYYY-MM-DD'));
-        setEndDate(lastdate);
-        setStartDate(prev30days);
+        const handlePreviousDays = () => {
+
+        // Calculate new start date by subtracting 30 days from the current start date
+        const newStartDate = moment(startDate).subtract(selectedDays, 'days').format('YYYY-MM-DD');
+        
+        // Calculate new end date by subtracting 30 days from the current end date
+        const newEndDate = moment(endDate).subtract(selectedDays, 'days').format('YYYY-MM-DD');
+
+        // Update the state with the new start date and end date
+        setStartDate(newStartDate);
+        setEndDate(newEndDate);
+
+        // Filter data based on the new start date and end date
         filterData();
-        // // setSelectedDays((prev) => (prev - days))
-      }
-      const handleNextDays = () => {
-        const currentDate = moment(); // Get the current date
-        const next30DaysDate = moment()?.add(selectedDays, 'days'); // Add 30 days to the current date
-        let next30days = currentDate?.format('YYYY-MM-DD');
-        let lastdate = next30DaysDate?.format('YYYY-MM-DD');
-        // console.log("Current Date:", currentDate?.format('YYYY-MM-DD'));
-        // console.log("Next 30 Days Date:", next30DaysDate?.format('YYYY-MM-DD'));
-        setEndDate(lastdate);
-        setStartDate(next30days);
-        filterData();
-        // // setSelectedDays((prev) => (prev + days));
-      }
+
+
+
+        }
+        const handleNextDays = () => {
+
+            const newStartDate = moment(startDate).add(30, 'days').format('YYYY-MM-DD');
+        
+            // Calculate new end date by adding 30 days to the current end date
+            const newEndDate = moment(endDate).add(30, 'days').format('YYYY-MM-DD');
+        
+            // Update the state with the new start date and end date
+            setStartDate(newStartDate);
+            setEndDate(newEndDate);
+        
+            // Filter data based on the new start date and end date
+            filterData();
+        }
       const handleExcel = () => {
-        console.log(filterArray, );
         const obj  = { 
             data: filterArray,
             debit_mg_diff : debit_mg_diff,
@@ -472,6 +480,9 @@ const AccountLedger = () => {
             credit_mg_diff : credit_mg_diff,
             credit_dia_diff: credit_dia_diff,
             credit_amt_diff : credit_amt_diff,
+            resultTotal : resultTotal,
+            startDate : startDate,
+            endDate : endDate,
         }
         localStorage.setItem('excelData', JSON.stringify(obj));
         window.open("http://localhost:3000/accountledgerexcel");
@@ -493,9 +504,9 @@ const AccountLedger = () => {
                     <input type="date" name="date" id="enddate" className='mx-2 p-1'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /><SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/></div>
                     <div><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div>
                     {/* <div onClick={() => navigate("/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
-                    <div onClick={() => handleExcel()}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div>
+                    {/* <div onClick={() => handleExcel()}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
                     {/* <div onClick={() => navigate("/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div> */}
-                    <div onClick={() => window.open("http://localhost:3000/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#printtable" className='eeal' /></div>
+                    {/* <div onClick={() => window.open("http://localhost:3000/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#printtable" className='eeal' /></div> */}
                     <div className='d-flex'>
                         <button className='ms-2 mx-1 btn border p-2 py-0 daybtn' title='previous' onClick={() => handlePreviousDays()}>&lt;</button>
                         <div className='mx-2 '>
