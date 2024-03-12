@@ -193,7 +193,7 @@ export default function Register() {
   };
 
   return (
-    <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+    <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
       {isLoading && (
         <div className="loader-overlay">
           <CircularProgress className='loadingBarManage' />
@@ -208,7 +208,9 @@ export default function Register() {
             fontSize: '40px',
             color: '#7d7f85',
             fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-          }}>Register</p>
+          }}
+            className='AuthScreenMainTitle'
+          >Register</p>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <TextField
