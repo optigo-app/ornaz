@@ -127,7 +127,6 @@ export const accountValidation = () => {
     getVals?.forEach((e, i) => {
         let getValss = JSON?.parse(localStorage?.getItem("myAccountFlags"))?.find(ele => ele?.pageid === e);
         if (getValss !== undefined) {
-            console.log(getValss?.isvisible);
             if (getValss?.isvisible === 1) {
                 pageIsOn = true;
             }
@@ -144,6 +143,25 @@ export const accountDetailPage = (pageId) => {
 
 
 
+export const accountDetailPages = () => {
+    let arr = [
+        { id: 1163, tabLabel: "Quote", tabComp: "QuotationQuote", compPath: "./QuotationQuote/QuotationQuote" },
+        { id: 1164, tabLabel: "Job", tabComp: "QuotationJob", compPath: "./quotationFilters/QuotationJob" },
+        { id: 1157, tabLabel: "Sales", tabComp: "Sales", compPath: "../sales/Sales/Sales" },
+        { id: 1314, tabLabel: "Sales Report", tabComp: "SalesReport", compPath: "../sales/salesReport/SalesReport" },
+        { id: 17020, tabLabel: "Design Wise Sales Report", tabComp: "DesignWiseSalesReport", compPath: "../sales/DesignWiseSalesReport/DesignWiseSalesReport" },
+        { id: 1159, tabLabel: "Account Ledger", tabComp: "AccountLedger", compPath: "./accountLedger/AccountLedger" }
+    ];
+
+    let getValArr = [];
+    arr?.forEach((e, i) => {
+        let getVal = JSON?.parse(localStorage?.getItem("myAccountFlags"))?.find(ele => ele?.pageid === e?.id);
+        getVal !== undefined && (getVal?.isvisible === 1 && getValArr?.push(e))
+        // getValArr?.push({ label: e?.tabLabel,id: e?.id, comp: e?.tabComp, value: false }))  
+        // getValArr?.push({ label: e?.tabLabel,id: e?.id, comp: e?.tabComp, value: false });
+    });
+    return getValArr;
+}
 export function formatAmount(amount) {
     const formattedAmount = parseFloat(+amount).toLocaleString('en-IN', {
       minimumFractionDigits: 2,

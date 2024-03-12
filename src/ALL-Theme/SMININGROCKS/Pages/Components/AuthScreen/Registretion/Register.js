@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CryptoJS from 'crypto-js';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
+import { loginState } from '../../../../../../Recoil/atom';
+import { useSetRecoilState } from 'recoil';
 
 export default function Register() {
   const navigation = useNavigate();
@@ -28,6 +30,8 @@ export default function Register() {
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
 
+  const setIsLoginState = useSetRecoilState(loginState)
+
   const handleKeyDown = (event, nextRef) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -38,8 +42,8 @@ export default function Register() {
   const location = useLocation();
 
   useEffect(() => {
-    const storedEmail = location.state?.email; ;
-    const routeMobileNo = location.state?.mobileNo; 
+    const storedEmail = location.state?.email;;
+    const routeMobileNo = location.state?.mobileNo;
 
     if (storedEmail) setEmail(storedEmail);
     if (routeMobileNo) setMobileNo(routeMobileNo);
@@ -156,9 +160,9 @@ export default function Register() {
       setIsLoading(true);
       try {
         const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-        const { FrontEnd_RegNo } = storeInit;
+        const { FrontEnd_RegNo, IsB2BWebsite } = storeInit;
         const combinedValue = JSON.stringify({
-          firstname: `${firstName}`, lastname: `${lastName}`, userid: `${email}`, country_code: '91', mobile: `${mobileNo}`, pass: `${hashedPassword}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: '0'
+          firstname: `${firstName}`, lastname: `${lastName}`, userid: `${email}`, country_code: '91', mobile: `${mobileNo}`, pass: `${hashedPassword}`, IsB2BWebsite: `${IsB2BWebsite}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: '0'
         });
         const encodedCombinedValue = btoa(combinedValue);
         const body = {
@@ -168,8 +172,9 @@ export default function Register() {
         }
         const response = await CommonAPI(body);
         if (response.Data.rd[0].stat === 1) {
-          localStorage.setItem('registerEmail', email)
           localStorage.setItem('LoginUser', 'true')
+          setIsLoginState('true')
+          localStorage.setItem('registerEmail', email)
           navigation('/');
         } else {
           alert(response.Data.rd[0].stat_msg);
@@ -188,7 +193,7 @@ export default function Register() {
   };
 
   return (
-    <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+    <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
       {isLoading && (
         <div className="loader-overlay">
           <CircularProgress className='loadingBarManage' />
@@ -203,7 +208,9 @@ export default function Register() {
             fontSize: '40px',
             color: '#7d7f85',
             fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-          }}>Register</p>
+          }}
+            className='AuthScreenMainTitle'
+          >Register</p>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <TextField

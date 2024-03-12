@@ -36,7 +36,7 @@ const ProdDetail = () => {
   const [isMetalCutoMizeFlag, setIsMetalCutoMizeFlag] = useState('');
   const [isDaimondCstoFlag, setIsDaimondCstoFlag] = useState('');
   const [isCColrStoneCustFlag, setIsCColrStoneCustFlag] = useState('');
-  const [isPriseShow, setIsPriceShow] = useState('');
+  const [isPriseShow, setIsPriceShow] = useState()
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -44,6 +44,7 @@ const ProdDetail = () => {
   const handelImgLoad = () => {
     setImgLoading(false)
   }
+
 
   const handelLocalStorage = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
@@ -64,13 +65,12 @@ const ProdDetail = () => {
   useEffect(() => {
 
 
-    const storedDataAll = localStorage.getItem('loginUserDetail');
+    const storedDataAll = localStorage.getItem('storeInit');
     const data = JSON.parse(storedDataAll);
     setIsMetalCutoMizeFlag(data.IsMetalCustomization);
     setIsDaimondCstoFlag(data.IsDiamondCustomization)
     setIsCColrStoneCustFlag(data.IsCsCustomization)
-    const priseShow = data.IsPriceShow;
-    setIsPriceShow(priseShow);
+    setIsPriceShow(data.IsPriceShow);
 
     const storedData = JSON.parse(localStorage.getItem('QualityColor'));
     if (storedData) {
@@ -910,7 +910,7 @@ const ProdDetail = () => {
                   </select>
                 </div>}
 
-                {isPriseShow == 1 && <div style={{ marginTop: "23px" }}>
+                {isPriseShow == 0 && <div style={{ marginTop: "23px" }}>
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
                     Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{`$${productData?.price}`}</span>
                   </p>

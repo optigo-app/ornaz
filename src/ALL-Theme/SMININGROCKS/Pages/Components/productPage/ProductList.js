@@ -10,19 +10,27 @@ import prodListData from "../../jsonFile/Productlist_4_95oztttesi0o50vr.json";
 import filterData from "../../jsonFile/M_4_95oztttesi0o50vr.json";
 import PriceData from "../../jsonFile/Productlist_4_95oztttesi0o50vr_8.json";
 // import PriceData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_8_Original.json";
-import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Slider, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { event } from "jquery";
-import { CommonAPI } from "../../../Utils/API/CommonAPI";
+import { CommonAPI, UnCommonAPI } from "../../../Utils/API/CommonAPI";
 import { async } from "q";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, WishListCounts } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
+
+
+
+function valuetext(value) {
+  return `${value}°C`;
+}
+
+const minDistance = 10;
 
 
 const ProductList = () => {
@@ -38,15 +46,18 @@ const ProductList = () => {
   const [WishData, setWishData] = useState([]);
   const [cartRemoveData, setCartRemoveData] = useState("");
   const [wishListRemoveData, setWishListRemoveData] = useState("");
-  const [newProData,setNewProData] = useState([]);
-
-  console.log("newProData", newProData);
+  const [newProData, setNewProData] = useState([]);
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
+  const getHeaderData = useRecoilValue(HeaderData)
+  const getHeaderData2 = useRecoilValue(HeaderData2)
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log("getHeaderData", getHeaderData)
+  console.log("getHeaderData2", getHeaderData2)
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
@@ -64,7 +75,7 @@ const ProductList = () => {
   }
 
 
-   
+
 
 
   const fetchFile = async () => {
@@ -125,16 +136,16 @@ const ProductList = () => {
   // if (location.state && location.state.param1 && location.state.param1.value1) {
   //   console.log("location", location.state.param1.value1);
   // }
-  
-    // const data = productData.filter((pd) => pd && pd.CollectionName === "AURORA");
-  
-  
+
+  // const data = productData.filter((pd) => pd && pd.CollectionName === "AURORA");
+
+
 
   useEffect(() => {
     // if(ProductApiData.length){
-      // window.scrollTo(0,0);
-      const element = document.getElementById("top")
-      element.scrollIntoView()
+    // window.scrollTo(0,0);
+    const element = document.getElementById("top")
+    element.scrollIntoView()
     // }
   }, []);
 
@@ -233,7 +244,7 @@ const ProductList = () => {
       if (gendertype) {
         product.GenderName = gendertype.GenderName;
       }
-      if(Berandtype){
+      if (Berandtype) {
         product.BrandName = Berandtype.BrandName
       }
       if (MetalType) {
@@ -245,7 +256,7 @@ const ProductList = () => {
       if (SubCategoryType) {
         product.SubCategoryName = SubCategoryType.SubCategoryName
       }
-      if(ThemeType){
+      if (ThemeType) {
         product.ThemeName = ThemeType.ThemeName
       }
     });
@@ -279,7 +290,6 @@ const ProductList = () => {
 
   diffCartData()
 
-  console.log("WishData", WishData);
 
 
   const diffWishData = useCallback(() => {
@@ -451,7 +461,7 @@ const ProductList = () => {
     }
   }
 
-  console.log("filterChecked11111",filterChecked);
+  // console.log("filterChecked11111",filterChecked);
 
   const filteredObjects = Object.entries(filterChecked)
     .filter(([key, value]) => value.checked)
@@ -476,22 +486,22 @@ const ProductList = () => {
   // console.log("sepeTypeVal",sepeTypeVal.map((st)=>productData.filter((pd)=>pd[st.type]=== st.value)))
   // console.log("sepeTypeVal",sepeTypeVal)
 
-//   const filteredProducts = (productData).filter(product => {
-//     return sepeTypeVal.some(condition => {
-//         return product[condition.type] === condition.value
-//     });
-// });
+  //   const filteredProducts = (productData).filter(product => {
+  //     return sepeTypeVal.some(condition => {
+  //         return product[condition.type] === condition.value
+  //     });
+  // });
 
-    
-    const filteredProducts = sepeTypeVal.map((st)=>productData.filter((pd)=>pd[st.type]=== st.value)).reverse()
 
-    console.log("filteredProducts",filteredProducts)
+  const filteredProducts = sepeTypeVal.map((st) => (newProData.length ? newProData : productData).filter((pd) => pd[st.type] === st.value)).reverse()
 
-    
+  console.log("filteredProducts", filteredProducts)
+
+
 
   const mergedArray = [...filteredProducts].reduce((acc, curr) => acc.concat(curr), []);
-  const finalDataOfDisplaying = () =>{
-    if(mergedArray.length && mergedArray){
+  const finalDataOfDisplaying = () => {
+    if (mergedArray.length && mergedArray) {
       return mergedArray
     }
     else {
@@ -749,7 +759,7 @@ const ProductList = () => {
         const product = prod
 
         let isWishHasCartData = WishData?.filter((pd) => product.autocode === pd.autocode)
-        console.log("isWishHasCartData", isWishHasCartData)
+        // console.log("isWishHasCartData", isWishHasCartData)
 
         let wishToCartEncData = { "autocodelist": `${isWishHasCartData[0]?.autocode}`, "ischeckall": 0, "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` }
 
@@ -913,18 +923,146 @@ const ProductList = () => {
 
   }
 
-  
-  const newMenuProdData = () =>{
-    if (location.state && location.state.param1 && location.state.param1.value1) {
-      // console.log("location", location.state.param1.value1);
-      let data = productData.filter((pd) => pd && pd.CollectionName === location.state.param1.value1)
-      setNewProData(data)
-      // console.log("data", data)
+
+
+
+  useEffect(() => {
+    let flag = localStorage.getItem('productDataShow') ?? 'true';
+    if (newProData.length === 0 && flag === 'true') {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
+      setNewProData(data);
+      setTimeout(() => {
+        localStorage.setItem('productDataShow', 'false')
+      }, 100);
     }
+  }, [getHeaderData, newProData])
+
+
+
+  useEffect(() => {
+
+    console.log('getHeaderData2?.label2getHeaderData2?.label2', getHeaderData2?.label2);
+
+    if (getHeaderData2?.label2 === "brand") {
+      console.log('getHeaderData2?.value1', getHeaderData2?.value1);
+      console.log('getHeaderData2?.value2', getHeaderData2?.value2);
+      console.log('brandbrandbrandbrandbrand', newProData);
+
+      let data = productData.filter((pd) => pd && pd.BrandName === getHeaderData2?.value2)
+
+      console.log('datadatadata', data);
+      setNewProData(data);
+
+    }
+
+    if (getHeaderData2?.label2 === "category") {
+      console.log('ppppppppppppppppppp', newProData);
+
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
+      setNewProData(data);
+    }
+  }, [getHeaderData2])
+
+
+
+  // useEffect(() => {
+  //     let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
+  //     setNewProData(data);
+  // }, [getHeaderData])
+
+  const newMenuProdData = () => {
+    let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
+    setNewProData(data)
   }
+  useEffect(() => {
+    if (getHeaderData && getHeaderData.value1 && productData) {
+      newMenuProdData()
+    }
+
+  }, [getHeaderData])
+
+
+
+
+
+  const [value1, setValue1] = useState([20, 37]);
+
+  const handleChange1 = (
+    event,
+    newValue,
+    activeThumb,
+  ) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (activeThumb === 0) {
+      setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
+    } else {
+      setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
+    }
+  };
+
+  const [value2, setValue2] = useState([20, 37]);
+
+  const handleChange2 = (
+    event,
+    newValue,
+    activeThumb,
+  ) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], 100 - minDistance);
+        setValue2([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setValue2([clamped - minDistance, clamped]);
+      }
+    } else {
+      setValue2(newValue);
+    }
+  };
+
+
+  const getDesignPriceList = async() =>{
+
+    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+    const loginUserDetail = JSON.parse(localStorage.getItem("loginUserDetail"));
+    const currencyCombo = JSON.parse(localStorage.getItem("CURRENCYCOMBO"));
+    const UserEmail = localStorage.getItem("registerEmail")
+
+    const GetPriceReq = {
+                  "CurrencyRate":`${currencyCombo?.CurrencyRate}`,
+                  "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
+                  "Customerid":`${loginUserDetail?.id}`,
+                  "Laboursetid":`${loginUserDetail?.pricemanagement_laboursetid}`,
+                  "diamondpricelistname":`${loginUserDetail?.diamondpricelistname}`,
+                  "colorstonepricelistname":`${loginUserDetail?.colorstonepricelistname}`,
+                  "SettingPriceUniqueNo":`${loginUserDetail?.SettingPriceUniqueNo}`,
+                  "DesignNo":""
+                }
+
+                const encodedCombinedValue = btoa(JSON.stringify(GetPriceReq));
+
+                let body ={
+                  "con":`{\"id\":\"Store\",\"mode\":\"getdesignpricelist\",\"appuserid\":\"${UserEmail}\"}`,
+                  "f":"onloadFirstTime (getdesignpricelist)",
+                  "p":encodedCombinedValue
+                  }
+    
+    await UnCommonAPI(body).then((res) => {
+        console.log(res)
+    })
+
+  }
+  
   useEffect(()=>{
-    newMenuProdData()
-  },[location.state])
+    getDesignPriceList()
+  },[])
 
   return (
     <div id="top">
@@ -977,97 +1115,126 @@ const ProductList = () => {
                 /> */}
                 <div>
                   {NewFilterData().map((ele, index) => (
-                    <Accordion
-                      elevation={0}
-                      sx={{
-                        borderBottom: "1px solid #c7c8c9",
-                        borderRadius: 0,
-                        marginLeft: "28px",
-                        "&.Mui-expanded": {
-                          marginLeft: "28px",
-                        },
-                        "&.MuiPaper-root.MuiAccordion-root:last-of-type": {
-                          borderBottomLeftRadius: "0px",
-                          borderBottomRightRadius: "0px",
-                        },
-                        "&.MuiPaper-root.MuiAccordion-root:before": {
-                          background: "none",
-                        },
-                      }}
-                    >
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
-                        aria-controls="panel1-content"
-                        id="panel1-header"
+                    <>
+                      <Accordion
+                        elevation={0}
                         sx={{
-                          color: "#7f7d85",
+                          borderBottom: "1px solid #c7c8c9",
                           borderRadius: 0,
-
-                          "&.MuiAccordionSummary-root": {
-                            padding: 0,
+                          marginLeft: "28px",
+                          "&.Mui-expanded": {
+                            marginLeft: "28px",
+                          },
+                          "&.MuiPaper-root.MuiAccordion-root:last-of-type": {
+                            borderBottomLeftRadius: "0px",
+                            borderBottomRightRadius: "0px",
+                          },
+                          "&.MuiPaper-root.MuiAccordion-root:before": {
+                            background: "none",
                           },
                         }}
                       >
-                        <span
-                          style={{
-                            fontFamily: "TT Commons, sans-serif",
-                            fontSize: "12px",
-                            opacity: "0.7",
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
+                          aria-controls="panel1-content"
+                          id="panel1-header"
+                          sx={{
+                            color: "#7f7d85",
+                            borderRadius: 0,
+
+                            "&.MuiAccordionSummary-root": {
+                              padding: 0,
+                            },
                           }}
                         >
-                          {ele.label}
-                        </span>
-                      </AccordionSummary>
-                      <AccordionDetails
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "4px",
-                        }}
-                      >
-                        {ele.filterList.map((flist, i) => (
-                          <div
+                          <span
                             style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "12px",
+                              fontFamily: "TT Commons, sans-serif",
+                              fontSize: "12px",
+                              opacity: "0.7",
                             }}
-                            key={i}
                           >
-                            <Checkbox
-                              name={`checkbox${index + 1}${i + 1}`}
-                              checked={
-                                filterChecked[`checkbox${index + 1}${i + 1}`]
-                                  ?.checked
-                              }
+                            {ele.label}
+                          </span>
+                        </AccordionSummary>
+                        <AccordionDetails
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "4px",
+                          }}
+                        >
+                          {ele.label === "PRICE" &&
+                            <div>
+                              <Slider
+                                className='netWtSecSlider'
+                                getAriaLabel={() => 'Minimum distance'}
+                                value={value1}
+                                onChange={handleChange1}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                              />
+                            </div>}
+
+                          {ele.label === "CENTERSTONE" &&
+                            <div>
+                              <Slider
+                                className='netWtSecSlider'
+                                getAriaLabel={() => 'Minimum distance'}
+                                value={value1}
+                                onChange={handleChange1}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                              />
+                            </div>
+                          }
+
+                          {ele.filterList.map((flist, i) => (
+                            <div
                               style={{
-                                color: "#7f7d85",
-                                padding: 0,
-                                width: "10px",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "12px",
                               }}
-                              onClick={(e) =>
-                                handleCheckboxChange(e, ele, flist)
-                              }
-                              size="small"
-                            />
-                            <small
-                              style={{
-                                fontFamily: "TT Commons, sans-serif",
-                                color: "#7f7d85",
-                                textTransform: "lowercase",
-                              }}
+                              key={i}
                             >
-                              {flist}
-                            </small>
-                          </div>
-                        ))}
-                      </AccordionDetails>
-                    </Accordion>
+                              <Checkbox
+                                name={`checkbox${index + 1}${i + 1}`}
+                                checked={
+                                  filterChecked[`checkbox${index + 1}${i + 1}`]
+                                    ?.checked
+                                }
+                                style={{
+                                  color: "#7f7d85",
+                                  padding: 0,
+                                  width: "10px",
+                                }}
+                                onClick={(e) =>
+                                  handleCheckboxChange(e, ele, flist)
+                                }
+                                size="small"
+                              />
+                              <small
+                                style={{
+                                  fontFamily: "TT Commons, sans-serif",
+                                  color: "#7f7d85",
+                                  textTransform: "lowercase",
+                                }}
+                              >
+                                {flist}
+                              </small>
+                            </div>
+                          ))}
+                        </AccordionDetails>
+                      </Accordion>
+                    </>
                   ))}
                 </div>
               </div>
               <div className="smilingMobileProductListSideBar">
-               
+
                 <hr style={{ marginTop: "0px" }} />
                 <div style={{ display: "flex", marginInline: "15px" }}>
                   <div style={{ width: "49%" }} onClick={toggleDrawerOverlay}>
@@ -1138,7 +1305,7 @@ const ProductList = () => {
                     flexWrap: "wrap",
                   }}
                 >
-                  {finalDataOfDisplaying()?.map((products, i) => (
+                  {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => (
                     <div
                       style={{
                         width: "33.33%",

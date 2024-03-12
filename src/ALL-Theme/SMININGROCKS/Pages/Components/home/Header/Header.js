@@ -1,26 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Header.css'
-// import ring1 from '../../../assets/svg.svg'
 import Tooltip from '@mui/material/Tooltip';
 import { Badge, Dialog, Divider, Drawer, SwipeableDrawer, TextField } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import ContactsIcon from '@mui/icons-material/Contacts';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import SearchIcon from '@mui/icons-material/Search';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import LockIcon from '@mui/icons-material/Lock';
-import i1 from '../../../../lib/consts/Images'
 import { PiStarThin } from "react-icons/pi";
 import { IoSearchOutline } from "react-icons/io5";
 import { ABOUT_US, ACCOUNT, BLOG, CELEBRITY, CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, IMPACT, LAB_GROWN, LIFETIME_WARRANTY, LOGIN, LOGOUT_MESSAGE, LOOK_BOOK, MONEY_BACK_GUARANTEE, PRESS, SHOP } from "../../../../lib/consts/Strings";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiStarFourThin } from "react-icons/pi";
-import { Button } from "react-bootstrap";
 import { IoClose } from "react-icons/io5";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import Cart from "./Cart";
 import titleImg from "../../../assets/title/sonasons.png"
@@ -37,25 +28,33 @@ export default function Header() {
   const [finalData, setFinalData] = useState([]);
   const [menu1Index, setMenu1Index] = useState(null);
   const [menu2Index, setMenu2Index] = useState(null);
-  const [menu1Data,setMenu1Data] = useState()
-  const [menu2Data,setMenu2Data] = useState()
+  const [menu1Data, setMenu1Data] = useState()
+  const [menu2Data, setMenu2Data] = useState()
 
   const getCartListCount = useRecoilValue(CartListCounts)
   const getWishListCount = useRecoilValue(WishListCounts)
+  const setHeaderData = useSetRecoilState(HeaderData)
+  const setHeaderData2 = useSetRecoilState(HeaderData2)
 
   // console.log("menu1Data",menu1Data)
   // console.log("menu2Data",menu2Data)
 
 
   const handelmenu1 = (param) => {
-    console.log("param1",param);
-    setIsDropdownOpen(false);
-    navigation("/productpage",{state:{param1:param}})
-    // if(param.label1 === "collection"){
-
-    // }
+    console.log("param1", param)
+    localStorage.setItem('productDataShow', 'true');
+    setIsDropdownOpen(false)
+    navigation("/productpage")
+    setHeaderData(param)
   }
 
+
+  const handelmenu2 = (param) => {
+    console.log("param1", param)
+    setIsDropdownOpen(false)
+    navigation("/productpage")
+    setHeaderData2(param)
+  }
 
 
   const transformData = (data) => {
@@ -138,9 +137,11 @@ export default function Header() {
   const [islogin, setislogin] = useRecoilState(loginState);
   const fetchData = () => {
     const value = localStorage.getItem('LoginUser');
-    const val = value === 'true' ? true : false
+    const val = (value === 'true' ? 'true' : 'false')
     setislogin(val);
   };
+
+  console.log("isLogin", islogin);
 
   useEffect(() => {
     fetchData();
@@ -169,7 +170,7 @@ export default function Header() {
 
 
   useEffect(() => {
-    islogin === true && getMenuApi()
+    islogin === 'true' && getMenuApi()
   }, [islogin])
 
 
@@ -371,7 +372,7 @@ export default function Header() {
                   </svg>
                 </a>
               </div>
-              <div
+              {islogin === 'true' && ( <div
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -424,7 +425,7 @@ export default function Header() {
                     }}
                   />
                 </li>
-              </div>
+              </div>)}
             </div>
             <div className="smlingDraweOverlayMain">
               <div className="drawrTitlediv">
@@ -510,32 +511,32 @@ export default function Header() {
                   </li>
                 </ul>
               </div>
-              <div onClick={() => navigation("/impact")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/impact"); }}>
                 <p className="drawrTitle">IMPACT</p>
               </div>
               <div onClick={() => navigation("/celeb")}>
                 <p className="drawrTitle">CELEBRITY</p>
               </div>
-              <div onClick={() => navigation("/press")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/press"); }}>
                 <p className="drawrTitle">PRESS</p>
               </div>
-              <div onClick={() => navigation("/blog")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/blog"); }}>
                 <p className="drawrTitle">BLOG</p>
               </div>
-              <div onClick={() => navigation("/aboutUs")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/aboutUs"); }}>
                 <p className="drawrTitle">ABOUT US</p>
               </div>
-              <div onClick={() => navigation("/labGrowDaimonds")}>
-                <p className="drawrTitle">LAB GROWN DAIMONDS</p>
-              </div>
-              <div onClick={() => navigation("/lookbook")}>
+              {/* <div onClick={() => {toggleDrawerOverlay(); navigation("/labGrowDaimonds");}}>
+               <p className="drawrTitle">LAB GROWN DAIMONDS</p>
+              </div> */}
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/lookbook"); }}>
                 <p className="drawrTitle">LOOKBOOK</p>
               </div>
 
-              {islogin && (
+              {islogin === 'true' && (
                 <div
                   style={{ cursor: "pointer", color: 'white' }}
-                  onClick={() => navigation("/account")}
+                  onClick={() => { toggleDrawerOverlay(); navigation("/account"); }}
                 >
                   <p className="drawrTitle">{ACCOUNT}</p>
                 </div>
@@ -714,7 +715,7 @@ export default function Header() {
               >
                 {LAB_GROWN}
               </li> */}
-              {islogin ? (
+              {islogin === "true" ? (
                 <li
                   className="nav-li-smining"
                   style={{ cursor: "pointer" }}
@@ -731,7 +732,7 @@ export default function Header() {
                   {LOGIN}
                 </li>
               )}
-              {islogin &&
+              {islogin === "true"  &&
                 <>
                   <Badge
                     badgeContent={getWishListCount}
@@ -807,8 +808,8 @@ export default function Header() {
                 <span
                   className="level0Menu"
                   onMouseEnter={() => setMenu1Index(i)}
-                // onMouseLeave={()=>setMenu1Index(null)}
-                onClick={()=>{console.log("menuname",fd)}}
+                  // onMouseLeave={()=>setMenu1Index(null)}
+                  onClick={() => { console.log("menuname", fd) }}
                 >
                   {fd?.menuname}
                 </span>
@@ -828,14 +829,14 @@ export default function Header() {
                   <div></div>
                   <span
                     className="level1Menu"
-                    onMouseEnter={() =>{
+                    onMouseEnter={() => {
                       setMenu2Index(i)
                       setMenu1Data(fd)
                     }}
                     // onMouseLeave={()=>setMenu2Index(null)}
-                    onClick={()=>{
-                      setMenu1Data({label1:fd?.param1name,value1:fd?.param1dataname})
-                      handelmenu1({label1:fd?.param1name,value1:fd?.param1dataname})
+                    onClick={() => {
+                      setMenu1Data({ label1: fd?.param1name, value1: fd?.param1dataname })
+                      handelmenu1({ label1: fd?.param1name, value1: fd?.param1dataname })
                     }}
                   >
                     {fd?.param1dataname}
@@ -854,10 +855,12 @@ export default function Header() {
               }}
             >
               {finalData[menu1Index]?.param1?.map((fd) => fd)[menu2Index]?.param2?.map((fd1) => (
-                <span className="level2Menu"  
-                      onClick={()=>{
-                        setMenu2Data({label1:menu1Data.param1name,value1:menu1Data.param1dataname,label2:fd1?.param2name,value2:fd1?.param2dataname})
-                      }}>{fd1?.param2dataname}</span>
+                <span className="level2Menu"
+                  onClick={() => {
+                    setMenu2Data({ label1: menu1Data.param1name, value1: menu1Data.param1dataname, label2: fd1?.param2name, value2: fd1?.param2dataname })
+                    handelmenu2({ label1: menu1Data.param1name, value1: menu1Data.param1dataname, label2: fd1?.param2name, value2: fd1?.param2dataname })
+
+                  }}>{fd1?.param2dataname}</span>
               ))}
             </div>
 
@@ -991,7 +994,7 @@ export default function Header() {
                 >
                   {LAB_GROWN}
                 </li> */}
-                {islogin ? (
+                {islogin === "true"  ? (
                   <li
                     className="nav-li-smining-fixed"
                     style={{ cursor: "pointer" }}
@@ -1010,7 +1013,7 @@ export default function Header() {
                   </li>
                 )}
 
-                {islogin &&
+                {islogin === "true"  &&
                   <>
                     <Badge
                       badgeContent={getWishListCount}
@@ -1138,10 +1141,10 @@ export default function Header() {
             }}
           >
 
-            {!islogin && (
+            {islogin === "false"  && (
               <li
                 className="nav-li-smining"
-                style={{ cursor: "pointer", color: 'white' }}
+                style={{ cursor: "pointer", color: 'white' ,marginRight: '15px' }}
                 onClick={() => navigation('/LoginOption')}
               >
                 {LOGIN}
@@ -1149,7 +1152,7 @@ export default function Header() {
             )}
 
 
-            {islogin &&
+            {islogin === "true"  &&
               <div style={{ display: 'flex' }}>
                 <Badge
                   badgeContent={getWishListCount}
@@ -1231,7 +1234,7 @@ export default function Header() {
               style={{ display: "flex" }}
             >
               <div
-                style={{ display: "flex", margin: "5px", alignItems: "center", width: '28%' }}
+                style={{ display: "flex", margin: "5px", alignItems: "center", width: '35%' }}
               >
                 {drawerShowOverlay ? (
                   <IoClose
@@ -1289,11 +1292,12 @@ export default function Header() {
                   </svg>
                 </a>
               </div>
-              {!islogin && (
+              {islogin === "false"  && (
                 <div style={{
                   display: 'flex',
                   justifyContent: 'flex-end',
-                  width: '33.33%'
+                  width: '33.33%',
+                  marginRight: '15px'
                 }}>
                   <li
                     className="nav-li-smining"
@@ -1304,7 +1308,7 @@ export default function Header() {
                   </li>
                 </div>
               )}
-              {islogin &&
+              {islogin === "true" &&
                 <div className="mobileHeaderFixedMobileLastDiv" style={{ display: 'flex' }}>
                   <Badge
                     badgeContent={getWishListCount}
@@ -1337,8 +1341,6 @@ export default function Header() {
 
                     />
                   </li>
-
-
                   <Badge
                     badgeContent={getCartListCount}
                     overlap={"rectangular"}
