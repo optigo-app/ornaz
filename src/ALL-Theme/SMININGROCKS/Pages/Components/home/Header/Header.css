@@ -639,12 +639,38 @@
     }
 
     .smilingMobileSubDiv{
-        padding: 4px!important;
+        padding-top: 15px!important;
+        padding-inline: 15px!important;
     }
 
     .Smining-Top-Header-fixed{
         margin-inline: 0px!important;
     }
+
+    .smilingHeaderWhishlistIcon{
+        display: none!important;
+    }
+    
+    .mobileViewSmilingTop1Icone{
+        display: none!important;
+    }
+    .mobileViewSmilingTop2Icone{
+        display: none!important;
+    }
+
+    .PiStarThinTopIcone{
+        display: none!important;
+    }
+    .IoSearchOutlineTopIcone{
+        display: none!important;
+    }
+
+    .centerSVGMobileImage{
+        height: 60px!important;
+        width: 120%!important;
+    }
+
+
 }
 
 @media screen and (max-width:1300px) {
@@ -667,6 +693,10 @@
         width: 45%!important;
     }
 
+    .smlingTopSerachOver{
+        margin: 0px!important;
+    }
+
 }
 
 @media screen and (max-width: 400px) {
@@ -677,11 +707,10 @@
     .muIconeMobileHeader{
         font-size: 30px!important;
     }
-
-    .centerSVGMobileImage{
-        height: 60px!important;
-        width: 120%!important;
+    .mobileViewFirstDiv1{
+        width: 0%!important;
     }
+ 
 
     .mobileViewSmilingTop1Icone{
         height: 18px!important;
@@ -695,8 +724,8 @@
     }
 
     .mobileViewSmilingTop3Icone{
-        height: 18px!important;
-        width: 18px!important;
+        height: 25px!important;
+        width: 25px!important;
     }
 
  

@@ -9,11 +9,11 @@ export default function FestiveFinds() {
     return (
         <div>
             <div className='FestiveMainImage'>
-                    <img src="//smilingrocks.com/cdn/shop/files/homepage_23c755c9-cd22-4cf4-bea5-b5e86a8cee5a_1680x.jpg?v=1700040129" style={{width : '100%'}}/>
+                <img src="//smilingrocks.com/cdn/shop/files/homepage_23c755c9-cd22-4cf4-bea5-b5e86a8cee5a_1680x.jpg?v=1700040129" style={{ width: '100%' }} />
                 <div className='festiveBox'>
-                    <p style={{ color: 'white' }}>LAB GROWN DIAMONDS</p>
-                    <p style={{ color: 'white', fontSize: '40px', margin: '0px' }}>Festive Finds!</p>
-                    <p style={{ color: 'white', margin: '0px', fontSize: '13px' }}>
+                    <p className='smilingFestiMainTitle1' style={{ color: 'white' }}>LAB GROWN DIAMONDS</p>
+                    <p className='smilingFestiMainTitle2' style={{ color: 'white', fontSize: '40px', margin: '0px' }}>Festive Finds!</p>
+                    <p className='smilingFestiMainTitle3' style={{ color: 'white', margin: '0px', fontSize: '13px' }}>
                         Explore your jewelry for upcoming holiday!
                     </p>
                     <div >

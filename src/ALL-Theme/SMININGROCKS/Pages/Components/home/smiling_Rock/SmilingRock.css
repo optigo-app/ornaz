@@ -88,6 +88,10 @@
         width: 70%!important;
         margin-inline: 5px!important;
     }
+
+    .smilingTitle{
+        margin: 0px!important;
+    }
 }
 
 @media screen and (max-width: 650px) {
@@ -98,10 +102,8 @@
         align-items: center;
     }
     .smilingRockBox {
-        width: 50%;
-
-    }
-    .smilingRockMobileDffres{
+        width: 35%!important;
         display: flex!important;
+        flex-direction: initial!important;
     }
 }
