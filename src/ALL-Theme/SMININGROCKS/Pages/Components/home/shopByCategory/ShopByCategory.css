@@ -39,4 +39,8 @@
         height: 90%!important;
         width: 100%!important;
     }
+
+    .shopbycategoryTitle{
+        font-size: 30px!important;
+    }
 }
