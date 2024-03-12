@@ -313,7 +313,7 @@ const QuotationQuote = () => {
                     let dataa = createData(i + 1, e?.Date, e?.SKUNo, e?.TotalDesign, e?.Amount);
                     rows?.push(dataa)
                 });
-                console.log(rows);
+                // console.log(rows);
                 setData(rows);
                 setFilterData(rows);
             } else {
