@@ -37,8 +37,8 @@ const Campaign = () => {
           }}
           className="campaignDesc"
         >
-          For every purchase you make, Smiling Rocks Foundation will donate 3%
-          to your choice of the following charity categories. Smiling Rocks
+          For every purchase you make, Sonasons Foundation will donate 3%
+          to your choice of the following charity categories. Sonasons
           Foundation is an organization qualified by the Internal Revenue
           Service as a tax exempt charitable foundation under 501(c)(3) of the
           Internal Revenue Code.

@@ -1131,7 +1131,7 @@ export default function Header() {
             }}
           >
             <a href="/">
-              <img src={titleImg} />
+              <img src={titleImg} className="MainlogogMobileImage"/>
             </a>
           </div>
           <div
@@ -1265,7 +1265,7 @@ export default function Header() {
                 }}
               >
                 <a href="/">
-                  <img src={titleImg} />
+                  <img src={titleImg} className="MainlogogMobileImage"/>
                 </a>
               </div>
               {islogin === "false" && (

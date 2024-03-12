@@ -1071,7 +1071,7 @@ const ProdDetail = () => {
                   <p>DIAMONDS ARE FOR EVERYONE ®</p>
 
                   <p>
-                    Smiling Rocks aims to create a Chain of Smile and will
+                    Sonasons aims to create a Chain of Smile and will
                     donate 3% of your purchase to your choice of charity during
                     check-out.
                     <br /> <u style={{ cursor: "pointer" }}>Learn More</u>

@@ -53,7 +53,7 @@ export default function AboutUs() {
                     <div className='about-daimondBoxMain'>
                         <div className='about-daimondBox1'>
                             <p style={{ fontSize: '25px', color: '#7d7f85', fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif' }}>Wear a Smile</p>
-                            <p style={{ textAlign: 'center', color: '#7d7f85', fontSize: '13px' }}>We want you to find reasons to smile in your everyday, from the time leaving your house to the endless experience of the day, we want you to be comfortable and confident wearing Smiling Rocks. Our unique designs and one-of-a-kind styles will bring your personality to a different level. Our sustainable, affordable and conflict-free lab grown diamond jewelry is perfect for your pocket! Love who you are, the way you look and the way you smile.</p>
+                            <p style={{ textAlign: 'center', color: '#7d7f85', fontSize: '13px' }}>We want you to find reasons to smile in your everyday, from the time leaving your house to the endless experience of the day, we want you to be comfortable and confident wearing Sonasons. Our unique designs and one-of-a-kind styles will bring your personality to a different level. Our sustainable, affordable and conflict-free lab grown diamond jewelry is perfect for your pocket! Love who you are, the way you look and the way you smile.</p>
                         </div>
                         <div className='about-daimondBox2'>
                             <img src='https://smilingrocks.com/cdn/shop/files/0W9A2307-Modifier.jpg?v=1613679005' className='about-daimondBox2-image' />
@@ -66,7 +66,7 @@ export default function AboutUs() {
                         </div>
                         <div className='about-daimondBox1'>
                             <p style={{ fontSize: '25px', color: '#7d7f85', fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif' }}>Wear a Smile</p>
-                            <p style={{ textAlign: 'center', color: '#7d7f85', fontSize: '13px' }}>We want you to find reasons to smile in your everyday, from the time leaving your house to the endless experience of the day, we want you to be comfortable and confident wearing Smiling Rocks. Our unique designs and one-of-a-kind styles will bring your personality to a different level. Our sustainable, affordable and conflict-free lab grown diamond jewelry is perfect for your pocket! Love who you are, the way you look and the way you smile.</p>
+                            <p style={{ textAlign: 'center', color: '#7d7f85', fontSize: '13px' }}>We want you to find reasons to smile in your everyday, from the time leaving your house to the endless experience of the day, we want you to be comfortable and confident wearing Sonasons. Our unique designs and one-of-a-kind styles will bring your personality to a different level. Our sustainable, affordable and conflict-free lab grown diamond jewelry is perfect for your pocket! Love who you are, the way you look and the way you smile.</p>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@ export default function AboutUs() {
                     <div>
                         <p style={{ fontSize: '25px', color: '#7d7f85', textAlign: 'center', fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif', marginTop: '80px' }}>Founders</p>
                         <div className='about-foundersDesc'>
-                            <p style={{ fontSize: '14px', color: '#7d7f85', width: '600px', textAlign: 'center', letterSpacing: '1px' }}>We are on a mission to make this world a better place by first starting with us and our business. Zulu Ghevriya and Manish Jiwani are self-made businessmen with over 20 years of experience in the Diamond and Jewelry Industry. Our Lab Men have built this business as an embodiment of their dream and a lifetime goal. They have seen this industry strive but did not feel 100% satisfied with their accomplishment. They wanted to do something for the world, so that they can leave a positive footprint for the next generations. Smiling Rocks is a brand they built that promotes the betterment in communities and preserve our mother nature. They believe Smiling Rocks is the links for the smiles that will pass from the lab to the world.</p>
+                            <p style={{ fontSize: '14px', color: '#7d7f85', width: '600px', textAlign: 'center', letterSpacing: '1px' }}>We are on a mission to make this world a better place by first starting with us and our business. Zulu Ghevriya and Manish Jiwani are self-made businessmen with over 20 years of experience in the Diamond and Jewelry Industry. Our Lab Men have built this business as an embodiment of their dream and a lifetime goal. They have seen this industry strive but did not feel 100% satisfied with their accomplishment. They wanted to do something for the world, so that they can leave a positive footprint for the next generations. Sonasons is a brand they built that promotes the betterment in communities and preserve our mother nature. They believe Sonasons is the links for the smiles that will pass from the lab to the world.</p>
                         </div>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -84,7 +84,7 @@ export default function AboutUs() {
                 </div>
 
                 <div>
-                    <p style={{ fontSize: '30px', color: '#7d7f85', textAlign: 'center', fontFamily : 'FreightDispProMedium-Regular, "Times New Roman", serif' }}>Smiling Rocks Brand Story</p>
+                    <p style={{ fontSize: '30px', color: '#7d7f85', textAlign: 'center', fontFamily : 'FreightDispProMedium-Regular, "Times New Roman", serif' }}>Sonasons Brand Story</p>
                     <div className='about-foundersDesc'>
                         <p style={{ fontSize: '14px', color: '#7d7f85', width: '700px', textAlign: 'center', letterSpacing: '1px' }}>A journey of our diamonds, our mission and our passion with your support and purchase. Watch a short video about us and our mission that we promised together with you. </p>
                     </div>

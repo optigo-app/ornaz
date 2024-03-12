@@ -30,17 +30,25 @@
 
 @media screen and (max-width: 550px) {
 
+    .shopbycategoryTitle{
+        margin-top: 50px!important;
+    }
+
     .shopByCategoryBox{
         width: 50%!important;
         margin: 5px!important;
     }
 
     .shopByCategoryBoxImg{
-        height: 90%!important;
+        height: 80%!important;
         width: 100%!important;
     }
 
     .shopbycategoryTitle{
         font-size: 30px!important;
+    }
+
+    .shopByCategoryBox{
+        padding: 20px!important;
     }
 }

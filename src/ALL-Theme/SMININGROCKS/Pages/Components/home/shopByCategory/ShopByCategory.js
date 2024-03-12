@@ -18,7 +18,7 @@ export default function ShopByCategory() {
             width: '240px',
             textAlign: 'center'
 
-          }}>Discover Smiling Rocks Fine Jewelry! Brilliant and Better!</p>
+          }}>Discover Sonasons Fine Jewelry! Brilliant and Better!</p>
         </div>
         <div style={{
           display: 'flex',
