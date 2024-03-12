@@ -234,7 +234,6 @@ const QuotationQuote = () => {
                 dateTo: false,
                 search: false,
             }
-            console.log(compareDate?.toString()?.toLowerCase(), (searchValue?.trim()?.toLowerCase()), compareDate?.toString()?.toLowerCase()?.includes?.(searchValue?.trim()?.toLowerCase()));
             if (searchValue !== "") {
                 if (e?.["SrNo"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
                     e?.["SKUNo"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||

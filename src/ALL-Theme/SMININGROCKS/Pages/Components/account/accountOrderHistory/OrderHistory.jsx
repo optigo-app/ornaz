@@ -14,7 +14,7 @@ const OrderHistory = () => {
   const [orderInfo, setOrderInfo] = useState(false);
   const [ukey, setUkey] = useState('');
   const [image_path, setImagePath] = useState('');
-  const [gId, setGid] = useState(false);
+
   // const [itemOffset, setItemOffset] = useState(0);
   // const itemsPerPage = 4;
   // Simulate fetching items from another resources.
@@ -102,6 +102,7 @@ const OrderHistory = () => {
   useEffect(() => {
     getData();
   }, []);
+
   const handleClick = (obj) => {
     setOrderDetails([]);
     if(obj?.TotalQuantity === 0) return ''
@@ -194,8 +195,7 @@ const OrderHistory = () => {
                           {e?.orderno}
                         </div>
                         <div
-                          className={`d-flex align-items-center  ${getStatusColor(
-                            e?.b2c_MasterManagement_ProgressStatusId
+                          className={`d-flex align-items-center  ${getStatusColor(e?.b2c_MasterManagement_ProgressStatusId
                           )} fs-5 fs_small fs_Small_2 pad_Setup`}
                           style={{textTransform:'uppercase'}}
                         >
@@ -248,7 +248,8 @@ const OrderHistory = () => {
                         loaderOH2 ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <div className="p-4 dec_pad">
                         <div className="d-flex flex-wrap align-items-center center_price_2 d_block">
                           {orderDetails?.length > 0 &&
-                            orderDetails?.map((e) => {
+                            orderDetails?.map((el) => {
+                              console.log(el);
                               return (
                                 <div className="container_order_details ">
                                   <div className="_center_img">
@@ -259,9 +260,9 @@ const OrderHistory = () => {
                                     />
                                   </div>
                                   <div className="ps-1 pt-1 text-secondary">
-                                    <div className="fw-bold fs-5 fs_small">{e?.metaltypename} {e?.metalcolorname}</div>
-                                    <div>{e?.designno}</div>
-                                    <div>$ {e?.TotalUnitCostWithDiscount}</div>
+                                    <div className="fw-bold fs-5 fs_small">{el?.metaltypename} {el?.metalcolorname}</div>
+                                    <div>{el?.designno}</div>
+                                    <div className="d-flex"><div className="pe-1" dangerouslySetInnerHTML={{__html:e?.Currencysymbol}}></div> {el?.TotalUnitCostWithDiscount}</div>
                                   </div>
                                 </div>
                               );
