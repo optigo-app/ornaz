@@ -143,12 +143,12 @@ export const accountDetailPage = (pageId) => {
 
 export const accountDetailPages = () => {
     let arr = [
-        { id: 1163, tabLabel: "Quote", tabComp: "QuotationQuote" },
-        { id: 1164, tabLabel: "Job", tabComp: "QuotationJob" },
-        { id: 1157, tabLabel: "Sales", tabComp: "Sales" },
-        { id: 1314, tabLabel: "Sales Report", tabComp: "SalesReport" },
-        { id: 17020, tabLabel: "Design Wise Sales Report", tabComp: "DesignWiseSalesReport" },
-        { id: 1159, tabLabel: "Account Ledger", tabComp: "AccountLedger" }
+        { id: 1163, tabLabel: "Quote", tabComp: "QuotationQuote", compPath: "./QuotationQuote/QuotationQuote" },
+        { id: 1164, tabLabel: "Job", tabComp: "QuotationJob", compPath: "./quotationFilters/QuotationJob" },
+        { id: 1157, tabLabel: "Sales", tabComp: "Sales", compPath: "../sales/Sales/Sales" },
+        { id: 1314, tabLabel: "Sales Report", tabComp: "SalesReport", compPath: "../sales/salesReport/SalesReport" },
+        { id: 17020, tabLabel: "Design Wise Sales Report", tabComp: "DesignWiseSalesReport", compPath: "../sales/DesignWiseSalesReport/DesignWiseSalesReport" },
+        { id: 1159, tabLabel: "Account Ledger", tabComp: "AccountLedger", compPath: "./accountLedger/AccountLedger" }
     ];
 
     let getValArr = [];

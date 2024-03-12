@@ -17,7 +17,7 @@ import SalesReport from '../sales/salesReport/SalesReport';
 import QuotationJob from './quotationFilters/QuotationJob';
 import QuotationQuote from './QuotationQuote/QuotationQuote';
 import Sales from '../sales/Sales/Sales';
-import { accountDetailPage, accountValidation } from '../../../Utils/globalFunctions/GlobalFunction';
+import { accountDetailPage, accountDetailPages, accountValidation } from '../../../Utils/globalFunctions/GlobalFunction';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -67,12 +67,12 @@ const tabIndicator = {
 
 export default function Account() {
 
-
     const [value, setValue] = useState(0);
     const [value1, setValue1] = useState(0);
     const naviagation = useNavigate();
     const setIsLoginState = useSetRecoilState(loginState)
     const navigation = useNavigate();
+    const [accountInner, setAccountInner] = useState(accountDetailPages());
 
 
     const handleChange = (event, newValue) => {
@@ -160,32 +160,44 @@ export default function Account() {
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value1} className='accountTabSection' variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
-                                        {accountDetailPage(1163) && <Tab label="Quote" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />}
+                                        {
+                                            accountInner?.map((e, i) => {
+                                                return <Tab label={e?.tabLabel} {...a11yProps(i)} sx={{ color: "#7d7f85" }} key={i} />
+                                            })
+                                        }
+
+                                        {/* {accountDetailPage(1163) && <Tab label="Quote" {...a11yProps(0)} sx={{ color: "#7d7f85" }} />}
                                         {accountDetailPage(1164) && <Tab label="Job" {...a11yProps(1)} sx={{ color: "#7d7f85" }} />}
                                         {accountDetailPage(1157) && <Tab label="Sales" {...a11yProps(2)} sx={{ color: "#7d7f85" }} />}
                                         {accountDetailPage(1314) && <Tab label="Sales Report" {...a11yProps(3)} sx={{ color: "#7d7f85" }} />}
                                         {accountDetailPage(17020) && <Tab label="Design Wise Sales Report" {...a11yProps(4)} sx={{ color: "#7d7f85" }} />}
-                                        {accountDetailPage(1159) && <Tab label="Account Ledger" {...a11yProps(5)} sx={{ color: "#7d7f85" }} />}
+                                        {accountDetailPage(1159) && <Tab label="Account Ledger" {...a11yProps(5)} sx={{ color: "#7d7f85" }} />} */}
                                     </Tabs>
                                 </Box>
-                                {accountDetailPage(1163) && <CustomTabPanel value={value1} index={0} className="AcountSales">
-                                    <QuotationQuote />
-                                </CustomTabPanel>}
-                                {accountDetailPage(1164) && <CustomTabPanel value={value1} index={1} className="quotationFilters">
-                                    <QuotationJob />
-                                </CustomTabPanel>}
-                                {accountDetailPage(1157) && <CustomTabPanel value={value1} index={2} className="salesPage">
-                                    <Sales />
-                                </CustomTabPanel>}
-                                {accountDetailPage(1314) && <CustomTabPanel value={value1} index={3} className="salesReport">
-                                    <SalesReport />
-                                </CustomTabPanel>}
-                                {accountDetailPage(17020) && <CustomTabPanel value={value1} index={4} className="DesignWiseSalesReport">
-                                    <DesignWiseSalesReport />
-                                </CustomTabPanel>}
-                                {accountDetailPage(1159) && <CustomTabPanel value={value1} index={5}>
-                                    <AccountLedger />
-                                </CustomTabPanel>}
+                                {
+                                    accountInner?.map((e, i) => {
+                                        return <React.Fragment key={i}>
+                                            {e?.id === 1163 && <CustomTabPanel value={value1} index={i} className="AcountSales">
+                                                <QuotationQuote />
+                                            </CustomTabPanel>}
+                                            {e?.id === 1164 && <CustomTabPanel value={value1} index={i} className="quotationFilters">
+                                                <QuotationJob />
+                                            </CustomTabPanel>}
+                                            {e?.id === 1157 && <CustomTabPanel value={value1} index={i} className="salesPage">
+                                                <Sales />
+                                            </CustomTabPanel>}
+                                            {e?.id === 1314 && <CustomTabPanel value={value1} index={i} className="salesReport">
+                                                <SalesReport />
+                                            </CustomTabPanel>}
+                                            {e?.id === 17020 && <CustomTabPanel value={value1} index={i} className="DesignWiseSalesReport">
+                                                <DesignWiseSalesReport />
+                                            </CustomTabPanel>}
+                                            {e?.id === 1159 && <CustomTabPanel value={value1} index={i}>
+                                                <AccountLedger />
+                                            </CustomTabPanel>}
+                                        </React.Fragment>
+                                    })
+                                }
                             </CustomTabPanel>}
 
                             <CustomTabPanel value={value} index={accountValidation() ? 4 : 3}>
