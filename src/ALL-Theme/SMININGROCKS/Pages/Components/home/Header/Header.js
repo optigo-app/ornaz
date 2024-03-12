@@ -1,23 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Header.css'
-// import ring1 from '../../../assets/svg.svg'
 import Tooltip from '@mui/material/Tooltip';
 import { Badge, Dialog, Divider, Drawer, SwipeableDrawer, TextField } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import ContactsIcon from '@mui/icons-material/Contacts';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import SearchIcon from '@mui/icons-material/Search';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import LockIcon from '@mui/icons-material/Lock';
-import i1 from '../../../../lib/consts/Images'
 import { PiStarThin } from "react-icons/pi";
 import { IoSearchOutline } from "react-icons/io5";
 import { ABOUT_US, ACCOUNT, BLOG, CELEBRITY, CUSTERM_SERVICES, ETERNITY_BANDS, FINE_JEWELLERY_GIFTS, FOR_HIM, FREE_INTERNATIONAL_SHIPPING, IMPACT, LAB_GROWN, LIFETIME_WARRANTY, LOGIN, LOGOUT_MESSAGE, LOOK_BOOK, MONEY_BACK_GUARANTEE, PRESS, SHOP } from "../../../../lib/consts/Strings";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiStarFourThin } from "react-icons/pi";
-import { Button } from "react-bootstrap";
 import { IoClose } from "react-icons/io5";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
@@ -381,7 +372,7 @@ export default function Header() {
                   </svg>
                 </a>
               </div>
-              <div
+              {islogin === 'true' && ( <div
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -434,7 +425,7 @@ export default function Header() {
                     }}
                   />
                 </li>
-              </div>
+              </div>)}
             </div>
             <div className="smlingDraweOverlayMain">
               <div className="drawrTitlediv">
@@ -520,32 +511,32 @@ export default function Header() {
                   </li>
                 </ul>
               </div>
-              <div onClick={() => navigation("/impact")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/impact"); }}>
                 <p className="drawrTitle">IMPACT</p>
               </div>
               <div onClick={() => navigation("/celeb")}>
                 <p className="drawrTitle">CELEBRITY</p>
               </div>
-              <div onClick={() => navigation("/press")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/press"); }}>
                 <p className="drawrTitle">PRESS</p>
               </div>
-              <div onClick={() => navigation("/blog")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/blog"); }}>
                 <p className="drawrTitle">BLOG</p>
               </div>
-              <div onClick={() => navigation("/aboutUs")}>
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/aboutUs"); }}>
                 <p className="drawrTitle">ABOUT US</p>
               </div>
-              <div onClick={() => navigation("/labGrowDaimonds")}>
-                <p className="drawrTitle">LAB GROWN DAIMONDS</p>
-              </div>
-              <div onClick={() => navigation("/lookbook")}>
+              {/* <div onClick={() => {toggleDrawerOverlay(); navigation("/labGrowDaimonds");}}>
+               <p className="drawrTitle">LAB GROWN DAIMONDS</p>
+              </div> */}
+              <div onClick={() => { toggleDrawerOverlay(); navigation("/lookbook"); }}>
                 <p className="drawrTitle">LOOKBOOK</p>
               </div>
 
-              {islogin && (
+              {islogin === 'true' && (
                 <div
                   style={{ cursor: "pointer", color: 'white' }}
-                  onClick={() => navigation("/account")}
+                  onClick={() => { toggleDrawerOverlay(); navigation("/account"); }}
                 >
                   <p className="drawrTitle">{ACCOUNT}</p>
                 </div>
@@ -724,7 +715,7 @@ export default function Header() {
               >
                 {LAB_GROWN}
               </li> */}
-              {islogin ? (
+              {islogin === "true" ? (
                 <li
                   className="nav-li-smining"
                   style={{ cursor: "pointer" }}
@@ -741,7 +732,7 @@ export default function Header() {
                   {LOGIN}
                 </li>
               )}
-              {islogin &&
+              {islogin === "true"  &&
                 <>
                   <Badge
                     badgeContent={getWishListCount}
@@ -1003,7 +994,7 @@ export default function Header() {
                 >
                   {LAB_GROWN}
                 </li> */}
-                {islogin ? (
+                {islogin === "true"  ? (
                   <li
                     className="nav-li-smining-fixed"
                     style={{ cursor: "pointer" }}
@@ -1022,7 +1013,7 @@ export default function Header() {
                   </li>
                 )}
 
-                {islogin &&
+                {islogin === "true"  &&
                   <>
                     <Badge
                       badgeContent={getWishListCount}
@@ -1150,10 +1141,10 @@ export default function Header() {
             }}
           >
 
-            {!islogin && (
+            {islogin === "false"  && (
               <li
                 className="nav-li-smining"
-                style={{ cursor: "pointer", color: 'white' }}
+                style={{ cursor: "pointer", color: 'white' ,marginRight: '15px' }}
                 onClick={() => navigation('/LoginOption')}
               >
                 {LOGIN}
@@ -1161,7 +1152,7 @@ export default function Header() {
             )}
 
 
-            {islogin &&
+            {islogin === "true"  &&
               <div style={{ display: 'flex' }}>
                 <Badge
                   badgeContent={getWishListCount}
@@ -1301,11 +1292,12 @@ export default function Header() {
                   </svg>
                 </a>
               </div>
-              {!islogin && (
+              {islogin === "false"  && (
                 <div style={{
                   display: 'flex',
                   justifyContent: 'flex-end',
-                  width: '33.33%'
+                  width: '33.33%',
+                  marginRight: '15px'
                 }}>
                   <li
                     className="nav-li-smining"
@@ -1316,7 +1308,7 @@ export default function Header() {
                   </li>
                 </div>
               )}
-              {islogin &&
+              {islogin === "true" &&
                 <div className="mobileHeaderFixedMobileLastDiv" style={{ display: 'flex' }}>
                   <Badge
                     badgeContent={getWishListCount}
@@ -1349,8 +1341,6 @@ export default function Header() {
 
                     />
                   </li>
-
-
                   <Badge
                     badgeContent={getCartListCount}
                     overlap={"rectangular"}

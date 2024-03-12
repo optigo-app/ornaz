@@ -570,6 +570,11 @@
         display: flex!important;
         justify-content: flex-end!important;
     }
+
+    .cartDrawerMainMobile{
+        width: 100%!important;
+        max-width: 100%!important;
+    }
 }
 
 @media screen and (max-width:599px) {

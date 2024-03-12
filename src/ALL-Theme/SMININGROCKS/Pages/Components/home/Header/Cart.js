@@ -335,6 +335,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                     maxWidth: "40%",
                 },
             }}
+            className='cartDrawerMainMobile'
         >
             {/* <div style={{ position: 'relative' }}> */}
             {isLoading && (

@@ -84,7 +84,7 @@ export default function Account() {
     }
 
     const handleLogout = () => {
-        setIsLoginState(false)
+        setIsLoginState('false')
         localStorage.setItem('LoginUser', 'false');
         localStorage.removeItem('storeInit');
         localStorage.removeItem('loginUserDetail');
@@ -121,7 +121,7 @@ export default function Account() {
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
                                         {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
-                                        <Tab label="CHANGE PASSWORD" {...a11yProps(5)} />
+                                        <Tab label="CHANGE PASSWORD" {...a11yProps(accountValidation() ? 4 : 3)} />
                                     </Tabs>
                                     <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p>
                                 </Box>
@@ -133,7 +133,7 @@ export default function Account() {
                                         <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                                         <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
                                         {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
-                                        <Tab label="CHANGE PASSWORD" {...a11yProps(4)} />
+                                        <Tab label="CHANGE PASSWORD" {...a11yProps(accountValidation() ? 4 : 3)} />
                                     </Tabs>
                                 </Box>
                                 <div onClick={() => alert('dddd')}>
@@ -188,7 +188,7 @@ export default function Account() {
                                 </CustomTabPanel>}
                             </CustomTabPanel>}
 
-                            <CustomTabPanel value={value} index={4}>
+                            <CustomTabPanel value={value} index={accountValidation() ? 4 : 3}>
                                 <div>
                                     <ChangePassword />
                                 </div>
