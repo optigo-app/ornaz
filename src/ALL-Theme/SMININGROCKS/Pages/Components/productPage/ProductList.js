@@ -381,7 +381,9 @@ const ProductList = () => {
 
 
 
-  updateProductsWithMetalColorName()?.forEach((product) => {
+  // updateProductsWithMetalColorName()?.forEach((product) => {
+    // let start = performance.now();
+    productData?.forEach((product) => {
 
     //  let currencyRate = JSON.stringify(localStorage.getItem('CURRENCYCOMBO')) 
      let loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail')) 
@@ -441,12 +443,15 @@ const ProductList = () => {
     // }
 
     if (newPriceData || newPriceData1 || newPriceData2) {
-      product.price = ((newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0));
+      product.price = ((newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0))
     } else {
       product.price = "Not Availabel";
     }
   });
-
+  // let end = performance.now();
+  // let timeTaken = end - start;
+  //       console.log("time","Function took " +
+  //               timeTaken + " milliseconds");
   // console.log(updateProductsWithMetalColorName().map(()=>{    }));
 
   updateProductsWithMetalColorName()?.forEach((prods) => {
@@ -469,6 +474,9 @@ const ProductList = () => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
     navigate("/productdetail");
   };
+
+
+  console.log("productData",productData);
 
 
   const NewFilterData = () => {
@@ -1531,7 +1539,7 @@ const ProductList = () => {
                       <div>
                         <p style={{ fontSize: "12px" }}>
                           {/* {products?.MetalColorName} / {currencySym?.Currencysymbol}{(products?.totalunitcostprice ?? null) + (products?.rd1finalamount ?? null) + (products?.rd2finalamount ?? null)} */}
-                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.price}
+                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{!(products?.price) ? "" : products?.price}
                         </p>
                       </div>
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
