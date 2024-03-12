@@ -17,7 +17,8 @@
     margin-top: 30px;
     height: 60px;
     width: 200px;
-    background-color: white;
+    background-color: gray;
+    color: white;
     cursor: pointer;
     border: none;
 }
@@ -40,5 +41,28 @@
         left: 0;
         transform: translate(0%, 0%)!important;
         text-align: center;
+    }
+
+    .smilingFestiMainTitle1{
+        font-size: 12px!important;
+        font-weight: 500;
+        margin: 0px;
+    }
+
+    .festiveBox{
+        padding-top: 35px!important;
+    }
+
+    .smilingFestiMainTitle2{
+        font-size: 30px!important;
+    }
+
+    .DiscoverBtn{
+        width: 200px!important;
+        height: 50px!important;
+        color: white;
+        background-color: gray;
+        font-weight: 500;
+        font-size: 13px;
     }
 }

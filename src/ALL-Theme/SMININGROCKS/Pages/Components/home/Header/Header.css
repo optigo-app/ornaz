@@ -376,7 +376,7 @@
 }
 
 .smlingDraweOverlayMain {
-    padding-inline: 20px;
+    padding-inline: 10px;
     height: 60%;
     overflow: scroll;
 }
@@ -387,7 +387,7 @@
     font-size: 14px;
     border-bottom: 1px solid white;
     margin: 0px;
-    padding-top: 25px;
+    padding-top: 20px;
 }
 
 .drawrTitlediv {
@@ -532,6 +532,10 @@
 }
 
 @media screen and (max-width:1440px) {
+    
+    .Smining-Top-Header-fixed{
+        margin-inline: 10px!important;
+    }
     .mobileHeaderSmining {
         display: block!important;
         background-color: rgb(192, 187, 177)!important;
@@ -559,6 +563,31 @@
 
     .smiling-cartBoxImg {
         width: 60%;
+    }
+
+    .mobileHeaderFixedMobileLastDiv{
+        width: 45%!important;
+        display: flex!important;
+        justify-content: flex-end!important;
+    }
+
+    .cartDrawerMainMobile{
+        width: 100%!important;
+        max-width: 100%!important;
+    }
+
+    .mobileViewFirstDiv1{
+        width: 20%!important;
+    }
+
+    .mobileViewFirstDiv2{
+        width: 50%!important;
+        display: flex!important;
+        justify-content: center!important;
+        align-items: center!important;
+    }
+    .mobileViewFirstDiv3{
+        width: 25%!important;
     }
 }
 
@@ -624,11 +653,39 @@
     }
 
     .smilingMobileSubDiv{
-        padding: 4px!important;
+        padding-top: 15px!important;
+        padding-inline: 15px!important;
     }
 
     .Smining-Top-Header-fixed{
         margin-inline: 0px!important;
+    }
+
+    .smilingHeaderWhishlistIcon{
+        display: none!important;
+    }
+    
+    .mobileViewSmilingTop1Icone{
+        display: none!important;
+    }
+    .mobileViewSmilingTop2Icone{
+        display: none!important;
+    }
+
+    .PiStarThinTopIcone{
+        display: none!important;
+    }
+    .IoSearchOutlineTopIcone{
+        display: none!important;
+    }
+
+    .centerSVGMobileImage{
+        height: 60px!important;
+        width: 120%!important;
+    }
+
+    .MainlogogMobileImage{
+        width: 150px!important;
     }
 }
 
@@ -652,6 +709,19 @@
         width: 45%!important;
     }
 
+    .smlingTopSerachOver{
+        margin: 0px!important;
+    }
+
+    .drawrTitle{
+        font-size: 12px!important;
+        letter-spacing: 0.5px;
+    }
+
+    .drawrTitlem{
+        font-size: 12px!important;
+        letter-spacing: 0.5px;
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -662,11 +732,8 @@
     .muIconeMobileHeader{
         font-size: 30px!important;
     }
-
-    .centerSVGMobileImage{
-        height: 60px!important;
-        width: 120%!important;
-    }
+   
+ 
 
     .mobileViewSmilingTop1Icone{
         height: 18px!important;
@@ -680,8 +747,8 @@
     }
 
     .mobileViewSmilingTop3Icone{
-        height: 18px!important;
-        width: 18px!important;
+        height: 25px!important;
+        width: 25px!important;
     }
 
  

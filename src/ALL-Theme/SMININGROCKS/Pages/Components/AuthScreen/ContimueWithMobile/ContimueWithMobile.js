@@ -73,7 +73,7 @@ export default function ContimueWithMobile() {
     };
 
     return (
-        <div style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+        <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
             {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />
@@ -88,14 +88,18 @@ export default function ContimueWithMobile() {
                         fontSize: '40px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }}>Continue With Mobile</p>
+                    }} 
+                    className='AuthScreenMainTitle'
+                    >Continue With Mobile</p>
                     <p style={{
                         textAlign: 'center',
                         marginTop: '-60px',
                         fontSize: '15px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }}>We'll check if you have an account, and help create one if you don't.</p>
+                    }}
+                    className='AuthScreenSubTitle'
+                    >We'll check if you have an account, and help create one if you don't.</p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField
@@ -116,7 +120,7 @@ export default function ContimueWithMobile() {
                             helperText={errors.mobileNo}
                         />
                         <button className='submitBtnForgot' onClick={handleSubmit}>SUBMIT</button>
-                        <p className='cancleForgot'>CANCEL</p>
+                        <p className='cancleForgot' onClick={() => navigation('/LoginOption')}>CANCEL</p>
                     </div>
                     <Footer />
                 </div>

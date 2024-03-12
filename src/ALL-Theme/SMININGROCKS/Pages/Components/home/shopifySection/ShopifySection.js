@@ -20,7 +20,7 @@ export default function ShopifySection() {
         {
             id: 1,
             Title: 'Carbon For Carbon',
-            Decription: 'Smiling Rocks has launched Carbon For Carbon campaign and is working with charity partners to plant trees and improve the environment impact of unnecessary carbon usage.',
+            Decription: 'Sonasons has launched Carbon For Carbon campaign and is working with charity partners to plant trees and improve the environment impact of unnecessary carbon usage.',
             Link: 'LISTEN NOW',
             images: image2
         },
@@ -34,21 +34,21 @@ export default function ShopifySection() {
         {
             id: 3,
             Title: 'Meet The Founders',
-            Decription: 'The founders of Smiling Rocks have a mission to spread smiles through supporting different charity organizations.',
+            Decription: 'The founders of Sonasons have a mission to spread smiles through supporting different charity organizations.',
             Link: 'DISCOVER',
             images: image4
         },
         {
             id: 4,
             Title: 'Featured In',
-            Decription: 'Check out the press coverage of Smiling Rocks by top media in the world',
+            Decription: 'Check out the press coverage of Sonasons by top media in the world',
             Link: 'DISCOVER',
             images: image5
         },
         {
             id: 5,
-            Title: 'Listen To Smiling Rocks Podcast',
-            Decription: 'Tune into Smiling Rocks podcast and join the Smiling Community. Here we will share thoughts with guest speakers on jewelry industry and sustainability.',
+            Title: 'Listen To Sonasons Podcast',
+            Decription: 'Tune into Sonasons podcast and join the Smiling Community. Here we will share thoughts with guest speakers on jewelry industry and sustainability.',
             Link: 'LISTEN NOW',
             images: image6
         },
@@ -62,7 +62,7 @@ export default function ShopifySection() {
                             <div className='shopifyDesc'>
                                 <p className='shopifyTitle'>{data.Title}</p>
                                 <p className='shopifyDescription'>{data.Decription}</p>
-                                <p style={{ fontSize: '12px', fontWeight: 500, letterSpacing: '1px' }}>{data.Link}</p>
+                                <p style={{ fontSize: '12px', fontWeight: 500, letterSpacing: '1px', color: '#7d7f85' }}>{data.Link}</p>
                             </div>
                             <div className='shopifyMainImage'>
                                 <img src={data.images} style={{ height: '100%',width:'100%'}} />

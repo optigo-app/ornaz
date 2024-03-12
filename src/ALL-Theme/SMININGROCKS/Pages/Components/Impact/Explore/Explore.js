@@ -17,7 +17,7 @@ const Explore = () => {
             />
             <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', gap: '10px', margin: '60px 0px 90px 0px' }}>
               <h3 style={{ fontFamily: "FreightDisp Pro Medium" }}>About Us</h3>
-              <p className='smilingExpolerBoxDesc' style={{ width: '420px', fontFamily: "TT Commons, sans-serif", fontSize: '13px', textAlign: 'center' }}>The founders of Smiling Rocks have a mission to spread smiles through supporting different charity organizations.</p>
+              <p className='smilingExpolerBoxDesc' style={{ width: '420px', fontFamily: "TT Commons, sans-serif", fontSize: '13px', textAlign: 'center' }}>The founders of Sonasons have a mission to spread smiles through supporting different charity organizations.</p>
               <a href="#" style={{ textDecoration: 'none', fontFamily: "TT Commons, sans-serif", fontSize: '12px', letterSpacing: '1px', fontWeight: '600' }}>LEARN MORE</a>
             </div>
           </div>

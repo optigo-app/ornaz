@@ -49,7 +49,7 @@ export default function Footer() {
                         fontSize: '12px',
                         fontWeight: 500,
                         marginInline:'15px'
-                    }}>© 2023, Smiling Rocks</p>
+                    }}>© 2023, Sonasons</p>
 
                     <p style={{
                         color: '#7d7f85',

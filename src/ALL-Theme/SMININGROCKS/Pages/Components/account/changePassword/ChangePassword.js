@@ -119,7 +119,6 @@ export default function ChangePassword() {
                 const combinedValue = JSON.stringify({
                     oldpassword: `${hashedOldPassword}`, newpassword: `${hashedPassword}`, confirmpassword: `${hashedConfirmPassword}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerID}`
                 });
-                console.log('combinedValuecombinedValue', combinedValue);
                 const encodedCombinedValue = btoa(combinedValue);
                 const body = {
                     "con": `{\"id\":\"\",\"mode\":\"CHANGEPASS\",\"appuserid\":\"${email}\"}`,
@@ -128,7 +127,6 @@ export default function ChangePassword() {
                 }
                 const response = await CommonAPI(body);
 
-                console.log('responseresponseresponse', response);
 
                 if (response.Data.rd[0].stat === 1) {
                     localStorage.setItem('LoginUser', 'false');

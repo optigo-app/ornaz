@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import "./accountledgerexcel.css";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import { useState } from "react";
 
 const AccountLedgerExcel = () => {
   
     const arr = [1, 2, 3, 4, 5];
+  const [excelData, setExcelData] = useState(null);
 
     //  useEffect(() => {
     //   // Simulate click on the download button when the component mounts
@@ -12,7 +14,13 @@ const AccountLedgerExcel = () => {
     //   downloadButton.click();
     // // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, []);
+
+    useEffect(() => {
+      const obj = JSON.parse(localStorage.getItem('excelData'))
+      setExcelData(obj);
+    }, [])
     
+    console.log(excelData);
   
   return (
     <>

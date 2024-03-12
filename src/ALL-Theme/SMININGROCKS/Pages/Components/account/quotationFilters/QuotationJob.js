@@ -224,7 +224,6 @@ const QuotationJob = () => {
   };
 
   const handleSearch = (eve, searchValue, fromDatess, todatess, metalPurities, MetalColors, categories, statuss, orderPromDate) => {
-    console.log("kasjhdjkashdjhsjd", statuss?.toLowerCase());
     let fromdates = `${fromDatess?.["$y"]}-${checkMonth(fromDatess?.["$M"])}-${fromDatess?.["$D"]}`
     let todates = `${todatess?.["$y"]}-${checkMonth(todatess?.["$M"])}-${todatess?.["$D"]}`
     let filteredData = [];
@@ -271,7 +270,6 @@ const QuotationJob = () => {
         let fromdat = moment(fromdates);
         let todat = moment(todates);
         let cutDat = moment(cutDate);
-        console.log(fromdates, todates, cutDate);
         const isBetween = cutDat.isBetween(fromdat, todat);
         if (isBetween) {
           flags.dateTo = true;
@@ -320,7 +318,6 @@ const QuotationJob = () => {
   }
 
   const resetAllFilters = (eve) => {
-    console.log(eve);
     setOrderProm("order");
     setFromDate(null);
     setToDate(null);
@@ -340,7 +337,6 @@ const QuotationJob = () => {
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
-    console.log(property, isAsc);
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
@@ -432,7 +428,6 @@ const QuotationJob = () => {
         setCategory(allCategory[0]?.value);
         setMetalColor(allMetalColor[0]?.value);
         setMetalPurity(allMetalPurity[0]?.value);
-        console.log(datass);
         setData(datass);
         setFilterData(datass);
       } else {
