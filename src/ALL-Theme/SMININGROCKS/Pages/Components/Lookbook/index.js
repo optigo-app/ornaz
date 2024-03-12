@@ -53,7 +53,7 @@ const index = () => {
             }}
             className='lookBookMainDesc'
           >
-            Smiling Rocks Guide to Style our Lab Grown Diamond Collections!
+            Sonasons Guide to Style our Lab Grown Diamond Collections!
           </p>
         </div>
         <div

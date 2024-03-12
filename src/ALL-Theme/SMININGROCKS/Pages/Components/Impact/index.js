@@ -98,13 +98,13 @@ const index = () => {
               }}
               className="quotes-div2Descript"
             >
-              “Creating Smiling Rocks has been our dream and life mission as our
+              “Creating Sonasons has been our dream and life mission as our
               way of spreading smiles around the world and to help make our
               world a better place.”
             </p>
             <p style={{ color: "white" }}>
               <small>
-                <i>-Smiling Rocks Founders</i>
+                <i>-Sonasons Founders</i>
               </small>
             </p>
           </div>

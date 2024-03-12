@@ -41,4 +41,26 @@
         transform: translate(0%, 0%)!important;
         text-align: center;
     }
+
+    .smilingFestiMainTitle1{
+        font-size: 13px!important;
+        font-weight: 500;
+        margin: 0px;
+    }
+
+    .festiveBox{
+        padding-top: 35px!important;
+    }
+
+    .smilingFestiMainTitle2{
+        font-size: 35px!important;
+    }
+
+    .DiscoverBtn{
+        width: 200px!important;
+        height: 50px!important;
+        color: #7d7f85;
+        font-weight: 500;
+        font-size: 13px;
+    }
 }
