@@ -95,6 +95,14 @@
     }
 }
 
+
+@media screen and (max-width: 550px) {
+
+    .prod_img{
+        height: auto!important;
+    }
+}
+
 .inputCheck:checked {
     background-color: '#7f7d85';
 }

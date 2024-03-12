@@ -225,6 +225,7 @@ const ProductList = ({PageType}) => {
               border: "1px solid #283045",
               padding: "10px 25px",
             }}
+            className='backToTopBtn'
           >
             BACK TO TOP
           </button>

@@ -44,8 +44,6 @@ export default function BlogHeader() {
 
   const toggleOverlay = () => {
     clearTimeout(timer)
-    console.log(inputRef.current);
-
     if (inputRef.current !== null) {
       inputRef.current.focus();
     }

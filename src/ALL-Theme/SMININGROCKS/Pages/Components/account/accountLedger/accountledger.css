@@ -1,0 +1,61 @@
+.fs_al{
+    font-size: 15px;
+}
+.fs_al2{
+    font-size: 14px;
+}
+.eeal{
+    font-size: 12px;
+    width: 70%;
+}
+.fs_td{
+    font-size: 13px;
+}
+._centeral{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.w_Al{
+    width: 7.14%;
+}
+.daybtn{
+    height: 35px;
+    width: 35px;
+}
+.daybtn:hover{
+    background-color: rgb(210, 213, 213);
+}
+.selected {
+    border: 1px solid darkgray !important;
+}
+.toggleBtn{
+    border: none;
+    font-size: 14px;
+    background-color: rgb(193, 232, 232);
+    font-weight: 500;
+    width: 100%;
+    outline: none !important;
+    border-radius: 4px;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.bal_Amt_ac{
+    padding: 8px;
+    border: 1px solid #989898;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
+/* .header_al{
+    display: none;
+} */
+
+/* @media print {
+    .header_al{
+        display: normal;
+    }   
+    
+} */
