@@ -141,6 +141,25 @@ export const accountDetailPage = (pageId) => {
 }
 
 
+export const accountDetailPages = () => {
+    let arr = [
+        { id: 1163, tabLabel: "Quote", tabComp: "QuotationQuote" },
+        { id: 1164, tabLabel: "Job", tabComp: "QuotationJob" },
+        { id: 1157, tabLabel: "Sales", tabComp: "Sales" },
+        { id: 1314, tabLabel: "Sales Report", tabComp: "SalesReport" },
+        { id: 17020, tabLabel: "Design Wise Sales Report", tabComp: "DesignWiseSalesReport" },
+        { id: 1159, tabLabel: "Account Ledger", tabComp: "AccountLedger" }
+    ];
+
+    let getValArr = [];
+    arr?.forEach((e, i) => {
+        let getVal = JSON?.parse(localStorage?.getItem("myAccountFlags"))?.find(ele => ele?.pageid === e?.id);
+        getVal !== undefined && (getVal?.isvisible === 1 && getValArr?.push(e))
+        // getValArr?.push({ label: e?.tabLabel,id: e?.id, comp: e?.tabComp, value: false }))  
+        // getValArr?.push({ label: e?.tabLabel,id: e?.id, comp: e?.tabComp, value: false });
+    });
+    return getValArr;
+}
 export function formatAmount(amount) {
     const formattedAmount = parseFloat(+amount).toLocaleString('en-IN', {
       minimumFractionDigits: 2,
