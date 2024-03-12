@@ -492,29 +492,29 @@ const AccountLedger = () => {
         <div className='fs-4 fw-bold text-center text-secondary my-2 py-2'>Ledger</div>
         <div>
             <div className='border'>
-            <div className='p-2 ps-4 border-bottom' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div>
+            <div className='p-2 ps-4 border-bottom fs_Al_mq' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div>
 
                 {/* <div className='p-2 ps-4 border-bottom' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div> */}
                 
-                <div className='d-flex justify-content-between align-items-center'>
+                <div className='d-flex justify-content-between align-items-center flex_col_Al'>
                 {
-                    filterVisible ? <div className='fs_al2 p-2 d-flex justify-content-start w-100 align-items-center'>
-                    <div><input type="date" name="date" id="startdate" className='mx-2 p-1' value={startDate} onChange={(e) => setStartDate(e.target.value)} title='find data'  />
+                    filterVisible ? <div className='fs_al2 p-2 d-flex justify-content-start  align-items-center flex-wrap'>
+                    <div className='mb-2'><input type="date" name="date" id="startdate" className='mx-2 p-1 mb-2' value={startDate} onChange={(e) => setStartDate(e.target.value)} title='find data'  />
                     To 
-                    <input type="date" name="date" id="enddate" className='mx-2 p-1'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /><SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/></div>
-                    <div><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div>
+                    <input type="date" name="date" id="enddate" className='mx-2 p-1 mb-2'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /><SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/></div>
+                    <div className='mb-2'><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div>
                     {/* <div onClick={() => navigate("/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
                     {/* <div onClick={() => handleExcel()}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
                     {/* <div onClick={() => navigate("/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div> */}
                     {/* <div onClick={() => window.open("http://localhost:3000/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#printtable" className='eeal' /></div> */}
                     <div className='d-flex'>
-                        <button className='ms-2 mx-1 btn border p-2 py-0 daybtn' title='previous' onClick={() => handlePreviousDays()}>&lt;</button>
-                        <div className='mx-2 '>
+                        <button className='ms-2 mx-1 btn border p-2 py-0 daybtn mb-2' title='previous' onClick={() => handlePreviousDays()}>&lt;</button>
+                        {/* <div className='mx-2 mb-2 d-flex flex-wrap'> */}
                             {[30, 60, 90].map((days) => (
-                                <button key={days} className={`mx-1 btn border p-2 py-0 daybtn ${selectedDays === days ? 'selected' : ''}`} title={`${days} days`} onClick={() => handleDays(days)}>{days}</button>
+                                <button key={days} className={`mx-1 btn border p-2 py-0 daybtn mb-2 ${selectedDays === days ? 'selected' : ''}`} title={`${days} days`} onClick={() => handleDays(days)}>{days}</button>
                             ))}
-                        </div>
-                        <button className='ms-2 mx-1 btn border p-2 py-0 daybtn me-3' title='next' onClick={() => handleNextDays()}>&gt;</button>
+                        {/* </div> */}
+                        <button className='ms-2 mx-1 btn border p-2 py-0 daybtn me-3 mb-2' title='next' onClick={() => handleNextDays()}>&gt;</button>
                     </div>
                     {/* <div>
                         <select name="status" className='p-1' id="status" value={selectedStatus} onChange={(e) => handleSelect(e)}>
@@ -524,25 +524,25 @@ const AccountLedger = () => {
                             <option value="0">Verified</option>
                         </select>
                     </div> */}
-                    <div className='mx-1 ms-4'>
+                    <div className='mx-1 ms-4 mb-2'>
                         {/* <input type="checkbox" name="duedate" checked={dueDateWise} value={dueDateWise} id="duedate" onChange={() => setDueDateWise(!dueDateWise)} /><label htmlFor="duedate" className='user-select-none ps-1'>Due Date Wise</label> */}
                     </div>
-                </div> : <div className='w-100'></div>
+                </div> : <div className=''></div>
                 }
-                <div className='m-2' style={{width:'10%'}} onClick={toggleFilter}> { !filterVisible ? <button className='toggleBtn'>Show More</button> : <button className='toggleBtn'>Show Less</button> } </div>
+                <div className='m-2' style={{minWidth:'max-content'}} onClick={toggleFilter}> { !filterVisible ? <button className='toggleBtn'>Show More</button> : <button className='toggleBtn'>Show Less</button> } </div>
                 {/* <ExpandMoreIcon sx={{cursor:'pointer'}} titleAccess='Show' /> */}
                 {/* <ExpandLessIcon sx={{cursor:'pointer'}} titleAccess='Hide'/> */}
                 </div>
                 
                 <div className='text-secondary fs_al d-flex justify-content-between align-items-start p-2 my-3'>
-                    <div className='d-flex justify-content-start align-items-start'>
-                        <div className='px-4'>Balance Gold : <span className='bal_Amt_ac'>
+                    <div className='d-flex justify-content-start align-items-start flex-wrap'>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2 '><span>Balance Gold :</span> <span className='bal_Amt_ac'>
                             { (((resultTotal?.debit_metalgold  + Math.abs(debit_mg_diff) ) - ( resultTotal?.credit_metalgold + Math.abs(credit_mg_diff)))?.toFixed(3)) }
                             { ((resultTotal?.debit_metalgold + Math.abs(debit_mg_diff)) - (resultTotal?.credit_metalgold + Math.abs(credit_mg_diff))) > 0 ? 'Dr' : 'Cr' }</span></div>
-                        <div className='px-4'>Balance Diam. : <span className='bal_Amt_ac'>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Diam. :</span> <span className='bal_Amt_ac'>
                             { (((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3)) }
                             { ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt)) > 0 ? 'Dr' : 'Cr' }</span></div>
-                        <div className='px-4'>Balance Amount : <span className='bal_Amt_ac'>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Amount :</span> <span className='bal_Amt_ac'>
                             {/* { (formatAmount(resultTotal?.debit_totalcurrency - resultTotal?.credit_totalcurrency))}&nbsp;{(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)) ? 'Dr' : 'Cr' ) }</span></div> */}
                             { (formatAmount((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)))}&nbsp;
                             {(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)) ? 'Dr' : 'Cr' ) }</span></div>
@@ -550,7 +550,7 @@ const AccountLedger = () => {
                 </div>
                 
                 {
-                    loaderAC ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px", paddingBottom: "30px" }}><CircularProgress className='loadingBarManage' /></Box> : <div className='m-2'>
+                    loaderAC ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px", paddingBottom: "30px" }}><CircularProgress className='loadingBarManage' /></Box> : <div className='m-2 overflow-auto'>
                     <table className='w-100'>
                         <thead className='w-100 border'>
                             <tr className='w-100 border-bottom fs_td'>
