@@ -4,7 +4,7 @@ import './SmilingRock.css'
 export default function SmilingRock() {
     return (
         <div style={{ paddingBlock: '5%' }}>
-            <p className='smilingTitle'>The Smiling Rocks Difference</p>
+            <p className='smilingTitle'>The Sonasons Difference</p>
             <div className='smilingRock'>
                 <div className='smilingRockBox'>
                     <div>
@@ -30,7 +30,7 @@ export default function SmilingRock() {
                         <img class="simple-card__img " src="//smilingrocks.com/cdn/shop/files/icon-laser_a4b2a25b-7688-4da4-95ed-135c93527c9b_43x.png?v=1613678796" srcset="//smilingrocks.com/cdn/shop/files/icon-laser_a4b2a25b-7688-4da4-95ed-135c93527c9b_43x.png?v=1613678796 1x, //smilingrocks.com/cdn/shop/files/icon-laser_a4b2a25b-7688-4da4-95ed-135c93527c9b_86x.png?v=1613678796 2x" alt="" />
                     </div>
                     <div>
-                        <p className='smilingBoxName'>Laser inscribed diamonds with Smiling Rocks logo</p>
+                        <p className='smilingBoxName'>Laser inscribed diamonds with Sonasons logo</p>
                         <p className='learnMore'>LEARN MORE</p>
                     </div>
 

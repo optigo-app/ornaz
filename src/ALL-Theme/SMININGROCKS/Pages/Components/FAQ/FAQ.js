@@ -16,30 +16,30 @@ export default function FAQ() {
 
                 <div className='smiling-FaqMain'>
                     <div className='smiling-FaqSubMain'>
-                        <p className='smiling-FaqMainTitle' style={{ paddingTop: '110px' }}>Smiling Rocks World</p>
-                        <p className='smiling-FaqMainSubTitle'>How Are Smiling Rocks diamonds made?</p>
+                        <p className='smiling-FaqMainTitle' style={{ paddingTop: '110px' }}>Sonasons World</p>
+                        <p className='smiling-FaqMainSubTitle'>How Are Sonasons diamonds made?</p>
                         <p className='smiling-FaqMainDesc'>Lab-grown diamonds are diamonds with the same crystal structure, chemical composition, and physical properties as the mined rocks: carbon atoms arranged in a cubic crystal structure. They are grown in labs, with advanced technological processes that stimulate the same conditions under which mined diamonds develop when they form in the mantle, beneath the Earth’s crust
                             <br />
                             <br />
-                            Here at Smiling Rocks we proudly offer only laboratory-grown, socially and environmentally conscious diamonds in our fine jewelry.
+                            Here at Sonasons we proudly offer only laboratory-grown, socially and environmentally conscious diamonds in our fine jewelry.
                             <br />
                             <br />
 
                             This makes our diamonds brighter, and stronger and more responsible. Our diamonds are dedicated to sustainable smiles.</p>
                         <br />
 
-                        <p className='smiling-FaqMainSubTitle'>Cs of Smiling Rocks </p>
-                        <p className='smiling-FaqMainDesc'>Here in Smiling rocks, we believe in building a chain of smile with our Customers, Colleagues, Community, because we Care. </p>
+                        <p className='smiling-FaqMainSubTitle'>Cs of Sonasons </p>
+                        <p className='smiling-FaqMainDesc'>Here in Sonasons, we believe in building a chain of smile with our Customers, Colleagues, Community, because we Care. </p>
                         <p className='smiling-FaqMainDesc'>To get more detailed information please visit Our Diamonds page.</p>
 
                         <p className='smiling-FaqMainSubTitle'>Is my diamond Laser Inscribed?</p>
-                        <p className='smiling-FaqMainDesc'>Yes, all Smiling Rocks diamonds are laser-inscribed with our logo. Also, if you are purchasing a loose diamond, that's one carat up, the stones will be inscribed with an IGI certification number.</p>
+                        <p className='smiling-FaqMainDesc'>Yes, all Sonasons diamonds are laser-inscribed with our logo. Also, if you are purchasing a loose diamond, that's one carat up, the stones will be inscribed with an IGI certification number.</p>
 
                         <p className='smiling-FaqMainSubTitle'>I’d like to purchase loose diamonds in large quantity, how can I do so?</p>
                         <p className='smiling-FaqMainDesc'>If you are interested in working with us, please contact order@smilingrocks.com and we will assist your requests accordingly.</p>
 
                         <p className='smiling-FaqMainSubTitle'>Can I choose to donate with each purchase?</p>
-                        <p className='smiling-FaqMainDesc'>Yes, we have set up a channel for the charitable distribution of funds so that 10% of the proceeds from your purchase is contributed to Smiling Rocks Foundation, Inc. (the “Foundation”). The Foundation will be responsible for dispersing the funds to the specific charities that you choose when making a purchase from the website. While 10% of your purchase is ultimately contributed to the charitable organizations, tax deductions are not available to each individual customer since the customer’s donations are not directly contributed.</p>
+                        <p className='smiling-FaqMainDesc'>Yes, we have set up a channel for the charitable distribution of funds so that 10% of the proceeds from your purchase is contributed to Sonasons Foundation, Inc. (the “Foundation”). The Foundation will be responsible for dispersing the funds to the specific charities that you choose when making a purchase from the website. While 10% of your purchase is ultimately contributed to the charitable organizations, tax deductions are not available to each individual customer since the customer’s donations are not directly contributed.</p>
 
                         <p className='smiling-FaqMainSubTitle'>What are the charity sectors I can donate to?</p>
                         <p className='smiling-FaqMainDesc'>You can choose for the Foundation to disperse the donation funds from your purchase to the following 4 charity sectors: Medical Support, Environmental Support,  Social Support, and Animal Protection. Check out more via our Impact Page.</p>
@@ -63,13 +63,13 @@ export default function FAQ() {
                             color: '#7d7f85',
                             fontWeight: 700
                         }}>Jewelry Return Policy</p>
-                        <p className='smiling-FaqMainDesc'>We offer free returns within 30 days of item delivery. Items must be in their original condition, with tags intact and unworn. It should be returned in their original packaging as shipped. Smiling Rocks reserves the right to reject any returns that do not meet the conditions specified above. In such case, we will return these items to you. If items are found faulty or defective, it should be returned in their original packaging. Items with special order or request are not returnable.</p>
+                        <p className='smiling-FaqMainDesc'>We offer free returns within 30 days of item delivery. Items must be in their original condition, with tags intact and unworn. It should be returned in their original packaging as shipped. Sonasons reserves the right to reject any returns that do not meet the conditions specified above. In such case, we will return these items to you. If items are found faulty or defective, it should be returned in their original packaging. Items with special order or request are not returnable.</p>
 
                         <p style={{
                             color: '#7d7f85',
                             fontWeight: 700
                         }}>Diamond Return Policy</p>
-                        <p className='smiling-FaqMainDesc'>We offer free returns within 30 days of item delivery. If you wish to return, the diamond must be in its original condition and shipped with the grading reports. If the diamond report is not returned, you will be charged for $150 USD as a replacement cost. Please return the diamond in its original packaging as shipped. Once received, we will need to inspect the diamond (it will take a week). Smiling Rocks reserves the right to reject the diamonds if it is not returned in its original condition. You will be notified once the return process is approved or rejected. The rejected items will be sent back to your original shipping address.
+                        <p className='smiling-FaqMainDesc'>We offer free returns within 30 days of item delivery. If you wish to return, the diamond must be in its original condition and shipped with the grading reports. If the diamond report is not returned, you will be charged for $150 USD as a replacement cost. Please return the diamond in its original packaging as shipped. Once received, we will need to inspect the diamond (it will take a week). Sonasons reserves the right to reject the diamonds if it is not returned in its original condition. You will be notified once the return process is approved or rejected. The rejected items will be sent back to your original shipping address.
                             <br />
                             <br />
                             In order to process a return of your purchased items simply send us an email to order@smilingrocks.com.</p>
@@ -127,7 +127,7 @@ export default function FAQ() {
                         </ul>
 
                         <p className='smiling-FaqMainTitle'>Lifetime Warranty</p>
-                        <p className='smiling-FaqMainDesc'>Be rest assured with your Smiling Rocks jewelry! We will provide you with Lifetime Warranty guarantee with any jewelry purchased from Smiling Rocks. If you believe your item has any manufacturing defect, you can ship it to us with your proof of purchase for us to inspect. If we determine the jewelry damage is valid, we will repair the item.</p>
+                        <p className='smiling-FaqMainDesc'>Be rest assured with your Sonasons jewelry! We will provide you with Lifetime Warranty guarantee with any jewelry purchased from Sonasons. If you believe your item has any manufacturing defect, you can ship it to us with your proof of purchase for us to inspect. If we determine the jewelry damage is valid, we will repair the item.</p>
 
                         <p className='smiling-FaqMainDesc'>The type of repairs included are:</p>
                         <ul>
@@ -141,13 +141,13 @@ export default function FAQ() {
                                 <p ><span >If your diamond falls out you can return it to us and we do our best to reset it. But if the diamond is lost, we are unable to replace it with a new one. You would need to purchase a diamond for replacing it.</span></p>
                             </li>
                         </ul>
-                        <p className='smiling-FaqMainDesc'>Our repair policy excludes wear and tear, loss of diamonds, product loss or item being stolen and any repairs or work not done by Smiling Rocks will void this warranty. For a repair request, we will first need to receive a proof of purchase shipped together with the jewelry. If the repair request is aligned with our policy, we will proceed with the request. If it is not, we will notify you if the repair service is available and what it will cost. The repaired items will be delivered back to your given shipping address in one to two weeks’ time. We offer complimentary shipping back to the customers for all warrantied repairs.</p>
+                        <p className='smiling-FaqMainDesc'>Our repair policy excludes wear and tear, loss of diamonds, product loss or item being stolen and any repairs or work not done by Sonasons will void this warranty. For a repair request, we will first need to receive a proof of purchase shipped together with the jewelry. If the repair request is aligned with our policy, we will proceed with the request. If it is not, we will notify you if the repair service is available and what it will cost. The repaired items will be delivered back to your given shipping address in one to two weeks’ time. We offer complimentary shipping back to the customers for all warrantied repairs.</p>
 
                         <p className='smiling-FaqMainSubTitle'>Special Order Request</p>
                         <p className='smiling-FaqMainSubTitle'>I’d like to engrave my name on my jewelry, can I do so?</p>
-                        <p className='smiling-FaqMainDesc'>Yes! But we can only engrave your initials on your jewelry.  If you have purchased our Smiling Rocks jewelry and wish to engrave your initials on it, we are happy to help you do so. Email us at order@smilingrocks.com and with proof of purchase for us to confirm and proceed with your request.</p>
+                        <p className='smiling-FaqMainDesc'>Yes! But we can only engrave your initials on your jewelry.  If you have purchased our Sonasons jewelry and wish to engrave your initials on it, we are happy to help you do so. Email us at order@smilingrocks.com and with proof of purchase for us to confirm and proceed with your request.</p>
 
-                        <p className='smiling-FaqMainSubTitle'>In what Karat gold is done Smiling Rocks jewelry?</p>
+                        <p className='smiling-FaqMainSubTitle'>In what Karat gold is done Sonasons jewelry?</p>
                         <p className='smiling-FaqMainDesc'>10K gold. If you wish to place any of our favorite order in a different metal purity (14K or 18K), email us at order@smilingrocks.com and we will look into your request.
                             <br />
                             <br />
@@ -156,10 +156,10 @@ export default function FAQ() {
                         <p className='smiling-FaqMainTitle'>Account Support</p>
 
                         <p className='smiling-FaqMainSubTitle'>How do I create an account?</p>
-                        <p className='smiling-FaqMainDesc'>To create an account simply click the Sign In button and Register Now to fill in your details. Please create an account password which is unique and kept secure. You must notify Smiling Rocks immediately of any unauthorized use of your account.
+                        <p className='smiling-FaqMainDesc'>To create an account simply click the Sign In button and Register Now to fill in your details. Please create an account password which is unique and kept secure. You must notify Sonasons immediately of any unauthorized use of your account.
                             <br />
                             <br />
-                            With a Smiling Rocks account you will be able to enjoy the following benefits:</p>
+                            With a Sonasons account you will be able to enjoy the following benefits:</p>
 
                         <p className='smiling-FaqMainSubTitle'>I need help to login to  My Account:</p>
                         <p className='smiling-FaqMainDesc'>If you are experiencing any issues to login into your account, please don’t hesitate to contact our Customer Support team at order@smilingrocks.com and we will assist you with any questions.</p>

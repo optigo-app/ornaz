@@ -51,7 +51,7 @@ export default function ContactUs() {
                         </div>
                         <div className='Fo-contactBox2'>
                             <p className='Fo-contactBox2Title'>Have questions?</p>
-                            <p className='Fo-contactBox2Desc'>Smiling Rocks is Here For You! Fill the line below or email us directly</p>
+                            <p className='Fo-contactBox2Desc'>Sonasons is Here For You! Fill the line below or email us directly</p>
 
                             <p style={{
                                 fontSize: '15px',

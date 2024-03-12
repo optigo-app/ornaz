@@ -38,7 +38,7 @@ const ImpCards = () => {
       icon: leaf,
       title: "Environmental Protection",
       descript:
-        "Smiling Rocks has launched a Carbon For Carbon initiative. We are working with NGOs to launch this campaign and research the amount of CO2 produced by one human cycle which will be offset with the amounts of trees that need to be planted to improve the environment impact of unnecessary carbon usage.",
+        "Sonasons has launched a Carbon For Carbon initiative. We are working with NGOs to launch this campaign and research the amount of CO2 produced by one human cycle which will be offset with the amounts of trees that need to be planted to improve the environment impact of unnecessary carbon usage.",
       counter: [
         { a: "", b: "Trees Planted & Clean Up Ocean" },
         { a: "159,619 +", b: "Trees Planted" },

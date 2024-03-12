@@ -44,9 +44,18 @@
 
   .daimondEveryTitle {
     padding: 20px;
+    text-align: center;
   }
   
   .daimondEvery {
     margin-inline: 5%;
+  }
+
+  .daimondEveryTitleDesc{
+    display: none;
+  }
+
+  .daimondLearnMore{
+    display: none;
   }
 }
