@@ -24,7 +24,7 @@ export default function ShopOurInstagram() {
 
 
     const toggleOverlay = () => {
-        setShowOverlay(!showOverlay);
+        // setShowOverlay(!showOverlay);
     };
 
 
