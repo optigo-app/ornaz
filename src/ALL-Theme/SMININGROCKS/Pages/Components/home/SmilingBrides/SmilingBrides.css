@@ -71,6 +71,10 @@
 
 @media screen and (max-width: 500px) {
  
+    .smilingBridesMain {
+        margin-top: 40px!important;
+    }
+
     .smilingMainImages {
         height: 350px;
         width: 100%;
