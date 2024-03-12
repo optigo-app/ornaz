@@ -43,19 +43,20 @@
 @media screen and (max-width: 1024px) {
 
   .daimondEveryTitle {
-    padding: 20px;
+    padding: 0px;
     text-align: center;
+    font-size: 22px !important;
   }
-  
+
   .daimondEvery {
     margin-inline: 5%;
   }
 
-  .daimondEveryTitleDesc{
+  .daimondEveryTitleDesc {
     display: none;
   }
 
-  .daimondLearnMore{
+  .daimondLearnMore {
     display: none;
   }
 }
