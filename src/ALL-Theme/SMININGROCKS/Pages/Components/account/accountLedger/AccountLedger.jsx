@@ -579,7 +579,13 @@ const AccountLedger = () => {
                             </tr>
                         </thead>
                         <tbody className='fs_td'>
-                                        <tr className='border fw-bold'>
+                                        {
+                                            ((Math.abs(debit_amt_diff) === 0) && 
+                                            (Math.abs(debit_dia_diff) === 0) &&
+                                            (Math.abs(debit_mg_diff) === 0) &&
+                                            (Math.abs(credit_amt_diff) === 0) &&
+                                            (Math.abs(credit_mg_diff) === 0) &&
+                                            (Math.abs(credit_dia_diff) === 0)) ? '' : <tr className='border fw-bold'>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1  ps-1' align='center'>Opening</td>
                                             <td className='border-end p-1 text-start ps-1'></td>
@@ -590,7 +596,7 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}></td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
-                                            <td className='border-end p-1 text-start ps-1'></td>
+                                            <td className='border-end p-1 text-start ps-1' align='center'>Opening</td>
                                             <td className='border-end p-1 text-end pe-1'></td>
                                             <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_mg_diff)}</td>
                                             <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_dia_diff)}</td>
@@ -598,7 +604,8 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-end pe-1'></td>
                                             <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}></td>
                                             <td className=' p-1 text-center'></td>
-                                        </tr>
+                                        </tr> 
+                                        }
                             {
                                 filterArray?.length > 0 ? filterArray?.map((e) => {
                                             let doneIcon = null;
