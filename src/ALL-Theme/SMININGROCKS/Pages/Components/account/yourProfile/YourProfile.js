@@ -32,7 +32,6 @@ export default function YourProfile() {
 
     const handleSave = async () => {
 
-        console.log('userDatauserDatauserDatauserData', userData);
         setEditMode(false);
         try {
             setIsLoading(true);
@@ -44,7 +43,6 @@ export default function YourProfile() {
             const combinedValue = JSON.stringify({
                 firstname: `${editedUserData.defaddress_shippingfirstname}`, lastname: `${editedUserData.defaddress_shippinglastname}`, street: `${editedUserData.defaddress_state}`, addressprofile: `${editedUserData.defaddress_shippingfirstname +' '+ editedUserData.defaddress_shippinglastname}`, city: `${editedUserData.city}`, state: `${editedUserData.state}`, country: `${userData.defaddress_country}`, zip: `${userData.defaddress_zip}`, mobile: `${userData.defaddress_shippingmobile}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${editedUserData.id}`
             });
-            console.log('combinedValuecombinedValue', combinedValue);
 
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
@@ -53,7 +51,6 @@ export default function YourProfile() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('ressssssssss', response);
             if (response.Data.rd[0].stat === 1) {
 
                 toast.success('Edit success');

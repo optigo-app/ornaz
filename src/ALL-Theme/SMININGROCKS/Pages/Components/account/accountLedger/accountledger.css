@@ -59,3 +59,20 @@
     }   
     
 } */
+
+@media (max-width:576px){
+    .fs_Al_mq *{
+        font-size: 11px !important;
+    }
+    .fs_Al_mq{
+        
+        padding-left: 0.65rem !important;
+    }
+    .flex_col_Al{
+        flex-direction: column !important;
+        align-items: start !important;
+    }
+    .px_2_al{
+        padding: 0 0.3rem !important;
+    }
+}

@@ -422,7 +422,6 @@ const ManageAddress = () => {
                     isLoading ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <Box sx={{ display: "flex", flexWrap: "wrap", paddingTop: "10px" }} className="addressMainSec">
                         {
                             addressData?.map((item, index) => {
-                                console.log(item);
                                 return <Box className="AddressSec" key={index}>
                                     <Box className={`manageAddressBlock ${item.isdefault === 1 && `manageAddressDefault`}`}>
                                         <Box sx={{ display: "flex", flexWrap: "wrap", }}>
