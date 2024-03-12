@@ -156,7 +156,8 @@ export default function Account() {
                                 <ManageAddress />
                             </CustomTabPanel>
 
-                            {accountValidation() && <CustomTabPanel value={value} index={3} className="accountSalesPage">
+                            {/* {accountValidation() && <CustomTabPanel value={value} index={3} className="accountSalesPage"> */}
+                            {<CustomTabPanel value={value} index={3} className="accountSalesPage">
                                 {/* <QuotationFilters /> */}
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <Tabs value={value1} className='accountTabSection' variant="scrollable" onChange={handleChangeSub} aria-label="basic tabs example" sx={{ background: "#7d7f8529", ...tabIndicator }} scrollButtons="auto">
@@ -183,7 +184,7 @@ export default function Account() {
                                 {accountDetailPage(17020) && <CustomTabPanel value={value1} index={4} className="DesignWiseSalesReport">
                                     <DesignWiseSalesReport />
                                 </CustomTabPanel>}
-                                {accountDetailPage(1159) && <CustomTabPanel value={value1} index={5}>
+                                {accountDetailPage(1159) && <CustomTabPanel value={value1} index={5} >
                                     <AccountLedger />
                                 </CustomTabPanel>}
                             </CustomTabPanel>}

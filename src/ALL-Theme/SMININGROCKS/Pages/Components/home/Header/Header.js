@@ -815,7 +815,7 @@ export default function Header() {
               ))}
             </div>
 
-            <div style={{
+            {/* <div style={{
               display: 'flex',
               flexDirection: 'column',
               gap: '12px',
@@ -842,7 +842,7 @@ export default function Header() {
                   </span>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             <div
               style={{

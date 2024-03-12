@@ -138,8 +138,10 @@ export const accountValidation = () => {
 
 export const accountDetailPage = (pageId) => {
     let getVal = JSON?.parse(localStorage?.getItem("myAccountFlags"))?.find(ele => ele?.pageid === pageId);
+    // return getVal !== undefined ? (getVal?.isvisible === 1 ? true : true) : true;
     return getVal !== undefined ? (getVal?.isvisible === 1 ? true : false) : false;
 }
+
 
 
 export function formatAmount(amount) {
