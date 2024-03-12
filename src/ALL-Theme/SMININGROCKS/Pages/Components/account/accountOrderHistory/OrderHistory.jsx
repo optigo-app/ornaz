@@ -109,7 +109,6 @@ const OrderHistory = () => {
     {
         
         setOrderInfo(orderInfo === obj?.id ? null : obj?.id);
-        orderInfo === obj?.id ? setGid(false)  : setGid(true)
         getOrderDetail(obj);
     }
   };
@@ -121,7 +120,7 @@ const OrderHistory = () => {
     let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"));
     const UserEmail = localStorage.getItem("userEmail");
     try {
-     if(!gId){
+     
      
       let EncodeData = {
         FrontEnd_RegNo: `${storeinit?.FrontEnd_RegNo}`,
@@ -168,7 +167,7 @@ const OrderHistory = () => {
             setLoaderOH2(true)
           }
       }
-    }
+    
     } catch (error) {
       console.log(error);
     }
@@ -176,14 +175,14 @@ const OrderHistory = () => {
 
   return (
     <div>
-      <div className="text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-4 yourOrderHistory">
+      <div className="text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-2 yourOrderHistory bg_oh">
         Your Order History
       </div>
       {loaderOH ? (
         <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box>
       ) : (
         <div className="orderedItems user-select-none">
-          {orderHistoryData?.length > 0 &&
+          {orderHistoryData?.length > 0 ?
             orderHistoryData?.map((e) => {
               return (
                 <div className="border orderHistory p-1 px-0 my-4" key={e?.id} onClick={() => handleClick(e)}>
@@ -271,7 +270,9 @@ const OrderHistory = () => {
                         <div className="pt-2 _end">
                           <div className="d-flex justify-content-between align-items-center fs-4 w-25 w25_oh  text-secondary _w50_oh_2 fs_small ">
                             <div className="w-50">Total :</div>
-                            <div className="w-50 _end">$ 0</div>
+                            <div className="w-50 _end"> <div className="pe-1"
+                                  dangerouslySetInnerHTML={{ __html: e?.Currencysymbol }}
+                            ></div>{e?.orderAmountwithvat}</div>
                           </div>
                         </div>
                       </div>
@@ -284,7 +285,7 @@ const OrderHistory = () => {
                   </div>
                 </div>
               );
-            })}
+            }) : <span className="w-100 d-flex justify-content-center align-items-center fs-5">Data Not Present</span>}
         </div>
       )}
       {/* {

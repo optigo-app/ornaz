@@ -53,7 +53,15 @@
 .fs_price_oh{
     font-size: 16px;
 }
-
+.bg_oh{
+    background-color: rgb(125, 127, 133);
+    color: white !important;
+    font-size: 20px !important;
+    font-weight: normal !important;
+    height: 70px;
+    margin-top: 3rem !important;
+    padding: 20px !important;
+}
 
 .container_order_details{
     display: flex;
