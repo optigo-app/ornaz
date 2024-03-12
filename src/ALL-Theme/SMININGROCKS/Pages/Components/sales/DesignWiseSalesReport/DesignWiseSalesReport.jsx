@@ -617,7 +617,7 @@ const DesignWiseSalesReport = () => {
     return (
         <Box className="designWiseSalesReport">
             <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <Button variant="contained" sx={{ background: "#7d7f85" }} className='muiSmilingRocksBtn' onClick={eve => resetAllFilters(eve)}>All</Button>
                 </Box>
                 {/* <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
@@ -632,7 +632,7 @@ const DesignWiseSalesReport = () => {
                         <FormControlLabel value="prom" className='orderFrom' control={<Radio className='designWiseSalesInputRadio' />} label="Prom. Date" sx={{ padding: "0 10px 0 0", marginRight: "0" }} />
                     </RadioGroup>
                 </Box> */}
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Date From"
@@ -643,7 +643,7 @@ const DesignWiseSalesReport = () => {
                         />
                     </LocalizationProvider>
                 </Box>
-                <Box sx={{ paddingRight: "25px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "25px", paddingBottom: "10px", }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Date To"
@@ -655,14 +655,14 @@ const DesignWiseSalesReport = () => {
                     </LocalizationProvider>
                 </Box>
 
-                <Box sx={{ paddingRight: "25px", paddingBottom: "20px", }} className="searchDesignWiseSalesReport">
+                <Box sx={{ paddingRight: "25px", paddingBottom: "10px", }} className="searchDesignWiseSalesReport">
                     <Button variant='contained' className='muiSmilingRocksBtn'
                         sx={{ padding: "7px 10px", minWidth: "max-content", background: "#7d7f85" }}
                         onClick={(eve) => handleSearch(eve, fromDate, toDate, netWtSlider[0], netWtSlider[1], grossWtSlider[0], grossWtSlider[1], purchaseCount, designNo, metal, productType, metalColor, category, subCategory, orderProm)}>
                         <SearchIcon sx={{ color: "#fff !important" }} /></Button>
                 </Box>
 
-                <Box sx={{ marginRight: "35px", paddingBottom: "20px", width: 170 }}>
+                <Box sx={{ marginRight: "35px", paddingBottom: "10px", width: 170 }}>
                     <Typography sx={{ textAlign: "center" }}>NetWt(gm)</Typography>
                     <Slider
                         className='netWtSecSlider'
@@ -695,7 +695,7 @@ const DesignWiseSalesReport = () => {
                     </Box>
                 </Box>
 
-                <Box sx={{ marginRight: "35px", paddingBottom: "20px", width: 170 }}>
+                <Box sx={{ marginRight: "35px", paddingBottom: "10px", width: 170 }}>
                     <Typography sx={{ textAlign: "center" }}>GrossWt</Typography>
                     <Slider
                         className='netWtSecSlider'
@@ -726,7 +726,7 @@ const DesignWiseSalesReport = () => {
                     </Box>
                 </Box>
 
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <Typography sx={{ paddingBottom: "3px" }}>Purchase Count</Typography>
                     <Box
                     >
@@ -745,7 +745,7 @@ const DesignWiseSalesReport = () => {
                     </Box>
                 </Box>
 
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <Typography>DesignNo</Typography>
                     <TextField type='text' value={designNo} onChange={eve => {
                         setDesignNo(eve?.target?.value);
@@ -753,7 +753,7 @@ const DesignWiseSalesReport = () => {
                     }} className='designNo' placeholder='#DesignNo' />
                 </Box>
 
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <Typography sx={{ paddingBottom: "5px" }}>Metal</Typography>
                     <Select
                         labelId="demo-simple-select-label"
@@ -769,7 +769,7 @@ const DesignWiseSalesReport = () => {
                     </Select>
                 </Box>
 
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <Typography sx={{ paddingBottom: "5px" }}>Product Type</Typography>
                     <Select
                         labelId="demo-simple-select-label"
@@ -785,7 +785,7 @@ const DesignWiseSalesReport = () => {
                     </Select>
                 </Box>
 
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <Typography sx={{ paddingBottom: "5px" }}>Metal Color</Typography>
                     <Select
                         labelId="metalColor"
@@ -801,7 +801,7 @@ const DesignWiseSalesReport = () => {
                     </Select>
                 </Box>
 
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <Typography sx={{ paddingBottom: "5px" }}>Category</Typography>
                     <Select
                         labelId="metalColor"
@@ -817,7 +817,7 @@ const DesignWiseSalesReport = () => {
                     </Select>
                 </Box>
 
-                <Box sx={{ paddingRight: "15px", paddingBottom: "20px", }}>
+                <Box sx={{ paddingRight: "15px", paddingBottom: "10px", }}>
                     <Typography sx={{ paddingBottom: "5px" }}>SubCategory</Typography>
                     <Select
                         labelId="SubCategory"
@@ -834,7 +834,7 @@ const DesignWiseSalesReport = () => {
                 </Box>
             </Box>
 
-            <Box sx={{ display: "grid", gap: "15px",  gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", }} className="designWiseSalesProducts">
+            <Box sx={{ display: "grid", gap: "15px", paddingTop: "10px",  gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", }} className="designWiseSalesProducts">
 
                 {isLoading ?
                     <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> :
@@ -861,9 +861,9 @@ const DesignWiseSalesReport = () => {
                                 <img className="prod_img" src={products?.imgsrc} alt='' style={{ objectFit: "contain", height: "auto" }} />
                             </Stack> */}
 
-                                <Box sx={{ maxheight: "271px" }}>
+                                <Box sx={{ minheight: "271px" }}>
                                     {products?.imgsrc ? (
-                                        <img className="prod_img" src={products?.imgsrc} alt='' style={{ objectFit: "contain", height: "100%" }} />
+                                        <img className="prod_img" src={products?.imgsrc} alt='' style={{ objectFit: "contain", height: "100%", minheight: "271px", maxHeight: "271px" }} />
                                     ) : (
                                         <Skeleton variant="rectangular" width={"100%"} height={271} />
                                     )}

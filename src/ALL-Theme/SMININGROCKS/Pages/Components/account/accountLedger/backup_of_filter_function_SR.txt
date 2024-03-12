@@ -48,7 +48,7 @@ const AccountLedger = () => {
       useEffect(() => {
         filterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [startDate, endDate, selectedDays]);
+    }, [selectedDays, dueDateWise, selectedStatus]);
     // }, [startDate, endDate, selectedDays, dueDateWise, selectedStatus]);
 
       const getLedgerData = async() => {
@@ -163,7 +163,7 @@ const AccountLedger = () => {
 
         const buttons = document.querySelectorAll('.daybtn');
         buttons.forEach(button => {
-            const buttonDays = parseInt(button?.textContent);
+            const buttonDays = parseInt(button.textContent);
             if (buttonDays === 30) {
                 button.classList.add('selected');
             } else {
@@ -306,15 +306,15 @@ const AccountLedger = () => {
                 (entryYear === endYear && entryMonth < endMonth) ||  
                 (entryYear === endYear && entryMonth === endMonth && entryDay <= endDay))
             ) {
-                return true;
                 // Filter based on selected status
-                // if (selectedStatus === 'all' || entry?.IsVerified?.toString() === selectedStatus) {
-                //     return true;
-                // }
+                if (selectedStatus === 'all' || entry?.IsVerified?.toString() === selectedStatus) {
+                    return true;
+                }
             }
         
             return false;
         });
+        console.log(filteredData, startDate, endDate);
         const oneDayBeforeStartDate = new Date(startDate);
         oneDayBeforeStartDate.setDate(oneDayBeforeStartDate.getDate() - 1);
         const recordsBeforeStartDate = resultArray.filter(entry => {
@@ -398,9 +398,9 @@ const AccountLedger = () => {
         setOpeningBalanceTotal(credit_debit)
       }
 
-    //   const handleSelect = (e) => {
-    //     setSelectedStatus(e.target.value);
-    //   }
+      const handleSelect = (e) => {
+        setSelectedStatus(e.target.value);
+      }
 
       const getStartNEndDate = () => {
         const currentDate = new Date();
@@ -438,44 +438,33 @@ const AccountLedger = () => {
       };
 
       const handlePreviousDays = () => {
+        console.log(selectedDays, startDate, endDate);
         // let days = selectedDays;
-        const currentDate = moment(); // Get the current date
-        const previous30DaysDate = moment()?.subtract(selectedDays, 'days'); // Add 30 days to the current date
-        let lastdate = currentDate?.format('YYYY-MM-DD');
-        let prev30days = previous30DaysDate?.format('YYYY-MM-DD');
+        // const currentDate = moment(); // Get the current date
+        // const previous30DaysDate = moment()?.subtract(selectedDays, 'days'); // Add 30 days to the current date
+        // let lastdate = currentDate?.format('YYYY-MM-DD');
+        // let prev30days = previous30DaysDate?.format('YYYY-MM-DD');
         // console.log("Current Date:", currentDate?.format('YYYY-MM-DD'));
         // console.log("Next 30 Days Date:", previous30DaysDate?.format('YYYY-MM-DD'));
-        setEndDate(lastdate);
-        setStartDate(prev30days);
-        filterData();
+        // setEndDate(lastdate);
+        // setStartDate(prev30days);
         // // setSelectedDays((prev) => (prev - days))
+        // filterData();
       }
       const handleNextDays = () => {
-        const currentDate = moment(); // Get the current date
-        const next30DaysDate = moment()?.add(selectedDays, 'days'); // Add 30 days to the current date
-        let next30days = currentDate?.format('YYYY-MM-DD');
-        let lastdate = next30DaysDate?.format('YYYY-MM-DD');
+        console.log(selectedDays, startDate, endDate);
+        // const currentDate = moment(); // Get the current date
+        // const next30DaysDate = moment()?.add(selectedDays, 'days'); // Add 30 days to the current date
+        // let next30days = currentDate?.format('YYYY-MM-DD');
+        // let lastdate = next30DaysDate?.format('YYYY-MM-DD');
         // console.log("Current Date:", currentDate?.format('YYYY-MM-DD'));
         // console.log("Next 30 Days Date:", next30DaysDate?.format('YYYY-MM-DD'));
-        setEndDate(lastdate);
-        setStartDate(next30days);
-        filterData();
+        // setEndDate(lastdate);
+        // setStartDate(next30days);
         // // setSelectedDays((prev) => (prev + days));
+        // filterData();
       }
-      const handleExcel = () => {
-        console.log(filterArray, );
-        const obj  = { 
-            data: filterArray,
-            debit_mg_diff : debit_mg_diff,
-            debit_dia_diff : debit_dia_diff,
-            debit_amt_diff : debit_amt_diff,
-            credit_mg_diff : credit_mg_diff,
-            credit_dia_diff: credit_dia_diff,
-            credit_amt_diff : credit_amt_diff,
-        }
-        localStorage.setItem('excelData', JSON.stringify(obj));
-        window.open("http://localhost:3000/accountledgerexcel");
-      }
+
   return (
     <div>
         <div className='fs-4 fw-bold text-center text-secondary my-2 py-2'>Ledger</div>
@@ -493,7 +482,7 @@ const AccountLedger = () => {
                     <input type="date" name="date" id="enddate" className='mx-2 p-1'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /><SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/></div>
                     <div><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div>
                     {/* <div onClick={() => navigate("/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
-                    <div onClick={() => handleExcel()}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div>
+                    <div onClick={() => window.open("http://localhost:3000/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div>
                     {/* <div onClick={() => navigate("/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div> */}
                     <div onClick={() => window.open("http://localhost:3000/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#printtable" className='eeal' /></div>
                     <div className='d-flex'>
@@ -505,16 +494,16 @@ const AccountLedger = () => {
                         </div>
                         <button className='ms-2 mx-1 btn border p-2 py-0 daybtn me-3' title='next' onClick={() => handleNextDays()}>&gt;</button>
                     </div>
-                    {/* <div>
+                    <div>
                         <select name="status" className='p-1' id="status" value={selectedStatus} onChange={(e) => handleSelect(e)}>
                             <option value="all">All</option>
                             <option value="2">Pending</option>
                             <option value="1">Declined</option>
                             <option value="0">Verified</option>
                         </select>
-                    </div> */}
+                    </div>
                     <div className='mx-1 ms-4'>
-                        {/* <input type="checkbox" name="duedate" checked={dueDateWise} value={dueDateWise} id="duedate" onChange={() => setDueDateWise(!dueDateWise)} /><label htmlFor="duedate" className='user-select-none ps-1'>Due Date Wise</label> */}
+                        <input type="checkbox" name="duedate" checked={dueDateWise} value={dueDateWise} id="duedate" onChange={() => setDueDateWise(!dueDateWise)} /><label htmlFor="duedate" className='user-select-none ps-1'>Due Date Wise</label>
                     </div>
                 </div> : <div className='w-100'></div>
                 }
