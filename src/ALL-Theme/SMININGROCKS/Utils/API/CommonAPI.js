@@ -1,7 +1,7 @@
 
 import axios from "axios";
 const APIURL = 'https://api.optigoapps.com/test/store.aspx';
-const ZENURL = 'http://zen/api/store.aspx'
+// const ZENURL = 'http://zen/api/store.aspx'
 
 const storeInit = JSON.parse(localStorage.getItem('storeInit'));
 
@@ -22,19 +22,19 @@ export const CommonAPI = async (body) => {
     }
 };
 
-export const UnCommonAPI = async(body) => {
-    try {
-        const { YearCode, version, token } = storeInit;
-        const header = {
-            Authorization: `Bearer ${token}`,
-            Yearcode: YearCode,
-            Version: version, 
-            sp:"1"
-        };
-        const response = await axios.post(ZENURL, body, { headers: header });
-        return response?.data;
+// export const UnCommonAPI = async(body) => {
+//     try {
+//         const { YearCode, version, token } = storeInit;
+//         const header = {
+//             Authorization: `Bearer ${token}`,
+//             Yearcode: YearCode,
+//             Version: version, 
+//             sp:"1"
+//         };
+//         const response = await axios.post(ZENURL, body, { headers: header });
+//         return response?.data;
 
-    } catch (error) {
-        console.error('error is..', error);
-    }
-};
+//     } catch (error) {
+//         console.error('error is..', error);
+//     }
+// };

@@ -23,20 +23,23 @@ const ProdDetail = () => {
   const [WishListFlag, setWishListFlag] = useState(false);
   const [cartData, setCartData] = useState([]);
   const [WishData, setWishData] = useState([]);
-
   const [productData, setProductData] = useState();
   const [thumbImg, setThumbImg] = useState();
-
   const [colorData, setColorData] = useState([]);
   const [sizeData, setSizeData] = useState([]);
   const [metalColorData, setMetalColorData] = useState([]);
   const [metalType, setMetalType] = useState([]);
   const [DaimondQualityColor, setDaimondQualityColor] = useState([]);
-
   const [isMetalCutoMizeFlag, setIsMetalCutoMizeFlag] = useState('');
   const [isDaimondCstoFlag, setIsDaimondCstoFlag] = useState('');
   const [isCColrStoneCustFlag, setIsCColrStoneCustFlag] = useState('');
   const [isPriseShow, setIsPriceShow] = useState()
+
+  const [sizeOption,setSizeOption] = useState();
+  const [mCOption,setMCOption] = useState();
+  const [diaQColOpt,setDiaQColOpt] = useState();
+  const [mtTypeOption,setmtTypeOption] = useState();
+  const [cSQopt,setCSQOpt] = useState();
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -44,6 +47,10 @@ const ProdDetail = () => {
   const handelImgLoad = () => {
     setImgLoading(false)
   }
+
+  useEffect(()=>{
+    console.log("customizeOpt",{sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt})
+  },[sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt])
 
 
   const handelLocalStorage = () => {
@@ -53,6 +60,8 @@ const ProdDetail = () => {
     setCartFlag(localProductData?.checkFlag)
     getSizeData(localProductData.autocode);
   }
+
+  console.log("metalcolor",metalColorData);
 
   useEffect(() => {
     handelLocalStorage();
@@ -147,7 +156,6 @@ const ProdDetail = () => {
     return filterImg
   }
 
-
   const getCountFunc = async () => {
 
     await GetCount().then((res) => {
@@ -185,11 +193,8 @@ const ProdDetail = () => {
 
   }
 
-
   useEffect(() => {
-
     getCartAndWishListData()
-
   }, [])
 
   const handelCart = async (event) => {
@@ -554,6 +559,8 @@ const ProdDetail = () => {
 
 
 
+
+
   // const handelWishList = (e) =>{
 
   //   productData.wishCheck = e.target.checked;
@@ -561,6 +568,9 @@ const ProdDetail = () => {
   //   localStorage.setItem("srProductsData",JSON.stringify(productData))
 
   // }
+
+
+
 
   return (
     <div
@@ -774,9 +784,11 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
+                    
+                      onChange={(e)=>{setSizeOption(e.target.value)}}
                     >
                       {sizeData?.map((size) => (
-                        <option key={size.ColorId} value={size.ColorId}>
+                        <option key={size.ColorId} value={size.id} >
                           {size.sizename}
                         </option>
                       ))}
@@ -809,9 +821,11 @@ const ProdDetail = () => {
                           color: "#7d7f85",
                           fontSize: "12.5px",
                         }}
+
+                        onChange={(e)=>setMCOption(e.target.value)}
                       >
                         {metalColorData.map((colorItem) => (
-                          <option key={colorItem.ColorId} value={colorItem.ColorId}>
+                          <option key={colorItem.ColorId} value={colorItem.metalcolorname} >
                             {colorItem.metalcolorname}
                           </option>
                         ))}
@@ -840,10 +854,12 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
+
+                      onChange={(e)=>setDiaQColOpt(e.target.value)}
                     >
                       {colorData.map((colorItem) => (
-                        <option key={colorItem.ColorId} value={colorItem.ColorId}>
-                          {colorItem.color}
+                        <option key={colorItem.ColorId} value={colorItem.color} >
+                          {`${colorItem.Quality}_${colorItem.color}`}
                         </option>
                       ))}
                     </select>
@@ -874,9 +890,10 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
+                      onChange={(e)=>setmtTypeOption(e.target.value)}
                     >
                       {metalType.map((data, index) => (
-                        <option key={index}>
+                        <option key={index}  value={data.metalType}>
                           {data.metaltype}
                         </option>
                       ))}
@@ -901,10 +918,11 @@ const ProdDetail = () => {
                       color: "#7d7f85",
                       fontSize: "12.5px",
                     }}
+                    onChange={(e)=>setCSQOpt(e.target.value)}
                   >
                     {DaimondQualityColor.map((data, index) => (
-                      <option key={index}>
-                        {data.color}
+                      <option key={index} value={data.color} >
+                        {`${data.Quality}-${data.color}`}
                       </option>
                     ))}
                   </select>

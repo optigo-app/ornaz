@@ -180,7 +180,8 @@ export default function Header() {
 
 
   useEffect(() => {
-    islogin === true && getMenuApi()
+    // islogin === true && getMenuApi()
+     getMenuApi()
   }, [islogin])
 
 
