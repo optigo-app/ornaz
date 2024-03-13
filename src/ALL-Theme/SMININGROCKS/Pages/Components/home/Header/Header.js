@@ -609,32 +609,36 @@ export default function Header() {
             }}
           >
             <ul className="nav-ul-shop">
-              <li
-                className="nav-li-shop-main"
-                onMouseEnter={handleDropdownOpen}
-                onMouseLeave={handleDropdownClose}
-              >
-                <span
-                  className="nav-li-smining"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    fontWeight: 500,
-                  }}
-                >
-                  SHOP
-                  <RiArrowDropDownLine
-                    style={{ width: "20px", height: "20px" }}
-                  />
-                </span>
-              </li>
-              <li
-                className="nav-li-smining"
-                style={{ cursor: "pointer" }}
-                onClick={() => navigation("/impact")}
-              >
-                {IMPACT}
-              </li>
+              {islogin === "true" &&
+                <>
+                  <li
+                    className="nav-li-shop-main"
+                    onMouseEnter={handleDropdownOpen}
+                    onMouseLeave={handleDropdownClose}
+                  >
+                    <span
+                      className="nav-li-smining"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        fontWeight: 500,
+                      }}
+                    >
+                      SHOP
+                      <RiArrowDropDownLine
+                        style={{ width: "20px", height: "20px" }}
+                      />
+                    </span>
+                  </li>
+                  <li
+                    className="nav-li-smining"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigation("/impact")}
+                  >
+                    {IMPACT}
+                  </li>
+                </>
+              }
               {/* <li
                 className="nav-li-smining"
                 style={{ cursor: "pointer" }}
@@ -831,31 +835,35 @@ export default function Header() {
               }}
             >
               <ul className="nav-ul-fixed">
-                <li
-                  className="nav-li-shop-main"
-                  onMouseEnter={handleDropdownOpen}
-                  onMouseLeave={handleDropdownClose}
-                >
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      fontWeight: 500,
-                    }}
-                  >
-                    SHOP
-                    <RiArrowDropDownLine
-                      style={{ width: "20px", height: "20px" }}
-                    />
-                  </span>
-                </li>
-                <li
-                  className="nav-li-smining-fixed"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => navigation("/impact")}
-                >
-                  {IMPACT}
-                </li>
+                {islogin === "true" &&
+                  <>
+                    <li
+                      className="nav-li-shop-main"
+                      onMouseEnter={handleDropdownOpen}
+                      onMouseLeave={handleDropdownClose}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          fontWeight: 500,
+                        }}
+                      >
+                        SHOP
+                        <RiArrowDropDownLine
+                          style={{ width: "20px", height: "20px" }}
+                        />
+                      </span>
+                    </li>
+                    <li
+                      className="nav-li-smining-fixed"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => navigation("/impact")}
+                    >
+                      {IMPACT}
+                    </li>
+                  </>
+                }
                 {/* <li
                   className="nav-li-smining-fixed"
                   style={{ cursor: "pointer" }}
@@ -1178,7 +1186,7 @@ export default function Header() {
                     style={{ fontSize: "35px", color: "#7d7f85" }}
                     onClick={toggleDrawerOverlay}
                     className="muIconeMobileHeader"
-                    
+
                   />
                 )}
               </div>
@@ -1206,12 +1214,13 @@ export default function Header() {
                 </div>
               )}
               {islogin === "true" &&
-                <div className="mobileViewFirstDiv3" style={{ display: 'flex' ,justifyContent: 'flex-end' }}>
+                <div className="mobileViewFirstDiv3" style={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <Badge
                     badgeContent={getWishListCount}
                     overlap={"rectangular"}
                     color="secondary"
                     style={{ marginInline: '5px' }}
+                    className="smilingHeaderWhishlistIcon"
                   >
                     <Tooltip title="Add To WishList">
                       <li style={{ listStyle: 'none' }} onClick={() => navigation("/myWishList")}>

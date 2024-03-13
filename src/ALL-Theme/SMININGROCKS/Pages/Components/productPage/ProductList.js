@@ -1,24 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Header from "../home/Header/Header";
 import Footer from "../home/Footer/Footer";
 import SmilingRock from "../home/smiling_Rock/SmilingRock";
 import "./product.css";
-import { IoClose } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 import prodListData from "../../jsonFile/Productlist_4_95oztttesi0o50vr.json";
 // import prodListData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_Original.json";
 import filterData from "../../jsonFile/M_4_95oztttesi0o50vr.json";
 import PriceData from "../../jsonFile/Productlist_4_95oztttesi0o50vr_8.json";
 // import PriceData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_8_Original.json";
-import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Slider, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Slider } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-import { event } from "jquery";
-import { CommonAPI, UnCommonAPI } from "../../../Utils/API/CommonAPI";
-import { async } from "q";
+import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { CartListCounts, HeaderData, HeaderData2, WishListCounts } from "../../../../../Recoil/atom";
@@ -37,8 +33,8 @@ const ProductList = () => {
   const [isOpenDetail, setIsOpenDetail] = useState(false);
   const [ProductApiData, setProductApiData] = useState([])
   const [drawerShowOverlay, setDrawerShowOverlay] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [HoveredID, setHoveredID] = useState();
+  // const [isHovered, setIsHovered] = useState(false);
+  // const [HoveredID, setHoveredID] = useState();
   const [filterChecked, setFilterChecked] = useState({});
   const [wishFlag, setWishFlag] = useState(false)
   const [cartFlag, setCartFlag] = useState(false)
@@ -47,6 +43,8 @@ const ProductList = () => {
   const [cartRemoveData, setCartRemoveData] = useState("");
   const [wishListRemoveData, setWishListRemoveData] = useState("");
   const [newProData, setNewProData] = useState([]);
+  const [priceDataApi,setpriceDataApi] = useState([]);
+  const [currencySym,setCurrencySym] = useState();
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -60,8 +58,11 @@ const ProductList = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log("getHeaderData", getHeaderData)
-  console.log("getHeaderData2", getHeaderData2)
+  // console.log("getHeaderData", getHeaderData)
+  console.log("currencySym", currencySym?.Currencysymbol)
+
+  console.log("priceDataApi",priceDataApi);
+
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
@@ -77,11 +78,7 @@ const ProductList = () => {
     })
 
   }
-
-
-
-
-
+  
   const fetchFile = async () => {
 
     let storeinit = JSON.parse(localStorage.getItem("storeInit"))
@@ -98,6 +95,10 @@ const ProductList = () => {
   };
 
   useEffect(() => {
+    
+    let Symbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
+    setCurrencySym(Symbol)
+
     fetchFile()
   }, [])
 
@@ -291,10 +292,7 @@ const ProductList = () => {
 
   }, [productData, cartData])
 
-
   diffCartData()
-
-
 
   const diffWishData = useCallback(() => {
 
@@ -387,22 +385,77 @@ const ProductList = () => {
 
 
 
-  updateProductsWithMetalColorName()?.forEach((product) => {
-    const priceData = PriceData?.find(
-      (priceD) =>
-        priceD.A === product.autocode &&
-        priceD.B === product.diamondquality &&
-        priceD.C === product.diamondcolorname &&
-        priceD.D.split(" ")[1] === product.MetalPurity
-    );
+  // updateProductsWithMetalColorName()?.forEach((product) => {
+    // let start = performance.now();
+    productData?.forEach((product) => {
 
-    if (priceData) {
-      product.price = priceData.E;
+    //  let currencyRate = JSON.stringify(localStorage.getItem('CURRENCYCOMBO')) 
+     let loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail')) 
+
+    const newPriceData = priceDataApi.rd?.find(
+      (pda) => 
+        pda.A === product.autocode && 
+        pda.B === product.designno &&
+        pda.D === loginUserDetail?.cmboMetalType 
+    )
+
+    const newPriceData1 = priceDataApi.rd1?.find(
+      (pda) => 
+        pda.A === product.autocode && 
+        pda.B === product.designno && 
+        pda.H === loginUserDetail?.cmboDiaQualityColor.split('#@#')[0] &&
+        pda.J === loginUserDetail?.cmboDiaQualityColor.split('#@#')[1]
+        
+    )
+
+    const newPriceData2 = priceDataApi.rd2?.find(
+      (pda) => 
+        pda.A === product.autocode && 
+        pda.B === product.designno && 
+        pda.H === loginUserDetail?.cmboCSQualityColor.split('#@#')[0] &&
+        pda.J === loginUserDetail?.cmboCSQualityColor.split('#@#')[1]
+        
+    )
+
+    // console.log("newPriceData",newPriceData?.Z)
+
+
+    // const priceData = PriceData?.find(
+    //   (priceD) =>
+    //     priceD.A === product.autocode &&
+    //     priceD.B === product.diamondquality &&
+    //     priceD.C === product.diamondcolorname &&
+    //     priceD.D.split(" ")[1] === product.MetalPurity
+    // );
+
+    // if(newPriceData){
+    //   product.totalunitcostprice = newPriceData?.Z;
+    // }else {
+    //   product.totalunitcostprice = 0;
+    // }
+
+    // if(newPriceData1){
+    //   product.rd1finalamount = newPriceData1?.S;
+    // }else {
+    //   product.rd1finalamount = 0;
+    // }
+
+    // if(newPriceData2){
+    //   product.rd2finalamount = newPriceData2?.S;
+    // }else {
+    //   product.rd2finalamount = 0;
+    // }
+
+    if (newPriceData || newPriceData1 || newPriceData2) {
+      product.price = ((newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0))
     } else {
       product.price = "Not Availabel";
     }
   });
-
+  // let end = performance.now();
+  // let timeTaken = end - start;
+  //       console.log("time","Function took " +
+  //               timeTaken + " milliseconds");
   // console.log(updateProductsWithMetalColorName().map(()=>{    }));
 
   updateProductsWithMetalColorName()?.forEach((prods) => {
@@ -425,6 +478,9 @@ const ProductList = () => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
     navigate("/productdetail");
   };
+
+
+  console.log("productData",productData);
 
 
   const NewFilterData = () => {
@@ -1059,8 +1115,9 @@ const ProductList = () => {
                   "p":encodedCombinedValue
                   }
     
-    await UnCommonAPI(body).then((res) => {
-        console.log(res)
+    await CommonAPI(body).then((res) => {
+        // console.log("uncommon",res)
+        setpriceDataApi(res.Data)
     })
 
   }
@@ -1266,9 +1323,129 @@ const ProductList = () => {
                         fontWeight: 500,
                         margin: "0px",
                       }}
+                      onClick={toggleDeatilList}
                     >
                       FILTER<span>{isOpenDetail ? "-" : "+"}</span>
                     </p>
+                    {isOpenDetail && <div>
+                      {NewFilterData().map((ele, index) => (
+                    <>
+                      <Accordion
+                        elevation={0}
+                        sx={{
+                          borderBottom: "1px solid #c7c8c9",
+                          borderRadius: 0,
+                          marginLeft: "28px",
+                          "&.Mui-expanded": {
+                            marginLeft: "28px",
+                          },
+                          "&.MuiPaper-root.MuiAccordion-root:last-of-type": {
+                            borderBottomLeftRadius: "0px",
+                            borderBottomRightRadius: "0px",
+                          },
+                          "&.MuiPaper-root.MuiAccordion-root:before": {
+                            background: "none",
+                          },
+                        }}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
+                          aria-controls="panel1-content"
+                          id="panel1-header"
+                          sx={{
+                            color: "#7f7d85",
+                            borderRadius: 0,
+
+                            "&.MuiAccordionSummary-root": {
+                              padding: 0,
+                            },
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontFamily: "TT Commons, sans-serif",
+                              fontSize: "12px",
+                              opacity: "0.7",
+                            }}
+                          >
+                            {ele.label}
+                          </span>
+                        </AccordionSummary>
+                        <AccordionDetails
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "4px",
+                          }}
+                        >
+                          {ele.label === "PRICE" &&
+                            <div>
+                              <Slider
+                                className='netWtSecSlider'
+                                getAriaLabel={() => 'Minimum distance'}
+                                value={value1}
+                                onChange={handleChange1}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                              />
+                            </div>}
+
+                          {ele.label === "CENTERSTONE" &&
+                            <div>
+                              <Slider
+                                className='netWtSecSlider'
+                                getAriaLabel={() => 'Minimum distance'}
+                                value={value1}
+                                onChange={handleChange1}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                              />
+                            </div>
+                          }
+
+                          {ele.filterList.map((flist, i) => (
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "12px",
+                              }}
+                              key={i}
+                            >
+                              <Checkbox
+                                name={`checkbox${index + 1}${i + 1}`}
+                                checked={
+                                  filterChecked[`checkbox${index + 1}${i + 1}`]
+                                    ?.checked
+                                }
+                                style={{
+                                  color: "#7f7d85",
+                                  padding: 0,
+                                  width: "10px",
+                                }}
+                                onClick={(e) =>
+                                  handleCheckboxChange(e, ele, flist)
+                                }
+                                size="small"
+                              />
+                              <small
+                                style={{
+                                  fontFamily: "TT Commons, sans-serif",
+                                  color: "#7f7d85",
+                                  textTransform: "lowercase",
+                                }}
+                              >
+                                {flist}
+                              </small>
+                            </div>
+                          ))}
+                        </AccordionDetails>
+                      </Accordion>
+                    </>
+                  ))}
+                    </div>}
                   </div>
                   <hr
                     style={{
@@ -1380,7 +1557,8 @@ const ProductList = () => {
                       </div>
                       <div>
                         <p style={{ fontSize: "12px" }}>
-                          {products?.MetalColorName} / ${products?.price}
+                          {/* {products?.MetalColorName} / {currencySym?.Currencysymbol}{(products?.totalunitcostprice ?? null) + (products?.rd1finalamount ?? null) + (products?.rd2finalamount ?? null)} */}
+                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{!(products?.price) ? "" : products?.price}
                         </p>
                       </div>
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
