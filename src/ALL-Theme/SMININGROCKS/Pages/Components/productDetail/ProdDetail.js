@@ -569,6 +569,11 @@ const ProdDetail = () => {
 
   // }
 
+  const handelSize = (data) =>{
+    console.log("e.target.value",data);
+    localStorage.setItem("sizeData",JSON.stringify(data))
+    setSizeOption(data)
+  }
 
 
 
@@ -784,8 +789,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
-                    
-                      onChange={(e)=>{setSizeOption(e.target.value)}}
+                      onChange={(e)=>handelSize(e.target.value)}
                     >
                       {sizeData?.map((size) => (
                         <option key={size.ColorId} value={size.id} >

@@ -443,7 +443,7 @@ const ProductList = () => {
     // }
 
     if (newPriceData || newPriceData1 || newPriceData2) {
-      product.price = ((newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0))
+      product.price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0)
     } else {
       product.price = "Not Availabel";
     }
