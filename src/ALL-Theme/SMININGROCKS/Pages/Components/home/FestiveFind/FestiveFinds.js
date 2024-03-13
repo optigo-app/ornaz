@@ -2,10 +2,18 @@ import React from 'react'
 import './FestiveFinds.css'
 import { useNavigate } from 'react-router-dom'
 import banner1 from '../../../assets/banner1.jpg'
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { loginState } from '../../../../../../Recoil/atom';
 
 export default function FestiveFinds() {
 
     const navigation = useNavigate();
+    const islogin  = useRecoilValue(loginState);
+
+
+    const handleNaviagtion = () =>{
+        islogin === 'true' && navigation('/productpage');
+    }
 
     return (
         <div>
@@ -18,7 +26,7 @@ export default function FestiveFinds() {
                         Explore your jewelry for upcoming holiday!
                     </p>
                     <div >
-                        <button className='DiscoverBtn' onClick={() => navigation('/productpage')}>DISCOVER MORE</button>
+                        <button className='DiscoverBtn' onClick={handleNaviagtion}>DISCOVER MORE</button>
                     </div>
                 </div>
             </div>
