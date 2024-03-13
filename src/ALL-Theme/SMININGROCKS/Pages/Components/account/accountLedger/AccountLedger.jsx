@@ -14,6 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment';
 const AccountLedger = () => {
     const [resultArray, setResultArray] = useState([]);
+    const [currencySymbol, setCurrencySymbol] = useState('');
     const [filterArray, setFilterArray] = useState([]);
     const [loaderAC, setLoaderAC] = useState(false);
     const [startDate, setStartDate] = useState('');
@@ -28,9 +29,11 @@ const AccountLedger = () => {
     const [debit_dia_diff, setDebit_dia_diff] = useState(0);
     const [debit_mg_diff, setDebit_mg_diff] = useState(0);
     const [debit_amt_diff, setDebit_amt_diff] = useState(0);
+    const [debit_curr_diff, setDebit_curr_diff] = useState(0);
     const [credit_dia_diff, setCredit_dia_diff] = useState(0);
     const [credit_mg_diff, setCredit_mg_diff] = useState(0);
     const [credit_amt_diff, setCredit_amt_diff] = useState(0);
+    const [credit_curr_diff, setCredit_curr_diff] = useState(0);
     const navigate = useNavigate("");
 
     useEffect(() => {
@@ -73,8 +76,11 @@ const AccountLedger = () => {
           };
     
           const response = await CommonAPI(body_currencycombo);
-
+          
           const CurrencyRate = response?.Data?.rd[0]?.CurrencyRate;
+          const CurrencySymbol = response?.Data?.rd[0]?.Currencysymbol;
+
+          setCurrencySymbol(CurrencySymbol)
 
           const forendcode = {"CurrencyRate":`${CurrencyRate}`,"FrontEnd_RegNo":`${storeinit?.FrontEnd_RegNo}`,"Customerid":`${loginInfo?.id}`};
 
@@ -355,9 +361,22 @@ const AccountLedger = () => {
                 credit_debit.credit_metalgold += e?.metalctw;
                 credit_debit.credit_diamondwt += e?.diamondctw;
                 credit_debit.credit_totalamount += e?.Amount;
-                credit_debit.credit_total += e?.Currency;
+                credit_debit.credit_totalcurrency += e?.Currency;
             }
         })
+
+        
+        //metal
+        let cre_result_mg =   0;
+        if(credit_debit.credit_metalgold - credit_debit.debit_metalgold > 0){
+            cre_result_mg = credit_debit.credit_metalgold - credit_debit.debit_metalgold;
+        }
+        setCredit_mg_diff(cre_result_mg);
+        let deb_result_mg =   0;
+        if(credit_debit.credit_metalgold - credit_debit.credit_metalgold < 0){
+            deb_result_mg = credit_debit.credit_metalgold - credit_debit.debit_metalgold;
+        }
+        setDebit_mg_diff(deb_result_mg);
 
         //diamond
         let cre_result_dia =   0;
@@ -371,18 +390,6 @@ const AccountLedger = () => {
         }
         setDebit_dia_diff(deb_result_dia);
 
-        //metal
-        let cre_result_mg =   0;
-        if(credit_debit.credit_metalgold - credit_debit.debit_metalgold > 0){
-            cre_result_mg = credit_debit.credit_metalgold - credit_debit.debit_metalgold;
-        }
-        setCredit_mg_diff(cre_result_mg);
-        let deb_result_mg =   0;
-        if(credit_debit.credit_metalgold - credit_debit.credit_metalgold < 0){
-            deb_result_mg = credit_debit.credit_metalgold - credit_debit.debit_metalgold;
-        }
-        setDebit_mg_diff(deb_result_mg);
-
         //amount difference
         let cre_result_amt =   0;
         if(credit_debit.credit_totalamount - credit_debit.debit_totalamount > 0){
@@ -394,6 +401,18 @@ const AccountLedger = () => {
             deb_result_amt = credit_debit.credit_totalamount - credit_debit.debit_totalamount;
         }
         setDebit_amt_diff(deb_result_amt);
+
+        //currency amount difference
+        let cre_result_curr_amt =   0;
+        if(credit_debit.credit_totalcurrency - credit_debit.debit_totalcurrency > 0){
+            cre_result_curr_amt = credit_debit.credit_totalcurrency - credit_debit.debit_totalcurrency;
+        }
+        setCredit_curr_diff(cre_result_curr_amt);
+        let deb_result_curr_amt =   0;
+        if(credit_debit.credit_totalcurrency - credit_debit.debit_totalcurrency < 0){
+            deb_result_curr_amt = credit_debit.credit_totalcurrency - credit_debit.debit_totalcurrency;
+        }
+        setDebit_curr_diff(deb_result_curr_amt);
 
         // console.log(result_dia);
         
@@ -457,6 +476,7 @@ const AccountLedger = () => {
 
 
         }
+      
         const handleNextDays = () => {
 
             const newStartDate = moment(startDate).add(30, 'days').format('YYYY-MM-DD');
@@ -471,22 +491,27 @@ const AccountLedger = () => {
             // Filter data based on the new start date and end date
             filterData();
         }
-      const handleExcel = () => {
+      
+        const handleExcel = () => {
+       
         const obj  = { 
             data: filterArray,
             debit_mg_diff : debit_mg_diff,
             debit_dia_diff : debit_dia_diff,
             debit_amt_diff : debit_amt_diff,
+            debit_curr_diff : debit_curr_diff,
             credit_mg_diff : credit_mg_diff,
             credit_dia_diff: credit_dia_diff,
             credit_amt_diff : credit_amt_diff,
+            credit_curr_diff : credit_curr_diff,
             resultTotal : resultTotal,
             startDate : startDate,
             endDate : endDate,
         }
-        localStorage.setItem('excelData', JSON.stringify(obj));
+        localStorage.setItem('excelData', JSON?.stringify(obj));
         window.open("http://localhost:3000/accountledgerexcel");
       }
+
   return (
     <div>
         <div className='fs-4 fw-bold text-center text-secondary my-2 py-2'>Ledger</div>
@@ -499,7 +524,7 @@ const AccountLedger = () => {
                 <div className='d-flex justify-content-between align-items-center flex_col_Al'>
                 {
                     filterVisible ? <div className='fs_al2 p-2 d-flex justify-content-start  align-items-center flex-wrap'>
-                    <div className='mb-2'><input type="date" name="date" id="startdate" className='mx-2 p-1 mb-2' value={startDate} onChange={(e) => setStartDate(e.target.value)} title='find data'  />
+                    <div ><input type="date" name="date" id="startdate" className='mx-2 p-1 mb-2' value={startDate} onChange={(e) => setStartDate(e.target.value)} title='find data'  />
                     To 
                     <input type="date" name="date" id="enddate" className='mx-2 p-1 mb-2'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /><SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/></div>
                     <div className='mb-2'><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div>
@@ -544,8 +569,8 @@ const AccountLedger = () => {
                             { ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt)) > 0 ? 'Dr' : 'Cr' }</span></div>
                         <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Amount :</span> <span className='bal_Amt_ac'>
                             {/* { (formatAmount(resultTotal?.debit_totalcurrency - resultTotal?.credit_totalcurrency))}&nbsp;{(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)) ? 'Dr' : 'Cr' ) }</span></div> */}
-                            { (formatAmount((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)))}&nbsp;
-                            {(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)) ? 'Dr' : 'Cr' ) }</span></div>
+                            {currencySymbol}&nbsp;{ (formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)))}&nbsp;
+                            {(((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) ? 'Dr' : 'Cr' ) }</span></div>
                     </div>
                 </div>
                 
@@ -581,9 +606,11 @@ const AccountLedger = () => {
                         <tbody className='fs_td'>
                                         {
                                             ((Math.abs(debit_amt_diff) === 0) && 
+                                            (Math.abs(debit_curr_diff) === 0) &&
                                             (Math.abs(debit_dia_diff) === 0) &&
                                             (Math.abs(debit_mg_diff) === 0) &&
                                             (Math.abs(credit_amt_diff) === 0) &&
+                                            (Math.abs(credit_curr_diff) === 0) &&
                                             (Math.abs(credit_mg_diff) === 0) &&
                                             (Math.abs(credit_dia_diff) === 0)) ? '' : <tr className='border fw-bold'>
                                             <td className='border-end p-1 text-center'></td>
@@ -593,7 +620,7 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-end ps-1'>{Math.abs(debit_dia_diff)}</td>
                                             <td className='border-end p-1 text-end pe-1'>{Math.abs(debit_amt_diff)}</td>
                                             <td className='border-end p-1 text-end pe-1'></td>
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}></td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(debit_curr_diff)}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-start ps-1' align='center'>Opening</td>
@@ -602,14 +629,14 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_dia_diff)}</td>
                                             <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_amt_diff)}</td>
                                             <td className='border-end p-1 text-end pe-1'></td>
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}></td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(credit_curr_diff)}</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr> 
                                         }
-                            {
-                                filterArray?.length > 0 ? filterArray?.map((e) => {
-                                            let doneIcon = null;
-                                            let closeIcon = null;
+                                        {
+                                            filterArray?.length > 0 ? filterArray?.map((e) => {
+                                                let doneIcon = null;
+                                                let closeIcon = null;
 
                                             if (e.IsVerified === 0) {
                                                 doneIcon = <DoneIcon sx={{ color: 'green' }} />;
@@ -650,7 +677,7 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-end pe-1'>{((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt))?.toFixed(3)}</td>
                                             <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount)))}</td>
                                             <td className='border-end p-1 text-end pe-1'></td>
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount((resultTotal?.debit_totalcurrency))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{currencySymbol}&nbsp;{formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency))}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-start ps-1'></td>
@@ -658,9 +685,9 @@ const AccountLedger = () => {
                                             {/* {console.log("dia wt total with result",((Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3))} */}
                                             <td className='border-end p-1 text-end pe-1'>{((Math.abs(credit_mg_diff) + resultTotal?.credit_metalgold))?.toFixed(3)}</td>
                                             <td className='border-end p-1 text-end pe-1'>{((Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3)}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{formatAmount((Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount((Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount))}</td>
                                             <td className='border-end p-1 text-end pe-1'></td>
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(( resultTotal?.credit_totalcurrency))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{currencySymbol}&nbsp;{formatAmount((Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency))}</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr>
                         </tbody>
