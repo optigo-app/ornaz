@@ -119,7 +119,7 @@ export default function MyWishList() {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
-                setWishlistData([]); 
+                setWishlistData([]);
                 getCountFunc();
                 navigation('/myWishList')
             } else {
@@ -179,7 +179,7 @@ export default function MyWishList() {
             if (response.Data.rd[0].stat === 1) {
                 // alert('Remove Success');
                 // window.location.reload();
-                setWishlistData([]); 
+                setWishlistData([]);
                 getCountFunc();
                 navigation('/myWishList')
             } else {
@@ -191,6 +191,13 @@ export default function MyWishList() {
             setIsLoading(false);
         }
     }
+
+    const handelProductSubmit = (product) => {
+        console.log('producrrrrrrrrrrr',JSON.stringify(product));
+        // localStorage.setItem("srProductsData", JSON.stringify(product));
+        // navigation("/productdetail");
+    };
+
 
     return (
         <div className='paddingTopMobileSet' style={{
@@ -223,7 +230,7 @@ export default function MyWishList() {
                                     <div style={{ position: 'absolute', right: '20px', top: '5px' }}>
                                         <IoClose style={{ height: '30px', width: '30px', cursor: 'pointer' }} onClick={() => handleRemoveWichList(item)} />
                                     </div>
-                                    <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' alt='Wishlist item' />
+                                    <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' style={{ cursor: 'pointer' }} alt='Wishlist item' onClick={() => handelProductSubmit(item)} />
                                     <p className='smiWishLsitBoxDesc1'>{item.designno}</p>
                                     <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} <br /> {isPriseShow == 1 && <p>$ {item.TotalUnitCost}</p>}</p>
                                     <p className='smiWishLsitBoxDesc3' onClick={() => handleAddToCart(item.autocode)}>ADD TO CART +</p>
