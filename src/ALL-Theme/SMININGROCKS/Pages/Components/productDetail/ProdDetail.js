@@ -149,7 +149,7 @@ const ProdDetail = () => {
   ]
 
   const handelmainImg = () => {
-    let filterImg = productData?.originalimage.split(",").filter((ele, i) => {
+    let filterImg = productData?.originalimage?.split(",").filter((ele, i) => {
       return i === thumbImg
     })
 
@@ -613,9 +613,10 @@ const ProdDetail = () => {
               )}
               <img
                 src={
+                  
                   productData?.imagepath +
                   (!handelmainImg()?.length
-                    ? productData?.originalimage.split(",")[0]
+                    ? productData?.originalimage?.split(",")[0]
                     : handelmainImg())
                 }
                 alt={""}
@@ -631,7 +632,7 @@ const ProdDetail = () => {
               />
               {/* } */}
               <div className="srthumb_images">
-                {productData?.thumbimage.split(",").map((data, i) => (
+                {productData?.thumbimage?.split(",").map((data, i) => (
                   <img
                     src={productData?.imagepath + data}
                     alt={""}
