@@ -628,7 +628,7 @@ const SalesReport = () => {
                 isLoading ?
                     <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <>
                         <Paper sx={{ width: '100%', mb: 2 }} className='salesReportTableSec'>
-                            <TableContainer>
+                            <TableContainer sx={{maxHeight: 580}}>
                                 <Table
                                     sx={{ minWidth: 750 }}
                                     aria-labelledby="tableTitle"
