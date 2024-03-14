@@ -56,6 +56,10 @@ const ProductList = () => {
   const getHeaderData = useRecoilValue(HeaderData)
   const getHeaderData2 = useRecoilValue(HeaderData2)
 
+  const [onlyPirce, setOnlyPrice] = useState([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -219,7 +223,7 @@ const ProductList = () => {
   };
 
   let productData = [];
-
+  
   if (ProductApiData?.data?.[0]) {
     ProductApiData.data[0].map((ele) => {
       let obj = {};
@@ -604,6 +608,7 @@ const ProductList = () => {
     // getCountApi()
     getCountFunc()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -1082,7 +1087,21 @@ const ProductList = () => {
   
   useEffect(()=>{
     getDesignPriceList()
+    getPriceFilterData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
+
+  // console.log(productData);
+  const getPriceFilterData = () => {
+      const price_only = productData?.filter((e) => e?.price !== 'Not Availabel' )?.map((e) => e?.price)?.sort((a, b) => a - b );
+      console.log("h",price_only);
+      setOnlyPrice(price_only);
+      setMinPrice(price_only[0])
+      console.log("min price", price_only[0]);
+      console.log("max price", price_only[price_only?.length - 1]);
+      setMaxPrice(price_only[price_only?.length - 1])
+  }
+    
 
   return (
     <div id="top">
