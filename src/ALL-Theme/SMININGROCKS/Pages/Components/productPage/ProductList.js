@@ -52,16 +52,20 @@ const ProductList = () => {
   const getHeaderData2 = useRecoilValue(HeaderData2)
 
   const [onlyPirce, setOnlyPrice] = useState([]);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+  const [minNetwt, setMinNetwt] = useState(null);
+  const [maxNetwt, setMaxNetwt] = useState(null);
+  const [minGrosswt, setMinGrossWt] = useState(null);
+  const [maxGrosswt, setMaxGrossWtt] = useState(null);
+  const [minDiamondWt, setMinDiamondWt] = useState(null);
+  const [maxDiamondWt, setMaxDiamondWt] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   // console.log("getHeaderData", getHeaderData)
-  console.log("currencySym", currencySym?.Currencysymbol)
 
-  console.log("priceDataApi",priceDataApi);
 
 
   const toggleDeatilList = () => {
@@ -109,9 +113,9 @@ const ProductList = () => {
   let productData = [];
   
   if (ProductApiData?.data?.[0]) {
-    ProductApiData.data[0].map((ele) => {
+    ProductApiData.data[0]?.map((ele) => {
       let obj = {};
-      Object.entries(prodListData.ProductsList).map((objele) => {
+      Object.entries(prodListData?.ProductsList)?.map((objele) => {
         obj[objele[0]] = ele[objele[1]];
       });
       productData.push(obj);
@@ -275,7 +279,7 @@ const ProductList = () => {
     // let pdata;
 
     productData.forEach((pd) => {
-      const pdata = cartData.find((cd) => pd.designno === cd.DesignNo)
+      const pdata = cartData?.find((cd) => pd.designno === cd.DesignNo)
 
       // console.log("pdata",pdata);
 
@@ -480,7 +484,6 @@ const ProductList = () => {
   };
 
 
-  console.log("productData",productData);
 
 
   const NewFilterData = () => {
@@ -493,11 +496,15 @@ const ProductList = () => {
       } else if (ele.Fno === '8') {
         newFilter.push({ label: "GENDER", filterList: filterData.GenderList?.map((ele) => { return ele.GenderName }), listType: 'GenderName' });
       } else if (ele.Fno === '12') {
-        newFilter.push({ label: "PRICE", filterList: [] });
+        // newFilter.push({ label: "PRICE", filterList: [] });
       } else if (ele.Fno === '15') {
         newFilter.push({ label: "COLLECTION", filterList: filterData.CollectionList?.map((ele) => { return ele.CollectionName }), listType: 'CollectionName' });
       } else if (ele.Fno === '18') {
-        newFilter.push({ label: "CENTERSTONE", filterList: filterData.CenterStoneList?.map((ele) => { return ele?.ColorStoneName }), listType: 'ColorStoneName' });
+
+        newFilter.push({ label: "PRICE", filterList: [] });
+        newFilter.push({ label: "NETWT", filterList: [] });
+        newFilter.push({ label: "GROSSWT", filterList: [] });
+        newFilter.push({ label: "DIAMONDWT", filterList: [] });
       }
     });
 
@@ -555,7 +562,6 @@ const ProductList = () => {
 
   const filteredProducts = sepeTypeVal.map((st) => (newProData.length ? newProData : productData).filter((pd) => pd[st.type] === st.value)).reverse()
 
-  console.log("filteredProducts", filteredProducts)
 
 
 
@@ -1002,22 +1008,19 @@ const ProductList = () => {
 
   useEffect(() => {
 
-    console.log('getHeaderData2?.label2getHeaderData2?.label2', getHeaderData2?.label2);
 
     if (getHeaderData2?.label2 === "brand") {
-      console.log('getHeaderData2?.value1', getHeaderData2?.value1);
-      console.log('getHeaderData2?.value2', getHeaderData2?.value2);
-      console.log('brandbrandbrandbrandbrand', newProData);
+      // console.log('getHeaderData2?.value1', getHeaderData2?.value1);
+      // console.log('getHeaderData2?.value2', getHeaderData2?.value2);
+      // console.log('brandbrandbrandbrandbrand', newProData);
 
       let data = productData.filter((pd) => pd && pd.BrandName === getHeaderData2?.value2)
 
-      console.log('datadatadata', data);
       setNewProData(data);
 
     }
 
     if (getHeaderData2?.label2 === "category") {
-      console.log('ppppppppppppppppppp', newProData);
 
       let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
       setNewProData(data);
@@ -1039,54 +1042,137 @@ const ProductList = () => {
     if (getHeaderData && getHeaderData.value1 && productData) {
       newMenuProdData()
     }
-
   }, [getHeaderData])
 
 
 
 
 
-  const [value1, setValue1] = useState([20, 37]);
+  const [value1, setValue1] = useState([minPrice, maxPrice]);
 
-  const handleChange1 = (
+  const handlePriceChange = (
     event,
     newValue,
     activeThumb,
   ) => {
-    if (!Array.isArray(newValue)) {
-      return;
-    }
+      setValue1(newValue)
+      setMinPrice(newValue[0])
+      setMaxPrice(newValue[1])
 
-    if (activeThumb === 0) {
-      setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
-    } else {
-      setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
-    }
+      const datas = productData?.filter((e) => e !== 'Not Available')?.filter((e) => e?.price>= newValue[0] && e?.price<= newValue[1] 
+      && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.Grossweight >= minGrosswt && e?.Grossweight <= maxGrosswt 
+      && e?.diamondweight >= minDiamondWt && e?.diamondweight <= maxDiamondWt)
+
+      // productData = datas;
+
+      setNewProData(datas);
+
+    // if (!Array.isArray(newValue)) {
+    //   return;
+    // }
+
+    // if (activeThumb === 0) {
+    //   setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
+    // } else {
+    //   setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
+    // }
   };
 
-  const [value2, setValue2] = useState([20, 37]);
+  const [value2, setValue2] = useState([minNetwt, maxNetwt]);
 
-  const handleChange2 = (
+  const handleNetWtChange = (
     event,
     newValue,
     activeThumb,
   ) => {
-    if (!Array.isArray(newValue)) {
-      return;
-    }
+        setValue2(newValue);
+        
+        const datas = productData?.filter((e) => e?.netwt >= newValue[0] && e?.netwt <= newValue[1] && e?.price >= minPrice && e?.price <= maxPrice 
+        && e?.Grossweight >= minGrosswt && e?.Grossweight <= maxGrosswt && e?.diamondweight >= minDiamondWt && e?.diamondweight <= maxDiamondWt)
+        
+        setNewProData(datas)
+        // if (!Array.isArray(newValue)) {
+          //   return;
+          // }
+          
+          // if (newValue[1] - newValue[0] < minDistance) {
+            //   if (activeThumb === 0) {
+              //     const clamped = Math.min(newValue[0], 100 - minDistance);
+              //     setValue2([clamped, clamped + minDistance]);
+              //   } else {
+                //     const clamped = Math.max(newValue[1], minDistance);
+                //     setValue2([clamped - minDistance, clamped]);
+                //   }
+                // } else {
+                  //   setValue2(newValue);
+                  // }
+                };
+                
+  const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
+  const handlegrossWtChange = (
+                  event,
+                  newValue,
+                  activeThumb,
+                ) => {
 
-    if (newValue[1] - newValue[0] < minDistance) {
-      if (activeThumb === 0) {
-        const clamped = Math.min(newValue[0], 100 - minDistance);
-        setValue2([clamped, clamped + minDistance]);
-      } else {
-        const clamped = Math.max(newValue[1], minDistance);
-        setValue2([clamped - minDistance, clamped]);
-      }
-    } else {
-      setValue2(newValue);
-    }
+                  setValue3(newValue);
+                  setMinGrossWt(newValue[0]);
+                  setMaxGrossWtt(newValue[1]);
+                  const datas = productData?.filter((e) => e?.Grossweight>= newValue[0] && e?.Grossweight<= newValue[1] 
+                    && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.price >= minPrice && e?.price <= maxPrice
+                  );
+                  setNewProData(datas)
+                  // if (!Array.isArray(newValue)) {
+                  //   return;
+                  // }
+              
+                  // if (newValue[1] - newValue[0] < minDistance) {
+                  //   if (activeThumb === 0) {
+                  //     const clamped = Math.min(newValue[0], 100 - minDistance);
+                  //     setValue2([clamped, clamped + minDistance]);
+                  //   } else {
+                  //     const clamped = Math.max(newValue[1], minDistance);
+                  //     setValue2([clamped - minDistance, clamped]);
+                  //   }
+                  // } else {
+                  //   setValue2(newValue);
+                  // }
+                };
+
+  const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
+  const handleDiamondChange = (
+    event,
+    newValue,
+    activeThumb,
+  ) => {
+
+    setValue4(newValue);
+    setMinDiamondWt(newValue[0]);
+    setMaxDiamondWt(newValue[1]);
+    const datas = productData?.filter((e) => e?.diamondweight>= newValue[0] && e?.diamondweight <= newValue[1] && e?.Grossweight>= minGrosswt && e?.Grossweight<= maxGrosswt 
+      && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.price >= minPrice && e?.price <= maxPrice
+    );
+    setNewProData(datas)
+    // if (!Array.isArray(newValue)) {
+    //   return;
+    // }
+
+    // if (newValue[1] - newValue[0] < minDistance) {
+    //   if (activeThumb === 0) {
+    //     const clamped = Math.min(newValue[0], 100 - minDistance);
+    //     setValue2([clamped, clamped + minDistance]);
+    //   } else {
+    //     const clamped = Math.max(newValue[1], minDistance);
+    //     setValue2([clamped - minDistance, clamped]);
+    //   }
+    // } else {
+    //   setValue2(newValue);
+    // }
   };
+
+
+
+
 
 
   const getDesignPriceList = async() =>{
@@ -1122,22 +1208,53 @@ const ProductList = () => {
 
   }
   
+
+  const handleChange1 = () => {
+
+  }
   useEffect(()=>{
     getDesignPriceList()
-    getPriceFilterData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
-  // console.log(productData);
-  const getPriceFilterData = () => {
+    //for price range
       const price_only = productData?.filter((e) => e?.price !== 'Not Availabel' )?.map((e) => e?.price)?.sort((a, b) => a - b );
-      console.log("h",price_only);
-      setOnlyPrice(price_only);
-      setMinPrice(price_only[0])
-      console.log("min price", price_only[0]);
-      console.log("max price", price_only[price_only?.length - 1]);
-      setMaxPrice(price_only[price_only?.length - 1])
-  }
+      const unique_price_only = [...new Set(price_only)];    
+    
+      useEffect(() => {
+          setMinPrice(unique_price_only[0]);
+          setMaxPrice(unique_price_only[unique_price_only?.length - 1]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[price_only])
+
+    //for netwt range
+    const netwt_only = productData?.map((e) => e?.netwt)?.sort((a, b) => a - b)
+    const unique_netwt_only = [...new Set(netwt_only)];
+      
+    useEffect(() => {
+        setMinNetwt(unique_netwt_only[0]);
+        setMaxNetwt(unique_netwt_only[unique_netwt_only?.length - 1]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[netwt_only]);
+
+    const groswt_only = productData?.map((e) => e?.Grossweight)?.sort((a, b) => a - b)
+    const unique_grosswt_only = [...new Set(groswt_only)];
+
+    useEffect(() => {
+      setMinGrossWt(unique_grosswt_only[0]);
+      setMaxGrossWtt(unique_grosswt_only[unique_grosswt_only?.length - 1]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[groswt_only]);
+
+    const diawt_only = productData?.map((e) => e?.diamondweight)?.sort((a, b) => a - b)
+    const unique_diawt_only = [...new Set(diawt_only)];
+
+    useEffect(() => {
+      setMinDiamondWt(unique_diawt_only[0]);
+      setMaxDiamondWt(unique_diawt_only[unique_diawt_only?.length - 1]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[diawt_only]);
+
     
 
   return (
@@ -1246,20 +1363,56 @@ const ProductList = () => {
                                 className='netWtSecSlider'
                                 getAriaLabel={() => 'Minimum distance'}
                                 value={value1}
-                                onChange={handleChange1}
+                                min={minPrice}
+                                max={maxPrice}
+                                onChange={handlePriceChange}
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
                                 disableSwap
                               />
                             </div>}
 
-                          {ele.label === "CENTERSTONE" &&
+                          {ele.label === "NETWT" &&
                             <div>
                               <Slider
                                 className='netWtSecSlider'
                                 getAriaLabel={() => 'Minimum distance'}
-                                value={value1}
-                                onChange={handleChange1}
+                                value={value2}
+                                min={minNetwt}
+                                max={maxNetwt}
+                                onChange={handleNetWtChange}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                              />
+                            </div>
+                          }
+
+                          {ele.label === "GROSSWT" &&
+                            <div>
+                              <Slider
+                                className='netWtSecSlider'
+                                getAriaLabel={() => 'Minimum distance'}
+                                value={value3}
+                                min={minGrosswt}
+                                max={maxGrosswt}
+                                onChange={handlegrossWtChange}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                                disableSwap
+                              />
+                            </div>
+                          }
+
+                          {ele.label === "DIAMONDWT" &&
+                            <div>
+                              <Slider
+                                className='netWtSecSlider'
+                                getAriaLabel={() => 'Minimum distance'}
+                                value={value4}
+                                min={minDiamondWt}
+                                max={maxDiamondWt}
+                                onChange={handleDiamondChange}
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
                                 disableSwap
@@ -1309,6 +1462,7 @@ const ProductList = () => {
                   ))}
                 </div>
               </div>
+              {/* for mobile */}
               <div className="smilingMobileProductListSideBar">
 
                 <hr style={{ marginTop: "0px" }} />

@@ -514,7 +514,7 @@ const AccountLedger = () => {
 
   return (
     <div>
-        <div className='fs-4 fw-bold text-center text-secondary my-2 py-2'>Ledger</div>
+        <div className='fs-4 fw-bold text-center text-secondary ledger_title'>Ledger</div>
         <div>
             <div className='border'>
             <div className='p-2 ps-4 border-bottom fs_Al_mq' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div>
@@ -525,8 +525,9 @@ const AccountLedger = () => {
                 {
                     filterVisible ? <div className='fs_al2 p-2 d-flex justify-content-start  align-items-center flex-wrap'>
                     <div ><input type="date" name="date" id="startdate" className='mx-2 p-1 mb-2' value={startDate} onChange={(e) => setStartDate(e.target.value)} title='find data'  />
-                    To 
+                     To 
                     <input type="date" name="date" id="enddate" className='mx-2 p-1 mb-2'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /><SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/></div>
+                    
                     <div className='mb-2'><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div>
                     {/* <div onClick={() => navigate("/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
                     {/* <div onClick={() => handleExcel()}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
@@ -535,7 +536,7 @@ const AccountLedger = () => {
                     <div className='d-flex'>
                         <button className='ms-2 mx-1 btn border p-2 py-0 daybtn mb-2' title='previous' onClick={() => handlePreviousDays()}>&lt;</button>
                         {/* <div className='mx-2 mb-2 d-flex flex-wrap'> */}
-                            {[30, 60, 90].map((days) => (
+                            {[30, 60, 90]?.map((days) => (
                                 <button key={days} className={`mx-1 btn border p-2 py-0 daybtn mb-2 ${selectedDays === days ? 'selected' : ''}`} title={`${days} days`} onClick={() => handleDays(days)}>{days}</button>
                             ))}
                         {/* </div> */}
@@ -573,7 +574,6 @@ const AccountLedger = () => {
                             {(((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) ? 'Dr' : 'Cr' ) }</span></div>
                     </div>
                 </div>
-                
                 {
                     loaderAC ? <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px", paddingBottom: "30px" }}><CircularProgress className='loadingBarManage' /></Box> : <div className='m-2 overflow-auto'>
                     <table className='w-100'>
