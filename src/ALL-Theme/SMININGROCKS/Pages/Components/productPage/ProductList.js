@@ -1761,7 +1761,7 @@ const ProductList = () => {
                   }}
                 >
                   {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
-                  {(newProData.length ? newProData : [])?.map((products, i) => (
+                  {(newProData.length ? newProData : ProductApiData2)?.map((products, i) => (
                     
                       <div
                         style={{
