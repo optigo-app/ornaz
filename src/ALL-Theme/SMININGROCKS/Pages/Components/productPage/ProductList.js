@@ -17,7 +17,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 import memoizeOne from 'memoize-one';
 
@@ -70,6 +70,13 @@ const ProductList = () => {
   const location = useLocation();
 
   const getPdData = useRecoilValue(productDataNew)
+  const getSearchData = useRecoilValue(searchData)
+
+  console.log('getEarch.',getSearchData);
+
+  useEffect(() =>{
+    setNewProData(getSearchData)
+  },[getSearchData])
 
 
   // useEffect(()=>{
@@ -127,7 +134,7 @@ const ProductList = () => {
         const data = JSON.parse(localStorage.getItem("allproductlist"));
         const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
 
-        const updatedData = await Promise.all(data.map(async (product) => {
+        const updatedData = await Promise.all(data?.map(async(product) => {
             const newPriceData = priceDataApi.rd?.find(
                 (pda) =>
                     pda.A === product.autocode &&
@@ -379,7 +386,7 @@ const ProductList = () => {
 
   const diffWishData = useCallback(() => {
 
-    productData.forEach((pd) => {
+    productData?.forEach((pd) => {
       const pdata = WishData.find((cd) => pd.designno === cd.DesignNo)
 
 

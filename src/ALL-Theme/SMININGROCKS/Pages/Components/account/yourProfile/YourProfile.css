@@ -1,7 +1,9 @@
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled{
     -webkit-text-fill-color: black!important;
 }
-
+.css-1x5jdmq.Mui-disabled{
+    -webkit-text-fill-color: black!important;
+}
 
 @media screen and (max-width: 500px) {
 
