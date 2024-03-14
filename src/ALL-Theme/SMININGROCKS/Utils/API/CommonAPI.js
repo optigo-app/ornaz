@@ -3,9 +3,9 @@ import axios from "axios";
 const APIURL = 'https://api.optigoapps.com/test/store.aspx';
 // const ZENURL = 'http://zen/api/store.aspx'
 
-const storeInit = JSON.parse(localStorage.getItem('storeInit'));
 
 export const CommonAPI = async (body) => {
+    const storeInit = JSON.parse(localStorage.getItem('storeInit'));
     try {
         const { YearCode, version, token } = storeInit;
         const header = {
