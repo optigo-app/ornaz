@@ -141,7 +141,6 @@ export default function Header() {
     setislogin(val);
   };
 
-  console.log("isLogin", islogin);
 
   useEffect(() => {
     fetchData();

@@ -32,14 +32,17 @@
 .toggleBtn{
     border: none;
     font-size: 14px;
-    background-color: rgb(193, 232, 232);
+    background-color: rgb(125, 127, 133);
+    color: white !important;
     font-weight: 500;
+    min-width: 100px;
     width: 100%;
     outline: none !important;
     border-radius: 4px;
     padding: 4px;
     padding-left: 8px;
     padding-right: 8px;
+    height: 40px;
 }
 
 .bal_Amt_ac{
@@ -59,7 +62,15 @@
     }   
     
 } */
-
+.ledger_title{
+    /* height: 40px; */
+    margin: 1rem;
+    background-color: rgb(125, 127, 133);
+    color: white !important;
+    padding: 1rem;
+    margin-left: 0px;
+    margin-right: 0px;
+}
 @media (max-width:576px){
     .fs_Al_mq *{
         font-size: 11px !important;
