@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../home/Footer/Footer";
 import SmilingRock from "../home/smiling_Rock/SmilingRock";
 import "./product.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { json, useLocation, useNavigate } from "react-router-dom";
 import prodListData from "../../jsonFile/Productlist_4_95oztttesi0o50vr.json";
 // import prodListData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_Original.json";
 import filterData from "../../jsonFile/M_4_95oztttesi0o50vr.json";
@@ -17,8 +17,9 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
+import memoizeOne from 'memoize-one';
 
 
 
@@ -30,8 +31,12 @@ const minDistance = 10;
 
 
 const ProductList = () => {
+
+  const ProductData2=[];
+
   const [isOpenDetail, setIsOpenDetail] = useState(false);
   const [ProductApiData, setProductApiData] = useState([])
+  const [ProductApiData2, setProductApiData2] = useState([])
   const [drawerShowOverlay, setDrawerShowOverlay] = useState(false);
   // const [isHovered, setIsHovered] = useState(false);
   // const [HoveredID, setHoveredID] = useState();
@@ -58,10 +63,122 @@ const ProductList = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // console.log("getHeaderData", getHeaderData)
-  console.log("currencySym", currencySym?.Currencysymbol)
+  const getPdData = useRecoilValue(productDataNew)
 
-  console.log("priceDataApi",priceDataApi);
+
+  // useEffect(()=>{
+  //   const data = JSON.parse(localStorage.getItem("allproductlist"))
+  //   let loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail')) 
+
+  //   // setTimeout(()=>{
+  //     data?.map((product) => {
+  
+  //         const newPriceData = priceDataApi.rd?.find(
+  //           (pda) => 
+  //             pda.A === product.autocode && 
+  //             pda.B === product.designno &&
+  //             pda.D === loginUserDetail?.cmboMetalType 
+  //         )
+      
+  //         const newPriceData1 = priceDataApi.rd1?.find(
+  //           (pda) => 
+  //             pda.A === product.autocode && 
+  //             pda.B === product.designno && 
+  //             pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
+  //             pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
+  //         )
+      
+  //         const newPriceData2 = priceDataApi.rd2?.find(
+  //           (pda) => 
+  //             pda.A === product.autocode && 
+  //             pda.B === product.designno && 
+  //             pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0] &&
+  //             pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1]
+      
+  //         )
+
+  //         console.log("priceList",{newPriceData,newPriceData1,newPriceData2})
+      
+  //         if (newPriceData || newPriceData1 || newPriceData2) {
+  //           product['price'] = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0)
+  //         } else {
+  //           product['price'] = "Not Availabel";
+  //         }
+          
+  //       });
+
+  //       localStorage.setItem("allproductlist",JSON?.stringify(data))
+  //       setProductApiData2(data)
+  //       console.log("END");
+  //   // },1000)
+
+
+
+  // },[])
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const data = JSON.parse(localStorage.getItem("allproductlist"));
+        const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
+
+        const updatedData = await Promise.all(data.map(async (product) => {
+            const newPriceData = priceDataApi.rd?.find(
+                (pda) =>
+                    pda.A === product.autocode &&
+                    pda.B === product.designno &&
+                    pda.D === loginUserDetail?.cmboMetalType
+            );
+
+            const newPriceData1 = priceDataApi.rd1?.find(
+                (pda) =>
+                    pda.A === product.autocode &&
+                    pda.B === product.designno &&
+                    pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
+                    pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
+            );
+
+            const newPriceData2 = priceDataApi.rd2?.find(
+                (pda) =>
+                    pda.A === product.autocode &&
+                    pda.B === product.designno &&
+                    pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0] &&
+                    pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1]
+            );
+
+
+            let price="Not Available";
+            let isLoading = true;
+
+            if (newPriceData || newPriceData1 || newPriceData2) {
+                price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
+                isLoading = false;
+            }
+            else{
+                // price = " " ;
+                isLoading = false;
+            }
+
+            console.log("priceList", price);
+          
+
+            return { ...product, price ,isLoading };
+        }));
+
+        localStorage.setItem("allproductlist", JSON.stringify(updatedData));
+        setProductApiData2(updatedData);
+        console.log("END");
+    };
+
+    fetchData();
+}, [priceDataApi]);
+
+
+
+
+
+
+
+
 
 
   const toggleDeatilList = () => {
@@ -91,7 +208,6 @@ const ProductList = () => {
         setProductApiData(res?.data)
       })
       .catch((err) => console.log("err", err))
-
   };
 
   useEffect(() => {
@@ -147,53 +263,14 @@ const ProductList = () => {
 
 
   useEffect(() => {
-    // if(ProductApiData.length){
-    // window.scrollTo(0,0);
     const element = document.getElementById("top")
     element.scrollIntoView()
-    // }
   }, []);
 
 
 
 
-  // let collectionsfilter = () =>{
-  //   let arr1=[]
-  //  filterData.CollectionList.map((filcollist)=>{
-  //   console.log("arr",productData.Collectionid);
-  //    productData?.map((pdColl)=>{
-  //     if(filcollist.Collectionid === pdColl.Collectionid){
-  //       arr1.push(filcollist.CollectionName)
-  //     }
-  //   })
-  //   })
-  //   return arr1
-  // }
 
-  // let Categoryfilter = () =>{
-  //   let arr1=[]
-  //  filterData.CategoryList.map((filcatlist)=>{
-  //    productData?.map((pdColl)=>{
-  //     if(filcatlist.Categoryid === pdColl.Categoryid){
-  //       arr1.push(filcatlist.CategoryName)
-  //     }
-  //   })
-  //   })
-  //   return arr1
-  // }
-
-  // const MetalColor = () =>{
-  //   let mtCol= [];
-  //   filterData.MetalColorList.map((mtc)=>{
-  //     productData.map((pdColl)=>{
-  //       if(mtc.MetalColorid === pdColl.MetalColorid){
-  //         mtCol.push(mtc.MetalColorName)
-  //       }
-  //     })
-  //   })
-
-  //   return mtCol
-  // }
 
   function updateProductsWithMetalColorName() {
     productData.forEach((product) => {
@@ -277,7 +354,7 @@ const ProductList = () => {
     productData.forEach((pd) => {
       const pdata = cartData.find((cd) => pd.designno === cd.DesignNo)
 
-      // console.log("pdata",pdata);
+
 
       if (pdata && !pd?.checkFlag) {
         pd.checkFlag = true
@@ -358,105 +435,52 @@ const ProductList = () => {
   removefromCart()
 
 
+ 
+
+  // ProductApiData2?.map((product) => {
+  //     console.log("product",product);
+
+  //    let loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail')) 
+
+  //   const newPriceData = priceDataApi.rd?.find(
+  //     (pda) => 
+  //       pda.A === product.autocode && 
+  //       pda.B === product.designno &&
+  //       pda.D === loginUserDetail?.cmboMetalType 
+  //   )
+
+  //   const newPriceData1 = priceDataApi.rd1?.find(
+  //     (pda) => 
+  //       pda.A === product.autocode && 
+  //       pda.B === product.designno && 
+  //       pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
+  //       pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
+  //   )
+
+  //   const newPriceData2 = priceDataApi.rd2?.find(
+  //     (pda) => 
+  //       pda.A === product.autocode && 
+  //       pda.B === product.designno && 
+  //       pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0] &&
+  //       pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1]
+
+  //   )
 
 
 
+  //   if (newPriceData || newPriceData1 || newPriceData2) {
+  //     product['price'] = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0)
+  //   } else {
+  //     product['price'] = "Not Availabel";
+  //   }
+    
+    
+  
+  // });
 
-  // let GetPrice = () =>{
-  //   // let PriceDataChange=[]
-  //   updateProductsWithMetalColorName()?.forEach(product=>{
-  //     const priceData = PriceData.find( priceD => priceD.A === product.autocode && priceD.B === product.diamondquality && priceD.C === product.diamondcolorname && priceD.D.split(" ")[1] === product.MetalPurity)
-  //     if(priceData){
-  //       product.price = priceData.E
-  //      }
+  //     localStorage.setItem("allproductlist",JSON?.stringify(product))
+  //     setProductApiData2(product)
 
-  //   })
-  //   return updateProductsWithMetalColorName()
-
-  // }
-
-
-  // useEffect(()=>{
-
-  //   let isWishHasCartData = productData?.filter((pd)=> WishData.find((wd)=>wd.autocode===pd.autocode))
-  //   console.log("isWishHasCartData",isWishHasCartData)
-
-  // },[WishData])
-
-
-
-  // updateProductsWithMetalColorName()?.forEach((product) => {
-    // let start = performance.now();
-    productData?.forEach((product) => {
-
-    //  let currencyRate = JSON.stringify(localStorage.getItem('CURRENCYCOMBO')) 
-     let loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail')) 
-
-    const newPriceData = priceDataApi.rd?.find(
-      (pda) => 
-        pda.A === product.autocode && 
-        pda.B === product.designno &&
-        pda.D === loginUserDetail?.cmboMetalType 
-    )
-
-    const newPriceData1 = priceDataApi.rd1?.find(
-      (pda) => 
-        pda.A === product.autocode && 
-        pda.B === product.designno && 
-        pda.H === loginUserDetail?.cmboDiaQualityColor.split('#@#')[0] &&
-        pda.J === loginUserDetail?.cmboDiaQualityColor.split('#@#')[1]
-        
-    )
-
-    const newPriceData2 = priceDataApi.rd2?.find(
-      (pda) => 
-        pda.A === product.autocode && 
-        pda.B === product.designno && 
-        pda.H === loginUserDetail?.cmboCSQualityColor.split('#@#')[0] &&
-        pda.J === loginUserDetail?.cmboCSQualityColor.split('#@#')[1]
-        
-    )
-
-    // console.log("newPriceData",newPriceData?.Z)
-
-
-    // const priceData = PriceData?.find(
-    //   (priceD) =>
-    //     priceD.A === product.autocode &&
-    //     priceD.B === product.diamondquality &&
-    //     priceD.C === product.diamondcolorname &&
-    //     priceD.D.split(" ")[1] === product.MetalPurity
-    // );
-
-    // if(newPriceData){
-    //   product.totalunitcostprice = newPriceData?.Z;
-    // }else {
-    //   product.totalunitcostprice = 0;
-    // }
-
-    // if(newPriceData1){
-    //   product.rd1finalamount = newPriceData1?.S;
-    // }else {
-    //   product.rd1finalamount = 0;
-    // }
-
-    // if(newPriceData2){
-    //   product.rd2finalamount = newPriceData2?.S;
-    // }else {
-    //   product.rd2finalamount = 0;
-    // }
-
-    if (newPriceData || newPriceData1 || newPriceData2) {
-      product.price = ((newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0))
-    } else {
-      product.price = "Not Availabel";
-    }
-  });
-  // let end = performance.now();
-  // let timeTaken = end - start;
-  //       console.log("time","Function took " +
-  //               timeTaken + " milliseconds");
-  // console.log(updateProductsWithMetalColorName().map(()=>{    }));
 
   updateProductsWithMetalColorName()?.forEach((prods) => {
     let fullTitle =
@@ -480,7 +504,7 @@ const ProductList = () => {
   };
 
 
-  console.log("productData",productData);
+  // console.log("productData",productData);
 
 
   const NewFilterData = () => {
@@ -521,7 +545,6 @@ const ProductList = () => {
     }
   }
 
-  // console.log("filterChecked11111",filterChecked);
 
   const filteredObjects = Object.entries(filterChecked)
     .filter(([key, value]) => value.checked)
@@ -534,23 +557,6 @@ const ProductList = () => {
   const sepeTypeVal = Object.entries(filteredObjects).map(ele => {
     return { type: ele[1].type, value: ele[1].value }
   })
-
-  // const filteredProducts = productData.filter(product => {
-  //   return sepeTypeVal.every(filter => {
-  //     return product[filter.type] === filter.value 
-  //   })
-  // })
-
-  // let ArrFil = []
-
-  // console.log("sepeTypeVal",sepeTypeVal.map((st)=>productData.filter((pd)=>pd[st.type]=== st.value)))
-  // console.log("sepeTypeVal",sepeTypeVal)
-
-  //   const filteredProducts = (productData).filter(product => {
-  //     return sepeTypeVal.some(condition => {
-  //         return product[condition.type] === condition.value
-  //     });
-  // });
 
 
   const filteredProducts = sepeTypeVal.map((st) => (newProData.length ? newProData : productData).filter((pd) => pd[st.type] === st.value)).reverse()
@@ -569,38 +575,6 @@ const ProductList = () => {
     }
   }
 
-  // console.log("finalDataOfDisplaying",finalDataOfDisplaying());
-
-
-  // const getCountApi = async()=>{
-
-  //       const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-  //       const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
-  //       const UserEmail = localStorage.getItem("userEmail")
-
-
-  //   let EncodeData = {FrontEnd_RegNo:`${storeInit?.FrontEnd_RegNo}`,Customerid:`${Customer_id?.id}`}
-
-  //   const encodedCombinedValue = btoa(JSON.stringify(EncodeData));
-
-  //   let body = {
-  //       "con":`{\"id\":\"\",\"mode\":\"Getcount\",\"appuserid\":\"${UserEmail}\"}`,
-  //       "f":"onAddToCart-AddToWishList-Reload (cartcount)",
-  //       "p":encodedCombinedValue
-  //       }
-
-  //   await CommonAPI(body).then((res)=>{
-  //     if(res?.Data?.rd[0]?.stat_msg === "success"){
-  //       const CountCart = res?.Data?.rd[0]?.cartcount
-  //       const WishCount = res?.Data?.rd[0]?.wishcount
-
-  //       setCartCount(CountCart)
-  //       setWishCount(WishCount)
-
-  //     }
-  //   })
-
-  // }
 
   const getCartAndWishListData = async () => {
 
@@ -711,7 +685,7 @@ const ProductList = () => {
           "designno": `${product?.designno}`,
           "diamondcolorname": `${product?.diamondcolorname}`,
           "diamondpcs": Number(`${product?.diamondpcs}`),
-          "diamondquality": `${product?.diamondquality.split(",")[0]}`,
+          "diamondquality": `${product?.diamondquality?.split(",")[0]}`,
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
@@ -733,7 +707,7 @@ const ProductList = () => {
           "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
-          "DQuality": `${product?.diamondquality.split(",")[0]}`,
+          "DQuality": `${product?.diamondquality?.split(",")[0]}`,
           "DColor": `${product?.diamondcolorname}`,
           "UploadLogicalPath": `${product?.UploadLogicalPath ?? ""}`,
           "ukey": `${storeInit?.ukey}`
@@ -804,9 +778,6 @@ const ProductList = () => {
     // prod["checkFlag"] = event.target.checked
   }
 
-
-
-
   const handelCartList = async (event, prod) => {
 
     try {
@@ -835,7 +806,7 @@ const ProductList = () => {
           "metaltypeid": `${product?.MetalTypeid}`,
           "metalcolorid": `${product?.MetalColorid}`,
           "stockno": "",
-          "DQuality": `${product?.diamondquality.split(",")[0]}`,
+          "DQuality": `${product?.diamondquality?.split(",")[0]}`,
           "DColor": `${product?.diamondcolorname}`,
           "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
           "AdditionalValWt": Number(`${product?.AdditionalValWt}`),
@@ -886,7 +857,7 @@ const ProductList = () => {
           "colorstonequality": `${product?.colorstonequality}`,
           "diamondcolorname": `${product?.diamondcolorname}`,
           "diamondpcs": Number(`${product?.diamondpcs}`),
-          "diamondquality": `${product?.diamondquality.split(",")[0]}`,
+          "diamondquality": `${product?.diamondquality?.split(",")[0]}`,
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
@@ -984,9 +955,6 @@ const ProductList = () => {
 
   }
 
-
-
-
   useEffect(() => {
     let flag = localStorage.getItem('productDataShow') ?? 'true';
     if (newProData.length === 0 && flag === 'true') {
@@ -997,7 +965,6 @@ const ProductList = () => {
       }, 100);
     }
   }, [getHeaderData, newProData])
-
 
 
   useEffect(() => {
@@ -1026,10 +993,6 @@ const ProductList = () => {
 
 
 
-  // useEffect(() => {
-  //     let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
-  //     setNewProData(data);
-  // }, [getHeaderData])
 
   const newMenuProdData = () => {
     let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
@@ -1405,7 +1368,7 @@ const ProductList = () => {
                             </div>
                           }
 
-                          {ele.filterList.map((flist, i) => (
+                          {ele?.filterList?.map((flist, i) => (
                             <div
                               style={{
                                 display: "flex",
@@ -1501,7 +1464,8 @@ const ProductList = () => {
                     flexWrap: "wrap",
                   }}
                 >
-                  {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => (
+                  {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
+                  {(newProData.length ? newProData : ProductApiData2)?.map((products, i) => (
                     <div
                       style={{
                         width: "33.33%",
@@ -1509,7 +1473,7 @@ const ProductList = () => {
                         textAlign: "center",
                         color: "#7d7f85",
                         position: "relative",
-                        zIndex: 0
+                        zIndex: 0,
                       }}
                       className="smilingProductImageBox"
 
@@ -1517,28 +1481,12 @@ const ProductList = () => {
                       <div onClick={() => handelProductSubmit(products)}>
                         <img
                           className="prod_img"
-                          // onMouseEnter={() => {
-                          //   setIsHovered(true);
-                          //   setHoveredID(products.id);
-                          // }}
-                          // onMouseLeave={() => setIsHovered(false)}
-                          // src={products.imagepath + products.mediumimage.split(",")[isHovered && HoveredID === products.id ? 1 : 0    ]}
+                        
                           src={
-                            products.imagepath +
-                            products.mediumimage.split(",")[0]
+                            products?.imagepath +
+                            products?.MediumImagePath?.split(",")[0]
                           }
-                        // style={{
-                        //   backgroundImage: `url(${
-                        //     products.imagepath +
-                        //     products.mediumimage.split(",")[0]
-                        //   })`,
-                        //   "&:hover": {
-                        //     backgroundImage: `url(${
-                        //       products.imagepath +
-                        //       products.mediumimage.split(",")[1]
-                        //     })`,
-                        //   },
-                        // }}
+                       
                         />
                       </div>
                       <div onClick={() => handelProductSubmit(products)}>
@@ -1547,18 +1495,22 @@ const ProductList = () => {
                             fontSize: "13px",
                             textTransform: "uppercase",
                             fontWeight: "500",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            textoverflow: "ellipsis",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            padding:'0 15px',
+                            minHeight:'19.5px'
                           }}
                         >
-                          {products?.title}
-                          {/* <br />
-                        R-00363WHT */}
+                          {products?.TitleLine}
+                          
                         </p>
                       </div>
                       <div>
                         <p style={{ fontSize: "12px" }}>
-                          {/* {products?.MetalColorName} / {currencySym?.Currencysymbol}{(products?.totalunitcostprice ?? null) + (products?.rd1finalamount ?? null) + (products?.rd2finalamount ?? null)} */}
-                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{!(products?.price) ? "" : products?.price}
+                        
+                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' :products?.price}
                         </p>
                       </div>
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
@@ -1576,8 +1528,7 @@ const ProductList = () => {
                             }
                             disableRipple={true}
                             sx={{ padding: "5px" }}
-                            // onClick={()=>handelWishList(products)}
-                            // value={wishFlag}
+                           
                             checked={products?.wishCheck}
                             onChange={(e) => handelWishList(e, products)}
                           />
@@ -1597,8 +1548,7 @@ const ProductList = () => {
                             }
                             disableRipple={true}
                             sx={{ padding: "5px" }}
-                            // onClick={()=>}
-                            // value={cartFlag}
+                          
                             checked={products?.checkFlag}
                             onChange={(e) => handelCartList(e, products)}
                           />
@@ -1643,128 +1593,7 @@ const ProductList = () => {
                     </div>
                   ))}
 
-                  {/* <div
-                    style={{
-                      width: "33.33%",
-                      border: "1px solid #e1e1e1",
-                      textAlign: "center",
-                      color: "#7d7f85",
-                    }}
-                    className="smilingProductImageBox"
-                  >
-                    <div className="prod_img"></div>
-                    <div>
-                      <p
-                        style={{
-                          fontSize: "13px",
-                          textTransform: "uppercase",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Drizzle 0.51ct Lab Grown Diamond Ring
-                        <br />
-                        R-00363WHT
-                      </p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: "12px" }}>White Gold / $1125.00</p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "8px",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginBottom: "12px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "9px",
-                          height: "9px",
-                          backgroundColor: "#c8c8c8",
-                          borderRadius: "50%",
-                        }}
-                      ></div>
-                      <div
-                        style={{
-                          width: "9px",
-                          height: "9px",
-                          backgroundColor: "#ffcfbc",
-                          borderRadius: "50%",
-                        }}
-                      ></div>
-                      <div
-                        style={{
-                          width: "9px",
-                          height: "9px",
-                          backgroundColor: "#e0be77",
-                          borderRadius: "50%",
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "33.33%",
-                      border: "1px solid #e1e1e1",
-                      textAlign: "center",
-                      color: "#7d7f85",
-                    }}
-                    className="smilingProductImageBox"
-                  >
-                    <div className="prod_img"></div>
-                    <div>
-                      <p
-                        style={{
-                          fontSize: "13px",
-                          textTransform: "uppercase",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Drizzle 0.51ct Lab Grown Diamond Ring
-                        <br />
-                        R-00363WHT
-                      </p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: "12px" }}>White Gold / $1125.00</p>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "8px",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginBottom: "12px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "9px",
-                          height: "9px",
-                          backgroundColor: "#c8c8c8",
-                          borderRadius: "50%",
-                        }}
-                      ></div>
-                      <div
-                        style={{
-                          width: "9px",
-                          height: "9px",
-                          backgroundColor: "#ffcfbc",
-                          borderRadius: "50%",
-                        }}
-                      ></div>
-                      <div
-                        style={{
-                          width: "9px",
-                          height: "9px",
-                          backgroundColor: "#e0be77",
-                          borderRadius: "50%",
-                        }}
-                      ></div>
-                    </div>
-                  </div> */}
+                  
                 </div>
               </div>
             </div>
