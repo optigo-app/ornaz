@@ -59,7 +59,7 @@ export default function ContactUs() {
                             }}>General inquiries:<span style={{
                                 fontWeight: 400,
                                 fontSize: '13px'
-                            }}>  Info@smilingrocks.com</span></p>
+                            }}>  Info@sonasons.com</span></p>
 
                             <p style={{
                                 fontSize: '15px',
@@ -67,7 +67,7 @@ export default function ContactUs() {
                             }}>Customer inquiries:<span tyle={{
                                 fontWeight: 400,
                                 fontSize: '13px'
-                            }}>  order@smilingrocks.com</span></p>
+                            }}>  order@sonasons.com</span></p>
 
                             <p style={{
                                 fontSize: '15px',
@@ -75,7 +75,7 @@ export default function ContactUs() {
                             }}>Orders & Returns:<spna tyle={{
                                 fontWeight: 400,
                                 fontSize: '13px'
-                            }}>  order@smilingrocks.com</spna></p>
+                            }}>  order@sonasons.com</spna></p>
 
                             <p className='Fo-contactBox2Desc'>If you are looking for instant answers, check out our FAQ page for more information!</p>
                             <p className='Fo-contactBox2Title'>Orders & Returns</p>

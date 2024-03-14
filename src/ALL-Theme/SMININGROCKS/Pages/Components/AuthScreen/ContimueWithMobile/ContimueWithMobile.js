@@ -9,12 +9,8 @@ export default function ContimueWithMobile() {
     const [mobileNo, setMobileNo] = useState('');
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigation = useNavigate();
-
-    const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
 
     const handleInputChange = (e, setter, fieldName) => {
         const { value } = e.target;
@@ -31,6 +27,9 @@ export default function ContimueWithMobile() {
     };
 
     const handleSubmit = async () => {
+        if (isSubmitting) {
+            return;
+        }
 
         if (!mobileNo.trim()) {
             setErrors({ mobileNo: 'Mobile No. is required' });
@@ -42,12 +41,12 @@ export default function ContimueWithMobile() {
 
         try {
             setIsLoading(true);
+            setIsSubmitting(true);
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
             const { FrontEnd_RegNo } = storeInit;
             const combinedValue = JSON.stringify({
                 country_code: '91', mobile: `${mobileNo}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
-            console.log('combinedValuecombinedValue', combinedValue);
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
                 "con": "{\"id\":\"\",\"mode\":\"WEBVALDNMOBILE\"}",
@@ -55,7 +54,6 @@ export default function ContimueWithMobile() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('ressssssss', response);
             if (response.Data.Table1[0].stat === '1') {
                 navigation('/LoginWithMobileCode', { mobileNo: mobileNo });
                 localStorage.setItem('registerMobile', mobileNo)
@@ -68,6 +66,7 @@ export default function ContimueWithMobile() {
         } catch (error) {
             console.error('Error:', error);
         } finally {
+            setIsSubmitting(false);
             setIsLoading(false);
         }
     };

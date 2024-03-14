@@ -10,7 +10,7 @@ const Explore = () => {
         <div className='exploreMain'>
           <div>
             <img
-              src={'https://smilingrocks.com/cdn/shop/files/founders_image_resize_2_grande.jpg?v=1613679000'}
+              src={'https://media.istockphoto.com/id/544357744/photo/friends-laughing-and-enjoying.jpg?s=612x612&w=0&k=20&c=Pbic5nOf77r61WX7nhGvCq7IStW76FmfiXm6niYYvak='}
               alt={''}
               style={{ width: '735px', height: '459px', objectFit: 'cover' }}
               className='smilingExpolerImgs'
@@ -23,7 +23,7 @@ const Explore = () => {
           </div>
           <div>
             <img
-              src={'https://smilingrocks.com/cdn/shop/files/product_image_2_grande.jpg?v=1613689552'}
+              src={'https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iHccLmdFtnFk/v0/1200x801.jpg'}
               alt={''}
               style={{ width: '735px', height: '459px', objectFit: 'cover' }}
               className='smilingExpolerImgs'
