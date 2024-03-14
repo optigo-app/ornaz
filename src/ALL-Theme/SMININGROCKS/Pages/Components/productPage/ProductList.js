@@ -47,7 +47,7 @@ const ProductList = () => {
   const [WishData, setWishData] = useState([]);
   const [cartRemoveData, setCartRemoveData] = useState("");
   const [wishListRemoveData, setWishListRemoveData] = useState("");
-  const [newProData, setNewProData] = useState([]);
+  const [newProData, setNewProData] = useState(ProductApiData2);
   const [priceDataApi,setpriceDataApi] = useState([]);
   const [currencySym,setCurrencySym] = useState();
 
@@ -56,7 +56,6 @@ const ProductList = () => {
   const getHeaderData = useRecoilValue(HeaderData)
   const getHeaderData2 = useRecoilValue(HeaderData2)
 
-  const [onlyPirce, setOnlyPrice] = useState([]);
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
   const [minNetwt, setMinNetwt] = useState(null);
@@ -134,7 +133,7 @@ const ProductList = () => {
         const data = JSON.parse(localStorage.getItem("allproductlist"));
         const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
 
-        const updatedData = await Promise.all(data?.map(async(product) => {
+        const updatedData = await Promise?.all(data?.map(async (product) => {
             const newPriceData = priceDataApi.rd?.find(
                 (pda) =>
                     pda.A === product.autocode &&
@@ -150,6 +149,8 @@ const ProductList = () => {
                     pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
             );
 
+            console.log("newPriceData1",newPriceData1);
+
             const newPriceData2 = priceDataApi.rd2?.find(
                 (pda) =>
                     pda.A === product.autocode &&
@@ -161,9 +162,13 @@ const ProductList = () => {
 
             let price="Not Available";
             let isLoading = true;
+            let markup = 0;
+
+            // console.log("newPriceData",newPriceData)
 
             if (newPriceData || newPriceData1 || newPriceData2) {
                 price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
+                markup = newPriceData.AB
                 isLoading = false;
             }
             else{
@@ -171,10 +176,9 @@ const ProductList = () => {
                 isLoading = false;
             }
 
-            console.log("priceList", price);
           
 
-            return { ...product, price ,isLoading };
+            return { ...product, price ,isLoading ,markup };
         }));
 
         localStorage.setItem("allproductlist", JSON.stringify(updatedData));
@@ -282,42 +286,39 @@ const ProductList = () => {
 
 
 
-
-
-
   function updateProductsWithMetalColorName() {
-    productData.forEach((product) => {
-      const metalColor = filterData.MetalColorList.find(
+    productData?.forEach((product) => {
+      const metalColor = filterData?.MetalColorList?.find(
         (color) => color.MetalColorid === product.MetalColorid
       );
-      const categoryName = filterData.CategoryList.find(
+      const categoryName = filterData?.CategoryList?.find(
         (cate) => cate.Categoryid === product.Categoryid
       );
-      const collectionName = filterData.CollectionList.find(
+      const collectionName = filterData?.CollectionList?.find(
         (coll) => coll.Collectionid === product.Collectionid
       );
-      const mtpurity = filterData.MetalPurityList.find(
+      const mtpurity = filterData?.MetalPurityList?.find(
         (mtp) => mtp.MetalPurityid === product.MetalPurityid
       );
-      const prodtype = filterData.ProductTypeList.find(
+      const prodtype = filterData?.ProductTypeList?.find(
         (pt) => pt.Producttypeid === product.Producttypeid
       );
-      const gendertype = filterData.GenderList.find(
+      const gendertype = filterData?.GenderList?.find(
         (gen) => gen.Genderid === product.Genderid
       );
-      const Berandtype = filterData.BrandList.find(
+      const Berandtype = filterData?.BrandList?.find(
         (brand) => brand.Brandid === product.Brandid
       )
-      const MetalType = filterData.MetalTypeList.find(
+      const MetalType = filterData?.MetalTypeList?.find(
         (mt) => mt.MetalTypeid === product.MetalTypeid
       )
-      const OcassionType = filterData.OcassionList.find(
+      const OcassionType = filterData?.OcassionList?.find(
         (ocs) => ocs.Ocassionid === product.Ocassionid
       )
-      const SubCategoryType = filterData.SubCategoryList.find(
+      const SubCategoryType = filterData?.SubCategoryList?.find(
         (sct) => sct.SubCategoryid === product.SubCategoryid
       )
-      const ThemeType = filterData.ThemeList.find(
+      const ThemeType = filterData?.ThemeList?.find(
         (tl) => tl.Themeid === product.Themeid
       )
 
@@ -364,7 +365,7 @@ const ProductList = () => {
 
     // let pdata;
 
-    productData.forEach((pd) => {
+    ProductApiData2.forEach((pd) => {
       const pdata = cartData?.find((cd) => pd.designno === cd.DesignNo)
 
 
@@ -378,15 +379,15 @@ const ProductList = () => {
     })
 
 
-    return productData
+    return ProductApiData2
 
-  }, [productData, cartData])
+  }, [ProductApiData2, cartData])
 
-  diffCartData()
+  // diffCartData()
 
   const diffWishData = useCallback(() => {
 
-    productData?.forEach((pd) => {
+    ProductApiData2.forEach((pd) => {
       const pdata = WishData.find((cd) => pd.designno === cd.DesignNo)
 
 
@@ -398,16 +399,15 @@ const ProductList = () => {
       }
     })
 
+    return ProductApiData2
 
-    return productData
-
-  }, [productData, WishData])
+  }, [ProductApiData2, WishData])
 
 
-  diffWishData()
+  // diffWishData()
 
   const removefromCart = () => {
-    productData.map((pd) => {
+    ProductApiData2.map((pd) => {
 
 
       if (cartRemoveData && pd.designno === cartRemoveData) {
@@ -421,7 +421,7 @@ const ProductList = () => {
     })
 
 
-    return productData
+    return ProductApiData2
     // // console.log("prodddd",product);
     // let prodD;
     // productData.forEach((pd)=>{
@@ -445,7 +445,7 @@ const ProductList = () => {
     // return productData
   }
 
-  removefromCart()
+  // removefromCart()
 
 
  
@@ -494,6 +494,61 @@ const ProductList = () => {
   //     localStorage.setItem("allproductlist",JSON?.stringify(product))
   //     setProductApiData2(product)
 
+  console.log("wishData",WishData);
+
+  useEffect(()=>{
+
+    let newWishCheckData = ProductApiData2.map((pd)=>{
+
+      let newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+
+      let wishCheck = false
+      if (newWish) {
+       wishCheck = true
+     }else{
+      wishCheck = false
+     }
+
+     return {...pd,wishCheck}
+
+   })
+
+   
+     console.log("logWishCheck");
+
+     localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
+     setProductApiData2(newWishCheckData)
+   
+
+  },[WishData])
+
+  useEffect(()=>{
+
+    let newCartCheckData = ProductApiData2.map((pd)=>{
+
+      let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+
+      let checkFlag = false
+      if (newWish) {
+        checkFlag = true
+     }else{
+      checkFlag = false
+     }
+
+     if(pd.wishCheck === true){
+      pd.wishCheck = false;
+     }
+
+     return {...pd,checkFlag}
+
+   })
+
+     localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+     setProductApiData2(newCartCheckData)
+
+
+  },[cartData])
+
 
   updateProductsWithMetalColorName()?.forEach((prods) => {
     let fullTitle =
@@ -517,12 +572,11 @@ const ProductList = () => {
   };
 
 
-  console.log("productData",productData);
 
 
   const NewFilterData = () => {
     const newFilter = [];
-    filterData.SideMenuList.forEach((ele) => {
+    filterData?.SideMenuList?.forEach((ele) => {
       if (ele.Fno === '1') {
         newFilter.push({ label: "CATEGORY", filterList: filterData.CategoryList?.map((ele) => { return ele.CategoryName }), listType: 'CategoryName' });
       } else if (ele.Fno === '2') {
@@ -610,8 +664,18 @@ const ProductList = () => {
 
     await CommonAPI(body).then((res) => {
       if (res?.Message === "Success") {
+
+        // let wish = res?.Data?.rd1
+
         setCartData(res?.Data?.rd)
         setWishData(res?.Data?.rd1)
+
+        // if(wish && wish?.length){
+
+        
+
+      // }
+
       }
     })
 
@@ -669,10 +733,10 @@ const ProductList = () => {
           "Grossweight": Number(`${product?.Grossweight}`),
           "InReadyStockCnt": Number(`${product?.InReadyStockCnt}`),
           "IsBestSeller": Number(`${product?.IsBestSeller}`),
-          "IsColorWiseImageExists": `${product?.IsColorWiseImageExists}`,
+          "IsColorWiseImageExists": `${product?.ColorWiseRollOverImageName ?? ""}`,
           "IsInReadyStock": Number(`${product?.IsInReadyStock}`),
           "IsNewArrival": `${product?.IsNewArrival}`,
-          "IsRollOverColorWiseImageExists": `${product?.IsRollOverColorWiseImageExists}`,
+          "IsRollOverColorWiseImageExists": `${product?.IsRollOverColorWiseImageExists ?? ""}`,
           "IsTrending": Number(`${product?.IsTrending}`),
           "MasterManagement_labid": Number(`${product?.MasterManagement_labid}`),
           "MasterManagement_labname": "",
@@ -693,8 +757,8 @@ const ProductList = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": Number(`${product?.UnitCost}`),
-          "UnitCostWithmarkup": Number(`${product?.UnitCostWithmarkup}`),
+          "UnitCost": Number(`${product?.price}`),
+          "UnitCostWithmarkup": Number(`${(product?.price ?? 0)+ (product?.markup ?? 0)}`),
           "autocode": `${product?.autocode}`,
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
@@ -705,20 +769,20 @@ const ProductList = () => {
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
-          "encrypted_designno": `${product?.encrypted_designno}`,
-          "hashtagid": `${product?.hashtagid}`,
-          "hashtagname": `${product?.hashtagname}`,
+          "encrypted_designno": `${product?.encrypted_designno ?? ""}`,
+          "hashtagid": `${product?.Hashtagid ?? ""}`,
+          "hashtagname": `${product?.Hashtagname ?? ""}`,
           "imagepath": `${product?.imagepath}`,
           "imgrandomno": `${product?.imgrandomno}`,
-          "mediumimage": `${product?.mediumimage ?? ""}`,
-          "originalimage": `${product?.originalimage}`,
-          "storyline_html": `${product?.storyline_html}`,
-          "storyline_video": `${product?.storyline_video}`,
-          "thumbimage": `${product?.thumbimage}`,
+          "mediumimage": `${product?.MediumImagePath ?? ""}`,
+          "originalimage": `${product?.OriginalImagePath}`,
+          "storyline_html": `${product?.storyline_html ?? ""}`,
+          "storyline_video": `${product?.storyline_video ?? ""}`,
+          "thumbimage": `${product?.ThumbImagePath}`,
           "totaladditionalvalueweight": 0,
           "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
-          "updatedate": `${product?.updatedate}`,
+          "updatedate": `${product?.UpdateDate}`,
           "videoname": `${product?.videoname ?? ""}`,
           "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
@@ -783,9 +847,6 @@ const ProductList = () => {
         })
 
       }
-
-
-
     }
     catch (error) {
       console.log("error", error);
@@ -846,7 +907,7 @@ const ProductList = () => {
           "IsColorWiseImageExists": `${product?.IsColorWiseImageExists ?? 0}`,
           "IsInReadyStock": Number(`${product?.IsInReadyStock}`),
           "IsNewArrival": `${product?.IsNewArrival}`,
-          "IsRollOverColorWiseImageExists": `${product?.IsRollOverColorWiseImageExists}`,
+          "IsRollOverColorWiseImageExists": `${product?.IsRollOverColorWiseImageExists ?? ""}`,
           "IsTrending": Number(`${product?.IsTrending}`),
           "MasterManagement_labid": Number(`${product?.MasterManagement_labid}`),
           "MasterManagement_labname": "",
@@ -867,8 +928,8 @@ const ProductList = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": Number(`${product?.UnitCost}`),
-          "UnitCostWithmarkup": Number(`${product?.UnitCostWithmarkup}`),
+          "UnitCost": Number(`${product?.price}`),
+          "UnitCostWithmarkup": Number(`${(product?.price ?? 0)+ (product?.markup ?? 0)}`),
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
           "diamondcolorname": `${product?.diamondcolorname}`,
@@ -877,19 +938,19 @@ const ProductList = () => {
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
-          "encrypted_designno": `${product?.encrypted_designno}`,
-          "hashtagid": `${product?.hashtagid}`,
-          "hashtagname": `${product?.hashtagname}`,
+          "encrypted_designno": `${product?.encrypted_designno ?? ""}`,
+          "hashtagid": `${product?.Hashtagid ?? ""}`,
+          "hashtagname": `${product?.Hashtagname ?? ""}`,
           "imagepath": `${product?.imagepath}`,
-          "mediumimage": `${product?.mediumimage ?? ""}`,
-          "originalimage": `${product?.originalimage}`,
-          "storyline_html": `${product?.storyline_html}`,
-          "storyline_video": `${product?.storyline_video}`,
-          "thumbimage": `${product?.thumbimage}`,
+          "mediumimage": `${product?.MediumImagePath ?? ""}`,
+          "originalimage": `${product?.OriginalImagePath}`,
+          "storyline_html": `${product?.storyline_html ?? ""}`,
+          "storyline_video": `${product?.storyline_video ?? ""}`,
+          "thumbimage": `${product?.ThumbImagePath}`,
           "totaladditionalvalueweight": Number(`${product?.totaladditionalvalueweight}`),
           "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
-          "updatedate": `${product?.updatedate}`,
+          "updatedate": `${product?.UpdateDate}`,
           "videoname": `${product?.videoname ?? ""}`,
           "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
@@ -931,8 +992,7 @@ const ProductList = () => {
           }
         })
 
-        // let isWishHasCartData = WishData?.filter((wd)=> wd.autocode === prod.autocode)
-        //  console.log("isWishHasCartData",isWishHasCartData)
+       
 
       }
       else {
@@ -1020,130 +1080,134 @@ const ProductList = () => {
 
 
 
+  //RANGE FILTERS
 
   const [value1, setValue1] = useState([minPrice, maxPrice]);
-
-  const handlePriceChange = (
-    event,
-    newValue,
-    activeThumb,
-  ) => {
-      setValue1(newValue)
-      setMinPrice(newValue[0])
-      setMaxPrice(newValue[1])
-
-      const datas = productData?.filter((e) => e !== 'Not Available')?.filter((e) => e?.price>= newValue[0] && e?.price<= newValue[1] 
-      && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.Grossweight >= minGrosswt && e?.Grossweight <= maxGrosswt 
-      && e?.diamondweight >= minDiamondWt && e?.diamondweight <= maxDiamondWt)
-
-      // productData = datas;
-
-      setNewProData(datas);
-
-    // if (!Array.isArray(newValue)) {
-    //   return;
-    // }
-
-    // if (activeThumb === 0) {
-    //   setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
-    // } else {
-    //   setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
-    // }
-  };
-
   const [value2, setValue2] = useState([minNetwt, maxNetwt]);
-
-  const handleNetWtChange = (
-    event,
-    newValue,
-    activeThumb,
-  ) => {
-        setValue2(newValue);
-        
-        const datas = productData?.filter((e) => e?.netwt >= newValue[0] && e?.netwt <= newValue[1] && e?.price >= minPrice && e?.price <= maxPrice 
-        && e?.Grossweight >= minGrosswt && e?.Grossweight <= maxGrosswt && e?.diamondweight >= minDiamondWt && e?.diamondweight <= maxDiamondWt)
-        
-        setNewProData(datas)
-        // if (!Array.isArray(newValue)) {
-          //   return;
-          // }
-          
-          // if (newValue[1] - newValue[0] < minDistance) {
-            //   if (activeThumb === 0) {
-              //     const clamped = Math.min(newValue[0], 100 - minDistance);
-              //     setValue2([clamped, clamped + minDistance]);
-              //   } else {
-                //     const clamped = Math.max(newValue[1], minDistance);
-                //     setValue2([clamped - minDistance, clamped]);
-                //   }
-                // } else {
-                  //   setValue2(newValue);
-                  // }
-                };
-                
   const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
-  const handlegrossWtChange = (
-                  event,
-                  newValue,
-                  activeThumb,
-                ) => {
-
-                  setValue3(newValue);
-                  setMinGrossWt(newValue[0]);
-                  setMaxGrossWtt(newValue[1]);
-                  const datas = productData?.filter((e) => e?.Grossweight>= newValue[0] && e?.Grossweight<= newValue[1] 
-                    && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.price >= minPrice && e?.price <= maxPrice
-                  );
-                  setNewProData(datas)
-                  // if (!Array.isArray(newValue)) {
-                  //   return;
-                  // }
-              
-                  // if (newValue[1] - newValue[0] < minDistance) {
-                  //   if (activeThumb === 0) {
-                  //     const clamped = Math.min(newValue[0], 100 - minDistance);
-                  //     setValue2([clamped, clamped + minDistance]);
-                  //   } else {
-                  //     const clamped = Math.max(newValue[1], minDistance);
-                  //     setValue2([clamped - minDistance, clamped]);
-                  //   }
-                  // } else {
-                  //   setValue2(newValue);
-                  // }
-                };
-
   const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
-  const handleDiamondChange = (
-    event,
-    newValue,
-    activeThumb,
-  ) => {
+  // const handlePriceChange = (
+  //   event,
+  //   newValue,
+  //   activeThumb,
+  // ) => {
+    
+  //     setValue1(newValue)
+  //     setMinPrice(newValue[0])
+  //     setMaxPrice(newValue[1])
+  //     const datas = (newProData?.length ? newProData : ProductApiData2)?.filter((e) => e !== 'Not Available')?.filter((e) => 
+  //        e?.price>= newValue[0] && e?.price<= newValue[1] 
+  //     && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.Grossweight >= minGrosswt && e?.Grossweight <= maxGrosswt 
+  //     && e?.diamondweight >= minDiamondWt && e?.diamondweight <= maxDiamondWt)
+  //     // productData = datas;
 
-    setValue4(newValue);
-    setMinDiamondWt(newValue[0]);
-    setMaxDiamondWt(newValue[1]);
-    const datas = productData?.filter((e) => e?.diamondweight>= newValue[0] && e?.diamondweight <= newValue[1] && e?.Grossweight>= minGrosswt && e?.Grossweight<= maxGrosswt 
-      && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.price >= minPrice && e?.price <= maxPrice
-    );
-    setNewProData(datas)
-    // if (!Array.isArray(newValue)) {
-    //   return;
-    // }
+  //     setNewProData(datas);
+      
 
-    // if (newValue[1] - newValue[0] < minDistance) {
-    //   if (activeThumb === 0) {
-    //     const clamped = Math.min(newValue[0], 100 - minDistance);
-    //     setValue2([clamped, clamped + minDistance]);
-    //   } else {
-    //     const clamped = Math.max(newValue[1], minDistance);
-    //     setValue2([clamped - minDistance, clamped]);
-    //   }
-    // } else {
-    //   setValue2(newValue);
-    // }
-  };
+  //   // if (!Array.isArray(newValue)) {
+  //   //   return;
+  //   // }
 
+  //   // if (activeThumb === 0) {
+  //   //   setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
+  //   // } else {
+  //   //   setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
+  //   // }
+  // };
 
+  // const [value2, setValue2] = useState([minNetwt, maxNetwt]);
+
+  // const handleNetWtChange = (
+  //   event,
+  //   newValue,
+  //   activeThumb,
+  // ) => {
+  //       setValue2(newValue);
+  //       setMinNetwt(newValue[0])
+  //       setMaxNetwt(newValue[1])
+  //       const datas = (newProData?.length ? newProData : ProductApiData2)?.filter((e) => e?.netwt >= newValue[0] && e?.netwt <= newValue[1] && e?.price >= minPrice && e?.price <= maxPrice 
+  //       && e?.Grossweight >= minGrosswt && e?.Grossweight <= maxGrosswt && e?.diamondweight >= minDiamondWt && e?.diamondweight <= maxDiamondWt)
+        
+  //       setNewProData(datas)
+  //       // if (!Array.isArray(newValue)) {
+  //         //   return;
+  //         // }
+          
+  //         // if (newValue[1] - newValue[0] < minDistance) {
+  //           //   if (activeThumb === 0) {
+  //             //     const clamped = Math.min(newValue[0], 100 - minDistance);
+  //             //     setValue2([clamped, clamped + minDistance]);
+  //             //   } else {
+  //               //     const clamped = Math.max(newValue[1], minDistance);
+  //               //     setValue2([clamped - minDistance, clamped]);
+  //               //   }
+  //               // } else {
+  //                 //   setValue2(newValue);
+  //                 // }
+  //               };
+                
+  // const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
+  // const handlegrossWtChange = (
+  //                 event,
+  //                 newValue,
+  //                 activeThumb,
+  //               ) => {
+
+  //                 setValue3(newValue);
+  //                 setMinGrossWt(newValue[0]);
+  //                 setMaxGrossWtt(newValue[1]);
+
+  //                 const datas = (newProData?.length ? newProData : ProductApiData2)?.filter((e) => e?.Grossweight>= newValue[0] && e?.Grossweight<= newValue[1] 
+  //                   && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.price >= minPrice && e?.price <= maxPrice
+  //                 );
+  //                 setNewProData(datas)
+  //                 // if (!Array.isArray(newValue)) {
+  //                 //   return;
+  //                 // }
+              
+  //                 // if (newValue[1] - newValue[0] < minDistance) {
+  //                 //   if (activeThumb === 0) {
+  //                 //     const clamped = Math.min(newValue[0], 100 - minDistance);
+  //                 //     setValue2([clamped, clamped + minDistance]);
+  //                 //   } else {
+  //                 //     const clamped = Math.max(newValue[1], minDistance);
+  //                 //     setValue2([clamped - minDistance, clamped]);
+  //                 //   }
+  //                 // } else {
+  //                 //   setValue2(newValue);
+  //                 // }
+  //               };
+
+  // const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
+  // const handleDiamondChange = (
+  //   event,
+  //   newValue,
+  //   activeThumb,
+  // ) => {
+
+  //   setValue4(newValue);
+  //   setMinDiamondWt(newValue[0]);
+  //   setMaxDiamondWt(newValue[1]);
+  //   const datas = (newProData?.length ? newProData : ProductApiData2)?.filter((e) => e?.diamondweight>= newValue[0] && e?.diamondweight <= newValue[1] && e?.Grossweight>= minGrosswt && e?.Grossweight<= maxGrosswt 
+  //     && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.price >= minPrice && e?.price <= maxPrice
+  //   );
+  //   setNewProData(datas)
+  //   // if (!Array.isArray(newValue)) {
+  //   //   return;
+  //   // }
+
+  //   // if (newValue[1] - newValue[0] < minDistance) {
+  //   //   if (activeThumb === 0) {
+  //   //     const clamped = Math.min(newValue[0], 100 - minDistance);
+  //   //     setValue2([clamped, clamped + minDistance]);
+  //   //   } else {
+  //   //     const clamped = Math.max(newValue[1], minDistance);
+  //   //     setValue2([clamped - minDistance, clamped]);
+  //   //   }
+  //   // } else {
+  //   //   setValue2(newValue);
+  //   // }
+  // };
 
 
 
@@ -1176,7 +1240,7 @@ const ProductList = () => {
     
     await CommonAPI(body).then((res) => {
         // console.log("uncommon",res)
-        setpriceDataApi(res.Data)
+        setpriceDataApi(res?.Data)
     })
 
   }
@@ -1191,44 +1255,119 @@ const ProductList = () => {
   },[])
 
     //for price range
-      const price_only = productData?.filter((e) => e?.price !== 'Not Availabel' )?.map((e) => e?.price)?.sort((a, b) => a - b );
-      const unique_price_only = [...new Set(price_only)];    
-    
-      useEffect(() => {
-          setMinPrice(unique_price_only[0]);
-          setMaxPrice(unique_price_only[unique_price_only?.length - 1]);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      },[price_only])
+    useEffect(() => {
+
+      const priceOnly = ProductApiData2?.filter((item) => item?.price !== 'Not Available')?.map((item) => item.price)?.sort((a, b) => a - b);
+      setMinPrice(priceOnly[0]);
+      setMaxPrice(priceOnly[priceOnly?.length - 1]);
+
+      const netWtOnly = ProductApiData2?.map((item) => item?.netwt).sort((a, b) => a - b);
+      setMinNetwt(netWtOnly[0]);
+      setMaxNetwt(netWtOnly[netWtOnly?.length - 1]);
+
+      const grossWtOnly = ProductApiData2?.map((item) => item?.Grossweight).sort((a, b) => a - b);
+      setMinGrossWt(grossWtOnly[0]);
+      setMaxGrossWtt(grossWtOnly[grossWtOnly?.length - 1]);
+
+      const diamondWtOnly = ProductApiData2?.map((item) => item?.diamondweight).sort((a, b) => a - b);
+      setMinDiamondWt(diamondWtOnly[0]);
+      setMaxDiamondWt(diamondWtOnly[diamondWtOnly?.length - 1]);
+
+  }, [ProductApiData2]);
+  // Initialize net weight range
+    // useEffect(() => {
+    //   const netWtOnly = ProductApiData2.map((item) => item.netwt).sort((a, b) => a - b);
+    //   setMinNetwt(netWtOnly[0]);
+    //   setMaxNetwt(netWtOnly[netWtOnly.length - 1]);
+    // }, [ProductApiData2]);
+
+    // Initialize gross weight range
+    // useEffect(() => {
+    //   const grossWtOnly = ProductApiData2.map((item) => item.Grossweight).sort((a, b) => a - b);
+    //   setMinGrossWt(grossWtOnly[0]);
+    //   setMaxGrossWtt(grossWtOnly[grossWtOnly.length - 1]);
+    // }, [ProductApiData2]);
+
+    // Initialize diamond weight range
+    // useEffect(() => {
+    //   const diamondWtOnly = ProductApiData2.map((item) => item.diamondweight).sort((a, b) => a - b);
+    //   setMinDiamondWt(diamondWtOnly[0]);
+    //   setMaxDiamondWt(diamondWtOnly[diamondWtOnly.length - 1]);
+    // }, [ProductApiData2]);
+  
+      // const price_only = ProductApiData2?.filter((e) => e?.price !== 'Not Available' )?.map((e) => e?.price)?.sort((a, b) => a - b );
+      // const unique_price_only = [...new Set(price_only)];    
+
+      // useEffect(() => {
+      //     setMinPrice(unique_price_only[0]);
+      //     setMaxPrice(unique_price_only[unique_price_only?.length - 1]);
+      // // eslint-disable-next-line react-hooks/exhaustive-deps
+      // },[price_only])
 
     //for netwt range
-    const netwt_only = productData?.map((e) => e?.netwt)?.sort((a, b) => a - b)
-    const unique_netwt_only = [...new Set(netwt_only)];
+    // const netwt_only = ProductApiData2?.map((e) => e?.netwt)?.sort((a, b) => a - b)
+    // const unique_netwt_only = [...new Set(netwt_only)];
       
-    useEffect(() => {
-        setMinNetwt(unique_netwt_only[0]);
-        setMaxNetwt(unique_netwt_only[unique_netwt_only?.length - 1]);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      },[netwt_only]);
+    // useEffect(() => {
+    //     setMinNetwt(unique_netwt_only[0]);
+    //     setMaxNetwt(unique_netwt_only[unique_netwt_only?.length - 1]);
+    //   // eslint-disable-next-line react-hooks/exhaustive-deps
+    //   },[netwt_only]);
 
-    const groswt_only = productData?.map((e) => e?.Grossweight)?.sort((a, b) => a - b)
-    const unique_grosswt_only = [...new Set(groswt_only)];
+    // const groswt_only = ProductApiData2?.map((e) => e?.Grossweight)?.sort((a, b) => a - b)
+    // const unique_grosswt_only = [...new Set(groswt_only)];
 
-    useEffect(() => {
-      setMinGrossWt(unique_grosswt_only[0]);
-      setMaxGrossWtt(unique_grosswt_only[unique_grosswt_only?.length - 1]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[groswt_only]);
+    // useEffect(() => {
+    //   setMinGrossWt(unique_grosswt_only[0]);
+    //   setMaxGrossWtt(unique_grosswt_only[unique_grosswt_only?.length - 1]);
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // },[groswt_only]);
 
-    const diawt_only = productData?.map((e) => e?.diamondweight)?.sort((a, b) => a - b)
-    const unique_diawt_only = [...new Set(diawt_only)];
+    // const diawt_only = ProductApiData2?.map((e) => e?.diamondweight)?.sort((a, b) => a - b)
+    // const unique_diawt_only = [...new Set(diawt_only)];
 
-    useEffect(() => {
-      setMinDiamondWt(unique_diawt_only[0]);
-      setMaxDiamondWt(unique_diawt_only[unique_diawt_only?.length - 1]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[diawt_only]);
+    // useEffect(() => {
+    //   setMinDiamondWt(unique_diawt_only[0]);
+    //   setMaxDiamondWt(unique_diawt_only[unique_diawt_only?.length - 1]);
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // },[diawt_only]);
 
-    
+  const handlePriceChange = (event, newValue, activeThumb) => {
+      setValue1(newValue);
+      filterDatasfunc(newValue, value2, value3, value4);
+  };
+  
+  const handleNetWtChange = (event, newValue, activeThumb) => {
+      setValue2(newValue);
+      filterDatasfunc(value1, newValue, value3, value4);
+  };
+  
+  const handlegrossWtChange = (event, newValue, activeThumb) => {
+      setValue3(newValue);
+      filterDatasfunc(value1, value2, newValue, value4);
+  };
+  
+  const handleDiamondChange = (event, newValue, activeThumb) => {
+      setValue4(newValue);
+      filterDatasfunc(value1, value2, value3, newValue);
+  };
+
+  const filterDatasfunc = (priceRange, netWtRange, grossWtRange, diamondWtRange) => {
+    console.log(priceRange, netWtRange, grossWtRange, diamondWtRange);
+
+    const filteredData = ProductApiData2?.filter((item) => {
+
+        const priceInRange = item?.price >= priceRange[0] && item?.price <= priceRange[1];
+        const netWtInRange = item.netwt >= netWtRange[0] && item.netwt <= netWtRange[1];
+        const grossWtInRange = item.Grossweight >= grossWtRange[0] && item.Grossweight <= grossWtRange[1];
+        const diamondWtInRange = item.diamondweight >= diamondWtRange[0] && item.diamondweight <= diamondWtRange[1];
+        return priceInRange && netWtInRange && grossWtInRange && diamondWtInRange;
+    });
+    console.log("filteredData", filteredData);
+    setNewProData(filteredData);
+  };
+
+  
 
   return (
     <div id="top">
@@ -1630,8 +1769,9 @@ const ProductList = () => {
                 >
                   {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
                   {(newProData.length ? newProData : ProductApiData2)?.map((products, i) => (
-                    <div
-                      style={{
+                    
+                      <div
+                        style={{
                         width: "33.33%",
                         border: "1px solid #e1e1e1",
                         textAlign: "center",
@@ -1674,7 +1814,7 @@ const ProductList = () => {
                       <div>
                         <p style={{ fontSize: "12px" }}>
                         
-                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' :products?.price}
+                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price + (products?.markup === 0 ? "" : products?.markup))}
                         </p>
                       </div>
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
