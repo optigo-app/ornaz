@@ -7,7 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CryptoJS from 'crypto-js';
 import { useSetRecoilState } from 'recoil';
-import { loginState } from '../../../../../../Recoil/atom';
+import { loginState, productDataNew } from '../../../../../../Recoil/atom';
+import { productListApiCall } from '../../../../Utils/API/ProductListAPI';
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');
@@ -19,7 +20,15 @@ export default function LoginWithEmail() {
     const location = useLocation();
 
 
+    const setPdData = useSetRecoilState(productDataNew)
     const setIsLoginState = useSetRecoilState(loginState)
+
+    
+    let pdDataCalling = async() =>{
+            await productListApiCall().then((res)=>{
+                setPdData(res)
+            })
+    }
 
     useEffect(() => {
         const storedEmail = location.state?.email; ;
@@ -74,6 +83,7 @@ export default function LoginWithEmail() {
                 setIsLoginState('true')
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
+                pdDataCalling()
                 navigation('/');
             } else {
                 errors.confirmPassword = 'Password is Invalid'
