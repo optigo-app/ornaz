@@ -5,6 +5,8 @@ import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
 import './LoginWithMobileCode.css';
+import { useSetRecoilState } from 'recoil';
+import { loginState } from '../../../../../../Recoil/atom';
 
 export default function LoginWithMobileCode() {
     const [errors, setErrors] = useState({});
@@ -13,6 +15,7 @@ export default function LoginWithMobileCode() {
     const [mobileNo, setMobileNo] = useState('');
     const [enterOTP, setEnterOTP] = useState('');
     const [resendTimer, setResendTimer] = useState(120);
+    const setIsLoginState = useSetRecoilState(loginState)
 
 
     useEffect(() => {
@@ -68,11 +71,12 @@ export default function LoginWithMobileCode() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
+            console.log('sssssssss',response);
             if (response.Data.rd[0].stat === 1) {
                 localStorage.setItem('LoginUser', 'true')
+                setIsLoginState('true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 localStorage.setItem('registerMobile', mobileNo);
-                alert('Register Sucssessfully');
                 navigation('/');
             } else {
                 errors.mobileNo = 'Code is Invalid'

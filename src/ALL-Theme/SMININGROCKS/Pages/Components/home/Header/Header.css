@@ -20,7 +20,8 @@
 .SmilingUpdateQuantityBtn{
     height: 40px;
     width: 80px;
-    background-color: #f1d8c6;
+    background-color: #a7a7a7;
+    color: white;
     border: none;
     outline: none;
     font-weight: 500;
@@ -28,7 +29,8 @@
 .SmilingAddSingleRemkarBtn{
     height: 40px;
     width:  120px;
-    background-color: #f1d8c6;
+    background-color: #a7a7a7;
+    color: white;
     border: none;
     outline: none;
     font-weight: 500;
@@ -41,27 +43,32 @@
     height: 40px;
     width: 160px;
     border-radius: 5px;
-    background-color: #f1d8c6;
+    background-color: #a7a7a7;
+    color: white;
     border: none;
     outline: none;
     font-weight: 500;
 }
 .SmilingAddRemkarBtn:hover{
     background-color: white;
-    border: 1px solid #f1d8c6;
+    border: 1px solid #a7a7a7;
+    color: #a7a7a7;
 }
 
 .SmilingCustomzeSaveBtn{
     height: 35px;
     width: 100px;
-    background-color: #f1d8c6;
+    background-color: #a7a7a7;
+    color: white;
     border: none;
+    border-radius: 6px;
     outline: none;
     font-weight: 500;
 }
 .SmilingCustomzeSaveBtn:hover{
     background-color: white;
-    border: 1px solid #f1d8c6;
+    color: #a7a7a7;
+    border: 1px solid #a7a7a7;
 }
 
 .addRemkarMain{
@@ -359,7 +366,7 @@
     left: 0;
     width: 100%;
     height: 150%;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.40);
     display: flex;
     z-index: 999;
 }
@@ -453,7 +460,7 @@
     left: 0;
     width: 100%;
     height: 150%;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.40);
     display: flex;
     z-index: 999;
 }
@@ -468,7 +475,7 @@
     transition: all 0.4s ease;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.40);
     display: flex;
     transform: translateY(0px);
     transition: all 0.4s ease;

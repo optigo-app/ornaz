@@ -56,12 +56,16 @@ export default function Register() {
     if (fieldName === 'firstName') {
       if (!value.trim()) {
         setErrors(prevErrors => ({ ...prevErrors, firstName: 'First Name is required' }));
+      } else if (!/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)$/.test(value)) {
+        setErrors(prevErrors => ({ ...prevErrors, firstName: 'Invalid First Name' }));
       } else {
         setErrors(prevErrors => ({ ...prevErrors, firstName: '' }));
       }
     } else if (fieldName === 'lastName') {
       if (!value.trim()) {
         setErrors(prevErrors => ({ ...prevErrors, lastName: 'Last Name is required' }));
+      } else if (!/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)$/.test(value)) {
+        setErrors(prevErrors => ({ ...prevErrors, lastName: 'Invalid Last Name' }));
       } else {
         setErrors(prevErrors => ({ ...prevErrors, lastName: '' }));
       }

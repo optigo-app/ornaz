@@ -12,7 +12,7 @@ export default function Footer() {
 
     return (
         <div>
-            <div className='footerTopMain'>
+            {/* <div className='footerTopMain'>
                 <p className='foTopTitle'>Let's Smile Together</p>
                 <div className='inputMain'>
                     <input type='text' placeholder='Email Address' className='foInputBox' />
@@ -21,7 +21,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <p className='foTopDescription'>Get early access to new products and special offers!</p>
-            </div>
+            </div> */}
             <div className='footerBottomMain'>
                 <div className='footerIconMain'>
                     <div className='footerFace'>
@@ -41,7 +41,7 @@ export default function Footer() {
                         <p className='footerMoreOptionData' onClick={() => navigation('/contactUs')}>CONTACT US</p>
                         <p className='footerMoreOptionData' onClick={() => navigation('/faq')}>FAQ</p>
                         <p className='footerMoreOptionData' onClick={() => navigation('/servicePolicy')}>SERVICE POLICY</p>
-                        <p className='footerMoreOptionData' onClick={() => navigation('/press')}>PRESS</p>
+                        {/* <p className='footerMoreOptionData' onClick={() => navigation('/press')}>PRESS</p> */}
                 </div>
                 <div className='footerMoreText'>
                     <p style={{

@@ -5,6 +5,9 @@ import { CommonAPI } from '../../../Utils/API/CommonAPI';
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { IoArrowBackOutline } from "react-icons/io5";
+import { useSetRecoilState } from 'recoil';
+import { CartListCounts, WishListCounts } from '../../../../../Recoil/atom';
+import { GetCount } from '../../../Utils/API/GetCount';
 
 export default function Payment() {
 
@@ -12,6 +15,9 @@ export default function Payment() {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedAdd, setSelectedAdd] = useState('');
     const navigation = useNavigate();
+
+    const setCartCount = useSetRecoilState(CartListCounts)
+    const setWishCount = useSetRecoilState(WishListCounts)
 
     useEffect(() => {
 
@@ -57,6 +63,17 @@ export default function Payment() {
         fetchData();
     }, []);
 
+    const getCountFunc = async () => {
+        await GetCount().then((res) => {
+            if (res) {
+                setCartCount(res.CountCart)
+                setWishCount(res.WishCount)
+            }
+        })
+
+    }
+
+
 
     const handlePayment = async () => {
         try {
@@ -72,10 +89,8 @@ export default function Payment() {
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
             const { FrontEnd_RegNo } = storeInit;
 
-            // {"addrid":"51","PaymentMethod":"Cash on Delivery","Istempaddress":"","addrType":"select","OrderPlacedFrom":1,"CurrencyId":"42","orderRemarks":"","FrontEnd_RegNo":"95oztttesi0o50vr","Customerid":"197"}
-
             const combinedValue = JSON.stringify({
-                addrid: `${selctedid.id}`, PaymentMethod: 'Cash on Delivery', Istempaddress: '', addrType: 'select', CurrencyId: `${CurrencyId}`, orderRemarks: '', FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
+                addrid: `${selctedid.id}`, PaymentMethod: 'Cash on Delivery', Istempaddress: '', addrType: 'select', OrderPlacedFrom: "1", CurrencyId: `${CurrencyId}`, orderRemarks: '', FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
             });
 
             console.log('combinedValuecombinedValue...', combinedValue);
@@ -91,6 +106,7 @@ export default function Payment() {
             console.log('response...', response);
             if (response.Data?.rd[0]?.stat == 1) {
                 let num = response.Data?.rd[0]?.orderno
+                getCountFunc();
                 localStorage.setItem('orderNumber', num)
                 navigation('/Confirmation')
 
@@ -161,7 +177,7 @@ export default function Payment() {
                 </div>
 
                 <div className='smilingPaymentMainMobile'>
-                {/* <IoArrowBackOutline style={{ height: '40px', width: '60px', cursor: 'pointer',margin: '' }} onClick={() => navigation('/Delivery')} /> */}
+                    {/* <IoArrowBackOutline style={{ height: '40px', width: '60px', cursor: 'pointer',margin: '' }} onClick={() => navigation('/Delivery')} /> */}
 
                     <div style={{ padding: '50px' }}>
 
@@ -177,8 +193,8 @@ export default function Payment() {
                                 <p className='AddressTitle'>Mobile : <span className='AdressData'>{selectedAdd.shippingmobile}</span></p>
                             </div>
                         </div>
-                        <div style={{ width: '100%' ,marginTop: '50px' }}>
-                            <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e',marginBottom: '5px' }}>Shipping Address</p>
+                        <div style={{ width: '100%', marginTop: '50px' }}>
+                            <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e', marginBottom: '5px' }}>Shipping Address</p>
                             <div style={{ marginTop: '0px' }}>
                                 <p style={{ fontSize: '20px', margin: '0px', fontWeight: 500, color: '#5e5e5e' }}>{selectedAdd.shippingfirstname} {selectedAdd.shippinglastname}</p>
                                 <p className='AddressTitle'><span className='AdressData'>{selectedAdd.street}</span></p>
@@ -187,7 +203,7 @@ export default function Payment() {
                                 <p className='AddressTitle'><span className='AdressData'>{selectedAdd.shippingmobile}</span></p>
                             </div>
 
-                            <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' ,marginTop: '50px' }}>Order Summary</p>
+                            <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e', marginTop: '50px' }}>Order Summary</p>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <p>Subtotal</p>
                                 <p>0.00</p>
@@ -205,7 +221,7 @@ export default function Payment() {
                             <button onClick={handlePayment} className='paymentBtn'>PAY ON ACCOUNT</button>
                         </div>
 
-                        <p style={{color: 'blue' ,textDecoration: 'underline' , marginTop: '10px', textAlign: 'center'}} onClick={() => navigation('/Delivery')}>Cancel</p>
+                        <p style={{ color: 'blue', textDecoration: 'underline', marginTop: '10px', textAlign: 'center' }} onClick={() => navigation('/Delivery')}>Cancel</p>
                     </div>
                     {/* <div style={{ display: 'flex', justifyContent: 'center',marginTop: '-100px' }}>
                         <img src='http://gstore.orail.co.in/assets/newfolder/images/account/blue-box.jpg' className='smilingPayentImg' />

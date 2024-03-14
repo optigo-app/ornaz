@@ -36,7 +36,7 @@ export default function FAQ() {
                         <p className='smiling-FaqMainDesc'>Yes, all Sonasons diamonds are laser-inscribed with our logo. Also, if you are purchasing a loose diamond, that's one carat up, the stones will be inscribed with an IGI certification number.</p>
 
                         <p className='smiling-FaqMainSubTitle'>I’d like to purchase loose diamonds in large quantity, how can I do so?</p>
-                        <p className='smiling-FaqMainDesc'>If you are interested in working with us, please contact order@smilingrocks.com and we will assist your requests accordingly.</p>
+                        <p className='smiling-FaqMainDesc'>If you are interested in working with us, please contact order@sonasons.com and we will assist your requests accordingly.</p>
 
                         <p className='smiling-FaqMainSubTitle'>Can I choose to donate with each purchase?</p>
                         <p className='smiling-FaqMainDesc'>Yes, we have set up a channel for the charitable distribution of funds so that 10% of the proceeds from your purchase is contributed to Sonasons Foundation, Inc. (the “Foundation”). The Foundation will be responsible for dispersing the funds to the specific charities that you choose when making a purchase from the website. While 10% of your purchase is ultimately contributed to the charitable organizations, tax deductions are not available to each individual customer since the customer’s donations are not directly contributed.</p>
@@ -56,7 +56,7 @@ export default function FAQ() {
                         <p className='smiling-FaqMainDesc'>IT'S FREE! We offer free shipping to all orders. </p>
 
                         <p className='smiling-FaqMainSubTitle'>I haven’t received my package. How can I track my order?</p>
-                        <p className='smiling-FaqMainDesc'>You can track your package with DHL or FedEx. If you see any issue with your delivery, please contact our support team at order@smilingrocks.com and we will get on the case.</p>
+                        <p className='smiling-FaqMainDesc'>You can track your package with DHL or FedEx. If you see any issue with your delivery, please contact our support team at order@sonasons.com and we will get on the case.</p>
 
                         <p className='smiling-FaqMainSubTitle'>What is the return policy?</p>
                         <p style={{
@@ -72,7 +72,7 @@ export default function FAQ() {
                         <p className='smiling-FaqMainDesc'>We offer free returns within 30 days of item delivery. If you wish to return, the diamond must be in its original condition and shipped with the grading reports. If the diamond report is not returned, you will be charged for $150 USD as a replacement cost. Please return the diamond in its original packaging as shipped. Once received, we will need to inspect the diamond (it will take a week). Sonasons reserves the right to reject the diamonds if it is not returned in its original condition. You will be notified once the return process is approved or rejected. The rejected items will be sent back to your original shipping address.
                             <br />
                             <br />
-                            In order to process a return of your purchased items simply send us an email to order@smilingrocks.com.</p>
+                            In order to process a return of your purchased items simply send us an email to order@sonasons.com.</p>
 
                         <p style={{
                             color: '#7d7f85',
@@ -101,7 +101,7 @@ export default function FAQ() {
                         <p className='smiling-FaqMainDesc'>At the time of your return request, we will send you a prepaid FedEx return label. Please include the copy of your original dispatch document inside the box, and make sure that all your personal details are filled on the dispatch. Make sure to receive a proof of postage from the FedEx office when you ship back your item. We will not be liable for any items that might be lost in transit or don’t arrive if you have chosen a different shipping method. All returns must be sent back as a single shipment. Please make sure to insure your jewelry for the value that was paid. You are responsible for the insurance fees of the return shipment.
                             <br />
                             <br />
-                            We will be more than happy to assist you. Simply send us an email to order@smilingrocks.com and we will walk you through all the details.</p>
+                            We will be more than happy to assist you. Simply send us an email to order@sonasons.com and we will walk you through all the details.</p>
 
                         <p className='smiling-FaqMainSubTitle'>Will I be refunded the full amount I paid?</p>
                         <p className='smiling-FaqMainDesc'>Items approved for return, we will refund back within a week once it is approved. The item will be refunded to your original payment method. It may take 10 days for your designated banks to post the funds to your account. For PayPal, it takes around 2 weeks for the refund to be processed to your account. Items with special order or request are not refundable.</p>
@@ -145,10 +145,10 @@ export default function FAQ() {
 
                         <p className='smiling-FaqMainSubTitle'>Special Order Request</p>
                         <p className='smiling-FaqMainSubTitle'>I’d like to engrave my name on my jewelry, can I do so?</p>
-                        <p className='smiling-FaqMainDesc'>Yes! But we can only engrave your initials on your jewelry.  If you have purchased our Sonasons jewelry and wish to engrave your initials on it, we are happy to help you do so. Email us at order@smilingrocks.com and with proof of purchase for us to confirm and proceed with your request.</p>
+                        <p className='smiling-FaqMainDesc'>Yes! But we can only engrave your initials on your jewelry.  If you have purchased our Sonasons jewelry and wish to engrave your initials on it, we are happy to help you do so. Email us at order@sonasons.com and with proof of purchase for us to confirm and proceed with your request.</p>
 
                         <p className='smiling-FaqMainSubTitle'>In what Karat gold is done Sonasons jewelry?</p>
-                        <p className='smiling-FaqMainDesc'>10K gold. If you wish to place any of our favorite order in a different metal purity (14K or 18K), email us at order@smilingrocks.com and we will look into your request.
+                        <p className='smiling-FaqMainDesc'>10K gold. If you wish to place any of our favorite order in a different metal purity (14K or 18K), email us at order@sonasons.com and we will look into your request.
                             <br />
                             <br />
                             All special orders are not refundable or returnable. They will take around 2 weeks’ time to deliver from the date of purchase.</p>
@@ -162,7 +162,7 @@ export default function FAQ() {
                             With a Sonasons account you will be able to enjoy the following benefits:</p>
 
                         <p className='smiling-FaqMainSubTitle'>I need help to login to  My Account:</p>
-                        <p className='smiling-FaqMainDesc'>If you are experiencing any issues to login into your account, please don’t hesitate to contact our Customer Support team at order@smilingrocks.com and we will assist you with any questions.</p>
+                        <p className='smiling-FaqMainDesc'>If you are experiencing any issues to login into your account, please don’t hesitate to contact our Customer Support team at order@sonasons.com and we will assist you with any questions.</p>
 
                         <p className='smiling-FaqMainSubTitle'>How do I restore my account password?</p>
                         <p className='smiling-FaqMainDesc'>To reset your password, follow the 'FORGOT  YOUR PASSWORD' instructions on the SIGN IN page. Please note, for security reasons we are unable to send your old password via email.</p>
@@ -170,7 +170,7 @@ export default function FAQ() {
                         <p  style={{
                             color: '#7d7f85',
                             fontWeight: 700
-                        }}>If you have any more questions for us, feel free to contact us at order@smilingrocks.com. Shop with a Smile!</p>
+                        }}>If you have any more questions for us, feel free to contact us at order@sonasons.com. Shop with a Smile!</p>
                     </div>
                     <Footer />
                 </div>

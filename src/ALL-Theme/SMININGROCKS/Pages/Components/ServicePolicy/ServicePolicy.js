@@ -24,7 +24,7 @@ export default function ServicePolicy() {
                             <br />
                             <br />
                             <br />
-                            In order to process a return of your purchased items simply send us an email to order@smilingrocks.com.</p>
+                            In order to process a return of your purchased items simply send us an email to order@sonasons.com.</p>
 
                         <p className='smiling-serviceSubTitle'>Return Shipping</p>
                         <p className='smiling-serviceDesc'>At the time of your return request, we will send you a prepaid FedEx return label. Please include the copy of your original dispatch document inside the box, and make sure that all your personal details are filled on the dispatch. Make sure to receive a proof of postage from the FedEx office when you ship back your item. We will not be liable for any items that might be lost in transit or don’t arrive if you have chosen a different shipping method. All returns must be sent back as a single shipment. Please make sure to insure your jewelry to the value that was paid. You are responsible for the insurance fees of the return shipment.</p>
@@ -45,12 +45,12 @@ export default function ServicePolicy() {
                         <p className='smiling-ServiceMainTitle'>Special Orders Policy</p>
                         <p style={{fontSize: '25px' ,color : '#7d7f85'}}>Engraving</p>
                         <ul>
-                            <li className='smiling-serviceDesc'>If you have purchased our Sonasons jewelry and wish to engrave your initial on it, we are happy to help you do so. Email us at <a href="mailto:order@smilingrocks.com">order@smilingrocks.com</a> and with proof of purchase for us to confirm and proceed with your request.</li>
+                            <li className='smiling-serviceDesc'>If you have purchased our Sonasons jewelry and wish to engrave your initial on it, we are happy to help you do so. Email us at <a href="mailto:order@sonasons.com">order@sonasons.com</a> and with proof of purchase for us to confirm and proceed with your request.</li>
                         </ul>
 
                         <p style={{fontSize: '25px' ,color : '#7d7f85'}}>Metal Purity</p>
                         <ul>
-                            <li className='smiling-serviceDesc'>If you wish to place any of our favourite order in a different metal purity (14K or 18K), email us at <a href="mailto:order@smilingrocks.com">order@smilingrocks.com</a> and we will look into your request.</li>
+                            <li className='smiling-serviceDesc'>If you wish to place any of our favourite order in a different metal purity (14K or 18K), email us at <a href="mailto:order@sonasons.com">order@sonasons.com</a> and we will look into your request.</li>
                         </ul>
                         <p className='smiling-serviceDesc'>All special orders are not refundable or returnable. They will take around 2 weeks’ time to deliver from the date of purchase.</p>
 

@@ -12,7 +12,7 @@ const index = () => {
         <div className="back-img-container">
           <img
             src={
-              "https://cdn.accentuate.io/19336265828/3641674891364/Stocksy_txp824d1dddS9J200_Medium_2036581.jpg"
+              "https://wallpapers.com/images/featured/tree-background-xgzu0ujdd4khh95j.jpg"
             }
             alt="..."
             className="impact-container"
@@ -32,7 +32,7 @@ const index = () => {
           }}
           className="main-front-container"
         >
-          <img src={i1} alt="..." style={{width:'100%'}} />
+          <img src="https://www.highspeedtraining.co.uk/hub/wp-content/uploads/2021/07/Class-planting-plants-1.jpg" alt="..." style={{width:'100%'}} />
 
           <div
             style={{

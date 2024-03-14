@@ -22,29 +22,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f2f3f5;
+    background-color: #888;
+    color: white;
     margin-inline: 7px;
-    height: 40px;
+    height: 55px;
     cursor: pointer;
     width: 25%;
     margin-top: 30px;
-}
-.loginMail:hover{
-    background-color: #e4e6ec;
 }
 .loginMobile{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f2f3f5;
+    background-color: #888;
+    color: white;
     margin-inline: 7px;
-    height: 40px;
+    height: 55px;
     cursor: pointer;
     margin-top: 25px;
     width: 25%;
-}
-.loginMobile:hover{
-    background-color: #e4e6ec;
 }
 
 @media screen and (max-width: 1150px) {

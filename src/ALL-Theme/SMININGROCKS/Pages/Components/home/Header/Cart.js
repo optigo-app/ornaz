@@ -101,14 +101,24 @@ export default function Cart({ open, toggleCartDrawer }) {
             if (response.Data?.rd) {
                 const sizeDropdownData = response.Data.rd;
                 const selectElement = document.getElementById(`sizeDropdown_${index}`);
+
                 if (selectElement) {
-                    selectElement.innerHTML = '';
-                    sizeDropdownData.forEach(option => {
+                    console.log('sizeDropdownData.lengthsizeDropdownData.length', sizeDropdownData.length);
+                    if (sizeDropdownData.length === 0) {
+                        selectElement.innerHTML = '';
                         const optionElement = document.createElement('option');
-                        optionElement.text = option.sizename;
-                        optionElement.value = option.id;
+                        optionElement.text = "NO DATA AVAILABEL";
                         selectElement.add(optionElement);
-                    });
+                        alert('nod at')
+                    } else {
+                        selectElement.innerHTML = '';
+                        sizeDropdownData.forEach(option => {
+                            const optionElement = document.createElement('option');
+                            optionElement.text = option.sizename;
+                            optionElement.value = option.id;
+                            selectElement.add(optionElement);
+                        });
+                    }
                 }
             }
         } catch (error) {

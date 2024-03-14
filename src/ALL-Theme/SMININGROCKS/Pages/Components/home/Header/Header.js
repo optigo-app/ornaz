@@ -141,7 +141,6 @@ export default function Header() {
     setislogin(val);
   };
 
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -239,6 +238,7 @@ export default function Header() {
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
+      toggleOverlay();
       handleEnterPress();
     }
   };
@@ -263,7 +263,7 @@ export default function Header() {
               <IoSearchOutline style={{ height: "15px", width: "15px", marginRight: "10px" }} />
               <input
                 type="text"
-                placeholder="search"
+                placeholder="Enter Design Number End Click Enter"
                 value={searchText}
                 autoFocus
                 onChange={(e) => setSearchText(e.target.value)}
@@ -287,7 +287,7 @@ export default function Header() {
               <IoSearchOutline style={{ height: "15px", width: "15px", marginRight: "10px" }} />
               <input
                 type="text"
-                placeholder="search"
+                placeholder="Enter Design Number End Click Enter"
                 value={searchText}
                 autoFocus
                 onChange={(e) => setSearchText(e.target.value)}
