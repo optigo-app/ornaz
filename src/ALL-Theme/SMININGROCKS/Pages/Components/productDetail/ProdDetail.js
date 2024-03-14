@@ -188,7 +188,7 @@ const ProdDetail = () => {
   ]
 
   const handelmainImg = () => {
-    let filterImg = productData?.originalimage?.split(",").filter((ele, i) => {
+    let filterImg = productData?.OriginalImagePath?.split(",").filter((ele, i) => {
       return i === thumbImg
     })
 
@@ -595,6 +595,11 @@ const ProdDetail = () => {
 
   // }
 
+  const handelSize = (data) =>{
+    console.log("e.target.value",data);
+    localStorage.setItem("sizeData",JSON.stringify(data))
+    setSizeOption(data)
+  }
 
 
 
@@ -641,7 +646,7 @@ const ProdDetail = () => {
                 src={selectedImagePath == '' ?
                   productData?.imagepath +
                   (!handelmainImg()?.length
-                    ? productData?.originalimage?.split(",")[0]
+                    ? productData?.OriginalImagePath?.split(",")[0]
                     : handelmainImg())
                     :
                     selectedImagePath
@@ -659,7 +664,7 @@ const ProdDetail = () => {
               />
               {/* } */}
               <div className="srthumb_images">
-                {productData?.thumbimage?.split(",").map((data, i) => (
+                {productData?.ThumbImagePath?.split(",").map((data, i) => (
                   <img
                     src={productData?.imagepath + data}
                     alt={""}
@@ -679,16 +684,17 @@ const ProdDetail = () => {
                     lineHeight: "40px",
                   }}
                 >
-                  {productData?.title}
+                  {productData?.TitleLine}
                 </p>
 
                 <p style={{ color: "#7d7f85", fontSize: "14px" }}>
-                  Slip this open Drizzle Ring from Smiling Rock's iconic
+                  {/* Slip this open Drizzle Ring from Smiling Rock's iconic
                   collection- Drizzle. It’s an exquisite ring with diamonds all
                   around the ring. The ring creates a wide space to decorate
                   your fingers as much as possible! Featured in lab grown
                   diamonds set in 14K gold, this ring is perfect for your best
-                  times.
+                  times. */}
+                  {productData?.description}
                 </p>
 
                 <div
@@ -812,8 +818,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
-
-                      onChange={(e) => { setSizeOption(e.target.value) }}
+                      onChange={(e)=>handelSize(e.target.value)}
                     >
                       {sizeData?.map((size) => (
                         <option key={size.ColorId} value={size.id} >

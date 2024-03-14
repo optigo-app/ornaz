@@ -257,7 +257,7 @@ const QuotationJob = () => {
       } else {
         flags.search = true;
       }
-
+//order date and promise date flag filter
       let cutDate = "";
       if (orderPromDate === "order") {
         cutDate = e?.["Date"]?.split("-");
@@ -372,7 +372,7 @@ const QuotationJob = () => {
       setIsLoading(true);
       const storedData = localStorage.getItem('loginUserDetail');
       const data = JSON.parse(storedData);
-      const customerid = data.id;
+      const customerid = data?.id;
       // const customerEmail = data.email1;
       // setUserEmail(customerEmail);
       const storeInit = JSON.parse(localStorage.getItem('storeInit'));
@@ -575,7 +575,7 @@ const QuotationJob = () => {
       <Box sx={{ padding: "0 0 35px 0", marginTop: "-15px" }}>
         {isLoading ?
           <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <Paper sx={{ width: '100%', overflow: 'hidden' }} className='QuoteJobtable'>
-            <TableContainer sx={{ maxHeight: 328 }} className='quotationJobSec'>
+            <TableContainer sx={{ maxHeight: 810 }} className='quotationJobSec'>
               <Table stickyHeader aria-label="sticky table" className='quotaionFiltertable'>
                 <TableHead>
                   <TableRow>
