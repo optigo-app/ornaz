@@ -5,19 +5,20 @@
 }
 
 
-.smilingCartRemoveBtn{
+.smilingCartRemoveBtn {
     height: 40px;
     width: 100px;
     border: none;
     background-color: lightgray;
     font-weight: 500;
 }
-.YourCartMainRemkarBoxSingle{
+
+.YourCartMainRemkarBoxSingle {
     height: 40px;
     width: 240px;
 }
 
-.SmilingUpdateQuantityBtn{
+.SmilingUpdateQuantityBtn {
     height: 40px;
     width: 80px;
     background-color: #a7a7a7;
@@ -26,20 +27,22 @@
     outline: none;
     font-weight: 500;
 }
-.SmilingAddSingleRemkarBtn{
+
+.SmilingAddSingleRemkarBtn {
     height: 40px;
-    width:  120px;
+    width: 120px;
     background-color: #a7a7a7;
     color: white;
     border: none;
     outline: none;
     font-weight: 500;
 }
+
 /* .SmilingAddSingleRemkarBtn:hover{
     background-color: white;
     border: 1px solid #f1d8c6;
 } */
-.SmilingAddRemkarBtn{
+.SmilingAddRemkarBtn {
     height: 40px;
     width: 160px;
     border-radius: 5px;
@@ -49,13 +52,14 @@
     outline: none;
     font-weight: 500;
 }
-.SmilingAddRemkarBtn:hover{
+
+.SmilingAddRemkarBtn:hover {
     background-color: white;
     border: 1px solid #a7a7a7;
     color: #a7a7a7;
 }
 
-.SmilingCustomzeSaveBtn{
+.SmilingCustomzeSaveBtn {
     height: 35px;
     width: 100px;
     background-color: #a7a7a7;
@@ -65,24 +69,27 @@
     outline: none;
     font-weight: 500;
 }
-.SmilingCustomzeSaveBtn:hover{
+
+.SmilingCustomzeSaveBtn:hover {
     background-color: white;
     color: #a7a7a7;
     border: 1px solid #a7a7a7;
 }
 
-.addRemkarMain{
+.addRemkarMain {
     display: flex;
     justify-content: flex-end;
     margin-inline: 15px;
 }
-.YourCartMainRemkarBox{
+
+.YourCartMainRemkarBox {
     width: 97%;
     margin-inline: 10px;
     border-radius: 5px;
 }
+
 .Smining-Top-Header {
-    
+
     display: flex;
     top: 0px;
     padding: 0px;
@@ -90,7 +97,8 @@
     height: 110px;
     margin-inline: 6%;
 }
-.similingCartBotttomMain{
+
+.similingCartBotttomMain {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,7 +111,7 @@
 
 .Smining-Top-Header-fixed {
     display: flex;
-    background-color: transparent!important;
+    background-color: transparent !important;
     top: 0px;
     padding: 0px;
     z-index: 1;
@@ -493,14 +501,14 @@
     display: none;
 }
 
-.level0Menu{
+.level0Menu {
     transition: 'opacity .25s ease-in-out';
     font-size: 14px;
     cursor: pointer;
     font-weight: 500;
 }
 
-.level1Menu{
+.level1Menu {
     transition: 'opacity .25s ease-in-out';
     font-size: 12px;
     cursor: pointer;
@@ -508,7 +516,7 @@
     text-transform: uppercase;
 }
 
-.level2Menu{
+.level2Menu {
     transition: 'opacity .25s ease-in-out';
     font-size: 12px;
     cursor: pointer;
@@ -516,21 +524,24 @@
     text-transform: uppercase;
 }
 
-.level0Menu:hover{
+.level0Menu:hover {
     opacity: .6;
 }
-.level1Menu:active{
+
+.level1Menu:active {
     opacity: .6;
     text-decoration: underline;
     text-underline-offset: 2;
 }
-.level2Menu:hover{
+
+.level2Menu:hover {
     opacity: .6;
 }
 
-.smilingMobileCartDeatil{
+.smilingMobileCartDeatil {
     margin: 10px 70px 10px 10px;
 }
+
 @media screen and (min-width:1441px) {
     .mobileHeaderSmining {
         display: none;
@@ -539,19 +550,21 @@
 }
 
 @media screen and (max-width:1440px) {
-    
-    .Smining-Top-Header-fixed{
-        margin-inline: 10px!important;
+
+    .Smining-Top-Header-fixed {
+        margin-inline: 10px !important;
     }
+
     .mobileHeaderSmining {
-        display: block!important;
-        background-color: rgb(192, 187, 177)!important;
-        height: 90px!important;
+        display: block !important;
+        background-color: rgb(192, 187, 177) !important;
+        height: 90px !important;
     }
 
     .placeOrderBtn {
         width: 100% !important;
     }
+
     .sminingHeaderWeb {
         display: none;
     }
@@ -572,37 +585,38 @@
         width: 60%;
     }
 
-    .mobileHeaderFixedMobileLastDiv{
-        width: 45%!important;
-        display: flex!important;
-        justify-content: flex-end!important;
+    .mobileHeaderFixedMobileLastDiv {
+        width: 45% !important;
+        display: flex !important;
+        justify-content: flex-end !important;
     }
 
-    .cartDrawerMainMobile{
-        width: 100%!important;
-        max-width: 100%!important;
+    .cartDrawerMainMobile {
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
-    .mobileViewFirstDiv1{
-        width: 20%!important;
+    .mobileViewFirstDiv1 {
+        width: 20% !important;
     }
 
-    .mobileViewFirstDiv2{
-        width: 50%!important;
-        display: flex!important;
-        justify-content: center!important;
-        align-items: center!important;
+    .mobileViewFirstDiv2 {
+        width: 50% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
-    .mobileViewFirstDiv3{
-        width: 25%!important;
+
+    .mobileViewFirstDiv3 {
+        width: 25% !important;
     }
 }
 
 @media screen and (max-width:599px) {
 
     .smiling-cartBoxImg {
-        width: 100%!important;
-        margin: 0px!important;
+        width: 100% !important;
+        margin: 0px !important;
     }
 
     .placeOrderBtn {
@@ -618,81 +632,87 @@
         display: block;
     }
 
-    .similingCartBotttomMain{
+    .similingCartBotttomMain {
         display: flex;
         flex-direction: column;
     }
 
-    .smilingCartMobileMain{
+    .smilingCartMobileMain {
         display: flex;
         flex-direction: column;
     }
 
-    .smilingMobileCartDeatil{
-        margin: 0px!important;
+    .smilingMobileCartDeatil {
+        margin: 0px !important;
     }
 
-    .smilingCartBox1{
-        width: 90%!important;
+    .smilingCartBox1 {
+        width: 90% !important;
     }
 
-    .YourCartMainRemkarBoxSingle{
-        width: 70%!important;
+    .YourCartMainRemkarBoxSingle {
+        width: 70% !important;
     }
-    .SmilingAddSingleRemkarBtn{
-        width: 50%!important;
+
+    .SmilingAddSingleRemkarBtn {
+        width: 50% !important;
     }
-    .smilingAddresingleMobileMain{
-        margin-top: 10px!important;
-        margin-right: 0px!important;
-        margin-left: 0px!important;
+
+    .smilingAddresingleMobileMain {
+        margin-top: 10px !important;
+        margin-right: 0px !important;
+        margin-left: 0px !important;
 
     }
 
-    .simlingQualityBox{
-        width: 70%!important;
-    }
-    .SmilingUpdateQuantityBtn{
-        width: 50%!important;
-    }
-    .smilingQualityMain{
-        width: 95%!important;
+    .simlingQualityBox {
+        width: 70% !important;
     }
 
-    .smilingMobileSubDiv{
-        padding-top: 15px!important;
-        padding-inline: 15px!important;
+    .SmilingUpdateQuantityBtn {
+        width: 50% !important;
     }
 
-    .Smining-Top-Header-fixed{
-        margin-inline: 0px!important;
+    .smilingQualityMain {
+        width: 95% !important;
     }
 
-    .smilingHeaderWhishlistIcon{
-        display: none!important;
-    }
-    
-    .mobileViewSmilingTop1Icone{
-        display: none!important;
-    }
-    .mobileViewSmilingTop2Icone{
-        display: none!important;
+    .smilingMobileSubDiv {
+        padding-top: 15px !important;
+        padding-inline: 15px !important;
     }
 
-    .PiStarThinTopIcone{
-        display: none!important;
-    }
-    .IoSearchOutlineTopIcone{
-        display: none!important;
+    .Smining-Top-Header-fixed {
+        margin-inline: 0px !important;
     }
 
-    .centerSVGMobileImage{
-        height: 60px!important;
-        width: 120%!important;
+    .smilingHeaderWhishlistIcon {
+        display: none !important;
     }
 
-    .MainlogogMobileImage{
-        width: 150px!important;
+    .mobileViewSmilingTop1Icone {
+        display: none !important;
+    }
+
+    .mobileViewSmilingTop2Icone {
+        display: none !important;
+    }
+
+    .PiStarThinTopIcone {
+        display: none !important;
+    }
+
+    .IoSearchOutlineTopIcone {
+        display: none !important;
+    }
+
+    .centerSVGMobileImage {
+        height: 60px !important;
+        width: 120% !important;
+    }
+
+    .MainlogogMobileImage {
+        width: 150px !important;
     }
 }
 
@@ -705,59 +725,65 @@
 }
 
 @media screen and (max-width: 850px) {
+
+    .cartDrawerMainMobile .MuiDrawer-paper.MuiDrawer-paperAnchorRight {
+        min-width: 100% !important;
+    }
+
     .css-i8mxf8-MuiModal-root-MuiDrawer-root .MuiDrawer-paper {
         width: 100% !important;
         max-width: 100% !important;
     }
 
-    .mobileHeaderFixedMobileLastDiv{
-        display: flex!important;
-        justify-content: flex-end!important;
-        width: 45%!important;
+    .mobileHeaderFixedMobileLastDiv {
+        display: flex !important;
+        justify-content: flex-end !important;
+        width: 45% !important;
     }
 
-    .smlingTopSerachOver{
-        margin: 0px!important;
+    .smlingTopSerachOver {
+        margin: 0px !important;
     }
 
-    .drawrTitle{
-        font-size: 12px!important;
+    .drawrTitle {
+        font-size: 12px !important;
         letter-spacing: 0.5px;
     }
 
-    .drawrTitlem{
-        font-size: 12px!important;
+    .drawrTitlem {
+        font-size: 12px !important;
         letter-spacing: 0.5px;
     }
 }
 
 @media screen and (max-width: 400px) {
 
-    .mobileViewFirstDiv{
-        width: 20%!important;
-    }
-    .muIconeMobileHeader{
-        font-size: 30px!important;
-    }
-   
- 
-
-    .mobileViewSmilingTop1Icone{
-        height: 18px!important;
-        width: 18px!important;
-    }
-    
-
-    .mobileViewSmilingTop2Icone{
-        height: 18px!important;
-        width: 18px!important;
+    .mobileViewFirstDiv {
+        width: 20% !important;
     }
 
-    .mobileViewSmilingTop3Icone{
-        height: 25px!important;
-        width: 25px!important;
+    .muIconeMobileHeader {
+        font-size: 30px !important;
     }
 
- 
+
+
+    .mobileViewSmilingTop1Icone {
+        height: 18px !important;
+        width: 18px !important;
+    }
+
+
+    .mobileViewSmilingTop2Icone {
+        height: 18px !important;
+        width: 18px !important;
+    }
+
+    .mobileViewSmilingTop3Icone {
+        height: 25px !important;
+        width: 25px !important;
+    }
+
+
 
 }

@@ -17,7 +17,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 import memoizeOne from 'memoize-one';
 
@@ -69,6 +69,13 @@ const ProductList = () => {
   const location = useLocation();
 
   const getPdData = useRecoilValue(productDataNew)
+  const getSearchData = useRecoilValue(searchData)
+
+  console.log('getEarch.',getSearchData);
+
+  useEffect(() =>{
+    setNewProData(getSearchData)
+  },[getSearchData])
 
 
   // useEffect(()=>{
