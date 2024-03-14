@@ -65,8 +65,6 @@ export default function SMININGROCKS_App() {
 
     return (
         <div>
-           
-            {console.log(location.pathname)}
             {(location.pathname === "/accountledgertable" ||
                 location.pathname === "/accountledgerexcel" ||
                 location.pathname === "/accountledgerdebit" ||

@@ -13,29 +13,31 @@ export default function ContinueWithEmail() {
     const navigation = useNavigate();
 
     const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const regex = /^[a-zA-Z][\w@$&#]*@[a-zA-Z]+\.[a-zA-Z]+$/;
         return regex.test(email);
     };
 
     const handleEmailChange = (event) => {
         const { value } = event.target;
-        setEmail(value);
-        if (!value.trim()) {
+        const trimmedValue = value.trim();
+        setEmail(trimmedValue);
+        if (!trimmedValue) {
             setEmailError('Email is required.');
-        } else if (!validateEmail(value)) {
-            setEmailError('Please enter a valid email address.');
+        } else if (!validateEmail(trimmedValue)) {
+            setEmailError('Please enter a valid email address without spaces at the start or end.');
         } else {
-            setEmailError(''); // Clear the error if email is valid
+            setEmailError('');
         }
     };
 
     const handleSubmit = async () => {
-        if (!email.trim()) {
+        const trimmedEmail = email.trim();
+        if (!trimmedEmail) {
             setEmailError('Email is required.');
             return;
         }
-        if (!validateEmail(email)) {
-            setEmailError('Please enter a valid email address.');
+        if (!validateEmail(trimmedEmail)) {
+            setEmailError('Please enter a valid email address without spaces at the start or end.');
             return;
         }
         try {
@@ -44,7 +46,7 @@ export default function ContinueWithEmail() {
             const { FrontEnd_RegNo } = storeInit;
 
             const combinedValue = JSON.stringify({
-                userid: `${email}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`
+                userid: `${trimmedEmail}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`
             });
             const encodedCombinedValue = btoa(combinedValue);
             const body = {
@@ -54,9 +56,9 @@ export default function ContinueWithEmail() {
             };
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
-                navigation('/LoginWithEmail', { state: { email: email } });
+                navigation('/LoginWithEmail', { state: { email: trimmedEmail } });
             } else {
-                navigation('/register', { state: { email: email } });
+                navigation('/register', { state: { email: trimmedEmail } });
             }
         } catch (error) {
             console.error('Error:', error);

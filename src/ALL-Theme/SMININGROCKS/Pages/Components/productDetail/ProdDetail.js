@@ -35,11 +35,14 @@ const ProdDetail = () => {
   const [isCColrStoneCustFlag, setIsCColrStoneCustFlag] = useState('');
   const [isPriseShow, setIsPriceShow] = useState()
 
-  const [sizeOption,setSizeOption] = useState();
-  const [mCOption,setMCOption] = useState();
-  const [diaQColOpt,setDiaQColOpt] = useState();
-  const [mtTypeOption,setmtTypeOption] = useState();
-  const [cSQopt,setCSQOpt] = useState();
+  const [sizeOption, setSizeOption] = useState();
+  const [diaQColOpt, setDiaQColOpt] = useState();
+  const [mtTypeOption, setmtTypeOption] = useState();
+  const [cSQopt, setCSQOpt] = useState();
+  const [colorImageData, setColorImageData] = useState([]);
+
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedImagePath, setSelectedImagePath] = useState('');
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -48,24 +51,66 @@ const ProdDetail = () => {
     setImgLoading(false)
   }
 
-  useEffect(()=>{
-    console.log("customizeOpt",{sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt})
-  },[sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt])
+  // useEffect(()=>{
+  //   console.log("customizeOpt",{sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt})
+  // },[sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt])
 
 
   const handelLocalStorage = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
     setProductData(localProductData)
+    getColorImagesData(localProductData.autocode);
     setWishListFlag(localProductData?.wishCheck)
     setCartFlag(localProductData?.checkFlag)
     getSizeData(localProductData.autocode);
   }
 
-  console.log("metalcolor",metalColorData);
 
   useEffect(() => {
     handelLocalStorage();
   }, [])
+  
+
+  const getColorImagesData = (autoCode) => {
+    console.log('productDataproductDataproductData', productData);
+    console.log('autoCode', autoCode);
+
+    const storedData = JSON.parse(localStorage.getItem('colorDataImages'));
+    if (!storedData) {
+      console.log('No data found in localStorage.');
+      return;
+    }
+    const filteredData = storedData.filter(item => item.autocode === autoCode);
+    setColorImageData(filteredData)
+  }
+
+  useEffect(() => {
+    console.log('Filtered data:', colorImageData);
+  }, [colorImageData]);
+
+
+  function convertPath(path) {
+    return path.replace(/\\/g, '/');
+  }
+
+  const handleColorSelection = (event) => {
+    let uploadPath = localStorage.getItem('UploadLogicalPath');
+    const storedDataAll = localStorage.getItem('storeInit');
+    const data = JSON.parse(storedDataAll);
+    const selectedColor = event.target.value;
+    setSelectedColor(selectedColor);
+    const selectedColorData = colorImageData.find(item => item.colorname === selectedColor);
+    if (selectedColorData) {
+      const correctedImagePath = convertPath(selectedColorData.imagepath);
+      let path = uploadPath + '/' + data.ukey + correctedImagePath
+      setSelectedImagePath(path);
+    } else {
+      setSelectedImagePath('');
+    }
+  };
+
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -90,8 +135,6 @@ const ProdDetail = () => {
     if (storedData1) {
       setDaimondQualityColor(storedData1);
     }
-    console.log('DaimondQualityColorDaimondQualityColorDaimondQualityColor', DaimondQualityColor);
-
 
     const storedData2 = JSON.parse(localStorage.getItem('MetalTypeData'));
     if (storedData2) {
@@ -117,8 +160,6 @@ const ProdDetail = () => {
       const combinedValue = JSON.stringify({
         autocode: `${autoC}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${customerid}`
       });
-      console.log('combinedValuecombinedValue', combinedValue);
-
       const encodedCombinedValue = btoa(combinedValue);
       const body = {
         "con": `{\"id\":\"\",\"mode\":\"CATEGORYSIZECOMBO\",\"appuserid\":\"${storedEmail}\"}`,
@@ -126,8 +167,6 @@ const ProdDetail = () => {
         "p": encodedCombinedValue
       }
       const response = await CommonAPI(body);
-      console.log('responseresponseresponse', response);
-
       if (response.Data?.rd) {
         setSizeData(response.Data.rd)
       }
@@ -185,7 +224,6 @@ const ProdDetail = () => {
 
     await CommonAPI(body).then((res) => {
       if (res?.Message === "Success") {
-        // console.log("res?.Data?.rd1",res?.Data?.rd1);
         setCartData(res?.Data?.rd)
         setWishData(res?.Data?.rd1)
       }
@@ -211,19 +249,13 @@ const ProdDetail = () => {
         localStorage.setItem("srProductsData", JSON.stringify(productData))
         const product = productData
 
-        // let isWishHasCartData = WishData?.filter((pd)=> productData.find((wd)=>wd.autocode===pd.autocode))
-        // console.log("isWishHasCartData",isWishHasCartData[0]?.autocode)
-
         let isWishHasCartData = WishData?.filter((pd) => product.autocode === pd.autocode)
 
         let WishedData = isWishHasCartData.map((wcd) => wcd.autocode === product.autocode ? product : null)
 
         if (WishedData.length) {
-          console.log("WishedData", WishedData)
-
           WishedData[0].checkFlag = true;
           WishedData[0].wishCheck = false;
-
           localStorage.setItem("srProductsData", JSON.stringify(WishedData[0]))
           handelLocalStorage()
         }
@@ -331,11 +363,9 @@ const ProdDetail = () => {
         }
 
         await CommonAPI(isWishHasCartData.length ? body1 : body).then(async (res) => {
-          // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
           if (!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success") {
             await getCartAndWishListData()
             getCountFunc()
-            // prod.checkFlag=false
           }
 
           if (isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success") {
@@ -343,9 +373,6 @@ const ProdDetail = () => {
             getCountFunc()
           }
         })
-
-        // let isWishHasCartData = WishData?.filter((wd)=> wd.autocode === prod.autocode)
-        //  console.log("isWishHasCartData",isWishHasCartData)
 
       }
       else {
@@ -370,7 +397,6 @@ const ProdDetail = () => {
         }
 
         await CommonAPI(body).then(async (res) => {
-          // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
           if (res?.Data?.rd[0]?.stat_msg === "success") {
             // removefromCart()
             await getCartAndWishListData()
@@ -612,12 +638,13 @@ const ProdDetail = () => {
                 />
               )}
               <img
-                src={
-                  
+                src={selectedImagePath == '' ?
                   productData?.imagepath +
                   (!handelmainImg()?.length
                     ? productData?.originalimage?.split(",")[0]
                     : handelmainImg())
+                    :
+                    selectedImagePath
                 }
                 alt={""}
                 style={{
@@ -785,8 +812,8 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
-                    
-                      onChange={(e)=>{setSizeOption(e.target.value)}}
+
+                      onChange={(e) => { setSizeOption(e.target.value) }}
                     >
                       {sizeData?.map((size) => (
                         <option key={size.ColorId} value={size.id} >
@@ -822,8 +849,7 @@ const ProdDetail = () => {
                           color: "#7d7f85",
                           fontSize: "12.5px",
                         }}
-
-                        onChange={(e)=>setMCOption(e.target.value)}
+                        onChange={handleColorSelection}
                       >
                         {metalColorData.map((colorItem) => (
                           <option key={colorItem.ColorId} value={colorItem.metalcolorname} >
@@ -856,7 +882,7 @@ const ProdDetail = () => {
                         fontSize: "12.5px",
                       }}
 
-                      onChange={(e)=>setDiaQColOpt(e.target.value)}
+                      onChange={(e) => setDiaQColOpt(e.target.value)}
                     >
                       {colorData.map((colorItem) => (
                         <option key={colorItem.ColorId} value={colorItem.color} >
@@ -891,10 +917,10 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
-                      onChange={(e)=>setmtTypeOption(e.target.value)}
+                      onChange={(e) => setmtTypeOption(e.target.value)}
                     >
                       {metalType.map((data, index) => (
-                        <option key={index}  value={data.metalType}>
+                        <option key={index} value={data.metalType}>
                           {data.metaltype}
                         </option>
                       ))}
@@ -919,7 +945,7 @@ const ProdDetail = () => {
                       color: "#7d7f85",
                       fontSize: "12.5px",
                     }}
-                    onChange={(e)=>setCSQOpt(e.target.value)}
+                    onChange={(e) => setCSQOpt(e.target.value)}
                   >
                     {DaimondQualityColor.map((data, index) => (
                       <option key={index} value={data.color} >

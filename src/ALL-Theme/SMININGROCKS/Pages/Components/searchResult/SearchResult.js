@@ -21,6 +21,7 @@ export default function SearchResult() {
     const handleMouseLeaveRing3 = () => {
         setRing3ImageChange(false)
     }
+    
 
     return (
         <div style={{

@@ -32,7 +32,7 @@ export default function Home() {
         Authorization: 'Bearer optigo_json_api',
         domain: 'gstore.orail.co.in',
         version: 'V4',
-        sp:"1"
+        sp: "1"
         // domain: 'zen',
       };
       // const header = {
@@ -189,36 +189,71 @@ export default function Home() {
       }
     }
 
-    const currencyCombo = async() =>{
+    const currencyCombo = async () => {
 
-      try{
+      try {
         const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+        const storedEmail = localStorage.getItem('registerEmail') || '';
+
         const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
-  
+
         const combinedValue = JSON.stringify({
           FrontEnd_RegNo: `${storeInit?.FrontEnd_RegNo}`, Customerid: `${loginUserDetail?.id}`
         });
         const encodedCombinedValue = btoa(combinedValue);
-  
+
         let body = {
-          "con":"{\"id\":\"Store\",\"mode\":\"CURRENCYCOMBO\",\"appuserid\":\"nimesh@ymail.in\"}",
-          "f":"on-index(home)-call (CURRENCYCOMBO)",
-          "p":encodedCombinedValue
+          "con": `{\"id\":\"Store\",\"mode\":\"CURRENCYCOMBO\",\"appuserid\":\"${storedEmail}\"}`,
+          "f": "on-index(home)-call (CURRENCYCOMBO)",
+          "p": encodedCombinedValue
         }
 
-        await CommonAPI(body).then((res)=>{
-          localStorage.setItem("CURRENCYCOMBO",JSON.stringify(res.Data.rd[0]))
+        await CommonAPI(body).then((res) => {
+          localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res.Data.rd[0]))
           // console.log("res",res)
-        })    
+        })
 
       }
-      catch(error){
-        console.log("error",error)
+      catch (error) {
+        console.log("error", error)
+      }
+
+    }
+
+
+    const getColorImgData = async () => {
+
+      try {
+        const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+        const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
+        const storedEmail = localStorage.getItem('registerEmail') || '';
+
+        const combinedValue = JSON.stringify({
+          autocode:"", FrontEnd_RegNo: `${storeInit?.FrontEnd_RegNo}`, Customerid: `${loginUserDetail?.id}`
+        });
+        const encodedCombinedValue = btoa(combinedValue);
+
+        let body = {
+          "con": `{\"id\":\"Store\",\"mode\":\"COLORIMAGELIST\",\"appuserid\":\"${storedEmail}\"}`,
+          "f": "mainIndex.js (getTheAllColorData)",
+          "p": encodedCombinedValue
+        }
+
+        const response = await CommonAPI(body);
+        if (response.Data?.rd) {
+          let data = JSON.stringify(response.Data?.rd)
+          localStorage.setItem('colorDataImages', data)
+        }
+
+      }
+      catch (error) {
+        console.log("error", error)
       }
 
     }
 
     fetchData();
+    getColorImgData();
     getMetalTypeData();
     getQualityColor();
     getColorStoneQualityData();
@@ -246,7 +281,7 @@ export default function Home() {
           <SustainAbility />
         </div>
         <ShopifySection />
-        <ShopOurInstagram />
+        {/* <ShopOurInstagram /> */}
         <Footer />
       </div>
       <div>

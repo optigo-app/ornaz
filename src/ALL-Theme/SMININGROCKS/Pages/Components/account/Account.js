@@ -96,6 +96,7 @@ export default function Account() {
         localStorage.removeItem('remarks');
         localStorage.removeItem('registerMobile');
         naviagation('/')
+        window.location.reload();
     }
 
     return (
