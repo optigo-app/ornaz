@@ -11,8 +11,8 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { GetCount } from '../../../Utils/API/GetCount'
-import { CartListCounts, WishListCounts } from '../../../../../Recoil/atom'
-import { useSetRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts, priceData } from '../../../../../Recoil/atom'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 const ProdDetail = () => {
 
@@ -44,9 +44,14 @@ const ProdDetail = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
 
+  const [mtPrice, setMetalPrice] = useState(0);
+  const [dqcPrice, setDQCPrice] = useState(0);
+  const [csqcPrice, setCSQCPrice] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
-
+  const getPriceData = useRecoilValue(priceData);
   const handelImgLoad = () => {
     setImgLoading(false)
   }
@@ -71,10 +76,95 @@ const ProdDetail = () => {
         setCSQOpt(ref)
       }
 
+      setSizeOption(sizeData[1]?.id)
+
   },[])
-  
-  console.log("xyzzzzz",cSQopt);
-  
+
+  useEffect(()=>{
+
+    let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+
+        let mtrd = getPriceData?.rd?.filter((ele) => 
+            ele?.A === srProductsData?.autocode && 
+            ele?.B === srProductsData?.designno && 
+            ele?.D === mtTypeOption
+          )
+          
+          let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
+          // setMetalPrice(showPrice)
+
+        let diaqcprice = getPriceData?.rd1?.filter((ele) => 
+          ele.A === srProductsData?.autocode && 
+          ele.B === srProductsData?.designno &&
+          ele.H === diaQColOpt?.split("_")[0] &&
+          ele.J === diaQColOpt?.split("_")[1] 
+          )
+
+          let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
+          // setDQCPrice(showPrice1)
+
+        let csqcpirce = getPriceData?.rd2?.filter((ele) => 
+          ele.A === srProductsData?.autocode && 
+          ele.B === srProductsData?.designno &&
+          ele.H === cSQopt?.split("-")[0] &&
+          ele.J === cSQopt?.split("-")[1]   
+          )
+
+          let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+          // setCSQCPrice(showPrice2)
+
+          let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
+
+          console.log({showPrice,showPrice1,showPrice2});
+          let gt = showPrice + showPrice1 + showPrice2;
+          setGrandTotal(gt)
+
+  },[mtTypeOption,diaQColOpt,cSQopt])
+
+  // useEffect(()=>{
+
+  //   let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+
+  //       let diaqcprice = getPriceData?.rd1?.filter((ele) => 
+  //           ele.A === srProductsData?.autocode && 
+  //           ele.B === srProductsData?.designno &&
+  //           ele.H === diaQColOpt?.split("_")[0] &&
+  //           ele.J === diaQColOpt?.split("_")[1] 
+  //           )
+
+  //           let showPrice = (srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0)
+  //           setDQCPrice(showPrice)
+
+  // },[diaQColOpt])
+
+  // useEffect(() => {
+  //   let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+    
+  //       let csqcpirce = getPriceData?.rd2?.filter((ele) => 
+  //           ele.A === srProductsData?.autocode && 
+  //           ele.B === srProductsData?.designno &&
+  //           ele.H === cSQopt?.split("-")[0] &&
+  //           ele.J === cSQopt?.split("-")[1]   
+  //           )
+    
+  //           let showPrice = ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+  //           setCSQCPrice(showPrice)
+
+
+  // },[cSQopt])
+        
+  // useEffect(() => {
+  //   let mt = (mtPrice) 
+  //   let dqc = (dqcPrice)
+  //   let csqc = (csqcPrice)
+
+  //   console.log("mt,dqc,csqc",mt,dqc,csqc)
+  //   // console.log("in usee", (mtPrice === NaN ? 0 :mtPrice), (dqcPrice === NaN ? 0 : dqcPrice), (csqcPrice === NaN ? 0 : csqcPrice));
+  //   // let gt = (gt === NaN ? 0 : gt);
+  //   // setGrandTotal(gt)
+
+  // },[mtPrice, dqcPrice, csqcPrice])
+        
   const handelLocalStorage = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
     setProductData(localProductData)
@@ -89,12 +179,9 @@ const ProdDetail = () => {
   }, [])
   
   const getColorImagesData = (autoCode) => {
-    console.log('productDataproductDataproductData', productData);
-    console.log('autoCode', autoCode);
 
     const storedData = JSON.parse(localStorage.getItem('colorDataImages'));
     if (!storedData) {
-      console.log('No data found in localStorage.');
       return;
     }
     const filteredData = storedData.filter(item => item.autocode === autoCode);
@@ -102,7 +189,6 @@ const ProdDetail = () => {
   }
 
   useEffect(() => {
-    console.log('Filtered data:', colorImageData);
   }, [colorImageData]);
 
 
@@ -767,7 +853,6 @@ const ProdDetail = () => {
   }
 
   const handelSize = (data) =>{
-    console.log("e.target.value",data);
     localStorage.setItem("sizeData",JSON.stringify(data))
     setSizeOption(data)
   }
@@ -990,6 +1075,7 @@ const ProdDetail = () => {
                         fontSize: "12.5px",
                       }}
                       onChange={(e)=>handelSize(e.target.value)}
+                      defaultValue={sizeOption}
                     >
                       {sizeData?.map((size) => (
                         <option key={size.ColorId} value={size.id} >
@@ -1135,7 +1221,7 @@ const ProdDetail = () => {
 
                 {isPriseShow == 0 && <div style={{ marginTop: "23px" }}>
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
-                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{`$${productData?.price}`}</span>
+                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{`$${(productData?.price - grandTotal)?.toFixed(2)}`}</span>
                   </p>
                 </div>}
 

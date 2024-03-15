@@ -29,3 +29,8 @@ export const productDataNew = atom({
   key:'productDataNew',
   default:[]
 })
+
+export const priceData = atom({
+  key:'priceData',
+  default:[]
+})
