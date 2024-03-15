@@ -160,7 +160,7 @@ const ProductList = () => {
             // console.log("newPriceData2",priceDataApi?.rd2?.find((te)=> te?.H !== "mix" && te?.H !== "MOTI" && te?.H !== "BEADS"));
             // console.log("newPriceData2",newPriceData2);
 
-            let price="Not Available";
+            let price= 0;
             let isLoading = true;
             let markup = 0;
             let metalrd=0;
@@ -490,7 +490,7 @@ const ProductList = () => {
 
   useEffect(()=>{
 
-    let newWishCheckData = (newProData.length ? newProData : ProductApiData2)?.map((pd)=>{
+    let newWishCheckData = (ProductApiData2)?.map((pd)=>{
 
       const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
 
@@ -515,7 +515,7 @@ const ProductList = () => {
 
   useEffect(()=>{
 
-    let newCartCheckData = (newProData.length ? newProData : ProductApiData2)?.map((pd)=>{
+    let newCartCheckData = (ProductApiData2)?.map((pd)=>{
 
       let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
 
@@ -1653,7 +1653,7 @@ const handlePageReload = () => {
                       <div>
                         <p style={{ fontSize: "12px" }}>
                         
-                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price + (products?.markup === 0 ? "" : products?.markup))}
+                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price === 0 ? 'Not Available' : products?.price + (products?.markup === 0 ? "" : products?.markup))}
                         </p>
                       </div>
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
