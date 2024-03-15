@@ -518,33 +518,32 @@ const ProductList = () => {
   },[WishData])
 
 
+let cartlistUpdate = async() =>{
+  let newCartCheckData = (ProductApiData2)?.map((pd)=>{
 
+    let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+
+    let checkFlag = false
+    if (newWish) {
+      checkFlag = true
+   }else{
+    checkFlag = false
+   }
+
+  //  if(pd.wishCheck === true){
+  //   pd.wishCheck = false;
+  //  }
+
+   return {...pd,checkFlag}
+
+ })
+
+   await localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+   setProductApiData2(newCartCheckData)
+}
 
   useEffect(()=>{
-
-    let newCartCheckData = (ProductApiData2)?.map((pd)=>{
-
-      let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
-
-      let checkFlag = false
-      if (newWish) {
-        checkFlag = true
-     }else{
-      checkFlag = false
-     }
-
-    //  if(pd.wishCheck === true){
-    //   pd.wishCheck = false;
-    //  }
-
-     return {...pd,checkFlag}
-
-   })
-
-     localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
-     setProductApiData2(newCartCheckData)
-
-
+    cartlistUpdate()
   },[cartData])
 
 
