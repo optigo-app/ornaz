@@ -501,7 +501,7 @@ const ProductList = () => {
 
   useEffect(()=>{
 
-    let newWishCheckData = ProductApiData2.map((pd)=>{
+    let newWishCheckData = (newProData.length ? newProData : ProductApiData2)?.map((pd)=>{
 
       let newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
 
@@ -525,7 +525,7 @@ const ProductList = () => {
 
   useEffect(()=>{
 
-    let newCartCheckData = ProductApiData2.map((pd)=>{
+    let newCartCheckData = (newProData.length ? newProData : ProductApiData2)?.map((pd)=>{
 
       let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
 
@@ -536,9 +536,9 @@ const ProductList = () => {
       checkFlag = false
      }
 
-     if(pd.wishCheck === true){
-      pd.wishCheck = false;
-     }
+    //  if(pd.wishCheck === true){
+    //   pd.wishCheck = false;
+    //  }
 
      return {...pd,checkFlag}
 
@@ -1084,129 +1084,6 @@ const ProductList = () => {
   const [value2, setValue2] = useState([minNetwt, maxNetwt]);
   const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
   const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
-  // const handlePriceChange = (
-  //   event,
-  //   newValue,
-  //   activeThumb,
-  // ) => {
-    
-  //     setValue1(newValue)
-  //     setMinPrice(newValue[0])
-  //     setMaxPrice(newValue[1])
-  //     const datas = (newProData?.length ? newProData : ProductApiData2)?.filter((e) => e !== 'Not Available')?.filter((e) => 
-  //        e?.price>= newValue[0] && e?.price<= newValue[1] 
-  //     && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.Grossweight >= minGrosswt && e?.Grossweight <= maxGrosswt 
-  //     && e?.diamondweight >= minDiamondWt && e?.diamondweight <= maxDiamondWt)
-  //     // productData = datas;
-
-  //     setNewProData(datas);
-      
-
-  //   // if (!Array.isArray(newValue)) {
-  //   //   return;
-  //   // }
-
-  //   // if (activeThumb === 0) {
-  //   //   setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
-  //   // } else {
-  //   //   setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
-  //   // }
-  // };
-
-  // const [value2, setValue2] = useState([minNetwt, maxNetwt]);
-
-  // const handleNetWtChange = (
-  //   event,
-  //   newValue,
-  //   activeThumb,
-  // ) => {
-  //       setValue2(newValue);
-  //       setMinNetwt(newValue[0])
-  //       setMaxNetwt(newValue[1])
-  //       const datas = (newProData?.length ? newProData : ProductApiData2)?.filter((e) => e?.netwt >= newValue[0] && e?.netwt <= newValue[1] && e?.price >= minPrice && e?.price <= maxPrice 
-  //       && e?.Grossweight >= minGrosswt && e?.Grossweight <= maxGrosswt && e?.diamondweight >= minDiamondWt && e?.diamondweight <= maxDiamondWt)
-        
-  //       setNewProData(datas)
-  //       // if (!Array.isArray(newValue)) {
-  //         //   return;
-  //         // }
-          
-  //         // if (newValue[1] - newValue[0] < minDistance) {
-  //           //   if (activeThumb === 0) {
-  //             //     const clamped = Math.min(newValue[0], 100 - minDistance);
-  //             //     setValue2([clamped, clamped + minDistance]);
-  //             //   } else {
-  //               //     const clamped = Math.max(newValue[1], minDistance);
-  //               //     setValue2([clamped - minDistance, clamped]);
-  //               //   }
-  //               // } else {
-  //                 //   setValue2(newValue);
-  //                 // }
-  //               };
-                
-  // const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
-  // const handlegrossWtChange = (
-  //                 event,
-  //                 newValue,
-  //                 activeThumb,
-  //               ) => {
-
-  //                 setValue3(newValue);
-  //                 setMinGrossWt(newValue[0]);
-  //                 setMaxGrossWtt(newValue[1]);
-
-  //                 const datas = (newProData?.length ? newProData : ProductApiData2)?.filter((e) => e?.Grossweight>= newValue[0] && e?.Grossweight<= newValue[1] 
-  //                   && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.price >= minPrice && e?.price <= maxPrice
-  //                 );
-  //                 setNewProData(datas)
-  //                 // if (!Array.isArray(newValue)) {
-  //                 //   return;
-  //                 // }
-              
-  //                 // if (newValue[1] - newValue[0] < minDistance) {
-  //                 //   if (activeThumb === 0) {
-  //                 //     const clamped = Math.min(newValue[0], 100 - minDistance);
-  //                 //     setValue2([clamped, clamped + minDistance]);
-  //                 //   } else {
-  //                 //     const clamped = Math.max(newValue[1], minDistance);
-  //                 //     setValue2([clamped - minDistance, clamped]);
-  //                 //   }
-  //                 // } else {
-  //                 //   setValue2(newValue);
-  //                 // }
-  //               };
-
-  // const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
-  // const handleDiamondChange = (
-  //   event,
-  //   newValue,
-  //   activeThumb,
-  // ) => {
-
-  //   setValue4(newValue);
-  //   setMinDiamondWt(newValue[0]);
-  //   setMaxDiamondWt(newValue[1]);
-  //   const datas = (newProData?.length ? newProData : ProductApiData2)?.filter((e) => e?.diamondweight>= newValue[0] && e?.diamondweight <= newValue[1] && e?.Grossweight>= minGrosswt && e?.Grossweight<= maxGrosswt 
-  //     && e?.netwt >= minNetwt && e?.netwt <= maxNetwt && e?.price >= minPrice && e?.price <= maxPrice
-  //   );
-  //   setNewProData(datas)
-  //   // if (!Array.isArray(newValue)) {
-  //   //   return;
-  //   // }
-
-  //   // if (newValue[1] - newValue[0] < minDistance) {
-  //   //   if (activeThumb === 0) {
-  //   //     const clamped = Math.min(newValue[0], 100 - minDistance);
-  //   //     setValue2([clamped, clamped + minDistance]);
-  //   //   } else {
-  //   //     const clamped = Math.max(newValue[1], minDistance);
-  //   //     setValue2([clamped - minDistance, clamped]);
-  //   //   }
-  //   // } else {
-  //   //   setValue2(newValue);
-  //   // }
-  // };
-
 
 
 
@@ -1272,63 +1149,7 @@ const ProductList = () => {
       setValue4([diamondWtOnly[0], diamondWtOnly[diamondWtOnly?.length - 1]])
 
   }, [ProductApiData2]);
-  // Initialize net weight range
-    // useEffect(() => {
-    //   const netWtOnly = ProductApiData2.map((item) => item.netwt).sort((a, b) => a - b);
-    //   setMinNetwt(netWtOnly[0]);
-    //   setMaxNetwt(netWtOnly[netWtOnly.length - 1]);
-    // }, [ProductApiData2]);
-
-    // Initialize gross weight range
-    // useEffect(() => {
-    //   const grossWtOnly = ProductApiData2.map((item) => item.Grossweight).sort((a, b) => a - b);
-    //   setMinGrossWt(grossWtOnly[0]);
-    //   setMaxGrossWtt(grossWtOnly[grossWtOnly.length - 1]);
-    // }, [ProductApiData2]);
-
-    // Initialize diamond weight range
-    // useEffect(() => {
-    //   const diamondWtOnly = ProductApiData2.map((item) => item.diamondweight).sort((a, b) => a - b);
-    //   setMinDiamondWt(diamondWtOnly[0]);
-    //   setMaxDiamondWt(diamondWtOnly[diamondWtOnly.length - 1]);
-    // }, [ProductApiData2]);
-  
-      // const price_only = ProductApiData2?.filter((e) => e?.price !== 'Not Available' )?.map((e) => e?.price)?.sort((a, b) => a - b );
-      // const unique_price_only = [...new Set(price_only)];    
-
-      // useEffect(() => {
-      //     setMinPrice(unique_price_only[0]);
-      //     setMaxPrice(unique_price_only[unique_price_only?.length - 1]);
-      // // eslint-disable-next-line react-hooks/exhaustive-deps
-      // },[price_only])
-
-    //for netwt range
-    // const netwt_only = ProductApiData2?.map((e) => e?.netwt)?.sort((a, b) => a - b)
-    // const unique_netwt_only = [...new Set(netwt_only)];
-      
-    // useEffect(() => {
-    //     setMinNetwt(unique_netwt_only[0]);
-    //     setMaxNetwt(unique_netwt_only[unique_netwt_only?.length - 1]);
-    //   // eslint-disable-next-line react-hooks/exhaustive-deps
-    //   },[netwt_only]);
-
-    // const groswt_only = ProductApiData2?.map((e) => e?.Grossweight)?.sort((a, b) => a - b)
-    // const unique_grosswt_only = [...new Set(groswt_only)];
-
-    // useEffect(() => {
-    //   setMinGrossWt(unique_grosswt_only[0]);
-    //   setMaxGrossWtt(unique_grosswt_only[unique_grosswt_only?.length - 1]);
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[groswt_only]);
-
-    // const diawt_only = ProductApiData2?.map((e) => e?.diamondweight)?.sort((a, b) => a - b)
-    // const unique_diawt_only = [...new Set(diawt_only)];
-
-    // useEffect(() => {
-    //   setMinDiamondWt(unique_diawt_only[0]);
-    //   setMaxDiamondWt(unique_diawt_only[unique_diawt_only?.length - 1]);
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[diawt_only]);
+ 
   const handlePriceChange = (event, newValue, activeThumb) => {
       setValue1(newValue);
       filterDatasfunc(newValue, value2, value3, value4);
@@ -1363,7 +1184,22 @@ const ProductList = () => {
     setNewProData(filteredData);
   };
   
-
+const handlePageReload = () => {
+  console.log("click");
+      setProductApiData2(ProductApiData2);
+      setMinPrice(0)
+      setMaxPrice(maxPrice)
+      setValue1([minPrice, maxPrice])
+      setMinNetwt(0)
+      setMaxNetwt(maxNetwt)
+      setValue2([0, maxNetwt])
+      setMinGrossWt(0)
+      setMaxGrossWtt(maxGrosswt)
+      setValue3([0, maxGrosswt])
+      setMinDiamondWt(0)
+      setMaxDiamondWt(maxDiamondWt)
+      setValue4([0, maxDiamondWt])
+}
 
   return (
     <div id="top">
@@ -1399,8 +1235,9 @@ const ProductList = () => {
                 }}
                 className="smilingWebProductListSideBar"
               >
-                <ul>
-                  <li className="finejwelery" id="finejwelery">Filters</li>
+                <ul className="d-flex">
+                  <li className="finejwelery me-4" id="finejwelery">Filters</li>
+                  <li className="finejwelery" id="finejwelery" onClick={() => handlePageReload()}>All</li>
                   {/* <li className="finejli">Rings</li>
                   <li className="finejli">Necklaces</li>
                   <li className="finejli">Earrings</li>
@@ -1473,11 +1310,16 @@ const ProductList = () => {
                                 value={value1}
                                 min={minPrice}
                                 max={maxPrice}
+                                size="small"
                                 onChange={handlePriceChange}
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
                                 disableSwap
                               />
+                              <div className="d-flex w-100 justify-content-between align-items-center mt-1">
+                                <input value={value1[0]} className="minmaxvalpl" disabled />
+                                <input value={value1[1]} className="minmaxvalpl" disabled />
+                              </div>
                             </div>}
 
                           {ele.label === "NETWT" &&
@@ -1488,11 +1330,16 @@ const ProductList = () => {
                                 value={value2}
                                 min={minNetwt}
                                 max={maxNetwt}
+                                size="small"
                                 onChange={handleNetWtChange}
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
                                 disableSwap
                               />
+                              <div className="d-flex w-100 justify-content-between align-items-center mt-1">
+                                <input value={value2[0]} className="minmaxvalpl" disabled />
+                                <input value={value2[1]} className="minmaxvalpl" disabled />
+                              </div>
                             </div>
                           }
 
@@ -1504,11 +1351,16 @@ const ProductList = () => {
                                 value={value3}
                                 min={minGrosswt}
                                 max={maxGrosswt}
+                                size="small"
                                 onChange={handlegrossWtChange}
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
                                 disableSwap
                               />
+                              <div className="d-flex w-100 justify-content-between align-items-center mt-1">
+                                <input value={value3[0]} className="minmaxvalpl" disabled />
+                                <input value={value3[1]} className="minmaxvalpl" disabled />
+                              </div>
                             </div>
                           }
 
@@ -1520,11 +1372,16 @@ const ProductList = () => {
                                 value={value4}
                                 min={minDiamondWt}
                                 max={maxDiamondWt}
+                                size="small"
                                 onChange={handleDiamondChange}
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
                                 disableSwap
                               />
+                              <div className="d-flex w-100 justify-content-between align-items-center mt-1">
+                                <input value={value4[0]} className="minmaxvalpl" disabled />
+                                <input value={value4[1]} className="minmaxvalpl" disabled />
+                              </div>
                             </div>
                           }
 

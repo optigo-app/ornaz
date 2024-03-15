@@ -74,6 +74,7 @@ export default function Cart({ open, toggleCartDrawer }) {
             getCartData();
         }
     }, [open]);
+
     useEffect(() => {
         const storedData = JSON.parse(localStorage.getItem('QualityColor'));
         if (storedData) {
@@ -360,6 +361,11 @@ export default function Cart({ open, toggleCartDrawer }) {
         setValue(newValue);
     };
 
+
+
+
+    
+
     return (
         <Drawer
             anchor="right"
@@ -463,6 +469,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                             <img
                                                 src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
                                                 className="smiling-cartBoxImg"
+                                                alt="#"
                                             />
                                         </div>
                                         <div className='smilingCartBox1' style={{ width: "65%", margin: "20px" }}>

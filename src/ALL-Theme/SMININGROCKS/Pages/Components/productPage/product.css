@@ -64,6 +64,15 @@
     transition: all 0.9s ease-in-out;
 }
 
+.minmaxvalpl{
+    outline: none !important;
+    font-size: 13px !important;
+    height: 25px !important;
+    width: 30% !important;
+    padding: 5px !important;
+    color: #555050 !important;
+}
+
 @media screen and (min-width: 1441px) {
     .smilingMobileProductListSideBar{
         display: none;
