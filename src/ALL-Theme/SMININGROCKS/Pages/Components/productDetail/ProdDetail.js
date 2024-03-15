@@ -11,8 +11,8 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { GetCount } from '../../../Utils/API/GetCount'
-import { CartListCounts, WishListCounts } from '../../../../../Recoil/atom'
-import { useSetRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts, priceData } from '../../../../../Recoil/atom'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 const ProdDetail = () => {
 
@@ -44,18 +44,127 @@ const ProdDetail = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
 
+  const [mtPrice, setMetalPrice] = useState(0);
+  const [dqcPrice, setDQCPrice] = useState(0);
+  const [csqcPrice, setCSQCPrice] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
-
+  const getPriceData = useRecoilValue(priceData);
   const handelImgLoad = () => {
     setImgLoading(false)
   }
 
+  useEffect(()=>{
+ 
+    let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
+    let ColorStoneQualityColor = JSON.parse(localStorage.getItem("ColorStoneQualityColor"))
+    setmtTypeOption(loginInfo?.cmboMetalType)
+
+    let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0].toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1].toUpperCase()}`
+    setDiaQColOpt(qualityColor)
+
+    let csQualColor = `${loginInfo?.cmboCSQualityColor.split("#@#")[0].toUpperCase()}-${loginInfo?.cmboCSQualityColor.split("#@#")[1].toUpperCase()}`
+
+      let dqcc=  ColorStoneQualityColor.find((dqc) => `${dqc.Quality}-${dqc.color}` === csQualColor)
+
+      if(dqcc){
+        setCSQOpt(csQualColor)
+      }else{
+        let ref = `${ColorStoneQualityColor[0].Quality}-${ColorStoneQualityColor[0].color}`
+        setCSQOpt(ref)
+      }
+
+      setSizeOption(sizeData[1]?.id)
+
+  },[])
+
+  useEffect(()=>{
+
+    let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+
+        let mtrd = getPriceData?.rd?.filter((ele) => 
+            ele?.A === srProductsData?.autocode && 
+            ele?.B === srProductsData?.designno && 
+            ele?.D === mtTypeOption
+          )
+          
+          let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
+          // setMetalPrice(showPrice)
+
+        let diaqcprice = getPriceData?.rd1?.filter((ele) => 
+          ele.A === srProductsData?.autocode && 
+          ele.B === srProductsData?.designno &&
+          ele.H === diaQColOpt?.split("_")[0] &&
+          ele.J === diaQColOpt?.split("_")[1] 
+          )
+
+          let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
+          // setDQCPrice(showPrice1)
+
+        let csqcpirce = getPriceData?.rd2?.filter((ele) => 
+          ele.A === srProductsData?.autocode && 
+          ele.B === srProductsData?.designno &&
+          ele.H === cSQopt?.split("-")[0] &&
+          ele.J === cSQopt?.split("-")[1]   
+          )
+
+          let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+          // setCSQCPrice(showPrice2)
+
+          let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
+
+          console.log({showPrice,showPrice1,showPrice2});
+          let gt = showPrice + showPrice1 + showPrice2;
+          setGrandTotal(gt)
+
+  },[mtTypeOption,diaQColOpt,cSQopt])
+
   // useEffect(()=>{
-  //   console.log("customizeOpt",{sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt})
-  // },[sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt])
+
+  //   let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+
+  //       let diaqcprice = getPriceData?.rd1?.filter((ele) => 
+  //           ele.A === srProductsData?.autocode && 
+  //           ele.B === srProductsData?.designno &&
+  //           ele.H === diaQColOpt?.split("_")[0] &&
+  //           ele.J === diaQColOpt?.split("_")[1] 
+  //           )
+
+  //           let showPrice = (srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0)
+  //           setDQCPrice(showPrice)
+
+  // },[diaQColOpt])
+
+  // useEffect(() => {
+  //   let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+    
+  //       let csqcpirce = getPriceData?.rd2?.filter((ele) => 
+  //           ele.A === srProductsData?.autocode && 
+  //           ele.B === srProductsData?.designno &&
+  //           ele.H === cSQopt?.split("-")[0] &&
+  //           ele.J === cSQopt?.split("-")[1]   
+  //           )
+    
+  //           let showPrice = ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+  //           setCSQCPrice(showPrice)
 
 
+  // },[cSQopt])
+        
+  // useEffect(() => {
+  //   let mt = (mtPrice) 
+  //   let dqc = (dqcPrice)
+  //   let csqc = (csqcPrice)
+
+  //   console.log("mt,dqc,csqc",mt,dqc,csqc)
+  //   // console.log("in usee", (mtPrice === NaN ? 0 :mtPrice), (dqcPrice === NaN ? 0 : dqcPrice), (csqcPrice === NaN ? 0 : csqcPrice));
+  //   // let gt = (gt === NaN ? 0 : gt);
+  //   // setGrandTotal(gt)
+
+  // },[mtPrice, dqcPrice, csqcPrice])
+        
   const handelLocalStorage = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
     setProductData(localProductData)
@@ -65,19 +174,14 @@ const ProdDetail = () => {
     getSizeData(localProductData.autocode);
   }
 
-
   useEffect(() => {
     handelLocalStorage();
   }, [])
   
-
   const getColorImagesData = (autoCode) => {
-    console.log('productDataproductDataproductData', productData);
-    console.log('autoCode', autoCode);
 
     const storedData = JSON.parse(localStorage.getItem('colorDataImages'));
     if (!storedData) {
-      console.log('No data found in localStorage.');
       return;
     }
     const filteredData = storedData.filter(item => item.autocode === autoCode);
@@ -85,7 +189,6 @@ const ProdDetail = () => {
   }
 
   useEffect(() => {
-    console.log('Filtered data:', colorImageData);
   }, [colorImageData]);
 
 
@@ -109,15 +212,11 @@ const ProdDetail = () => {
     }
   };
 
-
-
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
   useEffect(() => {
-
 
     const storedDataAll = localStorage.getItem('storeInit');
     const data = JSON.parse(storedDataAll);
@@ -753,20 +852,7 @@ const ProdDetail = () => {
     // prod["checkFlag"] = event.target.checked
   }
 
-
-
-
-
-  // const handelWishList = (e) =>{
-
-  //   productData.wishCheck = e.target.checked;
-  //   setWishListFlag(e.target.checked)
-  //   localStorage.setItem("srProductsData",JSON.stringify(productData))
-
-  // }
-
   const handelSize = (data) =>{
-    console.log("e.target.value",data);
     localStorage.setItem("sizeData",JSON.stringify(data))
     setSizeOption(data)
   }
@@ -989,6 +1075,7 @@ const ProdDetail = () => {
                         fontSize: "12.5px",
                       }}
                       onChange={(e)=>handelSize(e.target.value)}
+                      defaultValue={sizeOption}
                     >
                       {sizeData?.map((size) => (
                         <option key={size.ColorId} value={size.id} >
@@ -1027,7 +1114,7 @@ const ProdDetail = () => {
                         onChange={handleColorSelection}
                       >
                         {metalColorData.map((colorItem) => (
-                          <option key={colorItem.ColorId} value={colorItem.metalcolorname} >
+                          <option key={colorItem.ColorId} value={colorItem.metalcolorname}>
                             {colorItem.metalcolorname}
                           </option>
                         ))}
@@ -1056,11 +1143,11 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
-
+                      defaultValue={diaQColOpt}
                       onChange={(e) => setDiaQColOpt(e.target.value)}
                     >
-                      {colorData.map((colorItem) => (
-                        <option key={colorItem.ColorId} value={colorItem.color} >
+                      {colorData?.map((colorItem) => (
+                        <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
                           {`${colorItem.Quality}_${colorItem.color}`}
                         </option>
                       ))}
@@ -1092,6 +1179,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
+                      defaultValue={mtTypeOption}
                       onChange={(e) => setmtTypeOption(e.target.value)}
                     >
                       {metalType.map((data, index) => (
@@ -1121,9 +1209,10 @@ const ProdDetail = () => {
                       fontSize: "12.5px",
                     }}
                     onChange={(e) => setCSQOpt(e.target.value)}
+                    defaultValue={cSQopt}
                   >
                     {DaimondQualityColor.map((data, index) => (
-                      <option key={index} value={data.color} >
+                      <option key={index} value={`${data.Quality}-${data.color}`} >
                         {`${data.Quality}-${data.color}`}
                       </option>
                     ))}
@@ -1132,7 +1221,7 @@ const ProdDetail = () => {
 
                 {isPriseShow == 0 && <div style={{ marginTop: "23px" }}>
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
-                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{`$${productData?.price}`}</span>
+                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{`$${(productData?.price - grandTotal)?.toFixed(2)}`}</span>
                   </p>
                 </div>}
 

@@ -16,10 +16,9 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew, searchData } from "../../../../../Recoil/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
-import memoizeOne from 'memoize-one';
 
 
 
@@ -48,7 +47,7 @@ const ProductList = () => {
   const [cartRemoveData, setCartRemoveData] = useState("");
   const [wishListRemoveData, setWishListRemoveData] = useState("");
   const [newProData, setNewProData] = useState(ProductApiData2);
-  const [priceDataApi,setpriceDataApi] = useState([]);
+  const [priceDataApi,setpriceDataApi] = useRecoilState(priceData);
   const [currencySym,setCurrencySym] = useState();
 
   const setCartCount = useSetRecoilState(CartListCounts)
@@ -141,7 +140,7 @@ const ProductList = () => {
                     pda.D === loginUserDetail?.cmboMetalType
             );
 
-            const newPriceData1 = priceDataApi.rd1?.find(
+            const newPriceData1 = priceDataApi?.rd1?.find(
                 (pda) =>
                     pda.A === product.autocode &&
                     pda.B === product.designno &&
@@ -149,26 +148,33 @@ const ProductList = () => {
                     pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
             );
 
-            console.log("newPriceData1",newPriceData1);
-
-            const newPriceData2 = priceDataApi.rd2?.find(
+            
+            const newPriceData2 = priceDataApi?.rd2?.find(
                 (pda) =>
                     pda.A === product.autocode &&
-                    pda.B === product.designno &&
-                    pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0] &&
-                    pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1]
+                    pda.B === product.designno 
+                    // pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
+                    // pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
             );
 
+            // console.log("newPriceData2",priceDataApi?.rd2?.find((te)=> te?.H !== "mix" && te?.H !== "MOTI" && te?.H !== "BEADS"));
+            // console.log("newPriceData2",newPriceData2);
 
             let price="Not Available";
             let isLoading = true;
             let markup = 0;
+            let metalrd=0;
+            let diard1=0;
+            let csrd2=0;
 
             // console.log("newPriceData",newPriceData)
 
             if (newPriceData || newPriceData1 || newPriceData2) {
                 price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
-                markup = newPriceData.AB
+                metalrd = newPriceData?.Z
+                diard1 = newPriceData1?.S
+                csrd2 = newPriceData2?.S ?? 0
+                markup = newPriceData?.AB
                 isLoading = false;
             }
             else{
@@ -176,14 +182,12 @@ const ProductList = () => {
                 isLoading = false;
             }
 
-          
 
-            return { ...product, price ,isLoading ,markup };
+            return { ...product, price ,isLoading , markup, metalrd, diard1, csrd2};
         }));
 
         localStorage.setItem("allproductlist", JSON.stringify(updatedData));
         setProductApiData2(updatedData);
-        console.log("END");
     };
 
     fetchData();
@@ -494,7 +498,6 @@ const ProductList = () => {
   //     localStorage.setItem("allproductlist",JSON?.stringify(product))
   //     setProductApiData2(product)
 
-  console.log("wishData",WishData);
 
   useEffect(()=>{
 
@@ -513,8 +516,6 @@ const ProductList = () => {
 
    })
 
-   
-     console.log("logWishCheck");
 
      localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
      setProductApiData2(newWishCheckData)
@@ -1047,9 +1048,6 @@ const ProductList = () => {
 
 
     if (getHeaderData2?.label2 === "brand") {
-      // console.log('getHeaderData2?.value1', getHeaderData2?.value1);
-      // console.log('getHeaderData2?.value2', getHeaderData2?.value2);
-      // console.log('brandbrandbrandbrandbrand', newProData);
 
       let data = productData.filter((pd) => pd && pd.BrandName === getHeaderData2?.value2)
 
@@ -1239,7 +1237,6 @@ const ProductList = () => {
                   }
     
     await CommonAPI(body).then((res) => {
-        // console.log("uncommon",res)
         setpriceDataApi(res?.Data)
     })
 
