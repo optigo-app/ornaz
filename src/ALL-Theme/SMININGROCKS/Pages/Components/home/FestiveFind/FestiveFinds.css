@@ -1,9 +1,11 @@
 .FestiveMainImage {
     position: relative;
 }
-.FestiveBannerImage{
+
+.FestiveBannerImage {
     width: 100%;
 }
+
 .festiveBox {
     position: absolute;
     top: 50%;
@@ -31,35 +33,43 @@
 
 @media screen and (max-width: 1024px) {
     .FestiveMainImage {
-        display: flex!important;
-        flex-direction: column!important;
+        display: flex !important;
+        flex-direction: column !important;
     }
+
     .festiveBox {
-        position: static!important;
+        position: static !important;
         background-color: #c0bbb1;
         top: 0;
         left: 0;
-        transform: translate(0%, 0%)!important;
+        transform: translate(0%, 0%) !important;
         text-align: center;
     }
 
-    .smilingFestiMainTitle1{
-        font-size: 12px!important;
+    .smilingFestiMainTitle1 {
+        font-size: 12px !important;
         font-weight: 500;
         margin: 0px;
+        color: white !important;
     }
 
-    .festiveBox{
-        padding-top: 35px!important;
+    .festiveBox {
+        padding-top: 35px !important;
     }
 
-    .smilingFestiMainTitle2{
-        font-size: 30px!important;
+    .smilingFestiMainTitle2 {
+        font-size: 30px !important;
+        color: white !important;
+        
     }
 
-    .DiscoverBtn{
-        width: 200px!important;
-        height: 50px!important;
+    .smilingFestiMainTitle3 {
+        color: white !important;
+    }
+
+    .DiscoverBtn {
+        width: 200px !important;
+        height: 50px !important;
         color: white;
         background-color: gray;
         font-weight: 500;

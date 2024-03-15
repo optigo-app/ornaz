@@ -4,7 +4,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, CircularProgress, IconButton, InputAdornment, Tab, Tabs, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
-
+import './ChangePassword.css'
 
 export default function ChangePassword() {
 
