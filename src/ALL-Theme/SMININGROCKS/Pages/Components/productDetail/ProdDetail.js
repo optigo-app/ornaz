@@ -51,11 +51,30 @@ const ProdDetail = () => {
     setImgLoading(false)
   }
 
-  // useEffect(()=>{
-  //   console.log("customizeOpt",{sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt})
-  // },[sizeOption,mCOption,diaQColOpt,mtTypeOption,cSQopt])
+  useEffect(()=>{
+ 
+    let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
+    let ColorStoneQualityColor = JSON.parse(localStorage.getItem("ColorStoneQualityColor"))
+    setmtTypeOption(loginInfo?.cmboMetalType)
 
+    let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0].toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1].toUpperCase()}`
+    setDiaQColOpt(qualityColor)
 
+    let csQualColor = `${loginInfo?.cmboCSQualityColor.split("#@#")[0].toUpperCase()}-${loginInfo?.cmboCSQualityColor.split("#@#")[1].toUpperCase()}`
+
+      let dqcc=  ColorStoneQualityColor.find((dqc) => `${dqc.Quality}-${dqc.color}` === csQualColor)
+
+      if(dqcc){
+        setCSQOpt(csQualColor)
+      }else{
+        let ref = `${ColorStoneQualityColor[0].Quality}-${ColorStoneQualityColor[0].color}`
+        setCSQOpt(ref)
+      }
+
+  },[])
+  
+  console.log("xyzzzzz",cSQopt);
+  
   const handelLocalStorage = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
     setProductData(localProductData)
@@ -65,12 +84,10 @@ const ProdDetail = () => {
     getSizeData(localProductData.autocode);
   }
 
-
   useEffect(() => {
     handelLocalStorage();
   }, [])
   
-
   const getColorImagesData = (autoCode) => {
     console.log('productDataproductDataproductData', productData);
     console.log('autoCode', autoCode);
@@ -109,15 +126,11 @@ const ProdDetail = () => {
     }
   };
 
-
-
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
   useEffect(() => {
-
 
     const storedDataAll = localStorage.getItem('storeInit');
     const data = JSON.parse(storedDataAll);
@@ -753,18 +766,6 @@ const ProdDetail = () => {
     // prod["checkFlag"] = event.target.checked
   }
 
-
-
-
-
-  // const handelWishList = (e) =>{
-
-  //   productData.wishCheck = e.target.checked;
-  //   setWishListFlag(e.target.checked)
-  //   localStorage.setItem("srProductsData",JSON.stringify(productData))
-
-  // }
-
   const handelSize = (data) =>{
     console.log("e.target.value",data);
     localStorage.setItem("sizeData",JSON.stringify(data))
@@ -1027,7 +1028,7 @@ const ProdDetail = () => {
                         onChange={handleColorSelection}
                       >
                         {metalColorData.map((colorItem) => (
-                          <option key={colorItem.ColorId} value={colorItem.metalcolorname} >
+                          <option key={colorItem.ColorId} value={colorItem.metalcolorname}>
                             {colorItem.metalcolorname}
                           </option>
                         ))}
@@ -1056,11 +1057,11 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
-
+                      defaultValue={diaQColOpt}
                       onChange={(e) => setDiaQColOpt(e.target.value)}
                     >
-                      {colorData.map((colorItem) => (
-                        <option key={colorItem.ColorId} value={colorItem.color} >
+                      {colorData?.map((colorItem) => (
+                        <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
                           {`${colorItem.Quality}_${colorItem.color}`}
                         </option>
                       ))}
@@ -1092,6 +1093,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
+                      defaultValue={mtTypeOption}
                       onChange={(e) => setmtTypeOption(e.target.value)}
                     >
                       {metalType.map((data, index) => (
@@ -1121,9 +1123,10 @@ const ProdDetail = () => {
                       fontSize: "12.5px",
                     }}
                     onChange={(e) => setCSQOpt(e.target.value)}
+                    defaultValue={cSQopt}
                   >
                     {DaimondQualityColor.map((data, index) => (
-                      <option key={index} value={data.color} >
+                      <option key={index} value={`${data.Quality}-${data.color}`} >
                         {`${data.Quality}-${data.color}`}
                       </option>
                     ))}

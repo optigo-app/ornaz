@@ -134,7 +134,7 @@ const ProductList = () => {
                     pda.D === loginUserDetail?.cmboMetalType
             );
 
-            const newPriceData1 = priceDataApi.rd1?.find(
+            const newPriceData1 = priceDataApi?.rd1?.find(
                 (pda) =>
                     pda.A === product.autocode &&
                     pda.B === product.designno &&
@@ -142,8 +142,7 @@ const ProductList = () => {
                     pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
             );
 
-            console.log("newPriceData1",newPriceData1);
-
+            
             const newPriceData2 = priceDataApi.rd2?.find(
                 (pda) =>
                     pda.A === product.autocode &&
