@@ -251,9 +251,15 @@
 .smiling-cartBoxMain {
     border: 1px solid lightgray;
     border-radius: 10px;
-    margin: 10px;
+    margin-block: 10px;
 }
 
+.smiling-cartBoxMainImageView {
+    border: 1px solid lightgray;
+    /* border-radius: 10px; */
+    margin: 10px;
+    width: fit-content;
+}
 .smiling-cartBoxImg {
     width: 80%;
     margin: 10px;
@@ -724,6 +730,7 @@
 
 }
 
+
 @media screen and (max-width: 850px) {
 
     .cartDrawerMainMobile .MuiDrawer-paper.MuiDrawer-paperAnchorRight {
@@ -787,3 +794,37 @@
 
 
 }
+
+.smilingCartTabMain .MuiTabs-scroller {
+    display: flex;
+    justify-content: center;
+}
+
+.smilingCartTabMain .css-1wf8b0h-MuiTabs-flexContainer{
+    width: 80%;
+    background-color: #e1e1e1c2;
+    border-radius: 10px!important;
+}
+
+.smilingCartTabMain .MuiTabs-indicator {
+    background: unset;
+}
+
+.smilingCartTab1Main {
+    width: 50%;
+}
+
+.smilingCartTab2Main {
+    width: 50%;
+}
+
+.smilingCartTabMain .MuiTab-textColorPrimary.Mui-selected {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+}
+
+.smilingCartTab1Main .MuiButtonBase-root .MuiTab-root .MuiTab-textColorPrimary .Mui-selected {
+    width: 100%;
+}
+
