@@ -193,15 +193,6 @@ const ProductList = () => {
     fetchData();
 }, [priceDataApi]);
 
-
-
-
-
-
-
-
-
-
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
   };
@@ -451,9 +442,6 @@ const ProductList = () => {
 
   // removefromCart()
 
-
- 
-
   // ProductApiData2?.map((product) => {
   //     console.log("product",product);
 
@@ -498,12 +486,13 @@ const ProductList = () => {
   //     localStorage.setItem("allproductlist",JSON?.stringify(product))
   //     setProductApiData2(product)
 
+  console.log("wishData",WishData);
 
   useEffect(()=>{
 
-    let newWishCheckData = ProductApiData2.map((pd)=>{
+    const newWishCheckData = ProductApiData2?.map((pd)=>{
 
-      let newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+      const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
 
       let wishCheck = false
       if (newWish) {
@@ -516,11 +505,13 @@ const ProductList = () => {
 
    })
 
-
-     localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
-     setProductApiData2(newWishCheckData)
+    console.log("newWishCheckData",newWishCheckData)
+    if(newWishCheckData){
+      debugger
+      localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
+      setProductApiData2(newWishCheckData)
+    }
    
-
   },[WishData])
 
   useEffect(()=>{
@@ -551,21 +542,21 @@ const ProductList = () => {
   },[cartData])
 
 
-  updateProductsWithMetalColorName()?.forEach((prods) => {
-    let fullTitle =
-      prods.CollectionName +
-      " " +
-      prods.totaldiamondweight +
-      " " +
-      prods.diamondquality +
-      " " +
-      "Diamond" +
-      " " +
-      prods.CategoryName +
-      " " +
-      prods.designno;
-    prods.title = fullTitle;
-  });
+  // updateProductsWithMetalColorName()?.forEach((prods) => {
+  //   let fullTitle =
+  //     prods.CollectionName +
+  //     " " +
+  //     prods.totaldiamondweight +
+  //     " " +
+  //     prods.diamondquality +
+  //     " " +
+  //     "Diamond" +
+  //     " " +
+  //     prods.CategoryName +
+  //     " " +
+  //     prods.designno;
+  //   prods.title = fullTitle;
+  // });
 
   const handelProductSubmit = (product) => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
@@ -630,11 +621,7 @@ const ProductList = () => {
     return { type: ele[1].type, value: ele[1].value }
   })
 
-
   const filteredProducts = sepeTypeVal.map((st) => (newProData.length ? newProData : productData).filter((pd) => pd[st.type] === st.value)).reverse()
-
-
-
 
   const mergedArray = [...filteredProducts].reduce((acc, curr) => acc.concat(curr), []);
   const finalDataOfDisplaying = () => {
@@ -929,8 +916,8 @@ const ProductList = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": `${product?.price}`,
-          "UnitCostWithmarkup": (`${(product?.price ?? 0) + (product?.markup ?? 0)}`),
+          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
+          "UnitCostWithmarkup": (`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
           "diamondcolorname": `${product?.diamondcolorname}`,
