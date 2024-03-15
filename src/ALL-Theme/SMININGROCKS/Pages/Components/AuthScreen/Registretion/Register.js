@@ -56,21 +56,17 @@ export default function Register() {
     if (fieldName === 'firstName') {
       if (!value.trim()) {
         setErrors(prevErrors => ({ ...prevErrors, firstName: 'First Name is required' }));
-      }
-      else if (!/^(?![^a-zA-Z])[-a-zA-Z0-9\s@#$&]+$/.test(value)) {
-        setErrors(prevErrors => ({ ...prevErrors, firstName: 'Please enter a valid name. Names cannot start with special characters, or numbers' }));
-      }
-      else {
+      } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(value)) {
+        setErrors(prevErrors => ({ ...prevErrors, firstName: 'First Name should not start with a numeric, special character, or space' }));
+      } else {
         setErrors(prevErrors => ({ ...prevErrors, firstName: '' }));
       }
     } else if (fieldName === 'lastName') {
       if (!value.trim()) {
         setErrors(prevErrors => ({ ...prevErrors, lastName: 'Last Name is required' }));
-      }
-      else if (!/^(?![^a-zA-Z])[-a-zA-Z0-9\s@#$&]+$/.test(value)) {
-        setErrors(prevErrors => ({ ...prevErrors, lastName: 'Please enter a valid name. Names cannot start with special characters, or numbers' }));
-      }
-      else {
+      } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(value)) {
+        setErrors(prevErrors => ({ ...prevErrors, lastName: 'Last Name should not start with a numeric, special character, or space' }));
+      } else {
         setErrors(prevErrors => ({ ...prevErrors, lastName: '' }));
       }
     } else if (fieldName === 'mobileNo') {
@@ -123,15 +119,20 @@ export default function Register() {
   };
 
   const validatePassword = (value) => {
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[^\w\d\s]).{8,}$/;
     return passwordRegex.test(value);
   };
-
+  
   const handlePasswordChange = (event) => {
     const { value } = event.target;
     setPassword(value);
-    if (!validatePassword(value)) {
-      setPasswordError('Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, and one number.');
+    if (!value.trim()) {
+      setPasswordError('Password is required')
+    }else if (!validatePassword(value)) {
+      setPasswordError('Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character!');
+    } else if (value === confirmPassword) {
+      setErrors(prevErrors => ({ ...prevErrors, confirmPassword: '' }));
+      setPasswordError('');
     } else {
       setPasswordError('');
     }
@@ -141,13 +142,20 @@ export default function Register() {
     const errors = {};
     if (!firstName.trim()) {
       errors.firstName = 'First Name is required';
+    } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(firstName)) {
+      errors.firstName = 'First Name should not start with a numeric, special character, or space';
     }
     if (!lastName.trim()) {
       errors.lastName = 'Last Name is required';
+    } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(lastName)) {
+      errors.lastName = 'Last Name should not start with a numeric, special character, or space';
     }
     if (!mobileNo.trim()) {
       errors.mobileNo = 'Mobile No. is required';
-    }
+    } else if (!/^\d{10}$/.test(mobileNo.trim())) {
+      errors.mobileNo =  'Enter Valid mobile number';
+    } 
+    
     if (!email.trim()) {
       errors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -156,13 +164,16 @@ export default function Register() {
     if (!password.trim()) {
       setPasswordError('Password is required');
       errors.password = 'Password is required';
-    }
+    }else if (!validatePassword(password)) {
+      errors.password =  'Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character!';
+    } 
+
     if (!confirmPassword.trim()) {
       errors.confirmPassword = 'Confirm Password is required';
     } else if (confirmPassword !== password) {
       errors.confirmPassword = 'Passwords do not match';
     }
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(errors).length === 0 && passwordError.length === 0) {
       const hashedPassword = hashPasswordSHA1(password);
       setIsLoading(true);
       try {
@@ -184,7 +195,11 @@ export default function Register() {
           localStorage.setItem('registerEmail', email)
           navigation('/');
         } else {
-          alert(response.Data.rd[0].stat_msg);
+          const storedEmail = location.state?.email;;
+          const routeMobileNo = location.state?.mobileNo;
+          if (storedEmail) errors.email = response.Data.rd[0].stat_msg;
+          if (routeMobileNo) errors.mobileNo = response.Data.rd[0].stat_msg;
+          setErrors(errors);
         }
       } catch (error) {
         console.error('Error:', error);

@@ -661,8 +661,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                         </div>
                                     </div>
                                     <div style={{display: 'flex' ,justifyContent: 'flex-end'}}>
-                                        <p style={{marginRight: '50px'}}>Price : {item.UnitCost} </p>
-                                        {/* <p style={{marginRight: '50px'}}>Price : {item.UnitCost === 0 ? "Not Available" : item.UnitCost} </p> */}
+                                        <p style={{marginRight: '50px'}}>Price : {item.UnitCost === 0 ? "Not Available" : item.UnitCost} </p>
                                     </div>
                                     <div className='similingCartBotttomMain'>
                                         <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center', }}>

@@ -10,6 +10,7 @@ import { useSetRecoilState } from 'recoil';
 import { loginState, productDataNew } from '../../../../../../Recoil/atom';
 import { productListApiCall } from '../../../../Utils/API/ProductListAPI';
 import { ToastContainer, toast } from 'react-toastify';
+import './LoginWithEmail.css'
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');

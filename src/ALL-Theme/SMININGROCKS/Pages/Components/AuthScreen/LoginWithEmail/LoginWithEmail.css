@@ -1,0 +1,3 @@
+#outlined-confirm-password-input::-ms-reveal {
+    display: none !important;
+}
