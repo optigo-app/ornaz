@@ -16,10 +16,9 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew, searchData } from "../../../../../Recoil/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
-import memoizeOne from 'memoize-one';
 
 
 
@@ -48,7 +47,7 @@ const ProductList = () => {
   const [cartRemoveData, setCartRemoveData] = useState("");
   const [wishListRemoveData, setWishListRemoveData] = useState("");
   const [newProData, setNewProData] = useState(ProductApiData2);
-  const [priceDataApi,setpriceDataApi] = useState([]);
+  const [priceDataApi,setpriceDataApi] = useRecoilState(priceData);
   const [currencySym,setCurrencySym] = useState();
 
   const setCartCount = useSetRecoilState(CartListCounts)
@@ -141,7 +140,7 @@ const ProductList = () => {
                     pda.D === loginUserDetail?.cmboMetalType
             );
 
-            const newPriceData1 = priceDataApi.rd1?.find(
+            const newPriceData1 = priceDataApi?.rd1?.find(
                 (pda) =>
                     pda.A === product.autocode &&
                     pda.B === product.designno &&
@@ -149,26 +148,33 @@ const ProductList = () => {
                     pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
             );
 
-            console.log("newPriceData1",newPriceData1);
-
-            const newPriceData2 = priceDataApi.rd2?.find(
+            
+            const newPriceData2 = priceDataApi?.rd2?.find(
                 (pda) =>
                     pda.A === product.autocode &&
-                    pda.B === product.designno &&
-                    pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0] &&
-                    pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1]
+                    pda.B === product.designno 
+                    // pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
+                    // pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
             );
 
+            // console.log("newPriceData2",priceDataApi?.rd2?.find((te)=> te?.H !== "mix" && te?.H !== "MOTI" && te?.H !== "BEADS"));
+            // console.log("newPriceData2",newPriceData2);
 
             let price="Not Available";
             let isLoading = true;
             let markup = 0;
+            let metalrd=0;
+            let diard1=0;
+            let csrd2=0;
 
             // console.log("newPriceData",newPriceData)
 
             if (newPriceData || newPriceData1 || newPriceData2) {
                 price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
-                markup = newPriceData.AB
+                metalrd = newPriceData?.Z
+                diard1 = newPriceData1?.S
+                csrd2 = newPriceData2?.S ?? 0
+                markup = newPriceData?.AB
                 isLoading = false;
             }
             else{
@@ -176,27 +182,16 @@ const ProductList = () => {
                 isLoading = false;
             }
 
-          
 
-            return { ...product, price ,isLoading ,markup };
+            return { ...product, price ,isLoading , markup, metalrd, diard1, csrd2};
         }));
 
         localStorage.setItem("allproductlist", JSON.stringify(updatedData));
         setProductApiData2(updatedData);
-        console.log("END");
     };
 
     fetchData();
 }, [priceDataApi]);
-
-
-
-
-
-
-
-
-
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
@@ -447,9 +442,6 @@ const ProductList = () => {
 
   // removefromCart()
 
-
- 
-
   // ProductApiData2?.map((product) => {
   //     console.log("product",product);
 
@@ -498,9 +490,9 @@ const ProductList = () => {
 
   useEffect(()=>{
 
-    let newWishCheckData = ProductApiData2.map((pd)=>{
+    const newWishCheckData = ProductApiData2?.map((pd)=>{
 
-      let newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+      const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
 
       let wishCheck = false
       if (newWish) {
@@ -513,13 +505,13 @@ const ProductList = () => {
 
    })
 
+    console.log("newWishCheckData",newWishCheckData)
+    if(newWishCheckData){
+      debugger
+      localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
+      setProductApiData2(newWishCheckData)
+    }
    
-     console.log("logWishCheck");
-
-     localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
-     setProductApiData2(newWishCheckData)
-   
-
   },[WishData])
 
   useEffect(()=>{
@@ -550,21 +542,21 @@ const ProductList = () => {
   },[cartData])
 
 
-  updateProductsWithMetalColorName()?.forEach((prods) => {
-    let fullTitle =
-      prods.CollectionName +
-      " " +
-      prods.totaldiamondweight +
-      " " +
-      prods.diamondquality +
-      " " +
-      "Diamond" +
-      " " +
-      prods.CategoryName +
-      " " +
-      prods.designno;
-    prods.title = fullTitle;
-  });
+  // updateProductsWithMetalColorName()?.forEach((prods) => {
+  //   let fullTitle =
+  //     prods.CollectionName +
+  //     " " +
+  //     prods.totaldiamondweight +
+  //     " " +
+  //     prods.diamondquality +
+  //     " " +
+  //     "Diamond" +
+  //     " " +
+  //     prods.CategoryName +
+  //     " " +
+  //     prods.designno;
+  //   prods.title = fullTitle;
+  // });
 
   const handelProductSubmit = (product) => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
@@ -629,11 +621,7 @@ const ProductList = () => {
     return { type: ele[1].type, value: ele[1].value }
   })
 
-
   const filteredProducts = sepeTypeVal.map((st) => (newProData.length ? newProData : productData).filter((pd) => pd[st.type] === st.value)).reverse()
-
-
-
 
   const mergedArray = [...filteredProducts].reduce((acc, curr) => acc.concat(curr), []);
   const finalDataOfDisplaying = () => {
@@ -928,8 +916,8 @@ const ProductList = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": `${product?.price}`,
-          "UnitCostWithmarkup": (`${(product?.price ?? 0) + (product?.markup ?? 0)}`),
+          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
+          "UnitCostWithmarkup": (`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
           "diamondcolorname": `${product?.diamondcolorname}`,
@@ -1047,9 +1035,6 @@ const ProductList = () => {
 
 
     if (getHeaderData2?.label2 === "brand") {
-      // console.log('getHeaderData2?.value1', getHeaderData2?.value1);
-      // console.log('getHeaderData2?.value2', getHeaderData2?.value2);
-      // console.log('brandbrandbrandbrandbrand', newProData);
 
       let data = productData.filter((pd) => pd && pd.BrandName === getHeaderData2?.value2)
 
@@ -1239,7 +1224,6 @@ const ProductList = () => {
                   }
     
     await CommonAPI(body).then((res) => {
-        // console.log("uncommon",res)
         setpriceDataApi(res?.Data)
     })
 
