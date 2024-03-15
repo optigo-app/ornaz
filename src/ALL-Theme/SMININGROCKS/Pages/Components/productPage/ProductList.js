@@ -17,7 +17,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 import memoizeOne from 'memoize-one';
 
@@ -69,6 +69,13 @@ const ProductList = () => {
   const location = useLocation();
 
   const getPdData = useRecoilValue(productDataNew)
+  const getSearchData = useRecoilValue(searchData)
+
+  console.log('getEarch.',getSearchData);
+
+  useEffect(() =>{
+    setNewProData(getSearchData)
+  },[getSearchData])
 
 
   // useEffect(()=>{
@@ -142,6 +149,8 @@ const ProductList = () => {
                     pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
             );
 
+            console.log("newPriceData1",newPriceData1);
+
             const newPriceData2 = priceDataApi.rd2?.find(
                 (pda) =>
                     pda.A === product.autocode &&
@@ -153,9 +162,13 @@ const ProductList = () => {
 
             let price="Not Available";
             let isLoading = true;
+            let markup = 0;
+
+            // console.log("newPriceData",newPriceData)
 
             if (newPriceData || newPriceData1 || newPriceData2) {
                 price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
+                markup = newPriceData.AB
                 isLoading = false;
             }
             else{
@@ -165,7 +178,7 @@ const ProductList = () => {
 
           
 
-            return { ...product, price ,isLoading };
+            return { ...product, price ,isLoading ,markup };
         }));
 
         localStorage.setItem("allproductlist", JSON.stringify(updatedData));
@@ -273,9 +286,6 @@ const ProductList = () => {
 
 
 
-
-
-
   function updateProductsWithMetalColorName() {
     productData?.forEach((product) => {
       const metalColor = filterData?.MetalColorList?.find(
@@ -355,7 +365,7 @@ const ProductList = () => {
 
     // let pdata;
 
-    productData.forEach((pd) => {
+    ProductApiData2.forEach((pd) => {
       const pdata = cartData?.find((cd) => pd.designno === cd.DesignNo)
 
 
@@ -369,15 +379,15 @@ const ProductList = () => {
     })
 
 
-    return productData
+    return ProductApiData2
 
-  }, [productData, cartData])
+  }, [ProductApiData2, cartData])
 
-  diffCartData()
+  // diffCartData()
 
   const diffWishData = useCallback(() => {
 
-    productData.forEach((pd) => {
+    ProductApiData2.forEach((pd) => {
       const pdata = WishData.find((cd) => pd.designno === cd.DesignNo)
 
 
@@ -389,16 +399,15 @@ const ProductList = () => {
       }
     })
 
+    return ProductApiData2
 
-    return productData
-
-  }, [productData, WishData])
+  }, [ProductApiData2, WishData])
 
 
-  diffWishData()
+  // diffWishData()
 
   const removefromCart = () => {
-    productData.map((pd) => {
+    ProductApiData2.map((pd) => {
 
 
       if (cartRemoveData && pd.designno === cartRemoveData) {
@@ -412,7 +421,7 @@ const ProductList = () => {
     })
 
 
-    return productData
+    return ProductApiData2
     // // console.log("prodddd",product);
     // let prodD;
     // productData.forEach((pd)=>{
@@ -436,7 +445,7 @@ const ProductList = () => {
     // return productData
   }
 
-  removefromCart()
+  // removefromCart()
 
 
  
@@ -484,6 +493,61 @@ const ProductList = () => {
 
   //     localStorage.setItem("allproductlist",JSON?.stringify(product))
   //     setProductApiData2(product)
+
+  console.log("wishData",WishData);
+
+  useEffect(()=>{
+
+    let newWishCheckData = ProductApiData2.map((pd)=>{
+
+      let newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+
+      let wishCheck = false
+      if (newWish) {
+       wishCheck = true
+     }else{
+      wishCheck = false
+     }
+
+     return {...pd,wishCheck}
+
+   })
+
+   
+     console.log("logWishCheck");
+
+     localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
+     setProductApiData2(newWishCheckData)
+   
+
+  },[WishData])
+
+  useEffect(()=>{
+
+    let newCartCheckData = ProductApiData2.map((pd)=>{
+
+      let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+
+      let checkFlag = false
+      if (newWish) {
+        checkFlag = true
+     }else{
+      checkFlag = false
+     }
+
+     if(pd.wishCheck === true){
+      pd.wishCheck = false;
+     }
+
+     return {...pd,checkFlag}
+
+   })
+
+     localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+     setProductApiData2(newCartCheckData)
+
+
+  },[cartData])
 
 
   updateProductsWithMetalColorName()?.forEach((prods) => {
@@ -600,8 +664,18 @@ const ProductList = () => {
 
     await CommonAPI(body).then((res) => {
       if (res?.Message === "Success") {
+
+        // let wish = res?.Data?.rd1
+
         setCartData(res?.Data?.rd)
         setWishData(res?.Data?.rd1)
+
+        // if(wish && wish?.length){
+
+        
+
+      // }
+
       }
     })
 
@@ -659,10 +733,10 @@ const ProductList = () => {
           "Grossweight": Number(`${product?.Grossweight}`),
           "InReadyStockCnt": Number(`${product?.InReadyStockCnt}`),
           "IsBestSeller": Number(`${product?.IsBestSeller}`),
-          "IsColorWiseImageExists": `${product?.IsColorWiseImageExists}`,
+          "IsColorWiseImageExists": `${product?.ColorWiseRollOverImageName ?? ""}`,
           "IsInReadyStock": Number(`${product?.IsInReadyStock}`),
           "IsNewArrival": `${product?.IsNewArrival}`,
-          "IsRollOverColorWiseImageExists": `${product?.IsRollOverColorWiseImageExists}`,
+          "IsRollOverColorWiseImageExists": `${product?.IsRollOverColorWiseImageExists ?? ""}`,
           "IsTrending": Number(`${product?.IsTrending}`),
           "MasterManagement_labid": Number(`${product?.MasterManagement_labid}`),
           "MasterManagement_labname": "",
@@ -683,8 +757,8 @@ const ProductList = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": Number(`${product?.UnitCost}`),
-          "UnitCostWithmarkup": Number(`${product?.UnitCostWithmarkup}`),
+          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
+          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
           "autocode": `${product?.autocode}`,
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
@@ -695,20 +769,20 @@ const ProductList = () => {
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
-          "encrypted_designno": `${product?.encrypted_designno}`,
-          "hashtagid": `${product?.hashtagid}`,
-          "hashtagname": `${product?.hashtagname}`,
+          "encrypted_designno": `${product?.encrypted_designno ?? ""}`,
+          "hashtagid": `${product?.Hashtagid ?? ""}`,
+          "hashtagname": `${product?.Hashtagname ?? ""}`,
           "imagepath": `${product?.imagepath}`,
           "imgrandomno": `${product?.imgrandomno}`,
-          "mediumimage": `${product?.mediumimage ?? ""}`,
-          "originalimage": `${product?.originalimage}`,
-          "storyline_html": `${product?.storyline_html}`,
-          "storyline_video": `${product?.storyline_video}`,
-          "thumbimage": `${product?.thumbimage}`,
+          "mediumimage": `${product?.MediumImagePath ?? ""}`,
+          "originalimage": `${product?.OriginalImagePath}`,
+          "storyline_html": `${product?.storyline_html ?? ""}`,
+          "storyline_video": `${product?.storyline_video ?? ""}`,
+          "thumbimage": `${product?.ThumbImagePath}`,
           "totaladditionalvalueweight": 0,
           "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
-          "updatedate": `${product?.updatedate}`,
+          "updatedate": `${product?.UpdateDate}`,
           "videoname": `${product?.videoname ?? ""}`,
           "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
@@ -773,9 +847,6 @@ const ProductList = () => {
         })
 
       }
-
-
-
     }
     catch (error) {
       console.log("error", error);
@@ -836,7 +907,7 @@ const ProductList = () => {
           "IsColorWiseImageExists": `${product?.IsColorWiseImageExists ?? 0}`,
           "IsInReadyStock": Number(`${product?.IsInReadyStock}`),
           "IsNewArrival": `${product?.IsNewArrival}`,
-          "IsRollOverColorWiseImageExists": `${product?.IsRollOverColorWiseImageExists}`,
+          "IsRollOverColorWiseImageExists": `${product?.IsRollOverColorWiseImageExists ?? ""}`,
           "IsTrending": Number(`${product?.IsTrending}`),
           "MasterManagement_labid": Number(`${product?.MasterManagement_labid}`),
           "MasterManagement_labname": "",
@@ -857,8 +928,8 @@ const ProductList = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": Number(`${product?.UnitCost}`),
-          "UnitCostWithmarkup": Number(`${product?.UnitCostWithmarkup}`),
+          "UnitCost": `${product?.price}`,
+          "UnitCostWithmarkup": (`${(product?.price ?? 0) + (product?.markup ?? 0)}`),
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
           "diamondcolorname": `${product?.diamondcolorname}`,
@@ -867,19 +938,19 @@ const ProductList = () => {
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
-          "encrypted_designno": `${product?.encrypted_designno}`,
-          "hashtagid": `${product?.hashtagid}`,
-          "hashtagname": `${product?.hashtagname}`,
+          "encrypted_designno": `${product?.encrypted_designno ?? ""}`,
+          "hashtagid": `${product?.Hashtagid ?? ""}`,
+          "hashtagname": `${product?.Hashtagname ?? ""}`,
           "imagepath": `${product?.imagepath}`,
-          "mediumimage": `${product?.mediumimage ?? ""}`,
-          "originalimage": `${product?.originalimage}`,
-          "storyline_html": `${product?.storyline_html}`,
-          "storyline_video": `${product?.storyline_video}`,
-          "thumbimage": `${product?.thumbimage}`,
+          "mediumimage": `${product?.MediumImagePath ?? ""}`,
+          "originalimage": `${product?.OriginalImagePath}`,
+          "storyline_html": `${product?.storyline_html ?? ""}`,
+          "storyline_video": `${product?.storyline_video ?? ""}`,
+          "thumbimage": `${product?.ThumbImagePath}`,
           "totaladditionalvalueweight": Number(`${product?.totaladditionalvalueweight}`),
           "totalcolorstoneweight": Number(`${product?.totalcolorstoneweight}`),
           "totaldiamondweight": Number(`${product?.totaldiamondweight}`),
-          "updatedate": `${product?.updatedate}`,
+          "updatedate": `${product?.UpdateDate}`,
           "videoname": `${product?.videoname ?? ""}`,
           "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
@@ -921,8 +992,7 @@ const ProductList = () => {
           }
         })
 
-        // let isWishHasCartData = WishData?.filter((wd)=> wd.autocode === prod.autocode)
-        //  console.log("isWishHasCartData",isWishHasCartData)
+       
 
       }
       else {
@@ -1170,7 +1240,7 @@ const ProductList = () => {
     
     await CommonAPI(body).then((res) => {
         // console.log("uncommon",res)
-        setpriceDataApi(res.Data)
+        setpriceDataApi(res?.Data)
     })
 
   }
@@ -1743,7 +1813,7 @@ const ProductList = () => {
                       <div>
                         <p style={{ fontSize: "12px" }}>
                         
-                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' :products?.price}
+                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price + (products?.markup === 0 ? "" : products?.markup))}
                         </p>
                       </div>
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>

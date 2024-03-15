@@ -56,17 +56,21 @@ export default function Register() {
     if (fieldName === 'firstName') {
       if (!value.trim()) {
         setErrors(prevErrors => ({ ...prevErrors, firstName: 'First Name is required' }));
-      } else if (!/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)$/.test(value)) {
-        setErrors(prevErrors => ({ ...prevErrors, firstName: 'Invalid First Name' }));
-      } else {
+      }
+      else if (!/^(?![^a-zA-Z])[-a-zA-Z0-9\s@#$&]+$/.test(value)) {
+        setErrors(prevErrors => ({ ...prevErrors, firstName: 'Please enter a valid name. Names cannot start with special characters, or numbers' }));
+      }
+      else {
         setErrors(prevErrors => ({ ...prevErrors, firstName: '' }));
       }
     } else if (fieldName === 'lastName') {
       if (!value.trim()) {
         setErrors(prevErrors => ({ ...prevErrors, lastName: 'Last Name is required' }));
-      } else if (!/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)$/.test(value)) {
-        setErrors(prevErrors => ({ ...prevErrors, lastName: 'Invalid Last Name' }));
-      } else {
+      }
+      else if (!/^(?![^a-zA-Z])[-a-zA-Z0-9\s@#$&]+$/.test(value)) {
+        setErrors(prevErrors => ({ ...prevErrors, lastName: 'Please enter a valid name. Names cannot start with special characters, or numbers' }));
+      }
+      else {
         setErrors(prevErrors => ({ ...prevErrors, lastName: '' }));
       }
     } else if (fieldName === 'mobileNo') {
@@ -134,7 +138,6 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     const errors = {};
     if (!firstName.trim()) {
       errors.firstName = 'First Name is required';

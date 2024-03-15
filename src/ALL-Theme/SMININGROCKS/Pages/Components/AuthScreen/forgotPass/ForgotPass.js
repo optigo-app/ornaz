@@ -97,8 +97,10 @@ export default function ForgotPass() {
                 const storeInit = JSON.parse(localStorage.getItem('storeInit'));
                 const { FrontEnd_RegNo } = storeInit;
                 const combinedValue = JSON.stringify({
+                    // userid: 'xoraxor802@fryshare.com', pass: `${hashedPassword}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: '0'
                     userid: `${email}`, pass: `${hashedPassword}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: '0'
                 });
+
                 const encodedCombinedValue = btoa(combinedValue);
                 const body = {
                     "con": `{\"id\":\"\",\"mode\":\"resetpassword\",\"appuserid\":\"${email}\"}`,
@@ -106,10 +108,9 @@ export default function ForgotPass() {
                     "p": encodedCombinedValue
                 }
                 const response = await CommonAPI(body);
-                if (response.Data.rd[0].stat === 1) {
-                    localStorage.setItem('LoginUser', 'true')
-                    alert('Register Sucssessfully');
-                    navigation('/');
+                console.log('ressssssssssssss',response);
+                if (response.Data.rd[0].stat === 1) { 
+                    navigation('/ContinueWithEmail');
                 } else {
                     alert(response.Data.rd[0].stat_msg);
                 }
@@ -159,7 +160,7 @@ export default function ForgotPass() {
                     }} 
                     
                     className='AuthScreenSubTitle'
-                    >Please enter your email, and we will send you a password reset link.</p>
+                    >{}</p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <TextField
@@ -222,7 +223,7 @@ export default function ForgotPass() {
                             }}
                         />
 
-                        <button className='createBtnRegister' onClick={handleSubmit}>Forgot Password</button>
+                        <button className='createBtnRegister' onClick={handleSubmit}>Change Password</button>
                         <p className='cancleForgot'>CANCEL</p>
                     </div>
                     <Footer />
