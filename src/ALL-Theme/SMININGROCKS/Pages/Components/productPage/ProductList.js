@@ -488,13 +488,13 @@ const ProductList = () => {
 
   console.log("wishData",WishData);
 
-  useEffect(()=>{
-
+  let wislilistUpdate = async() =>{
     let newWishCheckData = (ProductApiData2)?.map((pd)=>{
 
       const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
 
       let wishCheck = false
+
       if (newWish) {
        wishCheck = true
      }else{
@@ -505,13 +505,20 @@ const ProductList = () => {
 
    })
 
-    console.log("newWishCheckData",newWishCheckData)
-    if(newWishCheckData){
-      localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
-      setProductApiData2(newWishCheckData)
-    }
+   await localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
+   setProductApiData2(newWishCheckData)
    
+   console.log("newWishCheckData",newWishCheckData)
+  }
+
+  useEffect(()=>{
+
+    wislilistUpdate()
+
   },[WishData])
+
+
+
 
   useEffect(()=>{
 
