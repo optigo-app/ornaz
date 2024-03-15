@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './SearchResult.css'
 import Header from '../home/Header/Header'
 import { useLocation } from 'react-router-dom';
@@ -11,8 +11,19 @@ import ring1hover from './../../assets/linkingLove/ring1hover.jpg'
 export default function SearchResult() {
 
     const [ring3ImageChange, setRing3ImageChange] = useState(false);
-
     const location = useLocation();
+    const [searchedProducts, setSearchedProducts] = useState([]);
+
+    useEffect(() => {
+        const savedProductList = localStorage.getItem('allproductlist');
+        if (savedProductList) {
+            const productList = JSON.parse(savedProductList);
+            // Filter the productList based on designno or ID
+            const searchValue = location.state?.searchText;
+            const filteredProducts = productList.filter(product => product.designno === searchValue || product.id === parseInt(searchValue));
+            setSearchedProducts(filteredProducts);
+        }
+    }, [location.state?.searchText]);
 
 
     const handleMouseEnterRing3 = () => {
@@ -21,12 +32,12 @@ export default function SearchResult() {
     const handleMouseLeaveRing3 = () => {
         setRing3ImageChange(false)
     }
-    
+
 
     return (
         <div style={{
             backgroundColor: '#c0bbb1',
-        paddingTop: '110px'
+            paddingTop: '110px'
 
         }}>
             <p style={{
@@ -37,33 +48,13 @@ export default function SearchResult() {
                 paddingBlock: '30px'
             }}>Search Results for "{location.state?.searchText}"</p>
             <div className='smilingSearchResultMain'>
-                <div className='smilingSearchResultBoxMain'>
-                    <div className='smilingSearchResultBox'>
+                {searchedProducts.map(product => (
+                    <div key={product.id} className='smilingSearchResultBox'>
                         <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
-                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                        <p className='smilingSearchResultBoxring1Desc'>{product.TitleLine}</p>
+                        <p style={{ fontSize: '12px' }}>{product.MetalColorName} / ${product.UnitCost}</p>
                     </div>
-                    <div className='smilingSearchResultBox'>
-                        <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
-                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
-                    </div>
-                    <div className='smilingSearchResultBox'>
-                        <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
-                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
-                    </div>
-                    <div className='smilingSearchResultBox'>
-                        <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
-                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
-                    </div>
-                    <div className='smilingSearchResultBox'>
-                        <img src={ring3ImageChange ? ring1hover : ring1} className='smilingSearchResultBoxImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
-                        <p className='smilingSearchResultBoxring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                        <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
-                    </div>
-                </div>
+                ))}
                 <SmilingRock />
                 <Footer />
             </div>

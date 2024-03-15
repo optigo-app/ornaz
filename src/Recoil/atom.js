@@ -30,6 +30,11 @@ export const productDataNew = atom({
   default:[]
 })
 
+export const searchData = atom({
+  key: 'searchData',
+  default: []
+})
+
 export const priceData = atom({
   key:'priceData',
   default:[]

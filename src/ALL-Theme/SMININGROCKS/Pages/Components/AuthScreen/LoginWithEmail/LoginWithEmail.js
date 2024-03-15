@@ -9,6 +9,7 @@ import CryptoJS from 'crypto-js';
 import { useSetRecoilState } from 'recoil';
 import { loginState, productDataNew } from '../../../../../../Recoil/atom';
 import { productListApiCall } from '../../../../Utils/API/ProductListAPI';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');
@@ -23,17 +24,17 @@ export default function LoginWithEmail() {
     const setPdData = useSetRecoilState(productDataNew)
     const setIsLoginState = useSetRecoilState(loginState)
 
-    
-    let pdDataCalling = async() =>{
-            await productListApiCall().then((res)=>{
-                setPdData(res)
-            })
+
+    let pdDataCalling = async () => {
+        await productListApiCall().then((res) => {
+            setPdData(res)
+        })
     }
 
     useEffect(() => {
-        const storedEmail = location.state?.email; ;
+        const storedEmail = location.state?.email;;
         if (storedEmail) setEmail(storedEmail);
-    }, []); 
+    }, []);
 
 
     const handleInputChange = (e, setter, fieldName) => {
@@ -105,9 +106,42 @@ export default function LoginWithEmail() {
         localStorage.setItem('registerEmail', email);
         navigation('/LoginWithEmailCode');
     }
+
+    const handleForgotPassword = async () => {
+        try {
+            setIsLoading(true);
+            const storeInit = JSON.parse(localStorage.getItem('storeInit'));
+            const { FrontEnd_RegNo, domain } = storeInit;
+
+            // let Domian = `https://${domain}`
+            let Domian = `https://https://dstore.optigoapps.com`
+
+            const combinedValue = JSON.stringify({
+                domain: `${Domian}`, userid: `${email}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: '0'
+            });
+
+            const encodedCombinedValue = btoa(combinedValue);
+            const body = {
+                "con": "{\"id\":\"\",\"mode\":\"FORGOTPASSWORDEMAIL\",\"appuserid\":\"\"}",
+                "f": "m-test2.orail.co.in (getdesignnolist)",
+                p: encodedCombinedValue
+            };
+            const response = await CommonAPI(body);
+            if (response.Data.rd[0].stat === 1) {
+                toast.success('Reset Link Send On Your Email');
+            } else {
+                alert('Error')
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
     return (
-        <div  className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1' ,paddingTop: '110px' }}>
-          {isLoading && (
+        <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+             <ToastContainer />
+            {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />
                 </div>
@@ -122,7 +156,7 @@ export default function LoginWithEmail() {
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
                     }}
-                    className='AuthScreenMainTitle'
+                        className='AuthScreenMainTitle'
                     >Login With Password</p>
                     <p style={{
                         textAlign: 'center',
@@ -131,7 +165,7 @@ export default function LoginWithEmail() {
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
                     }}
-                    className='AuthScreenSubTitle'
+                        className='AuthScreenSubTitle'
                     >using {email}</p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -174,7 +208,7 @@ export default function LoginWithEmail() {
                         <button type='submit' className='submitBtnForgot' onClick={handleNavigation}>Login With a Code instead on email</button>
                         <p>Go passwordless! we'll send you an email.</p>
 
-                        <p style={{ color: 'blue' , cursor: 'pointer'}} onClick={() => navigation('/forgotPass')}>Forgot Password ?</p>
+                        <p style={{ color: 'blue', cursor: 'pointer' }} onClick={handleForgotPassword}>Forgot Password ?</p>
                     </div>
                     <Footer />
                 </div>

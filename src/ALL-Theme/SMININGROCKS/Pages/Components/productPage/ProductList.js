@@ -17,7 +17,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, priceData, productDataNew } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 
 
@@ -68,6 +68,13 @@ const ProductList = () => {
   const location = useLocation();
 
   const getPdData = useRecoilValue(productDataNew)
+  const getSearchData = useRecoilValue(searchData)
+
+  console.log('getEarch.',getSearchData);
+
+  useEffect(() =>{
+    setNewProData(getSearchData)
+  },[getSearchData])
 
 
   // useEffect(()=>{
@@ -1239,6 +1246,7 @@ const ProductList = () => {
   const handleChange1 = () => {
 
   }
+
   useEffect(()=>{
     getDesignPriceList()
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1246,22 +1254,22 @@ const ProductList = () => {
 
     //for price range
     useEffect(() => {
-
       const priceOnly = ProductApiData2?.filter((item) => item?.price !== 'Not Available')?.map((item) => item.price)?.sort((a, b) => a - b);
       setMinPrice(priceOnly[0]);
       setMaxPrice(priceOnly[priceOnly?.length - 1]);
-
+      setValue1([priceOnly[0], priceOnly[priceOnly?.length - 1]])
       const netWtOnly = ProductApiData2?.map((item) => item?.netwt).sort((a, b) => a - b);
       setMinNetwt(netWtOnly[0]);
       setMaxNetwt(netWtOnly[netWtOnly?.length - 1]);
-
+      setValue2([netWtOnly[0], netWtOnly[netWtOnly?.length - 1]])
       const grossWtOnly = ProductApiData2?.map((item) => item?.Grossweight).sort((a, b) => a - b);
       setMinGrossWt(grossWtOnly[0]);
       setMaxGrossWtt(grossWtOnly[grossWtOnly?.length - 1]);
-
+      setValue3([grossWtOnly[0], grossWtOnly[grossWtOnly?.length - 1]])
       const diamondWtOnly = ProductApiData2?.map((item) => item?.diamondweight).sort((a, b) => a - b);
       setMinDiamondWt(diamondWtOnly[0]);
       setMaxDiamondWt(diamondWtOnly[diamondWtOnly?.length - 1]);
+      setValue4([diamondWtOnly[0], diamondWtOnly[diamondWtOnly?.length - 1]])
 
   }, [ProductApiData2]);
   // Initialize net weight range
@@ -1321,7 +1329,6 @@ const ProductList = () => {
     //   setMaxDiamondWt(unique_diawt_only[unique_diawt_only?.length - 1]);
     // // eslint-disable-next-line react-hooks/exhaustive-deps
     // },[diawt_only]);
-
   const handlePriceChange = (event, newValue, activeThumb) => {
       setValue1(newValue);
       filterDatasfunc(newValue, value2, value3, value4);
@@ -1351,11 +1358,12 @@ const ProductList = () => {
         const grossWtInRange = item.Grossweight >= grossWtRange[0] && item.Grossweight <= grossWtRange[1];
         const diamondWtInRange = item.diamondweight >= diamondWtRange[0] && item.diamondweight <= diamondWtRange[1];
         return priceInRange && netWtInRange && grossWtInRange && diamondWtInRange;
+
     });
     setNewProData(filteredData);
   };
-
   
+
 
   return (
     <div id="top">
@@ -1778,7 +1786,7 @@ const ProductList = () => {
                             products?.imagepath +
                             products?.MediumImagePath?.split(",")[0]
                           }
-                       
+                          alt="#"
                         />
                       </div>
                       <div onClick={() => handelProductSubmit(products)}>

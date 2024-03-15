@@ -11,7 +11,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiStarFourThin } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, openSignInModal } from "../../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, openSignInModal, searchData } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import Cart from "./Cart";
 import titleImg from "../../../assets/title/sonasons.png"
@@ -243,13 +243,23 @@ export default function Header() {
     }
   };
 
+  const [searchedProducts, setSearchedProducts] = useState([]);
+  const [gSearch, setGSearch] = useRecoilState(searchData)
+
   const handleEnterPress = () => {
-    navigation('/searchResult', {
-      state: {
-        searchText: searchText
-      }
-    })
+    const savedProductList = localStorage.getItem('allproductlist');
+    if (savedProductList) {
+        const productList = JSON.parse(savedProductList);
+        const searchValue = searchText;
+        const filteredProducts = productList.filter(product => product.designno === searchValue || product.id === parseInt(searchValue));
+        setSearchedProducts(filteredProducts);
+    }
+    navigation('/productpage');
   };
+
+  useEffect(() => {
+    setGSearch(searchedProducts);
+  },[searchedProducts])
 
 
 
