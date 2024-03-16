@@ -65,7 +65,6 @@ const ProductList = () => {
   const [maxDiamondWt, setMaxDiamondWt] = useState(null);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const getPdData = useRecoilValue(productDataNew)
   const getSearchData = useRecoilValue(searchData)
@@ -500,11 +499,6 @@ const ProductList = () => {
   //     localStorage.setItem("allproductlist",JSON?.stringify(product))
   //     setProductApiData2(product)
 
-
-  let wislilistUpdate = () => {
-
-  }
-
   useEffect(() => {
     let newWishCheckData = (ProductApiData2 || []).map((pd) => {
         const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode);
@@ -674,8 +668,6 @@ const ProductList = () => {
 
         // if(wish && wish?.length){
 
-
-
         // }
 
       }
@@ -706,7 +698,6 @@ const ProductList = () => {
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
         const product = prod
-
 
         const finalJSON = {
           "stockweb_event": "",
@@ -815,14 +806,11 @@ const ProductList = () => {
       else {
         // {"designlist":"'MCJ10'","isselectall":"0","FrontEnd_RegNo":"95oztttesi0o50vr","Customerid":"856"}
 
-
         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
         const UserEmail = localStorage.getItem("registerEmail")
         const Customer_id = JSON.parse(localStorage.getItem("loginUserDetail"));
 
-
         setWishListRemoveData(prod.designno)
-
 
         let Data = { "designlist": `'${prod?.designno}'`, "isselectall": "0", "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` }
 
