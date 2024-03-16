@@ -505,8 +505,8 @@ const ProdDetail = () => {
           "metaltypeid": `${product?.MetalTypeid}`,
           "metalcolorid": `${product?.MetalColorid}`,
           "stockno": "",
-          "DQuality": `${product?.diamondquality?.split(",")[0]}`,
-          "DColor": `${product?.diamondcolorname}`,
+          "DQuality":  `${(diaQColOpt?.split('_')[0] ? diaQColOpt?.split('_')[0] : product?.diamondquality?.split(",")[0]) }`,
+          "DColor":  `${diaQColOpt?.split('_')[1] ? diaQColOpt?.split('_')[1] : product?.diamondcolorname }`,
           "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
           "AdditionalValWt": Number(`${product?.AdditionalValWt}`),
           "BrandName": `${product?.BrandName ?? ""}`,
@@ -535,9 +535,9 @@ const ProdDetail = () => {
           "MasterManagement_labname": "",
           "MetalColorName": `${product?.MetalColorName}`,
           "MetalColorid": Number(`${product?.MetalColorid}`),
-          "MetalPurity": `${product?.MetalPurity}`,
+          "MetalPurity": `${mtTypeOption ? (mtTypeOption?.split(' ')[1]) : product?.MetalPurity }`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-          "MetalTypeName": `${product?.MetalTypeName}`,
+          "MetalTypeName": `${mtTypeOption ? mtTypeOption?.split(' ')[0] : product?.MetalTypeName  }`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
           "MetalWeight": Number(`${product?.MetalWeight}`),
           "OcassionName": `${product?.OcassionName ?? ""}`,
@@ -550,8 +550,10 @@ const ProdDetail = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
-          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
+          // "UnitCost": `${grandTotal ? grandTotal : (product?.price === "Not Available" ? 0 : product?.price)}`,
+          "UnitCost": `${(product?.price - grandTotal)}`,
+          // "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
+          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : (product?.price - grandTotal)) + (product?.markup ?? 0)}`),
           "colorstonecolorname": `${product?.colorstonecolorname ? product?.colorstonecolorname : cSQopt?.split('-')[1]}`,
           "colorstonequality": `${product?.colorstonequality ? product?.colorstonequality  : cSQopt?.split('-')[0] }`,
           "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
@@ -804,8 +806,9 @@ const ProdDetail = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
-          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
+          // "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
+          "UnitCost": `${(productData?.price - grandTotal)?.toFixed(2)}`,
+          "UnitCostWithmarkup":(`${(productData?.price - grandTotal)?.toFixed(2) + (product?.markup ?? 0)}`),
           "autocode": `${product?.autocode}`,
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
@@ -839,7 +842,6 @@ const ProdDetail = () => {
           "UploadLogicalPath": `${product?.UploadLogicalPath ?? ""}`,
           "ukey": `${storeInit?.ukey}`
         }
-
 
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
 
@@ -906,6 +908,9 @@ const ProdDetail = () => {
     localStorage.setItem("sizeData",JSON.stringify(data))
     setSizeOption(data)
   }
+
+
+  console.log("price",productData?.price - grandTotal, productData?.price, grandTotal);
 
 
 

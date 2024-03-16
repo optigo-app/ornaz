@@ -380,9 +380,13 @@ console.log("cart list data",cartListData);
             let mtrd = getPriceData?.rd?.filter((ele) => 
                 ele?.A === srProductsData?.autocode && 
                 ele?.B === srProductsData?.designno &&
-                ele?.D === selectedMetalType
+                ele?.D === (selectedMetalType)
               )
               console.log("metal",mtrd);
+              let showPrice = 0;
+              if (mtrd && mtrd.length > 0) {
+                  showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
+              }
             //   let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
             //   console.log("metal price",showPrice);
               // setMetalPrice(showPrice)
@@ -394,6 +398,11 @@ console.log("cart list data",cartListData);
               ele.J === selectedDiamondQualityColor?.split("_")[1] 
               )
             console.log("diamond ",diaqcprice);
+
+            let showPrice1 = 0;
+            if (diaqcprice && diaqcprice.length > 0) {
+                showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
+            }
             //   let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
             //   console.log("diamond price",showPrice1);
               // setDQCPrice(showPrice1)
@@ -405,6 +414,15 @@ console.log("cart list data",cartListData);
               ele.J === selectedColorstoneQualityColor?.split("-")[1]   
               )
               console.log("colorstone",csqcpirce);
+
+              let showPrice2 = 0;
+              if (csqcpirce && csqcpirce.length > 0) {
+                  showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+              }
+
+              console.log({ showPrice, showPrice1, showPrice2 });
+              let gt = showPrice + showPrice1 + showPrice2;
+              setGrandTotal(gt ?? 0);
             //   let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
             //   console.log("colorstone price",showPrice2);
             //   setCSQCPrice(showPrice2)
@@ -647,6 +665,9 @@ console.log("cart list data",cartListData);
                                                                 color: "#7d7f85",
                                                                 fontSize: "12.5px",
                                                             }}
+                                                            // defaultValue={`${item?.colorstonequality}-${item?.colorstonecolorname}`}
+                                                        defaultValue={`${item?.diamondqualityname}_${item?.diamondcolorname}`}
+
                                                         >
                                                             {colorData.map((colorItem) => (
                                                                 <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
@@ -713,6 +734,9 @@ console.log("cart list data",cartListData);
                                                             color: "#7d7f85",
                                                             fontSize: "12.5px",
                                                         }}
+                                                        // defaultValue={`${item?.diamondqualityname}_${item?.diamondcolorname}`}
+                                                        defaultValue={`${item?.colorstonequality}-${item?.colorstonecolorname}`}
+
                                                     >
                                                         {DaimondQualityColor.map((data, index) => (
                                                             <option key={index} value={`${data.Quality}-${data.color}`}>
