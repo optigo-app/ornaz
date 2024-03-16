@@ -11,8 +11,8 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { GetCount } from '../../../Utils/API/GetCount'
-import { CartListCounts, WishListCounts, priceData } from '../../../../../Recoil/atom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData } from '../../../../../Recoil/atom'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 const ProdDetail = () => {
 
@@ -36,11 +36,11 @@ const ProdDetail = () => {
   const [isPriseShow, setIsPriceShow] = useState()
 
   const [sizeOption, setSizeOption] = useState();
-  const [diaQColOpt, setDiaQColOpt] = useState();
-  const [mtTypeOption, setmtTypeOption] = useState();
-  const [cSQopt, setCSQOpt] = useState();
+  const [diaQColOpt, setDiaQColOpt] = useRecoilState(diamondQualityColorG);
+  const [mtTypeOption, setmtTypeOption] = useRecoilState(metalTypeG);
+  const [cSQopt, setCSQOpt] = useRecoilState(colorstoneQualityColorG);
   const [colorImageData, setColorImageData] = useState([]);
-
+  
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
 
@@ -552,11 +552,11 @@ const ProdDetail = () => {
           "TitleLine": `${product?.TitleLine}`,
           "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
           "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
-          "colorstonecolorname": `${product?.colorstonecolorname}`,
-          "colorstonequality": `${product?.colorstonequality}`,
-          "diamondcolorname": `${product?.diamondcolorname}`,
+          "colorstonecolorname": `${product?.colorstonecolorname ? product?.colorstonecolorname : cSQopt?.split('-')[1]}`,
+          "colorstonequality": `${product?.colorstonequality ? product?.colorstonequality  : cSQopt?.split('-')[0] }`,
+          "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
           "diamondpcs": Number(`${product?.diamondpcs}`),
-          "diamondquality": `${product?.diamondquality?.split(",")[0]}`,
+          "diamondquality": `${(product?.diamondquality?.split(",")[0]) ? product?.diamondquality?.split(",")[0] : diaQColOpt?.split('_')[0] }`,
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
@@ -579,7 +579,7 @@ const ProdDetail = () => {
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "quantity": `${product?.quantity ?? "1"}`
         }
-
+      console.log("finalJSON",finalJSON);
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
         const wishToCartEncData1 = btoa(JSON.stringify(wishToCartEncData));
 
