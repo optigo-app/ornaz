@@ -31,7 +31,7 @@ const minDistance = 10;
 
 const ProductList = () => {
 
-  const ProductData2=[];
+  const ProductData2 = [];
 
   const [isOpenDetail, setIsOpenDetail] = useState(false);
   const [ProductApiData, setProductApiData] = useState([])
@@ -47,8 +47,8 @@ const ProductList = () => {
   const [cartRemoveData, setCartRemoveData] = useState("");
   const [wishListRemoveData, setWishListRemoveData] = useState("");
   const [newProData, setNewProData] = useState(ProductApiData2);
-  const [priceDataApi,setpriceDataApi] = useRecoilState(priceData);
-  const [currencySym,setCurrencySym] = useState();
+  const [priceDataApi, setpriceDataApi] = useRecoilState(priceData);
+  const [currencySym, setCurrencySym] = useState();
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -70,11 +70,9 @@ const ProductList = () => {
   const getPdData = useRecoilValue(productDataNew)
   const getSearchData = useRecoilValue(searchData)
 
-  console.log('getEarch.',getSearchData);
-
-  useEffect(() =>{
+  useEffect(() => {
     setNewProData(getSearchData)
-  },[getSearchData])
+  }, [getSearchData])
 
 
   // useEffect(()=>{
@@ -83,14 +81,14 @@ const ProductList = () => {
 
   //   // setTimeout(()=>{
   //     data?.map((product) => {
-  
+
   //         const newPriceData = priceDataApi.rd?.find(
   //           (pda) => 
   //             pda.A === product.autocode && 
   //             pda.B === product.designno &&
   //             pda.D === loginUserDetail?.cmboMetalType 
   //         )
-      
+
   //         const newPriceData1 = priceDataApi.rd1?.find(
   //           (pda) => 
   //             pda.A === product.autocode && 
@@ -98,24 +96,24 @@ const ProductList = () => {
   //             pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
   //             pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
   //         )
-      
+
   //         const newPriceData2 = priceDataApi.rd2?.find(
   //           (pda) => 
   //             pda.A === product.autocode && 
   //             pda.B === product.designno && 
   //             pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0] &&
   //             pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1]
-      
+
   //         )
 
   //         console.log("priceList",{newPriceData,newPriceData1,newPriceData2})
-      
+
   //         if (newPriceData || newPriceData1 || newPriceData2) {
   //           product['price'] = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0)
   //         } else {
   //           product['price'] = "Not Availabel";
   //         }
-          
+
   //       });
 
   //       localStorage.setItem("allproductlist",JSON?.stringify(data))
@@ -129,69 +127,69 @@ const ProductList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        const data = JSON.parse(localStorage.getItem("allproductlist"));
-        const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
+      const data = JSON.parse(localStorage.getItem("allproductlist"));
+      const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
 
-        const updatedData = await Promise?.all(data?.map(async (product) => {
-            const newPriceData = priceDataApi.rd?.find(
-                (pda) =>
-                    pda.A === product.autocode &&
-                    pda.B === product.designno &&
-                    pda.D === loginUserDetail?.cmboMetalType
-            );
+      const updatedData = await Promise?.all(data?.map(async (product) => {
+        const newPriceData = priceDataApi.rd?.find(
+          (pda) =>
+            pda.A === product.autocode &&
+            pda.B === product.designno &&
+            pda.D === loginUserDetail?.cmboMetalType
+        );
 
-            const newPriceData1 = priceDataApi?.rd1?.find(
-                (pda) =>
-                    pda.A === product.autocode &&
-                    pda.B === product.designno &&
-                    pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
-                    pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
-            );
-
-            
-            const newPriceData2 = priceDataApi?.rd2?.find(
-                (pda) =>
-                    pda.A === product.autocode &&
-                    pda.B === product.designno 
-                    // pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
-                    // pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
-            );
-
-            // console.log("newPriceData2",priceDataApi?.rd2?.find((te)=> te?.H !== "mix" && te?.H !== "MOTI" && te?.H !== "BEADS"));
-            // console.log("newPriceData2",newPriceData2);
-
-            let price= 0;
-            let isLoading = true;
-            let markup = 0;
-            let metalrd=0;
-            let diard1=0;
-            let csrd2=0;
-
-            // console.log("newPriceData",newPriceData)
-
-            if (newPriceData || newPriceData1 || newPriceData2) {
-                price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
-                metalrd = newPriceData?.Z
-                diard1 = newPriceData1?.S
-                csrd2 = newPriceData2?.S ?? 0
-                markup = newPriceData?.AB
-                isLoading = false;
-            }
-            else{
-                // price = " " ;
-                isLoading = false;
-            }
+        const newPriceData1 = priceDataApi?.rd1?.find(
+          (pda) =>
+            pda.A === product.autocode &&
+            pda.B === product.designno &&
+            pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
+            pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
+        );
 
 
-            return { ...product, price ,isLoading , markup, metalrd, diard1, csrd2};
-        }));
+        const newPriceData2 = priceDataApi?.rd2?.find(
+          (pda) =>
+            pda.A === product.autocode &&
+            pda.B === product.designno
+          // pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
+          // pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
+        );
 
-        localStorage.setItem("allproductlist", JSON.stringify(updatedData));
-        setProductApiData2(updatedData);
+        // console.log("newPriceData2",priceDataApi?.rd2?.find((te)=> te?.H !== "mix" && te?.H !== "MOTI" && te?.H !== "BEADS"));
+        // console.log("newPriceData2",newPriceData2);
+
+        let price = 0;
+        let isLoading = true;
+        let markup = 0;
+        let metalrd = 0;
+        let diard1 = 0;
+        let csrd2 = 0;
+
+        // console.log("newPriceData",newPriceData)
+
+        if (newPriceData || newPriceData1 || newPriceData2) {
+          price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
+          metalrd = newPriceData?.Z
+          diard1 = newPriceData1?.S
+          csrd2 = newPriceData2?.S ?? 0
+          markup = newPriceData?.AB
+          isLoading = false;
+        }
+        else {
+          // price = " " ;
+          isLoading = false;
+        }
+
+
+        return { ...product, price, isLoading, markup, metalrd, diard1, csrd2 };
+      }));
+
+      localStorage.setItem("allproductlist", JSON.stringify(updatedData));
+      setProductApiData2(updatedData);
     };
 
     fetchData();
-}, [priceDataApi]);
+  }, [priceDataApi]);
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
@@ -207,7 +205,7 @@ const ProductList = () => {
     })
 
   }
-  
+
   const fetchFile = async () => {
 
     let storeinit = JSON.parse(localStorage.getItem("storeInit"))
@@ -223,7 +221,7 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    
+
     let Symbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
     setCurrencySym(Symbol)
 
@@ -235,7 +233,7 @@ const ProductList = () => {
   };
 
   let productData = [];
-  
+
   if (ProductApiData?.data?.[0]) {
     ProductApiData.data[0]?.map((ele) => {
       let obj = {};
@@ -478,73 +476,71 @@ const ProductList = () => {
   //   } else {
   //     product['price'] = "Not Availabel";
   //   }
-    
-    
-  
+
+
+
   // });
 
   //     localStorage.setItem("allproductlist",JSON?.stringify(product))
   //     setProductApiData2(product)
 
-  console.log("wishData",WishData);
 
-  let wislilistUpdate = async() =>{
-    let newWishCheckData = (ProductApiData2)?.map((pd)=>{
+  let wislilistUpdate = () => {
 
-      const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
-
-      let wishCheck = false
-
-      if (newWish) {
-       wishCheck = true
-     }else{
-      wishCheck = false
-     }
-
-     return {...pd,wishCheck}
-
-   })
-
-   await localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
-   setProductApiData2(newWishCheckData)
-   
-   console.log("newWishCheckData",newWishCheckData)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
+    let newWishCheckData = (ProductApiData2 || []).map((pd) => {
+        const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode);
+        let wishCheck = !!newWish;
+        return { ...pd, wishCheck };
+    });
 
-    wislilistUpdate()
+    console.log("newWishCheckData", newWishCheckData);
 
-  },[WishData])
+    try {
+        localStorage.setItem("allproductlist", JSON.stringify(newWishCheckData));
+        console.log("localStorage updated successfully!");
 
+        const localStorageData = JSON.parse(localStorage.getItem("allproductlist"));
 
-let cartlistUpdate = async() =>{
-  let newCartCheckData = (ProductApiData2)?.map((pd)=>{
+        if (JSON.stringify(newWishCheckData) !== JSON.stringify(ProductApiData2)) {
+            setProductApiData2(newWishCheckData);
+        }
 
-    let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+        console.log("Retrieved data from localStorage:", localStorageData);
+    } catch (error) {
+        console.error("Error storing data in localStorage:", error);
+    }
+}, [WishData, ProductApiData2]);
 
-    let checkFlag = false
-    if (newWish) {
-      checkFlag = true
-   }else{
-    checkFlag = false
-   }
+  let cartlistUpdate = async () => {
+    let newCartCheckData = (ProductApiData2)?.map((pd) => {
 
-  //  if(pd.wishCheck === true){
-  //   pd.wishCheck = false;
-  //  }
+      let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
 
-   return {...pd,checkFlag}
+      let checkFlag = false
+      if (newWish) {
+        checkFlag = true
+      } else {
+        checkFlag = false
+      }
 
- })
+      //  if(pd.wishCheck === true){
+      //   pd.wishCheck = false;
+      //  }
 
-   await localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
-   setProductApiData2(newCartCheckData)
-}
+      return { ...pd, checkFlag }
 
-  useEffect(()=>{
+    })
+
+    // await localStorage.setItem("allproductlist", JSON.stringify(newCartCheckData))
+    setProductApiData2(newCartCheckData)
+  }
+
+  useEffect(() => {
     cartlistUpdate()
-  },[cartData])
+  }, [cartData])
 
 
   // updateProductsWithMetalColorName()?.forEach((prods) => {
@@ -665,9 +661,9 @@ let cartlistUpdate = async() =>{
 
         // if(wish && wish?.length){
 
-        
 
-      // }
+
+        // }
 
       }
     })
@@ -681,7 +677,7 @@ let cartlistUpdate = async() =>{
     // getCountApi()
     getCountFunc()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -751,7 +747,7 @@ let cartlistUpdate = async() =>{
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
           "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
-          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
+          "UnitCostWithmarkup": (`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
           "autocode": `${product?.autocode}`,
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
@@ -799,11 +795,8 @@ let cartlistUpdate = async() =>{
 
           if (res?.Data?.rd[0]?.msg === "success") {
 
-
             await getCartAndWishListData()
-            // await getCountApi()
             getCountFunc()
-
           }
         })
       }
@@ -985,7 +978,7 @@ let cartlistUpdate = async() =>{
           }
         })
 
-       
+
 
       }
       else {
@@ -1079,7 +1072,7 @@ let cartlistUpdate = async() =>{
 
 
 
-  const getDesignPriceList = async() =>{
+  const getDesignPriceList = async () => {
 
     const storeInit = JSON.parse(localStorage.getItem("storeInit"))
     const loginUserDetail = JSON.parse(localStorage.getItem("loginUserDetail"));
@@ -1087,111 +1080,110 @@ let cartlistUpdate = async() =>{
     const UserEmail = localStorage.getItem("registerEmail")
 
     const GetPriceReq = {
-                  "CurrencyRate":`${currencyCombo?.CurrencyRate}`,
-                  "FrontEnd_RegNo":`${storeInit?.FrontEnd_RegNo}`,
-                  "Customerid":`${loginUserDetail?.id}`,
-                  "Laboursetid":`${loginUserDetail?.pricemanagement_laboursetid}`,
-                  "diamondpricelistname":`${loginUserDetail?.diamondpricelistname}`,
-                  "colorstonepricelistname":`${loginUserDetail?.colorstonepricelistname}`,
-                  "SettingPriceUniqueNo":`${loginUserDetail?.SettingPriceUniqueNo}`,
-                  "DesignNo":""
-                }
+      "CurrencyRate": `${currencyCombo?.CurrencyRate}`,
+      "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
+      "Customerid": `${loginUserDetail?.id}`,
+      "Laboursetid": `${loginUserDetail?.pricemanagement_laboursetid}`,
+      "diamondpricelistname": `${loginUserDetail?.diamondpricelistname}`,
+      "colorstonepricelistname": `${loginUserDetail?.colorstonepricelistname}`,
+      "SettingPriceUniqueNo": `${loginUserDetail?.SettingPriceUniqueNo}`,
+      "DesignNo": ""
+    }
 
-                const encodedCombinedValue = btoa(JSON.stringify(GetPriceReq));
+    const encodedCombinedValue = btoa(JSON.stringify(GetPriceReq));
 
-                let body ={
-                  "con":`{\"id\":\"Store\",\"mode\":\"getdesignpricelist\",\"appuserid\":\"${UserEmail}\"}`,
-                  "f":"onloadFirstTime (getdesignpricelist)",
-                  "p":encodedCombinedValue
-                  }
-    
+    let body = {
+      "con": `{\"id\":\"Store\",\"mode\":\"getdesignpricelist\",\"appuserid\":\"${UserEmail}\"}`,
+      "f": "onloadFirstTime (getdesignpricelist)",
+      "p": encodedCombinedValue
+    }
+
     await CommonAPI(body).then((res) => {
-        setpriceDataApi(res?.Data)
+      setpriceDataApi(res?.Data)
     })
 
   }
-  
+
 
   const handleChange1 = () => {
 
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getDesignPriceList()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    //for price range
-    useEffect(() => {
-      const priceOnly = ProductApiData2?.filter((item) => item?.price !== 'Not Available')?.map((item) => item.price)?.sort((a, b) => a - b);
-      setMinPrice(priceOnly[0]);
-      setMaxPrice(priceOnly[priceOnly?.length - 1]);
-      setValue1([priceOnly[0], priceOnly[priceOnly?.length - 1]])
-      const netWtOnly = ProductApiData2?.map((item) => item?.netwt).sort((a, b) => a - b);
-      setMinNetwt(netWtOnly[0]);
-      setMaxNetwt(netWtOnly[netWtOnly?.length - 1]);
-      setValue2([netWtOnly[0], netWtOnly[netWtOnly?.length - 1]])
-      const grossWtOnly = ProductApiData2?.map((item) => item?.Grossweight).sort((a, b) => a - b);
-      setMinGrossWt(grossWtOnly[0]);
-      setMaxGrossWtt(grossWtOnly[grossWtOnly?.length - 1]);
-      setValue3([grossWtOnly[0], grossWtOnly[grossWtOnly?.length - 1]])
-      const diamondWtOnly = ProductApiData2?.map((item) => item?.diamondweight).sort((a, b) => a - b);
-      setMinDiamondWt(diamondWtOnly[0]);
-      setMaxDiamondWt(diamondWtOnly[diamondWtOnly?.length - 1]);
-      setValue4([diamondWtOnly[0], diamondWtOnly[diamondWtOnly?.length - 1]])
+  //for price range
+  useEffect(() => {
+    const priceOnly = ProductApiData2?.filter((item) => item?.price !== 'Not Available')?.map((item) => item.price)?.sort((a, b) => a - b);
+    setMinPrice(priceOnly[0]);
+    setMaxPrice(priceOnly[priceOnly?.length - 1]);
+    setValue1([priceOnly[0], priceOnly[priceOnly?.length - 1]])
+    const netWtOnly = ProductApiData2?.map((item) => item?.netwt).sort((a, b) => a - b);
+    setMinNetwt(netWtOnly[0]);
+    setMaxNetwt(netWtOnly[netWtOnly?.length - 1]);
+    setValue2([netWtOnly[0], netWtOnly[netWtOnly?.length - 1]])
+    const grossWtOnly = ProductApiData2?.map((item) => item?.Grossweight).sort((a, b) => a - b);
+    setMinGrossWt(grossWtOnly[0]);
+    setMaxGrossWtt(grossWtOnly[grossWtOnly?.length - 1]);
+    setValue3([grossWtOnly[0], grossWtOnly[grossWtOnly?.length - 1]])
+    const diamondWtOnly = ProductApiData2?.map((item) => item?.diamondweight).sort((a, b) => a - b);
+    setMinDiamondWt(diamondWtOnly[0]);
+    setMaxDiamondWt(diamondWtOnly[diamondWtOnly?.length - 1]);
+    setValue4([diamondWtOnly[0], diamondWtOnly[diamondWtOnly?.length - 1]])
 
   }, [ProductApiData2]);
- 
+
   const handlePriceChange = (event, newValue, activeThumb) => {
-      setValue1(newValue);
-      filterDatasfunc(newValue, value2, value3, value4);
+    setValue1(newValue);
+    filterDatasfunc(newValue, value2, value3, value4);
   };
-  
+
   const handleNetWtChange = (event, newValue, activeThumb) => {
-      setValue2(newValue);
-      filterDatasfunc(value1, newValue, value3, value4);
+    setValue2(newValue);
+    filterDatasfunc(value1, newValue, value3, value4);
   };
-  
+
   const handlegrossWtChange = (event, newValue, activeThumb) => {
-      setValue3(newValue);
-      filterDatasfunc(value1, value2, newValue, value4);
+    setValue3(newValue);
+    filterDatasfunc(value1, value2, newValue, value4);
   };
-  
+
   const handleDiamondChange = (event, newValue, activeThumb) => {
-      setValue4(newValue);
-      filterDatasfunc(value1, value2, value3, newValue);
+    setValue4(newValue);
+    filterDatasfunc(value1, value2, value3, newValue);
   };
 
   const filterDatasfunc = (priceRange, netWtRange, grossWtRange, diamondWtRange) => {
 
     const filteredData = ProductApiData2?.filter((item) => {
 
-        const priceInRange = item?.price >= priceRange[0] && item?.price <= priceRange[1];
-        const netWtInRange = item.netwt >= netWtRange[0] && item.netwt <= netWtRange[1];
-        const grossWtInRange = item.Grossweight >= grossWtRange[0] && item.Grossweight <= grossWtRange[1];
-        const diamondWtInRange = item.diamondweight >= diamondWtRange[0] && item.diamondweight <= diamondWtRange[1];
-        return priceInRange && netWtInRange && grossWtInRange && diamondWtInRange;
+      const priceInRange = item?.price >= priceRange[0] && item?.price <= priceRange[1];
+      const netWtInRange = item.netwt >= netWtRange[0] && item.netwt <= netWtRange[1];
+      const grossWtInRange = item.Grossweight >= grossWtRange[0] && item.Grossweight <= grossWtRange[1];
+      const diamondWtInRange = item.diamondweight >= diamondWtRange[0] && item.diamondweight <= diamondWtRange[1];
+      return priceInRange && netWtInRange && grossWtInRange && diamondWtInRange;
 
     });
     setNewProData(filteredData);
   };
-  
-const handlePageReload = () => {
-  console.log("click");
-      setProductApiData2(ProductApiData2);
-      setMinPrice(0)
-      setMaxPrice(maxPrice)
-      setValue1([minPrice, maxPrice])
-      setMinNetwt(0)
-      setMaxNetwt(maxNetwt)
-      setValue2([0, maxNetwt])
-      setMinGrossWt(0)
-      setMaxGrossWtt(maxGrosswt)
-      setValue3([0, maxGrosswt])
-      setMinDiamondWt(0)
-      setMaxDiamondWt(maxDiamondWt)
-      setValue4([0, maxDiamondWt])
-}
+
+  const handlePageReload = () => {
+    setProductApiData2(ProductApiData2);
+    setMinPrice(0)
+    setMaxPrice(maxPrice)
+    setValue1([minPrice, maxPrice])
+    setMinNetwt(0)
+    setMaxNetwt(maxNetwt)
+    setValue2([0, maxNetwt])
+    setMinGrossWt(0)
+    setMaxGrossWtt(maxGrosswt)
+    setValue3([0, maxGrosswt])
+    setMinDiamondWt(0)
+    setMaxDiamondWt(maxDiamondWt)
+    setValue4([0, maxDiamondWt])
+  }
 
   return (
     <div id="top">
@@ -1440,122 +1432,122 @@ const handlePageReload = () => {
                     </p>
                     {isOpenDetail && <div>
                       {NewFilterData().map((ele, index) => (
-                    <>
-                      <Accordion
-                        elevation={0}
-                        sx={{
-                          borderBottom: "1px solid #c7c8c9",
-                          borderRadius: 0,
-                          marginLeft: "28px",
-                          "&.Mui-expanded": {
-                            marginLeft: "28px",
-                          },
-                          "&.MuiPaper-root.MuiAccordion-root:last-of-type": {
-                            borderBottomLeftRadius: "0px",
-                            borderBottomRightRadius: "0px",
-                          },
-                          "&.MuiPaper-root.MuiAccordion-root:before": {
-                            background: "none",
-                          },
-                        }}
-                      >
-                        <AccordionSummary
-                          expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
-                          aria-controls="panel1-content"
-                          id="panel1-header"
-                          sx={{
-                            color: "#7f7d85",
-                            borderRadius: 0,
-
-                            "&.MuiAccordionSummary-root": {
-                              padding: 0,
-                            },
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontFamily: "TT Commons, sans-serif",
-                              fontSize: "12px",
-                              opacity: "0.7",
+                        <>
+                          <Accordion
+                            elevation={0}
+                            sx={{
+                              borderBottom: "1px solid #c7c8c9",
+                              borderRadius: 0,
+                              marginLeft: "28px",
+                              "&.Mui-expanded": {
+                                marginLeft: "28px",
+                              },
+                              "&.MuiPaper-root.MuiAccordion-root:last-of-type": {
+                                borderBottomLeftRadius: "0px",
+                                borderBottomRightRadius: "0px",
+                              },
+                              "&.MuiPaper-root.MuiAccordion-root:before": {
+                                background: "none",
+                              },
                             }}
                           >
-                            {ele.label}
-                          </span>
-                        </AccordionSummary>
-                        <AccordionDetails
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "4px",
-                          }}
-                        >
-                          {ele.label === "PRICE" &&
-                            <div>
-                              <Slider
-                                className='netWtSecSlider'
-                                getAriaLabel={() => 'Minimum distance'}
-                                value={value1}
-                                onChange={handleChange1}
-                                valueLabelDisplay="auto"
-                                getAriaValueText={valuetext}
-                                disableSwap
-                              />
-                            </div>}
+                            <AccordionSummary
+                              expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
+                              aria-controls="panel1-content"
+                              id="panel1-header"
+                              sx={{
+                                color: "#7f7d85",
+                                borderRadius: 0,
 
-                          {ele.label === "CENTERSTONE" &&
-                            <div>
-                              <Slider
-                                className='netWtSecSlider'
-                                getAriaLabel={() => 'Minimum distance'}
-                                value={value1}
-                                onChange={handleChange1}
-                                valueLabelDisplay="auto"
-                                getAriaValueText={valuetext}
-                                disableSwap
-                              />
-                            </div>
-                          }
-
-                          {ele?.filterList?.map((flist, i) => (
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "12px",
-                              }}
-                              key={i}
-                            >
-                              <Checkbox
-                                name={`checkbox${index + 1}${i + 1}`}
-                                checked={
-                                  filterChecked[`checkbox${index + 1}${i + 1}`]
-                                    ?.checked
-                                }
-                                style={{
-                                  color: "#7f7d85",
+                                "&.MuiAccordionSummary-root": {
                                   padding: 0,
-                                  width: "10px",
-                                }}
-                                onClick={(e) =>
-                                  handleCheckboxChange(e, ele, flist)
-                                }
-                                size="small"
-                              />
-                              <small
+                                },
+                              }}
+                            >
+                              <span
                                 style={{
                                   fontFamily: "TT Commons, sans-serif",
-                                  color: "#7f7d85",
-                                  textTransform: "lowercase",
+                                  fontSize: "12px",
+                                  opacity: "0.7",
                                 }}
                               >
-                                {flist}
-                              </small>
-                            </div>
-                          ))}
-                        </AccordionDetails>
-                      </Accordion>
-                    </>
-                  ))}
+                                {ele.label}
+                              </span>
+                            </AccordionSummary>
+                            <AccordionDetails
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "4px",
+                              }}
+                            >
+                              {ele.label === "PRICE" &&
+                                <div>
+                                  <Slider
+                                    className='netWtSecSlider'
+                                    getAriaLabel={() => 'Minimum distance'}
+                                    value={value1}
+                                    onChange={handleChange1}
+                                    valueLabelDisplay="auto"
+                                    getAriaValueText={valuetext}
+                                    disableSwap
+                                  />
+                                </div>}
+
+                              {ele.label === "CENTERSTONE" &&
+                                <div>
+                                  <Slider
+                                    className='netWtSecSlider'
+                                    getAriaLabel={() => 'Minimum distance'}
+                                    value={value1}
+                                    onChange={handleChange1}
+                                    valueLabelDisplay="auto"
+                                    getAriaValueText={valuetext}
+                                    disableSwap
+                                  />
+                                </div>
+                              }
+
+                              {ele?.filterList?.map((flist, i) => (
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "12px",
+                                  }}
+                                  key={i}
+                                >
+                                  <Checkbox
+                                    name={`checkbox${index + 1}${i + 1}`}
+                                    checked={
+                                      filterChecked[`checkbox${index + 1}${i + 1}`]
+                                        ?.checked
+                                    }
+                                    style={{
+                                      color: "#7f7d85",
+                                      padding: 0,
+                                      width: "10px",
+                                    }}
+                                    onClick={(e) =>
+                                      handleCheckboxChange(e, ele, flist)
+                                    }
+                                    size="small"
+                                  />
+                                  <small
+                                    style={{
+                                      fontFamily: "TT Commons, sans-serif",
+                                      color: "#7f7d85",
+                                      textTransform: "lowercase",
+                                    }}
+                                  >
+                                    {flist}
+                                  </small>
+                                </div>
+                              ))}
+                            </AccordionDetails>
+                          </Accordion>
+                        </>
+                      ))}
                     </div>}
                   </div>
                   <hr
@@ -1614,9 +1606,9 @@ const handlePageReload = () => {
                 >
                   {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
                   {(newProData.length ? newProData : ProductApiData2)?.map((products, i) => (
-                    
-                      <div
-                        style={{
+
+                    <div
+                      style={{
                         width: "33.33%",
                         border: "1px solid #e1e1e1",
                         textAlign: "center",
@@ -1630,7 +1622,7 @@ const handlePageReload = () => {
                       <div onClick={() => handelProductSubmit(products)}>
                         <img
                           className="prod_img"
-                        
+
                           src={
                             products?.imagepath +
                             products?.MediumImagePath?.split(",")[0]
@@ -1648,17 +1640,17 @@ const handlePageReload = () => {
                             textoverflow: "ellipsis",
                             overflow: "hidden",
                             whiteSpace: "nowrap",
-                            padding:'0 15px',
-                            minHeight:'19.5px'
+                            padding: '0 15px',
+                            minHeight: '19.5px'
                           }}
                         >
                           {products?.TitleLine}
-                          
+
                         </p>
                       </div>
                       <div>
                         <p style={{ fontSize: "12px" }}>
-                        
+
                           {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price === 0 ? 'Not Available' : products?.price + (products?.markup === 0 ? "" : products?.markup))}
                         </p>
                       </div>
@@ -1677,7 +1669,7 @@ const handlePageReload = () => {
                             }
                             disableRipple={true}
                             sx={{ padding: "5px" }}
-                           
+
                             checked={products?.wishCheck}
                             onChange={(e) => handelWishList(e, products)}
                           />
@@ -1697,7 +1689,7 @@ const handlePageReload = () => {
                             }
                             disableRipple={true}
                             sx={{ padding: "5px" }}
-                          
+
                             checked={products?.checkFlag}
                             onChange={(e) => handelCartList(e, products)}
                           />
@@ -1742,7 +1734,7 @@ const handlePageReload = () => {
                     </div>
                   ))}
 
-                  
+
                 </div>
               </div>
             </div>
