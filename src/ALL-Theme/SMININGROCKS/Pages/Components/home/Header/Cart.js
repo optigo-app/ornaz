@@ -455,7 +455,8 @@ console.log("cart list data",cartListData);
                 style={{
                     position: 'fixed',
                     width: '-webkit-fill-available',
-                    backgroundColor: '#c0bbb1',
+                    backgroundColor: 'white',
+                    zIndex: '111'
                 }}
             >
                 <div style={{
@@ -465,10 +466,19 @@ console.log("cart list data",cartListData);
                 }}>
                     <CloseIcon
                         onClick={toggleCartDrawer(false)}
-                        style={{ cursor: "pointer", color: "white" }}
+                        style={{ cursor: "pointer", color: "black" }}
                     />
                 </div>
-                <div style={{marginTop: '0px',paddingBottom: '25px'}}>
+
+                <div>
+                    <p style={{
+                        fontSize: '30px',
+                        textAlign: 'center',
+                        fontWeight: 500
+                    }}>Your Cart</p>
+                </div>
+
+                <div style={{ marginTop: '0px', paddingBottom: '25px' }}>
                     <Tabs
                         value={value}
                         onChange={handleChange}
@@ -486,8 +496,9 @@ console.log("cart list data",cartListData);
                     </Tabs>
                 </div>
             </div>
+
             <CustomTabPanel value={value} index={0}>
-                <div style={{ paddingBottom: "150px", marginTop: '130px' }}>
+                <div style={{ paddingBottom: "150px", marginTop: '170px' , paddingInline: '10px' }}>
                     {cartListData?.length === 0 ? !isLoading && (
                         <div
                             style={{
@@ -512,7 +523,7 @@ console.log("cart list data",cartListData);
                                         <div
                                             style={{
                                                 position: "absolute",
-                                                right: "25px",
+                                                right: "35px",
                                                 cursor: "pointer",
                                             }}
                                             onClick={() => handleRemove(item)}
@@ -722,11 +733,8 @@ console.log("cart list data",cartListData);
                                             )}
                                         </div>
                                     </div>
-                                    <div style={{display: 'flex' ,justifyContent: 'flex-end'}}>
-                                        <p style={{marginRight: '50px'}}> Price : {item.UnitCost === 0 ? "Not Available" : item.UnitCost}</p>
-                                                
-                                        {/* {`$${(item.UnitCost === 0 ? "Not Available" : (item?.UnitCost - grandTotal))?.toFixed(2)}`}</p> */}
-{/* {item.UnitCost === 0 ? "Not Available" : item.UnitCost}  */}
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                        <p style={{ marginRight: '50px' }}>Price : {item.UnitCost === 0 ? "Not Available" : item.UnitCost} </p>
                                     </div>
                                     <div className='similingCartBotttomMain'>
                                         <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center', }}>
@@ -818,7 +826,7 @@ console.log("cart list data",cartListData);
                 )}
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                <div style={{ paddingBottom: "150px", marginTop: '120px' }}>
+                <div style={{ paddingBottom: "150px", marginTop: '170px' }}>
                     {cartListData?.length === 0 ? !isLoading && (
                         <div
                             style={{
@@ -835,7 +843,7 @@ console.log("cart list data",cartListData);
                             <p>Please First Add To Cart Data</p>
                         </div>
                     ) : (
-                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap' ,justifyContent: 'center' }}>
                             {cartListData?.map((item, index) => (
                                 <div key={item.id} className="smiling-cartBoxMainImageView">
                                     <div className='smilingCartMobileMain' style={{ display: 'flex' }}>

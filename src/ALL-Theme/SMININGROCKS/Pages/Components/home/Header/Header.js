@@ -135,6 +135,7 @@ export default function Header() {
 
 
   const [islogin, setislogin] = useRecoilState(loginState);
+  const [isB2bFlag, setIsB2BFlaf] = useState('');
   const fetchData = () => {
     const value = localStorage.getItem('LoginUser');
     const val = (value === 'true' ? 'true' : 'false')
@@ -144,6 +145,12 @@ export default function Header() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
+    const { IsB2BWebsite } = storeInit;
+    setIsB2BFlaf(IsB2BWebsite);
+  })
 
   const getMenuApi = async () => {
 
@@ -249,17 +256,17 @@ export default function Header() {
   const handleEnterPress = () => {
     const savedProductList = localStorage.getItem('allproductlist');
     if (savedProductList) {
-        const productList = JSON.parse(savedProductList);
-        const searchValue = searchText;
-        const filteredProducts = productList.filter(product => product.designno === searchValue || product.id === parseInt(searchValue));
-        setSearchedProducts(filteredProducts);
+      const productList = JSON.parse(savedProductList);
+      const searchValue = searchText;
+      const filteredProducts = productList.filter(product => product.designno === searchValue || product.id === parseInt(searchValue));
+      setSearchedProducts(filteredProducts);
     }
     navigation('/productpage');
   };
 
   useEffect(() => {
     setGSearch(searchedProducts);
-  },[searchedProducts])
+  }, [searchedProducts])
 
 
 
@@ -404,6 +411,7 @@ export default function Header() {
                 >
                   <Tooltip title="Add To Cart">
                     <li
+                      // onClick={() => alert(isB2bFlag)}
                       onClick={toggleCartDrawer(true)}
                       style={{
                         marginLeft: "-10px",

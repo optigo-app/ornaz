@@ -56,6 +56,8 @@ const ProdDetail = () => {
     setImgLoading(false)
   }
 
+  let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
+
   useEffect(()=>{
  
     let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
@@ -80,46 +82,47 @@ const ProdDetail = () => {
 
   },[])
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+  //   let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
 
-        let mtrd = getPriceData?.rd?.filter((ele) => 
-            ele?.A === srProductsData?.autocode && 
-            ele?.B === srProductsData?.designno && 
-            ele?.D === mtTypeOption
-          )
+  //       let mtrd = getPriceData?.rd?.filter((ele) => 
+  //           ele?.A === srProductsData?.autocode && 
+  //           ele?.B === srProductsData?.designno && 
+  //           ele?.D === mtTypeOption
+  //         )
           
-          let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
-          // setMetalPrice(showPrice)
+  //         let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0].Z ?? 0))
 
-        let diaqcprice = getPriceData?.rd1?.filter((ele) => 
-          ele.A === srProductsData?.autocode && 
-          ele.B === srProductsData?.designno &&
-          ele.H === diaQColOpt?.split("_")[0] &&
-          ele.J === diaQColOpt?.split("_")[1] 
-          )
+  //         // setMetalPrice(showPrice)
 
-          let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
-          // setDQCPrice(showPrice1)
+  //       let diaqcprice = getPriceData?.rd1?.filter((ele) => 
+  //         ele.A === srProductsData?.autocode && 
+  //         ele.B === srProductsData?.designno &&
+  //         ele.H === diaQColOpt?.split("_")[0] &&
+  //         ele.J === diaQColOpt?.split("_")[1] 
+  //         )
 
-        let csqcpirce = getPriceData?.rd2?.filter((ele) => 
-          ele.A === srProductsData?.autocode && 
-          ele.B === srProductsData?.designno &&
-          ele.H === cSQopt?.split("-")[0] &&
-          ele.J === cSQopt?.split("-")[1]   
-          )
+  //         let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0].S ?? 0))
+  //         // setDQCPrice(showPrice1)
 
-          let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
-          // setCSQCPrice(showPrice2)
+  //       let csqcpirce = getPriceData?.rd2?.filter((ele) => 
+  //         ele.A === srProductsData?.autocode && 
+  //         ele.B === srProductsData?.designno &&
+  //         ele.H === cSQopt?.split("-")[0] &&
+  //         ele.J === cSQopt?.split("-")[1]   
+  //         )
 
-          let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
+  //         let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0].S ?? 0));
+  //         // setCSQCPrice(showPrice2)
 
-          console.log({showPrice,showPrice1,showPrice2});
-          let gt = showPrice + showPrice1 + showPrice2;
-          setGrandTotal(gt)
+  //         let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
 
-  },[mtTypeOption,diaQColOpt,cSQopt])
+  //         console.log({showPrice,showPrice1,showPrice2});
+  //         let gt = showPrice + showPrice1 + showPrice2;
+  //         setGrandTotal(gt ?? 0)
+
+  // },[mtTypeOption,diaQColOpt,cSQopt])
 
   // useEffect(()=>{
 
@@ -164,6 +167,53 @@ const ProdDetail = () => {
   //   // setGrandTotal(gt)
 
   // },[mtPrice, dqcPrice, csqcPrice])
+
+  useEffect(() => {
+    let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+
+    let mtrd = getPriceData?.rd?.filter((ele) =>
+        ele?.A === srProductsData?.autocode &&
+        ele?.B === srProductsData?.designno &&
+        ele?.D === mtTypeOption
+    );
+
+    let showPrice = 0;
+    if (mtrd && mtrd.length > 0) {
+        showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
+    }
+
+    let diaqcprice = getPriceData?.rd1?.filter((ele) =>
+        ele.A === srProductsData?.autocode &&
+        ele.B === srProductsData?.designno &&
+        ele.H === diaQColOpt?.split("_")[0] &&
+        ele.J === diaQColOpt?.split("_")[1]
+    );
+
+    let showPrice1 = 0;
+    if (diaqcprice && diaqcprice.length > 0) {
+        showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
+    }
+
+    let csqcpirce = getPriceData?.rd2?.filter((ele) =>
+        ele.A === srProductsData?.autocode &&
+        ele.B === srProductsData?.designno &&
+        ele.H === cSQopt?.split("-")[0] &&
+        ele.J === cSQopt?.split("-")[1]
+    );
+
+    let showPrice2 = 0;
+    if (csqcpirce && csqcpirce.length > 0) {
+        showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+    }
+
+
+
+    console.log({ showPrice, showPrice1, showPrice2 });
+    let gt = showPrice + showPrice1 + showPrice2;
+    setGrandTotal(gt ?? 0);
+
+}, [mtTypeOption, diaQColOpt, cSQopt]);
+
         
   const handelLocalStorage = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
@@ -1221,7 +1271,7 @@ const ProdDetail = () => {
 
                 {isPriseShow == 0 && <div style={{ marginTop: "23px" }}>
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
-                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{`$${(productData?.price - grandTotal)?.toFixed(2)}`}</span>
+                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${(productData?.price - grandTotal) === 0 ? "Not Availabel" : (productData?.price - grandTotal)?.toFixed(2)}`}</span>
                   </p>
                 </div>}
 

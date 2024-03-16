@@ -193,7 +193,7 @@ export default function MyWishList() {
     }
 
     const handelProductSubmit = (product) => {
-        console.log('producrrrrrrrrrrr',JSON.stringify(product));
+        console.log('producrrrrrrrrrrr', JSON.stringify(product));
         // localStorage.setItem("srProductsData", JSON.stringify(product));
         // navigation("/productdetail");
     };
@@ -212,10 +212,12 @@ export default function MyWishList() {
             <div>
                 <div className='smiling-wishlist'>
                     <p className='SmiWishListTitle'>My Wishlist</p>
+
                     {wishlistData?.length !== 0 && <div className='smilingListTopButton'>
                         <button className='smiTopShareBtn'>SHARE WISHLIST</button>
                         <button className='smiTopClearBtn' onClick={handleRemoveAllWishList}>CLEAR ALL</button>
                         <button className='smiTopAddAllBtn' onClick={handleAddAll}>ADD TO CART ALL</button>
+                        <p style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigation('/productpage')}>Click To ProductList</p>
                     </div>}
 
                     <div className='smiWishLsitBoxMain'>
@@ -223,6 +225,7 @@ export default function MyWishList() {
                             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                 <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500 }}>No Data Available</p>
                                 <p>Please First Add To Wishlist Data</p>
+                                <p style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigation('/productpage')}>Click To ProductList</p>
                             </div>
                             :
                             wishlistData?.map(item => (
