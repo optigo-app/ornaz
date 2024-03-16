@@ -11,7 +11,7 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { GetCount } from '../../../Utils/API/GetCount'
-import { CartListCounts, WishListCounts, priceData } from '../../../../../Recoil/atom'
+import { CartListCounts, WishListCounts, designSet, priceData } from '../../../../../Recoil/atom'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 const ProdDetail = () => {
@@ -52,9 +52,12 @@ const ProdDetail = () => {
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
   const getPriceData = useRecoilValue(priceData);
+  const getDesignSet = useRecoilValue(designSet)
   const handelImgLoad = () => {
     setImgLoading(false)
   }
+
+  console.log(getDesignSet);
 
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
 
