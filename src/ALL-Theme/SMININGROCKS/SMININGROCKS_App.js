@@ -40,6 +40,7 @@ import Payment from './Pages/Components/Payment/Payment'
 import Confirmation from './Pages/Components/confirmation/Confirmation'
 import { GetCount } from './Utils/API/GetCount'
 import LoginOption from './Pages/Components/AuthScreen/LoginOption/LoginOption'
+import CartPage from './Pages/Components/home/Header/CartPage'
 // import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
 
 export default function SMININGROCKS_App() {
@@ -104,6 +105,7 @@ export default function SMININGROCKS_App() {
                     <Route path="/Payment" element={<Payment />} />
                     <Route path="/Confirmation" element={<Confirmation />} />
                     <Route path="/LoginOption" element={<LoginOption />} />
+                    <Route path="/CartPage" element={<CartPage />} />
                 </Routes>
             </div>
         </div>

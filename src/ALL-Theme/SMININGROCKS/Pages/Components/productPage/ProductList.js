@@ -65,82 +65,22 @@ const ProductList = () => {
   const [maxDiamondWt, setMaxDiamondWt] = useState(null);
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const getPdData = useRecoilValue(productDataNew)
   const getSearchData = useRecoilValue(searchData)
+  const [value1, setValue1] = useState([minPrice, maxPrice]);
+  const [value2, setValue2] = useState([minNetwt, maxNetwt]);
+  const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
+  const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
 
-
-    //RANGE FILTERS
-
-    const [value1, setValue1] = useState([minPrice, maxPrice]);
-    const [value2, setValue2] = useState([minNetwt, maxNetwt]);
-    const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
-    const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
-
-  console.log('getEarch.',getSearchData);
-
-  useEffect(() =>{
+  useEffect(() => {
     setNewProData(getSearchData)
   }, [getSearchData])
 
-
-  // useEffect(()=>{
-  //   const data = JSON.parse(localStorage.getItem("allproductlist"))
-  //   let loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail')) 
-
-  //   // setTimeout(()=>{
-  //     data?.map((product) => {
-
-  //         const newPriceData = priceDataApi.rd?.find(
-  //           (pda) => 
-  //             pda.A === product.autocode && 
-  //             pda.B === product.designno &&
-  //             pda.D === loginUserDetail?.cmboMetalType 
-  //         )
-
-  //         const newPriceData1 = priceDataApi.rd1?.find(
-  //           (pda) => 
-  //             pda.A === product.autocode && 
-  //             pda.B === product.designno && 
-  //             pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
-  //             pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
-  //         )
-
-  //         const newPriceData2 = priceDataApi.rd2?.find(
-  //           (pda) => 
-  //             pda.A === product.autocode && 
-  //             pda.B === product.designno && 
-  //             pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0] &&
-  //             pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1]
-
-  //         )
-
-  //         console.log("priceList",{newPriceData,newPriceData1,newPriceData2})
-
-  //         if (newPriceData || newPriceData1 || newPriceData2) {
-  //           product['price'] = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0)
-  //         } else {
-  //           product['price'] = "Not Availabel";
-  //         }
-
-  //       });
-
-  //       localStorage.setItem("allproductlist",JSON?.stringify(data))
-  //       setProductApiData2(data)
-  //       console.log("END");
-  //   // },1000)
-
-
-
-  // },[])
-
-  useEffect(()=>{
+  useEffect(() => {
 
     const data = JSON.parse(localStorage.getItem("allproductlist"));
     setProductApiData2(data)
 
-  },[])
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -175,27 +115,27 @@ const ProductList = () => {
         // console.log("newPriceData2",priceDataApi?.rd2?.find((te)=> te?.H !== "mix" && te?.H !== "MOTI" && te?.H !== "BEADS"));
         // console.log("newPriceData2",newPriceData2);
 
-            let price = 0;
-            let isLoading = true;
-            let markup = 0;
-            let metalrd=0;
-            let diard1=0;
-            let csrd2=0;
+        let price = 0;
+        let isLoading = true;
+        let markup = 0;
+        let metalrd = 0;
+        let diard1 = 0;
+        let csrd2 = 0;
 
         // console.log("newPriceData",newPriceData)
 
-            if (newPriceData || newPriceData1 || newPriceData2) {
-                price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
-                metalrd = newPriceData?.Z
-                diard1 = newPriceData1?.S
-                csrd2 = newPriceData2?.S ?? 0
-                markup = newPriceData?.AB
-                isLoading = false;
-            }
-            else{
-                // price = " " ;
-                isLoading = false;
-            }
+        if (newPriceData || newPriceData1 || newPriceData2) {
+          price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
+          metalrd = newPriceData?.Z
+          diard1 = newPriceData1?.S
+          csrd2 = newPriceData2?.S ?? 0
+          markup = newPriceData?.AB
+          isLoading = false;
+        }
+        else {
+          // price = " " ;
+          isLoading = false;
+        }
 
         return { ...product, price, isLoading, markup, metalrd, diard1, csrd2 };
       }));
@@ -260,275 +200,36 @@ const ProductList = () => {
     });
   }
 
-  // let product2Data = [];
-
-  // ProductApiData.data[0].map((ele) => {
-  //   let obj = {};
-  //   Object.entries(prodListData.ProductsList).map((objele) => {
-  //     obj[objele[0]] = ele[objele[1]];
-  //   });
-  //   product2Data.push(obj);
-  // });
-
-  // console.log("product2Data",ProductApiData?.data[0]?.map((ele)=>ele))
-
-  // if(location.state){
-  //   console.log("location",location.state.param1.value1)
-  //   // if(location.state.param1.label1 ==="collection"){
-  //     const data = productData.filter((pd)=> pd?.CollectionName === "AURORA")
-  //     console.log("data",data)
-  //   // }
-  // }
-
-  // if (location.state && location.state.param1 && location.state.param1.value1) {
-  //   console.log("location", location.state.param1.value1);
-  // }
-
-  // const data = productData.filter((pd) => pd && pd.CollectionName === "AURORA");
-
-
-
   useEffect(() => {
     const element = document.getElementById("top")
     element.scrollIntoView()
   }, []);
 
 
-
-  function updateProductsWithMetalColorName() {
-    productData?.forEach((product) => {
-      const metalColor = filterData?.MetalColorList?.find(
-        (color) => color.MetalColorid === product.MetalColorid
-      );
-      const categoryName = filterData?.CategoryList?.find(
-        (cate) => cate.Categoryid === product.Categoryid
-      );
-      const collectionName = filterData?.CollectionList?.find(
-        (coll) => coll.Collectionid === product.Collectionid
-      );
-      const mtpurity = filterData?.MetalPurityList?.find(
-        (mtp) => mtp.MetalPurityid === product.MetalPurityid
-      );
-      const prodtype = filterData?.ProductTypeList?.find(
-        (pt) => pt.Producttypeid === product.Producttypeid
-      );
-      const gendertype = filterData?.GenderList?.find(
-        (gen) => gen.Genderid === product.Genderid
-      );
-      const Berandtype = filterData?.BrandList?.find(
-        (brand) => brand.Brandid === product.Brandid
-      )
-      const MetalType = filterData?.MetalTypeList?.find(
-        (mt) => mt.MetalTypeid === product.MetalTypeid
-      )
-      const OcassionType = filterData?.OcassionList?.find(
-        (ocs) => ocs.Ocassionid === product.Ocassionid
-      )
-      const SubCategoryType = filterData?.SubCategoryList?.find(
-        (sct) => sct.SubCategoryid === product.SubCategoryid
-      )
-      const ThemeType = filterData?.ThemeList?.find(
-        (tl) => tl.Themeid === product.Themeid
-      )
-
-      if (metalColor) {
-        product.MetalColorName = metalColor.MetalColorName;
-      }
-      if (categoryName) {
-        product.CategoryName = categoryName.CategoryName;
-      }
-      if (collectionName) {
-        product.CollectionName = collectionName.CollectionName;
-      }
-      if (mtpurity) {
-        product.MetalPurity = mtpurity.MetalPurity;
-      }
-      if (prodtype) {
-        product.ProducttypeName = prodtype.ProducttypeName;
-      }
-      if (gendertype) {
-        product.GenderName = gendertype.GenderName;
-      }
-      if (Berandtype) {
-        product.BrandName = Berandtype.BrandName
-      }
-      if (MetalType) {
-        product.MetalTypeName = MetalType.MetalTypeName
-      }
-      if (OcassionType) {
-        product.OcassionName = OcassionType.OcassionName
-      }
-      if (SubCategoryType) {
-        product.SubCategoryName = SubCategoryType.SubCategoryName
-      }
-      if (ThemeType) {
-        product.ThemeName = ThemeType.ThemeName
-      }
-    });
-
-    return productData;
-  }
-
-
-  const diffCartData = useCallback(() => {
-
-    // let pdata;
-
-    ProductApiData2.forEach((pd) => {
-      const pdata = cartData?.find((cd) => pd.designno === cd.DesignNo)
-
-
-
-      if (pdata && !pd?.checkFlag) {
-        pd.checkFlag = true
-      }
-      else {
-        pd.checkFlag = false
-      }
-    })
-
-
-    return ProductApiData2
-
-  }, [ProductApiData2, cartData])
-
-  // diffCartData()
-
-  const diffWishData = useCallback(() => {
-
-    ProductApiData2.forEach((pd) => {
-      const pdata = WishData.find((cd) => pd.designno === cd.DesignNo)
-
-
-      if (pdata && !pd?.wishCheck) {
-        pd.wishCheck = true
-      }
-      else {
-        pd.wishCheck = false
-      }
-    })
-
-    return ProductApiData2
-
-  }, [ProductApiData2, WishData])
-
-
-  // diffWishData()
-
-  const removefromCart = () => {
-    ProductApiData2.map((pd) => {
-
-
-      if (cartRemoveData && pd.designno === cartRemoveData) {
-        pd.checkFlag = false
-      }
-
-      if (wishListRemoveData && pd.designno === wishListRemoveData) {
-        pd.wishCheck = false
-      }
-
-    })
-
-
-    return ProductApiData2
-    // // console.log("prodddd",product);
-    // let prodD;
-    // productData.forEach((pd)=>{
-
-    //   // let prodD = productData.find((p)=>p?.designno === product?.designno && p?.checkFlag === true)
-
-    //   // if(prodD){
-    //   //   pd.checkFlag = false
-    //   // }
-
-    // if(pd?.designno===product?.designno){
-    //    prodD = pd
-    // }
-    // if(prodD){
-    //   pd.checkFlag = false
-    // }
-
-    // })
-
-    // console.log("prodD",prodD);
-    // return productData
-  }
-
-  // removefromCart()
-
-  // ProductApiData2?.map((product) => {
-  //     console.log("product",product);
-
-  //    let loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail')) 
-
-  //   const newPriceData = priceDataApi.rd?.find(
-  //     (pda) => 
-  //       pda.A === product.autocode && 
-  //       pda.B === product.designno &&
-  //       pda.D === loginUserDetail?.cmboMetalType 
-  //   )
-
-  //   const newPriceData1 = priceDataApi.rd1?.find(
-  //     (pda) => 
-  //       pda.A === product.autocode && 
-  //       pda.B === product.designno && 
-  //       pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
-  //       pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
-  //   )
-
-  //   const newPriceData2 = priceDataApi.rd2?.find(
-  //     (pda) => 
-  //       pda.A === product.autocode && 
-  //       pda.B === product.designno && 
-  //       pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0] &&
-  //       pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1]
-
-  //   )
-
-
-
-  //   if (newPriceData || newPriceData1 || newPriceData2) {
-  //     product['price'] = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0)
-  //   } else {
-  //     product['price'] = "Not Availabel";
-  //   }
-
-
-
-  // });
-
-  //     localStorage.setItem("allproductlist",JSON?.stringify(product))
-  //     setProductApiData2(product)
-
-
-  let wislilistUpdate = () => {
-
-  }
-
   useEffect(() => {
     let newWishCheckData = (ProductApiData2 || []).map((pd) => {
-        const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode);
-        let wishCheck = !!newWish;
-        return { ...pd, wishCheck };
+      const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode);
+      let wishCheck = !!newWish;
+      return { ...pd, wishCheck };
     });
 
     console.log("newWishCheckData", newWishCheckData);
 
     try {
-        localStorage.setItem("allproductlist", JSON.stringify(newWishCheckData));
-        console.log("localStorage updated successfully!");
+      localStorage.setItem("allproductlist", JSON.stringify(newWishCheckData));
+      console.log("localStorage updated successfully!");
 
-        const localStorageData = JSON.parse(localStorage.getItem("allproductlist"));
+      const localStorageData = JSON.parse(localStorage.getItem("allproductlist"));
 
-        if (JSON.stringify(newWishCheckData) !== JSON.stringify(ProductApiData2)) {
-            setProductApiData2(newWishCheckData);
-        }
+      if (JSON.stringify(newWishCheckData) !== JSON.stringify(ProductApiData2)) {
+        setProductApiData2(newWishCheckData);
+      }
 
-        console.log("Retrieved data from localStorage:", localStorageData);
+      console.log("Retrieved data from localStorage:", localStorageData);
     } catch (error) {
-        console.error("Error storing data in localStorage:", error);
+      console.error("Error storing data in localStorage:", error);
     }
-}, [WishData, ProductApiData2]);
+  }, [WishData, ProductApiData2]);
 
   let cartlistUpdate = async () => {
     let newCartCheckData = (ProductApiData2)?.map((pd) => {
@@ -541,16 +242,8 @@ const ProductList = () => {
       } else {
         checkFlag = false
       }
-
-      //  if(pd.wishCheck === true){
-      //   pd.wishCheck = false;
-      //  }
-
       return { ...pd, checkFlag }
-
     })
-
-    // await localStorage.setItem("allproductlist", JSON.stringify(newCartCheckData))
     setProductApiData2(newCartCheckData)
   }
 
@@ -558,22 +251,6 @@ const ProductList = () => {
     cartlistUpdate()
   }, [cartData])
 
-
-  // updateProductsWithMetalColorName()?.forEach((prods) => {
-  //   let fullTitle =
-  //     prods.CollectionName +
-  //     " " +
-  //     prods.totaldiamondweight +
-  //     " " +
-  //     prods.diamondquality +
-  //     " " +
-  //     "Diamond" +
-  //     " " +
-  //     prods.CategoryName +
-  //     " " +
-  //     prods.designno;
-  //   prods.title = fullTitle;
-  // });
 
   const handelProductSubmit = (product) => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
@@ -622,32 +299,6 @@ const ProductList = () => {
     }
   }
 
-
-  const filteredObjects = Object.entries(filterChecked)
-    .filter(([key, value]) => value.checked)
-    .reduce((acc, [key, value]) => {
-      acc[key] = value;
-      return acc;
-    }, {});
-
-
-  const sepeTypeVal = Object.entries(filteredObjects).map(ele => {
-    return { type: ele[1].type, value: ele[1].value }
-  })
-
-  const filteredProducts = sepeTypeVal.map((st) => (newProData.length ? newProData : productData).filter((pd) => pd[st.type] === st.value)).reverse()
-
-  const mergedArray = [...filteredProducts].reduce((acc, curr) => acc.concat(curr), []);
-  const finalDataOfDisplaying = () => {
-    if (mergedArray.length && mergedArray) {
-      return mergedArray
-    }
-    else {
-      return updateProductsWithMetalColorName()
-    }
-  }
-
-
   const getCartAndWishListData = async () => {
 
     const UserEmail = localStorage.getItem("registerEmail")
@@ -683,7 +334,6 @@ const ProductList = () => {
 
   }
 
-
   useEffect(() => {
 
     getCartAndWishListData()
@@ -691,8 +341,6 @@ const ProductList = () => {
     getCountFunc()
 
   }, [])
-
-
 
   const handelWishList = async (event, prod) => {
 
@@ -1042,23 +690,16 @@ const ProductList = () => {
 
 
   useEffect(() => {
-
-
     if (getHeaderData2?.label2 === "brand") {
-
       let data = productData.filter((pd) => pd && pd.BrandName === getHeaderData2?.value2)
-
       setNewProData(data);
-
     }
 
     if (getHeaderData2?.label2 === "category") {
-
       let data = productData?.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
       setNewProData(data);
     }
   }, [getHeaderData2])
-
 
 
 
@@ -1071,12 +712,6 @@ const ProductList = () => {
       newMenuProdData()
     }
   }, [getHeaderData])
-
-
-
-
-
-
 
 
   const getDesignPriceList = async () => {
@@ -1118,7 +753,6 @@ const ProductList = () => {
 
   useEffect(() => {
     getDesignPriceList()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   //for price range
@@ -1175,22 +809,22 @@ const ProductList = () => {
     });
     setNewProData(filteredData);
   };
-  
-const handlePageReload = () => {
-      setNewProData(ProductApiData2);
-      setMinPrice(0)
-      setMaxPrice(maxPrice)
-      setValue1([minPrice, maxPrice])
-      setMinNetwt(0)
-      setMaxNetwt(maxNetwt)
-      setValue2([0, maxNetwt])
-      setMinGrossWt(0)
-      setMaxGrossWtt(maxGrosswt)
-      setValue3([0, maxGrosswt])
-      setMinDiamondWt(0)
-      setMaxDiamondWt(maxDiamondWt)
-      setValue4([0, maxDiamondWt])
-}
+
+  const handlePageReload = () => {
+    setNewProData(ProductApiData2);
+    setMinPrice(0)
+    setMaxPrice(maxPrice)
+    setValue1([minPrice, maxPrice])
+    setMinNetwt(0)
+    setMaxNetwt(maxNetwt)
+    setValue2([0, maxNetwt])
+    setMinGrossWt(0)
+    setMaxGrossWtt(maxGrosswt)
+    setValue3([0, maxGrosswt])
+    setMinDiamondWt(0)
+    setMaxDiamondWt(maxDiamondWt)
+    setValue4([0, maxDiamondWt])
+  }
 
   return (
     <div id="top">
@@ -1229,19 +863,7 @@ const handlePageReload = () => {
                 <ul className="d-flex">
                   <li className="finejwelery me-4" id="finejwelery">Filters</li>
                   <li className="finejwelery" id="finejwelery" onClick={() => handlePageReload()}>All</li>
-                  {/* <li className="finejli">Rings</li>
-                  <li className="finejli">Necklaces</li>
-                  <li className="finejli">Earrings</li>
-                  <li className="finejli">Bracelets</li>
-                  <li className="finejli">All</li> */}
                 </ul>
-                {/* <hr
-                  style={{
-                    width: "239px",
-                    // marginTop: "30px",
-                    marginLeft: "30px",
-                  }}
-                /> */}
                 <div>
                   {NewFilterData().map((ele, index) => (
                     <>
@@ -1613,9 +1235,9 @@ const handlePageReload = () => {
                 >
                   {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
                   {(newProData?.length ? newProData : ProductApiData2)?.map((products, i) => (
-                    
-                      <div
-                        style={{
+
+                    <div
+                      style={{
                         width: "33.33%",
                         border: "1px solid #e1e1e1",
                         textAlign: "center",
@@ -1652,7 +1274,6 @@ const handlePageReload = () => {
                           }}
                         >
                           {products?.TitleLine}
-
                         </p>
                       </div>
                       <div>
