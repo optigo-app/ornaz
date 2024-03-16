@@ -135,6 +135,13 @@ const ProductList = () => {
 
   // },[])
 
+  useEffect(()=>{
+
+    const data = JSON.parse(localStorage.getItem("allproductlist"));
+    setProductApiData2(data)
+
+  },[])
+
   useEffect(() => {
     const fetchData = async () => {
         const data = JSON.parse(localStorage.getItem("allproductlist"));
@@ -189,7 +196,6 @@ const ProductList = () => {
                 // price = " " ;
                 isLoading = false;
             }
-
 
             return { ...product, price ,isLoading , markup, metalrd, diard1, csrd2};
         }));
@@ -496,56 +502,61 @@ const ProductList = () => {
 
   console.log("wishData",WishData);
 
-  useEffect(()=>{
+ const wislilistUpdate = () => {
+ 
+  debugger
+      const newWishCheckData = (ProductApiData2)?.map((pd)=>{
+  
+        const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+  
+        let wishCheck = false
+  
+        if (newWish) {
+         wishCheck = true
+       }else{
+        wishCheck = false
+       }
+  
+       return {...pd,wishCheck}
+  
+     })
 
-    let newWishCheckData = (ProductApiData2)?.map((pd)=>{
-
-      const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
-
-      let wishCheck = false
-      if (newWish) {
-       wishCheck = true
-     }else{
-      wishCheck = false
-     }
-
-     return {...pd,wishCheck}
-
-   })
-
-    console.log("newWishCheckData",newWishCheckData)
-    if(newWishCheckData){
       localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
       setProductApiData2(newWishCheckData)
-    }
    
-  },[WishData])
+  }
 
   useEffect(()=>{
-
-    let newCartCheckData = (ProductApiData2)?.map((pd)=>{
-
-      let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
-
-      let checkFlag = false
-      if (newWish) {
-        checkFlag = true
-     }else{
-      checkFlag = false
-     }
-
-    //  if(pd.wishCheck === true){
-    //   pd.wishCheck = false;
-    //  }
-
-     return {...pd,checkFlag}
-
-   })
-
-     localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
-     setProductApiData2(newCartCheckData)
+    wislilistUpdate()
+  },[WishData])
 
 
+let cartlistUpdate = () =>{
+  const newCartCheckData = (ProductApiData2)?.map((pd)=>{
+
+    let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+
+    let checkFlag = false
+    if (newWish) {
+      checkFlag = true
+   }else{
+    checkFlag = false
+   }
+
+  //  if(pd.wishCheck === true){
+  //   pd.wishCheck = false;
+  //  }
+
+   return {...pd,checkFlag}
+
+ })
+
+  localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+   setProductApiData2(newCartCheckData)
+}
+
+  useEffect(()=>{
+    cartlistUpdate()
   },[cartData])
 
 
@@ -569,9 +580,6 @@ const ProductList = () => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
     navigate("/productdetail");
   };
-
-
-
 
   const NewFilterData = () => {
     const newFilter = [];
@@ -679,11 +687,10 @@ const ProductList = () => {
 
   useEffect(() => {
 
-    getCartAndWishListData();
+    getCartAndWishListData()
     // getCountApi()
     getCountFunc()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
