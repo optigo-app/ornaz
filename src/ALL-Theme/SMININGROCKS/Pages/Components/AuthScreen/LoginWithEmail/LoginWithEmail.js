@@ -7,10 +7,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CryptoJS from 'crypto-js';
 import { useSetRecoilState } from 'recoil';
-import { loginState, productDataNew } from '../../../../../../Recoil/atom';
+import { designSet, loginState, productDataNew } from '../../../../../../Recoil/atom';
 import { productListApiCall } from '../../../../Utils/API/ProductListAPI';
 import { ToastContainer, toast } from 'react-toastify';
 import './LoginWithEmail.css'
+import { DesignSet } from '../../../../Utils/API/DesignSet';
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');
@@ -24,11 +25,19 @@ export default function LoginWithEmail() {
 
     const setPdData = useSetRecoilState(productDataNew)
     const setIsLoginState = useSetRecoilState(loginState)
+    const setDesignList = useSetRecoilState(designSet)
 
 
     let pdDataCalling = async () => {
         await productListApiCall().then((res) => {
             setPdData(res)
+        })
+    }
+
+    let designDataCall = async () =>{
+        await DesignSet().then((res)=>{
+            let fData = res.Data?.rd
+            setDesignList(fData)
         })
     }
 
@@ -86,6 +95,7 @@ export default function LoginWithEmail() {
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 pdDataCalling()
+                designDataCall()    
                 navigation('/');
             } else {
                 errors.confirmPassword = 'Password is Invalid'
