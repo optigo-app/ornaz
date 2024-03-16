@@ -17,7 +17,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 
 
@@ -69,8 +69,10 @@ const ProductList = () => {
 
   const getPdData = useRecoilValue(productDataNew)
   const getSearchData = useRecoilValue(searchData)
-
-
+  const mtName = useRecoilValue(metalTypeG)
+  const dqcName = useRecoilValue(diamondQualityColorG)
+  const csqcName = useRecoilValue(colorstoneQualityColorG)
+  console.log(mtName, dqcName, csqcName);
     //RANGE FILTERS
 
     const [value1, setValue1] = useState([minPrice, maxPrice]);
@@ -500,11 +502,9 @@ const ProductList = () => {
   //     localStorage.setItem("allproductlist",JSON?.stringify(product))
   //     setProductApiData2(product)
 
-  console.log("wishData",WishData);
 
  const wislilistUpdate = () => {
  
-  debugger
       const newWishCheckData = (ProductApiData2)?.map((pd)=>{
   
         const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
@@ -917,7 +917,7 @@ let cartlistUpdate = () =>{
           "MetalColorid": Number(`${product?.MetalColorid}`),
           "MetalPurity": `${product?.MetalPurity}`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-          "MetalTypeName": `${product?.MetalTypeName}`,
+          "MetalTypeName": `${ product?.MetalTypeName}`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
           "MetalWeight": Number(`${product?.MetalWeight}`),
           "OcassionName": `${product?.OcassionName ?? ""}`,

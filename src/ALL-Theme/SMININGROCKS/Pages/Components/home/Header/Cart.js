@@ -3,8 +3,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { Box, CircularProgress, Divider, Drawer, Tab, Tabs, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { CartListCounts, WishListCounts } from '../../../../../../Recoil/atom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { CartListCounts, WishListCounts, priceData } from '../../../../../../Recoil/atom';
 import { GetCount } from '../../../../Utils/API/GetCount';
 
 
@@ -48,21 +48,26 @@ export default function Cart({ open, toggleCartDrawer }) {
     const [DaimondQualityColor, setDaimondQualityColor] = useState([]);
     const [showDropdowns, setShowDropdowns] = useState(Array(cartListData.length).fill(false));
 
+    const [lastEnteredQuantityIndex, setLastEnteredQuantityIndex] = useState(null);
+    const [lastEnteredQuantity, setLastEnteredQuantity] = useState('');
+    const [remarks, setRemarks] = useState({});
+    const [Mainremarks, setMainRemarks] = useState('');
+    const [value, setValue] = React.useState(0);
+
+    const [selectedSize, setSelectedSize] = useState();
+    const [selectedMetalType, setSelectedMetalType] = useState();
+    const [selectedMetalColor, setSelectedMetalColor] = useState();
+    const [selectedDiamondQualityColor, setSelectedDiamondQualityColor] = useState();
+    const [selectedColorstoneQualityColor, setSelectedColorstoneQualityColor] = useState();
+    const [grandTotal, setGrandTotal] = useState(0);
+
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
+    const getPriceData = useRecoilValue(priceData);
 
     const navigation = useNavigate();
-
-
-    const getCountFunc = async () => {
-        await GetCount().then((res) => {
-            if (res) {
-                setCartCount(res.CountCart)
-                setWishCount(res.WishCount)
-            }
-        })
-
-    }
+console.log("cart list data",cartListData);
+  
 
 
     useEffect(() => {
@@ -96,6 +101,18 @@ export default function Cart({ open, toggleCartDrawer }) {
             setMetalColorData(storedData3);
         }
     }, []);
+
+
+
+    const getCountFunc = async () => {
+        await GetCount().then((res) => {
+            if (res) {
+                setCartCount(res.CountCart)
+                setWishCount(res.WishCount)
+            }
+        })
+
+    }
 
     const getSizeData = async (item, index) => {
 
@@ -230,12 +247,10 @@ export default function Cart({ open, toggleCartDrawer }) {
 
     }
 
-    const [remarks, setRemarks] = useState({});
-    const [Mainremarks, setMainRemarks] = useState('');
-
     const handleInputChangeMainRemarks = (e) => {
         setMainRemarks(e.target.value)
     }
+
     const submitMainRemrks = async () => {
         if (!Mainremarks || Mainremarks.trim() === '') {
             alert('Enter a value for remarks.');
@@ -306,8 +321,6 @@ export default function Cart({ open, toggleCartDrawer }) {
         }
     };
 
-    const [lastEnteredQuantityIndex, setLastEnteredQuantityIndex] = useState(null);
-    const [lastEnteredQuantity, setLastEnteredQuantity] = useState('');
 
     const handleInputChange = (event, index) => {
         let { value } = event.target;
@@ -354,16 +367,56 @@ export default function Cart({ open, toggleCartDrawer }) {
         }
     };
 
-
-    const [value, setValue] = React.useState(0);
-
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
 
 
+    useEffect(()=>{
 
+        let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+    
+            let mtrd = getPriceData?.rd?.filter((ele) => 
+                ele?.A === srProductsData?.autocode && 
+                ele?.B === srProductsData?.designno &&
+                ele?.D === selectedMetalType
+              )
+              console.log("metal",mtrd);
+            //   let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
+            //   console.log("metal price",showPrice);
+              // setMetalPrice(showPrice)
+    
+            let diaqcprice = getPriceData?.rd1?.filter((ele) => 
+              ele.A === srProductsData?.autocode && 
+              ele.B === srProductsData?.designno &&
+              ele.H === selectedDiamondQualityColor?.split("_")[0] &&
+              ele.J === selectedDiamondQualityColor?.split("_")[1] 
+              )
+            console.log("diamond ",diaqcprice);
+            //   let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
+            //   console.log("diamond price",showPrice1);
+              // setDQCPrice(showPrice1)
+    
+            let csqcpirce = getPriceData?.rd2?.filter((ele) => 
+              ele.A === srProductsData?.autocode && 
+              ele.B === srProductsData?.designno &&
+              ele.H === selectedColorstoneQualityColor?.split("-")[0] &&
+              ele.J === selectedColorstoneQualityColor?.split("-")[1]   
+              )
+              console.log("colorstone",csqcpirce);
+            //   let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+            //   console.log("colorstone price",showPrice2);
+            //   setCSQCPrice(showPrice2)
+    
+            //   let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
+    
+            //   console.log({showPrice,showPrice1,showPrice2});
+            //   let gt = showPrice + showPrice1 + showPrice2;
+            //   console.log(gt);
+            //   setGrandTotal(gt)
+    
+      },[selectedMetalType, selectedDiamondQualityColor, selectedColorstoneQualityColor])
     
 
     return (
@@ -453,6 +506,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                     ) : (
                         <div>
                             {cartListData?.map((item, index) => (
+                                
                                 <div key={item.id} className="smiling-cartBoxMain">
                                     <div className='smilingCartMobileMain' style={{ display: 'flex' }}>
                                         <div
@@ -530,7 +584,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             margin: "10px 10px 0px 10px",
                                                         }}
                                                     />
-                                                    {isMetalCutoMizeFlag == 1 &&
+                                                    {isMetalCutoMizeFlag === 1 &&
                                                         <div
                                                             style={{
                                                                 display: "flex",
@@ -542,6 +596,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                                 METAL COLOR:
                                                             </label>
                                                             <select
+                                                                value={selectedMetalColor}
                                                                 style={{
                                                                     border: "none",
                                                                     outline: "none",
@@ -562,7 +617,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                     style={{ display: "flex", width: "100%", marginTop: "12px" }}
                                                     className="srcolorsizecarat"
                                                 >
-                                                    {isDaimondCstoFlag == 1 && <div
+                                                    {isDaimondCstoFlag === 1 && <div
                                                         style={{
                                                             display: "flex",
                                                             flexDirection: "column",
@@ -573,6 +628,8 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             DAIMOND QUALITY COLOR:
                                                         </label>
                                                         <select
+                                                        value={selectedDiamondQualityColor}
+                                                        onChange={(e) => setSelectedDiamondQualityColor(e.target.value)}
                                                             style={{
                                                                 border: "none",
                                                                 outline: "none",
@@ -581,8 +638,8 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             }}
                                                         >
                                                             {colorData.map((colorItem) => (
-                                                                <option key={colorItem.ColorId} value={colorItem.ColorId}>
-                                                                    {colorItem.color}
+                                                                <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
+                                                                    {`${colorItem.Quality}_${colorItem.color}`}
                                                                 </option>
                                                             ))}
                                                         </select>
@@ -596,7 +653,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             margin: "0px 10px 0px 10px",
                                                         }}
                                                     />
-                                                    {isMetalCutoMizeFlag == 1 && <div
+                                                    {isMetalCutoMizeFlag === 1 && <div
                                                         style={{
                                                             display: "flex",
                                                             flexDirection: "column",
@@ -607,15 +664,18 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             METAL TYPE:
                                                         </label>
                                                         <select
+                                                            value={selectedMetalType}
+                                                            onChange={(e) => setSelectedMetalType(e.target.value)}
                                                             style={{
                                                                 border: "none",
                                                                 outline: "none",
                                                                 color: "#7d7f85",
                                                                 fontSize: "12.5px",
                                                             }}
+                                                            defaultValue={item?.metal}
                                                         >
                                                             {metalType.map((data, index) => (
-                                                                <option key={index}>
+                                                                <option key={index} value={data.metalType}>
                                                                     {data.metaltype}
                                                                 </option>
                                                             ))}
@@ -623,7 +683,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                     </div>}
                                                 </div>
                                                 <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
-                                                {isCColrStoneCustFlag == 1 && <div
+                                                {isCColrStoneCustFlag === 1 && <div
                                                     style={{
                                                         display: "flex",
                                                         flexDirection: "column",
@@ -634,6 +694,8 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                         COLOR STONE QUALITY COLOR:
                                                     </label>
                                                     <select
+                                                        value={selectedColorstoneQualityColor}
+                                                        onChange={(e) => setSelectedColorstoneQualityColor(e.target.value)}
                                                         style={{
                                                             border: "none",
                                                             outline: "none",
@@ -642,8 +704,8 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                         }}
                                                     >
                                                         {DaimondQualityColor.map((data, index) => (
-                                                            <option key={index}>
-                                                                {data.color}
+                                                            <option key={index} value={`${data.Quality}-${data.color}`}>
+                                                                {`${data.Quality}-${data.color}`}
                                                             </option>
                                                         ))}
                                                     </select>
@@ -661,7 +723,10 @@ export default function Cart({ open, toggleCartDrawer }) {
                                         </div>
                                     </div>
                                     <div style={{display: 'flex' ,justifyContent: 'flex-end'}}>
-                                        <p style={{marginRight: '50px'}}>Price : {item.UnitCost === 0 ? "Not Available" : item.UnitCost} </p>
+                                        <p style={{marginRight: '50px'}}> Price : {item.UnitCost === 0 ? "Not Available" : item.UnitCost}</p>
+                                                
+                                        {/* {`$${(item.UnitCost === 0 ? "Not Available" : (item?.UnitCost - grandTotal))?.toFixed(2)}`}</p> */}
+{/* {item.UnitCost === 0 ? "Not Available" : item.UnitCost}  */}
                                     </div>
                                     <div className='similingCartBotttomMain'>
                                         <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center', }}>
@@ -715,7 +780,6 @@ export default function Cart({ open, toggleCartDrawer }) {
                                             </button>
                                         </div>
                                     </div>
-
                                 </div>
                             ))}
                             <textarea
@@ -743,7 +807,6 @@ export default function Cart({ open, toggleCartDrawer }) {
                     <div className="placeOrderBtnMain">
                         <button
                             className="placeOrderBtn"
-
                             onClick={(event) => {
                                 toggleCartDrawer(false)(event);
                                 navigation('/Delivery');
@@ -777,6 +840,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 <div key={item.id} className="smiling-cartBoxMainImageView">
                                     <div className='smilingCartMobileMain' style={{ display: 'flex' }}>
                                         <img
+                                            alt=''
                                             src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
                                             className="smiling-cartBoxImgView"
                                         />
