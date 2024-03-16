@@ -11,8 +11,8 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { GetCount } from '../../../Utils/API/GetCount'
-import { CartListCounts, WishListCounts, designSet, priceData } from '../../../../../Recoil/atom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts, designSet, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData } from '../../../../../Recoil/atom'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 const ProdDetail = () => {
 
@@ -36,11 +36,11 @@ const ProdDetail = () => {
   const [isPriseShow, setIsPriceShow] = useState()
 
   const [sizeOption, setSizeOption] = useState();
-  const [diaQColOpt, setDiaQColOpt] = useState();
-  const [mtTypeOption, setmtTypeOption] = useState();
-  const [cSQopt, setCSQOpt] = useState();
+  const [diaQColOpt, setDiaQColOpt] = useRecoilState(diamondQualityColorG);
+  const [mtTypeOption, setmtTypeOption] = useRecoilState(metalTypeG);
+  const [cSQopt, setCSQOpt] = useRecoilState(colorstoneQualityColorG);
   const [colorImageData, setColorImageData] = useState([]);
-
+  
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
 
@@ -508,8 +508,8 @@ const ProdDetail = () => {
           "metaltypeid": `${product?.MetalTypeid}`,
           "metalcolorid": `${product?.MetalColorid}`,
           "stockno": "",
-          "DQuality": `${product?.diamondquality?.split(",")[0]}`,
-          "DColor": `${product?.diamondcolorname}`,
+          "DQuality":  `${(diaQColOpt?.split('_')[0] ? diaQColOpt?.split('_')[0] : product?.diamondquality?.split(",")[0]) }`,
+          "DColor":  `${diaQColOpt?.split('_')[1] ? diaQColOpt?.split('_')[1] : product?.diamondcolorname }`,
           "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
           "AdditionalValWt": Number(`${product?.AdditionalValWt}`),
           "BrandName": `${product?.BrandName ?? ""}`,
@@ -538,9 +538,9 @@ const ProdDetail = () => {
           "MasterManagement_labname": "",
           "MetalColorName": `${product?.MetalColorName}`,
           "MetalColorid": Number(`${product?.MetalColorid}`),
-          "MetalPurity": `${product?.MetalPurity}`,
+          "MetalPurity": `${mtTypeOption ? (mtTypeOption?.split(' ')[1]) : product?.MetalPurity }`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-          "MetalTypeName": `${product?.MetalTypeName}`,
+          "MetalTypeName": `${mtTypeOption ? mtTypeOption?.split(' ')[0] : product?.MetalTypeName  }`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
           "MetalWeight": Number(`${product?.MetalWeight}`),
           "OcassionName": `${product?.OcassionName ?? ""}`,
@@ -553,13 +553,15 @@ const ProdDetail = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
-          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
-          "colorstonecolorname": `${product?.colorstonecolorname}`,
-          "colorstonequality": `${product?.colorstonequality}`,
-          "diamondcolorname": `${product?.diamondcolorname}`,
+          // "UnitCost": `${grandTotal ? grandTotal : (product?.price === "Not Available" ? 0 : product?.price)}`,
+          "UnitCost": `${(product?.price - grandTotal)}`,
+          // "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
+          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : (product?.price - grandTotal)) + (product?.markup ?? 0)}`),
+          "colorstonecolorname": `${product?.colorstonecolorname ? product?.colorstonecolorname : cSQopt?.split('-')[1]}`,
+          "colorstonequality": `${product?.colorstonequality ? product?.colorstonequality  : cSQopt?.split('-')[0] }`,
+          "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
           "diamondpcs": Number(`${product?.diamondpcs}`),
-          "diamondquality": `${product?.diamondquality?.split(",")[0]}`,
+          "diamondquality": `${(product?.diamondquality?.split(",")[0]) ? product?.diamondquality?.split(",")[0] : diaQColOpt?.split('_')[0] }`,
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
@@ -582,7 +584,7 @@ const ProdDetail = () => {
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "quantity": `${product?.quantity ?? "1"}`
         }
-
+      console.log("finalJSON",finalJSON);
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
         const wishToCartEncData1 = btoa(JSON.stringify(wishToCartEncData));
 
@@ -807,8 +809,9 @@ const ProdDetail = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
-          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
+          // "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
+          "UnitCost": `${(productData?.price - grandTotal)?.toFixed(2)}`,
+          "UnitCostWithmarkup":(`${(productData?.price - grandTotal)?.toFixed(2) + (product?.markup ?? 0)}`),
           "autocode": `${product?.autocode}`,
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
@@ -842,7 +845,6 @@ const ProdDetail = () => {
           "UploadLogicalPath": `${product?.UploadLogicalPath ?? ""}`,
           "ukey": `${storeInit?.ukey}`
         }
-
 
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
 
@@ -909,6 +911,9 @@ const ProdDetail = () => {
     localStorage.setItem("sizeData",JSON.stringify(data))
     setSizeOption(data)
   }
+
+
+  console.log("price",productData?.price - grandTotal, productData?.price, grandTotal);
 
 
 

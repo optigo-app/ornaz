@@ -44,3 +44,16 @@ export const designSet = atom({
   key:'designSet',
   default:[]
 })
+
+export const metalTypeG = atom({
+  key:'metalType',
+  default: ''
+})
+export const diamondQualityColorG = atom({
+  key:'diamondQualityColor',
+  default: ''
+})
+export const colorstoneQualityColorG = atom({
+  key:'colorstoneQualityColor',
+  default: ''
+})
