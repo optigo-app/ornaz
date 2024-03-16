@@ -133,11 +133,7 @@ export const productListApiCall = async() =>{
             }
             pdList.push(mergedItem); // Push the merged item inside the forEach loop
         });
-
-
         console.log("pdList",pdList);
-
-        
     });
     
     localStorage.setItem("allproductlist", JSON.stringify(pdList));

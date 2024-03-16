@@ -70,7 +70,17 @@ const ProductList = () => {
   const getPdData = useRecoilValue(productDataNew)
   const getSearchData = useRecoilValue(searchData)
 
-  useEffect(() => {
+
+    //RANGE FILTERS
+
+    const [value1, setValue1] = useState([minPrice, maxPrice]);
+    const [value2, setValue2] = useState([minNetwt, maxNetwt]);
+    const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
+    const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
+
+  console.log('getEarch.',getSearchData);
+
+  useEffect(() =>{
     setNewProData(getSearchData)
   }, [getSearchData])
 
@@ -125,6 +135,13 @@ const ProductList = () => {
 
   // },[])
 
+  useEffect(()=>{
+
+    const data = JSON.parse(localStorage.getItem("allproductlist"));
+    setProductApiData2(data)
+
+  },[])
+
   useEffect(() => {
     const fetchData = async () => {
       const data = JSON.parse(localStorage.getItem("allproductlist"));
@@ -158,28 +175,27 @@ const ProductList = () => {
         // console.log("newPriceData2",priceDataApi?.rd2?.find((te)=> te?.H !== "mix" && te?.H !== "MOTI" && te?.H !== "BEADS"));
         // console.log("newPriceData2",newPriceData2);
 
-        let price = 0;
-        let isLoading = true;
-        let markup = 0;
-        let metalrd = 0;
-        let diard1 = 0;
-        let csrd2 = 0;
+            let price = 0;
+            let isLoading = true;
+            let markup = 0;
+            let metalrd=0;
+            let diard1=0;
+            let csrd2=0;
 
         // console.log("newPriceData",newPriceData)
 
-        if (newPriceData || newPriceData1 || newPriceData2) {
-          price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
-          metalrd = newPriceData?.Z
-          diard1 = newPriceData1?.S
-          csrd2 = newPriceData2?.S ?? 0
-          markup = newPriceData?.AB
-          isLoading = false;
-        }
-        else {
-          // price = " " ;
-          isLoading = false;
-        }
-
+            if (newPriceData || newPriceData1 || newPriceData2) {
+                price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
+                metalrd = newPriceData?.Z
+                diard1 = newPriceData1?.S
+                csrd2 = newPriceData2?.S ?? 0
+                markup = newPriceData?.AB
+                isLoading = false;
+            }
+            else{
+                // price = " " ;
+                isLoading = false;
+            }
 
         return { ...product, price, isLoading, markup, metalrd, diard1, csrd2 };
       }));
@@ -564,9 +580,6 @@ const ProductList = () => {
     navigate("/productdetail");
   };
 
-
-
-
   const NewFilterData = () => {
     const newFilter = [];
     filterData?.SideMenuList?.forEach((ele) => {
@@ -673,11 +686,10 @@ const ProductList = () => {
 
   useEffect(() => {
 
-    getCartAndWishListData();
+    getCartAndWishListData()
     // getCountApi()
     getCountFunc()
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
@@ -1042,7 +1054,7 @@ const ProductList = () => {
 
     if (getHeaderData2?.label2 === "category") {
 
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
+      let data = productData?.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
       setNewProData(data);
     }
   }, [getHeaderData2])
@@ -1051,7 +1063,7 @@ const ProductList = () => {
 
 
   const newMenuProdData = () => {
-    let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
+    let data = productData?.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
     setNewProData(data)
   }
   useEffect(() => {
@@ -1063,12 +1075,7 @@ const ProductList = () => {
 
 
 
-  //RANGE FILTERS
 
-  const [value1, setValue1] = useState([minPrice, maxPrice]);
-  const [value2, setValue2] = useState([minNetwt, maxNetwt]);
-  const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
-  const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
 
 
 
@@ -1168,22 +1175,22 @@ const ProductList = () => {
     });
     setNewProData(filteredData);
   };
-
-  const handlePageReload = () => {
-    setProductApiData2(ProductApiData2);
-    setMinPrice(0)
-    setMaxPrice(maxPrice)
-    setValue1([minPrice, maxPrice])
-    setMinNetwt(0)
-    setMaxNetwt(maxNetwt)
-    setValue2([0, maxNetwt])
-    setMinGrossWt(0)
-    setMaxGrossWtt(maxGrosswt)
-    setValue3([0, maxGrosswt])
-    setMinDiamondWt(0)
-    setMaxDiamondWt(maxDiamondWt)
-    setValue4([0, maxDiamondWt])
-  }
+  
+const handlePageReload = () => {
+      setNewProData(ProductApiData2);
+      setMinPrice(0)
+      setMaxPrice(maxPrice)
+      setValue1([minPrice, maxPrice])
+      setMinNetwt(0)
+      setMaxNetwt(maxNetwt)
+      setValue2([0, maxNetwt])
+      setMinGrossWt(0)
+      setMaxGrossWtt(maxGrosswt)
+      setValue3([0, maxGrosswt])
+      setMinDiamondWt(0)
+      setMaxDiamondWt(maxDiamondWt)
+      setValue4([0, maxDiamondWt])
+}
 
   return (
     <div id="top">
@@ -1605,10 +1612,10 @@ const ProductList = () => {
                   }}
                 >
                   {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
-                  {(newProData.length ? newProData : ProductApiData2)?.map((products, i) => (
-
-                    <div
-                      style={{
+                  {(newProData?.length ? newProData : ProductApiData2)?.map((products, i) => (
+                    
+                      <div
+                        style={{
                         width: "33.33%",
                         border: "1px solid #e1e1e1",
                         textAlign: "center",
