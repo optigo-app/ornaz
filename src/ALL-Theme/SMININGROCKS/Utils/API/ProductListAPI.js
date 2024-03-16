@@ -97,33 +97,8 @@ export const productListApiCall = async() =>{
       "p":encData
     }
 
-    // await CommonAPI(body).then((res)=>{
-    //    pdList.push(res?.Data.rd)
-    //    let pdData = res?.Data.rd;
-    // //    pdData.forEach(ele => {
-    // // });
-    //    localStorage.setItem("allproductlist",JSON.stringify(pdData))
-
-
-    // })
-
-    // let pdl=[];
-
-    // pdList?.map((pd)=>{
-    // const mergedItem = {};
-    // pd.map((p)=>{
-    //     for (let key in p) {
-    //         if (keyMapping[key]) {
-    //             mergedItem[keyMapping[key]] = p[key];
-    //         }
-    //     }
-    // })
-    // pdl.push(mergedItem)
-    // })
-
     await CommonAPI(body).then((res) => {
         let pdData = res?.Data.rd;
-        // let pdList =[];
         pdData.forEach(p => {
             const mergedItem = {};
             for (let key in p) {
@@ -131,7 +106,7 @@ export const productListApiCall = async() =>{
                     mergedItem[keyMapping[key]] = p[key];
                 }
             }
-            pdList.push(mergedItem); // Push the merged item inside the forEach loop
+            pdList.push(mergedItem); 
         });
         console.log("pdList",pdList);
     });
@@ -139,7 +114,11 @@ export const productListApiCall = async() =>{
     localStorage.setItem("allproductlist", JSON.stringify(pdList));
 
 
-    // console.log("pdlIst",pdl)
+    //DesignList API Calling
+
+
+    
+    
 
 
 
