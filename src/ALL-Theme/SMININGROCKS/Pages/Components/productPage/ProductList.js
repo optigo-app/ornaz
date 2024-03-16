@@ -127,6 +127,13 @@ const ProductList = () => {
 
   // },[])
 
+  useEffect(()=>{
+
+    const data = JSON.parse(localStorage.getItem("allproductlist"));
+    setProductApiData2(data)
+
+  },[])
+
   useEffect(() => {
     const fetchData = async () => {
         const data = JSON.parse(localStorage.getItem("allproductlist"));
@@ -181,7 +188,6 @@ const ProductList = () => {
                 // price = " " ;
                 isLoading = false;
             }
-
 
             return { ...product, price ,isLoading , markup, metalrd, diard1, csrd2};
         }));
@@ -488,38 +494,37 @@ const ProductList = () => {
 
   console.log("wishData",WishData);
 
-  let wislilistUpdate = async() =>{
-    let newWishCheckData = (ProductApiData2)?.map((pd)=>{
+ const wislilistUpdate = () => {
+ 
+  debugger
+      const newWishCheckData = (ProductApiData2)?.map((pd)=>{
+  
+        const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
+  
+        let wishCheck = false
+  
+        if (newWish) {
+         wishCheck = true
+       }else{
+        wishCheck = false
+       }
+  
+       return {...pd,wishCheck}
+  
+     })
 
-      const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
-
-      let wishCheck = false
-
-      if (newWish) {
-       wishCheck = true
-     }else{
-      wishCheck = false
-     }
-
-     return {...pd,wishCheck}
-
-   })
-
-   await localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
-   setProductApiData2(newWishCheckData)
+      localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
+      setProductApiData2(newWishCheckData)
    
-   console.log("newWishCheckData",newWishCheckData)
   }
 
   useEffect(()=>{
-
     wislilistUpdate()
-
   },[WishData])
 
 
-let cartlistUpdate = async() =>{
-  let newCartCheckData = (ProductApiData2)?.map((pd)=>{
+let cartlistUpdate = () =>{
+  const newCartCheckData = (ProductApiData2)?.map((pd)=>{
 
     let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode) 
 
@@ -538,7 +543,7 @@ let cartlistUpdate = async() =>{
 
  })
 
-   await localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+  localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
    setProductApiData2(newCartCheckData)
 }
 
@@ -567,9 +572,6 @@ let cartlistUpdate = async() =>{
     localStorage.setItem("srProductsData", JSON.stringify(product));
     navigate("/productdetail");
   };
-
-
-
 
   const NewFilterData = () => {
     const newFilter = [];
@@ -677,11 +679,10 @@ let cartlistUpdate = async() =>{
 
   useEffect(() => {
 
-    getCartAndWishListData();
+    getCartAndWishListData()
     // getCountApi()
     getCountFunc()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 
