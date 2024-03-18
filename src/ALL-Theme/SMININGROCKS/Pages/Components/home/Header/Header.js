@@ -36,9 +36,8 @@ export default function Header() {
   const setHeaderData = useSetRecoilState(HeaderData)
   const setHeaderData2 = useSetRecoilState(HeaderData2)
 
-  // console.log("menu1Data",menu1Data)
-  // console.log("menu2Data",menu2Data)
-
+  console.log("finalData",finalData)
+  // console.log("menu1Index",finalData?.map((fd)=>fd?.param1)[menu1Index])
 
   const handelmenu1 = (param) => {
     console.log("param1", param)
@@ -50,12 +49,11 @@ export default function Header() {
 
 
   const handelmenu2 = (param) => {
-    console.log("param1", param)
+    console.log("param2", param)
     setIsDropdownOpen(false)
     navigation("/productpage")
     setHeaderData2(param)
   }
-
 
   const transformData = (data) => {
 
@@ -75,7 +73,7 @@ export default function Header() {
                 param2name: item.param2name,
                 param2dataid: item.param2dataid,
                 param2dataname: item.param2dataname
-              });
+              })
             }
           }
         } else {
@@ -272,6 +270,7 @@ export default function Header() {
   useEffect(() => {
     setGSearch(searchedProducts);
   }, [searchedProducts])
+
 
 
 
@@ -818,7 +817,7 @@ export default function Header() {
                 <span
                   className="level0Menu"
                   onMouseEnter={() => setMenu1Index(i)}
-                  onClick={() => { console.log("menuname", fd) }}
+                  onClick={() => { console.log("menuname", fd)}}
                 >
                   {fd?.menuname}
                 </span>
@@ -832,11 +831,35 @@ export default function Header() {
                 paddingLeft: '20px'
               }}
             >
+              {
+              // finalData?.map((fd) => (
+                finalData?.map((fd)=>fd?.param1)[menu1Index]?.map((fd1,i)=>(
+                <span className="level0Menu" 
+                onClick={()=>{
+                  handelmenu1({ label1: fd1?.param1name, value1: fd1?.param1dataname})
+                  setMenu1Data({label1: fd1?.param1name, value1: fd1?.param1dataname})
+                }}
+                onMouseEnter={()=>{
+                  setMenu2Index(i)
+                  setMenu1Data({label1: fd1?.param1name, value1: fd1?.param1dataname})
+                }}>{fd1?.param1dataname}</span>
+              ))
+            //  ))
+             }
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                paddingLeft: '20px'
+              }}
+            >
               {finalData[menu1Index]?.param1?.map((fd) => fd)[menu2Index]?.param2?.map((fd1) => (
                 <span className="level2Menu"
                   onClick={() => {
-                    setMenu2Data({ label1: menu1Data.param1name, value1: menu1Data.param1dataname, label2: fd1?.param2name, value2: fd1?.param2dataname })
-                    handelmenu2({ label1: menu1Data.param1name, value1: menu1Data.param1dataname, label2: fd1?.param2name, value2: fd1?.param2dataname })
+                    setMenu2Data({ label1: menu1Data?.label1, value1: menu1Data?.value1, label2: fd1?.param2name, value2: fd1?.param2dataname })
+                    handelmenu2({ label1: menu1Data?.label1, value1: menu1Data?.value1, label2: fd1?.param2name, value2: fd1?.param2dataname })
 
                   }}>{fd1?.param2dataname}</span>
               ))}
