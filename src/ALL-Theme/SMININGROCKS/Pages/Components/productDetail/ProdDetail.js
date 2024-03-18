@@ -958,16 +958,6 @@ const handelDesignSet = (ele) =>{
 }
 
 
-  console.log("price",productData?.price - grandTotal, productData?.price, grandTotal);
-
-const handelDesignSet = (ele) =>{
-  localStorage.setItem("srProductsData",JSON.stringify(ele))
-  // navigate(window.location.pathname)
-  handelLocalStorage()
-  window.scrollTo(0, 0)
-}
-
-
   // console.log('prodddddddddddd', productData);
   // console.log('DefaultSizeDefaultSizeDefaultSize', productData?.DefaultSize);
   // console.log('DefaultSizeDefaultSizeDefaultlengthlength', productData?.DefaultSize.length);
