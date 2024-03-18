@@ -11,8 +11,12 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { GetCount } from '../../../Utils/API/GetCount'
-import { CartListCounts, WishListCounts, priceData } from '../../../../../Recoil/atom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { CartListCounts, WishListCounts, designSet, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData } from '../../../../../Recoil/atom'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import notFound from '../../assets/image-not-found.png'
+import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { useNavigate } from 'react-router-dom'
+// import notFound from '../../assets/image-not-found.png'
 
 const ProdDetail = () => {
 
@@ -36,11 +40,11 @@ const ProdDetail = () => {
   const [isPriseShow, setIsPriceShow] = useState()
 
   const [sizeOption, setSizeOption] = useState();
-  const [diaQColOpt, setDiaQColOpt] = useState();
-  const [mtTypeOption, setmtTypeOption] = useState();
-  const [cSQopt, setCSQOpt] = useState();
+  const [diaQColOpt, setDiaQColOpt] = useRecoilState(diamondQualityColorG);
+  const [mtTypeOption, setmtTypeOption] = useRecoilState(metalTypeG);
+  const [cSQopt, setCSQOpt] = useRecoilState(colorstoneQualityColorG);
   const [colorImageData, setColorImageData] = useState([]);
-
+  
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
 
@@ -49,14 +53,23 @@ const ProdDetail = () => {
   const [csqcPrice, setCSQCPrice] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
 
+  const [designSetList,setDesignSetList] = useState([]);
+
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
   const getPriceData = useRecoilValue(priceData);
+  const getDesignSet = useRecoilValue(designSet)
   const handelImgLoad = () => {
     setImgLoading(false)
   }
 
+  // console.log("getDesignSet",getDesignSet);
+
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
+
+  let navigate = useNavigate()
+
+ 
 
   useEffect(() => {
 
@@ -225,7 +238,34 @@ const ProdDetail = () => {
     handelLocalStorage();
   }, [])
 
-  const getColorImagesData = (autoCode) => {
+
+  useEffect(()=>{
+    let allProductData = JSON.parse(localStorage.getItem('allproductlist'))
+
+    let designListData = productData?.SetDno?.split(",")
+
+    let arrFinal = [];
+
+    designListData?.filter((dld)=>{
+
+      let findData = allProductData?.find((ele)=>ele.designno === dld)
+      // console.log("findData",findData);
+
+      if(findData !== undefined){
+        arrFinal.push(findData)
+      }
+    })
+    
+    if(arrFinal){
+      setDesignSetList(arrFinal)
+    }else{
+      setDesignSetList([])
+    }
+  },[productData])
+  
+  console.log("designSetList",designSetList)
+
+  const getColorImagesData = (autoCode) => {   
 
     const storedData = JSON.parse(localStorage.getItem('colorDataImages'));
     if (!storedData) {
@@ -503,8 +543,8 @@ const ProdDetail = () => {
           "metaltypeid": `${product?.MetalTypeid}`,
           "metalcolorid": `${product?.MetalColorid}`,
           "stockno": "",
-          "DQuality": `${product?.diamondquality?.split(",")[0]}`,
-          "DColor": `${product?.diamondcolorname}`,
+          "DQuality":  `${(diaQColOpt?.split('_')[0] ? diaQColOpt?.split('_')[0] : product?.diamondquality?.split(",")[0]) }`,
+          "DColor":  `${diaQColOpt?.split('_')[1] ? diaQColOpt?.split('_')[1] : product?.diamondcolorname }`,
           "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
           "AdditionalValWt": Number(`${product?.AdditionalValWt}`),
           "BrandName": `${product?.BrandName ?? ""}`,
@@ -533,9 +573,9 @@ const ProdDetail = () => {
           "MasterManagement_labname": "",
           "MetalColorName": `${product?.MetalColorName}`,
           "MetalColorid": Number(`${product?.MetalColorid}`),
-          "MetalPurity": `${product?.MetalPurity}`,
+          "MetalPurity": `${mtTypeOption ? (mtTypeOption?.split(' ')[1]) : product?.MetalPurity }`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-          "MetalTypeName": `${product?.MetalTypeName}`,
+          "MetalTypeName": `${mtTypeOption ? mtTypeOption?.split(' ')[0] : product?.MetalTypeName  }`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
           "MetalWeight": Number(`${product?.MetalWeight}`),
           "OcassionName": `${product?.OcassionName ?? ""}`,
@@ -548,13 +588,15 @@ const ProdDetail = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
-          "UnitCostWithmarkup": (`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
-          "colorstonecolorname": `${product?.colorstonecolorname}`,
-          "colorstonequality": `${product?.colorstonequality}`,
-          "diamondcolorname": `${product?.diamondcolorname}`,
+          // "UnitCost": `${grandTotal ? grandTotal : (product?.price === "Not Available" ? 0 : product?.price)}`,
+          "UnitCost": `${(product?.price - grandTotal)}`,
+          // "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
+          "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : (product?.price - grandTotal)) + (product?.markup ?? 0)}`),
+          "colorstonecolorname": `${product?.colorstonecolorname ? product?.colorstonecolorname : cSQopt?.split('-')[1]}`,
+          "colorstonequality": `${product?.colorstonequality ? product?.colorstonequality  : cSQopt?.split('-')[0] }`,
+          "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
           "diamondpcs": Number(`${product?.diamondpcs}`),
-          "diamondquality": `${product?.diamondquality?.split(",")[0]}`,
+          "diamondquality": `${(product?.diamondquality?.split(",")[0]) ? product?.diamondquality?.split(",")[0] : diaQColOpt?.split('_')[0] }`,
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
@@ -577,7 +619,7 @@ const ProdDetail = () => {
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "quantity": `${product?.quantity ?? "1"}`
         }
-
+      console.log("finalJSON",finalJSON);
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
         const wishToCartEncData1 = btoa(JSON.stringify(wishToCartEncData));
 
@@ -802,8 +844,9 @@ const ProdDetail = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
-          "UnitCostWithmarkup": (`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
+          // "UnitCost": `${product?.price === "Not Available" ? 0 : product?.price}`,
+          "UnitCost": `${(productData?.price - grandTotal)?.toFixed(2)}`,
+          "UnitCostWithmarkup":(`${(productData?.price - grandTotal)?.toFixed(2) + (product?.markup ?? 0)}`),
           "autocode": `${product?.autocode}`,
           "colorstonecolorname": `${product?.colorstonecolorname}`,
           "colorstonequality": `${product?.colorstonequality}`,
@@ -837,7 +880,6 @@ const ProdDetail = () => {
           "UploadLogicalPath": `${product?.UploadLogicalPath ?? ""}`,
           "ukey": `${storeInit?.ukey}`
         }
-
 
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
 
@@ -906,6 +948,26 @@ const ProdDetail = () => {
   }
 
 
+  console.log("price",productData?.price - grandTotal, productData?.price, grandTotal);
+
+const handelDesignSet = (ele) =>{
+  localStorage.setItem("srProductsData",JSON.stringify(ele))
+  // navigate(window.location.pathname)
+  handelLocalStorage()
+  window.scrollTo(0, 0)
+}
+
+
+  console.log("price",productData?.price - grandTotal, productData?.price, grandTotal);
+
+const handelDesignSet = (ele) =>{
+  localStorage.setItem("srProductsData",JSON.stringify(ele))
+  // navigate(window.location.pathname)
+  handelLocalStorage()
+  window.scrollTo(0, 0)
+}
+
+
   // console.log('prodddddddddddd', productData);
   // console.log('DefaultSizeDefaultSizeDefaultSize', productData?.DefaultSize);
   // console.log('DefaultSizeDefaultSizeDefaultlengthlength', productData?.DefaultSize.length);
@@ -951,13 +1013,17 @@ const ProdDetail = () => {
                 />
               )}
               <img
-                src={selectedImagePath == '' ?
+                src={ (productData?.OriginalImagePath) ? (selectedImagePath == '' ?
                   productData?.imagepath +
                   (!handelmainImg()?.length
                     ? productData?.OriginalImagePath?.split(",")[0]
                     : handelmainImg())
-                  :
-                  selectedImagePath
+                    :
+                    selectedImagePath)
+
+                    :
+
+                    notFound
                 }
                 alt={""}
                 style={{
@@ -971,7 +1037,7 @@ const ProdDetail = () => {
                 onLoad={handelImgLoad}
               />
               {/* } */}
-              <div className="srthumb_images">
+              {productData?.ThumbImagePath && <div className="srthumb_images">
                 {productData?.ThumbImagePath?.split(",").map((data, i) => (
                   <img
                     src={productData?.imagepath + data}
@@ -980,7 +1046,7 @@ const ProdDetail = () => {
                     onClick={() => setThumbImg(i)}
                   />
                 ))}
-              </div>
+              </div>}
             </div>
             <div className="srprodetail2">
               <div className="srprodetail2-cont">
@@ -1418,6 +1484,36 @@ const ProdDetail = () => {
               </div>
             </div>
           </div>
+          {designSetList.length !== 0 && <div className='similiarBrand' style={{display:'flex',alignItems:'center',flexDirection:'column',marginBottom:'100px',marginTop:!(productData?.OriginalImagePath) && '120px'}}>
+            <div style={{marginBottom:'12px'}}>
+              <span style={{fontFamily:'FreightDisp Pro Medium',color:'#7d7f85',fontSize:'26px'}}>Complete The Look</span>
+            </div>
+            <div style={{border:'1px solid #e1e1e1',borderRadius:'4px',padding:'30px',display:'flex',flexDirection:'column',gap:'40px'}}>
+            {
+              designSetList?.map((dsl,i)=>(
+                <>
+                {/* {i !== 0 && <hr style={{opacity:0.06}}/>} */}
+                <div style={{display:'flex',alignItems:'center',width:'670px',gap:'30px'}}>
+                  <div >
+                    <img src={  !(dsl?.ThumbImagePath) ? notFound : dsl?.imagepath+dsl?.ThumbImagePath.split(",")[0] } alt={""} style={{width:'100px',height:'100px',objectFit:'cover'}}/>
+                  </div>
+                  <div style={{display:'flex',alignItems:'center', position:'relative',height:'100px'}}>
+                  <div style={{display:'flex',flexDirection:'column',minWidth:'500px'}}>
+                    <sapn style={{fontWeight:'500'}}>{dsl?.TitleLine}({dsl?.designno})</sapn>
+                    {/* <span></span> */}
+                    <span style={{fontSize:'14px',color:'#888'}}>{dsl?.description}</span>
+                  </div>
+                  <div onClick={()=>handelDesignSet(dsl)}>
+                    <NavigateNextRoundedIcon />
+                  </div>
+                  {(i !== designSetList.length-1) && <div style={{borderBottom:'1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%",}}></div>}
+                  </div>
+                </div>
+                </>
+              ))
+            }
+            </div>
+          </div>}
           <div className="Acc-container">
             <div
               style={{

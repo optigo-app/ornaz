@@ -17,9 +17,9 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
-
+import notFound from "../../assets/image-not-found.png";
 
 
 function valuetext(value) {
@@ -68,10 +68,16 @@ const ProductList = () => {
 
   const getPdData = useRecoilValue(productDataNew)
   const getSearchData = useRecoilValue(searchData)
-  const [value1, setValue1] = useState([minPrice, maxPrice]);
-  const [value2, setValue2] = useState([minNetwt, maxNetwt]);
-  const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
-  const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
+  const mtName = useRecoilValue(metalTypeG)
+  const dqcName = useRecoilValue(diamondQualityColorG)
+  const csqcName = useRecoilValue(colorstoneQualityColorG)
+  console.log(mtName, dqcName, csqcName);
+    //RANGE FILTERS
+
+    const [value1, setValue1] = useState([minPrice, maxPrice]);
+    const [value2, setValue2] = useState([minNetwt, maxNetwt]);
+    const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
+    const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
 
   useEffect(() => {
     setNewProData(getSearchData)
@@ -90,7 +96,7 @@ const ProductList = () => {
       const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
 
       const updatedData = await Promise?.all(data?.map(async (product) => {
-        const newPriceData = priceDataApi.rd?.find(
+        const newPriceData = priceDataApi?.rd?.find(
           (pda) =>
             pda.A === product.autocode &&
             pda.B === product.designno &&
@@ -209,164 +215,164 @@ const ProductList = () => {
 
 
 
-  function updateProductsWithMetalColorName() {
-    productData?.forEach((product) => {
-      const metalColor = filterData?.MetalColorList?.find(
-        (color) => color.MetalColorid === product.MetalColorid
-      );
-      const categoryName = filterData?.CategoryList?.find(
-        (cate) => cate.Categoryid === product.Categoryid
-      );
-      const collectionName = filterData?.CollectionList?.find(
-        (coll) => coll.Collectionid === product.Collectionid
-      );
-      const mtpurity = filterData?.MetalPurityList?.find(
-        (mtp) => mtp.MetalPurityid === product.MetalPurityid
-      );
-      const prodtype = filterData?.ProductTypeList?.find(
-        (pt) => pt.Producttypeid === product.Producttypeid
-      );
-      const gendertype = filterData?.GenderList?.find(
-        (gen) => gen.Genderid === product.Genderid
-      );
-      const Berandtype = filterData?.BrandList?.find(
-        (brand) => brand.Brandid === product.Brandid
-      )
-      const MetalType = filterData?.MetalTypeList?.find(
-        (mt) => mt.MetalTypeid === product.MetalTypeid
-      )
-      const OcassionType = filterData?.OcassionList?.find(
-        (ocs) => ocs.Ocassionid === product.Ocassionid
-      )
-      const SubCategoryType = filterData?.SubCategoryList?.find(
-        (sct) => sct.SubCategoryid === product.SubCategoryid
-      )
-      const ThemeType = filterData?.ThemeList?.find(
-        (tl) => tl.Themeid === product.Themeid
-      )
+  // function updateProductsWithMetalColorName() {
+  //   productData?.forEach((product) => {
+  //     const metalColor = filterData?.MetalColorList?.find(
+  //       (color) => color.MetalColorid === product.MetalColorid
+  //     );
+  //     const categoryName = filterData?.CategoryList?.find(
+  //       (cate) => cate.Categoryid === product.Categoryid
+  //     );
+  //     const collectionName = filterData?.CollectionList?.find(
+  //       (coll) => coll.Collectionid === product.Collectionid
+  //     );
+  //     const mtpurity = filterData?.MetalPurityList?.find(
+  //       (mtp) => mtp.MetalPurityid === product.MetalPurityid
+  //     );
+  //     const prodtype = filterData?.ProductTypeList?.find(
+  //       (pt) => pt.Producttypeid === product.Producttypeid
+  //     );
+  //     const gendertype = filterData?.GenderList?.find(
+  //       (gen) => gen.Genderid === product.Genderid
+  //     );
+  //     const Berandtype = filterData?.BrandList?.find(
+  //       (brand) => brand.Brandid === product.Brandid
+  //     )
+  //     const MetalType = filterData?.MetalTypeList?.find(
+  //       (mt) => mt.MetalTypeid === product.MetalTypeid
+  //     )
+  //     const OcassionType = filterData?.OcassionList?.find(
+  //       (ocs) => ocs.Ocassionid === product.Ocassionid
+  //     )
+  //     const SubCategoryType = filterData?.SubCategoryList?.find(
+  //       (sct) => sct.SubCategoryid === product.SubCategoryid
+  //     )
+  //     const ThemeType = filterData?.ThemeList?.find(
+  //       (tl) => tl.Themeid === product.Themeid
+  //     )
 
-      if (metalColor) {
-        product.MetalColorName = metalColor.MetalColorName;
-      }
-      if (categoryName) {
-        product.CategoryName = categoryName.CategoryName;
-      }
-      if (collectionName) {
-        product.CollectionName = collectionName.CollectionName;
-      }
-      if (mtpurity) {
-        product.MetalPurity = mtpurity.MetalPurity;
-      }
-      if (prodtype) {
-        product.ProducttypeName = prodtype.ProducttypeName;
-      }
-      if (gendertype) {
-        product.GenderName = gendertype.GenderName;
-      }
-      if (Berandtype) {
-        product.BrandName = Berandtype.BrandName
-      }
-      if (MetalType) {
-        product.MetalTypeName = MetalType.MetalTypeName
-      }
-      if (OcassionType) {
-        product.OcassionName = OcassionType.OcassionName
-      }
-      if (SubCategoryType) {
-        product.SubCategoryName = SubCategoryType.SubCategoryName
-      }
-      if (ThemeType) {
-        product.ThemeName = ThemeType.ThemeName
-      }
-    });
+  //     if (metalColor) {
+  //       product.MetalColorName = metalColor.MetalColorName;
+  //     }
+  //     if (categoryName) {
+  //       product.CategoryName = categoryName.CategoryName;
+  //     }
+  //     if (collectionName) {
+  //       product.CollectionName = collectionName.CollectionName;
+  //     }
+  //     if (mtpurity) {
+  //       product.MetalPurity = mtpurity.MetalPurity;
+  //     }
+  //     if (prodtype) {
+  //       product.ProducttypeName = prodtype.ProducttypeName;
+  //     }
+  //     if (gendertype) {
+  //       product.GenderName = gendertype.GenderName;
+  //     }
+  //     if (Berandtype) {
+  //       product.BrandName = Berandtype.BrandName
+  //     }
+  //     if (MetalType) {
+  //       product.MetalTypeName = MetalType.MetalTypeName
+  //     }
+  //     if (OcassionType) {
+  //       product.OcassionName = OcassionType.OcassionName
+  //     }
+  //     if (SubCategoryType) {
+  //       product.SubCategoryName = SubCategoryType.SubCategoryName
+  //     }
+  //     if (ThemeType) {
+  //       product.ThemeName = ThemeType.ThemeName
+  //     }
+  //   });
 
-    return productData;
-  }
-
-
-  const diffCartData = useCallback(() => {
-
-    // let pdata;
-
-    ProductApiData2.forEach((pd) => {
-      const pdata = cartData?.find((cd) => pd.designno === cd.DesignNo)
+  //   return productData;
+  // }
 
 
+  // const diffCartData = useCallback(() => {
 
-      if (pdata && !pd?.checkFlag) {
-        pd.checkFlag = true
-      }
-      else {
-        pd.checkFlag = false
-      }
-    })
+  //   // let pdata;
+
+  //   ProductApiData2.forEach((pd) => {
+  //     const pdata = cartData?.find((cd) => pd.designno === cd.DesignNo)
 
 
-    return ProductApiData2
 
-  }, [ProductApiData2, cartData])
+  //     if (pdata && !pd?.checkFlag) {
+  //       pd.checkFlag = true
+  //     }
+  //     else {
+  //       pd.checkFlag = false
+  //     }
+  //   })
+
+
+  //   return ProductApiData2
+
+  // }, [ProductApiData2, cartData])
 
   // diffCartData()
 
-  const diffWishData = useCallback(() => {
+  // const diffWishData = useCallback(() => {
 
-    ProductApiData2.forEach((pd) => {
-      const pdata = WishData.find((cd) => pd.designno === cd.DesignNo)
+  //   ProductApiData2.forEach((pd) => {
+  //     const pdata = WishData.find((cd) => pd.designno === cd.DesignNo)
 
 
-      if (pdata && !pd?.wishCheck) {
-        pd.wishCheck = true
-      }
-      else {
-        pd.wishCheck = false
-      }
-    })
+  //     if (pdata && !pd?.wishCheck) {
+  //       pd.wishCheck = true
+  //     }
+  //     else {
+  //       pd.wishCheck = false
+  //     }
+  //   })
 
-    return ProductApiData2
+  //   return ProductApiData2
 
-  }, [ProductApiData2, WishData])
+  // }, [ProductApiData2, WishData])
 
 
   // diffWishData()
 
-  const removefromCart = () => {
-    ProductApiData2.map((pd) => {
+  // const removefromCart = () => {
+  //   ProductApiData2.map((pd) => {
 
 
-      if (cartRemoveData && pd.designno === cartRemoveData) {
-        pd.checkFlag = false
-      }
+  //     if (cartRemoveData && pd.designno === cartRemoveData) {
+  //       pd.checkFlag = false
+  //     }
 
-      if (wishListRemoveData && pd.designno === wishListRemoveData) {
-        pd.wishCheck = false
-      }
+  //     if (wishListRemoveData && pd.designno === wishListRemoveData) {
+  //       pd.wishCheck = false
+  //     }
 
-    })
+  //   })
 
 
-    return ProductApiData2
-    // // console.log("prodddd",product);
-    // let prodD;
-    // productData.forEach((pd)=>{
+  //   return ProductApiData2
+  //   // // console.log("prodddd",product);
+  //   // let prodD;
+  //   // productData.forEach((pd)=>{
 
-    //   // let prodD = productData.find((p)=>p?.designno === product?.designno && p?.checkFlag === true)
+  //   //   // let prodD = productData.find((p)=>p?.designno === product?.designno && p?.checkFlag === true)
 
-    //   // if(prodD){
-    //   //   pd.checkFlag = false
-    //   // }
+  //   //   // if(prodD){
+  //   //   //   pd.checkFlag = false
+  //   //   // }
 
-    // if(pd?.designno===product?.designno){
-    //    prodD = pd
-    // }
-    // if(prodD){
-    //   pd.checkFlag = false
-    // }
+  //   // if(pd?.designno===product?.designno){
+  //   //    prodD = pd
+  //   // }
+  //   // if(prodD){
+  //   //   pd.checkFlag = false
+  //   // }
 
-    // })
+  //   // })
 
-    // console.log("prodD",prodD);
-    // return productData
-  }
+  //   // console.log("prodD",prodD);
+  //   // return productData
+  // }
 
   // removefromCart()
 
@@ -755,7 +761,7 @@ const ProductList = () => {
           "MetalColorid": Number(`${product?.MetalColorid}`),
           "MetalPurity": `${product?.MetalPurity}`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-          "MetalTypeName": `${product?.MetalTypeName}`,
+          "MetalTypeName": `${ product?.MetalTypeName}`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
           "MetalWeight": Number(`${product?.MetalWeight}`),
           "OcassionName": `${product?.OcassionName ?? ""}`,
@@ -1444,11 +1450,14 @@ const ProductList = () => {
                       <div onClick={() => handelProductSubmit(products)}>
                         <img
                           className="prod_img"
-
                           src={
-                            products?.imagepath +
-                            products?.MediumImagePath?.split(",")[0]
+                            products?.MediumImagePath ? 
+                            (products?.imagepath +
+                            products?.MediumImagePath?.split(",")[0])
+                            :
+                            notFound
                           }
+                          style={{objectFit:'cover'}}
                           alt="#"
                         />
                       </div>
