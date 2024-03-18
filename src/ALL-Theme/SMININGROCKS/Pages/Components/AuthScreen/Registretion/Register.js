@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Header from '../../home/Header/Header';
 import './Register.css';
-import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Button, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -57,7 +57,7 @@ export default function Register() {
       if (!value.trim()) {
         setErrors(prevErrors => ({ ...prevErrors, firstName: 'First Name is required' }));
       } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(value)) {
-        setErrors(prevErrors => ({ ...prevErrors, firstName: 'First Name should not start with a numeric, special character, or space' }));
+        setErrors(prevErrors => ({ ...prevErrors, firstName: 'Invalid First Name' }));
       } else {
         setErrors(prevErrors => ({ ...prevErrors, firstName: '' }));
       }
@@ -65,7 +65,7 @@ export default function Register() {
       if (!value.trim()) {
         setErrors(prevErrors => ({ ...prevErrors, lastName: 'Last Name is required' }));
       } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(value)) {
-        setErrors(prevErrors => ({ ...prevErrors, lastName: 'Last Name should not start with a numeric, special character, or space' }));
+        setErrors(prevErrors => ({ ...prevErrors, lastName: 'Invalid Last Name' }));
       } else {
         setErrors(prevErrors => ({ ...prevErrors, lastName: '' }));
       }
@@ -361,14 +361,13 @@ export default function Register() {
               <input type='checkbox' />
               <p style={{ margin: '5px' }}>Subscribe to our newsletter</p>
             </div> */}
-            <p className='SmilingSignInHere' onClick={() => navigation('/')}>BACK</p>
-
+            <Button style={{marginTop: '10px' ,color: 'gray'}} onClick={() => navigation('/LoginOption')}>BACK</Button>
           </div>
           <Footer />
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
-        <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => ''}>BACK TO TOP</p>
+        <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
       </div>
     </div>
   );

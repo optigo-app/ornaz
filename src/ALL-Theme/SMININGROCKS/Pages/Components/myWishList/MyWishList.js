@@ -214,7 +214,7 @@ export default function MyWishList() {
                     <p className='SmiWishListTitle'>My Wishlist</p>
 
                     {wishlistData?.length !== 0 && <div className='smilingListTopButton'>
-                        <button className='smiTopShareBtn'>SHARE WISHLIST</button>
+                        {/* <button className='smiTopShareBtn'>SHARE WISHLIST</button> */}
                         <button className='smiTopClearBtn' onClick={handleRemoveAllWishList}>CLEAR ALL</button>
                         <button className='smiTopAddAllBtn' onClick={handleAddAll}>ADD TO CART ALL</button>
                         <p style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigation('/productpage')}>Click To ProductList</p>
@@ -245,7 +245,7 @@ export default function MyWishList() {
 
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
-                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => ''}>BACK TO TOP</p>
+                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
             </div>
         </div>
     )

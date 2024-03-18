@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../../home/Header/Header';
-import { CircularProgress, TextField } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
@@ -10,22 +10,26 @@ export default function ContimueWithMobile() {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [buttonFocused, setButtonFocused] = useState(false);
     const navigation = useNavigate();
 
     const handleInputChange = (e, setter, fieldName) => {
         const { value } = e.target;
-        setter(value);
+        const trimmedValue = value.trim();
+        const formattedValue = trimmedValue.replace(/\s/g, '');
+
+        setter(formattedValue);
+
         if (fieldName === 'mobileNo') {
-            if (!value.trim()) {
+            if (!formattedValue) {
                 setErrors(prevErrors => ({ ...prevErrors, mobileNo: 'Mobile No. is required' }));
-            } else if (!/^\d{10}$/.test(value.trim())) {
+            } else if (!/^\d{10}$/.test(formattedValue)) {
                 setErrors(prevErrors => ({ ...prevErrors, mobileNo: 'Enter Valid mobile number' }));
             } else {
                 setErrors(prevErrors => ({ ...prevErrors, mobileNo: '' }));
             }
         }
     };
-
     const handleSubmit = async () => {
         if (isSubmitting) {
             return;
@@ -87,8 +91,8 @@ export default function ContimueWithMobile() {
                         fontSize: '40px',
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
-                    }} 
-                    className='AuthScreenMainTitle'
+                    }}
+                        className='AuthScreenMainTitle'
                     >Continue With Mobile</p>
                     <p style={{
                         textAlign: 'center',
@@ -97,7 +101,7 @@ export default function ContimueWithMobile() {
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
                     }}
-                    className='AuthScreenSubTitle'
+                        className='AuthScreenSubTitle'
                     >We'll check if you have an account, and help create one if you don't.</p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -118,14 +122,17 @@ export default function ContimueWithMobile() {
                             error={!!errors.mobileNo}
                             helperText={errors.mobileNo}
                         />
-                        <button className='submitBtnForgot' onClick={handleSubmit}>SUBMIT</button>
-                        <p className='cancleForgot' onClick={() => navigation('/LoginOption')}>CANCEL</p>
+
+                        <button className='submitBtnForgot' onClick={handleSubmit}>
+                            SUBMIT
+                        </button>
+                        <Button style={{ marginTop: '10px', color: 'gray' }} onClick={() => navigation('/LoginOption')}>CANCEL</Button>
                     </div>
                     <Footer />
                 </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
-                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => ''}>BACK TO TOP</p>
+                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
             </div>
         </div>
     );

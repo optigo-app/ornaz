@@ -1,0 +1,108 @@
+.smilingCartPageMain {
+    background-color: white;
+    margin-inline: 6%;
+}
+
+.smiling-cartPageBoxMain {
+    width: 49%;
+    border: 1px solid lightgray;
+    position: relative;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.smilingCartPageDataMain {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.placeOrderCartPageBtnMain {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.placeOrderCartPageBtn {
+    background-color: lightgray;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    height: 45px;
+    width: 200px;
+    font-weight: 500;
+}
+
+.similingCartPageBotttomMain {
+    display: flex;
+    justify-content: space-around;
+    margin: 5px;
+}
+
+@media screen and (max-width: 1450px) {
+    .smilingCartPageDataMain {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: column !important;
+    }
+
+    .smiling-cartPageBoxMain {
+        width: 90% !important;
+    }
+
+    .similingCartPageBotttomMain {
+        display: flex !important;
+
+    }
+
+    .placeOrderCartPageBtnMain{
+        position: fixed;
+        bottom: 0px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .similingCartPageBotttomMain {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .smilingQualityMain {
+        margin-block: 10px !important;
+        width: 100%!important;
+    }
+
+    .smilingAddresingleMobileMain{
+        margin-left: 0px!important;
+    }
+    .smilingAddresingleMobileMain{
+        width: 100%!important;
+    }
+    .YourCartMainRemkarBoxSingle{
+        width: 60%!important
+    }
+    .SmilingAddSingleRemkarBtn{
+        width: 40%!important;
+    }
+    .simlingQualityBox{
+        width: 60%!important
+    }
+    .SmilingUpdateQuantityBtn{
+        width: 40%!important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+
+    .SmilingAddSingleRemkarBtn {
+        font-size: 12px !important;
+    }
+
+   .smiling-cartPageBoxImgView{
+    width: 250px!important;
+   }
+}
