@@ -11,8 +11,12 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from '../../../Utils/API/CommonAPI'
 import { GetCount } from '../../../Utils/API/GetCount'
-import { CartListCounts, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData } from '../../../../../Recoil/atom'
+import { CartListCounts, WishListCounts, designSet, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData } from '../../../../../Recoil/atom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import notFound from '../../assets/image-not-found.png'
+import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { useNavigate } from 'react-router-dom'
+// import notFound from '../../assets/image-not-found.png'
 
 const ProdDetail = () => {
 
@@ -49,14 +53,23 @@ const ProdDetail = () => {
   const [csqcPrice, setCSQCPrice] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
 
+  const [designSetList,setDesignSetList] = useState([]);
+
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
   const getPriceData = useRecoilValue(priceData);
+  const getDesignSet = useRecoilValue(designSet)
   const handelImgLoad = () => {
     setImgLoading(false)
   }
 
+  // console.log("getDesignSet",getDesignSet);
+
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
+
+  let navigate = useNavigate()
+
+ 
 
   useEffect(()=>{
  
@@ -227,8 +240,35 @@ const ProdDetail = () => {
   useEffect(() => {
     handelLocalStorage();
   }, [])
+
+
+  useEffect(()=>{
+    let allProductData = JSON.parse(localStorage.getItem('allproductlist'))
+
+    let designListData = productData?.SetDno?.split(",")
+
+    let arrFinal = [];
+
+    designListData?.filter((dld)=>{
+
+      let findData = allProductData?.find((ele)=>ele.designno === dld)
+      // console.log("findData",findData);
+
+      if(findData !== undefined){
+        arrFinal.push(findData)
+      }
+    })
+    
+    if(arrFinal){
+      setDesignSetList(arrFinal)
+    }else{
+      setDesignSetList([])
+    }
+  },[productData])
   
-  const getColorImagesData = (autoCode) => {
+  console.log("designSetList",designSetList)
+
+  const getColorImagesData = (autoCode) => {   
 
     const storedData = JSON.parse(localStorage.getItem('colorDataImages'));
     if (!storedData) {
@@ -912,6 +952,13 @@ const ProdDetail = () => {
 
   console.log("price",productData?.price - grandTotal, productData?.price, grandTotal);
 
+const handelDesignSet = (ele) =>{
+  localStorage.setItem("srProductsData",JSON.stringify(ele))
+  // navigate(window.location.pathname)
+  handelLocalStorage()
+  window.scrollTo(0, 0)
+}
+
 
 
   return (
@@ -954,13 +1001,17 @@ const ProdDetail = () => {
                 />
               )}
               <img
-                src={selectedImagePath == '' ?
+                src={ (productData?.OriginalImagePath) ? (selectedImagePath == '' ?
                   productData?.imagepath +
                   (!handelmainImg()?.length
                     ? productData?.OriginalImagePath?.split(",")[0]
                     : handelmainImg())
                     :
-                    selectedImagePath
+                    selectedImagePath)
+
+                    :
+
+                    notFound
                 }
                 alt={""}
                 style={{
@@ -974,7 +1025,7 @@ const ProdDetail = () => {
                 onLoad={handelImgLoad}
               />
               {/* } */}
-              <div className="srthumb_images">
+              {productData?.ThumbImagePath && <div className="srthumb_images">
                 {productData?.ThumbImagePath?.split(",").map((data, i) => (
                   <img
                     src={productData?.imagepath + data}
@@ -983,7 +1034,7 @@ const ProdDetail = () => {
                     onClick={() => setThumbImg(i)}
                   />
                 ))}
-              </div>
+              </div>}
             </div>
             <div className="srprodetail2">
               <div className="srprodetail2-cont">
@@ -1449,6 +1500,36 @@ const ProdDetail = () => {
               </div>
             </div>
           </div>
+          {designSetList.length !== 0 && <div className='similiarBrand' style={{display:'flex',alignItems:'center',flexDirection:'column',marginBottom:'100px',marginTop:!(productData?.OriginalImagePath) && '120px'}}>
+            <div style={{marginBottom:'12px'}}>
+              <span style={{fontFamily:'FreightDisp Pro Medium',color:'#7d7f85',fontSize:'26px'}}>Complete The Look</span>
+            </div>
+            <div style={{border:'1px solid #e1e1e1',borderRadius:'4px',padding:'30px',display:'flex',flexDirection:'column',gap:'40px'}}>
+            {
+              designSetList?.map((dsl,i)=>(
+                <>
+                {/* {i !== 0 && <hr style={{opacity:0.06}}/>} */}
+                <div style={{display:'flex',alignItems:'center',width:'670px',gap:'30px'}}>
+                  <div >
+                    <img src={  !(dsl?.ThumbImagePath) ? notFound : dsl?.imagepath+dsl?.ThumbImagePath.split(",")[0] } alt={""} style={{width:'100px',height:'100px',objectFit:'cover'}}/>
+                  </div>
+                  <div style={{display:'flex',alignItems:'center', position:'relative',height:'100px'}}>
+                  <div style={{display:'flex',flexDirection:'column',minWidth:'500px'}}>
+                    <sapn style={{fontWeight:'500'}}>{dsl?.TitleLine}({dsl?.designno})</sapn>
+                    {/* <span></span> */}
+                    <span style={{fontSize:'14px',color:'#888'}}>{dsl?.description}</span>
+                  </div>
+                  <div onClick={()=>handelDesignSet(dsl)}>
+                    <NavigateNextRoundedIcon />
+                  </div>
+                  {(i !== designSetList.length-1) && <div style={{borderBottom:'1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%",}}></div>}
+                  </div>
+                </div>
+                </>
+              ))
+            }
+            </div>
+          </div>}
           <div className="Acc-container">
             <div
               style={{
