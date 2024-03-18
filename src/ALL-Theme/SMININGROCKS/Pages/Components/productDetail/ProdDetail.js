@@ -1541,8 +1541,7 @@ const handelDesignSet = (ele) =>{
                   </span>
                   {/* <div style={{display:acc && accNo === '1' ? 'block':'none',userSelect:'none',transition:'0.5s'}}> */}
                   <div
-                    className={`my-list-fineJewe ${acc && accNo === "1" ? "openAcc" : ""
-                      }`}
+                    className={`my-list-fineJewe ${acc && accNo === "1" ? "openAcc" : ""}`}
                   >
                     <div>
                       <div className="srAccContainer">
