@@ -56,10 +56,10 @@ export default function Cart({ open, toggleCartDrawer }) {
     const [value, setValue] = React.useState(0);
 
     const [selectedSize, setSelectedSize] = useState();
-    const [selectedMetalType, setSelectedMetalType] = useState();
+    const [selectedMetalType, setSelectedMetalType] = useState({});
     const [selectedMetalColor, setSelectedMetalColor] = useState();
-    const [selectedDiamondQualityColor, setSelectedDiamondQualityColor] = useState();
-    const [selectedColorstoneQualityColor, setSelectedColorstoneQualityColor] = useState();
+    const [selectedDiamondQualityColor, setSelectedDiamondQualityColor] = useState({});
+    const [selectedColorstoneQualityColor, setSelectedColorstoneQualityColor] = useState({});
     const [grandTotal, setGrandTotal] = useState(0);
 
     const setCartCount = useSetRecoilState(CartListCounts)
@@ -67,7 +67,9 @@ export default function Cart({ open, toggleCartDrawer }) {
     const getPriceData = useRecoilValue(priceData);
 
     const navigation = useNavigate();
-console.log("cart list data",cartListData);
+    console.log("selectedMetalType",selectedMetalType)
+    console.log("grandTotal",grandTotal)
+
   
 
 
@@ -101,7 +103,7 @@ console.log("cart list data",cartListData);
         if (storedData3) {
             setMetalColorData(storedData3);
         }
-    }, []);
+    }, [open]);
 
 
 
@@ -660,8 +662,8 @@ console.log("cart list data",cartListData);
                                                             DAIMOND QUALITY COLOR:
                                                         </label>
                                                         <select
-                                                        value={selectedDiamondQualityColor}
-                                                        onChange={(e) => setSelectedDiamondQualityColor(e.target.value)}
+                                                        value={selectedDiamondQualityColor[item?.aotucode] || ''}
+                                                        onChange={(e) => setSelectedDiamondQualityColor({...selectedDiamondQualityColor,[item?.autocode]:e.target.value})}
                                                             style={{
                                                                 border: "none",
                                                                 outline: "none",
@@ -670,7 +672,6 @@ console.log("cart list data",cartListData);
                                                             }}
                                                             // defaultValue={`${item?.colorstonequality}-${item?.colorstonecolorname}`}
                                                         defaultValue={`${item?.diamondqualityname}_${item?.diamondcolorname}`}
-
                                                         >
                                                             {colorData.map((colorItem) => (
                                                                 <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
@@ -699,8 +700,8 @@ console.log("cart list data",cartListData);
                                                             METAL TYPE:
                                                         </label>
                                                         <select
-                                                            value={selectedMetalType}
-                                                            onChange={(e) => setSelectedMetalType(e.target.value)}
+                                                            value={selectedMetalType[item?.autocode] || ''}
+                                                            onChange={(e) => setSelectedMetalType({...selectedMetalType,[item?.autocode]:e.target.value})}
                                                             style={{
                                                                 border: "none",
                                                                 outline: "none",
@@ -729,8 +730,8 @@ console.log("cart list data",cartListData);
                                                         COLOR STONE QUALITY COLOR:
                                                     </label>
                                                     <select
-                                                        value={selectedColorstoneQualityColor}
-                                                        onChange={(e) => setSelectedColorstoneQualityColor(e.target.value)}
+                                                        value={selectedColorstoneQualityColor[item?.autocode] || ''}
+                                                        onChange={(e) => setSelectedColorstoneQualityColor({...selectedColorstoneQualityColor,[item?.autocode]:e.target.value})}
                                                         style={{
                                                             border: "none",
                                                             outline: "none",

@@ -7,11 +7,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CryptoJS from 'crypto-js';
 import { useSetRecoilState } from 'recoil';
-import { designSet, loginState, productDataNew } from '../../../../../../Recoil/atom';
+import { CartListCounts, WishListCounts, designSet, loginState, productDataNew } from '../../../../../../Recoil/atom';
 import { productListApiCall } from '../../../../Utils/API/ProductListAPI';
 import { ToastContainer, toast } from 'react-toastify';
 import './LoginWithEmail.css'
 import { DesignSet } from '../../../../Utils/API/DesignSet';
+import { GetCount } from '../../../../Utils/API/GetCount';
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');
@@ -26,6 +27,20 @@ export default function LoginWithEmail() {
     const setPdData = useSetRecoilState(productDataNew)
     const setIsLoginState = useSetRecoilState(loginState)
     const setDesignList = useSetRecoilState(designSet)
+
+    const setCartCount = useSetRecoilState(CartListCounts)
+  const setWishCount = useSetRecoilState(WishListCounts)
+
+    const getCountFunc = async () => {
+
+        await GetCount().then((res) => {
+          if (res) {
+            setCartCount(res.CountCart)
+            setWishCount(res.WishCount)
+          }
+        })
+    
+      }
 
 
     let pdDataCalling = async () => {
@@ -95,8 +110,9 @@ export default function LoginWithEmail() {
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 pdDataCalling()
                 designDataCall()   
+                getCountFunc()
                 navigation('/');
-                window.location.reload(); 
+                // window.location.reload(); 
             } else {
                 errors.confirmPassword = 'Password is Invalid'
             }

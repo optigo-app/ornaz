@@ -20,6 +20,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { CartListCounts, HeaderData, HeaderData2, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 import notFound from "../../assets/image-not-found.png";
+import { Category } from "@mui/icons-material";
 
 
 function valuetext(value) {
@@ -55,6 +56,9 @@ const ProductList = () => {
   const getHeaderData = useRecoilValue(HeaderData)
   const getHeaderData2 = useRecoilValue(HeaderData2)
 
+  // console.log("getHeaderData",getHeaderData)
+  // console.log("getHeaderData2",getHeaderData2)
+
   const [minPrice, setMinPrice] = useState(null);
   const [maxPrice, setMaxPrice] = useState(null);
   const [minNetwt, setMinNetwt] = useState(null);
@@ -71,7 +75,7 @@ const ProductList = () => {
   const mtName = useRecoilValue(metalTypeG)
   const dqcName = useRecoilValue(diamondQualityColorG)
   const csqcName = useRecoilValue(colorstoneQualityColorG)
-  console.log(mtName, dqcName, csqcName);
+  // console.log(mtName, dqcName, csqcName);
     //RANGE FILTERS
 
     const [value1, setValue1] = useState([minPrice, maxPrice]);
@@ -884,22 +888,68 @@ const ProductList = () => {
       setNewProData(data);
       setTimeout(() => {
         localStorage.setItem('productDataShow', 'false')
-      }, 100);
+      }, 100)
     }
   }, [getHeaderData, newProData])
 
 
   useEffect(() => {
-    if (getHeaderData2?.label2 === "brand") {
-      let data = productData.filter((pd) => pd && pd.BrandName === getHeaderData2?.value2)
+    //level1 filter
+    if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "collection") {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2 )
+      setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "category") {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2 )
+      setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "gender") {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2 )
+      setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "brand") {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2 )
       setNewProData(data);
     }
 
-    if (getHeaderData2?.label2 === "category") {
-      let data = productData?.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
+    if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "brand") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2)
       setNewProData(data);
     }
-  }, [getHeaderData2])
+    if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "collection") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2)
+      setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "category") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
+      setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "gender") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2)
+      setNewProData(data);
+    }
+
+    // level2 filter
+    if(getHeaderData?.label1 === "collection"){
+      let data = productData?.filter((pd)=>pd && pd.CollectionName === getHeaderData?.value1)
+      setNewProData(data)
+    }
+    if(getHeaderData?.label1 === "brand"){
+      let data = productData?.filter((pd)=>pd && pd.BrandName === getHeaderData?.value1)
+      setNewProData(data)
+    }
+    if(getHeaderData?.label1 === "category"){
+      let data = productData?.filter((pd)=>pd && pd.CategoryName === getHeaderData?.value1)
+      setNewProData(data)
+    }
+    if(getHeaderData?.label1 === "gender"){
+      let data = productData?.filter((pd)=>pd && pd.GenderName === getHeaderData?.value1)
+      setNewProData(data)
+    }
+
+
+
+  }, [getHeaderData2,getHeaderData])
 
 
 
