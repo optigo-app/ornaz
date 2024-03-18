@@ -42,6 +42,7 @@ import { GetCount } from './Utils/API/GetCount'
 import LoginOption from './Pages/Components/AuthScreen/LoginOption/LoginOption'
 import CartPage from './Pages/Components/home/Header/cartPage/CartPage'
 // import OrderHistory from './Pages/Components/account/accountOrderHistory/OrderHistory';
+import { ToastContainer } from 'react-toastify';
 
 export default function SMININGROCKS_App() {
 
@@ -65,6 +66,8 @@ export default function SMININGROCKS_App() {
 
 
     return (
+        <>
+        <ToastContainer/>
         <div>
             {(location.pathname === "/accountledgertable" ||
                 location.pathname === "/accountledgerexcel" ||
@@ -109,5 +112,6 @@ export default function SMININGROCKS_App() {
                 </Routes>
             </div>
         </div>
+        </>
     )
 }

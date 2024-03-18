@@ -21,6 +21,7 @@ import { CartListCounts, HeaderData, HeaderData2, WishListCounts, colorstoneQual
 import { GetCount } from "../../../Utils/API/GetCount";
 import notFound from "../../assets/image-not-found.png";
 import { Category } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 
 function valuetext(value) {
@@ -56,7 +57,7 @@ const ProductList = () => {
   const getHeaderData = useRecoilValue(HeaderData)
   const getHeaderData2 = useRecoilValue(HeaderData2)
 
-  // console.log("getHeaderData",getHeaderData)
+  console.log("newProData",newProData)
   // console.log("getHeaderData2",getHeaderData2)
 
   const [minPrice, setMinPrice] = useState(null);
@@ -897,60 +898,77 @@ const ProductList = () => {
     //level1 filter
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "collection") {
       let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2 )
-      setNewProData(data);
+      setNewProData(data)
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "category") {
       let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2 )
       setNewProData(data);
+      
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "gender") {
       let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2 )
       setNewProData(data);
+      
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "brand") {
       let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2 )
       setNewProData(data);
+      
     }
-
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "brand") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2)
       setNewProData(data);
+      
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "collection") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2)
       setNewProData(data);
+      
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "category") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
       setNewProData(data);
+      
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "gender") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2)
       setNewProData(data);
+      
     }
 
     // level2 filter
     if(getHeaderData?.label1 === "collection"){
       let data = productData?.filter((pd)=>pd && pd.CollectionName === getHeaderData?.value1)
       setNewProData(data)
+      
     }
     if(getHeaderData?.label1 === "brand"){
       let data = productData?.filter((pd)=>pd && pd.BrandName === getHeaderData?.value1)
       setNewProData(data)
+      
     }
     if(getHeaderData?.label1 === "category"){
       let data = productData?.filter((pd)=>pd && pd.CategoryName === getHeaderData?.value1)
       setNewProData(data)
+      
     }
     if(getHeaderData?.label1 === "gender"){
       let data = productData?.filter((pd)=>pd && pd.GenderName === getHeaderData?.value1)
       setNewProData(data)
+      
     }
-
-
-
   }, [getHeaderData2,getHeaderData])
 
+  useEffect(()=>{
+
+  if(newProData.length){
+    toast.success("Products Found!!")
+  }
+  else{
+    toast.error("Products not Found!!")
+  }
+  
+  },[newProData])
 
 
   const newMenuProdData = () => {
