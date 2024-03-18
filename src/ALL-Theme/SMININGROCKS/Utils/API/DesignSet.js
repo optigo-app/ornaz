@@ -15,11 +15,12 @@ export const DesignSet = async() => {
         }
 
 
-    const designList= []; 
+    let designList;
 
 
     await CommonAPI(body).then((res)=>{
-        designList.push(res.Data.rd)
+        designList=res.Data.rd
+        localStorage.setItem("designsetlist",JSON.stringify(designList))
     })
 
     return designList;

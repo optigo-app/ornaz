@@ -36,8 +36,7 @@ export default function LoginWithEmail() {
 
     let designDataCall = async () =>{
         await DesignSet().then((res)=>{
-            let fData = res.Data?.rd
-            setDesignList(fData)
+            setDesignList(res)
         })
     }
 

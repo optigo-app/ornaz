@@ -96,7 +96,7 @@ const ProductList = () => {
       const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
 
       const updatedData = await Promise?.all(data?.map(async (product) => {
-        const newPriceData = priceDataApi.rd?.find(
+        const newPriceData = priceDataApi?.rd?.find(
           (pda) =>
             pda.A === product.autocode &&
             pda.B === product.designno &&
