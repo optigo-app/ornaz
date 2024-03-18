@@ -232,7 +232,7 @@ export default function Header() {
 
   const [openCart, setOpenCart] = useState(false);
   const toggleCartDrawer = (isOpen) => (event) => {
-    if (isB2bFlag === 2) {
+    if (isB2bFlag === 1) {
       navigation('/CartPage');
     } else {
       if (
