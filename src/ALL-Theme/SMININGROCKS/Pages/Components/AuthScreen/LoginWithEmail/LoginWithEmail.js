@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../home/Header/Header';
-import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Button, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -95,8 +95,9 @@ export default function LoginWithEmail() {
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 pdDataCalling()
-                designDataCall()    
+                designDataCall()   
                 navigation('/');
+                window.location.reload(); 
             } else {
                 errors.confirmPassword = 'Password is Invalid'
             }
@@ -214,7 +215,7 @@ export default function LoginWithEmail() {
                         />
 
                         <button className='submitBtnForgot' onClick={handleSubmit}>Login</button>
-                        <p className='cancleForgot' onClick={() => navigation('/')}>CANCEL</p>
+                        <Button style={{marginTop: '10px' ,color: 'gray'}} onClick={() => navigation('/LoginOption')}>CANCEL</Button>
 
                         <button type='submit' className='submitBtnForgot' onClick={handleNavigation}>Login With a Code instead on email</button>
                         <p>Go passwordless! we'll send you an email.</p>
@@ -225,7 +226,7 @@ export default function LoginWithEmail() {
                 </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
-                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => ''}>BACK TO TOP</p>
+                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
             </div>
         </div>
     );

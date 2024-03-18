@@ -421,19 +421,11 @@ const ProductList = () => {
       return { ...pd, wishCheck };
     });
 
-    console.log("newWishCheckData", newWishCheckData);
-
     try {
       localStorage.setItem("allproductlist", JSON.stringify(newWishCheckData));
-      console.log("localStorage updated successfully!");
-
-      const localStorageData = JSON.parse(localStorage.getItem("allproductlist"));
-
       if (JSON.stringify(newWishCheckData) !== JSON.stringify(ProductApiData2)) {
         setProductApiData2(newWishCheckData);
       }
-
-      console.log("Retrieved data from localStorage:", localStorageData);
     } catch (error) {
       console.error("Error storing data in localStorage:", error);
     }
@@ -1036,8 +1028,7 @@ const ProductList = () => {
           backgroundColor: "#c0bbb1",
           height: "100%",
           width: "100%",
-          paddingBottom: "100px",
-
+          // paddingBottom: "100px",
         }}
       >
         <div
@@ -1572,7 +1563,11 @@ const ProductList = () => {
             <Footer />
           </div>
         </div>
+        <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
+        <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
       </div>
+      </div>
+     
     </div>
   );
 };

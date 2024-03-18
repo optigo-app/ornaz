@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../../home/Header/Header';
 import './ContinueWithEmail.css';
-import { CircularProgress, TextField } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ export default function ContinueWithEmail() {
         if (!trimmedValue) {
             setEmailError('Email is required.');
         } else if (!validateEmail(trimmedValue)) {
-            setEmailError('Please enter a valid email address without spaces at the start or end.');
+            setEmailError('Please enter a valid email');
         } else {
             setEmailError('');
         }
@@ -37,7 +37,7 @@ export default function ContinueWithEmail() {
             return;
         }
         if (!validateEmail(trimmedEmail)) {
-            setEmailError('Please enter a valid email address without spaces at the start or end.');
+            setEmailError('Please enter a valid email.');
             return;
         }
         try {
@@ -115,14 +115,25 @@ export default function ContinueWithEmail() {
                             error={!!emailError}
                             helperText={emailError}
                         />
+
+                          {/* <button
+                            className={`submitBtnForgot ${buttonFocused ? 'focused' : ''}`}
+                            onClick={handleSubmit}
+                            onFocus={() => setButtonFocused(true)}
+                            onBlur={() => setButtonFocused(false)}
+                            style={{borderColor: 'red'}}
+                        >
+
+                        </button> */}
+
                         <button type='submit' className='submitBtnForgot' onClick={handleSubmit}>SUBMIT</button>
-                        <p className='cancleForgot' onClick={() => navigation('/LoginOption')}>CANCEL</p>
+                        <Button style={{marginTop: '10px' ,color: 'gray'}} onClick={() => navigation('/LoginOption')}>CANCEL</Button>
                     </div>
                     <Footer />
                 </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
-                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => ''}>BACK TO TOP</p>
+                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
             </div>
         </div>
     );

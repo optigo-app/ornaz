@@ -149,8 +149,9 @@ export default function Header() {
   useEffect(() => {
     const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
     const { IsB2BWebsite } = storeInit;
+    // setIsB2BFlaf(0);
     setIsB2BFlaf(IsB2BWebsite);
-  })
+  }, [])
 
   const getMenuApi = async () => {
 
@@ -231,13 +232,17 @@ export default function Header() {
 
   const [openCart, setOpenCart] = useState(false);
   const toggleCartDrawer = (isOpen) => (event) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
+    if (isB2bFlag === 2) {
+      navigation('/CartPage');
+    } else {
+      if (
+        event.type === 'keydown' &&
+        (event.key === 'Tab' || event.key === 'Shift')
+      ) {
+        return;
+      }
+      setOpenCart(isOpen);
     }
-    setOpenCart(isOpen);
   };
 
 
@@ -378,7 +383,7 @@ export default function Header() {
                   style={{ marginInline: '5px' }}
                   className="smilingHeaderWhishlistIcon"
                 >
-                  <Tooltip title="Add To WishList">
+                  <Tooltip title="WishList">
                     <li style={{ listStyle: 'none' }} onClick={() => navigation("/myWishList")}>
                       <PiStarThin
                         style={{
@@ -409,7 +414,7 @@ export default function Header() {
                   color="secondary"
                   style={{ marginInline: '10px' }}
                 >
-                  <Tooltip title="Add To Cart">
+                  <Tooltip title="Cart">
                     <li
                       // onClick={() => alert(isB2bFlag)}
                       onClick={toggleCartDrawer(true)}
@@ -744,7 +749,7 @@ export default function Header() {
                     overlap={"rectangular"}
                     color="secondary"
                   >
-                    <Tooltip title="Add To WishList">
+                    <Tooltip title="WishList">
                       <li onClick={() => navigation("/myWishList")}>
                         <PiStarThin
                           style={{
@@ -766,7 +771,7 @@ export default function Header() {
                     overlap={"rectangular"}
                     color="secondary"
                   >
-                    <Tooltip title="Add To Cart">
+                    <Tooltip title="Cart">
                       <li
                         onClick={toggleCartDrawer(true)}
                         style={{
@@ -997,7 +1002,7 @@ export default function Header() {
                       overlap={"rectangular"}
                       color="secondary"
                     >
-                      <Tooltip title="Add To WishList">
+                      <Tooltip title="WishList">
                         <li onClick={() => navigation("/myWishList")}>
                           <PiStarThin
                             style={{
@@ -1019,7 +1024,7 @@ export default function Header() {
                       overlap={"rectangular"}
                       color="secondary"
                     >
-                      <Tooltip title="Add To Cart">
+                      <Tooltip title="Cart">
                         <li
                           onClick={toggleCartDrawer(true)}
                           style={{
@@ -1109,10 +1114,10 @@ export default function Header() {
                   badgeContent={getWishListCount}
                   overlap={"rectangular"}
                   color="secondary"
-                  style={{ marginInline: '5px' }}
+                  style={{ marginInline: '6px' }}
                   className="smilingHeaderWhishlistIcon"
                 >
-                  <Tooltip title="Add To WishList">
+                  <Tooltip title="WishList">
                     <li style={{ listStyle: 'none' }} onClick={() => navigation("/myWishList")}>
                       <PiStarThin
                         style={{
@@ -1127,7 +1132,7 @@ export default function Header() {
                   </Tooltip>
                 </Badge>
 
-                <li onClick={toggleOverlay} style={{ listStyle: 'none', width: '40px', textAlign: 'center' }}>
+                <li onClick={toggleOverlay} style={{ listStyle: 'none', width: '40px', textAlign: 'center', marginInline: '10px' }}>
                   <IoSearchOutline
                     style={{
                       height: "25px", cursor: "pointer", width: "25px",
@@ -1144,7 +1149,7 @@ export default function Header() {
                   color="secondary"
                   style={{ marginInline: '10px' }}
                 >
-                  <Tooltip title="Add To Cart">
+                  <Tooltip title="Cart">
                     <li
                       onClick={toggleCartDrawer(true)}
                       style={{
@@ -1239,7 +1244,7 @@ export default function Header() {
                     style={{ marginInline: '5px' }}
                     className="smilingHeaderWhishlistIcon"
                   >
-                    <Tooltip title="Add To WishList">
+                    <Tooltip title="WishList">
                       <li style={{ listStyle: 'none' }} onClick={() => navigation("/myWishList")}>
                         <PiStarThin
                           style={{
@@ -1254,7 +1259,7 @@ export default function Header() {
                     </Tooltip>
                   </Badge>
 
-                  <li onClick={toggleOverlay} style={{ listStyle: 'none', textAlign: 'center' }}>
+                  <li onClick={toggleOverlay} style={{ listStyle: 'none', textAlign: 'center', marginInline: '10px' }}>
                     <IoSearchOutline
                       style={{
                         height: "25px", cursor: "pointer", width: "25px",
@@ -1269,7 +1274,7 @@ export default function Header() {
                     color="secondary"
                     style={{ marginInline: '10px' }}
                   >
-                    <Tooltip title="Add To Cart">
+                    <Tooltip title="Cart">
                       <li
                         onClick={toggleCartDrawer(true)}
                         style={{

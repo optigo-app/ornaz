@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './YourProfile.css';
 import { TextField, Modal, Button, CircularProgress } from '@mui/material';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 
 export default function YourProfile() {
@@ -76,6 +76,8 @@ export default function YourProfile() {
 
     return (
         <div>
+            <ToastContainer />
+
             {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />
@@ -146,7 +148,7 @@ export default function YourProfile() {
                     )}
                 </div>
                 <div>
-                    <button onClick={handleEdit} className='SmilingAddRemkarBtn' style={{ backgroundColor: 'lightgray' }}>Edit Address</button>
+                    <button onClick={handleEdit} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' }}>Edit Address</button>
                 </div>
             </div>
 
@@ -203,8 +205,8 @@ export default function YourProfile() {
                         )}
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', marginBlock: '20px' }}>
-                        <button onClick={handleSave} className='SmilingAddRemkarBtn' style={{ backgroundColor: 'lightgray' }}>Save</button>
-                        <button onClick={() => setEditMode(false)} className='SmilingAddRemkarBtn' style={{ marginInline: '5px', backgroundColor: 'lightgray' }}>Cancel</button>
+                        <button onClick={handleSave} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' ,marginInline: '5px' }}>Save</button>
+                        <button onClick={() => setEditMode(false)} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' }}>Cancel</button>
                     </div>
                 </div>
             </Modal>

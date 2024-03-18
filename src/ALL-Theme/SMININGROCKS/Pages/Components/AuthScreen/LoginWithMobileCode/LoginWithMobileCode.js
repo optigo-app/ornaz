@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../home/Header/Header';
-import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Button, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
@@ -165,13 +165,13 @@ export default function LoginWithMobileCode() {
 
                         <button className='submitBtnForgot' onClick={handleSubmit}>Login</button>
                         <p style={{ marginTop: '10px' }}>Didn't get the code ? {resendTimer === 0 ? <span style={{ fontWeight: 500, color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} onClick={handleResendCode}>Resend Code</span> : <span>Resend in {Math.floor(resendTimer / 60).toString().padStart(2, '0')}:{(resendTimer % 60).toString().padStart(2, '0')}</span>}</p>
-                        <p className='cancleForgot' onClick={() => navigation('/')}>CANCEL</p>
+                        <Button style={{marginTop: '10px' ,color: 'gray'}} onClick={() => navigation('/LoginOption')}>CANCEL</Button>
                     </div>
                     <Footer />
                 </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
-                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => ''}>BACK TO TOP</p>
+                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
             </div>
         </div>
     );

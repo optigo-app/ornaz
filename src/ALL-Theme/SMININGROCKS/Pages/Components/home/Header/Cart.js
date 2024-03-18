@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { CartListCounts, WishListCounts } from '../../../../../../Recoil/atom';
 import { GetCount } from '../../../../Utils/API/GetCount';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -256,7 +257,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                 };
                 const response = await CommonAPI(body);
                 if (response.Data.rd[0].stat === 1) {
-                    alert('done');
+                    toast.success('Add remark successfully');
                 } else {
                     alert('Error');
                 }
@@ -341,7 +342,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                 };
                 const response = await CommonAPI(body);
                 if (response.Data.rd[0].stat === 1) {
-                    alert('done');
+                    toast.success('QTY update successfully');
                 } else {
                     alert('Error');
                 }
@@ -380,6 +381,8 @@ export default function Cart({ open, toggleCartDrawer }) {
             }}
             className='cartDrawerMainMobile'
         >
+            <ToastContainer />
+
             {isLoading && (
                 <div
                     style={{
@@ -445,7 +448,7 @@ export default function Cart({ open, toggleCartDrawer }) {
             </div>
 
             <CustomTabPanel value={value} index={0}>
-                <div style={{ paddingBottom: "150px", marginTop: '170px' , paddingInline: '10px' }}>
+                <div style={{ paddingBottom: "150px", marginTop: '170px', paddingInline: '10px' }}>
                     {cartListData?.length === 0 ? !isLoading && (
                         <div
                             style={{
@@ -722,7 +725,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                 onClick={() => handleSubmit(index, item)}
                                                 className="SmilingAddSingleRemkarBtn"
                                             >
-                                                Add Remarks
+                                                Add Remark
                                             </button>
                                         </div>
                                     </div>
@@ -732,7 +735,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                             <textarea
                                 label="Enter Remarks"
                                 variant="outlined"
-                                placeholder="Enter Main Remark"
+                                placeholder="Enter Order Remark"
                                 value={Mainremarks}
                                 rows={4}
                                 onChange={(e) => handleInputChangeMainRemarks(e)}
@@ -783,7 +786,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                             <p>Please First Add To Cart Data</p>
                         </div>
                     ) : (
-                        <div style={{ display: 'flex', flexWrap: 'wrap' ,justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                             {cartListData?.map((item, index) => (
                                 <div key={item.id} className="smiling-cartBoxMainImageView">
                                     <div className='smilingCartMobileMain' style={{ display: 'flex' }}>
