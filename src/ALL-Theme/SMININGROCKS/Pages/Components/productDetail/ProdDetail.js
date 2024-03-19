@@ -82,12 +82,12 @@ const ProdDetail = () => {
     let ColorStoneQualityColor = JSON.parse(localStorage.getItem("ColorStoneQualityColor"))
     setmtTypeOption(loginInfo?.cmboMetalType)
 
-    let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0].toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1].toUpperCase()}`
+    let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0]?.toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1]?.toUpperCase()}`
     setDiaQColOpt(qualityColor)
 
-    let csQualColor = `${loginInfo?.cmboCSQualityColor.split("#@#")[0].toUpperCase()}-${loginInfo?.cmboCSQualityColor.split("#@#")[1].toUpperCase()}`
+    let csQualColor = `${loginInfo?.cmboCSQualityColor.split("#@#")[0]?.toUpperCase()}-${loginInfo?.cmboCSQualityColor.split("#@#")[1]?.toUpperCase()}`
 
-    let dqcc = ColorStoneQualityColor.find((dqc) => `${dqc.Quality}-${dqc.color}` === csQualColor)
+    let dqcc = ColorStoneQualityColor?.find((dqc) => `${dqc.Quality}-${dqc.color}` === csQualColor)
 
     if (dqcc) {
       setCSQOpt(csQualColor)
