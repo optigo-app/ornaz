@@ -1034,7 +1034,7 @@ useEffect(() => {
 
                   }}>{fd1?.param2dataname}</span>
               ))}
-            </div>
+            </div> 
 
             {/* <div style={{display:'flex',flexDirection:'row' ,gap:'80px'}}>
               <div style={{display:'flex',flexDirection:'column'}}>
