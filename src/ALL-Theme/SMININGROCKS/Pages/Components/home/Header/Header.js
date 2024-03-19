@@ -15,6 +15,7 @@ import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, op
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import Cart from "./Cart";
 import titleImg from "../../../assets/title/sonasons.png"
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 export default function Header() {
   const navigation = useNavigate();
@@ -36,8 +37,81 @@ export default function Header() {
   const setHeaderData = useSetRecoilState(HeaderData)
   const setHeaderData2 = useSetRecoilState(HeaderData2)
 
+  const [menul0data, setMenu0data] = useState([])
+  const [menul1data, setMenu1data] = useState([])
+  const [menul2data, setMenul2data] = useState([])
+
   console.log("finalData",finalData)
   // console.log("menu1Index",finalData?.map((fd)=>fd?.param1)[menu1Index])
+
+  const separateData = (menuData) => {
+    // let tempMenu0data = [];
+    // let tempMenu1data = [];
+    // let tempMenu2data = [];
+
+    // menuData?.forEach(item => {
+    //     // Extract data for menu0data
+    //     let menu0 = {
+    //         menuname: item.menuname,
+    //         param0dataname: item.param0dataname,
+    //         param0dataid: item.param0dataid,
+    //         param0name: item.param0name,
+    //         param0id: item.param0id
+    //     };
+    //     tempMenu0data.push(menu0);
+
+    //     // Extract data for menu1data
+    //     let menu1 = {
+    //         param1id: item.param1id,
+    //         param1name: item.param1name,
+    //         param1dataid: item.param1dataid,
+    //         param1dataname: item.param1dataname
+    //     };
+    //     tempMenu1data.push(menu1);
+
+    //     // Extract data for menu2data
+    //     let menu2 = {
+    //         param2id: item.param2id,
+    //         param2name: item.param2name,
+    //         param2dataid: item.param2dataid,
+    //         param2dataname: item.param2dataname
+    //     };
+    //     tempMenu2data.push(menu2);
+    // });
+
+    let tempMenu0data = Array.from(new Set(menuData?.map(item => JSON.stringify({
+      menuname: item.menuname,
+      param0dataname: item.param0dataname,
+      param0dataid: item.param0dataid,
+      param0name: item.param0name,
+      param0id: item.param0id
+  }))))?.map(item => JSON.parse(item));
+
+  let tempMenu1data = Array.from(new Set(menuData?.map(item => JSON.stringify({
+      param1id: item.param1id,
+      param1name: item.param1name,
+      param1dataid: item.param1dataid,
+      param1dataname: item.param1dataname
+  }))))?.map(item => JSON.parse(item));
+
+  let tempMenu2data = Array.from(new Set(menuData?.map(item => JSON.stringify({
+      param2id: item.param2id,
+      param2name: item.param2name,
+      param2dataid: item.param2dataid,
+      param2dataname: item.param2dataname
+  }))))?.map(item => JSON.parse(item));
+
+    // Update states
+    setMenu0data(tempMenu0data)
+    setMenu1data(tempMenu1data)
+    setMenul2data(tempMenu2data)
+};
+
+
+useEffect(() => {
+  separateData();
+}, []);
+
 
   const handelmenu1 = (param) => {
     console.log("param1", param)
@@ -60,82 +134,154 @@ export default function Header() {
     setHeaderData2(param)
   }
 
-  const transformData = (data) => {
+  // const transformData = (data) => {
 
+  //   const transformedData = data?.reduce((acc, item) => {
+  //     const existingItem = acc.find(i => i.lavelid === item.levelid);
+  //     if (existingItem) {
+  //       const existingParam1 = existingItem.param1.find(p => p.param1dataid === item.param1dataid);
+  //       if (existingParam1) {
+  //         if (item.param2id) {
+  //           const existingParam2 = existingParam1.param2.find(p => p.param2dataid === item.param2dataid);
+  //           if (existingParam2) {
+  //             // If param2dataid already exists, do nothing
+  //           } else {
+  //             // Add new param2
+  //             existingParam1.param2.push({
+  //               param2id: item.param2id,
+  //               param2name: item.param2name,
+  //               param2dataid: item.param2dataid,
+  //               param2dataname: item.param2dataname
+  //             })
+  //           }
+  //         }
+  //       } else {
+  //         const newItem = {
+  //           param1id: item.param1id,
+  //           param1name: item.param1name,
+  //           param1dataid: item.param1dataid,
+  //           param1dataname: item.param1dataname,
+  //           param2: []
+  //         };
+  //         if (item.param2id) {
+  //           newItem.param2.push({
+  //             param2id: item.param2id,
+  //             param2name: item.param2name,
+  //             param2dataid: item.param2dataid,
+  //             param2dataname: item.param2dataname
+  //           });
+  //         }
+  //         existingItem.param1.push(newItem);
+  //       }
+  //     } else {
+  //       const newItem = {
+  //         lavelid: item.levelid,
+  //         menuname: item.menuname,
+  //         link: item.link || '',
+  //         param0id: item.param0id || '',
+  //         param0name: item.param0name || '',
+  //         param0dataid: item.param0dataid || '',
+  //         param0dataname: item.param0dataname || '',
+  //         param1: []
+  //       };
+  //       if (item.param1id) {
+  //         const newParam1 = {
+  //           param1id: item.param1id,
+  //           param1name: item.param1name,
+  //           param1dataid: item.param1dataid,
+  //           param1dataname: item.param1dataname,
+  //           param2: []
+  //         };
+  //         if (item.param2id) {
+  //           newParam1.param2.push({
+  //             param2id: item.param2id,
+  //             param2name: item.param2name,
+  //             param2dataid: item.param2dataid,
+  //             param2dataname: item.param2dataname
+  //           });
+  //         }
+  //         newItem.param1.push(newParam1);
+  //       }
+  //       acc.push(newItem);
+  //     }
+  //     return acc;
+  //   }, []);
+
+  //   setFinalData(transformedData);
+  // };
+
+  const transformData = (data) => {
     const transformedData = data?.reduce((acc, item) => {
-      const existingItem = acc.find(i => i.lavelid === item.levelid);
-      if (existingItem) {
-        const existingParam1 = existingItem.param1.find(p => p.param1dataid === item.param1dataid);
-        if (existingParam1) {
-          if (item.param2id) {
-            const existingParam2 = existingParam1.param2.find(p => p.param2dataid === item.param2dataid);
-            if (existingParam2) {
-              // If param2dataid already exists, do nothing
+        const existingItem = acc.find(i => i.levelid === item.levelid);
+        if (existingItem) {
+            const existingParam1 = existingItem.param1.find(p => p.param1dataid === item.param1dataid);
+            if (existingParam1) {
+                if (item.param2id) {
+                    const existingParam2 = existingParam1.param2.find(p => p.param2dataid === item.param2dataid);
+                    if (!existingParam2) {
+                        existingParam1.param2.push({
+                            param2id: item.param2id,
+                            param2name: item.param2name,
+                            param2dataid: item.param2dataid,
+                            param2dataname: item.param2dataname
+                        });
+                    }
+                }
             } else {
-              // Add new param2
-              existingParam1.param2.push({
-                param2id: item.param2id,
-                param2name: item.param2name,
-                param2dataid: item.param2dataid,
-                param2dataname: item.param2dataname
-              })
+                const newParam1 = {
+                    param1id: item.param1id,
+                    param1name: item.param1name,
+                    param1dataid: item.param1dataid,
+                    param1dataname: item.param1dataname,
+                    menuname: item.menuname, // Include menuname here
+                    param2: []
+                };
+                if (item.param2id) {
+                    newParam1.param2.push({
+                        param2id: item.param2id,
+                        param2name: item.param2name,
+                        param2dataid: item.param2dataid,
+                        param2dataname: item.param2dataname
+                    });
+                }
+                existingItem.param1.push(newParam1);
             }
-          }
         } else {
-          const newItem = {
-            param1id: item.param1id,
-            param1name: item.param1name,
-            param1dataid: item.param1dataid,
-            param1dataname: item.param1dataname,
-            param2: []
-          };
-          if (item.param2id) {
-            newItem.param2.push({
-              param2id: item.param2id,
-              param2name: item.param2name,
-              param2dataid: item.param2dataid,
-              param2dataname: item.param2dataname
-            });
-          }
-          existingItem.param1.push(newItem);
+            const newItem = {
+                levelid: item.levelid,
+                menuname: item.menuname,
+                param0dataname: item.param0dataname,
+                param0dataid: item.param0dataid,
+                param0name: item.param0name,
+                param0id: item.param0id,
+                param1: []
+            };
+            if (item.param1id) {
+                const newParam1 = {
+                    param1id: item.param1id,
+                    param1name: item.param1name,
+                    param1dataid: item.param1dataid,
+                    param1dataname: item.param1dataname,
+                    menuname: item.menuname, // Include menuname here
+                    param2: []
+                };
+                if (item.param2id) {
+                    newParam1.param2.push({
+                        param2id: item.param2id,
+                        param2name: item.param2name,
+                        param2dataid: item.param2dataid,
+                        param2dataname: item.param2dataname
+                    });
+                }
+                newItem.param1.push(newParam1);
+            }
+            acc.push(newItem);
         }
-      } else {
-        const newItem = {
-          lavelid: item.levelid,
-          menuname: item.menuname,
-          link: item.link || '',
-          param0id: item.param0id || '',
-          param0name: item.param0name || '',
-          param0dataid: item.param0dataid || '',
-          param0dataname: item.param0dataname || '',
-          param1: []
-        };
-        if (item.param1id) {
-          const newParam1 = {
-            param1id: item.param1id,
-            param1name: item.param1name,
-            param1dataid: item.param1dataid,
-            param1dataname: item.param1dataname,
-            param2: []
-          };
-          if (item.param2id) {
-            newParam1.param2.push({
-              param2id: item.param2id,
-              param2name: item.param2name,
-              param2dataid: item.param2dataid,
-              param2dataname: item.param2dataname
-            });
-          }
-          newItem.param1.push(newParam1);
-        }
-        acc.push(newItem);
-      }
-      return acc;
+        return acc;
     }, []);
 
     setFinalData(transformedData);
-  };
-
+};
 
   const [islogin, setislogin] = useRecoilState(loginState);
   const [isB2bFlag, setIsB2BFlaf] = useState('');
@@ -172,7 +318,9 @@ export default function Header() {
     }
 
     await CommonAPI(body).then((res) => {
+      // console.log("getmenuData",res?.Data?.rd)
       transformData(res?.Data?.rd)
+      separateData(res?.Data?.rd)
     })
     // }
   }
@@ -277,7 +425,11 @@ export default function Header() {
   }, [searchedProducts])
 
 
-
+  function capitalizeText(text) {
+    return text?.toLowerCase()?.split(' ').map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+  }
 
 
   return (
@@ -405,8 +557,9 @@ export default function Header() {
                 <li onClick={toggleOverlay} style={{ listStyle: 'none', width: '40px', textAlign: 'center' }}>
                   <IoSearchOutline
                     style={{
-                      height: "25px", cursor: "pointer", width: "25px",
+                      height: "20px", cursor: "pointer", width: "20px",
                       color: "white",
+                      marginRight:'9px'
                     }}
                     className="mobileViewSmilingTop2Icone"
                   />
@@ -429,7 +582,7 @@ export default function Header() {
                         marginTop: "0px",
                       }}
                     >
-                      <PiStarFourThin
+                      {/* <PiStarFourThin
                         style={{
                           cursor: "pointer",
                           height: "30px",
@@ -439,7 +592,10 @@ export default function Header() {
                         }}
                         className="mobileViewSmilingTop3Icone"
 
-                      />
+                      /> */}
+                      <ShoppingCartOutlinedIcon
+                          sx={{height:'30px',width:'30px'}}
+                          />
                     </li>
                   </Tooltip>
                 </Badge>
@@ -767,7 +923,7 @@ export default function Header() {
                   </Badge>
                   <li onClick={toggleOverlay} style={{}}>
                     <IoSearchOutline
-                      style={{ height: "15px", cursor: "pointer", width: "15px" }}
+                      style={{ height: "20px", cursor: "pointer", width: "20px" }}
                     />
                   </li>
                   <Badge
@@ -784,13 +940,16 @@ export default function Header() {
                           marginTop: "0px",
                         }}
                       >
-                        <PiStarFourThin
+                        {/* <PiStarFourThin
                           style={{
                             cursor: "pointer",
                             height: "35px",
                             width: "35px",
                           }}
-                        />
+                        /> */}
+                        <ShoppingCartOutlinedIcon
+                          sx={{height:'30px',width:'30px'}}
+                          />
                       </li>
                     </Tooltip>
                   </Badge></>}
@@ -810,7 +969,7 @@ export default function Header() {
               padding: "50px",
               color: "#7d7f85",
               backgroundColor: "white",
-              flexDirection: "row",
+              // flexDirection: "column",
               gap: "50px",
             }}
             onMouseEnter={handleDropdownOpen}
@@ -869,6 +1028,43 @@ export default function Header() {
                   }}>{fd1?.param2dataname}</span>
               ))}
             </div>
+
+            {/* <div style={{display:'flex',flexDirection:'row' ,gap:'80px'}}>
+              <div style={{display:'flex',flexDirection:'column'}}>
+                <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>FINE JEWELRY</span>
+                <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px'}}>
+                {
+                  menul0data?.map((md)=>(
+                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4}}>{capitalizeText(md?.menuname)}</span>
+                    ))
+                  }
+                </span>
+              </div>
+              <div>
+              <div style={{display:'flex',flexDirection:'column',borderLeft:'1px solid #e1e1e1',paddingLeft:'40px'}}>
+                <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>COLLECTIONS</span>
+                <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px'}}>
+                {
+                  menul1data?.map((md)=>(
+                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4}}>{capitalizeText(md?.param1dataname)}</span>
+                    ))
+                  }
+                </span>
+              </div>
+              </div>
+              <div>
+              <div style={{display:'flex',flexDirection:'column',borderLeft:'1px solid #e1e1e1',paddingLeft:'40px',width:'150%'}}>
+                <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>BOUTIQUE</span>
+                <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px',height:'350px',flexWrap:'wrap'}}>
+                {
+                  menul2data?.map((md)=>(
+                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4}}>{capitalizeText(md?.param2dataname)}</span>
+                    ))
+                  }
+                </span>
+              </div>
+              </div>
+            </div> */}
 
           </div>
         </div>
@@ -1044,7 +1240,7 @@ export default function Header() {
                     </Badge>
                     <li onClick={toggleOverlay} style={{}}>
                       <IoSearchOutline
-                        style={{ height: "15px", cursor: "pointer", width: "15px" }}
+                        style={{ height: "20px", cursor: "pointer", width: "20px" }}
                       />
                     </li>
                     <Badge
@@ -1061,12 +1257,15 @@ export default function Header() {
                             cursor: "pointer",
                           }}
                         >
-                          <PiStarFourThin
+                          {/* <PiStarFourThin
                             style={{
                               cursor: "pointer",
                               height: "30px",
                               width: "30px",
                             }}
+                          /> */}
+                          <ShoppingCartOutlinedIcon
+                          sx={{height:'30px',width:'30px'}}
                           />
                         </li>
                       </Tooltip>
@@ -1163,7 +1362,7 @@ export default function Header() {
                 <li onClick={toggleOverlay} style={{ listStyle: 'none', width: '40px', textAlign: 'center', marginInline: '10px' }}>
                   <IoSearchOutline
                     style={{
-                      height: "25px", cursor: "pointer", width: "25px",
+                      height: "20px", cursor: "pointer", width: "20px",
                       color: "white",
                     }}
                     className="mobileViewSmilingTop2Icone"
@@ -1187,7 +1386,7 @@ export default function Header() {
                         marginTop: "0px",
                       }}
                     >
-                      <PiStarFourThin
+                      {/* <PiStarFourThin
                         style={{
                           cursor: "pointer",
                           height: "30px",
@@ -1197,7 +1396,10 @@ export default function Header() {
                         }}
                         className="mobileViewSmilingTop3Icone"
 
-                      />
+                      /> */}
+                      <ShoppingCartOutlinedIcon
+                          sx={{height:'30px',width:'30px'}}
+                          />
                     </li>
                   </Tooltip>
                 </Badge>
@@ -1290,7 +1492,7 @@ export default function Header() {
                   <li onClick={toggleOverlay} style={{ listStyle: 'none', textAlign: 'center', marginInline: '10px' }}>
                     <IoSearchOutline
                       style={{
-                        height: "25px", cursor: "pointer", width: "25px",
+                        height: "20px", cursor: "pointer", width: "20px",
                         color: "#7d7f85",
                       }}
                       className="mobileViewSmilingTop2Icone"
@@ -1312,7 +1514,7 @@ export default function Header() {
                           marginTop: "0px",
                         }}
                       >
-                        <PiStarFourThin
+                        {/* <PiStarFourThin
                           style={{
                             cursor: "pointer",
                             height: "30px",
@@ -1321,7 +1523,10 @@ export default function Header() {
                           }}
                           className="mobileViewSmilingTop3Icone"
 
-                        />
+                        /> */}
+                        <ShoppingCartOutlinedIcon
+                          sx={{height:'30px',width:'30px'}}
+                          />
                       </li>
                     </Tooltip>
                   </Badge>
