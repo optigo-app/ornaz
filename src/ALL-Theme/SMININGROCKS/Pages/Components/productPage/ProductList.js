@@ -39,8 +39,6 @@ const ProductList = () => {
   const [ProductApiData, setProductApiData] = useState([])
   const [ProductApiData2, setProductApiData2] = useState([])
   const [drawerShowOverlay, setDrawerShowOverlay] = useState(false);
-  // const [isHovered, setIsHovered] = useState(false);
-  // const [HoveredID, setHoveredID] = useState();
   const [filterChecked, setFilterChecked] = useState({});
   const [wishFlag, setWishFlag] = useState(false)
   const [cartFlag, setCartFlag] = useState(false)
@@ -51,6 +49,10 @@ const ProductList = () => {
   const [newProData, setNewProData] = useState(ProductApiData2);
   const [priceDataApi, setpriceDataApi] = useRecoilState(priceData);
   const [currencySym, setCurrencySym] = useState();
+
+  const[metalRdPrice,setMetalRdPrice] = useState([]);
+  const[diaRd1Price,setDiaRd1Price] = useState([]);
+  const[csRd2Price,setCsRd2Price] = useState([]);
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -135,7 +137,11 @@ const ProductList = () => {
         let diard1 = 0;
         let csrd2 = 0;
 
-        // console.log("newPriceData",newPriceData)
+        console.log("newPriceData",newPriceData?.Z)
+
+        // if(newPriceData){
+        //   setMetalRdPrice((prev)=>[...prev,{product["autocode"]:newPriceData?.Z}])
+        // }
 
         if (newPriceData || newPriceData1 || newPriceData2) {
           price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
@@ -146,7 +152,6 @@ const ProductList = () => {
           isLoading = false;
         }
         else {
-          // price = " " ;
           isLoading = false;
         }
 
@@ -958,8 +963,6 @@ const ProductList = () => {
       
     }
 
-
-
   }, [getHeaderData2,getHeaderData])
 
 
@@ -986,7 +989,7 @@ const ProductList = () => {
       "CurrencyRate": `${currencyCombo?.CurrencyRate}`,
       "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
       "Customerid": `${loginUserDetail?.id}`,
-      "Laboursetid": `${loginUserDetail?.pricemanagement_laboursetid}`,
+      "Laboursetid": `${storeInit.PolicyApplyOnName === "Customer Wise Policy" ? loginUserDetail?._pricemanagement_laboursetid : loginUserDetail?.pricemanagement_laboursetid}`,
       "diamondpricelistname": `${loginUserDetail?.diamondpricelistname}`,
       "colorstonepricelistname": `${loginUserDetail?.colorstonepricelistname}`,
       "SettingPriceUniqueNo": `${loginUserDetail?.SettingPriceUniqueNo}`,
@@ -1545,7 +1548,11 @@ const ProductList = () => {
                       <div>
                         <p style={{ fontSize: "12px" }}>
 
-                          {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price === 0 ? 'Not Available' : products?.price + (products?.markup === 0 ? "" : products?.markup))}
+                          {/* {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price === 0 ? 'Not Available' : products?.price + (products?.markup === 0 ? "" : products?.markup))} */}
+                          {products?.MetalColorName} 
+                          / 
+                          {currencySym?.Currencysymbol}
+                          {((products?.UnitCost ?? 0) + (products?.price ?? 0) + (products?.markup ?? 0)).toFixed(2)}
                         </p>
                       </div>
                      

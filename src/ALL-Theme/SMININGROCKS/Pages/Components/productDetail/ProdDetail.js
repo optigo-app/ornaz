@@ -59,6 +59,7 @@ const ProdDetail = () => {
   const [grandTotal, setGrandTotal] = useState(0);
 
   const [designSetList, setDesignSetList] = useState([]);
+  const [sizeMarkup,setSizeMarkup] = useState();
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -68,7 +69,7 @@ const ProdDetail = () => {
     setImgLoading(false)
   }
 
-  // console.log("getDesignSet",getDesignSet);
+  console.log("sizeMarkup",sizeMarkup);
 
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
 
@@ -82,12 +83,12 @@ const ProdDetail = () => {
     let ColorStoneQualityColor = JSON.parse(localStorage.getItem("ColorStoneQualityColor"))
     setmtTypeOption(loginInfo?.cmboMetalType)
 
-    let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0].toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1].toUpperCase()}`
+    let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0]?.toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1]?.toUpperCase()}`
     setDiaQColOpt(qualityColor)
 
-    let csQualColor = `${loginInfo?.cmboCSQualityColor.split("#@#")[0].toUpperCase()}-${loginInfo?.cmboCSQualityColor.split("#@#")[1].toUpperCase()}`
+    let csQualColor = `${loginInfo?.cmboCSQualityColor.split("#@#")[0]?.toUpperCase()}-${loginInfo?.cmboCSQualityColor.split("#@#")[1]?.toUpperCase()}`
 
-    let dqcc = ColorStoneQualityColor.find((dqc) => `${dqc.Quality}-${dqc.color}` === csQualColor)
+    let dqcc = ColorStoneQualityColor?.find((dqc) => `${dqc.Quality}-${dqc.color}` === csQualColor)
 
     if (dqcc) {
       setCSQOpt(csQualColor)
@@ -198,6 +199,7 @@ const ProdDetail = () => {
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
       showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
+      setMetalPrice(mtrd[0]?.Z ?? 0)
     }
 
     let diaqcprice = getPriceData?.rd1?.filter((ele) =>
@@ -207,9 +209,13 @@ const ProdDetail = () => {
       ele.J === diaQColOpt?.split("_")[1]
     );
 
+    
+    
     let showPrice1 = 0;
     if (diaqcprice && diaqcprice.length > 0) {
       showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
+      console.log("diaqcprice",diaqcprice)
+      setDQCPrice(diaqcprice[0]?.S ?? 0)
     }
 
     let csqcpirce = getPriceData?.rd2?.filter((ele) =>
@@ -222,12 +228,14 @@ const ProdDetail = () => {
     let showPrice2 = 0;
     if (csqcpirce && csqcpirce.length > 0) {
       showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+      setCSQCPrice(csqcpirce[0]?.S ?? 0)
     }
 
     let gt = showPrice + showPrice1 + showPrice2;
     setGrandTotal(gt ?? 0);
 
-  }, [mtTypeOption, diaQColOpt, cSQopt]);
+  }, [mtTypeOption, diaQColOpt, cSQopt])
+  
 
 
   const handelLocalStorage = () => {
@@ -945,6 +953,11 @@ const ProdDetail = () => {
   }
 
   const handelSize = (data) => {
+
+    const selectedSize = sizeData.find((size) => size.sizename === data);
+    if (selectedSize) {
+      setSizeMarkup(selectedSize?.MarkUp)
+    }
     setSizeOption(data)
     const filteredData = getAllFilterSizeData?.filter(item => item.sizename === data);
     const filteredDataMetal = filteredData?.filter(item => item.DiamondStoneTypeName === "METAL");
@@ -1365,9 +1378,11 @@ const ProdDetail = () => {
 
                 </div>
 
-                {isPriseShow == 0 && <div style={{ marginTop: "23px" }}>
+                {isPriseShow == 1 && <div style={{ marginTop: "23px" }}>
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
-                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${(productData?.price - grandTotal) === 0 ? "Not Availabel" : (productData?.price - grandTotal)?.toFixed(2)}`}</span>
+                    {/* Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${(productData?.price - grandTotal) === 0 ? "Not Availabel" : (productData?.price - grandTotal)?.toFixed(2)}`}</span> */}
+                    {/* Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${productData?.UnitCost + (productData?.price - grandTotal)?.toFixed(2)}`}</span> */}
+                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${((productData?.UnitCost) + mtPrice + dqcPrice + csqcPrice + (sizeMarkup ?? 0) ).toFixed(2)}`}</span>
                   </p>
                 </div>}
 
