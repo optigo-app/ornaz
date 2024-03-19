@@ -62,9 +62,7 @@ export default function ContimueWithMobile() {
                 navigation('/LoginWithMobileCode', { mobileNo: mobileNo });
                 localStorage.setItem('registerMobile', mobileNo)
             } else {
-                console.log('send mobleeeee', mobileNo);
                 navigation('/register', { state: { mobileNo: mobileNo } });
-
                 localStorage.setItem('registerMobile', mobileNo)
             }
         } catch (error) {

@@ -1540,11 +1540,15 @@ const ProductList = () => {
                         </p>
                       </div>
                       <div>
+                        <p style={{margin: '0px' , fontSize: '13px'}}>{products?.designno}</p>
+                      </div>
+                      <div>
                         <p style={{ fontSize: "12px" }}>
 
                           {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price === 0 ? 'Not Available' : products?.price + (products?.markup === 0 ? "" : products?.markup))}
                         </p>
                       </div>
+                     
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
                         <div>
                           <Checkbox
