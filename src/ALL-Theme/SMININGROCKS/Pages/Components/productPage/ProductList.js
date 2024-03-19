@@ -957,18 +957,11 @@ const ProductList = () => {
       setNewProData(data)
       
     }
+
+
+
   }, [getHeaderData2,getHeaderData])
 
-  useEffect(()=>{
-
-  if(newProData.length){
-    toast.success("Products Found!!")
-  }
-  else{
-    toast.error("Products not Found!!")
-  }
-  
-  },[newProData])
 
 
   const newMenuProdData = () => {

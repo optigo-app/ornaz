@@ -1088,7 +1088,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                       }}
                     >
-                      Metal Purity : {productData?.MetalPurity}
+                      Metal Purity : {mtTypeOption ? mtTypeOption.split(" ")[1] :productData?.MetalPurity}
                     </span>
                     <sapn
                       style={{
@@ -1097,7 +1097,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                       }}
                     >
-                      Metal Color : {productData?.MetalColorName}
+                      Metal Color : {selectedColor ? selectedColor : productData?.MetalColorName}
                     </sapn>
                     <sapn
                       style={{
@@ -1107,7 +1107,7 @@ const ProdDetail = () => {
                       }}
                     >
                       Diamond Quality Color:{" "}
-                      {`${productData?.diamondquality}-${productData?.diamondcolorname}`}
+                      {diaQColOpt ?  diaQColOpt :`${productData?.diamondquality}-${productData?.diamondcolorname}`}
                     </sapn>
                   </div>
                   {productData?.IsColorWiseImageExists !== null && (
