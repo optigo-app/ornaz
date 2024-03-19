@@ -41,10 +41,6 @@ export default function Header() {
   const [menul1data, setMenu1data] = useState([])
   const [menul2data, setMenul2data] = useState([])
 
-  const [menul0data, setMenu0data] = useState([])
-  const [menul1data, setMenu1data] = useState([])
-  const [menul2data, setMenul2data] = useState([])
-
   console.log("finalData", finalData)
   // console.log("menu1Index",finalData?.map((fd)=>fd?.param1)[menu1Index])
 
