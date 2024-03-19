@@ -232,7 +232,7 @@ export default function Delivery() {
                     };
                     const response = await CommonAPI(body);
                     if (response.Data.rd[0].stat === 1) {
-                        toast.success('Edit success');
+                        toast.success('Save success');
                         const editedAddress = {
                             ...addressData[editAddressIndex],
                             shippingfirstname: formData.firstName,
@@ -508,7 +508,7 @@ export default function Delivery() {
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
                             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' ,marginBottom: '20px' }}>
                                 <button type="submit" className='smilingDeleveryformSaveBtn'>
-                                    {isEditMode ? 'Edit' : 'Add'}
+                                    {isEditMode ? 'Save' : 'Add'}
                                 </button>
                                 <button onClick={handleClose} className='smilingDeleveryformCansleBtn'>
                                     Cancel
@@ -526,8 +526,9 @@ export default function Delivery() {
                         <div className='smilingDeliveyAddressMain' style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {
                                 addressData?.map((item, index) => (
-                                    <div key={item.id} className='AddressMain'>
+                                    <div key={item.id} className='AddressMain'>.
                                         <input
+                                        
                                             type="radio"
                                             checked={item.isdefault === 1}
                                             onChange={() => handleDefaultSelection(item.id)}
