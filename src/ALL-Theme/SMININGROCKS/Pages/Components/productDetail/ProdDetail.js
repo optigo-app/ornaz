@@ -1087,7 +1087,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                       }}
                     >
-                      Metal Purity : {mtTypeOption ? mtTypeOption.split(" ")[1] :productData?.MetalPurity}
+                      Metal Purity : {mtTypeOption ? mtTypeOption.split(" ")[1] : productData?.MetalPurity}
                     </span>
                     <sapn
                       style={{
@@ -1106,7 +1106,7 @@ const ProdDetail = () => {
                       }}
                     >
                       Diamond Quality Color:{" "}
-                      {diaQColOpt ?  diaQColOpt :`${productData?.diamondquality}-${productData?.diamondcolorname}`}
+                      {diaQColOpt ? diaQColOpt : `${productData?.diamondquality}-${productData?.diamondcolorname}`}
                     </sapn>
                   </div>
                   {productData?.IsColorWiseImageExists !== null && (
@@ -1170,47 +1170,35 @@ const ProdDetail = () => {
                   className="srcolorsizecarat"
                 >
 
-                  {(sizeData?.length !== 0 || (productData?.DefaultSize && productData.DefaultSize.length !== 0)) && (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: '45%',
-                        marginTop: '20px'
-                      }}
-                    >
-                      <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                        SIZE:
-                      </label>
-                      <select
-                        style={{
-                          border: "none",
-                          outline: "none",
-                          color: "#7d7f85",
-                          fontSize: "12.5px",
-                        }}
-                        onChange={(e) => handelSize(e.target.value)}
-                        defaultValue={
-                          productData && productData.DefaultSize
-                            ? productData.DefaultSize
-                            : sizeData.find((size) => size.IsDefaultSize === 1)?.id
-                        }
-                      >
-                        {sizeData?.map((size) => (
-                          <option
-                            key={size.id}
-                            value={size.sizename} // Pass sizename as value
-                            selected={
-                              productData && productData.DefaultSize === size.sizename
-                            }
-                          >
-                            {size.sizename}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
+                  {isMetalCutoMizeFlag == 1 && <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: '45%',
+                      marginTop: '20px'
 
+                    }}
+                  >
+                    <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                      METAL TYPE:
+                    </label>
+                    <select
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        color: "#7d7f85",
+                        fontSize: "12.5px",
+                      }}
+                      defaultValue={mtTypeOption}
+                      onChange={(e) => setmtTypeOption(e.target.value)}
+                    >
+                      {metalType.map((data, index) => (
+                        <option key={index} value={data.metalType}>
+                          {data.metaltype}
+                        </option>
+                      ))}
+                    </select>
+                  </div>}
                   <Divider
                     orientation="vertical"
                     flexItem
@@ -1227,7 +1215,7 @@ const ProdDetail = () => {
                       style={{
                         display: "flex",
                         flexDirection: "column",
-                        width: '45%',
+                        width: '49%',
                         marginTop: '20px'
 
                       }}
@@ -1267,7 +1255,7 @@ const ProdDetail = () => {
                     }}
                   >
                     <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                      DAIMOND QUALITY COLOR:
+                      DAIMOND :
                     </label>
                     <select
                       style={{
@@ -1296,35 +1284,7 @@ const ProdDetail = () => {
                       marginTop: '20px'
                     }}
                   />
-                  {isMetalCutoMizeFlag == 1 && <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: '45%',
-                      marginTop: '20px'
 
-                    }}
-                  >
-                    <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                      METAL TYPE:
-                    </label>
-                    <select
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        color: "#7d7f85",
-                        fontSize: "12.5px",
-                      }}
-                      defaultValue={mtTypeOption}
-                      onChange={(e) => setmtTypeOption(e.target.value)}
-                    >
-                      {metalType.map((data, index) => (
-                        <option key={index} value={data.metalType}>
-                          {data.metaltype}
-                        </option>
-                      ))}
-                    </select>
-                  </div>}
 
 
                   <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
@@ -1340,7 +1300,7 @@ const ProdDetail = () => {
                     }}
                   >
                     <label style={{ fontSize: "12.5px", color: "#7d7f85", marginTop: '10px' }}>
-                      COLOR STONE QUALITY COLOR:
+                      COLOR STONE:
                     </label>
                     <select
                       style={{
@@ -1359,6 +1319,49 @@ const ProdDetail = () => {
                       ))}
                     </select>
                   </div>}
+
+
+                  {(sizeData?.length !== 0 || (productData?.DefaultSize && productData.DefaultSize.length !== 0)) && (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: '45%',
+                        marginTop: '10px'
+                      }}
+                    >
+                      <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                        SIZE:
+                      </label>
+                      <select
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          color: "#7d7f85",
+                          fontSize: "12.5px",
+                        }}
+                        onChange={(e) => handelSize(e.target.value)}
+                        defaultValue={
+                          productData && productData.DefaultSize
+                            ? productData.DefaultSize
+                            : sizeData.find((size) => size.IsDefaultSize === 1)?.id
+                        }
+                      >
+                        {sizeData?.map((size) => (
+                          <option
+                            key={size.id}
+                            value={size.sizename} // Pass sizename as value
+                            selected={
+                              productData && productData.DefaultSize === size.sizename
+                            }
+                          >
+                            {size.sizename}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
 
                 </div>
 
