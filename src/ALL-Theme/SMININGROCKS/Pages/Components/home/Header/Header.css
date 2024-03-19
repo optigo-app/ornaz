@@ -20,21 +20,20 @@
 }
 
 .SmilingUpdateQuantityBtn {
-    height: 40px;
-    width: 80px;
-    background-color: #a7a7a7;
-    color: white;
+    height: 35px;
+    width: 60px;
+    background-color: #e1e1e1;
     border: none;
     outline: none;
     font-weight: 500;
 }
 
 .SmilingAddSingleRemkarBtn {
-    height: 40px;
-    width: 120px;
-    background-color: #a7a7a7;
-    color: white;
+    height: 35px;
+    width: 70px;
+    background-color: #e1e1e1;
     border: none;
+    font-size: 14px;
     outline: none;
     font-weight: 500;
 }
@@ -45,20 +44,20 @@
 } */
 .SmilingAddRemkarBtn {
     height: 40px;
-    width: 160px;
+    width: 130px;
     border-radius: 5px;
-    background-color: #a7a7a7;
-    color: white;
+    font-size: 14px;
+    background-color: #e1e1e1;
     border: none;
     outline: none;
     font-weight: 500;
 }
 
-.SmilingAddRemkarBtn:hover {
+/* .SmilingAddRemkarBtn:hover {
     background-color: white;
     border: 1px solid #a7a7a7;
     color: #a7a7a7;
-}
+} */
 
 .SmilingCustomzeSaveBtn {
     height: 35px;
@@ -262,8 +261,8 @@
     width: fit-content;
 }
 .smiling-cartBoxImg {
-    width: 80%;
-    margin: 10px;
+    width: 70%;
+    margin: 0px;
 }
 
 .nav-li-smining-fixed {

@@ -217,7 +217,7 @@ export default function MyWishList() {
                         {/* <button className='smiTopShareBtn'>SHARE WISHLIST</button> */}
                         <button className='smiTopClearBtn' onClick={handleRemoveAllWishList}>CLEAR ALL</button>
                         <button className='smiTopAddAllBtn' onClick={handleAddAll}>ADD TO CART ALL</button>
-                        <p style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigation('/productpage')}>Click To ProductList</p>
+                        <button className='smiTopAddAllBtn' onClick={() => navigation('/productpage')}>Show ProductList</button>
                     </div>}
 
                     <div className='smiWishLsitBoxMain'>
@@ -225,13 +225,13 @@ export default function MyWishList() {
                             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                 <p style={{ margin: '0px', fontSize: '20px', fontWeight: 500 }}>No Data Available</p>
                                 <p>Please First Add To Wishlist Data</p>
-                                <p style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigation('/productpage')}>Click To ProductList</p>
+                                <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
                             </div>
                             :
                             wishlistData?.map(item => (
                                 <div key={item.id} className='smiWishLsitBox'>
                                     <div style={{ position: 'absolute', right: '20px', top: '5px' }}>
-                                        <IoClose style={{ height: '30px', width: '30px', cursor: 'pointer' }} onClick={() => handleRemoveWichList(item)} />
+                                        <IoClose style={{ height: '30px', width: '30px', cursor: 'pointer', color: 'rgb(0 0 0 / 66%)' }} onClick={() => handleRemoveWichList(item)} />
                                     </div>
                                     <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' style={{ cursor: 'pointer' }} alt='Wishlist item' onClick={() => handelProductSubmit(item)} />
                                     <p className='smiWishLsitBoxDesc1'>{item.designno}</p>

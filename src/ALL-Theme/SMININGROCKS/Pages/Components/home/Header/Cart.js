@@ -536,6 +536,8 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 No Data Available
                             </p>
                             <p>Please First Add To Cart Data</p>
+                            <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
+                            
                         </div>
                     ) : (
                         <div>
@@ -869,6 +871,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 No Data Available
                             </p>
                             <p>Please First Add To Cart Data</p>
+                            <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
                         </div>
                     ) : (
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
