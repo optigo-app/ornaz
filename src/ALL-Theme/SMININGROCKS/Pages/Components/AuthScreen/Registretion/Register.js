@@ -214,6 +214,12 @@ export default function Register() {
     return value && value.trim() !== '';
   };
 
+  const isDefaultValueSetMobile = (value) => {
+    return value && value.trim() !== '';
+  };
+
+  
+
   return (
     <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
       {isLoading && (
@@ -242,6 +248,7 @@ export default function Register() {
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
+              autoComplete="off" 
               value={firstName}
               inputRef={firstNameRef}
               onKeyDown={(e) => handleKeyDown(e, lastNameRef)}
@@ -256,6 +263,7 @@ export default function Register() {
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
+              autoComplete="off" 
               value={lastName}
               inputRef={lastNameRef}
               onKeyDown={(e) => handleKeyDown(e, mobileNoRef)}
@@ -270,17 +278,20 @@ export default function Register() {
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
+              autoComplete="off" 
               value={mobileNo}
               inputRef={mobileNoRef}
               onKeyDown={(e) => handleKeyDown(e, emailRef)}
               onChange={(e) => handleInputChange(e, setMobileNo, 'mobileNo')}
               error={!!errors.mobileNo}
               helperText={errors.mobileNo}
+              disabled={isDefaultValueSetMobile(mobileNo)}
             />
 
             <TextField
               id="outlined-basic"
               label="Email"
+              autoComplete="off" 
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
@@ -296,8 +307,8 @@ export default function Register() {
             <TextField
               id="outlined-password-input"
               label="Password"
+              autoComplete="off" 
               type={showPassword ? 'text' : 'password'}
-              autoComplete="current-password"
               className='labgrowRegister'
               style={{ margin: '15px' }}
               value={password}
@@ -325,8 +336,8 @@ export default function Register() {
             <TextField
               id="outlined-confirm-password-input"
               label="Confirm Password"
+              autoComplete="off" 
               type={showConfirmPassword ? 'text' : 'password'}
-              autoComplete="current-password"
               className='labgrowRegister'
               style={{ margin: '15px' }}
               value={confirmPassword}

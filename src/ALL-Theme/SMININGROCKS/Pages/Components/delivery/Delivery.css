@@ -25,8 +25,8 @@
 }
 
 .AddressMain{
-    border: 1px solid lightgray;
-    width: 170px;
+    border: 1px solid #ccc;
+    width: 220px;
     word-wrap: break-word;
     margin: 5px;
     padding: 5px;
@@ -43,13 +43,13 @@
     justify-content: center;
     align-items: center;
     height: 30px;
-    background-color: lightgray;
+    background-color: white;
+    border: 1px solid lightgray;
     margin-inline: 2px;
     cursor: pointer;
 }
 .deliveryAddressEdit:hover{
-    border: 1px solid lightgray;
-    background-color: white;
+    background-color: lightgray;
 }
 
 
@@ -59,13 +59,14 @@
     justify-content: center;
     align-items: center;
     height: 30px;
-    background-color: lightgray;
+    background-color: white;
+    border: 1px solid lightgray;
     margin-inline: 2px;
     cursor: pointer;
 }
 .deliveryAddressDelete:hover{
-    border: 1px solid lightgray;
-    background-color: white;
+    background-color: lightgray;
+
 }
 
 .smilingAddToAddressBtn{
@@ -73,14 +74,14 @@
     width: 170px;
     border: none;
     outline: none;
-    background-color: lightgray;
+    background-color: white;
+    border: 1px solid lightgray;
     border-radius: 5px;
     font-weight: 500;
     margin-top: 10px;
 }
 .smilingAddToAddressBtn:hover{
-    border: 1px solid lightgray;
-    background-color: white;
+    background-color: lightgray;
 }
 
 .smilingAddressPopupMain{
