@@ -1122,7 +1122,7 @@ const ProdDetail = () => {
                       {diaQColOpt ? diaQColOpt : `${productData?.diamondquality}-${productData?.diamondcolorname}`}
                     </sapn>
                   </div>
-                  {productData?.IsColorWiseImageExists !== null && (
+                  {/* {productData?.IsColorWiseImageExists !== null && (
                     <div
                       style={{ display: "flex", gap: "5px" }}
                       className="part2"
@@ -1176,7 +1176,7 @@ const ProdDetail = () => {
                         ></div>
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
                 <div
                   style={{ display: "flex", flexWrap: 'wrap', width: "100%", marginTop: "12px" }}
