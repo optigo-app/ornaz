@@ -47,6 +47,11 @@ export default function Header() {
     setHeaderData(param)
   }
 
+  const handelMenu0 = () =>{
+    setIsDropdownOpen(false)
+    navigation("/productpage")
+  }
+
 
   const handelmenu2 = (param) => {
     console.log("param2", param)
@@ -817,7 +822,7 @@ export default function Header() {
                 <span
                   className="level0Menu"
                   onMouseEnter={() => setMenu1Index(i)}
-                  onClick={() => { console.log("menuname", fd)}}
+                  onClick={() =>handelMenu0()}
                 >
                   {fd?.menuname}
                 </span>
