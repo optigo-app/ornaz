@@ -67,10 +67,10 @@ export default function Cart({ open, toggleCartDrawer }) {
     const getPriceData = useRecoilValue(priceData);
 
     const navigation = useNavigate();
-    console.log("selectedMetalType",selectedMetalType)
-    console.log("grandTotal",grandTotal)
+    console.log("selectedMetalType", selectedMetalType)
+    console.log("grandTotal", grandTotal)
 
-  
+
 
 
     useEffect(() => {
@@ -376,69 +376,69 @@ export default function Cart({ open, toggleCartDrawer }) {
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
         let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
-    
-            let mtrd = getPriceData?.rd?.filter((ele) => 
-                ele?.A === srProductsData?.autocode && 
-                ele?.B === srProductsData?.designno &&
-                ele?.D === (selectedMetalType)
-              )
-              console.log("metal",mtrd);
-              let showPrice = 0;
-              if (mtrd && mtrd.length > 0) {
-                  showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
-              }
-            //   let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
-            //   console.log("metal price",showPrice);
-              // setMetalPrice(showPrice)
-    
-            let diaqcprice = getPriceData?.rd1?.filter((ele) => 
-              ele.A === srProductsData?.autocode && 
-              ele.B === srProductsData?.designno &&
-              ele.H === selectedDiamondQualityColor?.split("_")[0] &&
-              ele.J === selectedDiamondQualityColor?.split("_")[1] 
-              )
-            console.log("diamond ",diaqcprice);
 
-            let showPrice1 = 0;
-            if (diaqcprice && diaqcprice.length > 0) {
-                showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
-            }
-            //   let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
-            //   console.log("diamond price",showPrice1);
-              // setDQCPrice(showPrice1)
-    
-            let csqcpirce = getPriceData?.rd2?.filter((ele) => 
-              ele.A === srProductsData?.autocode && 
-              ele.B === srProductsData?.designno &&
-              ele.H === selectedColorstoneQualityColor?.split("-")[0] &&
-              ele.J === selectedColorstoneQualityColor?.split("-")[1]   
-              )
-              console.log("colorstone",csqcpirce);
+        let mtrd = getPriceData?.rd?.filter((ele) =>
+            ele?.A === srProductsData?.autocode &&
+            ele?.B === srProductsData?.designno &&
+            ele?.D === (selectedMetalType)
+        )
+        console.log("metal", mtrd);
+        let showPrice = 0;
+        if (mtrd && mtrd.length > 0) {
+            showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
+        }
+        //   let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
+        //   console.log("metal price",showPrice);
+        // setMetalPrice(showPrice)
 
-              let showPrice2 = 0;
-              if (csqcpirce && csqcpirce.length > 0) {
-                  showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
-              }
+        let diaqcprice = getPriceData?.rd1?.filter((ele) =>
+            ele.A === srProductsData?.autocode &&
+            ele.B === srProductsData?.designno &&
+            ele.H === selectedDiamondQualityColor?.split("_")[0] &&
+            ele.J === selectedDiamondQualityColor?.split("_")[1]
+        )
+        console.log("diamond ", diaqcprice);
 
-              console.log({ showPrice, showPrice1, showPrice2 });
-              let gt = showPrice + showPrice1 + showPrice2;
-              setGrandTotal(gt ?? 0);
-            //   let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
-            //   console.log("colorstone price",showPrice2);
-            //   setCSQCPrice(showPrice2)
-    
-            //   let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
-    
-            //   console.log({showPrice,showPrice1,showPrice2});
-            //   let gt = showPrice + showPrice1 + showPrice2;
-            //   console.log(gt);
-            //   setGrandTotal(gt)
-    
-      },[selectedMetalType, selectedDiamondQualityColor, selectedColorstoneQualityColor])
-    
+        let showPrice1 = 0;
+        if (diaqcprice && diaqcprice.length > 0) {
+            showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
+        }
+        //   let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
+        //   console.log("diamond price",showPrice1);
+        // setDQCPrice(showPrice1)
+
+        let csqcpirce = getPriceData?.rd2?.filter((ele) =>
+            ele.A === srProductsData?.autocode &&
+            ele.B === srProductsData?.designno &&
+            ele.H === selectedColorstoneQualityColor?.split("-")[0] &&
+            ele.J === selectedColorstoneQualityColor?.split("-")[1]
+        )
+        console.log("colorstone", csqcpirce);
+
+        let showPrice2 = 0;
+        if (csqcpirce && csqcpirce.length > 0) {
+            showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+        }
+
+        console.log({ showPrice, showPrice1, showPrice2 });
+        let gt = showPrice + showPrice1 + showPrice2;
+        setGrandTotal(gt ?? 0);
+        //   let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+        //   console.log("colorstone price",showPrice2);
+        //   setCSQCPrice(showPrice2)
+
+        //   let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
+
+        //   console.log({showPrice,showPrice1,showPrice2});
+        //   let gt = showPrice + showPrice1 + showPrice2;
+        //   console.log(gt);
+        //   setGrandTotal(gt)
+
+    }, [selectedMetalType, selectedDiamondQualityColor, selectedColorstoneQualityColor])
+
 
     return (
         <Drawer
@@ -521,7 +521,7 @@ export default function Cart({ open, toggleCartDrawer }) {
             </div>
 
             <CustomTabPanel value={value} index={0}>
-                <div style={{ paddingBottom: "150px", marginTop: '170px', paddingInline: '10px' }}>
+                <div className='allCartdataMain' >
                     {cartListData?.length === 0 ? !isLoading && (
                         <div
                             style={{
@@ -537,12 +537,12 @@ export default function Cart({ open, toggleCartDrawer }) {
                             </p>
                             <p>Please First Add To Cart Data</p>
                             <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
-                            
+
                         </div>
                     ) : (
                         <div>
                             {cartListData?.map((item, index) => (
-                                
+
                                 <div key={item.id} className="smiling-cartBoxMain">
                                     <div className='smilingCartMobileMain' style={{ display: 'flex' }}>
                                         <div
@@ -664,8 +664,8 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             DAIMOND QUALITY COLOR:
                                                         </label>
                                                         <select
-                                                        value={selectedDiamondQualityColor[item?.aotucode] || ''}
-                                                        onChange={(e) => setSelectedDiamondQualityColor({...selectedDiamondQualityColor,[item?.autocode]:e.target.value})}
+                                                            value={selectedDiamondQualityColor[item?.aotucode] || ''}
+                                                            onChange={(e) => setSelectedDiamondQualityColor({ ...selectedDiamondQualityColor, [item?.autocode]: e.target.value })}
                                                             style={{
                                                                 border: "none",
                                                                 outline: "none",
@@ -673,7 +673,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                                 fontSize: "12.5px",
                                                             }}
                                                             // defaultValue={`${item?.colorstonequality}-${item?.colorstonecolorname}`}
-                                                        defaultValue={`${item?.diamondqualityname}_${item?.diamondcolorname}`}
+                                                            defaultValue={`${item?.diamondqualityname}_${item?.diamondcolorname}`}
                                                         >
                                                             {colorData.map((colorItem) => (
                                                                 <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
@@ -703,7 +703,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                         </label>
                                                         <select
                                                             value={selectedMetalType[item?.autocode] || ''}
-                                                            onChange={(e) => setSelectedMetalType({...selectedMetalType,[item?.autocode]:e.target.value})}
+                                                            onChange={(e) => setSelectedMetalType({ ...selectedMetalType, [item?.autocode]: e.target.value })}
                                                             style={{
                                                                 border: "none",
                                                                 outline: "none",
@@ -733,7 +733,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                     </label>
                                                     <select
                                                         value={selectedColorstoneQualityColor[item?.autocode] || ''}
-                                                        onChange={(e) => setSelectedColorstoneQualityColor({...selectedColorstoneQualityColor,[item?.autocode]:e.target.value})}
+                                                        onChange={(e) => setSelectedColorstoneQualityColor({ ...selectedColorstoneQualityColor, [item?.autocode]: e.target.value })}
                                                         style={{
                                                             border: "none",
                                                             outline: "none",
@@ -768,29 +768,23 @@ export default function Cart({ open, toggleCartDrawer }) {
                                     </div>
                                     <div className='similingCartBotttomMain'>
                                         <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center', }}>
-                                            <div
+                                            <input
+                                                type="text"
                                                 style={{
-                                                    display: "flex",
-                                                    justifyContent: "center",
-                                                    height: "40px",
+                                                    border: "0px",
+                                                    textAlign: "center",
+                                                    outline: "none",
+                                                    width: "80px",
+                                                    height: '35px',
                                                     border: "1px solid #7d7f85",
                                                 }}
-                                            >
-                                                <input
-                                                    type="text"
-                                                    style={{
-                                                        border: "0px",
-                                                        textAlign: "center",
-                                                        outline: "none",
-                                                        width: "130px",
-                                                    }}
-                                                    maxLength={2}
-                                                    className='simlingQualityBox'
-                                                    inputMode="numeric"
-                                                    value={item.Quantity}
-                                                    onChange={(event) => handleInputChange(event, index)}
-                                                />
-                                            </div>
+                                                maxLength={2}
+                                                className='simlingQualityBox'
+                                                onClick={(event) => event.target.select()}
+                                                inputMode="numeric"
+                                                value={item.Quantity}
+                                                onChange={(event) => handleInputChange(event, index)}
+                                            />
                                             <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(item.designno)}>QTY</button>
                                         </div>
 
@@ -814,7 +808,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                 onClick={() => handleSubmit(index, item)}
                                                 className="SmilingAddSingleRemkarBtn"
                                             >
-                                                Add Remark
+                                                Add
                                             </button>
                                         </div>
                                     </div>
@@ -828,7 +822,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 rows={4}
                                 onChange={(e) => handleInputChangeMainRemarks(e)}
                                 className="YourCartMainRemkarBox"
-                                style={{ marginTop: "30px" }}
+                                style={{ marginTop: "30px" , paddingLeft: '10px' }}
                             />
                             <div className="addRemkarMain">
                                 <button
@@ -884,11 +878,43 @@ export default function Cart({ open, toggleCartDrawer }) {
                                             className="smiling-cartBoxImgView"
                                         />
                                     </div>
+
                                 </div>
                             ))}
+                            <textarea
+                                label="Enter Remarks"
+                                variant="outlined"
+                                placeholder="Enter Order Remark"
+                                value={Mainremarks}
+                                rows={4}
+                                onChange={(e) => handleInputChangeMainRemarks(e)}
+                                className="YourCartMainRemkarBox"
+                                style={{ marginTop: "30px", paddingLeft: '10px' }}
+                            />
+                            <div className="addRemkarMain" style={{width: '100%' ,marginTop: '10px'}}>
+                                <button
+                                    onClick={submitMainRemrks}
+                                    className="SmilingAddRemkarBtn"
+                                >
+                                    Add Order Remark
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>
+                {cartListData?.length !== 0 && (
+                    <div className="placeOrderBtnMain">
+                        <button
+                            className="placeOrderBtn"
+                            onClick={(event) => {
+                                toggleCartDrawer(false)(event);
+                                navigation('/Delivery');
+                            }}
+                        >
+                            Place Order
+                        </button>
+                    </div>
+                )}
             </CustomTabPanel>
 
 

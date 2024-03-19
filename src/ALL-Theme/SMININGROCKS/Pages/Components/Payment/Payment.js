@@ -134,9 +134,7 @@ export default function Payment() {
 
                         <div className='smilingPaySub1Box1'>
                             <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Payment Card Method</p>
-                            <div className='smilingPaymentBtn'>
-                                <button onClick={handlePayment} className='paymentBtn'>PAY ON ACCOUNT</button>
-                            </div>
+
                             <div style={{ marginTop: '40px' }}>
                                 <p style={{ fontSize: '25px', fontWeight: 500, color: '#5e5e5e' }}>Billing Address</p>
                                 <p className='AddressTitle'>Name : <span className='AdressData'>{selectedAdd.shippingfirstname} {selectedAdd.shippinglastname}</span></p>
@@ -171,6 +169,11 @@ export default function Payment() {
                             </div>
                         </div>
                     </div>
+
+                    <div className='smilingPaymentBtn'>
+                        <button onClick={handlePayment} className='paymentBtn'>PAY ON ACCOUNT</button>
+                    </div>
+                    
                     {/* <div style={{ display: 'flex', justifyContent: 'center',marginTop: '-100px' }}>
                         <img src='http://gstore.orail.co.in/assets/newfolder/images/account/blue-box.jpg' className='smilingPayentImg' />
                     </div> */}
@@ -223,6 +226,8 @@ export default function Payment() {
 
                         <p style={{ color: 'blue', textDecoration: 'underline', marginTop: '10px', textAlign: 'center' }} onClick={() => navigation('/Delivery')}>Cancel</p>
                     </div>
+
+                   
                     {/* <div style={{ display: 'flex', justifyContent: 'center',marginTop: '-100px' }}>
                         <img src='http://gstore.orail.co.in/assets/newfolder/images/account/blue-box.jpg' className='smilingPayentImg' />
                     </div> */}
