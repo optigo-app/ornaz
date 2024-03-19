@@ -296,7 +296,7 @@ export default function Home() {
           fontSize: '13px',
           fontWeight: 500,
           letterSpacing: '1px'
-        }}>BACK TO TOP</p>
+        }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
       </div>
     </div>
   )

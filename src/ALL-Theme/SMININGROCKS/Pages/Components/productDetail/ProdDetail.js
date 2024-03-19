@@ -976,7 +976,6 @@ const ProdDetail = () => {
         backgroundColor: "#c0bbb1",
         height: "100%",
         width: "100%",
-        paddingBottom: "100px",
         paddingTop: "110px",
       }}
     >
@@ -1905,6 +1904,9 @@ const ProdDetail = () => {
           {/* <SmilingRock /> */}
           <Footer />
         </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
+        <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
       </div>
     </div >
   );

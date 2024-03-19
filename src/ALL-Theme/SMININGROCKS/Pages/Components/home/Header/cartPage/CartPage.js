@@ -11,6 +11,7 @@ import { CartListCounts, WishListCounts } from '../../../../../../../Recoil/atom
 import { GetCount } from '../../../../../Utils/API/GetCount';
 import { CommonAPI } from '../../../../../Utils/API/CommonAPI';
 import './CartPage.css'
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function CustomTabPanel(props) {
@@ -240,7 +241,7 @@ export default function CartPage() {
     }
     const submitMainRemrks = async () => {
         if (!Mainremarks || Mainremarks.trim() === '') {
-            alert('Enter a value for remarks.');
+            toast.error('Enter a value for remark.');
         } else {
             try {
                 setIsLoading(true);
@@ -258,7 +259,7 @@ export default function CartPage() {
                 };
                 const response = await CommonAPI(body);
                 if (response.Data.rd[0].stat === 1) {
-                    alert('done');
+                    toast.success('Add remark successfully');
                 } else {
                     alert('Error');
                 }
@@ -273,7 +274,7 @@ export default function CartPage() {
     const handleSubmit = async (index, data) => {
         const remark = remarks[index];
         if (!remark || remark.trim() === '') {
-            alert('Enter a value for remarks.');
+            toast.error('Enter a value for remarks.');
         } else {
 
             try {
@@ -296,7 +297,7 @@ export default function CartPage() {
                     //   ...prevRemarks,
                     //   [index]: ''
                     // }));
-                    alert('done');
+                    toast.success('Add remark successfully');
                 } else {
                     alert('Error');
                 }
@@ -325,7 +326,7 @@ export default function CartPage() {
 
     const handleUpdateQuantity = async (num) => {
         if (lastEnteredQuantity.length === 0) {
-            alert('enter value first');
+            toast.error('change the value first');
         } else {
             try {
                 const updatedQuantity = cartListData[lastEnteredQuantityIndex].Quantity;
@@ -343,15 +344,13 @@ export default function CartPage() {
                 };
                 const response = await CommonAPI(body);
                 if (response.Data.rd[0].stat === 1) {
-                    alert('done');
+                    toast.success('QTY change successfully');
                 } else {
                     alert('Error');
                 }
             } catch (error) {
                 console.error('Error:', error);
             } finally {
-                // Uncomment if needed:
-                // setIsLoading(false);
             }
         }
     };
@@ -375,6 +374,8 @@ export default function CartPage() {
                     <CircularProgress className='loadingBarManage' />
                 </div>
             )}
+            <ToastContainer />
+
             <div className='smilingCartPageMain'>
 
                 <div
@@ -663,7 +664,13 @@ export default function CartPage() {
                                                     value={item.Quantity}
                                                     onChange={(event) => handleInputChange(event, index)}
                                                 />
-                                                <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(item.designno)}>QTY</button>
+                                                {isLoading ? (
+                                                    <CircularProgress className='loadingBarManage' />
+                                                ) : (
+                                                    <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(item.designno, index)}>QTY</button>
+                                                )}
+
+                                                {/* <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(item.designno)}>QTY</button> */}
                                             </div>
 
                                             <div className='smilingAddresingleMobileMain' style={{ display: "flex", alignItems: 'center', marginLeft: '30px' }}>
@@ -727,7 +734,6 @@ export default function CartPage() {
                             </div>
                         )}
                     </div>
-
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     <div style={{ paddingBottom: "150px", marginTop: '10px' }}>
