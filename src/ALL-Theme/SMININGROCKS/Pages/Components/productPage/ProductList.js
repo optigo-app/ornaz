@@ -79,8 +79,6 @@ const ProductList = () => {
   const mtName = useRecoilValue(metalTypeG)
   const dqcName = useRecoilValue(diamondQualityColorG)
   const csqcName = useRecoilValue(colorstoneQualityColorG)
-  // console.log(mtName, dqcName, csqcName);
-    //RANGE FILTERS
 
     const [value1, setValue1] = useState([minPrice, maxPrice])
     const [value2, setValue2] = useState([minNetwt, maxNetwt])
@@ -92,10 +90,8 @@ const ProductList = () => {
   }, [getSearchData])
 
   useEffect(() => {
-
     const data = JSON.parse(localStorage.getItem("allproductlist"));
     setProductApiData2(data)
-
   }, [])
 
   useEffect(() => {
@@ -143,6 +139,23 @@ const ProductList = () => {
         // if(newPriceData){
         //   setMetalRdPrice((prev)=>[...prev,{product["autocode"]:newPriceData?.Z}])
         // }
+        let p1=[];
+        let p2=[];
+        let p3=[];
+
+        if (newPriceData) {
+          p1.push(newPriceData)
+        }
+
+        if (newPriceData1) {
+          p2.push(newPriceData1)
+        }
+
+        if (newPriceData2) {
+          p3.push(newPriceData2)
+        }
+
+        console.log("ppp",{p1,p2,p3})
 
         if (newPriceData || newPriceData1 || newPriceData2) {
           price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
@@ -171,7 +184,6 @@ const ProductList = () => {
   };
 
   const getCountFunc = async () => {
-
     await GetCount().then((res) => {
       if (res) {
         setCartCount(res.CountCart)
@@ -180,8 +192,6 @@ const ProductList = () => {
     })
 
   }
-
-  // console.log("filterData", ProductApiData2.filter((pd) => pd && pd.CollectionName === 'Anemone'))
 
   function paramnameSetting(paramVal){
     if(paramVal === 'param0'){
@@ -207,14 +217,7 @@ const ProductList = () => {
     }
   }
 
-  // console.log("newProData",newProData)
-  // console.log("getnewMenuData", getnewMenuData)
-
-
   useEffect(()=>{
-    // debugger
-    // let prodData = localStorage.getItem("allproductlist")
-    // if(getnewMenuData && getnewMenuData.label === "param0"){
       if(paramnameSetting(getnewMenuData.label) === "brand"){
         const data = ProductApiData2.filter((pd) => pd && pd.BrandName === paramdataSetting(getnewMenuData.label))
         if(data){
@@ -243,8 +246,6 @@ const ProductList = () => {
           setNewProData(data)
         }
       }
-    // }
-
   },[getnewMenuData,ProductApiData2])
 
   const fetchFile = async () => {
@@ -565,7 +566,6 @@ const ProductList = () => {
     return newFilter;
   }
 
-
   const handleCheckboxChange = (e, ele, flist) => {
     const { name, checked, value } = e.target;
 
@@ -584,6 +584,11 @@ const ProductList = () => {
     }
   }
 
+  console.log("NewFilterArr",NewFilterArr)
+
+
+  // 
+  
 
   const getCartAndWishListData = async () => {
 
@@ -1047,7 +1052,6 @@ const ProductList = () => {
     }
   }, [getHeaderData])
 
-
   const getDesignPriceList = async () => {
 
     const storeInit = JSON.parse(localStorage.getItem("storeInit"))
@@ -1060,8 +1064,8 @@ const ProductList = () => {
       "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
       "Customerid": `${loginUserDetail?.id}`,
       "Laboursetid": `${storeInit.PolicyApplyOnName === "Customer Wise Policy" ? loginUserDetail?._pricemanagement_laboursetid : loginUserDetail?.pricemanagement_laboursetid}`,
-      "diamondpricelistname": `${loginUserDetail?.diamondpricelistname}`,
-      "colorstonepricelistname": `${loginUserDetail?.colorstonepricelistname}`,
+      "diamondpricelistname": `${loginUserDetail?._diamondpricelistname}`,
+      "colorstonepricelistname": `${loginUserDetail?._colorstonepricelistname}`,
       "SettingPriceUniqueNo": `${loginUserDetail?.SettingPriceUniqueNo}`,
       "DesignNo": ""
     }
@@ -1079,7 +1083,6 @@ const ProductList = () => {
     })
 
   }
-
 
   const handleChange1 = () => {
 
