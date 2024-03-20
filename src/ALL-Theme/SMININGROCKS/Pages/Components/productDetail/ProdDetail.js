@@ -16,7 +16,8 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import notFound from '../../assets/image-not-found.png'
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import { useNavigate } from 'react-router-dom'
-// import notFound from '../../assets/image-not-found.png'
+import playVidoe from '../../assets/paly.png'
+import { IoIosPlayCircle } from "react-icons/io";
 
 const ProdDetail = () => {
 
@@ -34,7 +35,7 @@ const ProdDetail = () => {
   const [getAllFilterSizeData, setGetAllFilterSizeData] = useState([]);
   const [metalFilterData, setMetalFilterData] = useState([]);
   const [daimondFilterData, setDaimondFiletrData] = useState([]);
-
+  const [updatedColorImage, setUpdateColorImage] = useState('');
 
   const [metalColorData, setMetalColorData] = useState([]);
   const [metalType, setMetalType] = useState([]);
@@ -49,6 +50,8 @@ const ProdDetail = () => {
   const [mtTypeOption, setmtTypeOption] = useRecoilState(metalTypeG);
   const [cSQopt, setCSQOpt] = useRecoilState(colorstoneQualityColorG);
   const [colorImageData, setColorImageData] = useState([]);
+  const [IsColorWiseImagesShow, setIsColorWiseImagesShow] = useState('')
+  const [videoUrl, setVideoUrl] = useState('');
 
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
@@ -59,7 +62,7 @@ const ProdDetail = () => {
   const [grandTotal, setGrandTotal] = useState(0);
 
   const [designSetList, setDesignSetList] = useState([]);
-  const [sizeMarkup,setSizeMarkup] = useState();
+  const [sizeMarkup, setSizeMarkup] = useState();
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -69,7 +72,7 @@ const ProdDetail = () => {
     setImgLoading(false)
   }
 
-  console.log("sizeMarkup",sizeMarkup);
+  // console.log("sizeMarkup",sizeMarkup);
 
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
 
@@ -209,12 +212,11 @@ const ProdDetail = () => {
       ele.J === diaQColOpt?.split("_")[1]
     );
 
-    
-    
+
+
     let showPrice1 = 0;
     if (diaqcprice && diaqcprice.length > 0) {
       showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
-      console.log("diaqcprice",diaqcprice)
       setDQCPrice(diaqcprice[0]?.S ?? 0)
     }
 
@@ -235,10 +237,11 @@ const ProdDetail = () => {
     setGrandTotal(gt ?? 0);
 
   }, [mtTypeOption, diaQColOpt, cSQopt])
-  
+
 
 
   const handelLocalStorage = () => {
+    handleColorSelection('Rose Gold');
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
     setProductData(localProductData)
     getColorImagesData(localProductData.autocode);
@@ -253,6 +256,10 @@ const ProdDetail = () => {
 
 
   useEffect(() => {
+    const storedDataAll = localStorage.getItem('srProductsData');
+    const data = JSON.parse(storedDataAll);
+    setVideoUrl(data.videoName);
+
     let allProductData = JSON.parse(localStorage.getItem('allproductlist'))
 
     let designListData = productData?.SetDno?.split(",")
@@ -277,12 +284,13 @@ const ProdDetail = () => {
   }, [productData])
 
   const getColorImagesData = (autoCode) => {
-
     const storedData = JSON.parse(localStorage.getItem('colorDataImages'));
     if (!storedData) {
       return;
     }
     const filteredData = storedData.filter(item => item.autocode === autoCode);
+
+    console.log('clor data........', filteredData);
     setColorImageData(filteredData)
   }
 
@@ -294,19 +302,83 @@ const ProdDetail = () => {
     return path.replace(/\\/g, '/');
   }
 
-  const handleColorSelection = (event) => {
+
+  useEffect(() => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
     const storedDataAll = localStorage.getItem('storeInit');
     const data = JSON.parse(storedDataAll);
-    const selectedColor = event.target.value;
-    setSelectedColor(selectedColor);
-    const selectedColorData = colorImageData.find(item => item.colorname === selectedColor);
-    if (selectedColorData) {
-      const correctedImagePath = convertPath(selectedColorData.imagepath);
-      let path = uploadPath + '/' + data.ukey + correctedImagePath
-      setSelectedImagePath(path);
-    } else {
-      setSelectedImagePath('');
+    if (data.IsColorWiseImages === 1) {
+      const filteredData = colorImageData.filter(item => item.colorname.toLowerCase() === selectedColor.toLowerCase());
+      console.log('Filter Data', filteredData);
+      if (filteredData.length > 0) {
+        const correctedData = filteredData.map(item => {
+          return {
+            ...item,
+            imagepath: convertPath(item.imagepath)
+          };
+        });
+
+        correctedData.forEach(item => {
+          item.imagepath = uploadPath + '/' + data.ukey + item.imagepath;
+        });
+
+        correctedData.forEach((item, index) => {
+          correctedData[index] = item;
+        });
+
+        setTimeout(() => {
+          setUpdateColorImage(correctedData);
+        }, 100);
+
+      } else {
+        setUpdateColorImage('');
+      }
+    }
+
+  }, [selectedColor])
+
+  const handleColorSelection = (color) => {
+    let uploadPath = localStorage.getItem('UploadLogicalPath');
+    const storedDataAll = localStorage.getItem('storeInit');
+    const data = JSON.parse(storedDataAll);
+    if (data.IsColorWiseImages === 1) {
+      const selectedColor = color;
+      setSelectedColor(selectedColor);
+      const filteredData = colorImageData.filter(item => item.colorname.toLowerCase() === selectedColor.toLowerCase());
+      console.log('Filter Data', filteredData);
+      if (filteredData.length > 0) {
+        const correctedData = filteredData.map(item => {
+          return {
+            ...item,
+            imagepath: convertPath(item.imagepath)
+          };
+        });
+
+        correctedData.forEach(item => {
+          item.imagepath = uploadPath + '/' + data.ukey + item.imagepath;
+          console.log('Updated Path:', item.imagepath);
+        });
+
+        correctedData.forEach((item, index) => {
+          correctedData[index] = item;
+        });
+
+        setTimeout(() => {
+          setUpdateColorImage(correctedData);
+        }, 100);
+      } else {
+        setUpdateColorImage('');
+      }
+
+
+      const selectedColorData = colorImageData.find(item => item.colorname === selectedColor);
+      if (selectedColorData) {
+        const correctedImagePath = convertPath(selectedColorData.imagepath);
+        let path = uploadPath + '/' + data.ukey + correctedImagePath
+        setSelectedImagePath(path);
+      } else {
+        setSelectedImagePath('');
+      }
     }
   };
 
@@ -365,7 +437,6 @@ const ProdDetail = () => {
       }
       const response = await CommonAPI(body);
       if (response.Data?.rd) {
-        console.log('resssssssssssssssssssssssssssssssss', response.Data);
         setSizeData(response.Data.rd)
         setGetAllFilterSizeData(response.Data.rd1)
       }
@@ -375,16 +446,6 @@ const ProdDetail = () => {
 
     }
   }
-
-  let imgData = [
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-model-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-rose-gold-ring-SRR00363wht_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/IMG_5326_90x90_crop_center.jpg?v=1613627318' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Set_image.2_cf499c9c-486b-47a3-b3fc-97aa9eda7ca5_90x90_crop_center.jpg?v=1661753045' },
-    { links: 'https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_90x90_crop_center.jpg?v=1613627318' },
-  ]
 
   const handelmainImg = () => {
     let filterImg = productData?.OriginalImagePath?.split(",").filter((ele, i) => {
@@ -975,12 +1036,18 @@ const ProdDetail = () => {
   }
 
 
-  // console.log('prodddddddddddd', productData);
+  // console.log('prodddddddddddd', updatedColorImage);
   // console.log('DefaultSizeDefaultSizeDefaultSize', productData?.DefaultSize);
   // console.log('DefaultSizeDefaultSizeDefaultlengthlength', productData?.DefaultSize.length);
 
-  console.log('daimondFilterDatadaimondFilterData', daimondFilterData);
-  console.log('metalFilterDatametalFilterData', metalFilterData);
+  // console.log('daimondFilterDatadaimondFilterData', daimondFilterData);
+  // console.log('metalFilterDatametalFilterData', metalFilterData);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+
+  const handleClick = () => {
+    setIsVideoPlaying(true);
+  };
+
 
   return (
     <div
@@ -1019,41 +1086,83 @@ const ProdDetail = () => {
                   variant="rounded"
                 />
               )}
-              <img
-                src={(productData?.OriginalImagePath) ? (selectedImagePath == '' ?
-                  productData?.imagepath +
-                  (!handelmainImg()?.length
-                    ? productData?.OriginalImagePath?.split(",")[0]
-                    : handelmainImg())
-                  :
-                  selectedImagePath)
-
-                  :
-
-                  notFound
-                }
-                alt={""}
-                style={{
+              {isVideoPlaying ?
+                <video src={videoUrl} autoPlay={true} style={{
                   width: "100%",
                   zindex: -1,
                   position: "relative",
                   objectFit: "cover",
                   marginLeft: "51px",
                   display: imgLoading ? "none" : "block",
-                }}
-                onLoad={handelImgLoad}
-              />
-              {/* } */}
-              {productData?.ThumbImagePath && <div className="srthumb_images">
-                {productData?.ThumbImagePath?.split(",").map((data, i) => (
-                  <img
-                    src={productData?.imagepath + data}
-                    alt={""}
-                    className="srthumb_images_el"
-                    onClick={() => setThumbImg(i)}
-                  />
-                ))}
-              </div>}
+                }} />
+                :
+                <img
+                  src={
+
+                    (productData?.OriginalImagePath) ? (selectedImagePath == '' ?
+                      productData?.imagepath +
+                      (!handelmainImg()?.length
+                        ? productData?.OriginalImagePath?.split(",")[0]
+                        : handelmainImg())
+                      :
+                      selectedImagePath)
+                      :
+                      notFound
+                  }
+                  alt={""}
+                  style={{
+                    width: "100%",
+                    zindex: -1,
+                    position: "relative",
+                    objectFit: "cover",
+                    marginLeft: "51px",
+                    display: imgLoading ? "none" : "block",
+                  }}
+                  onLoad={handelImgLoad}
+                />
+              }
+              {updatedColorImage?.length === 0 ?
+                <>
+                  {productData?.ThumbImagePath && <div className="srthumb_images">
+                    {productData?.ThumbImagePath?.split(",").map((data, i) => (
+                      <img
+                        src={productData?.imagepath + data}
+                        alt={""}
+                        className="srthumb_images_el"
+                        onClick={() => setThumbImg(i)}
+                      />
+                    ))}
+
+                  </div>}
+                </>
+                :
+                <div>
+                  {
+                    <div className="srthumb_images">
+                      {updatedColorImage?.map((data, i) => (
+
+                        <img
+                          src={data.imagepath}
+                          alt={""}
+                          className="srthumb_images_el"
+                          onClick={() => { setSelectedImagePath(data.imagepath); setIsVideoPlaying(false); }}
+                        // onClick={() => setThumbImg(data.imagepath)}
+                        />
+                      ))}
+
+                      {
+                        videoUrl && (
+                          <div style={{ position: 'relative' }}>
+                            <video src={videoUrl} autoPlay={false} className="srthumb_images_el" style={{ position: 'absolute' }} onClick={handleClick} />
+                            <IoIosPlayCircle className="srthumb_images_el" style={{ position: 'absolute', height: '45px', top: '10px', border: 'none' }} />
+                          </div>
+                        )
+                      }
+                    </div>
+                  }
+                </div>
+              }
+
             </div>
             <div className="srprodetail2">
               <div className="srprodetail2-cont">
@@ -1243,7 +1352,7 @@ const ProdDetail = () => {
                           color: "#7d7f85",
                           fontSize: "12.5px",
                         }}
-                        onChange={handleColorSelection}
+                        onChange={(e) => handleColorSelection(e.target.value)}
                       >
                         {metalColorData.map((colorItem) => (
                           <option key={colorItem.ColorId} value={colorItem.metalcolorname}>
@@ -1298,10 +1407,7 @@ const ProdDetail = () => {
                     }}
                   />
 
-
-
                   <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
-
 
                   {isCColrStoneCustFlag == 1 && <div
                     style={{
@@ -1382,7 +1488,7 @@ const ProdDetail = () => {
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
                     {/* Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${(productData?.price - grandTotal) === 0 ? "Not Availabel" : (productData?.price - grandTotal)?.toFixed(2)}`}</span> */}
                     {/* Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${productData?.UnitCost + (productData?.price - grandTotal)?.toFixed(2)}`}</span> */}
-                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${((productData?.UnitCost) + mtPrice + dqcPrice + csqcPrice + (sizeMarkup ?? 0) ).toFixed(2)}`}</span>
+                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${((productData?.UnitCost) + mtPrice + dqcPrice + csqcPrice + (sizeMarkup ?? 0)).toFixed(2)}`}</span>
                   </p>
                 </div>}
 

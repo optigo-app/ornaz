@@ -526,9 +526,8 @@ export default function Delivery() {
                         <div className='smilingDeliveyAddressMain' style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {
                                 addressData?.map((item, index) => (
-                                    <div key={item.id} className='AddressMain'>.
+                                    <div key={item.id} className='AddressMain'>
                                         <input
-                                        
                                             type="radio"
                                             checked={item.isdefault === 1}
                                             onChange={() => handleDefaultSelection(item.id)}

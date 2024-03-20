@@ -26,15 +26,15 @@
 .paymentBtn {
     height: 40px;
     width: 180px;
-    background-color: #f1d8c6;
+    background-color: white;
+    border: 1px solid lightgray;
     font-weight: 500;
-    border: none;
     border-radius: 5px;
 }
 
 .paymentBtn:hover {
-    background-color: white;
-    border: 1px solid #f1d8c6;
+    background-color: lightgray;
+    border: 1px solid lightgray;
 }
 
 

@@ -41,7 +41,6 @@ export default function Header() {
   const [menul1data, setMenu1data] = useState([])
   const [menul2data, setMenul2data] = useState([])
 
-  console.log("finalData", finalData)
   // console.log("menu1Index",finalData?.map((fd)=>fd?.param1)[menu1Index])
 
   const separateData = (menuData) => {
@@ -114,7 +113,6 @@ useEffect(() => {
 
 
   const handelmenu1 = (param) => {
-    console.log("param1", param)
     localStorage.setItem('productDataShow', 'true');
     setIsDropdownOpen(false)
     navigation("/productpage")
@@ -128,7 +126,6 @@ useEffect(() => {
 
 
   const handelmenu2 = (param) => {
-    console.log("param2", param)
     setIsDropdownOpen(false)
     navigation("/productpage")
     setHeaderData2(param)
@@ -298,7 +295,6 @@ useEffect(() => {
   useEffect(() => {
     const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
     const { IsB2BWebsite } = storeInit;
-    console.log('isb2bbbbbbbbbbbbbbbbbbb', IsB2BWebsite);
     setIsB2BFlaf(IsB2BWebsite);
   }, [])
 
