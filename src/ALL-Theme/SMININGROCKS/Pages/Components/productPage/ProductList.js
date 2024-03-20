@@ -17,7 +17,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, newMenuData, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 import notFound from "../../assets/image-not-found.png";
 import { Category } from "@mui/icons-material";
@@ -35,30 +35,32 @@ const ProductList = () => {
 
   const ProductData2 = [];
 
-  const [isOpenDetail, setIsOpenDetail] = useState(false);
+  const [isOpenDetail, setIsOpenDetail] = useState(false)
   const [ProductApiData, setProductApiData] = useState([])
   const [ProductApiData2, setProductApiData2] = useState([])
-  const [drawerShowOverlay, setDrawerShowOverlay] = useState(false);
-  const [filterChecked, setFilterChecked] = useState({});
+  const [drawerShowOverlay, setDrawerShowOverlay] = useState(false)
+  const [filterChecked, setFilterChecked] = useState({})
   const [wishFlag, setWishFlag] = useState(false)
   const [cartFlag, setCartFlag] = useState(false)
-  const [cartData, setCartData] = useState([]);
-  const [WishData, setWishData] = useState([]);
-  const [cartRemoveData, setCartRemoveData] = useState("");
-  const [wishListRemoveData, setWishListRemoveData] = useState("");
-  const [newProData, setNewProData] = useState(ProductApiData2);
-  const [priceDataApi, setpriceDataApi] = useRecoilState(priceData);
-  const [currencySym, setCurrencySym] = useState();
+  const [cartData, setCartData] = useState([])
+  const [WishData, setWishData] = useState([])
+  const [cartRemoveData, setCartRemoveData] = useState("")
+  const [wishListRemoveData, setWishListRemoveData] = useState("")
+  const [newProData, setNewProData] = useState(ProductApiData2)
+  const [priceDataApi, setpriceDataApi] = useRecoilState(priceData)
+  const [currencySym, setCurrencySym] = useState()
 
-  const [metalRdPrice, setMetalRdPrice] = useState([]);
-  const [diaRd1Price, setDiaRd1Price] = useState([]);
-  const [csRd2Price, setCsRd2Price] = useState([]);
+  const[metalRdPrice,setMetalRdPrice] = useState([])
+  const[diaRd1Price,setDiaRd1Price] = useState([])
+  const[csRd2Price,setCsRd2Price] = useState([])
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
   const getHeaderData = useRecoilValue(HeaderData)
   const getHeaderData2 = useRecoilValue(HeaderData2)
+  const getnewMenuData = useRecoilValue(newMenuData)
 
+  // console.log("getnewMenuData",getnewMenuData)  
   // console.log("getHeaderData2",getHeaderData2)
 
   const [minPrice, setMinPrice] = useState(null);
@@ -81,22 +83,20 @@ const ProductList = () => {
   const dqcName = useRecoilValue(diamondQualityColorG)
   const csqcName = useRecoilValue(colorstoneQualityColorG)
   // console.log(mtName, dqcName, csqcName);
-  //RANGE FILTERS
+    //RANGE FILTERS
 
-  const [value1, setValue1] = useState([minPrice, maxPrice]);
-  const [value2, setValue2] = useState([minNetwt, maxNetwt]);
-  const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
-  const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
+    const [value1, setValue1] = useState([minPrice, maxPrice]);
+    const [value2, setValue2] = useState([minNetwt, maxNetwt]);
+    const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
+    const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
 
   useEffect(() => {
     setNewProData(getSearchData)
   }, [getSearchData])
 
   useEffect(() => {
-
     const data = JSON.parse(localStorage.getItem("allproductlist"));
     setProductApiData2(data)
-
   }, [])
 
   useEffect(() => {
@@ -139,10 +139,28 @@ const ProductList = () => {
         let diard1 = 0;
         let csrd2 = 0;
 
+        console.log("newPriceData",newPriceData?.Z)
 
         // if(newPriceData){
         //   setMetalRdPrice((prev)=>[...prev,{product["autocode"]:newPriceData?.Z}])
         // }
+        let p1=[];
+        let p2=[];
+        let p3=[];
+
+        if (newPriceData) {
+          p1.push(newPriceData)
+        }
+
+        if (newPriceData1) {
+          p2.push(newPriceData1)
+        }
+
+        if (newPriceData2) {
+          p3.push(newPriceData2)
+        }
+
+        console.log("ppp",{p1,p2,p3})
 
         if (newPriceData || newPriceData1 || newPriceData2) {
           price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
@@ -171,7 +189,6 @@ const ProductList = () => {
   };
 
   const getCountFunc = async () => {
-
     await GetCount().then((res) => {
       if (res) {
         setCartCount(res.CountCart)
@@ -180,6 +197,61 @@ const ProductList = () => {
     })
 
   }
+
+  function paramnameSetting(paramVal){
+    if(paramVal === 'param0'){
+      return getnewMenuData?.data?.param0name
+    }
+    if(paramVal === 'param1'){
+      return getnewMenuData?.data?.param1name
+    }
+    if(paramVal === 'param2'){
+      return getnewMenuData?.data?.param2name
+    }
+  }
+
+  function paramdataSetting(paramVal){
+    if(paramVal === 'param0'){
+      return getnewMenuData?.data?.param0dataname
+    }
+    if(paramVal === 'param1'){
+      return getnewMenuData?.data?.param1dataname
+    }
+    if(paramVal === 'param2'){
+      return getnewMenuData?.data?.param2dataname
+    }
+  }
+
+  useEffect(()=>{
+      if(paramnameSetting(getnewMenuData.label) === "brand"){
+        const data = ProductApiData2.filter((pd) => pd && pd.BrandName === paramdataSetting(getnewMenuData.label))
+        if(data){
+          setNewProData(data)
+        }
+      }
+
+      if(paramnameSetting(getnewMenuData.label) === "collection"){
+        const data = ProductApiData2.filter((pd) => pd && pd.CollectionName === paramdataSetting(getnewMenuData.label))
+        if(data){
+          setNewProData(data)
+        }
+      }
+
+      if(paramnameSetting(getnewMenuData.label) === "category"){
+
+        const data = ProductApiData2.filter((pd) => pd && pd.CategoryName === paramdataSetting(getnewMenuData.label))
+        if(data){
+          setNewProData(data)
+        }
+      }
+
+      if(paramnameSetting(getnewMenuData.label) === "gender"){
+        const data = ProductApiData2.filter((pd) => pd && pd.GenderName === paramdataSetting(getnewMenuData.label))
+        if(data){
+          setNewProData(data)
+        }
+      }
+  },[getnewMenuData,ProductApiData2])
 
   const fetchFile = async () => {
 
@@ -500,7 +572,6 @@ const ProductList = () => {
     return newFilter;
   }
 
-
   const handleCheckboxChange = (e, ele, flist) => {
     const { name, checked, value } = e.target;
 
@@ -512,10 +583,18 @@ const ProductList = () => {
 
   let NewFilterArr = []
   for (let key in filterChecked) {
-    if (filterChecked[key] === 'checked' && filterChecked['checked'] === true) {
+    
+    // if (filterChecked[key]?.checked === 'true' && filterChecked['checked'] === true) {
+    if (filterChecked[key]?.checked === true) {
       NewFilterArr.push(filterChecked)
     }
   }
+
+  console.log("NewFilterArr",NewFilterArr)
+
+
+  // 
+  
 
   const getCartAndWishListData = async () => {
 
@@ -889,83 +968,83 @@ const ProductList = () => {
 
   }
 
-  useEffect(() => {
-    let flag = localStorage.getItem('productDataShow') ?? 'true';
-    if (newProData.length === 0 && flag === 'true') {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
-      setNewProData(data);
-      setTimeout(() => {
-        localStorage.setItem('productDataShow', 'false')
-      }, 100)
-    }
-  }, [getHeaderData, newProData])
+  // useEffect(() => {
+  //   let flag = localStorage.getItem('productDataShow') ?? 'true';
+  //   if (newProData.length === 0 && flag === 'true') {
+  //     let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
+  //     setNewProData(data);
+  //     setTimeout(() => {
+  //       localStorage.setItem('productDataShow', 'false')
+  //     }, 100)
+  //   }
+  // }, [getHeaderData, newProData])
 
 
   useEffect(() => {
     //level1 filter
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "collection") {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2)
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2 )
       setNewProData(data)
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "category") {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2 )
       setNewProData(data);
-
+      
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "gender") {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2)
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2 )
       setNewProData(data);
-
+      
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "brand") {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2)
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2 )
       setNewProData(data);
-
+      
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "brand") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2)
       setNewProData(data);
-
+      
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "collection") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2)
       setNewProData(data);
-
+      
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "category") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
       setNewProData(data);
-
+      
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "gender") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2)
       setNewProData(data);
-
+      
     }
 
     // level2 filter
-    if (getHeaderData?.label1 === "collection") {
-      let data = productData?.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
+    if(getHeaderData?.label1 === "collection"){
+      let data = productData?.filter((pd)=>pd && pd.CollectionName === getHeaderData?.value1)
       setNewProData(data)
-
+      
     }
-    if (getHeaderData?.label1 === "brand") {
-      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData?.value1)
+    if(getHeaderData?.label1 === "brand"){
+      let data = productData?.filter((pd)=>pd && pd.BrandName === getHeaderData?.value1)
       setNewProData(data)
-
+      
     }
-    if (getHeaderData?.label1 === "category") {
-      let data = productData?.filter((pd) => pd && pd.CategoryName === getHeaderData?.value1)
+    if(getHeaderData?.label1 === "category"){
+      let data = productData?.filter((pd)=>pd && pd.CategoryName === getHeaderData?.value1)
       setNewProData(data)
-
+      
     }
-    if (getHeaderData?.label1 === "gender") {
-      let data = productData?.filter((pd) => pd && pd.GenderName === getHeaderData?.value1)
+    if(getHeaderData?.label1 === "gender"){
+      let data = productData?.filter((pd)=>pd && pd.GenderName === getHeaderData?.value1)
       setNewProData(data)
-
+      
     }
 
-  }, [getHeaderData2, getHeaderData])
+  }, [getHeaderData2,getHeaderData])
 
 
 
@@ -979,7 +1058,6 @@ const ProductList = () => {
     }
   }, [getHeaderData])
 
-
   const getDesignPriceList = async () => {
 
     const storeInit = JSON.parse(localStorage.getItem("storeInit"))
@@ -992,8 +1070,8 @@ const ProductList = () => {
       "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
       "Customerid": `${loginUserDetail?.id}`,
       "Laboursetid": `${storeInit.PolicyApplyOnName === "Customer Wise Policy" ? loginUserDetail?._pricemanagement_laboursetid : loginUserDetail?.pricemanagement_laboursetid}`,
-      "diamondpricelistname": `${loginUserDetail?.diamondpricelistname}`,
-      "colorstonepricelistname": `${loginUserDetail?.colorstonepricelistname}`,
+      "diamondpricelistname": `${loginUserDetail?._diamondpricelistname}`,
+      "colorstonepricelistname": `${loginUserDetail?._colorstonepricelistname}`,
       "SettingPriceUniqueNo": `${loginUserDetail?.SettingPriceUniqueNo}`,
       "DesignNo": ""
     }
@@ -1011,7 +1089,6 @@ const ProductList = () => {
     })
 
   }
-
 
   const handleChange1 = () => {
 
