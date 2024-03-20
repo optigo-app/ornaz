@@ -11,11 +11,13 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiStarFourThin } from "react-icons/pi";
 import { IoClose } from "react-icons/io5";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, openSignInModal, searchData } from "../../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, loginState, newMenuData, openSignInModal, searchData } from "../../../../../../Recoil/atom";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
 import Cart from "./Cart";
 import titleImg from "../../../assets/title/sonasons.png"
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import menu1Img from '../../../assets/45.jpg'
+import menu2Img from '../../../assets/456.jpg'
 
 export default function Header() {
   const navigation = useNavigate();
@@ -37,11 +39,15 @@ export default function Header() {
   const setHeaderData = useSetRecoilState(HeaderData)
   const setHeaderData2 = useSetRecoilState(HeaderData2)
 
-  const [menul0data, setMenu0data] = useState([])
-  const [menul1data, setMenu1data] = useState([])
+  const [menul0data, setMenul0data] = useState([])
+  const [menul1data, setMenul1data] = useState([])
   const [menul2data, setMenul2data] = useState([])
 
-  console.log("finalData", finalData)
+  // const [newMenu1Data,setNewMenu1Data] = useState([])
+  // const [newMenu2Data,setNewMenu2Data] = useState([])
+  // const [newMenu3Data,setNewMenu3Data] = useState([])
+
+  const setNewMenuData = useSetRecoilState(newMenuData)
   // console.log("menu1Index",finalData?.map((fd)=>fd?.param1)[menu1Index])
 
   const separateData = (menuData) => {
@@ -102,10 +108,16 @@ export default function Header() {
   }))))?.map(item => JSON.parse(item));
 
     // Update states
-    setMenu0data(tempMenu0data)
-    setMenu1data(tempMenu1data)
+    setMenul0data(tempMenu0data)
+    setMenul1data(tempMenu1data)
     setMenul2data(tempMenu2data)
 };
+
+const handelNewMenuData = (param) =>{
+  setNewMenuData(param)
+  setIsDropdownOpen(false)
+  navigation("/productpage")
+}
 
 
 useEffect(() => {
@@ -298,7 +310,6 @@ useEffect(() => {
   useEffect(() => {
     const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
     const { IsB2BWebsite } = storeInit;
-    console.log('isb2bbbbbbbbbbbbbbbbbbb', IsB2BWebsite);
     setIsB2BFlaf(IsB2BWebsite);
   }, [])
 
@@ -325,20 +336,14 @@ useEffect(() => {
     // }
   }
 
-
   useEffect(() => {
-
     if (islogin === 'true') {
       getMenuApi()
       const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
       const { IsB2BWebsite } = storeInit;
       setIsB2BFlaf(IsB2BWebsite);
     }
-
   }, [islogin])
-
-
-
 
   const toggleList = () => {
     setIsOpen(!isOpen);
@@ -978,12 +983,13 @@ useEffect(() => {
               backgroundColor: "white",
               // flexDirection: "column",
               gap: "50px",
+              justifyContent:'space-between'
             }}
             onMouseEnter={handleDropdownOpen}
             onMouseLeave={handleDropdownClose}
           >
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {/* <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {finalData?.map((fd, i) => (
                 <span
                   className="level0Menu"
@@ -1034,44 +1040,61 @@ useEffect(() => {
 
                   }}>{fd1?.param2dataname}</span>
               ))}
-            </div> 
+            </div>  */}
 
-            {/* <div style={{display:'flex',flexDirection:'row' ,gap:'80px'}}>
+            <div style={{display:'flex',flexDirection:'row' ,gap:'50px'}}>
               <div style={{display:'flex',flexDirection:'column'}}>
                 <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>FINE JEWELRY</span>
                 <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px'}}>
-                {
+                 {
                   menul0data?.map((md)=>(
-                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4}}>{capitalizeText(md?.menuname)}</span>
+                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4,cursor:'pointer'}} 
+                    onClick={()=>handelNewMenuData({"label":"param0","data":md})}
+                    >
+                      {capitalizeText(md?.menuname)}
+                    </span>
                     ))
                   }
                 </span>
               </div>
               <div>
-              <div style={{display:'flex',flexDirection:'column',borderLeft:'1px solid #e1e1e1',paddingLeft:'40px'}}>
+              <div style={{display:'flex',flexDirection:'column',borderLeft:'1px solid #e1e1e1',paddingLeft:'30px'}}>
                 <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>COLLECTIONS</span>
                 <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px'}}>
                 {
                   menul1data?.map((md)=>(
-                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4}}>{capitalizeText(md?.param1dataname)}</span>
+                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4,cursor:'pointer'}} 
+                    onClick={()=>handelNewMenuData({"label":"param1","data":md})}
+                    >
+                      {capitalizeText(md?.param1dataname)}
+                    </span>
                     ))
                   }
                 </span>
               </div>
               </div>
               <div>
-              <div style={{display:'flex',flexDirection:'column',borderLeft:'1px solid #e1e1e1',paddingLeft:'40px',width:'150%'}}>
+              <div style={{display:'flex',flexDirection:'column',borderLeft:'1px solid #e1e1e1',paddingLeft:'30px',width:'130%'}}>
                 <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>BOUTIQUE</span>
                 <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px',height:'350px',flexWrap:'wrap'}}>
                 {
                   menul2data?.map((md)=>(
-                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4}}>{capitalizeText(md?.param2dataname)}</span>
+                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4,cursor:'pointer'}} 
+                    onClick={()=>handelNewMenuData({"label":"param2","data":md})}
+                    >
+                      {capitalizeText(md?.param2dataname)}
+                    </span>
                     ))
                   }
                 </span>
               </div>
               </div>
-            </div> */}
+            </div>
+
+            <div style={{display:'flex',gap:'15px'}}>
+              <img src={menu2Img} alt="#" style={{height:'250px',width:'300px',objectFit:'cover'}}/>
+              <img src={menu1Img} alt="#" style={{height:'250px',width:'300px',objectFit:'cover'}}/>
+            </div>
 
           </div>
         </div>

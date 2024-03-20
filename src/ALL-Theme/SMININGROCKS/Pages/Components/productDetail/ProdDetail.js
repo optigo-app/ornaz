@@ -83,8 +83,15 @@ const ProdDetail = () => {
     let ColorStoneQualityColor = JSON.parse(localStorage.getItem("ColorStoneQualityColor"))
     setmtTypeOption(loginInfo?.cmboMetalType)
 
-    let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0]?.toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1]?.toUpperCase()}`
-    setDiaQColOpt(qualityColor)
+    if(loginInfo?.cmboDiaQualityColor !== "" && !loginInfo?.cmboDiaQualityColor){
+      let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0]?.toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1]?.toUpperCase()}`
+      setDiaQColOpt(qualityColor)
+    }
+    else{
+      if(colorData && colorData?.length){
+        setDiaQColOpt(`${colorData[0]?.Quality}_${colorData[0]?.color}`)
+      }
+    }
 
     let csQualColor = `${loginInfo?.cmboCSQualityColor.split("#@#")[0]?.toUpperCase()}-${loginInfo?.cmboCSQualityColor.split("#@#")[1]?.toUpperCase()}`
 
@@ -99,7 +106,7 @@ const ProdDetail = () => {
 
     setSizeOption(sizeData[1]?.id)
 
-  }, [])
+  }, [colorData])
 
   // useEffect(()=>{
 
@@ -214,7 +221,6 @@ const ProdDetail = () => {
     let showPrice1 = 0;
     if (diaqcprice && diaqcprice.length > 0) {
       showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
-      console.log("diaqcprice",diaqcprice)
       setDQCPrice(diaqcprice[0]?.S ?? 0)
     }
 
@@ -365,7 +371,6 @@ const ProdDetail = () => {
       }
       const response = await CommonAPI(body);
       if (response.Data?.rd) {
-        console.log('resssssssssssssssssssssssssssssssss', response.Data);
         setSizeData(response.Data.rd)
         setGetAllFilterSizeData(response.Data.rd1)
       }
@@ -1277,7 +1282,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
-                      defaultValue={diaQColOpt}
+                      defaultValue={diaQColOpt }
                       onChange={(e) => setDiaQColOpt(e.target.value)}
                     >
                       {colorData?.map((colorItem) => (
