@@ -67,8 +67,8 @@ export default function Cart({ open, toggleCartDrawer }) {
     const getPriceData = useRecoilValue(priceData);
 
     const navigation = useNavigate();
-    console.log("selectedMetalType", selectedMetalType)
-    console.log("grandTotal", grandTotal)
+    // console.log("selectedMetalType", selectedMetalType)
+    // console.log("grandTotal", grandTotal)
 
 
 
@@ -385,7 +385,7 @@ export default function Cart({ open, toggleCartDrawer }) {
             ele?.B === srProductsData?.designno &&
             ele?.D === (selectedMetalType)
         )
-        console.log("metal", mtrd);
+        // console.log("metal", mtrd);
         let showPrice = 0;
         if (mtrd && mtrd.length > 0) {
             showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
@@ -400,7 +400,7 @@ export default function Cart({ open, toggleCartDrawer }) {
             ele.H === selectedDiamondQualityColor?.split("_")[0] &&
             ele.J === selectedDiamondQualityColor?.split("_")[1]
         )
-        console.log("diamond ", diaqcprice);
+        // console.log("diamond ", diaqcprice);
 
         let showPrice1 = 0;
         if (diaqcprice && diaqcprice.length > 0) {
@@ -416,14 +416,14 @@ export default function Cart({ open, toggleCartDrawer }) {
             ele.H === selectedColorstoneQualityColor?.split("-")[0] &&
             ele.J === selectedColorstoneQualityColor?.split("-")[1]
         )
-        console.log("colorstone", csqcpirce);
+        // console.log("colorstone", csqcpirce);
 
         let showPrice2 = 0;
         if (csqcpirce && csqcpirce.length > 0) {
             showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
         }
 
-        console.log({ showPrice, showPrice1, showPrice2 });
+        // console.log({ showPrice, showPrice1, showPrice2 });
         let gt = showPrice + showPrice1 + showPrice2;
         setGrandTotal(gt ?? 0);
         //   let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
