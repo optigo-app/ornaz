@@ -63,14 +63,17 @@ const ProductList = () => {
   // console.log("getnewMenuData",getnewMenuData)  
   // console.log("getHeaderData2",getHeaderData2)
 
-  const [minPrice, setMinPrice] = useState(null)
-  const [maxPrice, setMaxPrice] = useState(null)
-  const [minNetwt, setMinNetwt] = useState(null)
-  const [maxNetwt, setMaxNetwt] = useState(null)
-  const [minGrosswt, setMinGrossWt] = useState(null)
-  const [maxGrosswt, setMaxGrossWtt] = useState(null)
-  const [minDiamondWt, setMinDiamondWt] = useState(null)
-  const [maxDiamondWt, setMaxDiamondWt] = useState(null)
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+  const [minNetwt, setMinNetwt] = useState(null);
+  const [maxNetwt, setMaxNetwt] = useState(null);
+  const [minGrosswt, setMinGrossWt] = useState(null);
+  const [maxGrosswt, setMaxGrossWtt] = useState(null);
+  const [minDiamondWt, setMinDiamondWt] = useState(null);
+  const [maxDiamondWt, setMaxDiamondWt] = useState(null);
+
+  const [hoverProductImageShow, setHoverProductImageShow] = useState(false);
+  const [isColorWiseImageShow, setIsColorWiseImage] = useState('');
 
   const navigate = useNavigate();
 
@@ -79,11 +82,13 @@ const ProductList = () => {
   const mtName = useRecoilValue(metalTypeG)
   const dqcName = useRecoilValue(diamondQualityColorG)
   const csqcName = useRecoilValue(colorstoneQualityColorG)
+  // console.log(mtName, dqcName, csqcName);
+    //RANGE FILTERS
 
-    const [value1, setValue1] = useState([minPrice, maxPrice])
-    const [value2, setValue2] = useState([minNetwt, maxNetwt])
-    const [value3, setValue3] = useState([minGrosswt, maxGrosswt])
-    const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt])
+    const [value1, setValue1] = useState([minPrice, maxPrice]);
+    const [value2, setValue2] = useState([minNetwt, maxNetwt]);
+    const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
+    const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
 
   useEffect(() => {
     setNewProData(getSearchData)
@@ -134,7 +139,7 @@ const ProductList = () => {
         let diard1 = 0;
         let csrd2 = 0;
 
-        // console.log("newPriceData",newPriceData?.Z)
+        console.log("newPriceData",newPriceData?.Z)
 
         // if(newPriceData){
         //   setMetalRdPrice((prev)=>[...prev,{product["autocode"]:newPriceData?.Z}])
@@ -252,6 +257,7 @@ const ProductList = () => {
 
     let storeinit = JSON.parse(localStorage.getItem("storeInit"))
     let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
+    setIsColorWiseImage(storeinit.IsColorWiseImages);
 
     await axios.get(
       `https://${storeinit?.domain}/assets/${storeinit?.FrontEnd_RegNo}/Store_Data/Productlist/Productlist_${loginInfo?.PackageId}_${storeinit?.FrontEnd_RegNo}.txt`
@@ -846,7 +852,7 @@ const ProductList = () => {
           "MetalColorid": Number(`${product?.MetalColorid}`),
           "MetalPurity": `${product?.MetalPurity}`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
-          "MetalTypeName": `${ product?.MetalTypeName}`,
+          "MetalTypeName": `${product?.MetalTypeName}`,
           "MetalTypeid": Number(`${product?.IsInReadyStock}`),
           "MetalWeight": Number(`${product?.MetalWeight}`),
           "OcassionName": `${product?.OcassionName ?? ""}`,
@@ -974,71 +980,71 @@ const ProductList = () => {
   // }, [getHeaderData, newProData])
 
 
-  // useEffect(() => {
-  //   //level1 filter
-  //   if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "collection") {
-  //     let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2 )
-  //     setNewProData(data)
-  //   }
-  //   if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "category") {
-  //     let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2 )
-  //     setNewProData(data);
+  useEffect(() => {
+    //level1 filter
+    if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "collection") {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2 )
+      setNewProData(data)
+    }
+    if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "category") {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2 )
+      setNewProData(data);
       
-  //   }
-  //   if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "gender") {
-  //     let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2 )
-  //     setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "gender") {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2 )
+      setNewProData(data);
       
-  //   }
-  //   if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "brand") {
-  //     let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2 )
-  //     setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "brand") {
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2 )
+      setNewProData(data);
       
-  //   }
-  //   if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "brand") {
-  //     let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2)
-  //     setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "brand") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2)
+      setNewProData(data);
       
-  //   }
-  //   if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "collection") {
-  //     let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2)
-  //     setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "collection") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2)
+      setNewProData(data);
       
-  //   }
-  //   if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "category") {
-  //     let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
-  //     setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "category") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
+      setNewProData(data);
       
-  //   }
-  //   if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "gender") {
-  //     let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2)
-  //     setNewProData(data);
+    }
+    if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "gender") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2)
+      setNewProData(data);
       
-  //   }
+    }
 
-  //   // level2 filter
-  //   if(getHeaderData?.label1 === "collection"){
-  //     let data = productData?.filter((pd)=>pd && pd.CollectionName === getHeaderData?.value1)
-  //     setNewProData(data)
+    // level2 filter
+    if(getHeaderData?.label1 === "collection"){
+      let data = productData?.filter((pd)=>pd && pd.CollectionName === getHeaderData?.value1)
+      setNewProData(data)
       
-  //   }
-  //   if(getHeaderData?.label1 === "brand"){
-  //     let data = productData?.filter((pd)=>pd && pd.BrandName === getHeaderData?.value1)
-  //     setNewProData(data)
+    }
+    if(getHeaderData?.label1 === "brand"){
+      let data = productData?.filter((pd)=>pd && pd.BrandName === getHeaderData?.value1)
+      setNewProData(data)
       
-  //   }
-  //   if(getHeaderData?.label1 === "category"){
-  //     let data = productData?.filter((pd)=>pd && pd.CategoryName === getHeaderData?.value1)
-  //     setNewProData(data)
+    }
+    if(getHeaderData?.label1 === "category"){
+      let data = productData?.filter((pd)=>pd && pd.CategoryName === getHeaderData?.value1)
+      setNewProData(data)
       
-  //   }
-  //   if(getHeaderData?.label1 === "gender"){
-  //     let data = productData?.filter((pd)=>pd && pd.GenderName === getHeaderData?.value1)
-  //     setNewProData(data)
+    }
+    if(getHeaderData?.label1 === "gender"){
+      let data = productData?.filter((pd)=>pd && pd.GenderName === getHeaderData?.value1)
+      setNewProData(data)
       
-  //   }
+    }
 
-  // }, [getHeaderData2,getHeaderData])
+  }, [getHeaderData2,getHeaderData])
 
 
 
@@ -1162,6 +1168,32 @@ const ProductList = () => {
     setMaxDiamondWt(maxDiamondWt)
     setValue4([0, maxDiamondWt])
   }
+
+  const [hoveredImageUrls, setHoveredImageUrls] = useState({});
+
+  const handleHoverImageShow = (url, index, rollPath, imagepath) => {
+
+    // isColorWiseImageShow
+
+    let updatedFilename = rollPath.replace(/\s/g, '_');
+    let newPath = url.replace(/\/([^/]+)$/, '/' + updatedFilename);
+    let path = imagepath + newPath;
+
+    if (rollPath.length !== 0) {
+      setHoveredImageUrls(prevHoveredImageUrls => {
+        return { ...prevHoveredImageUrls, [index]: path };
+      });
+    }
+
+  };
+
+  const handleMouseLeave = (index) => {
+    setHoveredImageUrls(prevState => {
+      const newState = { ...prevState };
+      delete newState[index];
+      return newState;
+    });
+  };
 
   return (
     <div id="top">
@@ -1569,6 +1601,7 @@ const ProductList = () => {
                     flexWrap: "wrap",
                   }}
                 >
+                  {/* RollOverImageName */}
                   {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
                   {(newProData?.length ? newProData : ProductApiData2)?.map((products, i) => (
 
@@ -1588,13 +1621,16 @@ const ProductList = () => {
                         <img
                           className="prod_img"
                           src={
-                            products?.MediumImagePath ? 
-                            (products?.imagepath +
-                            products?.MediumImagePath?.split(",")[0])
-                            :
-                            notFound
+                            hoveredImageUrls[i] ? hoveredImageUrls[i] : // Check if hover image URL exists
+                              (products?.MediumImagePath ?
+                                (products?.imagepath + products?.MediumImagePath?.split(",")[0])
+                                :
+                                notFound)
                           }
-                          style={{objectFit:'cover'}}
+                          onMouseEnter={() => handleHoverImageShow(products?.MediumImagePath?.split(",")[0], i, products?.RollOverImageName, products?.imagepath)}
+                          // onMouseEnter={() => handleHoverImageShow(products?.MediumImagePath?.split(",")[0], i, isColorWiseImageShow === 1 ? products?.ColorWiseRollOverImageName : products?.RollOverImageName, products?.imagepath)}
+                          onMouseLeave={() => handleMouseLeave(i)}
+                          style={{ objectFit: 'cover' }}
                           alt="#"
                         />
                       </div>
@@ -1616,19 +1652,19 @@ const ProductList = () => {
                         </p>
                       </div>
                       <div>
-                        <p style={{margin: '0px' , fontSize: '13px'}}>{products?.designno}</p>
+                        <p style={{ margin: '0px', fontSize: '13px' }}>{products?.designno}</p>
                       </div>
                       <div>
                         <p style={{ fontSize: "12px" }}>
 
                           {/* {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price === 0 ? 'Not Available' : products?.price + (products?.markup === 0 ? "" : products?.markup))} */}
-                          {products?.MetalColorName} 
-                          / 
+                          {products?.MetalColorName}
+                          /
                           {currencySym?.Currencysymbol}
                           {((products?.UnitCost ?? 0) + (products?.price ?? 0) + (products?.markup ?? 0)).toFixed(2)}
                         </p>
                       </div>
-                     
+
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
                         <div>
                           <Checkbox
@@ -1718,10 +1754,10 @@ const ProductList = () => {
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
-        <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
+          <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
+        </div>
       </div>
-      </div>
-     
+
     </div>
   );
 };
