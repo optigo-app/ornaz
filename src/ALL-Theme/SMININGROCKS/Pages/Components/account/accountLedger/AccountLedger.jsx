@@ -562,16 +562,16 @@ const AccountLedger = () => {
                 
                 <div className='text-secondary fs_al d-flex justify-content-between align-items-start p-2 my-3'>
                     <div className='d-flex justify-content-start align-items-start flex-wrap'>
-                        <div className='px-4 px_2_al d-flex align-items-center mb-2 '><span>Balance Gold :</span> <span className='bal_Amt_ac'>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2 '><span>Balance Gold :&nbsp;</span> <span className='bal_Amt_ac'>
                             { (((resultTotal?.debit_metalgold  + Math.abs(debit_mg_diff) ) - ( resultTotal?.credit_metalgold + Math.abs(credit_mg_diff)))?.toFixed(3)) }
-                            { ((resultTotal?.debit_metalgold + Math.abs(debit_mg_diff)) - (resultTotal?.credit_metalgold + Math.abs(credit_mg_diff))) > 0 ? 'Dr' : 'Cr' }</span></div>
-                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Diam. :</span> <span className='bal_Amt_ac'>
+                            { ((resultTotal?.debit_metalgold + Math.abs(debit_mg_diff)) - (resultTotal?.credit_metalgold + Math.abs(credit_mg_diff))) > 0 ? 'Dr' : ' Cr' }</span></div>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Diam. :&nbsp;</span> <span className='bal_Amt_ac'>
                             { (((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3)) }
-                            { ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt)) > 0 ? 'Dr' : 'Cr' }</span></div>
-                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Amount :</span> <span className='bal_Amt_ac'>
+                            { ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt)) > 0 ? 'Dr' : ' Cr' }</span></div>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Amount :&nbsp;</span> <span className='bal_Amt_ac'>
                             {/* { (formatAmount(resultTotal?.debit_totalcurrency - resultTotal?.credit_totalcurrency))}&nbsp;{(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)) ? 'Dr' : 'Cr' ) }</span></div> */}
                             {currencySymbol}&nbsp;{ (formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)))}&nbsp;
-                            {(((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) ? 'Dr' : 'Cr' ) }</span></div>
+                            {(((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) ? 'Dr' : ' Cr' ) }</span></div>
                     </div>
                 </div>
                 {
