@@ -282,31 +282,65 @@ const ManageAddress = () => {
 
         switch (fieldName) {
             case 'firstName':
-                errorsCopy.firstName = value.trim() ? '' : 'First Name is required';
+                if (!value.trim()) {
+                    errorsCopy.firstName = 'First Name is required';
+                } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(value.trim())) {
+                    errorsCopy.firstName = 'Invalid First Name';
+                } else {
+                    errorsCopy.firstName = '';
+                }
                 break;
             case 'lastName':
-                errorsCopy.lastName = value.trim() ? '' : 'Last Name is required';
+                if (!value.trim()) {
+                    errorsCopy.lastName = 'Last Name is required';
+                } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(value.trim())) {
+                    errorsCopy.lastName = 'Invalid Last Name';
+                } else {
+                    errorsCopy.lastName = '';
+                }
                 break;
             case 'address':
                 errorsCopy.address = value.trim() ? '' : 'Address is required';
                 break;
             case 'country':
-                errorsCopy.country = value.trim() ? '' : 'Country is required';
+                if (!value.trim()) {
+                    errorsCopy.country = 'Country is required';
+                } else if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
+                    errorsCopy.country = 'Invalid Country';
+                } else {
+                    errorsCopy.country = '';
+                }
                 break;
             case 'state':
-                errorsCopy.state = value.trim() ? '' : 'State is required';
+                if (!value.trim()) {
+                    errorsCopy.state = 'State is required';
+                } else if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
+                    errorsCopy.state = 'Invalid State';
+                } else {
+                    errorsCopy.state = '';
+                }
                 break;
             case 'city':
-                errorsCopy.city = value.trim() ? '' : 'City is required';
+                if (!value.trim()) {
+                    errorsCopy.city = 'City is required';
+                } else if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
+                    errorsCopy.city = 'Invalid City';
+                } else {
+                    errorsCopy.city = '';
+                }
                 break;
             case 'zipCode':
-                errorsCopy.zipCode = value.trim() ? '' : 'ZIP Code is required';
+                if (!value.trim()) {
+                    errorsCopy.zipCode = 'ZIP Code is required';
+                } else {
+                    errorsCopy.zipCode = '';
+                }
                 break;
             case 'mobileNo':
                 if (!value.trim()) {
                     errorsCopy.mobileNo = 'Mobile No. is required';
                 } else if (!/^\d{10}$/.test(value.trim())) {
-                    errorsCopy.mobileNo = 'Enter a valid 10-digit mobile number';
+                    errorsCopy.mobileNo = 'Enter Valid mobile number';
                 } else {
                     errorsCopy.mobileNo = '';
                 }
@@ -321,7 +355,7 @@ const ManageAddress = () => {
     const loginDetail = () => {
         const storedData = localStorage.getItem('loginUserDetail');
         const data = JSON.parse(storedData);
-        return {id: data.id, emai: data.userid}
+        return { id: data.id, emai: data.userid }
     }
 
     const storeInit = () => {

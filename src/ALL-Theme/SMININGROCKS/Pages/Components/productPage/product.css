@@ -106,7 +106,7 @@
 }
 
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 600px) {
 
     /* .prod_img{
         height: auto!important;
@@ -121,8 +121,25 @@
         font-size: 12px !important;
         white-space:unset !important;
         line-height: 1.4 !important;
-      }
+          min-height: auto!important;
+    }
+
+    .mobileDeatilDiv1{
+        display: flex!important;
+        flex-direction: column!important;
+    }
+
+    .mobileDeatilDiv2{
+        display: flex!important;
+        flex-direction: column!important;
+    }
+
+    .smilingProductDeatilTitleMobile{
+        white-space: normal!important;
+    }
 }
+
+
 
 .inputCheck:checked {
     background-color: '#7f7d85';
