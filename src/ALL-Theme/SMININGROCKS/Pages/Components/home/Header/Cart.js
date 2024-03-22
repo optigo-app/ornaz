@@ -559,7 +559,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                             className='smilingCartTab1Main'
                         />
                         <Tab label="Image View"
-                            className='smilingCartTab2Main'
+                            className='smilingCartTab1Main'
                         />
                     </Tabs>
                 </div>
