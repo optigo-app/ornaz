@@ -715,8 +715,8 @@ const ProdDetail = () => {
           "metaltypeid": `${product?.MetalTypeid}`,
           "metalcolorid": `${product?.MetalColorid}`,
           "stockno": "",
-          "DQuality": `${(diaQColOpt?.split('_')[0] ? diaQColOpt?.split('_')[0] : product?.diamondquality?.split(",")[0])}`,
-          "DColor": `${diaQColOpt?.split('_')[1] ? diaQColOpt?.split('_')[1] : product?.diamondcolorname}`,
+          "DQuality": `${(diaQColOpt ? diaQColOpt?.split('_')[0] : product?.diamondquality?.split(",")[0])}`,
+          "DColor": `${diaQColOpt ? diaQColOpt?.split('_')[1] : product?.diamondcolorname}`,
           "cmboMetalType": `${product?.MetalTypeName} ${product?.MetalPurity}`,
           "AdditionalValWt": Number(`${product?.AdditionalValWt}`),
           "BrandName": `${product?.BrandName ?? ""}`,
@@ -764,11 +764,13 @@ const ProdDetail = () => {
           "UnitCost": `${(product?.UnitCost + mtrdData?.Z + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)).toFixed(2)}`,
           // "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
           "UnitCostWithmarkup": (`${(product?.UnitCost + mtrdData?.Z + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)).toFixed(2) + (product?.markup ?? 0)}`),
-          "colorstonecolorname": `${product?.colorstonecolorname ? product?.colorstonecolorname : cSQopt?.split('-')[1]}`,
-          "colorstonequality": `${product?.colorstonequality ? product?.colorstonequality : cSQopt?.split('-')[0]}`,
-          "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
+          "colorstonecolorname": `${cSQopt ? cSQopt?.split('-')[1] : product?.colorstonecolorname }`,
+          "colorstonequality": `${cSQopt ? cSQopt?.split('-')[0] : product?.colorstonequality}`,
+          // "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
+          "diamondcolorname": `${diaQColOpt ? diaQColOpt?.split('_')[1] : product?.diamondcolorname}`,
           "diamondpcs": Number(`${product?.diamondpcs}`),
-          "diamondquality": `${(product?.diamondquality?.split(",")[0]) ? product?.diamondquality?.split(",")[0] : diaQColOpt?.split('_')[0]}`,
+          // "diamondquality": `${(product?.diamondquality?.split(",")[0]) ? product?.diamondquality?.split(",")[0] : diaQColOpt?.split('_')[0]}`,
+          "diamondquality": `${(diaQColOpt ? diaQColOpt?.split('_')[0] : product?.diamondquality?.split(",")[0])}`,
           "diamondsetting": `${product?.diamondsetting}`,
           "diamondshape": `${product?.diamondshape}`,
           "diamondweight": Number(`${product?.diamondweight}`),
@@ -1146,6 +1148,8 @@ const ProdDetail = () => {
   const handleClick = () => {
     setIsVideoPlaying(true);
   };
+
+  console.log("cSQopt",cSQopt)
 
 
   return (
