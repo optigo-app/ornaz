@@ -146,7 +146,6 @@ export default function Cart({ open, toggleCartDrawer }) {
                 const selectElement = document.getElementById(`sizeDropdown_${index}`);
 
                 if (selectElement) {
-                    console.log('sizeDropdownData.lengthsizeDropdownData.length', sizeDropdownData.length);
                     if (sizeDropdownData.length === 0) {
                         selectElement.innerHTML = '';
                         const optionElement = document.createElement('option');

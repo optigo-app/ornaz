@@ -19,7 +19,7 @@ export default function Confirmation() {
                 <div className='confritmSubmain'>
                     <img src='https://gstore.orail.co.in/assets/newfolder/images/account/thankyou.svg' className='SmilingthanksImg' />
                     <p style={{marginTop: '-30px' , textAlign: 'center'}}>Your Order number is <span style={{fontWeight: 500}}>{orderNumber}</span></p>
-                    <button className='contiShopiBtn' onClick={() => navigation('/')}>Continue Shopping</button>
+                    <button className='contiShopiBtn' onClick={() => navigation('/productpage')}>Continue Shopping</button>
                 </div>
                 <Footer />
             </div>

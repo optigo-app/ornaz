@@ -126,7 +126,6 @@ useEffect(() => {
 
 
   const handelmenu1 = (param) => {
-    console.log("param1", param)
     localStorage.setItem('productDataShow', 'true');
     setIsDropdownOpen(false)
     navigation("/productpage")
@@ -140,7 +139,6 @@ useEffect(() => {
 
 
   const handelmenu2 = (param) => {
-    console.log("param2", param)
     setIsDropdownOpen(false)
     navigation("/productpage")
     setHeaderData2(param)
