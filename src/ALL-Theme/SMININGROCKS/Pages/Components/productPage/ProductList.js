@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../home/Footer/Footer";
 import SmilingRock from "../home/smiling_Rock/SmilingRock";
 import "./product.css";
-import { json, useLocation, useNavigate } from "react-router-dom";
+import { json, useFetcher, useLocation, useNavigate } from "react-router-dom";
 import prodListData from "../../jsonFile/Productlist_4_95oztttesi0o50vr.json";
 // import prodListData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_Original.json";
 import filterData from "../../jsonFile/M_4_95oztttesi0o50vr.json";
@@ -160,7 +160,6 @@ const ProductList = () => {
           p3.push(newPriceData2)
         }
 
-        console.log("ppp",{p1,p2,p3})
 
         if (newPriceData || newPriceData1 || newPriceData2) {
           price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
@@ -581,20 +580,31 @@ const ProductList = () => {
     }));
   }
 
-  let NewFilterArr = []
-  for (let key in filterChecked) {
-    
-    // if (filterChecked[key]?.checked === 'true' && filterChecked['checked'] === true) {
-    if (filterChecked[key]?.checked === true) {
-      NewFilterArr.push(filterChecked)
-    }
-  }
-
-  console.log("NewFilterArr",NewFilterArr)
-
-
-  // 
   
+  // console.log("NewFilterArr",NewFilterArr)
+  
+  useEffect(()=>{
+    let FilterDataVar = [];
+    let NewFilterArr = Object?.values(filterChecked).filter((ele)=>ele?.checked === true)
+      NewFilterArr.map((ele)=>{
+        let fd = ProductApiData2.filter((pd)=>pd[ele?.type] === ele?.value)
+        if(fd){
+          FilterDataVar.push(fd)
+        }
+      })
+      if(FilterDataVar.length && FilterDataVar){
+        let reverseData = FilterDataVar.reverse()
+        const mergedArray = [].concat(...reverseData);
+        setNewProData(mergedArray)
+        console.log("FilterDataVar",mergedArray)
+      }else{
+        setNewProData(ProductApiData2)
+      }
+    
+  },[filterChecked])
+
+
+
 
   const getCartAndWishListData = async () => {
 
@@ -615,14 +625,8 @@ const ProductList = () => {
     await CommonAPI(body).then((res) => {
       if (res?.Message === "Success") {
 
-        // let wish = res?.Data?.rd1
-
         setCartData(res?.Data?.rd)
         setWishData(res?.Data?.rd1)
-
-        // if(wish && wish?.length){
-
-        // }
 
       }
     })

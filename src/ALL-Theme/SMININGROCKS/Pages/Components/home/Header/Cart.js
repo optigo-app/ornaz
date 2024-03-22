@@ -375,69 +375,81 @@ export default function Cart({ open, toggleCartDrawer }) {
 
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+    //     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
 
-        let mtrd = getPriceData?.rd?.filter((ele) =>
-            ele?.A === srProductsData?.autocode &&
-            ele?.B === srProductsData?.designno &&
-            ele?.D === (selectedMetalType)
-        )
-        // console.log("metal", mtrd);
-        let showPrice = 0;
-        if (mtrd && mtrd.length > 0) {
-            showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
-        }
-        //   let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
-        //   console.log("metal price",showPrice);
-        // setMetalPrice(showPrice)
+    //     let mtrd = getPriceData?.rd?.filter((ele) =>
+    //         ele?.A === srProductsData?.autocode &&
+    //         ele?.B === srProductsData?.designno &&
+    //         ele?.D === (selectedMetalType)
+    //     )
+    //     // console.log("metal", mtrd);
+    //     let showPrice = 0;
+    //     if (mtrd && mtrd.length > 0) {
+    //         showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
+    //     }
+    //     //   let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0))
+    //     //   console.log("metal price",showPrice);
+    //     // setMetalPrice(showPrice)
 
-        let diaqcprice = getPriceData?.rd1?.filter((ele) =>
-            ele.A === srProductsData?.autocode &&
-            ele.B === srProductsData?.designno &&
-            ele.H === selectedDiamondQualityColor?.split("_")[0] &&
-            ele.J === selectedDiamondQualityColor?.split("_")[1]
-        )
-        // console.log("diamond ", diaqcprice);
+    //     let diaqcprice = getPriceData?.rd1?.filter((ele) =>
+    //         ele.A === srProductsData?.autocode &&
+    //         ele.B === srProductsData?.designno &&
+    //         ele.H === selectedDiamondQualityColor?.split("_")[0] &&
+    //         ele.J === selectedDiamondQualityColor?.split("_")[1]
+    //     )
+    //     // console.log("diamond ", diaqcprice);
 
-        let showPrice1 = 0;
-        if (diaqcprice && diaqcprice.length > 0) {
-            showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
-        }
-        //   let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
-        //   console.log("diamond price",showPrice1);
-        // setDQCPrice(showPrice1)
+    //     let showPrice1 = 0;
+    //     if (diaqcprice && diaqcprice.length > 0) {
+    //         showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
+    //     }
+    //     //   let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0))
+    //     //   console.log("diamond price",showPrice1);
+    //     // setDQCPrice(showPrice1)
 
-        let csqcpirce = getPriceData?.rd2?.filter((ele) =>
-            ele.A === srProductsData?.autocode &&
-            ele.B === srProductsData?.designno &&
-            ele.H === selectedColorstoneQualityColor?.split("-")[0] &&
-            ele.J === selectedColorstoneQualityColor?.split("-")[1]
-        )
-        // console.log("colorstone", csqcpirce);
+    //     let csqcpirce = getPriceData?.rd2?.filter((ele) =>
+    //         ele.A === srProductsData?.autocode &&
+    //         ele.B === srProductsData?.designno &&
+    //         ele.H === selectedColorstoneQualityColor?.split("-")[0] &&
+    //         ele.J === selectedColorstoneQualityColor?.split("-")[1]
+    //     )
+    //     // console.log("colorstone", csqcpirce);
 
-        let showPrice2 = 0;
-        if (csqcpirce && csqcpirce.length > 0) {
-            showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
-        }
+    //     let showPrice2 = 0;
+    //     if (csqcpirce && csqcpirce.length > 0) {
+    //         showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+    //     }
 
-        // console.log({ showPrice, showPrice1, showPrice2 });
-        let gt = showPrice + showPrice1 + showPrice2;
-        setGrandTotal(gt ?? 0);
-        //   let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
-        //   console.log("colorstone price",showPrice2);
-        //   setCSQCPrice(showPrice2)
+    //     // console.log({ showPrice, showPrice1, showPrice2 });
+    //     let gt = showPrice + showPrice1 + showPrice2;
+    //     setGrandTotal(gt ?? 0);
+    //     //   let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+    //     //   console.log("colorstone price",showPrice2);
+    //     //   setCSQCPrice(showPrice2)
 
-        //   let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
+    //     //   let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
 
-        //   console.log({showPrice,showPrice1,showPrice2});
-        //   let gt = showPrice + showPrice1 + showPrice2;
-        //   console.log(gt);
-        //   setGrandTotal(gt)
+    //     //   console.log({showPrice,showPrice1,showPrice2});
+    //     //   let gt = showPrice + showPrice1 + showPrice2;
+    //     //   console.log(gt);
+    //     //   setGrandTotal(gt)
 
-    }, [selectedMetalType, selectedDiamondQualityColor, selectedColorstoneQualityColor])
+    // }, [selectedMetalType, selectedDiamondQualityColor, selectedColorstoneQualityColor])
 
+    useEffect(()=>{
+
+        cartListData?.forEach(()=>{
+
+        })
+
+    },[selectedMetalType])
+
+
+    console.log("selectedMetalType",{selectedMetalType,selectedDiamondQualityColor,selectedColorstoneQualityColor})
+    console.log("cartData",cartListData);
+    console.log("DaimondQualityColor",DaimondQualityColor)
 
     return (
         <Drawer
@@ -663,7 +675,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             DAIMOND QUALITY COLOR:
                                                         </label>
                                                         <select
-                                                            value={selectedDiamondQualityColor[item?.aotucode] || ''}
+                                                            value={selectedDiamondQualityColor[item?.aotucode] || `${item?.diamondqualityname}_${item?.diamondcolorname}`}
                                                             onChange={(e) => setSelectedDiamondQualityColor({ ...selectedDiamondQualityColor, [item?.autocode]: e.target.value })}
                                                             style={{
                                                                 border: "none",
@@ -672,7 +684,6 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                                 fontSize: "12.5px",
                                                             }}
                                                             // defaultValue={`${item?.colorstonequality}-${item?.colorstonecolorname}`}
-                                                            defaultValue={`${item?.diamondqualityname}_${item?.diamondcolorname}`}
                                                         >
                                                             {colorData.map((colorItem) => (
                                                                 <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
@@ -701,7 +712,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                             METAL TYPE:
                                                         </label>
                                                         <select
-                                                            value={selectedMetalType[item?.autocode] || ''}
+                                                            value={selectedMetalType[item?.autocode] || item?.metal}
                                                             onChange={(e) => setSelectedMetalType({ ...selectedMetalType, [item?.autocode]: e.target.value })}
                                                             style={{
                                                                 border: "none",
@@ -709,10 +720,9 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                                 color: "#7d7f85",
                                                                 fontSize: "12.5px",
                                                             }}
-                                                            defaultValue={item?.metal}
                                                         >
                                                             {metalType.map((data, index) => (
-                                                                <option key={index} value={data.metalType}>
+                                                                <option key={index} value={data.metalType} selected>
                                                                     {data.metaltype}
                                                                 </option>
                                                             ))}
@@ -731,7 +741,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                         COLOR STONE QUALITY COLOR:
                                                     </label>
                                                     <select
-                                                        value={selectedColorstoneQualityColor[item?.autocode] || ''}
+                                                        value={selectedColorstoneQualityColor[item?.autocode] || `${item?.colorstonequalityname}-${item?.colorstonecolorname}`}
                                                         onChange={(e) => setSelectedColorstoneQualityColor({ ...selectedColorstoneQualityColor, [item?.autocode]: e.target.value })}
                                                         style={{
                                                             border: "none",
