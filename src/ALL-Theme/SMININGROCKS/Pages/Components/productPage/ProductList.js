@@ -888,7 +888,17 @@ const ProductList = () => {
           "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
-          "quantity": `${product?.quantity ?? "1"}`
+          "quantity": `${product?.quantity ?? "1"}`,
+          "CurrencyRate":`${product?.CurrencyRate ?? ""}`,
+          "remarks_design":`${product?.remarks_design ?? ""}`,
+          "diamondcolorid":`${product?.diamondcolorid ?? ""}`,
+          "diamondqualityid":`${product?.diamondqualityid ?? ""}`,
+          "detail_ringsize":`${product?.detail_ringsize ?? ""}`,
+          "ProjMode":`${product?.ProjMode ?? ""}`,
+          "AlbumMasterid":`${product?.AlbumMasterid ?? ""}`,
+          "AlbumMastername":`${product?.AlbumMastername ?? ""}`,
+          "Albumcode":`${product?.Albumcode ?? ""}`,
+          "Designid":`${product?.Designid ?? ""}`
         }
 
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
@@ -1629,7 +1639,7 @@ const ProductList = () => {
                           alt="#"
                         />
                       </div>
-                      <div onClick={() => handelProductSubmit(products)}>
+                      <div className="productTitleLine" onClick={() => handelProductSubmit(products)}>
                         <p
                           style={{
                             fontSize: "13px",

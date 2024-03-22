@@ -6,6 +6,15 @@
 
 .smilingCartDeatilSub1{
     width: 75%;
+    display: flex;
+    justify-content: center;
+    background-color: whitesmoke;
+    margin: 2px 20px;
+    border-radius: 12px;
+    height: 100%;
+    padding: 70px 0px;
+
+    /* border:1px solid red */
 }
 
 .smilingCartDeatilSub2{
@@ -136,6 +145,40 @@
     border-left: none;
     height: 33px;
     border-bottom: 1px solid lightgray;
+}
+
+.SmilingCustomzeSaveBtn {
+    height: 35px;
+    width: 100px;
+    background-color: #a7a7a7;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.SmilingCustomzeSaveBtn:hover {
+    background-color: white;
+    color: #a7a7a7;
+    border: 1px solid #a7a7a7;
+}
+
+.newBtn{
+    height: 60px;
+    width: 150px;
+    background-color: #7d7f85;
+    color:white;
+    border: 1px solid #7d7f85;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 10px;
+}
+
+.newBtn:hover{
+    color: #7d7f85;
+    background-color: white;
 }
 
 
