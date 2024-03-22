@@ -68,6 +68,7 @@ export default function Cart({ open, toggleCartDrawer }) {
     const getPriceData = useRecoilValue(priceData);
     const [getAllFilterSizeData, setGetAllFilterSizeData] = useState([]);
     const [allSelectedSizeData, setAllSelectedSizeData] = useState('');
+    const [openCustoMizeIndexNumber, setOpenCustoMizeIndexNumber] = useState('');
     const navigation = useNavigate();
     // console.log("selectedMetalType", selectedMetalType)
     // console.log("grandTotal", grandTotal)
@@ -121,10 +122,17 @@ export default function Cart({ open, toggleCartDrawer }) {
     }
 
     const getSizeData = async (item, index) => {
-
+        setOpenCustoMizeIndexNumber(index);
         const newShowDropdowns = [...showDropdowns];
-        newShowDropdowns[index] = true;
+        newShowDropdowns[index] = !newShowDropdowns[index];
+
+        for (let i = 0; i < newShowDropdowns.length; i++) {
+            if (i !== index) {
+                newShowDropdowns[i] = false;
+            }
+        }
         setShowDropdowns(newShowDropdowns);
+
         try {
             const storedEmail = localStorage.getItem('registerEmail') || '';
             const storeInit = JSON.parse(localStorage.getItem('storeInit'));
@@ -175,7 +183,6 @@ export default function Cart({ open, toggleCartDrawer }) {
     }
 
     const handleSave = (index) => {
-        // Your save logic here
         const newShowDropdowns = [...showDropdowns];
         newShowDropdowns[index] = false;
         setShowDropdowns(newShowDropdowns);
@@ -467,7 +474,6 @@ export default function Cart({ open, toggleCartDrawer }) {
             setDaimondFiletrData(filteredDataDaimond);
         }
 
-
     }
 
     console.log("metalFilterData", metalFilterData)
@@ -478,7 +484,10 @@ export default function Cart({ open, toggleCartDrawer }) {
         <Drawer
             anchor="right"
             open={open}
-            onClose={toggleCartDrawer(false)}
+            onClose={(event) => {
+                toggleCartDrawer(false)(event);
+                handleSave(openCustoMizeIndexNumber);
+            }}
             transitionDuration={500}
             sx={{
                 "& .MuiDrawer-paper": {
@@ -522,7 +531,10 @@ export default function Cart({ open, toggleCartDrawer }) {
                     margin: '10px 20px 0px 0px'
                 }}>
                     <CloseIcon
-                        onClick={toggleCartDrawer(false)}
+                        onClose={(event) => {
+                            toggleCartDrawer(false)(event);
+                            handleSave(openCustoMizeIndexNumber);
+                        }}
                         style={{ cursor: "pointer", color: "black" }}
                     />
                 </div>
@@ -565,6 +577,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                             <button className='browseBtnMore' onClick={(event) => {
                                 toggleCartDrawer(false)(event);
                                 navigation('/productpage');
+                                handleSave(openCustoMizeIndexNumber);
                             }}>BROWSE OUR COLLECTION</button>
 
                         </div>
@@ -870,6 +883,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                             onClick={(event) => {
                                 toggleCartDrawer(false)(event);
                                 navigation('/Delivery');
+                                handleSave(openCustoMizeIndexNumber);
                             }}
                         >
                             Place Order
@@ -889,6 +903,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                             <button className='browseBtnMore' onClick={(event) => {
                                 toggleCartDrawer(false)(event);
                                 navigation('/productpage');
+                                handleSave(openCustoMizeIndexNumber);
                             }}>BROWSE OUR COLLECTION</button>
                         </div>
                     ) : (
@@ -933,6 +948,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                             onClick={(event) => {
                                 toggleCartDrawer(false)(event);
                                 navigation('/Delivery');
+                                handleSave(openCustoMizeIndexNumber);
                             }}
                         >
                             Place Order
