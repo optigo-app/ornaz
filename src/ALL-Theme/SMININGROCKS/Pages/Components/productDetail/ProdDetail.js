@@ -203,13 +203,19 @@ const ProdDetail = () => {
   let diaUpdatedPrice = () =>{
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'))
 
-    let calcDiaWt = (srProductsData?.diamondweight ?? 0) + (daimondFilterData?.Weight ?? 0)
-
-    let CalcPics = (srProductsData?.diamondpcs ?? 0) + (daimondFilterData?.pieces ?? 0)
-
-    let fpprice = ((dqcData?.O ?? 0) * (calcDiaWt ?? 0)) + ((dqcData?.Q ?? 0) * (CalcPics ?? 0))
-
-    return fpprice
+    if(daimondFilterData && daimondFilterData.length){
+      
+          let calcDiaWt = (srProductsData?.diamondweight ?? 0) + (daimondFilterData?.Weight ?? 0)
+      
+          let CalcPics = (srProductsData?.diamondpcs ?? 0) + (daimondFilterData?.pieces ?? 0)
+      
+          let fpprice = ((dqcData?.O ?? 0) * (calcDiaWt ?? 0)) + ((dqcData?.Q ?? 0) * (CalcPics ?? 0))
+      
+          return fpprice
+    }
+    else{
+      return 0
+    }
 
   }
 
@@ -217,13 +223,19 @@ const ProdDetail = () => {
 
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'))
 
-    let calcDiaWt = (srProductsData?.totalcolorstoneweight ?? 0) + (daimondFilterData?.Weight ?? 0)
+    if(daimondFilterData && daimondFilterData.length){
 
-    let CalcPics = (srProductsData?.totalcolorstonepcs ?? 0) + (daimondFilterData?.pieces ?? 0)
-
-    let fpprice = ((csqcData?.O ?? 0) * (calcDiaWt ?? 0)) + ((csqcData?.Q ?? 0) * (CalcPics ?? 0))
-
-    return fpprice
+      
+      let calcDiaWt = (srProductsData?.totalcolorstoneweight ?? 0) + (daimondFilterData?.Weight ?? 0)
+      
+      let CalcPics = (srProductsData?.totalcolorstonepcs ?? 0) + (daimondFilterData?.pieces ?? 0)
+      
+      let fpprice = ((csqcData?.O ?? 0) * (calcDiaWt ?? 0)) + ((csqcData?.Q ?? 0) * (CalcPics ?? 0))
+      
+      return fpprice
+    }else{
+      return 0
+    }
 
   }
 
@@ -231,11 +243,17 @@ const ProdDetail = () => {
 
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
 
-    let CalcNetwt = (srProductsData?.netwt ?? 0) + (metalFilterData?.Weight ?? 0)
+    if(metalFilterData && metalFilterData.length){
 
-    let fprice = (mtrdData?.AD * CalcNetwt) + (mtrdData?.AC * CalcNetwt)
-
-    return fprice
+      let CalcNetwt = (srProductsData?.netwt ?? 0) + (metalFilterData?.Weight ?? 0)
+      console.log("CalcNetwt",CalcNetwt)
+      
+      let fprice = (mtrdData?.AD * CalcNetwt) + (mtrdData?.AC * CalcNetwt)
+      
+      return fprice
+    }else{
+      return 0
+    }
 
 
   }
@@ -673,9 +691,9 @@ const ProdDetail = () => {
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
           // "UnitCost": `${grandTotal ? grandTotal : (product?.price === "Not Available" ? 0 : product?.price)}`,
-          "UnitCost": `${(product?.price - grandTotal)}`,
+          "UnitCost": `${(product?.UnitCost + mtrdData?.Z + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)).toFixed(2)}`,
           // "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
-          "UnitCostWithmarkup": (`${(product?.price === "Not Available" ? 0 : (product?.price - grandTotal)) + (product?.markup ?? 0)}`),
+          "UnitCostWithmarkup": (`${(product?.UnitCost + mtrdData?.Z + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)).toFixed(2) + (product?.markup ?? 0)}`),
           "colorstonecolorname": `${product?.colorstonecolorname ? product?.colorstonecolorname : cSQopt?.split('-')[1]}`,
           "colorstonequality": `${product?.colorstonequality ? product?.colorstonequality : cSQopt?.split('-')[0]}`,
           "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
@@ -1052,7 +1070,9 @@ const ProdDetail = () => {
   // console.log('DefaultSizeDefaultSizeDefaultlengthlength', productData?.DefaultSize.length);
 
   // console.log('daimondFilterDatadaimondFilterData', daimondFilterData);
-  // console.log('metalFilterDatametalFilterData', metalFilterData);
+  console.log("metalFilterData",metalFilterData)
+  console.log("daimondFilterData",daimondFilterData)
+  console.log('lastPrice', {"unitcost":productData?.UnitCost ?? 0,"mtrdPrice":mtrdData,"dqcDataPrice":dqcData?.S ?? 0,"csqcData":csqcData?.S ?? 0,sizeMarkup,"metalupdatePrice":metalUpdatedPrice(),"diaUpdatedPrice":diaUpdatedPrice(),"colUpdatedPrice":colUpdatedPrice()})
 
   return (
     <div
@@ -1454,7 +1474,7 @@ const ProdDetail = () => {
                   <p style={{ color: "#7d7f85", fontSize: "14px" }}>
                     {/* Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${(productData?.price - grandTotal) === 0 ? "Not Availabel" : (productData?.price - grandTotal)?.toFixed(2)}`}</span> */}
                     {/* Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${productData?.UnitCost + (productData?.price - grandTotal)?.toFixed(2)}`}</span> */}
-                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${((productData?.UnitCost) + mtPrice + dqcPrice + csqcPrice + (sizeMarkup ?? 0) + metalUpdatedPrice() + diaUpdatedPrice() + colUpdatedPrice()).toFixed(2)}`}</span>
+                    Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${((productData?.UnitCost) + (mtrdData?.Z ?? 0) + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + metalUpdatedPrice() + diaUpdatedPrice() + colUpdatedPrice()).toFixed(2)}`}</span>
                   </p>
                 </div>}
 

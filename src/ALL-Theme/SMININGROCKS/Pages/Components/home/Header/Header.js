@@ -803,8 +803,7 @@ useEffect(() => {
             }}
           >
             <ul className="nav-ul-shop">
-              {islogin === "true" &&
-                <>
+                  {islogin === "true" && 
                   <li
                     className="nav-li-shop-main"
                     onMouseEnter={handleDropdownOpen}
@@ -823,7 +822,7 @@ useEffect(() => {
                         style={{ width: "20px", height: "20px" }}
                       />
                     </span>
-                  </li>
+                  </li>}
                   <li
                     className="nav-li-smining"
                     style={{ cursor: "pointer" }}
@@ -831,8 +830,6 @@ useEffect(() => {
                   >
                     {IMPACT}
                   </li>
-                </>
-              }
               {/* <li
                 className="nav-li-smining"
                 style={{ cursor: "pointer" }}
