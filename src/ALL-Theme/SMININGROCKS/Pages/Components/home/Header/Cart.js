@@ -378,8 +378,6 @@ export default function Cart({ open, toggleCartDrawer }) {
         setValue(newValue);
     };
 
-
-
     // useEffect(() => {
 
     //     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
@@ -444,11 +442,17 @@ export default function Cart({ open, toggleCartDrawer }) {
     // }, [selectedMetalType, selectedDiamondQualityColor, selectedColorstoneQualityColor])
 
     useEffect(() => {
+        cartListData?.forEach((cartData) => {
+            let mtrd = getPriceData?.rd?.find((ele) =>
+            ele?.A === cartData?.autocode &&
+            ele?.B === cartData?.designno &&
+            ele?.D === selectedMetalType
+            );
 
-        cartListData?.forEach(() => {
 
+            console.log("mtrd", Object.values(Object.fromEntries(Object.entries(selectedMetalType).filter(([key, value]) => key === cartData.autocode))))
+            
         })
-
     }, [selectedMetalType])
 
 

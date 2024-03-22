@@ -791,7 +791,17 @@ const ProdDetail = () => {
           "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
-          "quantity": `${product?.quantity ?? "1"}`
+          "quantity": `${product?.quantity ?? "1"}`,
+          "CurrencyRate":`${product?.CurrencyRate ?? ""}`,
+          "remarks_design":`${product?.remarks_design ?? ""}`,
+          "diamondcolorid":`${product?.diamondcolorid ?? ""}`,
+          "diamondqualityid":`${product?.diamondqualityid ?? ""}`,
+          "detail_ringsize":`${sizeOption ? (sizeOption ?? "") : (product?.detail_ringsize ?? "")}`,
+          "ProjMode":`${product?.ProjMode ?? ""}`,
+          "AlbumMasterid":`${product?.AlbumMasterid ?? ""}`,
+          "AlbumMastername":`${product?.AlbumMastername ?? ""}`,
+          "Albumcode":`${product?.Albumcode ?? ""}`,
+          "Designid":`${product?.Designid ?? ""}`
         }
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
         const wishToCartEncData1 = btoa(JSON.stringify(wishToCartEncData));

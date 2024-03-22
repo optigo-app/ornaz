@@ -108,9 +108,20 @@
 
 @media screen and (max-width: 550px) {
 
-    .prod_img{
+    /* .prod_img{
         height: auto!important;
+    } */
+
+    .prod_img{
+        margin-top: 30px !important;
+        min-height: 200px !important;
+        height: 200px !important;
     }
+    .productTitleLine p {
+        font-size: 12px !important;
+        white-space:unset !important;
+        line-height: 1.4 !important;
+      }
 }
 
 .inputCheck:checked {
