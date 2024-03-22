@@ -144,10 +144,22 @@ export default function Delivery() {
 
         switch (fieldName) {
             case 'firstName':
-                errorsCopy.firstName = value.trim() ? '' : 'First Name is required';
+                if (!value.trim()) {
+                    errorsCopy.firstName = 'First Name is required';
+                } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(value.trim())) {
+                    errorsCopy.firstName = 'Invalid First Name';
+                } else {
+                    errorsCopy.firstName = '';
+                }
                 break;
             case 'lastName':
-                errorsCopy.lastName = value.trim() ? '' : 'Last Name is required';
+                if (!value.trim()) {
+                    errorsCopy.lastName = 'Last Name is required';
+                } else if (!/^(?![\d\s!@#$%^&*()_+={}\[\]|\\:;"'<>,.?/~`])[^\s][^\n]+$/.test(value.trim())) {
+                    errorsCopy.lastName = 'Invalid Last Name';
+                } else {
+                    errorsCopy.lastName = '';
+                }
                 break;
             case 'address':
                 errorsCopy.address = value.trim() ? '' : 'Address is required';
@@ -168,7 +180,7 @@ export default function Delivery() {
                 if (!value.trim()) {
                     errorsCopy.mobileNo = 'Mobile No. is required';
                 } else if (!/^\d{10}$/.test(value.trim())) {
-                    errorsCopy.mobileNo = 'Enter a valid 10-digit mobile number';
+                    errorsCopy.mobileNo = 'Enter Valid mobile number';
                 } else {
                     errorsCopy.mobileNo = '';
                 }
@@ -506,7 +518,7 @@ export default function Delivery() {
                             helperText={errors.mobileNo || ''}
                         />
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' ,marginBottom: '20px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px', marginBottom: '20px' }}>
                                 <button type="submit" className='smilingDeleveryformSaveBtn'>
                                     {isEditMode ? 'Save' : 'Add'}
                                 </button>
@@ -538,8 +550,8 @@ export default function Delivery() {
                                         <p className='addressData'>{item.street}</p>
                                         <p className='addressData'>{item.city}-{item.zip}</p>
                                         <p className='addressData'>{item.state}</p>
-                                        <p className='addressData' style={{marginBottom: '35px'}}>{item.shippingmobile}</p>
-                                        <div style={{position:'absolute',bottom:'5px',width:'95%', display: 'flex', marginTop: '10px' }}>
+                                        <p className='addressData' style={{ marginBottom: '35px' }}>{item.shippingmobile}</p>
+                                        <div style={{ position: 'absolute', bottom: '5px', width: '95%', display: 'flex', marginTop: '10px' }}>
                                             <div onClick={() => handleOpen(item, index)} className='deliveryAddressEdit' style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                 <MdEdit />
                                             </div>

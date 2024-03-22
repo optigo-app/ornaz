@@ -1643,12 +1643,13 @@ const ProductList = () => {
                             minHeight: '19.5px',
                             margin: '3px'
                           }}
+                          className="smilingProductDeatilTitleMobile"
                         >
                           {products?.TitleLine} -<span style={{ fontWeight: 600 }}> {products?.designno} </span>
                         </p>
                       </div>
                       <div style={{}}>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div className="mobileDeatilDiv1" style={{ display: 'flex', justifyContent: 'center' }}>
                           {ismetalWShow === 1 &&
                             <div>
                               <p style={{ margin: '0px', fontSize: '13px' }}>NWT : <span style={{ fontWeight: 600, marginRight: '15px' }}>{products?.netwt}</span></p>
@@ -1658,7 +1659,7 @@ const ProductList = () => {
                           </div>}
                           
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div className="mobileDeatilDiv2" style={{ display: 'flex', justifyContent: 'center' }}>
                           {(isDaaimongWShow || isDaaimongWShow) === 1 && <div>
                             <p style={{ margin: '0px', fontSize: '13px' }}>DWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{isDaaimongWShow === 1 && products?.diamondweight} / {isDaaimonPShow === 1 && products?.diamondpcs}</span></p>
                           </div>}
@@ -1666,6 +1667,7 @@ const ProductList = () => {
                             <p style={{ margin: '0px', fontSize: '13px' }}>CWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{isStoneWShow === 1 && products?.totalcolorstoneweight} / {isStonePShow === 1 && products?.totalcolorstonepcs}</span></p>
                           </div>}
                         </div>
+                        
                         <div>
                           <p style={{ fontSize: "14px", fontWeight: 'bold' }}>
                           {isMetalTCShow === 1 &&  products?.MetalTypeName}-{products?.MetalColorName}{products?.MetalPurity}
