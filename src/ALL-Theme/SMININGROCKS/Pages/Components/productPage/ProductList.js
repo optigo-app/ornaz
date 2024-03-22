@@ -124,13 +124,10 @@ const ProductList = () => {
         const newPriceData2 = priceDataApi?.rd2?.find(
           (pda) =>
             pda.A === product.autocode &&
-            pda.B === product.designno
-          // pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
-          // pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
+            pda.B === product.designno &&
+            pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
+            pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
         );
-
-        // console.log("newPriceData2",priceDataApi?.rd2?.find((te)=> te?.H !== "mix" && te?.H !== "MOTI" && te?.H !== "BEADS"));
-        // console.log("newPriceData2",newPriceData2);
 
         let price = 0;
         let isLoading = true;
@@ -138,28 +135,6 @@ const ProductList = () => {
         let metalrd = 0;
         let diard1 = 0;
         let csrd2 = 0;
-
-        console.log("newPriceData",newPriceData?.Z)
-
-        // if(newPriceData){
-        //   setMetalRdPrice((prev)=>[...prev,{product["autocode"]:newPriceData?.Z}])
-        // }
-        let p1=[];
-        let p2=[];
-        let p3=[];
-
-        if (newPriceData) {
-          p1.push(newPriceData)
-        }
-
-        if (newPriceData1) {
-          p2.push(newPriceData1)
-        }
-
-        if (newPriceData2) {
-          p3.push(newPriceData2)
-        }
-
 
         if (newPriceData || newPriceData1 || newPriceData2) {
           price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
