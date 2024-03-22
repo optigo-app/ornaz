@@ -50,6 +50,8 @@ export default function CartPage() {
     const [metalType, setMetalType] = useState([]);
     const [DaimondQualityColor, setDaimondQualityColor] = useState([]);
     const [showDropdowns, setShowDropdowns] = useState(Array(cartListData.length).fill(false));
+    const [prodSelectData,setProdSelectData] = useState();
+    const [cartSelectData,setCartSelectData] = useState();
 
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
@@ -391,6 +393,20 @@ export default function CartPage() {
         }
     }
 
+     useEffect(()=>{
+        const prodData = JSON.parse(localStorage.getItem("allproductlist")) 
+
+        let isCartData = cartSelectData ? cartSelectData : cartListData[0]
+
+        const finalProdData = prodData.filter((pd)=>pd?.designno === isCartData?.designno && pd?.autocode === isCartData?.autocode)[0]
+
+        if(finalProdData){
+            setProdSelectData(finalProdData)
+        }
+        
+    },[cartSelectData,cartListData])
+    
+    console.log("finalProdData",prodSelectData)
 
     return (
         <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
@@ -411,7 +427,7 @@ export default function CartPage() {
                     }}
                 >
 
-                    <p className='SmiWishListTitle'>My Cart</p>
+                    <p className='SmiWishListTitle' style={{paddingTop:'30px'}}>My Cart</p>
 
                     {cartListData?.length !== 0 &&
                         <div>
@@ -445,9 +461,30 @@ export default function CartPage() {
                 </div>
 
                 <CustomTabPanel value={value} index={0}>
-                    <div style={{ paddingBottom: "150px", marginTop: '10px', paddingInline: '10px', display: 'flex' }}>
+                    <div 
+                      style={{ 
+                        // paddingBottom: "150px", 
+                        // marginTop: '10px', 
+                        paddingInline: '10px', 
+                        display: 'flex' 
+                        }}
+                    >
                         <div className='smilingCartDeatilSub1'>
-                            <p>Show Data</p>
+                            <div style={{width:'100%',height:'70%',marginTop:'0px',display:'flex',justifyContent:'space-around',alignItems:'center',gap:'20px'}}>
+                                <img 
+                                src={prodSelectData?.imagepath + prodSelectData?.MediumImagePath?.split(",")[0] }
+                                 style={{
+                                    border:'1px solid #e1e1e1',
+                                    borderRadius:'12px',
+                                    width:'50%'
+                                }}
+                                />
+
+                                <div style={{display:'flex',flexDirection:'column'}}>
+                                   <button className='newBtn'> Customize</button>
+                                   <button className='newBtn'> Remark</button>
+                                </div>
+                            </div>
                         </div>
                         <div className='smilingCartDeatilSub2'>
 
@@ -470,9 +507,9 @@ export default function CartPage() {
                             ) : (
                                 <div>
 
-                                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                                    <div style={{ display: 'flex', flexWrap: 'wrap' , height: '565px', overflowY: 'auto' }}>
                                         {cartListData?.map((item, index) => (
-                                            <div key={item.id} className="smiling-cartPageBoxMain">
+                                            <div key={item.id} className="smiling-cartPageBoxMain" onClick={()=>setCartSelectData(item)}>
                                                 <div
                                                     style={{
                                                         cursor: "pointer",
