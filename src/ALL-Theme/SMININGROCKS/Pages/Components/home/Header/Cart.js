@@ -530,11 +530,10 @@ export default function Cart({ open, toggleCartDrawer }) {
                     justifyContent: 'flex-end',
                     margin: '10px 20px 0px 0px'
                 }}>
-                    <CloseIcon
-                        onClose={(event) => {
-                            toggleCartDrawer(false)(event);
-                            handleSave(openCustoMizeIndexNumber);
-                        }}
+                    <CloseIcon onClick={(event) => {
+                        toggleCartDrawer(false)(event);
+                        handleSave(openCustoMizeIndexNumber);
+                    }}
                         style={{ cursor: "pointer", color: "black" }}
                     />
                 </div>
