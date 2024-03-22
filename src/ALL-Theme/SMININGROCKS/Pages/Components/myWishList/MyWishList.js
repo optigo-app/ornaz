@@ -234,6 +234,7 @@ export default function MyWishList() {
                                         <IoClose style={{ height: '30px', width: '30px', cursor: 'pointer', color: 'rgb(0 0 0 / 66%)' }} onClick={() => handleRemoveWichList(item)} />
                                     </div>
                                     <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' style={{ cursor: 'pointer' }} alt='Wishlist item' onClick={() => handelProductSubmit(item)} />
+                                   
                                     <p className='smiWishLsitBoxDesc1'>{item.designno}</p>
                                     <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} <br /> {isPriseShow == 1 && <p>$ {item.TotalUnitCost}</p>}</p>
                                     <p className='smiWishLsitBoxDesc3' onClick={() => handleAddToCart(item.autocode)}>ADD TO CART +</p>

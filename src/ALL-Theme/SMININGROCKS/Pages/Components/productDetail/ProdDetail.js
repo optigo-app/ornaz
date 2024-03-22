@@ -52,9 +52,11 @@ const ProdDetail = () => {
   const [colorImageData, setColorImageData] = useState([]);
   const [IsColorWiseImagesShow, setIsColorWiseImagesShow] = useState('')
   const [videoUrl, setVideoUrl] = useState('');
+  const [completeBackImage, setCompleteBackImage] = useState('');
 
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
+  const [showIcateDesign, setShowEcateDesign] = useState('');
 
   const [mtPrice, setMetalPrice] = useState(0)
   const [dqcPrice, setDQCPrice] = useState(0)
@@ -76,14 +78,8 @@ const ProdDetail = () => {
     setImgLoading(false)
   }
 
-  // console.log("sizeMarkup",sizeMarkup);
-  // console.log("sizeMarkup",sizeMarkup);
-
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
-
   let navigate = useNavigate()
-
-
 
   useEffect(() => {
 
@@ -91,12 +87,12 @@ const ProdDetail = () => {
     let ColorStoneQualityColor = JSON.parse(localStorage.getItem("ColorStoneQualityColor"))
     setmtTypeOption(loginInfo?.cmboMetalType)
 
-    if(loginInfo?.cmboDiaQualityColor !== "" && !loginInfo?.cmboDiaQualityColor){
+    if (loginInfo?.cmboDiaQualityColor !== "" && !loginInfo?.cmboDiaQualityColor) {
       let qualityColor = `${loginInfo?.cmboDiaQualityColor.split("#@#")[0]?.toUpperCase()}_${loginInfo?.cmboDiaQualityColor.split("#@#")[1]?.toUpperCase()}`
       setDiaQColOpt(qualityColor)
     }
-    else{
-      if(colorData && colorData?.length){
+    else {
+      if (colorData && colorData?.length) {
         setDiaQColOpt(`${colorData[0]?.Quality}_${colorData[0]?.color}`)
       }
     }
@@ -204,7 +200,7 @@ const ProdDetail = () => {
 
   // console.log("ppp",{mtrdData,dqcData,csqcData})
 
-  let diaUpdatedPrice = () =>{
+  let diaUpdatedPrice = () => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'))
 
     if(daimondFilterData && daimondFilterData.length){
@@ -223,7 +219,7 @@ const ProdDetail = () => {
 
   }
 
-  let colUpdatedPrice = () =>{
+  let colUpdatedPrice = () => {
 
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'))
 
@@ -243,7 +239,7 @@ const ProdDetail = () => {
 
   }
 
-  let metalUpdatedPrice = () =>{
+  let metalUpdatedPrice = () => {
 
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
 
@@ -308,23 +304,23 @@ const ProdDetail = () => {
       setCSQCPrice(csqcpirce[0]?.S ?? 0)
     }
 
-        // let p1=[];
-        // let p2=[];
-        // let p3=[];
+    // let p1=[];
+    // let p2=[];
+    // let p3=[];
 
-        // if (mtrd) {
-        //   p1.push(mtrd)
-        // }
+    // if (mtrd) {
+    //   p1.push(mtrd)
+    // }
 
-        // if (diaqcprice) {
-        //   p2.push(diaqcprice)
-        // }
+    // if (diaqcprice) {
+    //   p2.push(diaqcprice)
+    // }
 
-        // if (csqcpirce) {
-        //   p3.push(csqcpirce)
-        // }
+    // if (csqcpirce) {
+    //   p3.push(csqcpirce)
+    // }
 
-        // console.log("ppp",{mtrd,diaqcprice,csqcpirce})
+    // console.log("ppp",{mtrd,diaqcprice,csqcpirce})
 
     let gt = showPrice + showPrice1 + showPrice2;
     setGrandTotal(gt ?? 0);
@@ -338,6 +334,7 @@ const ProdDetail = () => {
     let localProductData = JSON.parse(localStorage.getItem('srProductsData'))
     setProductData(localProductData)
     getColorImagesData(localProductData.autocode);
+    getTheImageSetImage(localProductData.autocode);
     setWishListFlag(localProductData?.wishCheck)
     setCartFlag(localProductData?.checkFlag)
     getSizeData(localProductData.autocode);
@@ -347,11 +344,23 @@ const ProdDetail = () => {
     handelLocalStorage();
   }, [])
 
+  const getTheImageSetImage = (autoCode) => {
+    const storedData = localStorage.getItem('designsetlist');
+    const jsonData = JSON.parse(storedData);
+    const filteredData = jsonData.filter(item => item.autocode === autoCode);
+    console.log('fffffffffffffffffffffffffffffffffff', filteredData);
+    if (filteredData.DefaultImageName) {
+      console.log('fffffffffffffffffffffffffffffffffff', filteredData);
+      setCompleteBackImage(filteredData.DefaultImageName);
+    }
+  }
 
   useEffect(() => {
     const storedDataAll = localStorage.getItem('srProductsData');
     const data = JSON.parse(storedDataAll);
     setVideoUrl(data.videoName);
+    console.log('videoUrlvideoUrlvideoUrl',videoUrl);
+
 
     let allProductData = JSON.parse(localStorage.getItem('allproductlist'))
 
@@ -382,8 +391,6 @@ const ProdDetail = () => {
       return;
     }
     const filteredData = storedData.filter(item => item.autocode === autoCode);
-
-    console.log('clor data........', filteredData);
     setColorImageData(filteredData)
   }
 
@@ -400,9 +407,10 @@ const ProdDetail = () => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
     const storedDataAll = localStorage.getItem('storeInit');
     const data = JSON.parse(storedDataAll);
+    setShowEcateDesign(data.IsEcatDesignset);
+
     if (data.IsColorWiseImages === 1) {
       const filteredData = colorImageData.filter(item => item.colorname.toLowerCase() === selectedColor.toLowerCase());
-      console.log('Filter Data', filteredData);
       if (filteredData.length > 0) {
         const correctedData = filteredData.map(item => {
           return {
@@ -438,7 +446,6 @@ const ProdDetail = () => {
       const selectedColor = color;
       setSelectedColor(selectedColor);
       const filteredData = colorImageData.filter(item => item.colorname.toLowerCase() === selectedColor.toLowerCase());
-      console.log('Filter Data', filteredData);
       if (filteredData.length > 0) {
         const correctedData = filteredData.map(item => {
           return {
@@ -449,7 +456,6 @@ const ProdDetail = () => {
 
         correctedData.forEach(item => {
           item.imagepath = uploadPath + '/' + data.ukey + item.imagepath;
-          console.log('Updated Path:', item.imagepath);
         });
 
         correctedData.forEach((item, index) => {
@@ -1102,8 +1108,6 @@ const ProdDetail = () => {
     catch (error) {
       console.log("error", error);
     }
-    // console.log("productsWish",prod)
-    // prod["checkFlag"] = event.target.checked
   }
 
   const handelSize = (data) => {
@@ -1141,6 +1145,7 @@ const ProdDetail = () => {
 
   const handleClick = () => {
     setIsVideoPlaying(true);
+    console.log('trrrrrrrrrrrrrrrrrrrr');
   };
 
 
@@ -1187,6 +1192,7 @@ const ProdDetail = () => {
                   zindex: -1,
                   position: "relative",
                   objectFit: "cover",
+                  padding: '10%',
                   marginLeft: "51px",
                   display: imgLoading ? "none" : "block",
                 }} />
@@ -1247,8 +1253,8 @@ const ProdDetail = () => {
 
                       {
                         videoUrl && (
-                          <div style={{ position: 'relative' }}>
-                            <video src={videoUrl} autoPlay={false} className="srthumb_images_el" style={{ position: 'absolute' }} onClick={handleClick} />
+                          <div style={{ position: 'relative' }} onClick={handleClick}>
+                            <video src={videoUrl} autoPlay={false} className="srthumb_images_el" style={{ position: 'absolute' }}  />
                             <IoIosPlayCircle className="srthumb_images_el" style={{ position: 'absolute', height: '45px', top: '10px', border: 'none' }} />
                           </div>
                         )
@@ -1297,6 +1303,15 @@ const ProdDetail = () => {
                     className="part1"
                     style={{ display: "flex", flexDirection: "column" }}
                   >
+                    <span
+                      style={{
+                        // textTransform: "uppercase",
+                        fontSize: "12px",
+                        color: "#7d7f85",
+                      }}
+                    >
+                      {productData?.designno}
+                    </span>
                     <span
                       style={{
                         // textTransform: "uppercase",
@@ -1481,7 +1496,7 @@ const ProdDetail = () => {
                         color: "#7d7f85",
                         fontSize: "12.5px",
                       }}
-                      defaultValue={diaQColOpt }
+                      defaultValue={diaQColOpt}
                       onChange={(e) => setDiaQColOpt(e.target.value)}
                     >
                       {colorData?.map((colorItem) => (
@@ -1756,36 +1771,42 @@ const ProdDetail = () => {
               </div>
             </div>
           </div>
-          {designSetList.length !== 0 && <div className='similiarBrand' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '100px', marginTop: !(productData?.OriginalImagePath) && '120px' }}>
-            <div style={{ marginBottom: '12px' }}>
-              <span style={{ fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85', fontSize: '26px' }}>Complete The Look</span>
-            </div>
-            <div style={{ border: '1px solid #e1e1e1', borderRadius: '4px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
-              {
-                designSetList?.map((dsl, i) => (
-                  <>
-                    {/* {i !== 0 && <hr style={{opacity:0.06}}/>} */}
-                    <div style={{ display: 'flex', alignItems: 'center', width: '670px', gap: '30px' }}>
-                      <div >
-                        <img src={!(dsl?.ThumbImagePath) ? notFound : dsl?.imagepath + dsl?.ThumbImagePath.split(",")[0]} alt={""} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', position: 'relative', height: '100px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', minWidth: '500px' }}>
-                          <sapn style={{ fontWeight: '500' }}>{dsl?.TitleLine}({dsl?.designno})</sapn>
-                          {/* <span></span> */}
-                          <span style={{ fontSize: '14px', color: '#888' }}>{dsl?.description}</span>
+          {(designSetList.length !== 0 && showIcateDesign === 1) &&
+            <div style={{position: 'relative', marginInline: '10%', display: 'flex',alignItems: 'center', marginBottom: '7%'}}>
+              <div className='similiarBrand' style={{backgroundColor:'white',right:'0px', position:'absolute', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '100px', marginTop: !(productData?.OriginalImagePath) && '120px' }}>
+                <div style={{ marginBottom: '12px' }}>
+                  <span style={{ fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85', fontSize: '26px' }}>Complete The Look</span>
+                </div>
+                <div style={{ border: '1px solid #e1e1e1', borderRadius: '4px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                  {
+                    designSetList?.map((dsl, i) => (
+                      <>
+                        {/* {i !== 0 && <hr style={{opacity:0.06}}/>} */}
+                        <div style={{ display: 'flex', alignItems: 'center', width: '670px', gap: '30px' }}>
+                          <div >
+                            <img src={!(dsl?.ThumbImagePath) ? notFound : dsl?.imagepath + dsl?.ThumbImagePath.split(",")[0]} alt={""} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', position: 'relative', height: '100px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', minWidth: '500px' }}>
+                              <sapn style={{ fontWeight: '500' }}>{dsl?.TitleLine}({dsl?.designno})</sapn>
+                              {/* <span></span> */}
+                              <span style={{ fontSize: '14px', color: '#888' }}>{dsl?.description}</span>
+                            </div>
+                            <div onClick={() => handelDesignSet(dsl)}>
+                              <NavigateNextRoundedIcon />
+                            </div>
+                            {(i !== designSetList.length - 1) && <div style={{ borderBottom: '1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%", }}></div>}
+                          </div>
                         </div>
-                        <div onClick={() => handelDesignSet(dsl)}>
-                          <NavigateNextRoundedIcon />
-                        </div>
-                        {(i !== designSetList.length - 1) && <div style={{ borderBottom: '1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%", }}></div>}
-                      </div>
-                    </div>
-                  </>
-                ))
-              }
+                      </>
+                    ))
+                  }
+                </div>
+              </div>
+              <img src='https://cdn.accentuate.io/3204707942500/4121939443812/Essentials%20(2).jpg?2048x1950' style={{ width: '800px' }} />
             </div>
-          </div>}
+          }
+
           <div className="Acc-container">
             <div
               style={{

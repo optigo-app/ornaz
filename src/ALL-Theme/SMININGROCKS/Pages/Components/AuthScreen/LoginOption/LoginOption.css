@@ -55,7 +55,15 @@
 }
 
 
-@media screen and (max-width: 700px) {
+
+
+@media screen and (max-width: 900px) {
+    .loginDailog{
+        margin-inline: 2%!important;
+    }
+
+}
+    @media screen and (max-width: 700px) {
 
     .loginMail{
         width: 80%!important;
@@ -64,6 +72,11 @@
     .loginMobile{
         width: 80%!important;
     }
+
+    .loginDiTile{
+        font-size: 25px;
+    }
+
 }
 
 
