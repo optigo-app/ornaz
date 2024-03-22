@@ -445,30 +445,34 @@ export default function CartPage() {
                 </div>
 
                 <CustomTabPanel value={value} index={0}>
-                    <div style={{ paddingBottom: "150px", marginTop: '10px', paddingInline: '10px' }}>
-                        {cartListData?.length === 0 ? !isLoading && (
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginTop: "150px",
-                                }}
-                            >
-                                <p style={{ margin: "0px", fontSize: "20px", fontWeight: 500 }}>
-                                    No Data Available
-                                </p>
-                                <p>Please First Add To Cart Data</p>
-                                <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
-                            </div>
-                        ) : (
-                            <div>
+                    <div style={{ paddingBottom: "150px", marginTop: '10px', paddingInline: '10px', display: 'flex' }}>
+                        <div className='smilingCartDeatilSub1'>
+                            <p>Show Data</p>
+                        </div>
+                        <div className='smilingCartDeatilSub2'>
 
-                                <div className='smilingCartPageDataMain'>
-                                    {cartListData?.map((item, index) => (
-                                        <div key={item.id} className="smiling-cartPageBoxMain">
-                                            <div className='smilingCartMobileMain' style={{ display: 'flex' }}>
+                            {cartListData?.length === 0 ? !isLoading && (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginTop: "150px",
+                                    }}
+                                >
+                                    <p style={{ margin: "0px", fontSize: "20px", fontWeight: 500 }}>
+                                        No Data Available
+                                    </p>
+                                    <p>Please First Add To Cart Data</p>
+                                    <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
+                                </div>
+                            ) : (
+                                <div>
+
+                                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                                        {cartListData?.map((item, index) => (
+                                            <div key={item.id} className="smiling-cartPageBoxMain">
                                                 <div
                                                     style={{
                                                         cursor: "pointer",
@@ -480,279 +484,48 @@ export default function CartPage() {
                                                 >
                                                     <CloseIcon />
                                                 </div>
-                                                <div className='smilingCartImage'>
-                                                    <img
-                                                        src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
-                                                        className="smiling-cartBoxImg"
-                                                        alt="#"
-                                                    />
-                                                </div>
-                                                <div className='smilingCartBox1' style={{ width: "65%", margin: "5px 20px 0px 0px" }}>
-                                                    <p className='smilingMobileCartDeatil' style={{ margin: '10px 70px 10px 10px' }}>
-                                                        <span style={{ fontWeight: 600 }}>{item.metalcolorname} {item.metaltypename}</span> with
-                                                        <span style={{ fontWeight: 600 }}> {item.Rec_NetWeight}</span> with gross wt of
-                                                        <span style={{ fontWeight: 600 }}> {item.grossweight}</span> including
-                                                        <span style={{ fontWeight: 600 }}>  {item.totalDiaWt}({item.totaldiamondpcs})</span> of daimonds in
-                                                        <span style={{ fontWeight: 600 }}> {item.diamondcolor} </span>
-                                                        {
-                                                            item.totalCSWt !== 0 && (
-                                                                <>
-                                                                    and
-                                                                    <span style={{ fontWeight: 600 }}> {item.totalCSWt}({item.totalcolorstonepcs})</span>
-                                                                </>
-                                                            )
-                                                        }
-                                                        {item.colorstonequality !== "" && (
-                                                            <>of CS in <span style={{ fontWeight: 600 }}>
-                                                                {item.colorstonequality}({item.colorstonecolor})
-                                                            </span></>
-                                                        )}
-                                                    </p>
-
-                                                    {showDropdowns[index] ? (<div>
-                                                        <div
-                                                            style={{ display: "flex", width: "100%", marginTop: "12px" }}
-                                                            className="srcolorsizecarat"
-                                                        >
-                                                            <div
-                                                                style={{
-                                                                    display: "flex",
-                                                                    flexDirection: "column",
-                                                                    width: "49.5%",
-                                                                }}
-                                                            >
-                                                                <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                                                                    SIZE:
-                                                                </label>
-                                                                <select
-                                                                    id={`sizeDropdown_${index}`}
-                                                                    style={{
-                                                                        border: "none",
-                                                                        outline: "none",
-                                                                        color: "#7d7f85",
-                                                                        fontSize: "12.5px",
-                                                                    }}
-                                                                >
-
-                                                                </select>
-                                                            </div>
-                                                            <Divider
-                                                                orientation="vertical"
-                                                                flexItem
-                                                                style={{
-                                                                    opacity: 1,
-                                                                    height: "30px",
-                                                                    margin: "10px 10px 0px 10px",
-                                                                }}
-                                                            />
-                                                            {isMetalCutoMizeFlag == 1 &&
-                                                                <div
-                                                                    style={{
-                                                                        display: "flex",
-                                                                        flexDirection: "column",
-                                                                        width: "47.5%",
-                                                                    }}
-                                                                >
-                                                                    <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                                                                        METAL COLOR:
-                                                                    </label>
-                                                                    <select
-                                                                        style={{
-                                                                            border: "none",
-                                                                            outline: "none",
-                                                                            color: "#7d7f85",
-                                                                            fontSize: "12.5px",
-                                                                        }}
-                                                                    >
-                                                                        {metalColorData.map((colorItem) => (
-                                                                            <option key={colorItem.ColorId} value={colorItem.ColorId}>
-                                                                                {colorItem.metalcolorname}
-                                                                            </option>
-                                                                        ))}
-                                                                    </select>
-                                                                </div>}
-                                                        </div>
-                                                        <Divider sx={{ marginTop: '10px', background: '#a9a7a7' }} />
-                                                        <div
-                                                            style={{ display: "flex", width: "100%", marginTop: "12px" }}
-                                                            className="srcolorsizecarat"
-                                                        >
-                                                            {isDaimondCstoFlag == 1 && <div
-                                                                style={{
-                                                                    display: "flex",
-                                                                    flexDirection: "column",
-                                                                    width: "49.5%",
-                                                                }}
-                                                            >
-                                                                <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                                                                    DAIMOND QUALITY COLOR:
-                                                                </label>
-                                                                <select
-                                                                    style={{
-                                                                        border: "none",
-                                                                        outline: "none",
-                                                                        color: "#7d7f85",
-                                                                        fontSize: "12.5px",
-                                                                    }}
-                                                                >
-                                                                    {colorData.map((colorItem) => (
-                                                                        <option key={colorItem.ColorId} value={colorItem.ColorId}>
-                                                                            {colorItem.color}
-                                                                        </option>
-                                                                    ))}
-                                                                </select>
-                                                            </div>}
-                                                            <Divider
-                                                                orientation="vertical"
-                                                                flexItem
-                                                                style={{
-                                                                    opacity: 1,
-                                                                    height: "30px",
-                                                                    margin: "0px 10px 0px 10px",
-                                                                }}
-                                                            />
-                                                            {isMetalCutoMizeFlag == 1 && <div
-                                                                style={{
-                                                                    display: "flex",
-                                                                    flexDirection: "column",
-                                                                    width: "49.5%",
-                                                                }}
-                                                            >
-                                                                <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
-                                                                    METAL TYPE:
-                                                                </label>
-                                                                <select
-                                                                    style={{
-                                                                        border: "none",
-                                                                        outline: "none",
-                                                                        color: "#7d7f85",
-                                                                        fontSize: "12.5px",
-                                                                    }}
-                                                                >
-                                                                    {metalType.map((data, index) => (
-                                                                        <option key={index}>
-                                                                            {data.metaltype}
-                                                                        </option>
-                                                                    ))}
-                                                                </select>
-                                                            </div>}
-                                                        </div>
-                                                        <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
-                                                        {isCColrStoneCustFlag == 1 && <div
-                                                            style={{
-                                                                display: "flex",
-                                                                flexDirection: "column",
-                                                                width: "48%",
-                                                            }}
-                                                        >
-                                                            <label style={{ fontSize: "12.5px", color: "#7d7f85", marginTop: '10px' }}>
-                                                                COLOR STONE QUALITY COLOR:
-                                                            </label>
-                                                            <select
-                                                                style={{
-                                                                    border: "none",
-                                                                    outline: "none",
-                                                                    color: "#7d7f85",
-                                                                    fontSize: "12.5px",
-                                                                }}
-                                                            >
-                                                                {DaimondQualityColor.map((data, index) => (
-                                                                    <option key={index}>
-                                                                        {data.color}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                        </div>}
-                                                        <button className="SmilingCustomzeSaveBtn" style={{ marginTop: '10px' }} onClick={() => handleSave(index)}>Save</button>
+                                                <img
+                                                    src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
+                                                    alt="#"
+                                                    className='cartImageShow'
+                                                />
+                                                <div className='smilingCartBox1' style={{ padding: '5px' }}>
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                        <p style={{ margin: '0px', fontSize: '12px' }}>NWT : <span style={{ fontWeight: 600 }}>{item?.MetalWeight}</span></p>
+                                                        <p style={{ margin: '0px', fontSize: '12px' }}>DWT : <span style={{ fontWeight: 600 }}>{item?.Rec_DiamondWeight} / {item?.totaldiamondpcs}</span></p>
                                                     </div>
-                                                    ) : (
-                                                        isProductCuFlag == 1 &&
-                                                        <div className="addRemkarMain">
-                                                            <button className="SmilingAddRemkarBtn" style={{ marginTop: '20px' }} onClick={() => getSizeData(item, index)}>
-                                                                Customization
-                                                            </button>
-                                                        </div>
-                                                    )}
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                        <p style={{ margin: '0px', fontSize: '12px' }}>CWT : <span style={{ fontWeight: 600, }}>{item?.Rec_CSWeight} / {item?.totalcolorstonepcs}</span></p>
+                                                        <p style={{ margin: '0px', fontSize: '12px' }}>GWT : <span style={{ fontWeight: 600 }}>{item?.grossweight}</span></p>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                                <p style={{ margin: '-40px 50px 10px 0px' }} className='smilingCartPagePrice'>{currency}{item.UnitCost === 0 ? "Not Available" : item.UnitCost} </p>
-                                            </div>
-                                            <div className='similingCartPageBotttomMain'>
-                                                <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center', marginRight: '15%' }}>
-                                                    <input
-                                                        type="text"
-                                                        style={{
-                                                            border: "0px",
-                                                            textAlign: "center",
-                                                            outline: "none",
-                                                            width: "80px",
-                                                            height: '35px',
-                                                            border: "1px solid #7d7f85",
+                                        ))}
+                                    </div>
 
-                                                        }}
-                                                        maxLength={2}
-                                                        className='simlingQualityBox'
-                                                        inputMode="numeric"
-                                                        onClick={(event) => event.target.select()}
-                                                        value={item.Quantity}
-                                                        onChange={(event) => handleInputChange(event, index)}
-                                                    />
-                                                    <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(item.designno)}>QTY</button>
-                                                </div>
-
-                                                <div className='smilingAddresingleMobileMain' style={{ display: "flex", alignItems: 'center', marginLeft: '30px' }}>
-                                                    <textarea
-                                                        type="text"
-                                                        placeholder="Enter Remarks..."
-                                                        value={item.Remarks || ""}
-                                                        onChange={(e) => {
-                                                            const updatedCartListData = [...cartListData];
-                                                            updatedCartListData[index].Remarks = e.target.value;
-                                                            setCartListData(updatedCartListData);
-                                                            setRemarks((prevRemarks) => ({
-                                                                ...prevRemarks,
-                                                                [index]: e.target.value,
-                                                            }));
-                                                        }}
-                                                        className="YourCartMainRemkarBoxSingle"
-                                                    />
-
-                                                    <button
-                                                        onClick={() => handleSubmit(index, item)}
-                                                        className="SmilingAddSingleRemkarBtn"
-                                                    >
-                                                        Add
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    ))}
+                                    <textarea
+                                        label="Enter Remarks"
+                                        variant="outlined"
+                                        placeholder="Enter Order Remark"
+                                        value={Mainremarks}
+                                        rows={4}
+                                        onChange={(e) => handleInputChangeMainRemarks(e)}
+                                        className="YourCartPageMainRemkarBox"
+                                        style={{ marginTop: "30px" }}
+                                    />
+                                    <div className="addRemkarMainBottom">
+                                        <button
+                                            onClick={submitMainRemrks}
+                                            className="SmilingAddRemkarBtn"
+                                            style={{ marginTop: '10px' }}
+                                        >
+                                            Add Order Remark
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <textarea
-                                    label="Enter Remarks"
-                                    variant="outlined"
-                                    placeholder="Enter Order Remark"
-                                    value={Mainremarks}
-                                    rows={4}
-                                    onChange={(e) => handleInputChangeMainRemarks(e)}
-                                    className="YourCartPageMainRemkarBox"
-                                    style={{ marginTop: "30px" }}
-                                />
-                                <div className="addRemkarMainBottom">
-                                    <button
-                                        onClick={submitMainRemrks}
-                                        className="SmilingAddRemkarBtn"
-                                        style={{ marginTop: '10px' }}
-                                    >
-                                        Add Order Remark
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
+                            )}
+                        </div>
                     </div>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>

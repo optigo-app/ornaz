@@ -3,13 +3,29 @@
     margin-inline: 6%;
 }
 
+
+.smilingCartDeatilSub1{
+    width: 75%;
+}
+
+.smilingCartDeatilSub2{
+    width: 25%;
+}
+
+
+
 .smiling-cartPageBoxMain {
-    width: 49%;
     border: 1px solid #ccc;
     position: relative;
     margin: 5px;
+    width: 47%;
     border-radius: 5px;
     overflow: hidden;
+}
+
+.cartImageShow{
+    width: 100%;
+    border-bottom: 1px solid #e1e1e1;
 }
 
 .smilingCartPageDataMain {
@@ -121,6 +137,7 @@
     height: 33px;
     border-bottom: 1px solid lightgray;
 }
+
 
 @media screen and (min-width: 1450px) {
     .placeOrderCartPageBtnMobile {
