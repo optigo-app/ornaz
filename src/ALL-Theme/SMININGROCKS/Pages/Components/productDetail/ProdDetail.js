@@ -1145,7 +1145,6 @@ const ProdDetail = () => {
 
   const handleClick = () => {
     setIsVideoPlaying(true);
-    console.log('trrrrrrrrrrrrrrrrrrrr');
   };
 
 
