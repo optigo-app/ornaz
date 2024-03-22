@@ -50,9 +50,9 @@ const ProductList = () => {
   const [priceDataApi, setpriceDataApi] = useRecoilState(priceData)
   const [currencySym, setCurrencySym] = useState()
 
-  const[metalRdPrice,setMetalRdPrice] = useState([])
-  const[diaRd1Price,setDiaRd1Price] = useState([])
-  const[csRd2Price,setCsRd2Price] = useState([])
+  const [metalRdPrice, setMetalRdPrice] = useState([])
+  const [diaRd1Price, setDiaRd1Price] = useState([])
+  const [csRd2Price, setCsRd2Price] = useState([])
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -83,12 +83,21 @@ const ProductList = () => {
   const dqcName = useRecoilValue(diamondQualityColorG)
   const csqcName = useRecoilValue(colorstoneQualityColorG)
   // console.log(mtName, dqcName, csqcName);
-    //RANGE FILTERS
+  //RANGE FILTERS
 
-    const [value1, setValue1] = useState([minPrice, maxPrice]);
-    const [value2, setValue2] = useState([minNetwt, maxNetwt]);
-    const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
-    const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
+  const [value1, setValue1] = useState([minPrice, maxPrice]);
+  const [value2, setValue2] = useState([minNetwt, maxNetwt]);
+  const [value3, setValue3] = useState([minGrosswt, maxGrosswt]);
+  const [value4, setValue4] = useState([minDiamondWt, maxDiamondWt]);
+
+  const [ismetalWShow, setIsMeatlWShow] = useState('');
+  const [isGrossWShow, setIsGrossShow] = useState('');
+  const [isDaaimongWShow, setIsDaaimongWShow] = useState('');
+  const [isDaaimonPShow, setIsDaaimonPShow] = useState('');
+  const [isStoneWShow, setIsStoneWShow] = useState('');
+  const [isStonePShow, setIsStonePShow] = useState('');
+  const [isMetalTCShow, setIsMetalTCShow] = useState('');
+  const [isPriceShow, setIsPriceShow] = useState('');
 
   useEffect(() => {
     setNewProData(getSearchData)
@@ -139,14 +148,14 @@ const ProductList = () => {
         let diard1 = 0;
         let csrd2 = 0;
 
-        console.log("newPriceData",newPriceData?.Z)
+        console.log("newPriceData", newPriceData?.Z)
 
         // if(newPriceData){
         //   setMetalRdPrice((prev)=>[...prev,{product["autocode"]:newPriceData?.Z}])
         // }
-        let p1=[];
-        let p2=[];
-        let p3=[];
+        let p1 = [];
+        let p2 = [];
+        let p3 = [];
 
         if (newPriceData) {
           p1.push(newPriceData)
@@ -160,7 +169,7 @@ const ProductList = () => {
           p3.push(newPriceData2)
         }
 
-        console.log("ppp",{p1,p2,p3})
+        console.log("ppp", { p1, p2, p3 })
 
         if (newPriceData || newPriceData1 || newPriceData2) {
           price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
@@ -198,66 +207,74 @@ const ProductList = () => {
 
   }
 
-  function paramnameSetting(paramVal){
-    if(paramVal === 'param0'){
+  function paramnameSetting(paramVal) {
+    if (paramVal === 'param0') {
       return getnewMenuData?.data?.param0name
     }
-    if(paramVal === 'param1'){
+    if (paramVal === 'param1') {
       return getnewMenuData?.data?.param1name
     }
-    if(paramVal === 'param2'){
+    if (paramVal === 'param2') {
       return getnewMenuData?.data?.param2name
     }
   }
 
-  function paramdataSetting(paramVal){
-    if(paramVal === 'param0'){
+  function paramdataSetting(paramVal) {
+    if (paramVal === 'param0') {
       return getnewMenuData?.data?.param0dataname
     }
-    if(paramVal === 'param1'){
+    if (paramVal === 'param1') {
       return getnewMenuData?.data?.param1dataname
     }
-    if(paramVal === 'param2'){
+    if (paramVal === 'param2') {
       return getnewMenuData?.data?.param2dataname
     }
   }
 
-  useEffect(()=>{
-      if(paramnameSetting(getnewMenuData.label) === "brand"){
-        const data = ProductApiData2.filter((pd) => pd && pd.BrandName === paramdataSetting(getnewMenuData.label))
-        if(data){
-          setNewProData(data)
-        }
+  useEffect(() => {
+    if (paramnameSetting(getnewMenuData.label) === "brand") {
+      const data = ProductApiData2.filter((pd) => pd && pd.BrandName === paramdataSetting(getnewMenuData.label))
+      if (data) {
+        setNewProData(data)
       }
+    }
 
-      if(paramnameSetting(getnewMenuData.label) === "collection"){
-        const data = ProductApiData2.filter((pd) => pd && pd.CollectionName === paramdataSetting(getnewMenuData.label))
-        if(data){
-          setNewProData(data)
-        }
+    if (paramnameSetting(getnewMenuData.label) === "collection") {
+      const data = ProductApiData2.filter((pd) => pd && pd.CollectionName === paramdataSetting(getnewMenuData.label))
+      if (data) {
+        setNewProData(data)
       }
+    }
 
-      if(paramnameSetting(getnewMenuData.label) === "category"){
+    if (paramnameSetting(getnewMenuData.label) === "category") {
 
-        const data = ProductApiData2.filter((pd) => pd && pd.CategoryName === paramdataSetting(getnewMenuData.label))
-        if(data){
-          setNewProData(data)
-        }
+      const data = ProductApiData2.filter((pd) => pd && pd.CategoryName === paramdataSetting(getnewMenuData.label))
+      if (data) {
+        setNewProData(data)
       }
+    }
 
-      if(paramnameSetting(getnewMenuData.label) === "gender"){
-        const data = ProductApiData2.filter((pd) => pd && pd.GenderName === paramdataSetting(getnewMenuData.label))
-        if(data){
-          setNewProData(data)
-        }
+    if (paramnameSetting(getnewMenuData.label) === "gender") {
+      const data = ProductApiData2.filter((pd) => pd && pd.GenderName === paramdataSetting(getnewMenuData.label))
+      if (data) {
+        setNewProData(data)
       }
-  },[getnewMenuData,ProductApiData2])
+    }
+  }, [getnewMenuData, ProductApiData2])
 
   const fetchFile = async () => {
 
     let storeinit = JSON.parse(localStorage.getItem("storeInit"))
     let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
     setIsColorWiseImage(storeinit.IsColorWiseImages);
+    setIsMeatlWShow(storeinit.IsMetalWeight);
+    setIsGrossShow(storeinit.IsGrossWeight);
+    setIsDaaimongWShow(storeinit.IsDiamondWeight);
+    setIsDaaimonPShow(storeinit.IsDiamondPcs);
+    setIsStoneWShow(storeinit.IsStoneWeight);
+    setIsStonePShow(storeinit.IsStonePcs);
+    setIsMetalTCShow(storeinit.IsMetalTypeWithColor);
+    setIsPriceShow(storeinit.IsPriceShow);
 
     await axios.get(
       `https://${storeinit?.domain}/assets/${storeinit?.FrontEnd_RegNo}/Store_Data/Productlist/Productlist_${loginInfo?.PackageId}_${storeinit?.FrontEnd_RegNo}.txt`
@@ -583,18 +600,18 @@ const ProductList = () => {
 
   let NewFilterArr = []
   for (let key in filterChecked) {
-    
+
     // if (filterChecked[key]?.checked === 'true' && filterChecked['checked'] === true) {
     if (filterChecked[key]?.checked === true) {
       NewFilterArr.push(filterChecked)
     }
   }
 
-  console.log("NewFilterArr",NewFilterArr)
+  console.log("NewFilterArr", NewFilterArr)
 
 
   // 
-  
+
 
   const getCartAndWishListData = async () => {
 
@@ -983,68 +1000,68 @@ const ProductList = () => {
   useEffect(() => {
     //level1 filter
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "collection") {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2 )
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2)
       setNewProData(data)
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "category") {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2 )
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
       setNewProData(data);
-      
+
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "gender") {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2 )
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2)
       setNewProData(data);
-      
+
     }
     if (getHeaderData2?.label1 === "collection" && getHeaderData2?.label2 === "brand") {
-      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2 )
+      let data = productData.filter((pd) => pd && pd.CollectionName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2)
       setNewProData(data);
-      
+
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "brand") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.BrandName === getHeaderData2?.value2)
       setNewProData(data);
-      
+
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "collection") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CollectionName === getHeaderData2?.value2)
       setNewProData(data);
-      
+
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "category") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.CategoryName === getHeaderData2?.value2)
       setNewProData(data);
-      
+
     }
     if (getHeaderData2?.label1 === "brand" && getHeaderData2?.label2 === "gender") {
       let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData2?.value1 && pd.GenderName === getHeaderData2?.value2)
       setNewProData(data);
-      
+
     }
 
     // level2 filter
-    if(getHeaderData?.label1 === "collection"){
-      let data = productData?.filter((pd)=>pd && pd.CollectionName === getHeaderData?.value1)
+    if (getHeaderData?.label1 === "collection") {
+      let data = productData?.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
       setNewProData(data)
-      
+
     }
-    if(getHeaderData?.label1 === "brand"){
-      let data = productData?.filter((pd)=>pd && pd.BrandName === getHeaderData?.value1)
+    if (getHeaderData?.label1 === "brand") {
+      let data = productData?.filter((pd) => pd && pd.BrandName === getHeaderData?.value1)
       setNewProData(data)
-      
+
     }
-    if(getHeaderData?.label1 === "category"){
-      let data = productData?.filter((pd)=>pd && pd.CategoryName === getHeaderData?.value1)
+    if (getHeaderData?.label1 === "category") {
+      let data = productData?.filter((pd) => pd && pd.CategoryName === getHeaderData?.value1)
       setNewProData(data)
-      
+
     }
-    if(getHeaderData?.label1 === "gender"){
-      let data = productData?.filter((pd)=>pd && pd.GenderName === getHeaderData?.value1)
+    if (getHeaderData?.label1 === "gender") {
+      let data = productData?.filter((pd) => pd && pd.GenderName === getHeaderData?.value1)
       setNewProData(data)
-      
+
     }
 
-  }, [getHeaderData2,getHeaderData])
+  }, [getHeaderData2, getHeaderData])
 
 
 
@@ -1172,7 +1189,6 @@ const ProductList = () => {
   const [hoveredImageUrls, setHoveredImageUrls] = useState({});
 
   const handleHoverImageShow = (url, index, rollPath, imagepath) => {
-
     // isColorWiseImageShow
 
     let updatedFilename = rollPath.replace(/\s/g, '_');
@@ -1645,25 +1661,47 @@ const ProductList = () => {
                             overflow: "hidden",
                             whiteSpace: "nowrap",
                             padding: '0 15px',
-                            minHeight: '19.5px'
+                            minHeight: '19.5px',
+                            margin: '3px'
                           }}
                         >
-                          {products?.TitleLine}
+                          {products?.TitleLine} -<span style={{ fontWeight: 600 }}> {products?.designno} </span>
                         </p>
                       </div>
-                      <div>
-                        <p style={{ margin: '0px', fontSize: '13px' }}>{products?.designno}</p>
+                      <div style={{}}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                          {ismetalWShow === 1 &&
+                            <div>
+                              <p style={{ margin: '0px', fontSize: '13px' }}>NWT : <span style={{ fontWeight: 600, marginRight: '15px' }}>{products?.netwt}</span></p>
+                            </div>}
+                          {isGrossWShow === 1 && <div>
+                            <p style={{ margin: '0px', fontSize: '13px' }}>GWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{products?.Grossweight}</span></p>
+                          </div>}
+                          
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                          {(isDaaimongWShow || isDaaimongWShow) === 1 && <div>
+                            <p style={{ margin: '0px', fontSize: '13px' }}>DWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{isDaaimongWShow === 1 && products?.diamondweight} / {isDaaimonPShow === 1 && products?.diamondpcs}</span></p>
+                          </div>}
+                          {(isStoneWShow || isStonePShow) === 1 && <div>
+                            <p style={{ margin: '0px', fontSize: '13px' }}>CWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{isStoneWShow === 1 && products?.totalcolorstoneweight} / {isStonePShow === 1 && products?.totalcolorstonepcs}</span></p>
+                          </div>}
+                        </div>
+                        <div>
+                          <p style={{ fontSize: "14px", fontWeight: 'bold' }}>
+                          {isMetalTCShow === 1 &&  products?.MetalTypeName}-{products?.MetalColorName}{products?.MetalPurity}
+                            {isPriceShow === 1 &&
+                              <span>
+                                /
+                                {currencySym?.Currencysymbol}
+                                {((products?.UnitCost ?? 0) + (products?.price ?? 0) + (products?.markup ?? 0)).toFixed(2)}
+                              </span>
+                            }
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p style={{ fontSize: "12px" }}>
 
-                          {/* {products?.MetalColorName} / {currencySym?.Currencysymbol}{products?.isLoading ? 'loading...' : (products?.price === 0 ? 'Not Available' : products?.price + (products?.markup === 0 ? "" : products?.markup))} */}
-                          {products?.MetalColorName}
-                          /
-                          {currencySym?.Currencysymbol}
-                          {((products?.UnitCost ?? 0) + (products?.price ?? 0) + (products?.markup ?? 0)).toFixed(2)}
-                        </p>
-                      </div>
+
 
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
                         <div>

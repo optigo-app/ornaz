@@ -106,7 +106,7 @@
     padding: 0px 10px 10px 10px;
 }
 
-.allCartdataMain{
+.allCartdataMain {
     padding-bottom: 20%;
     margin-top: 30%;
     padding-inline: 2%;
@@ -268,6 +268,7 @@
     margin: 10px;
     width: fit-content;
 }
+
 .smiling-cartBoxImg {
     width: 70%;
     margin: 0px;
@@ -556,12 +557,20 @@
     margin: 10px 70px 10px 10px;
 }
 
-.menuLabel{
+.menuLabel {
     text-transform: lowercase;
 }
 
-.menuLabel::first-letter{
+.menuLabel::first-letter {
     text-transform: uppercase;
+}
+
+.smilingNoDataCart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40% !important;
 }
 
 @media screen and (min-width:1441px) {
@@ -635,6 +644,10 @@
 }
 
 @media screen and (max-width:599px) {
+
+    .smilingNoDataCart {
+        margin-top: 300px !important;
+    }
 
     .smiling-cartBoxImg {
         width: 100% !important;
@@ -778,16 +791,27 @@
         letter-spacing: 0.5px;
     }
 
-    .smilingCartTabMain .css-1wf8b0h-MuiTabs-flexContainer{
-        width: 80%!important;
+    .smilingCartTabMain .css-1wf8b0h-MuiTabs-flexContainer {
+        width: 80% !important;
     }
 }
 
-.css-19kzrtu{
-    padding: 0px!important;
+.css-19kzrtu {
+    padding: 0px !important;
+}
+
+
+
+@media screen and (max-width: 500px) {
+    .smilingCartTabMain .css-1wf8b0h-MuiTabs-flexContainer {
+        width: 80% !important;
+        background-color: #e1e1e1c2;
+        border-radius: 10px !important;
+    }
 }
 
 @media screen and (max-width: 400px) {
+
 
     .mobileViewFirstDiv {
         width: 20% !important;
@@ -824,10 +848,10 @@
     justify-content: center;
 }
 
-.smilingCartTabMain .css-1wf8b0h-MuiTabs-flexContainer{
+.smilingCartTabMain .css-1wf8b0h-MuiTabs-flexContainer {
     width: 50%;
     background-color: #e1e1e1c2;
-    border-radius: 10px!important;
+    border-radius: 10px !important;
 }
 
 .smilingCartTabMain .MuiTabs-indicator {
@@ -851,4 +875,3 @@
 .smilingCartTab1Main .MuiButtonBase-root .MuiTab-root .MuiTab-textColorPrimary .Mui-selected {
     width: 100%;
 }
-

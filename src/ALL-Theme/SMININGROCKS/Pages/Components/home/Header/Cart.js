@@ -522,20 +522,15 @@ export default function Cart({ open, toggleCartDrawer }) {
             <CustomTabPanel value={value} index={0}>
                 <div className='allCartdataMain' >
                     {cartListData?.length === 0 ? !isLoading && (
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginTop: "150px",
-                            }}
-                        >
+                        <div className='smilingNoDataCart'>
                             <p style={{ margin: "0px", fontSize: "20px", fontWeight: 500 }}>
                                 No Data Available
                             </p>
                             <p>Please First Add To Cart Data</p>
-                            <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
+                            <button className='browseBtnMore' onClick={(event) => {
+                                toggleCartDrawer(false)(event);
+                                navigation('/productpage');
+                            }}>BROWSE OUR COLLECTION</button>
 
                         </div>
                     ) : (
@@ -821,7 +816,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 rows={4}
                                 onChange={(e) => handleInputChangeMainRemarks(e)}
                                 className="YourCartMainRemkarBox"
-                                style={{ marginTop: "30px" , paddingLeft: '10px' }}
+                                style={{ marginTop: "30px", paddingLeft: '10px' }}
                             />
                             <div className="addRemkarMain">
                                 <button
@@ -851,20 +846,16 @@ export default function Cart({ open, toggleCartDrawer }) {
             <CustomTabPanel value={value} index={1}>
                 <div style={{ paddingBottom: "150px", marginTop: '170px' }}>
                     {cartListData?.length === 0 ? !isLoading && (
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginTop: "150px",
-                            }}
-                        >
+                        <div className='smilingNoDataCart'>
                             <p style={{ margin: "0px", fontSize: "20px", fontWeight: 500 }}>
                                 No Data Available
                             </p>
                             <p>Please First Add To Cart Data</p>
-                            <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
+
+                            <button className='browseBtnMore' onClick={(event) => {
+                                toggleCartDrawer(false)(event);
+                                navigation('/productpage');
+                            }}>BROWSE OUR COLLECTION</button>
                         </div>
                     ) : (
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -890,7 +881,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 className="YourCartMainRemkarBox"
                                 style={{ marginTop: "30px", paddingLeft: '10px' }}
                             />
-                            <div className="addRemkarMain" style={{width: '100%' ,marginTop: '10px'}}>
+                            <div className="addRemkarMain" style={{ width: '100%', marginTop: '10px' }}>
                                 <button
                                     onClick={submitMainRemrks}
                                     className="SmilingAddRemkarBtn"

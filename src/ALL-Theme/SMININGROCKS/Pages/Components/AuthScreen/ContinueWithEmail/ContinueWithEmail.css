@@ -81,17 +81,35 @@
         font-size: 12px !important;
         margin-inline: 15%;
     }
+
+    .smling-forgot-main {
+        margin-inline: 2%!important;
+    }
+
+
 }
 
 @media screen and (max-width: 700px) {
     .labGrowForgot {
-        width: 80%;
+        width: 90%;
     }
 
     .submitBtnForgot {
-        width: 60%;
+        width: 50%;
         height: 50px!important;
 
     }
+   
+}
 
+@media screen and (max-width: 500px) {
+
+    .submitBtnForgot {
+        width: 70%;
+        height: 40px!important;
+    }
+
+    .AuthScreenSubTitle{
+        margin-top: -65px!important;
+    }
 }
