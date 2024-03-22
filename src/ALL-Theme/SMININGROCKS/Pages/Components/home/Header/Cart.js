@@ -452,9 +452,9 @@ export default function Cart({ open, toggleCartDrawer }) {
     }, [selectedMetalType])
 
 
-    // console.log("selectedMetalType", { selectedMetalType, selectedDiamondQualityColor, selectedColorstoneQualityColor })
-    // console.log("cartData", cartListData);
-    // console.log("DaimondQualityColor", DaimondQualityColor)
+    // console.log("selectedMetalType",{selectedMetalType,selectedDiamondQualityColor,selectedColorstoneQualityColor})
+    // console.log("cartData",cartListData);
+    // console.log("DaimondQualityColor",DaimondQualityColor)
 
     const handelSize = (selectedId) => {
         const sizeData = allSelectedSizeData.find(item => item.id === parseInt(selectedId));
