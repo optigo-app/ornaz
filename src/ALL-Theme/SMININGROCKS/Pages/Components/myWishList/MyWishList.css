@@ -165,4 +165,21 @@
     .smiWishLsitBox{
         width: 50%;
     }
+    .smiWishLsitBoxMain{
+        display: flex!important;
+        flex-wrap: nowrap!important;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .smiWishLsitBoxMain{
+        display: flex!important;
+        flex-wrap: nowrap!important;
+        flex-direction: column!important;
+    }
+
+    .smiWishLsitBox{
+        width: 100%!important;
+    }
+
 }

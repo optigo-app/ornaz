@@ -423,8 +423,16 @@ export default function CartPage() {
                                 <button className='smiTopAddAllBtn' onClick={() => handleChange(1)}>Image View</button>
                                 <button className='smiTopClearBtn' onClick={handleRemoveAllWishList}>CLEAR ALL</button>
                                 <button className='smiTopAddAllBtn' onClick={() => navigation('/productpage')}>Show ProductList</button>
+                                <button
+                                    className="placeOrderCartPageBtnMobile"
+                                    onClick={(event) => {
+                                        navigation('/Delivery');
+                                    }}
+                                >
+                                    Place Order
+                                </button>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '-50px 25px 0px 20px', paddingBottom: '50px' }}>
+                            <div className='smilingCartPagePlaceOrderBtnMainWeb' style={{ display: 'flex', justifyContent: 'flex-end', margin: '-50px 25px 0px 20px', paddingBottom: '50px' }}>
                                 <button
                                     className="placeOrderCartPageBtn"
                                     onClick={(event) => {
@@ -671,10 +679,10 @@ export default function CartPage() {
                                                 </div>
                                             </div>
                                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                                <p style={{ margin: '-40px 50px 10px 0px' }}>{currency}{item.UnitCost === 0 ? "Not Available" : item.UnitCost} </p>
+                                                <p style={{ margin: '-40px 50px 10px 0px' }} className='smilingCartPagePrice'>{currency}{item.UnitCost === 0 ? "Not Available" : item.UnitCost} </p>
                                             </div>
                                             <div className='similingCartPageBotttomMain'>
-                                                <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center',marginRight: '15%' }}>
+                                                <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center', marginRight: '15%' }}>
                                                     <input
                                                         type="text"
                                                         style={{
@@ -747,6 +755,7 @@ export default function CartPage() {
                                 </div>
                             </div>
                         )}
+
                     </div>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>

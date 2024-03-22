@@ -40,14 +40,20 @@ export default function Register() {
   };
 
   const location = useLocation();
-
   useEffect(() => {
-    const storedEmail = location.state?.email;;
+    const storedEmail = location.state?.email;
     const routeMobileNo = location.state?.mobileNo;
-
-    if (storedEmail) setEmail(storedEmail);
-    if (routeMobileNo) setMobileNo(routeMobileNo);
-  }, []);
+    
+    if (routeMobileNo) {
+      setMobileNo(routeMobileNo);
+      mobileNoRef.current.disabled = true;
+    }
+  
+    if(storedEmail) {
+      setEmail(storedEmail);
+      emailRef.current.disabled = true;
+    }
+  }, [location.state]);
 
   const handleInputChange = (e, setter, fieldName) => {
     const { value } = e.target;
@@ -214,9 +220,7 @@ export default function Register() {
     return value && value.trim() !== '';
   };
 
-  const isDefaultValueSetMobile = (value) => {
-    return value && value.trim() !== '';
-  };
+
 
   
 
@@ -237,7 +241,7 @@ export default function Register() {
             color: '#7d7f85',
             fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
           }}
-            className='AuthScreenMainTitle'
+            className='AuthScreenRegisterMainTitle'
           >Register</p>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -278,14 +282,12 @@ export default function Register() {
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
-              autoComplete="new-MobileNum" 
               value={mobileNo}
               inputRef={mobileNoRef}
               onKeyDown={(e) => handleKeyDown(e, emailRef)}
               onChange={(e) => handleInputChange(e, setMobileNo, 'mobileNo')}
               error={!!errors.mobileNo}
               helperText={errors.mobileNo}
-              disabled={isDefaultValueSetMobile(mobileNo)}
             />
 
             <TextField
@@ -301,7 +303,6 @@ export default function Register() {
               onChange={(e) => handleInputChange(e, setEmail, 'email')}
               error={!!errors.email}
               helperText={errors.email}
-              disabled={isDefaultValueSet(email)}
             />
 
             <TextField

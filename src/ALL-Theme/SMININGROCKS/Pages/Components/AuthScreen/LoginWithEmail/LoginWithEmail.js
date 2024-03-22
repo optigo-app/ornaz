@@ -29,18 +29,18 @@ export default function LoginWithEmail() {
     const setDesignList = useSetRecoilState(designSet)
 
     const setCartCount = useSetRecoilState(CartListCounts)
-  const setWishCount = useSetRecoilState(WishListCounts)
+    const setWishCount = useSetRecoilState(WishListCounts)
 
     const getCountFunc = async () => {
 
         await GetCount().then((res) => {
-          if (res) {
-            setCartCount(res.CountCart)
-            setWishCount(res.WishCount)
-          }
+            if (res) {
+                setCartCount(res.CountCart)
+                setWishCount(res.WishCount)
+            }
         })
-    
-      }
+
+    }
 
 
     let pdDataCalling = async () => {
@@ -49,8 +49,8 @@ export default function LoginWithEmail() {
         })
     }
 
-    let designDataCall = async () =>{
-        await DesignSet().then((res)=>{
+    let designDataCall = async () => {
+        await DesignSet().then((res) => {
             setDesignList(res)
         })
     }
@@ -109,7 +109,7 @@ export default function LoginWithEmail() {
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
                 pdDataCalling()
-                designDataCall()   
+                designDataCall()
                 getCountFunc()
                 navigation('/');
                 // window.location.reload(); 
@@ -167,7 +167,7 @@ export default function LoginWithEmail() {
     }
     return (
         <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
-             <ToastContainer />
+            <ToastContainer />
             {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />
@@ -230,10 +230,10 @@ export default function LoginWithEmail() {
                         />
 
                         <button className='submitBtnForgot' onClick={handleSubmit}>Login</button>
-                        <Button style={{marginTop: '10px' ,color: 'gray'}} onClick={() => navigation('/LoginOption')}>CANCEL</Button>
+                        <Button style={{ marginTop: '10px', color: 'gray' }} onClick={() => navigation('/LoginOption')}>CANCEL</Button>
 
-                        <button type='submit' className='submitBtnForgot' onClick={handleNavigation}>Login With a Code instead on email</button>
-                        <p>Go passwordless! we'll send you an email.</p>
+                        <button type='submit' className='SmilingLoginCodeBtn' onClick={handleNavigation}>Login With a Code instead on email</button>
+                        <p style={{ textAlign: 'center' }}>Go passwordless! we'll send you an email.</p>
 
                         <p style={{ color: 'blue', cursor: 'pointer' }} onClick={handleForgotPassword}>Forgot Password ?</p>
                     </div>

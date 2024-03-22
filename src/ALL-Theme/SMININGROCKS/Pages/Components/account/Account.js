@@ -137,7 +137,7 @@ export default function Account() {
                                         <Tab label="CHANGE PASSWORD" {...a11yProps(accountValidation() ? 4 : 3)} />
                                     </Tabs>
                                 </Box>
-                                <div onClick={() => alert('dddd')}>
+                                <div>
                                     <p className='smilingAccountLogoutMobile' onClick={handleLogout}>LOG OUT</p>
                                 </div>
                             </div>

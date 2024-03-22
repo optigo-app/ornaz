@@ -53,14 +53,19 @@ export default function ChangePassword() {
         }
     };
 
+    const validatePassword = (value) => {
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[^\w\d\s]).{8,}$/;
+        return passwordRegex.test(value);
+      };
+      
     const handlePasswordChange = (event) => {
         const { value } = event.target;
         setPassword(value);
-        // if (!validatePassword(value)) {
-        //     setPasswordError('Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, and one number.');
-        // } else {
-        //     setPasswordError('');
-        // }
+        if (!validatePassword(value)) {
+            setPasswordError('Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, and one number.');
+        } else {
+            setPasswordError('');
+        }
     };
 
 

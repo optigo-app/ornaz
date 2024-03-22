@@ -91,38 +91,39 @@ export default function Header() {
       param0dataid: item.param0dataid,
       param0name: item.param0name,
       param0id: item.param0id
-  }))))?.map(item => JSON.parse(item));
+    }))))?.map(item => JSON.parse(item));
 
-  let tempMenu1data = Array.from(new Set(menuData?.map(item => JSON.stringify({
+    let tempMenu1data = Array.from(new Set(menuData?.map(item => JSON.stringify({
       param1id: item.param1id,
       param1name: item.param1name,
       param1dataid: item.param1dataid,
       param1dataname: item.param1dataname
-  }))))?.map(item => JSON.parse(item));
+    }))))?.map(item => JSON.parse(item));
 
-  let tempMenu2data = Array.from(new Set(menuData?.map(item => JSON.stringify({
+    let tempMenu2data = Array.from(new Set(menuData?.map(item => JSON.stringify({
       param2id: item.param2id,
       param2name: item.param2name,
       param2dataid: item.param2dataid,
       param2dataname: item.param2dataname
-  }))))?.map(item => JSON.parse(item));
+    }))))?.map(item => JSON.parse(item));
 
     // Update states
     setMenul0data(tempMenu0data)
     setMenul1data(tempMenu1data)
     setMenul2data(tempMenu2data)
-};
+  };
 
-const handelNewMenuData = (param) =>{
-  setNewMenuData(param)
-  setIsDropdownOpen(false)
-  navigation("/productpage")
-}
+  const handelNewMenuData = (param) => {
+    setNewMenuData(param)
+    setIsDropdownOpen(false)
+    setDrawerShowOverlay(false)
+    navigation("/productpage")
+  }
 
 
-useEffect(() => {
-  separateData();
-}, []);
+  useEffect(() => {
+    separateData();
+  }, []);
 
 
   const handelmenu1 = (param) => {
@@ -222,76 +223,76 @@ useEffect(() => {
 
   const transformData = (data) => {
     const transformedData = data?.reduce((acc, item) => {
-        const existingItem = acc.find(i => i.levelid === item.levelid);
-        if (existingItem) {
-            const existingParam1 = existingItem.param1.find(p => p.param1dataid === item.param1dataid);
-            if (existingParam1) {
-                if (item.param2id) {
-                    const existingParam2 = existingParam1.param2.find(p => p.param2dataid === item.param2dataid);
-                    if (!existingParam2) {
-                        existingParam1.param2.push({
-                            param2id: item.param2id,
-                            param2name: item.param2name,
-                            param2dataid: item.param2dataid,
-                            param2dataname: item.param2dataname
-                        });
-                    }
-                }
-            } else {
-                const newParam1 = {
-                    param1id: item.param1id,
-                    param1name: item.param1name,
-                    param1dataid: item.param1dataid,
-                    param1dataname: item.param1dataname,
-                    menuname: item.menuname, // Include menuname here
-                    param2: []
-                };
-                if (item.param2id) {
-                    newParam1.param2.push({
-                        param2id: item.param2id,
-                        param2name: item.param2name,
-                        param2dataid: item.param2dataid,
-                        param2dataname: item.param2dataname
-                    });
-                }
-                existingItem.param1.push(newParam1);
+      const existingItem = acc.find(i => i.levelid === item.levelid);
+      if (existingItem) {
+        const existingParam1 = existingItem.param1.find(p => p.param1dataid === item.param1dataid);
+        if (existingParam1) {
+          if (item.param2id) {
+            const existingParam2 = existingParam1.param2.find(p => p.param2dataid === item.param2dataid);
+            if (!existingParam2) {
+              existingParam1.param2.push({
+                param2id: item.param2id,
+                param2name: item.param2name,
+                param2dataid: item.param2dataid,
+                param2dataname: item.param2dataname
+              });
             }
+          }
         } else {
-            const newItem = {
-                levelid: item.levelid,
-                menuname: item.menuname,
-                param0dataname: item.param0dataname,
-                param0dataid: item.param0dataid,
-                param0name: item.param0name,
-                param0id: item.param0id,
-                param1: []
-            };
-            if (item.param1id) {
-                const newParam1 = {
-                    param1id: item.param1id,
-                    param1name: item.param1name,
-                    param1dataid: item.param1dataid,
-                    param1dataname: item.param1dataname,
-                    menuname: item.menuname, // Include menuname here
-                    param2: []
-                };
-                if (item.param2id) {
-                    newParam1.param2.push({
-                        param2id: item.param2id,
-                        param2name: item.param2name,
-                        param2dataid: item.param2dataid,
-                        param2dataname: item.param2dataname
-                    });
-                }
-                newItem.param1.push(newParam1);
-            }
-            acc.push(newItem);
+          const newParam1 = {
+            param1id: item.param1id,
+            param1name: item.param1name,
+            param1dataid: item.param1dataid,
+            param1dataname: item.param1dataname,
+            menuname: item.menuname, // Include menuname here
+            param2: []
+          };
+          if (item.param2id) {
+            newParam1.param2.push({
+              param2id: item.param2id,
+              param2name: item.param2name,
+              param2dataid: item.param2dataid,
+              param2dataname: item.param2dataname
+            });
+          }
+          existingItem.param1.push(newParam1);
         }
-        return acc;
+      } else {
+        const newItem = {
+          levelid: item.levelid,
+          menuname: item.menuname,
+          param0dataname: item.param0dataname,
+          param0dataid: item.param0dataid,
+          param0name: item.param0name,
+          param0id: item.param0id,
+          param1: []
+        };
+        if (item.param1id) {
+          const newParam1 = {
+            param1id: item.param1id,
+            param1name: item.param1name,
+            param1dataid: item.param1dataid,
+            param1dataname: item.param1dataname,
+            menuname: item.menuname, // Include menuname here
+            param2: []
+          };
+          if (item.param2id) {
+            newParam1.param2.push({
+              param2id: item.param2id,
+              param2name: item.param2name,
+              param2dataid: item.param2dataid,
+              param2dataname: item.param2dataname
+            });
+          }
+          newItem.param1.push(newParam1);
+        }
+        acc.push(newItem);
+      }
+      return acc;
     }, []);
 
     setFinalData(transformedData);
-};
+  };
 
   const [islogin, setislogin] = useRecoilState(loginState);
   const [isB2bFlag, setIsB2BFlaf] = useState('');
@@ -516,7 +517,7 @@ useEffect(() => {
                   style={{
                     height: "30px",
                     width: "30px",
-                    color: "white",
+                    color: "black",
                     cursor: "pointer",
                   }}
                   onClick={toggleDrawerOverlay}
@@ -569,7 +570,7 @@ useEffect(() => {
                     style={{
                       height: "20px", cursor: "pointer", width: "20px",
                       color: "white",
-                      marginRight:'9px'
+                      marginRight: '9px'
                     }}
                     className="mobileViewSmilingTop2Icone"
                   />
@@ -604,8 +605,8 @@ useEffect(() => {
 
                       /> */}
                       <ShoppingCartOutlinedIcon
-                          sx={{height:'30px',width:'30px'}}
-                          />
+                        sx={{ height: '30px', width: '30px' }}
+                      />
                     </li>
                   </Tooltip>
                 </Badge>
@@ -626,13 +627,16 @@ useEffect(() => {
                   FINE JEWELLERY<span>{isOpen ? "-" : "+"}</span>
                 </p>
                 <ul className={`my-list-fineJewe ${isOpen ? "open" : ""}`}>
-                  <li>
-                    <p style={{ marginTop: "10px" }}>Ring</p>
-                    <p>Necklace</p>
-                    <p>Earrings</p>
-                    <p>Bracelets</p>
-                    <p>All Fine Jewellery</p>
-                    <p>Under $499</p>
+                  <li style={{ display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+                    {
+                      menul0data?.map((md) => (
+                        <span style={{ fontSize: '12.5px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 0.4, cursor: 'pointer' }}
+                          onClick={() => handelNewMenuData({ "label": "param0", "data": md })}
+                        >
+                          {capitalizeText(md?.menuname)}
+                        </span>
+                      ))
+                    }
                   </li>
                 </ul>
               </div>
@@ -654,29 +658,16 @@ useEffect(() => {
                   className={`my-list-fineJewe ${isOpenCollection ? "open" : ""
                     }`}
                 >
-                  <li>
-                    <p style={{ marginTop: "10px" }}>Ring</p>
-                    <p>Necklace</p>
-                    <p>Smiling Brides</p>
-                    <p>Engagement and Wedding </p>
-                    <p>Zulu- Men's Jewelry</p>
-                    <p>Frame</p>
-                    <p>Dvaita</p>
-                    <p>Love Beads</p>
-                    <p>Bands</p>
-                    <p>Flora</p>
-                    <p>Linking Love</p>
-                    <p>Flow</p>
-                    <p>Gemtastic</p>
-                    <p>Mini Huggies</p>
-                    <p>Big Heart</p>
-                    <p>Sparkle</p>
-                    <p>Drizzle</p>
-                    <p>Skyline</p>
-                    <p>Bubbly</p>
-                    <p>My Type</p>
-                    <p>Bubbly</p>
-                    <p>Bubbly</p>
+                  <li style={{ display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+                    {
+                      menul1data?.map((md) => (
+                        <span style={{ fontSize: '12.5px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 0.4, cursor: 'pointer' }}
+                          onClick={() => handelNewMenuData({ "label": "param1", "data": md })}
+                        >
+                          {capitalizeText(md?.param1dataname)}
+                        </span>
+                      ))
+                    }
                   </li>
                 </ul>
               </div>
@@ -694,36 +685,25 @@ useEffect(() => {
                 </p>
 
                 <ul className={`my-list-fineJewe ${isOpenBouti ? "open" : ""}`}>
-                  <li>
-                    <p style={{ marginTop: "10px" }}>Haute Couture</p>
-                    <p>Engagement Collection - Smiling Brides</p>
+                  <li style={{ display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+                    {
+                      menul2data?.map((md) => (
+                        <span style={{ fontSize: '12.5px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 0.4, cursor: 'pointer' }}
+                          onClick={() => handelNewMenuData({ "label": "param2", "data": md })}
+                        >
+                          {capitalizeText(md?.param2dataname)}
+                        </span>
+                      ))
+                    }
                   </li>
                 </ul>
               </div>
               <div onClick={() => { toggleDrawerOverlay(); navigation("/impact"); }}>
                 <p className="drawrTitle">IMPACT</p>
               </div>
-              {/* <div onClick={() => { toggleDrawerOverlay(); navigation("/celeb");}}>
-                <p className="drawrTitle">CELEBRITY</p>
-              </div>
-              <div onClick={() => { toggleDrawerOverlay(); navigation("/press"); }}>
-                <p className="drawrTitle">PRESS</p>
-              </div>
-              <div onClick={() => { toggleDrawerOverlay(); navigation("/blog"); }}>
-                <p className="drawrTitle">BLOG</p>
-              </div> */}
               <div onClick={() => { toggleDrawerOverlay(); navigation("/aboutUs"); }}>
                 <p className="drawrTitle">ABOUT US</p>
               </div>
-              {/* <div onClick={() => {toggleDrawerOverlay(); navigation("/labGrowDaimonds");}}>
-               <p className="drawrTitle">LAB GROWN DAIMONDS</p>
-              </div> */}
-              {/* <div onClick={() => { toggleDrawerOverlay(); navigation("/lookbook"); }}>
-                <p className="drawrTitle">LOOKBOOK</p>
-              </div> */}
-
-
-
               <div
                 style={{
                   marginTop: "20px",
@@ -955,8 +935,8 @@ useEffect(() => {
                           }}
                         /> */}
                         <ShoppingCartOutlinedIcon
-                          sx={{height:'30px',width:'30px'}}
-                          />
+                          sx={{ height: '30px', width: '30px' }}
+                        />
                       </li>
                     </Tooltip>
                   </Badge></>}
@@ -978,7 +958,7 @@ useEffect(() => {
               backgroundColor: "white",
               // flexDirection: "column",
               gap: "50px",
-              justifyContent:'space-between'
+              justifyContent: 'space-between'
             }}
             onMouseEnter={handleDropdownOpen}
             onMouseLeave={handleDropdownClose}
@@ -1037,58 +1017,58 @@ useEffect(() => {
               ))}
             </div>  */}
 
-            <div style={{display:'flex',flexDirection:'row' ,gap:'50px'}}>
-              <div style={{display:'flex',flexDirection:'column'}}>
-                <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>FINE JEWELRY</span>
-                <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px'}}>
-                 {
-                  menul0data?.map((md)=>(
-                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4,cursor:'pointer'}} 
-                    onClick={()=>handelNewMenuData({"label":"param0","data":md})}
-                    >
-                      {capitalizeText(md?.menuname)}
-                    </span>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '50px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '13px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 1, fontWeight: 600 }}>FINE JEWELRY</span>
+                <span style={{ display: 'flex', flexDirection: 'column', marginTop: '12px', gap: '5px' }}>
+                  {
+                    menul0data?.map((md) => (
+                      <span style={{ fontSize: '12.5px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 0.4, cursor: 'pointer' }}
+                        onClick={() => handelNewMenuData({ "label": "param0", "data": md })}
+                      >
+                        {capitalizeText(md?.menuname)}
+                      </span>
                     ))
                   }
                 </span>
               </div>
               <div>
-              <div style={{display:'flex',flexDirection:'column',borderLeft:'1px solid #e1e1e1',paddingLeft:'30px'}}>
-                <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>COLLECTIONS</span>
-                <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px'}}>
-                {
-                  menul1data?.map((md)=>(
-                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4,cursor:'pointer'}} 
-                    onClick={()=>handelNewMenuData({"label":"param1","data":md})}
-                    >
-                      {capitalizeText(md?.param1dataname)}
-                    </span>
-                    ))
-                  }
-                </span>
-              </div>
+                <div style={{ display: 'flex', flexDirection: 'column', borderLeft: '1px solid #e1e1e1', paddingLeft: '30px' }}>
+                  <span style={{ fontSize: '13px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 1, fontWeight: 600 }}>COLLECTIONS</span>
+                  <span style={{ display: 'flex', flexDirection: 'column', marginTop: '12px', gap: '5px' }}>
+                    {
+                      menul1data?.map((md) => (
+                        <span style={{ fontSize: '12.5px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 0.4, cursor: 'pointer' }}
+                          onClick={() => handelNewMenuData({ "label": "param1", "data": md })}
+                        >
+                          {capitalizeText(md?.param1dataname)}
+                        </span>
+                      ))
+                    }
+                  </span>
+                </div>
               </div>
               <div>
-              <div style={{display:'flex',flexDirection:'column',borderLeft:'1px solid #e1e1e1',paddingLeft:'30px',width:'130%'}}>
-                <span style={{fontSize:'13px',fontFamily:'TT Commons, sans-serif',letterSpacing:1,fontWeight:600}}>BOUTIQUE</span>
-                <span style={{display:'flex',flexDirection:'column',marginTop:'12px',gap:'5px',height:'350px',flexWrap:'wrap'}}>
-                {
-                  menul2data?.map((md)=>(
-                    <span style={{fontSize:'12.5px',fontFamily:'TT Commons, sans-serif',letterSpacing:0.4,cursor:'pointer'}} 
-                    onClick={()=>handelNewMenuData({"label":"param2","data":md})}
-                    >
-                      {capitalizeText(md?.param2dataname)}
-                    </span>
-                    ))
-                  }
-                </span>
-              </div>
+                <div style={{ display: 'flex', flexDirection: 'column', borderLeft: '1px solid #e1e1e1', paddingLeft: '30px', width: '130%' }}>
+                  <span style={{ fontSize: '13px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 1, fontWeight: 600 }}>BOUTIQUE</span>
+                  <span style={{ display: 'flex', flexDirection: 'column', marginTop: '12px', gap: '5px', height: '350px', flexWrap: 'wrap' }}>
+                    {
+                      menul2data?.map((md) => (
+                        <span style={{ fontSize: '12.5px', fontFamily: 'TT Commons, sans-serif', letterSpacing: 0.4, cursor: 'pointer' }}
+                          onClick={() => handelNewMenuData({ "label": "param2", "data": md })}
+                        >
+                          {capitalizeText(md?.param2dataname)}
+                        </span>
+                      ))
+                    }
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div style={{display:'flex',gap:'15px'}}>
-              <img src={menu2Img} alt="#" style={{height:'250px',width:'300px',objectFit:'cover'}}/>
-              <img src={menu1Img} alt="#" style={{height:'250px',width:'300px',objectFit:'cover'}}/>
+            <div style={{ display: 'flex', gap: '15px' }}>
+              <img src={menu2Img} alt="#" style={{ height: '250px', width: '300px', objectFit: 'cover' }} />
+              <img src={menu1Img} alt="#" style={{ height: '250px', width: '300px', objectFit: 'cover' }} />
             </div>
 
           </div>
@@ -1290,7 +1270,7 @@ useEffect(() => {
                             }}
                           /> */}
                           <ShoppingCartOutlinedIcon
-                          sx={{height:'30px',width:'30px'}}
+                            sx={{ height: '30px', width: '30px' }}
                           />
                         </li>
                       </Tooltip>
@@ -1352,7 +1332,7 @@ useEffect(() => {
             {islogin === "false" && (
               <li
                 className="nav-li-smining"
-                style={{ cursor: "pointer", color: 'white', marginRight: '15px' }}
+                style={{ cursor: "pointer", color: 'black', marginRight: '15px' }}
                 onClick={() => navigation('/LoginOption')}
               >
                 {LOGIN}
@@ -1423,8 +1403,8 @@ useEffect(() => {
 
                       /> */}
                       <ShoppingCartOutlinedIcon
-                          sx={{height:'30px',width:'30px'}}
-                          />
+                        sx={{ height: '30px', width: '30px' ,color: "white"}}
+                      />
                     </li>
                   </Tooltip>
                 </Badge>
@@ -1453,7 +1433,7 @@ useEffect(() => {
                     style={{
                       height: "30px",
                       width: "30px",
-                      color: "#7d7f85",
+                      color: "black",
                       cursor: "pointer",
                     }}
                     onClick={toggleDrawerOverlay}
@@ -1550,8 +1530,8 @@ useEffect(() => {
 
                         /> */}
                         <ShoppingCartOutlinedIcon
-                          sx={{height:'30px',width:'30px'}}
-                          />
+                          sx={{ height: '30px', width: '30px', color:'#7d7f85' }}
+                        />
                       </li>
                     </Tooltip>
                   </Badge>

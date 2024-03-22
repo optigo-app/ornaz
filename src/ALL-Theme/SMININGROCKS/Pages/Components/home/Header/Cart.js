@@ -61,14 +61,17 @@ export default function Cart({ open, toggleCartDrawer }) {
     const [selectedDiamondQualityColor, setSelectedDiamondQualityColor] = useState({});
     const [selectedColorstoneQualityColor, setSelectedColorstoneQualityColor] = useState({});
     const [grandTotal, setGrandTotal] = useState(0);
-
+    const [metalFilterData, setMetalFilterData] = useState([]);
+    const [daimondFilterData, setDaimondFiletrData] = useState([]);
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
     const getPriceData = useRecoilValue(priceData);
-
+    const [getAllFilterSizeData, setGetAllFilterSizeData] = useState([]);
+    const [allSelectedSizeData, setAllSelectedSizeData] = useState('');
     const navigation = useNavigate();
     // console.log("selectedMetalType", selectedMetalType)
     // console.log("grandTotal", grandTotal)
+
 
 
 
@@ -143,8 +146,9 @@ export default function Cart({ open, toggleCartDrawer }) {
             const response = await CommonAPI(body);
             if (response.Data?.rd) {
                 const sizeDropdownData = response.Data.rd;
+                setGetAllFilterSizeData(response.Data.rd1)
                 const selectElement = document.getElementById(`sizeDropdown_${index}`);
-
+                console.log('sizeDropdownDatasizeDropdownDatasizeDropdownData', sizeDropdownData);
                 if (selectElement) {
                     if (sizeDropdownData.length === 0) {
                         selectElement.innerHTML = '';
@@ -152,6 +156,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                         optionElement.text = "NO DATA AVAILABEL";
                         selectElement.add(optionElement);
                     } else {
+                        setAllSelectedSizeData(response.Data.rd)
                         selectElement.innerHTML = '';
                         sizeDropdownData.forEach(option => {
                             const optionElement = document.createElement('option');
@@ -438,18 +443,36 @@ export default function Cart({ open, toggleCartDrawer }) {
 
     // }, [selectedMetalType, selectedDiamondQualityColor, selectedColorstoneQualityColor])
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        cartListData?.forEach(()=>{
+        cartListData?.forEach(() => {
 
         })
 
-    },[selectedMetalType])
+    }, [selectedMetalType])
 
 
     // console.log("selectedMetalType",{selectedMetalType,selectedDiamondQualityColor,selectedColorstoneQualityColor})
     // console.log("cartData",cartListData);
     // console.log("DaimondQualityColor",DaimondQualityColor)
+
+    const handelSize = (selectedId) => {
+        const sizeData = allSelectedSizeData.find(item => item.id === parseInt(selectedId));
+        if (sizeData) {
+            console.log('Selected size:', sizeData.sizename);
+            const filteredData = getAllFilterSizeData?.filter(item => item.sizename === sizeData.sizename);
+            const filteredDataMetal = filteredData?.filter(item => item.DiamondStoneTypeName === "METAL");
+            const filteredDataDaimond = filteredData?.filter(item => item.DiamondStoneTypeName === "DIAMOND");
+            setMetalFilterData(filteredDataMetal);
+            setDaimondFiletrData(filteredDataDaimond);
+        }
+
+
+    }
+
+    console.log("metalFilterData", metalFilterData)
+    console.log("daimondFilterData", daimondFilterData)
+
 
     return (
         <Drawer
@@ -534,20 +557,15 @@ export default function Cart({ open, toggleCartDrawer }) {
             <CustomTabPanel value={value} index={0}>
                 <div className='allCartdataMain' >
                     {cartListData?.length === 0 ? !isLoading && (
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginTop: "150px",
-                            }}
-                        >
+                        <div className='smilingNoDataCart'>
                             <p style={{ margin: "0px", fontSize: "20px", fontWeight: 500 }}>
                                 No Data Available
                             </p>
                             <p>Please First Add To Cart Data</p>
-                            <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
+                            <button className='browseBtnMore' onClick={(event) => {
+                                toggleCartDrawer(false)(event);
+                                navigation('/productpage');
+                            }}>BROWSE OUR COLLECTION</button>
 
                         </div>
                     ) : (
@@ -618,6 +636,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                                 color: "#7d7f85",
                                                                 fontSize: "12.5px",
                                                             }}
+                                                            onChange={(e) => handelSize(e.target.value)}
                                                         >
 
                                                         </select>
@@ -683,7 +702,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                                 color: "#7d7f85",
                                                                 fontSize: "12.5px",
                                                             }}
-                                                            // defaultValue={`${item?.colorstonequality}-${item?.colorstonecolorname}`}
+                                                        // defaultValue={`${item?.colorstonequality}-${item?.colorstonecolorname}`}
                                                         >
                                                             {colorData.map((colorItem) => (
                                                                 <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
@@ -831,7 +850,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 rows={4}
                                 onChange={(e) => handleInputChangeMainRemarks(e)}
                                 className="YourCartMainRemkarBox"
-                                style={{ marginTop: "30px" , paddingLeft: '10px' }}
+                                style={{ marginTop: "30px", paddingLeft: '10px' }}
                             />
                             <div className="addRemkarMain">
                                 <button
@@ -861,20 +880,16 @@ export default function Cart({ open, toggleCartDrawer }) {
             <CustomTabPanel value={value} index={1}>
                 <div style={{ paddingBottom: "150px", marginTop: '170px' }}>
                     {cartListData?.length === 0 ? !isLoading && (
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginTop: "150px",
-                            }}
-                        >
+                        <div className='smilingNoDataCart'>
                             <p style={{ margin: "0px", fontSize: "20px", fontWeight: 500 }}>
                                 No Data Available
                             </p>
                             <p>Please First Add To Cart Data</p>
-                            <button className='browseBtnMore' onClick={() => navigation('/productpage')}>BROWSE OUR COLLECTION</button>
+
+                            <button className='browseBtnMore' onClick={(event) => {
+                                toggleCartDrawer(false)(event);
+                                navigation('/productpage');
+                            }}>BROWSE OUR COLLECTION</button>
                         </div>
                     ) : (
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -900,7 +915,7 @@ export default function Cart({ open, toggleCartDrawer }) {
                                 className="YourCartMainRemkarBox"
                                 style={{ marginTop: "30px", paddingLeft: '10px' }}
                             />
-                            <div className="addRemkarMain" style={{width: '100%' ,marginTop: '10px'}}>
+                            <div className="addRemkarMain" style={{ width: '100%', marginTop: '10px' }}>
                                 <button
                                     onClick={submitMainRemrks}
                                     className="SmilingAddRemkarBtn"
