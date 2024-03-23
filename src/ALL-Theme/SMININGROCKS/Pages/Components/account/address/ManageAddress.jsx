@@ -325,6 +325,7 @@ const ManageAddress = () => {
                     errorsCopy.city = 'City is required';
                 } else if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
                     errorsCopy.city = 'Invalid City';
+
                 } else {
                     errorsCopy.city = '';
                 }
@@ -332,9 +333,12 @@ const ManageAddress = () => {
             case 'zipCode':
                 if (!value.trim()) {
                     errorsCopy.zipCode = 'ZIP Code is required';
+                } else if (!/^\d+$/.test(value.trim())) {
+                    errorsCopy.zipCode = 'Invalid ZIP Code';
                 } else {
                     errorsCopy.zipCode = '';
                 }
+
                 break;
             case 'mobileNo':
                 if (!value.trim()) {
@@ -632,7 +636,7 @@ const ManageAddress = () => {
                             helperText={errors.mobileNo || ''}
                         />
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px', marginBottom: '30px' }}>
                                 <button type="submit" className='smilingDeleveryformSaveBtn'>
                                     {isEditMode ? 'Edit' : 'Add'}
                                 </button>

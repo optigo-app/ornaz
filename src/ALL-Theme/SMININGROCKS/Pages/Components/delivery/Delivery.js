@@ -139,7 +139,6 @@ export default function Delivery() {
             [fieldName]: value
         }));
 
-        // Validate the field
         const errorsCopy = { ...errors };
 
         switch (fieldName) {
@@ -165,16 +164,42 @@ export default function Delivery() {
                 errorsCopy.address = value.trim() ? '' : 'Address is required';
                 break;
             case 'country':
-                errorsCopy.country = value.trim() ? '' : 'Country is required';
+                if (!value.trim()) {
+                    errorsCopy.country = 'Country is required';
+                } else if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
+                    errorsCopy.country = 'Invalid Country';
+                } else {
+                    errorsCopy.country = '';
+                }
                 break;
             case 'state':
-                errorsCopy.state = value.trim() ? '' : 'State is required';
+                if (!value.trim()) {
+                    errorsCopy.state = 'State is required';
+                } else if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
+                    errorsCopy.state = 'Invalid State';
+                } else {
+                    errorsCopy.state = '';
+                }
                 break;
             case 'city':
-                errorsCopy.city = value.trim() ? '' : 'City is required';
+                if (!value.trim()) {
+                    errorsCopy.city = 'City is required';
+                } else if (!/^[a-zA-Z\s]*$/.test(value.trim())) {
+                    errorsCopy.city = 'Invalid City';
+
+                } else {
+                    errorsCopy.city = '';
+                }
                 break;
             case 'zipCode':
-                errorsCopy.zipCode = value.trim() ? '' : 'ZIP Code is required';
+                if (!value.trim()) {
+                    errorsCopy.zipCode = 'ZIP Code is required';
+                } else if (!/^\d+$/.test(value.trim())) {
+                    errorsCopy.zipCode = 'Invalid ZIP Code';
+                } else {
+                    errorsCopy.zipCode = '';
+                }
+
                 break;
             case 'mobileNo':
                 if (!value.trim()) {
@@ -518,7 +543,7 @@ export default function Delivery() {
                             helperText={errors.mobileNo || ''}
                         />
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px', marginBottom: '20px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px', marginBottom: '30px' }}>
                                 <button type="submit" className='smilingDeleveryformSaveBtn'>
                                     {isEditMode ? 'Save' : 'Add'}
                                 </button>

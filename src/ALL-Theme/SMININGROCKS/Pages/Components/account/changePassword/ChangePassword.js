@@ -132,7 +132,7 @@ export default function ChangePassword() {
                 }
                 const response = await CommonAPI(body);
 
-
+                console.log('response',response);
                 if (response.Data.rd[0].stat === 1) {
                     localStorage.setItem('LoginUser', 'false');
                     naviagation('/')

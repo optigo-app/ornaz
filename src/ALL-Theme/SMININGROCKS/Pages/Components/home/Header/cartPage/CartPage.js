@@ -669,6 +669,7 @@ export default function CartPage() {
                                                             {`${colorItem.Quality}_${colorItem.color}`}
                                                         </option>
                                                     ))}
+                                                    
                                                 </select>
                                             </div>}
 
