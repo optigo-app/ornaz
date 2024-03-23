@@ -14,7 +14,17 @@
     font-weight: 500;
 }
 
-@media screen and (max-width: 500px) {
+
+
+@media screen and (max-width: 1000px) {
+
+    .mobileEditProfileDiv{
+        display: flex!important;
+        flex-direction: column!important;
+        align-items: center!important;
+    }
+}
+    @media screen and (max-width: 500px) {
 
     .smilingEditProfilePopup {
         width: 95% !important;

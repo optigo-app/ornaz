@@ -8,7 +8,7 @@ import prodListData from "../../jsonFile/Productlist_4_95oztttesi0o50vr.json";
 import filterData from "../../jsonFile/M_4_95oztttesi0o50vr.json";
 import PriceData from "../../jsonFile/Productlist_4_95oztttesi0o50vr_8.json";
 // import PriceData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_8_Original.json";
-import { Accordion, AccordionDetails, AccordionSummary, Checkbox, Slider } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Slider } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -23,6 +23,8 @@ import notFound from "../../assets/image-not-found.png";
 import { Category } from "@mui/icons-material";
 import { toast } from "react-toastify";
 
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
 function valuetext(value) {
   return `${value}°C`;
@@ -572,28 +574,28 @@ const ProductList = () => {
     }));
   }
 
-  
+
   // console.log("NewFilterArr",NewFilterArr)
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     let FilterDataVar = [];
-    let NewFilterArr = Object?.values(filterChecked).filter((ele)=>ele?.checked === true)
-      NewFilterArr.map((ele)=>{
-        let fd = ProductApiData2.filter((pd)=>pd[ele?.type] === ele?.value)
-        if(fd){
-          FilterDataVar.push(fd)
-        }
-      })
-      if(FilterDataVar.length && FilterDataVar){
-        let reverseData = FilterDataVar.reverse()
-        const mergedArray = [].concat(...reverseData);
-        setNewProData(mergedArray)
-        console.log("FilterDataVar",mergedArray)
-      }else{
-        setNewProData(ProductApiData2)
+    let NewFilterArr = Object?.values(filterChecked).filter((ele) => ele?.checked === true)
+    NewFilterArr.map((ele) => {
+      let fd = ProductApiData2.filter((pd) => pd[ele?.type] === ele?.value)
+      if (fd) {
+        FilterDataVar.push(fd)
       }
-    
-  },[filterChecked])
+    })
+    if (FilterDataVar.length && FilterDataVar) {
+      let reverseData = FilterDataVar.reverse()
+      const mergedArray = [].concat(...reverseData);
+      setNewProData(mergedArray)
+      console.log("FilterDataVar", mergedArray)
+    } else {
+      setNewProData(ProductApiData2)
+    }
+
+  }, [filterChecked])
 
 
 
@@ -889,16 +891,16 @@ const ProductList = () => {
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "quantity": `${product?.quantity ?? "1"}`,
-          "CurrencyRate":`${product?.CurrencyRate ?? ""}`,
-          "remarks_design":`${product?.remarks_design ?? ""}`,
-          "diamondcolorid":`${product?.diamondcolorid ?? ""}`,
-          "diamondqualityid":`${product?.diamondqualityid ?? ""}`,
-          "detail_ringsize":`${product?.detail_ringsize ?? ""}`,
-          "ProjMode":`${product?.ProjMode ?? ""}`,
-          "AlbumMasterid":`${product?.AlbumMasterid ?? ""}`,
-          "AlbumMastername":`${product?.AlbumMastername ?? ""}`,
-          "Albumcode":`${product?.Albumcode ?? ""}`,
-          "Designid":`${product?.Designid ?? ""}`
+          "CurrencyRate": `${product?.CurrencyRate ?? ""}`,
+          "remarks_design": `${product?.remarks_design ?? ""}`,
+          "diamondcolorid": `${product?.diamondcolorid ?? ""}`,
+          "diamondqualityid": `${product?.diamondqualityid ?? ""}`,
+          "detail_ringsize": `${product?.detail_ringsize ?? ""}`,
+          "ProjMode": `${product?.ProjMode ?? ""}`,
+          "AlbumMasterid": `${product?.AlbumMasterid ?? ""}`,
+          "AlbumMastername": `${product?.AlbumMastername ?? ""}`,
+          "Albumcode": `${product?.Albumcode ?? ""}`,
+          "Designid": `${product?.Designid ?? ""}`
         }
 
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
@@ -1200,6 +1202,183 @@ const ProductList = () => {
     });
   };
 
+
+
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const toggleDetailDrawer = () => {
+    setIsOpenDetail(!isOpenDetail);
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      {/* <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List> */}
+
+      {isOpenDetail &&
+        <div>
+          {NewFilterData().map((ele, index) => (
+            <>
+              <Accordion
+                elevation={0}
+                sx={{
+                  borderBottom: "1px solid #c7c8c9",
+                  borderRadius: 0,
+                  marginLeft: "28px",
+                  "&.Mui-expanded": {
+                    marginLeft: "28px",
+                  },
+                  "&.MuiPaper-root.MuiAccordion-root:last-of-type": {
+                    borderBottomLeftRadius: "0px",
+                    borderBottomRightRadius: "0px",
+                  },
+                  "&.MuiPaper-root.MuiAccordion-root:before": {
+                    background: "none",
+                  },
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                  sx={{
+                    color: "#7f7d85",
+                    borderRadius: 0,
+
+                    "&.MuiAccordionSummary-root": {
+                      padding: 0,
+                    },
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "TT Commons, sans-serif",
+                      fontSize: "12px",
+                      opacity: "0.7",
+                    }}
+                  >
+                    {ele.label}
+                  </span>
+                </AccordionSummary>
+                <AccordionDetails
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "4px",
+                  }}
+                >
+                  {ele.label === "PRICE" &&
+                    <div>
+                      <Slider
+                        className='netWtSecSlider'
+                        getAriaLabel={() => 'Minimum distance'}
+                        value={value1}
+                        onChange={handleChange1}
+                        valueLabelDisplay="auto"
+                        getAriaValueText={valuetext}
+                        disableSwap
+                      />
+                    </div>}
+
+                  {ele.label === "CENTERSTONE" &&
+                    <div>
+                      <Slider
+                        className='netWtSecSlider'
+                        getAriaLabel={() => 'Minimum distance'}
+                        value={value1}
+                        onChange={handleChange1}
+                        valueLabelDisplay="auto"
+                        getAriaValueText={valuetext}
+                        disableSwap
+                      />
+                    </div>
+                  }
+
+                  {ele?.filterList?.map((flist, i) => (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px",
+                      }}
+                      key={i}
+                    >
+                      <Checkbox
+                        name={`checkbox${index + 1}${i + 1}`}
+                        checked={
+                          filterChecked[`checkbox${index + 1}${i + 1}`]
+                            ?.checked
+                        }
+                        style={{
+                          color: "#7f7d85",
+                          padding: 0,
+                          width: "10px",
+                        }}
+                        onClick={(e) =>
+                          handleCheckboxChange(e, ele, flist)
+                        }
+                        size="small"
+                      />
+                      <small
+                        style={{
+                          fontFamily: "TT Commons, sans-serif",
+                          color: "#7f7d85",
+                          textTransform: "lowercase",
+                        }}
+                      >
+                        {flist}
+                      </small>
+                    </div>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+            </>
+          ))}
+        </div>}
+    </Box>
+  );
+
   return (
     <div id="top">
 
@@ -1419,6 +1598,15 @@ const ProductList = () => {
                 <hr style={{ marginTop: "0px" }} />
                 <div style={{ display: "flex", marginInline: "15px" }}>
                   <div style={{ width: "49%" }} onClick={toggleDrawerOverlay}>
+
+                    <Drawer
+                      anchor="bottom"
+                      open={isOpenDetail}
+                      onClose={toggleDetailDrawer}
+                    >
+                      {list("bottom")}
+                    </Drawer>
+
                     <p
                       style={{
                         display: "flex",
@@ -1428,129 +1616,12 @@ const ProductList = () => {
                         fontWeight: 500,
                         margin: "0px",
                       }}
-                      onClick={toggleDeatilList}
+                      // onClick={toggleDeatilList}
+                      onClick={toggleDetailDrawer}
                     >
                       FILTER<span>{isOpenDetail ? "-" : "+"}</span>
                     </p>
-                    {isOpenDetail && <div>
-                      {NewFilterData().map((ele, index) => (
-                        <>
-                          <Accordion
-                            elevation={0}
-                            sx={{
-                              borderBottom: "1px solid #c7c8c9",
-                              borderRadius: 0,
-                              marginLeft: "28px",
-                              "&.Mui-expanded": {
-                                marginLeft: "28px",
-                              },
-                              "&.MuiPaper-root.MuiAccordion-root:last-of-type": {
-                                borderBottomLeftRadius: "0px",
-                                borderBottomRightRadius: "0px",
-                              },
-                              "&.MuiPaper-root.MuiAccordion-root:before": {
-                                background: "none",
-                              },
-                            }}
-                          >
-                            <AccordionSummary
-                              expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
-                              aria-controls="panel1-content"
-                              id="panel1-header"
-                              sx={{
-                                color: "#7f7d85",
-                                borderRadius: 0,
 
-                                "&.MuiAccordionSummary-root": {
-                                  padding: 0,
-                                },
-                              }}
-                            >
-                              <span
-                                style={{
-                                  fontFamily: "TT Commons, sans-serif",
-                                  fontSize: "12px",
-                                  opacity: "0.7",
-                                }}
-                              >
-                                {ele.label}
-                              </span>
-                            </AccordionSummary>
-                            <AccordionDetails
-                              sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "4px",
-                              }}
-                            >
-                              {ele.label === "PRICE" &&
-                                <div>
-                                  <Slider
-                                    className='netWtSecSlider'
-                                    getAriaLabel={() => 'Minimum distance'}
-                                    value={value1}
-                                    onChange={handleChange1}
-                                    valueLabelDisplay="auto"
-                                    getAriaValueText={valuetext}
-                                    disableSwap
-                                  />
-                                </div>}
-
-                              {ele.label === "CENTERSTONE" &&
-                                <div>
-                                  <Slider
-                                    className='netWtSecSlider'
-                                    getAriaLabel={() => 'Minimum distance'}
-                                    value={value1}
-                                    onChange={handleChange1}
-                                    valueLabelDisplay="auto"
-                                    getAriaValueText={valuetext}
-                                    disableSwap
-                                  />
-                                </div>
-                              }
-
-                              {ele?.filterList?.map((flist, i) => (
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "12px",
-                                  }}
-                                  key={i}
-                                >
-                                  <Checkbox
-                                    name={`checkbox${index + 1}${i + 1}`}
-                                    checked={
-                                      filterChecked[`checkbox${index + 1}${i + 1}`]
-                                        ?.checked
-                                    }
-                                    style={{
-                                      color: "#7f7d85",
-                                      padding: 0,
-                                      width: "10px",
-                                    }}
-                                    onClick={(e) =>
-                                      handleCheckboxChange(e, ele, flist)
-                                    }
-                                    size="small"
-                                  />
-                                  <small
-                                    style={{
-                                      fontFamily: "TT Commons, sans-serif",
-                                      color: "#7f7d85",
-                                      textTransform: "lowercase",
-                                    }}
-                                  >
-                                    {flist}
-                                  </small>
-                                </div>
-                              ))}
-                            </AccordionDetails>
-                          </Accordion>
-                        </>
-                      ))}
-                    </div>}
                   </div>
                   <hr
                     style={{
@@ -1605,6 +1676,7 @@ const ProductList = () => {
                     alignItems: "center",
                     flexWrap: "wrap",
                   }}
+                  className="smilingAllProductDataMainMobile"
                 >
                   {/* RollOverImageName */}
                   {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
@@ -1665,22 +1737,24 @@ const ProductList = () => {
                               <p style={{ margin: '0px', fontSize: '13px' }}>NWT : <span style={{ fontWeight: 600, marginRight: '15px' }}>{products?.netwt}</span></p>
                             </div>}
                           {isGrossWShow === 1 && <div>
+
                             <p style={{ margin: '0px', fontSize: '13px' }}>GWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{products?.Grossweight}</span></p>
                           </div>}
-                          
+
                         </div>
                         <div className="mobileDeatilDiv2" style={{ display: 'flex', justifyContent: 'center' }}>
-                          {(isDaaimongWShow || isDaaimongWShow) === 1 && <div>
-                            <p style={{ margin: '0px', fontSize: '13px' }}>DWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{isDaaimongWShow === 1 && products?.diamondweight} / {isDaaimonPShow === 1 && products?.diamondpcs}</span></p>
+                          {((isDaaimongWShow || isDaaimongWShow) === 1 && (products?.diamondweight !== 0 || products?.diamondpcs !== 0)) && <div>
+                            <p style={{ margin: '0px', fontSize: '13px' }}>DWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{(isDaaimongWShow === 1 && products?.diamondweight !== 0) && products?.diamondweight + '/'}  {(isDaaimonPShow === 1 && products?.diamondpcs !== 0) && products?.diamondpcs}</span></p>
                           </div>}
-                          {(isStoneWShow || isStonePShow) === 1 && <div>
-                            <p style={{ margin: '0px', fontSize: '13px' }}>CWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{isStoneWShow === 1 && products?.totalcolorstoneweight} / {isStonePShow === 1 && products?.totalcolorstonepcs}</span></p>
+
+                          {((isStoneWShow || isStonePShow) === 1 && (products?.totalcolorstoneweight !== 0 || products?.totalcolorstonepcs !== 0)) && <div>
+                            <p style={{ margin: '0px', fontSize: '13px' }}>CWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{(isStoneWShow === 1 && products?.totalcolorstoneweight !== 0) && products?.totalcolorstoneweight + '/'}  {(isStonePShow === 1 && products?.totalcolorstonepcs !== 0) && products?.totalcolorstonepcs}</span></p>
                           </div>}
                         </div>
-                        
+
                         <div>
                           <p style={{ fontSize: "14px", fontWeight: 'bold' }}>
-                          {isMetalTCShow === 1 &&  products?.MetalTypeName}-{products?.MetalColorName}{products?.MetalPurity}
+                            {isMetalTCShow === 1 && products?.MetalTypeName}-{products?.MetalColorName}{products?.MetalPurity}
                             {isPriceShow === 1 &&
                               <span>
                                 /

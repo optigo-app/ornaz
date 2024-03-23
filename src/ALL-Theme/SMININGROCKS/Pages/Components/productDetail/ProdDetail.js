@@ -797,16 +797,16 @@ const ProdDetail = () => {
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
           "quantity": `${product?.quantity ?? "1"}`,
-          "CurrencyRate":`${product?.CurrencyRate ?? ""}`,
-          "remarks_design":`${product?.remarks_design ?? ""}`,
-          "diamondcolorid":`${product?.diamondcolorid ?? ""}`,
-          "diamondqualityid":`${product?.diamondqualityid ?? ""}`,
-          "detail_ringsize":`${sizeOption ? (sizeOption ?? "") : (product?.detail_ringsize ?? "")}`,
-          "ProjMode":`${product?.ProjMode ?? ""}`,
-          "AlbumMasterid":`${product?.AlbumMasterid ?? ""}`,
-          "AlbumMastername":`${product?.AlbumMastername ?? ""}`,
-          "Albumcode":`${product?.Albumcode ?? ""}`,
-          "Designid":`${product?.Designid ?? ""}`
+          "CurrencyRate": `${product?.CurrencyRate ?? ""}`,
+          "remarks_design": `${product?.remarks_design ?? ""}`,
+          "diamondcolorid": `${product?.diamondcolorid ?? ""}`,
+          "diamondqualityid": `${product?.diamondqualityid ?? ""}`,
+          "detail_ringsize": `${sizeOption ? (sizeOption ?? "") : (product?.detail_ringsize ?? "")}`,
+          "ProjMode": `${product?.ProjMode ?? ""}`,
+          "AlbumMasterid": `${product?.AlbumMasterid ?? ""}`,
+          "AlbumMastername": `${product?.AlbumMastername ?? ""}`,
+          "Albumcode": `${product?.Albumcode ?? ""}`,
+          "Designid": `${product?.Designid ?? ""}`
         }
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
         const wishToCartEncData1 = btoa(JSON.stringify(wishToCartEncData));
@@ -1498,7 +1498,7 @@ const ProdDetail = () => {
                     marginTop: '20px'
                   }} />
 
-                  {isDaimondCstoFlag == 1 && <div
+                  {((isDaimondCstoFlag == 1) && (productData?.diamondweight !== 0 || productData?.diamondpcs !== 0)) && <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
@@ -1539,7 +1539,7 @@ const ProdDetail = () => {
 
                   <Divider sx={{ marginTop: '20px', background: '#a9a7a7' }} />
 
-                  {isCColrStoneCustFlag == 1 && <div
+                  {((isCColrStoneCustFlag === 1) && (productData?.totalcolorstonepcs !== 0 || productData?.totalcolorstoneweight !== 0)) && <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
@@ -1548,7 +1548,7 @@ const ProdDetail = () => {
 
                     }}
                   >
-                    <label style={{ fontSize: "12.5px", color: "#7d7f85", marginTop: '10px' }}>
+                    <label style={{ fontSize: "12.5px", color: "#7d7f85"}}>
                       COLOR STONE:
                     </label>
                     <select
@@ -1576,7 +1576,7 @@ const ProdDetail = () => {
                         display: "flex",
                         flexDirection: "column",
                         width: '45%',
-                        marginTop: '10px'
+                        marginTop: '20px'
                       }}
                     >
                       <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
@@ -1687,7 +1687,7 @@ const ProdDetail = () => {
                     marginTop: '20px'
                   }} />
 
-                  {isDaimondCstoFlag == 1 && <div
+                  {((isDaimondCstoFlag == 1) && (productData?.diamondweight !== 0 || productData?.diamondpcs !== 0)) && <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
@@ -1720,33 +1720,34 @@ const ProdDetail = () => {
                     marginTop: '20px'
                   }} />
 
-                  {isCColrStoneCustFlag == 1 && <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      marginTop: '20px'
-                    }}
-                  >
-                    <label style={{ fontSize: "12.5px", color: "#7d7f85", marginTop: '10px' }}>
-                      COLOR STONE:
-                    </label>
-                    <select
+                  {((isCColrStoneCustFlag === 1) && (productData?.totalcolorstonepcs !== 0 || productData?.totalcolorstoneweight !== 0)) &&
+                    <div
                       style={{
-                        border: "none",
-                        outline: "none",
-                        color: "#7d7f85",
-                        fontSize: "12.5px",
+                        display: "flex",
+                        flexDirection: "column",
+                        marginTop: '20px'
                       }}
-                      onChange={(e) => setCSQOpt(e.target.value)}
-                      defaultValue={cSQopt}
                     >
-                      {DaimondQualityColor.map((data, index) => (
-                        <option key={index} value={`${data.Quality}-${data.color}`} >
-                          {`${data.Quality}-${data.color}`}
-                        </option>
-                      ))}
-                    </select>
-                  </div>}
+                      <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                        COLOR STONE:
+                      </label>
+                      <select
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          color: "#7d7f85",
+                          fontSize: "12.5px",
+                        }}
+                        onChange={(e) => setCSQOpt(e.target.value)}
+                        defaultValue={cSQopt}
+                      >
+                        {DaimondQualityColor.map((data, index) => (
+                          <option key={index} value={`${data.Quality}-${data.color}`} >
+                            {`${data.Quality}-${data.color}`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>}
 
                   <Divider sx={{
                     marginTop: '20px', background: '#a9a7a7',
@@ -1758,7 +1759,7 @@ const ProdDetail = () => {
                       style={{
                         display: "flex",
                         flexDirection: "column",
-                        marginTop: '10px'
+                        marginTop: '20px'
                       }}
                     >
                       <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
