@@ -81,7 +81,7 @@ export default function CartPage() {
   const [mtrdData, setMtrdData] = useState([]);
   const [dqcData, setDqcData] = useState([]);
   const [csqcData, setCsqcData] = useState([]);
-  const [selectedColor,setSelectedColor] = useState()
+  const [selectedColor, setSelectedColor] = useState()
 
   const setCartCount = useSetRecoilState(CartListCounts);
   const setWishCount = useSetRecoilState(WishListCounts);
@@ -90,14 +90,14 @@ export default function CartPage() {
   const navigation = useNavigate();
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
 
-  useEffect(()=>{
+  useEffect(() => {
 
-      if(!cartListData && cartListData.length === 0){
-          setProdSelectData();
-          setCartSelectData();
-      }
+    if (!cartListData && cartListData.length === 0) {
+      setProdSelectData();
+      setCartSelectData();
+    }
 
-  },[])
+  }, [])
 
 
   const getCountFunc = async () => {
@@ -153,7 +153,7 @@ export default function CartPage() {
     if (csqcpirce && csqcpirce.length > 0) {
       setCsqcData(csqcpirce[0] ?? []);
     }
-  }, [mtTypeOption, diaQColOpt, cSQopt, cartSelectData,getPriceData]);
+  }, [mtTypeOption, diaQColOpt, cSQopt, cartSelectData, getPriceData]);
 
   useEffect(() => {
     // let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
@@ -350,9 +350,7 @@ export default function CartPage() {
     }
   };
 
-  const [remarks, setRemarks] = useState({});
   const [Mainremarks, setMainRemarks] = useState("");
-
   const handleInputChangeMainRemarks = (e) => {
     setMainRemarks(e.target.value);
   };
@@ -389,19 +387,25 @@ export default function CartPage() {
     }
   };
 
-  const handleSubmit = async (index, data) => {
-    const remark = remarks[index];
-    if (!remark || remark.trim() === "") {
+
+  const [remarks, setRemarks] = useState(cartSelectData?.Remarks || '');
+  const handleInputChangeRemarks = (event, index) => {
+    let { value } = event.target;
+    setRemarks(value);
+  };
+
+  const handleSubmit = async (data) => {
+    if (!remarks || remarks.trim() === "") {
       toast.error("Enter a value for remarks.");
     } else {
       try {
-        setIsLoading(true);
+        // setIsLoading(true);
         const storeInit = JSON.parse(localStorage.getItem("storeInit"));
         const { FrontEnd_RegNo } = storeInit;
         const combinedValue = JSON.stringify({
           designno: `${data.designno}`,
           autocode: `${data.autocode}`,
-          remarks: `${remark}`,
+          remarks: `${remarks}`,
           FrontEnd_RegNo: `${FrontEnd_RegNo}`,
           Customerid: `${customerID}`,
         });
@@ -413,10 +417,6 @@ export default function CartPage() {
         };
         const response = await CommonAPI(body);
         if (response.Data.rd[0].stat === 1) {
-          // setRemarks(prevRemarks => ({
-          //   ...prevRemarks,
-          //   [index]: ''
-          // }));
           toast.success("Add remark successfully");
         } else {
           alert("Error");
@@ -429,54 +429,45 @@ export default function CartPage() {
     }
   };
 
-  const [lastEnteredQuantityIndex, setLastEnteredQuantityIndex] =
-    useState(null);
-  const [lastEnteredQuantity, setLastEnteredQuantity] = useState("");
+  const [lastEnteredQuantity, setLastEnteredQuantity] = useState(cartSelectData?.Quantity || "");
+  useEffect(() => {
+    setLastEnteredQuantity(cartSelectData?.Quantity || "");
+  }, [cartSelectData]);
 
-  const handleInputChange = (event, index) => {
+  const handleInputChange = (event) => {
     let { value } = event.target;
-    if (index >= 0 && index < cartListData.length) {
-      value = value.replace(/\D|^0+/g, "");
-      const updatedCartList = [...cartListData];
-      updatedCartList[index] = { ...updatedCartList[index], Quantity: value };
-      setCartListData(updatedCartList);
-      setLastEnteredQuantityIndex(index);
-      setLastEnteredQuantity(value);
-    }
+    setLastEnteredQuantity(value);
   };
 
+
   const handleUpdateQuantity = async (num) => {
-    if (lastEnteredQuantity.length === 0) {
-      toast.error("change the value first");
-    } else {
-      try {
-        const updatedQuantity = cartListData[lastEnteredQuantityIndex].Quantity;
-        const firstItemQuantity =
-          cartListData.length > 0 ? cartListData[0].Quantity : null;
-        const storeInit = JSON.parse(localStorage.getItem("storeInit"));
-        const { FrontEnd_RegNo } = storeInit;
-        const combinedValue = JSON.stringify({
-          designno: `${num}`,
-          Quantity: `${updatedQuantity}`,
-          FrontEnd_RegNo: `${FrontEnd_RegNo}`,
-          Customerid: `${customerID}`,
-        });
-        const encodedCombinedValue = btoa(combinedValue);
-        const body = {
-          con: `{\"id\":\"\",\"mode\":\"UpdateQuantity\",\"appuserid\":\"${userEmail}\"}`,
-          f: "header (handleUpdateQuantity)",
-          p: encodedCombinedValue,
-        };
-        const response = await CommonAPI(body);
-        if (response.Data.rd[0].stat === 1) {
-          toast.success("QTY change successfully");
-        } else {
-          alert("Error");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
+    try {
+      const storeInit = JSON.parse(localStorage.getItem("storeInit"));
+      const { FrontEnd_RegNo } = storeInit;
+      const combinedValue = JSON.stringify({
+        designno: `${num}`,
+        Quantity: `${lastEnteredQuantity}`,
+        FrontEnd_RegNo: `${FrontEnd_RegNo}`,
+        Customerid: `${customerID}`,
+      });
+      console.log('combinedValuecombinedValuecombinedValue',combinedValue);
+
+      const encodedCombinedValue = btoa(combinedValue);
+      const body = {
+        con: `{\"id\":\"\",\"mode\":\"UpdateQuantity\",\"appuserid\":\"${userEmail}\"}`,
+        f: "header (handleUpdateQuantity)",
+        p: encodedCombinedValue,
+      };
+      const response = await CommonAPI(body);
+      console.log('resssssssss',response);
+      if (response.Data.rd[0].stat === 1) {
+        toast.success("QTY change successfully");
+      } else {
+        alert("Error");
       }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
     }
   };
 
@@ -599,6 +590,8 @@ export default function CartPage() {
     //       }
     //     }
   };
+
+  console.log('cartSelectDatacartSelectData', cartSelectData);
 
   return (
     <div
@@ -734,12 +727,12 @@ export default function CartPage() {
                           fontFamily: "FreightDisp Pro Medium",
                           color: "#7d7f85",
                           lineHeight: "40px",
-                          marginBottom:'14px'
+                          marginBottom: '14px'
                         }}
                       >
                         {prodSelectData?.TitleLine}
                       </div>
-                      
+
                       {/* <Divider
                         sx={{
                           margin: "12px",
@@ -747,7 +740,7 @@ export default function CartPage() {
                           marginLeft: "-5px",
                         }}
                       /> */}
-                      <div style={{borderTop:'1px solid #e1e1e1',marginInline:'-10px',padding:'20px'}}>
+                      <div style={{ borderTop: '1px solid #e1e1e1', marginInline: '-10px', padding: '20px' }}>
                         <div
                           style={{
                             display: "flex",
@@ -777,7 +770,7 @@ export default function CartPage() {
                                 }}
                                 value={selectedColor}
                                 onChange={(e) =>
-                                    setSelectedColor(e.target.value)
+                                  setSelectedColor(e.target.value)
                                 }
                               >
                                 {metalColorData.map((colorItem) => (
@@ -916,68 +909,99 @@ export default function CartPage() {
                         {(sizeData?.length !== 0 ||
                           (productData?.DefaultSize &&
                             productData.DefaultSize.length !== 0)) && (
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              width: "49%",
-                              marginTop: "30px",
-                            }}
-                          >
-                            <label
-                              style={{ fontSize: "12.5px", color: "#7d7f85" }}
-                            >
-                              SIZE:
-                            </label>
-                            <select
+                            <div
                               style={{
-                                border: "none",
-                                outline: "none",
-                                color: "#7d7f85",
-                                fontSize: "12.5px",
+                                display: "flex",
+                                flexDirection: "column",
+                                width: "49%",
+                                marginTop: "30px",
                               }}
-                              onChange={(e) => handelSize(e.target.value)}
-                              defaultValue={
-                                productData && productData.DefaultSize
-                                  ? productData.DefaultSize
-                                  : sizeData.find(
+                            >
+                              <label
+                                style={{ fontSize: "12.5px", color: "#7d7f85" }}
+                              >
+                                SIZE:
+                              </label>
+                              <select
+                                style={{
+                                  border: "none",
+                                  outline: "none",
+                                  color: "#7d7f85",
+                                  fontSize: "12.5px",
+                                }}
+                                onChange={(e) => handelSize(e.target.value)}
+                                defaultValue={
+                                  productData && productData.DefaultSize
+                                    ? productData.DefaultSize
+                                    : sizeData.find(
                                       (size) => size.IsDefaultSize === 1
                                     )?.id
-                              }
-                            >
-                              {sizeData?.map((size) => (
-                                <option
-                                  key={size.id}
-                                  value={size.sizename} // Pass sizename as value
-                                  selected={
-                                    productData &&
-                                    productData.DefaultSize === size.sizename
-                                  }
-                                >
-                                  {size.sizename}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        )}
+                                }
+                              >
+                                {sizeData?.map((size) => (
+                                  <option
+                                    key={size.id}
+                                    value={size.sizename} // Pass sizename as value
+                                    selected={
+                                      productData &&
+                                      productData.DefaultSize === size.sizename
+                                    }
+                                  >
+                                    {size.sizename}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          )}
                       </div>
-                      {/* <button className='newBtn'> Customize</button>
-                                    <button className='newBtn'> Remark</button> */}
                     </div>
-                    {/* <Divider
-                        sx={{
-                          margin: " 20px 0px",
-                          backgroundColor: "#e1e1e1",
-                          marginLeft: "-5px",
-                        }}
-                      /> */}
-                    <div style={{ marginTop: "20px",color: "#7d7f85", fontSize: "14px"}}>
-                      Price : <span style={{fontWeight:'500', fontSize: "16px"}}>{currencySymbol?.Currencysymbol}{(cartSelectData?.UnitCost +( mtrdData?.Z ?? 0) + (dqcData?.S ?? 0) + (csqcData?.S ?? 0)).toFixed(2)}</span>
+                    <div style={{ marginTop: "20px", color: "#7d7f85", fontSize: "14px" }}>
+                      Price : <span style={{ fontWeight: '500', fontSize: "16px" }}>{currencySymbol?.Currencysymbol}{(cartSelectData?.UnitCost + (mtrdData?.Z ?? 0) + (dqcData?.S ?? 0) + (csqcData?.S ?? 0)).toFixed(2)}</span>
+                    </div>
+                    <div className='similingCartPageBotttomMain'>
+                      <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center'}}>
+                        <input
+                          type="text"
+                          style={{
+                            border: "0px",
+                            textAlign: "center",
+                            outline: "none",
+                            width: "80px",
+                            height: '35px',
+                            border: "1px solid #7d7f85",
+
+                          }}
+                          maxLength={2}
+                          className='simlingQualityBox'
+                          inputMode="numeric"
+                          onClick={(event) => event.target.select()}
+                          value={lastEnteredQuantity}
+                          onChange={(event) => handleInputChange(event)}
+                        />
+                        <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(prodSelectData?.designno)}>QTY</button>
+                      </div>
+
+                      <div className='smilingAddresingleMobileMain' style={{ display: "flex", alignItems: 'center', marginLeft: '30px' }}>
+                        <textarea
+                          type="text"
+                          placeholder="Enter Remarks..."
+                          value={remarks}
+                          onChange={(event) => handleInputChangeRemarks(event)}
+                          className="YourCartMainRemkarBoxSingle"
+                        />
+                        <button
+                          onClick={() => handleSubmit(cartSelectData)}
+                          className="SmilingAddSingleRemkarBtn"
+                        >
+                          Add
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             )}
+
 
             <div className="smilingCartDeatilSub2">
               {cartListData?.length === 0 ? (
