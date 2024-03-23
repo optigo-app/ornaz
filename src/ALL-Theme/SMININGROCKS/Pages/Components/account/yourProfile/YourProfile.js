@@ -87,7 +87,7 @@ export default function YourProfile() {
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     {userData && (
                         <>
-                            <div>
+                            <div className='mobileEditProfileDiv'>
                                 <TextField
                                     autoFocus
                                     id="defaddress_shippingfirstname"
@@ -110,7 +110,7 @@ export default function YourProfile() {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div>
+                            <div className='mobileEditProfileDiv'>
                                 <TextField
                                     id="userid"
                                     label="Email"
@@ -132,7 +132,7 @@ export default function YourProfile() {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div>
+                            <div className='mobileEditProfileDiv'>
                                 <TextField
                                     id="defaddress_street"
                                     label="Address"
@@ -148,7 +148,7 @@ export default function YourProfile() {
                     )}
                 </div>
                 <div>
-                    <button onClick={handleEdit} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' }}>Edit Address</button>
+                    <button onClick={handleEdit} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' ,marginTop: '15px' }}>Edit Profile</button>
                 </div>
             </div>
 
@@ -158,7 +158,7 @@ export default function YourProfile() {
             >
                 <div className='smilingEditProfilePopup' style={{ position: 'absolute', backgroundColor: 'white', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 450, boxShadow: 24, p: 4 }}>
                     <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-                        <h2 style={{ marginBlock: '20px', textAlign: 'center' }}>Edit Address</h2>
+                        <h2 style={{ marginTop: '30px', textAlign: 'center' }}>Edit Profile</h2>
                         {editedUserData && (
                             <>
                                 <TextField
@@ -204,7 +204,7 @@ export default function YourProfile() {
                             </>
                         )}
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', marginBlock: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', marginBottom: '25px' }}>
                         <button onClick={handleSave} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' ,marginInline: '5px' }}>Save</button>
                         <button onClick={() => setEditMode(false)} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' }}>Cancel</button>
                     </div>

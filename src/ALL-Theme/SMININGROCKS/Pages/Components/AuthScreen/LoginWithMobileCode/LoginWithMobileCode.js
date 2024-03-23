@@ -79,7 +79,7 @@ export default function LoginWithMobileCode() {
                 localStorage.setItem('registerMobile', mobileNo);
                 navigation('/');
             } else {
-                errors.mobileNo = 'Code is Invalid'
+                setErrors(prevErrors => ({ ...prevErrors, otp: 'Invalid Code' }));
             }
         } catch (error) {
             console.error('Error:', error);
