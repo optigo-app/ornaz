@@ -90,15 +90,19 @@ export default function CartPage() {
   const navigation = useNavigate();
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
 
-  useEffect(()=>{
-
-      if(!cartListData && cartListData.length === 0){
-          setProdSelectData();
-          setCartSelectData();
-      }
-
-  },[])
-
+  console.log("cartdata",prodSelectData,cartSelectData);
+  
+//   const handelCartSelectData = () =>{
+//       if(!cartListData){
+//           setProdSelectData([]);
+//           setCartSelectData([]);
+          
+//         }
+//     }
+    
+    // useEffect(()=>{
+    //   handelCartSelectData()
+    // },[cartListData])
 
   const getCountFunc = async () => {
     await GetCount().then((res) => {
@@ -114,7 +118,7 @@ export default function CartPage() {
       setCartSelectData(cartListData[0]);
       getSizeData(cartListData[0]?.autocode);
     }
-  }, [cartListData]);
+  }, [cartListData,cartSelectData]);
 
 
   useEffect(() => {
@@ -156,8 +160,6 @@ export default function CartPage() {
   }, [mtTypeOption, diaQColOpt, cSQopt, cartSelectData,getPriceData]);
 
   useEffect(() => {
-    // let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
-    // let ColorStoneQualityColor = JSON.parse(localStorage.getItem("ColorStoneQualityColor"))
     setmtTypeOption(cartSelectData?.metal);
 
     let qualityColor = `${cartSelectData?.diamondquality}_${cartSelectData?.diamondcolor}`;
@@ -168,19 +170,8 @@ export default function CartPage() {
 
     setSelectedColor(cartSelectData?.metalcolorname)
 
-    // let dqcc = ColorStoneQualityColor?.find((dqc) => `${dqc.Quality}-${dqc.color}` === cartSelectData?.)
+  }, [cartSelectData])
 
-    // if (dqcc) {
-    //     setCSQOpt(csQualColor)
-    // } else {
-    //     let ref = `${ColorStoneQualityColor[0].Quality}-${ColorStoneQualityColor[0].color}`
-    //     setCSQOpt(ref)
-    // }
-
-    // setSizeOption(sizeData[1]?.id)
-
-
-  }, [cartSelectData]);
 
   useEffect(() => {
     getCountFunc();
@@ -523,41 +514,43 @@ export default function CartPage() {
   };
 
   useEffect(() => {
-    const prodData = JSON.parse(localStorage.getItem("allproductlist"));
+    const prodData = JSON.parse(localStorage.getItem("allproductlist"))
 
-    let isCartData = cartSelectData ? cartSelectData : cartListData[0];
+    console.log("cartListData",cartListData);
+
+    let isCartData = cartSelectData ? cartSelectData : cartListData[0]
 
     const finalProdData = prodData.filter(
       (pd) =>
         pd?.designno === isCartData?.designno &&
         pd?.autocode === isCartData?.autocode
-    )[0];
+    )[0]
 
     if (finalProdData) {
-      setProdSelectData(finalProdData);
+      setProdSelectData(finalProdData)
     }
-  }, [cartSelectData, cartListData]);
+  }, [cartSelectData, cartListData])
 
 
-  const [sizeMarkup, setSizeMarkup] = useState();
+  const [sizeMarkup, setSizeMarkup] = useState()
 
   const handelSize = (data) => {
-    const selectedSize = sizeData.find((size) => size.sizename === data);
+    const selectedSize = sizeData.find((size) => size.sizename === data)
     if (selectedSize) {
       setSizeMarkup(selectedSize?.MarkUp);
     }
     setSizeOption(data);
     const filteredData = getAllFilterSizeData?.filter(
       (item) => item.sizename === data
-    );
+    )
     const filteredDataMetal = filteredData?.filter(
       (item) => item.DiamondStoneTypeName === "METAL"
-    );
+    )
     const filteredDataDaimond = filteredData?.filter(
       (item) => item.DiamondStoneTypeName === "DIAMOND"
-    );
-    setMetalFilterData(filteredDataMetal);
-    setDaimondFiletrData(filteredDataDaimond);
+    )
+    setMetalFilterData(filteredDataMetal)
+    setDaimondFiletrData(filteredDataDaimond)
   };
 
   const handleColorSelection = (color) => {
@@ -598,7 +591,7 @@ export default function CartPage() {
     //         setSelectedImagePath('');
     //       }
     //     }
-  };
+  }
 
   return (
     <div
@@ -694,8 +687,8 @@ export default function CartPage() {
               display: "flex",
             }}
           >
-            {!isLoading && prodSelectData && cartSelectData && (
-              <div className="smilingCartDeatilSub1">
+            {!isLoading && (
+              <div className="smilingCartDeatilSub1" style={{display:!prodSelectData && !cartSelectData && 'none'}}>
                 <div
                   style={{
                     width: "100%",
@@ -1032,12 +1025,15 @@ export default function CartPage() {
                           style={{
                             cursor: "pointer",
                             position: "absolute",
-                            right: "15px",
-                            top: "10px",
+                            right: "0px",
+                            top: "0px",
+                            backgroundColor:'black',
+                            borderRadius:'2px',
+                            opacity:'0.8'
                           }}
                           onClick={() => handleRemove(item)}
                         >
-                          <CloseIcon />
+                          <CloseIcon sx={{color:'white',fontSize:'22px'}} />
                         </div>
                         <img
                           src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
