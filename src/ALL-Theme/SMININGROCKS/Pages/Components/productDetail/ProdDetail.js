@@ -267,6 +267,8 @@ const ProdDetail = () => {
       ele?.D === mtTypeOption
     );
 
+    console.log("mtrddetail",mtrd);
+
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
       showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
@@ -437,6 +439,9 @@ const ProdDetail = () => {
     }
 
   }, [selectedColor])
+
+
+  console.log("selectedcolor",selectedColor);
 
   const handleColorSelection = (color) => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
@@ -743,7 +748,7 @@ const ProdDetail = () => {
           "IsTrending": Number(`${product?.IsTrending}`),
           "MasterManagement_labid": Number(`${product?.MasterManagement_labid}`),
           "MasterManagement_labname": "",
-          "MetalColorName": `${product?.MetalColorName}`,
+          "MetalColorName": `${selectedColor ?? product?.MetalColorName}`,
           "MetalColorid": Number(`${product?.MetalColorid}`),
           "MetalPurity": `${mtTypeOption ? (mtTypeOption?.split(' ')[1]) : product?.MetalPurity}`,
           "MetalPurityid": Number(`${product?.MetalTypeid}`),
@@ -760,10 +765,10 @@ const ProdDetail = () => {
           "ThemeName": `${product?.ThemeName ?? ""}`,
           "Themeid": Number(`${product?.Themeid}`),
           "TitleLine": `${product?.TitleLine}`,
-          // "UnitCost": `${grandTotal ? grandTotal : (product?.price === "Not Available" ? 0 : product?.price)}`,
-          "UnitCost": `${(product?.UnitCost + mtrdData?.Z + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)).toFixed(2)}`,
+          "UnitCost": `${product?.UnitCost ?? 0}`,
+          // "UnitCost": `${(product?.UnitCost + mtrdData?.Z + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)).toFixed(2)}`,
           // "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
-          "UnitCostWithmarkup": (`${(product?.UnitCost + mtrdData?.Z + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)).toFixed(2) + (product?.markup ?? 0)}`),
+          "UnitCostWithmarkup": (`${(product?.UnitCost ?? 0) + (product?.markup ?? 0)}`),
           "colorstonecolorname": `${cSQopt ? cSQopt?.split('-')[1] : product?.colorstonecolorname}`,
           "colorstonequality": `${cSQopt ? cSQopt?.split('-')[0] : product?.colorstonequality}`,
           // "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
