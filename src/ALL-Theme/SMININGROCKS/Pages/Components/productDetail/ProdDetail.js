@@ -69,10 +69,12 @@ const ProdDetail = () => {
   const [mtrdData, setMtrdData] = useState([])
   const [dqcData, setDqcData] = useState([])
   const [csqcData, setCsqcData] = useState([])
+  const [getPriceData, setGetPriceData] = useState([])
+
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
-  const getPriceData = useRecoilValue(priceData);
+  // const getPriceData = useRecoilValue(priceData);
   const getDesignSet = useRecoilValue(designSet)
   const handelImgLoad = () => {
     setImgLoading(false)
@@ -80,6 +82,13 @@ const ProdDetail = () => {
 
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
   let navigate = useNavigate()
+
+  useEffect(()=>{
+    const data = JSON.parse(localStorage.getItem("getPriceData"))
+    setGetPriceData(data)
+  },[])
+
+
 
   useEffect(() => {
 
@@ -246,7 +255,7 @@ const ProdDetail = () => {
     if (metalFilterData && metalFilterData.length) {
 
       let CalcNetwt = (srProductsData?.netwt ?? 0) + (metalFilterData?.Weight ?? 0)
-      console.log("CalcNetwt", CalcNetwt)
+      // console.log("CalcNetwt", CalcNetwt)
 
       let fprice = (mtrdData?.AD * CalcNetwt) + (mtrdData?.AC * CalcNetwt)
 
@@ -261,14 +270,16 @@ const ProdDetail = () => {
   useEffect(() => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
 
+  console.log("getPriceDatagetPriceData",getPriceData)
+    
     let mtrd = getPriceData?.rd?.filter((ele) =>
-      ele?.A === srProductsData?.autocode &&
-      ele?.B === srProductsData?.designno &&
-      ele?.D === mtTypeOption
+    ele?.A === srProductsData?.autocode &&
+    ele?.B === srProductsData?.designno &&
+    ele?.D === mtTypeOption
     );
-
-
-
+    
+    
+    // console.log("call11",getPriceData);
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
       showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
@@ -310,7 +321,7 @@ const ProdDetail = () => {
     let gt = showPrice + showPrice1 + showPrice2;
     setGrandTotal(gt ?? 0);
 
-  }, [mtTypeOption, diaQColOpt, cSQopt])
+  }, [getPriceData,mtTypeOption, diaQColOpt, cSQopt])
 
 
   useEffect(()=>{
@@ -338,9 +349,9 @@ const ProdDetail = () => {
     const storedData = localStorage.getItem('designsetlist');
     const jsonData = JSON.parse(storedData);
     const filteredData = jsonData.filter(item => item.autocode === autoCode);
-    console.log('fffffffffffffffffffffffffffffffffff', filteredData);
+    // console.log('fffffffffffffffffffffffffffffffffff', filteredData);
     if (filteredData.DefaultImageName) {
-      console.log('fffffffffffffffffffffffffffffffffff', filteredData);
+      // console.log('fffffffffffffffffffffffffffffffffff', filteredData);
       setCompleteBackImage(filteredData.DefaultImageName);
     }
   }
@@ -427,8 +438,6 @@ const ProdDetail = () => {
 
   }, [selectedColor])
 
-
-  console.log("selectedcolor",selectedColor);
 
   const handleColorSelection = (color) => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
@@ -1142,16 +1151,29 @@ const ProdDetail = () => {
   // console.log('DefaultSizeDefaultSizeDefaultlengthlength', productData?.DefaultSize.length);
 
   // console.log('daimondFilterDatadaimondFilterData', daimondFilterData);
-  console.log("metalFilterData", metalFilterData)
-  console.log("daimondFilterData", daimondFilterData)
-  console.log('lastPrice', { "unitcost": productData?.UnitCost ?? 0, "mtrdPrice": mtrdData, "dqcDataPrice": dqcData?.S ?? 0, "csqcData": csqcData?.S ?? 0, sizeMarkup, "metalupdatePrice": metalUpdatedPrice(), "diaUpdatedPrice": diaUpdatedPrice(), "colUpdatedPrice": colUpdatedPrice() })
+  // console.log("metalFilterData", metalFilterData)
+  // console.log("daimondFilterData", daimondFilterData)
+  // console.log('lastPrice', { "unitcost": productData?.UnitCost ?? 0, "mtrdPrice": mtrdData, "dqcDataPrice": dqcData?.S ?? 0, "csqcData": csqcData?.S ?? 0, sizeMarkup, "metalupdatePrice": metalUpdatedPrice(), "diaUpdatedPrice": diaUpdatedPrice(), "colUpdatedPrice": colUpdatedPrice() })
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const handleClick = () => {
     setIsVideoPlaying(true);
   };
 
-  console.log("cSQopt", cSQopt)
+  useEffect(()=>{
+
+    let srData = JSON.parse(localStorage.getItem("srProductsData"))
+    let price = ((productData?.UnitCost) + (mtrdData?.Z ?? 0) + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + metalUpdatedPrice() + diaUpdatedPrice() + colUpdatedPrice()).toFixed(2)
+
+    if(price){
+      srData.price = Number(price)
+    }
+
+    localStorage.setItem("srProductsData",JSON.stringify(srData))
+
+  },[mtrdData,dqcData,csqcData,sizeMarkup,metalUpdatedPrice,diaUpdatedPrice,colUpdatedPrice])
+
+  console.log("priceData",productData,productData?.price);
 
 
   return (
@@ -1434,7 +1456,9 @@ const ProdDetail = () => {
                         fontSize: "12.5px",
                       }}
                       defaultValue={mtTypeOption}
-                      onChange={(e) => setmtTypeOption(e.target.value)}
+                      onChange={(e) =>{ 
+                        setmtTypeOption(e.target.value)
+                      }}
                     >
                       {metalType.map((data, index) => (
                         <option key={index} value={data.metalType}>

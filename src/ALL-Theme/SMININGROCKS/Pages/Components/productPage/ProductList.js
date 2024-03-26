@@ -49,7 +49,8 @@ const ProductList = () => {
   const [cartRemoveData, setCartRemoveData] = useState("")
   const [wishListRemoveData, setWishListRemoveData] = useState("")
   const [newProData, setNewProData] = useState(ProductApiData2)
-  const [priceDataApi, setpriceDataApi] = useRecoilState(priceData)
+  // const [priceDataApi, setpriceDataApi] = useRecoilState(priceData)
+  const [priceDataApi, setpriceDataApi] = useState([])
   const [currencySym, setCurrencySym] = useState()
 
   const [metalRdPrice, setMetalRdPrice] = useState([])
@@ -101,6 +102,7 @@ const ProductList = () => {
   const [isMetalTCShow, setIsMetalTCShow] = useState('');
   const [isPriceShow, setIsPriceShow] = useState('');
 
+
   useEffect(() => {
     setNewProData(getSearchData)
   }, [getSearchData])
@@ -109,6 +111,11 @@ const ProductList = () => {
     const data = JSON.parse(localStorage.getItem("allproductlist"));
     setProductApiData2(data)
   }, [])
+
+  useEffect(()=>{
+    const data = JSON.parse(localStorage.getItem("getPriceData"));
+    setpriceDataApi(data)
+  },[])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -289,8 +296,6 @@ const ProductList = () => {
     const element = document.getElementById("top")
     element.scrollIntoView()
   }, []);
-
-
 
   // function updateProductsWithMetalColorName() {
   //   productData?.forEach((product) => {
@@ -574,8 +579,7 @@ const ProductList = () => {
     }));
   }
 
-
-  // console.log("NewFilterArr",NewFilterArr)
+  // console.log("filterChecked",filterChecked)
 
   useEffect(() => {
     let FilterDataVar = [];
@@ -590,7 +594,7 @@ const ProductList = () => {
       let reverseData = FilterDataVar.reverse()
       const mergedArray = [].concat(...reverseData);
       setNewProData(mergedArray)
-      console.log("FilterDataVar", mergedArray)
+      // console.log("FilterDataVar", mergedArray)
     } else {
       setNewProData(ProductApiData2)
     }
@@ -1054,8 +1058,6 @@ const ProductList = () => {
 
   }, [getHeaderData2, getHeaderData])
 
-
-
   const newMenuProdData = () => {
     let data = productData?.filter((pd) => pd && pd.CollectionName === getHeaderData?.value1)
     setNewProData(data)
@@ -1066,45 +1068,46 @@ const ProductList = () => {
     }
   }, [getHeaderData])
 
-  const getDesignPriceList = async () => {
+  // const getDesignPriceList = async () => {
 
-    const storeInit = JSON.parse(localStorage.getItem("storeInit"))
-    const loginUserDetail = JSON.parse(localStorage.getItem("loginUserDetail"));
-    const currencyCombo = JSON.parse(localStorage.getItem("CURRENCYCOMBO"));
-    const UserEmail = localStorage.getItem("registerEmail")
+  //   const storeInit = JSON.parse(localStorage.getItem("storeInit"))
+  //   const loginUserDetail = JSON.parse(localStorage.getItem("loginUserDetail"));
+  //   const currencyCombo = JSON.parse(localStorage.getItem("CURRENCYCOMBO"));
+  //   const UserEmail = localStorage.getItem("registerEmail")
 
-    const GetPriceReq = {
-      "CurrencyRate": `${currencyCombo?.CurrencyRate}`,
-      "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
-      "Customerid": `${loginUserDetail?.id}`,
-      "Laboursetid": `${storeInit.PolicyApplyOnName === "Customer Wise Policy" ? loginUserDetail?._pricemanagement_laboursetid : loginUserDetail?.pricemanagement_laboursetid}`,
-      "diamondpricelistname": `${loginUserDetail?._diamondpricelistname}`,
-      "colorstonepricelistname": `${loginUserDetail?._colorstonepricelistname}`,
-      "SettingPriceUniqueNo": `${loginUserDetail?.SettingPriceUniqueNo}`,
-      "DesignNo": ""
-    }
+  //   const GetPriceReq = {
+  //     "CurrencyRate": `${currencyCombo?.CurrencyRate}`,
+  //     "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
+  //     "Customerid": `${loginUserDetail?.id}`,
+  //     "Laboursetid": `${storeInit.PolicyApplyOnName === "Customer Wise Policy" ? loginUserDetail?._pricemanagement_laboursetid : loginUserDetail?.pricemanagement_laboursetid}`,
+  //     "diamondpricelistname": `${loginUserDetail?._diamondpricelistname}`,
+  //     "colorstonepricelistname": `${loginUserDetail?._colorstonepricelistname}`,
+  //     "SettingPriceUniqueNo": `${loginUserDetail?.SettingPriceUniqueNo}`,
+  //     "DesignNo": ""
+  //   }
 
-    const encodedCombinedValue = btoa(JSON.stringify(GetPriceReq));
+  //   const encodedCombinedValue = btoa(JSON.stringify(GetPriceReq));
 
-    let body = {
-      "con": `{\"id\":\"Store\",\"mode\":\"getdesignpricelist\",\"appuserid\":\"${UserEmail}\"}`,
-      "f": "onloadFirstTime (getdesignpricelist)",
-      "p": encodedCombinedValue
-    }
+  //   let body = {
+  //     "con": `{\"id\":\"Store\",\"mode\":\"getdesignpricelist\",\"appuserid\":\"${UserEmail}\"}`,
+  //     "f": "onloadFirstTime (getdesignpricelist)",
+  //     "p": encodedCombinedValue
+  //   }
 
-    await CommonAPI(body).then((res) => {
-      setpriceDataApi(res?.Data)
-    })
+  //   await CommonAPI(body).then((res) => {
+  //     localStorage.setItem("getPriceData",JSON.stringify(res?.Data))
+  //     setpriceDataApi(res?.Data)
+  //   })
 
-  }
+  // }
 
   const handleChange1 = () => {
 
   }
 
-  useEffect(() => {
-    getDesignPriceList()
-  }, [])
+  // useEffect(() => {
+  //   getDesignPriceList()
+  // }, [])
 
   //for price range
   useEffect(() => {
