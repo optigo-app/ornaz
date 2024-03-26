@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import './LoginWithEmail.css'
 import { DesignSet } from '../../../../Utils/API/DesignSet';
 import { GetCount } from '../../../../Utils/API/GetCount';
+import { getDesignPriceList } from '../../../../Utils/API/PriceDataApi';
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');
@@ -111,6 +112,7 @@ export default function LoginWithEmail() {
                 pdDataCalling()
                 designDataCall()
                 getCountFunc()
+                getDesignPriceList()
                 navigation('/');
                 // window.location.reload(); 
             } else {

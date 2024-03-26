@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Button, CircularProgress, FormControlLabel, MenuItem, Radio, RadioGroup, Select, TextField } from '@mui/material';
 import "./QuotationJob.css";
@@ -24,6 +24,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { checkMonth } from '../../../../Utils/globalFunctions/GlobalFunction';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
+import Swal from 'sweetalert2';
 const CustomSortIcon = ({ order }) => {
   return (
     <>
@@ -174,6 +175,10 @@ const QuotationJob = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const fromDateRef = useRef(null);
+  const toDateRef = useRef(null);
+
+
   const handleOrderProms = (event) => {
     setOrderProm(event.target.value);
   };
@@ -198,7 +203,7 @@ const QuotationJob = () => {
 
   const columns = [
     { id: 'Sr#', label: 'Sr No', minWidth: 85, align: "center" },
-    { id: 'Date', label: 'Date', minWidth: 110, align: "center" },
+    { id: 'Date', label: 'Date', minWidth: 130, align: "center" },
     { id: 'SKUNO', label: 'SKU#', minWidth: 110, align: "center" },
     { id: 'PO', label: 'PO', minWidth: 110, align: "center" },
     { id: 'JobNo', label: 'Job#', minWidth: 100, align: "center" },
@@ -227,6 +232,7 @@ const QuotationJob = () => {
     let fromdates = `${fromDatess?.["$y"]}-${checkMonth(fromDatess?.["$M"])}-${fromDatess?.["$D"]}`
     let todates = `${todatess?.["$y"]}-${checkMonth(todatess?.["$M"])}-${todatess?.["$D"]}`
     let filteredData = [];
+    let count = 0;
     data?.forEach((e, i) => {
       let flags = {
         dateFrom: false,
@@ -257,43 +263,62 @@ const QuotationJob = () => {
       } else {
         flags.search = true;
       }
-//order date and promise date flag filter
+      //order date and promise date flag filter
       let cutDate = "";
       if (orderPromDate === "order") {
         cutDate = e?.["Date"]?.split("-");
       } else {
         cutDate = e?.["PDate"]?.split("-");
       }
-      cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
+      if (cutDate !== undefined) {
+        cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
+        if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+          let fromdat = moment(fromdates);
+          let todat = moment(todates);
+          let cutDat = moment(cutDate);
+          const isBetween = cutDat.isBetween(fromdat, todat);
+          if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
+            flags.dateTo = true;
+            flags.dateFrom = true;
+          }
+        } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+          // let todat = new Date(todates);
+          // let cutDat = new Date(cutDate);
+          // if (cutDat < todat) {
+          //   flags.dateTo = true;
+          //   flags.dateFrom = true;
+          // }
+          flags.dateTo = true;
+          count++;
+          Swal.fire({
+            title: "Error !",
+            text: "Enter Valid Date From",
+            icon: "error",
+            confirmButtonText: "ok"
+          });
+          // flags.dateFrom = true;
 
-      if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
-        let fromdat = moment(fromdates);
-        let todat = moment(todates);
-        let cutDat = moment(cutDate);
-        const isBetween = cutDat.isBetween(fromdat, todat);
-        if (isBetween) {
+        } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
+          // let fromdat = new Date(fromdates);
+          // let cutDat = new Date(cutDate);
+          // if (cutDat > fromdat) {
+          //   flags.dateTo = true;
+          //   flags.dateFrom = true;
+          // }
+          // flags.dateTo = true;
+          flags.dateFrom = true;
+          count++;
+          Swal.fire({
+            title: "Error !",
+            text: "Enter Valid Date To",
+            icon: "error",
+            confirmButtonText: "ok"
+          });
+
+        } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
           flags.dateTo = true;
           flags.dateFrom = true;
         }
-      } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
-        let todat = new Date(todates);
-        let cutDat = new Date(cutDate);
-        if (cutDat < todat) {
-          flags.dateTo = true;
-          flags.dateFrom = true;
-        }
-
-      } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
-        let fromdat = new Date(fromdates);
-        let cutDat = new Date(cutDate);
-        if (cutDat > fromdat) {
-          flags.dateTo = true;
-          flags.dateFrom = true;
-        }
-
-      } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
-        flags.dateTo = true;
-        flags.dateFrom = true;
       }
 
       if (e?.MetalType?.toString()?.toLowerCase()?.includes(metalPurities?.toLowerCase()) || metalPurities?.toLowerCase() === "all") {
@@ -314,7 +339,12 @@ const QuotationJob = () => {
       }
 
     });
-    setFilterData(filteredData);
+    if(count === 0){
+      setFilterData(filteredData);
+    }else{
+      resetAllFilt();
+      handleSearch(eve, "", null, null, metalPurityList[0]?.value, metalColorList[0]?.value, categoryList[0]?.value, statusList[0]?.value, "order");
+    }
   }
 
   const resetAllFilters = (eve) => {
@@ -327,6 +357,17 @@ const QuotationJob = () => {
     setMetalPurity(metalPurityList[0]?.value);
     setSearchVal("");
     handleSearch(eve, "", null, null, metalPurityList[0]?.value, metalColorList[0]?.value, categoryList[0]?.value, statusList[0]?.value, "order");
+  }
+
+  const resetAllFilt = () => {
+    setOrderProm("order");
+    setFromDate(null);
+    setToDate(null);
+    setStatus(statusList[0]?.value);
+    setCategory(categoryList[0]?.value);
+    setMetalColor(metalColorList[0]?.value);
+    setMetalPurity(metalPurityList[0]?.value);
+    setSearchVal("");
   }
 
   // function createData(srNo, Date, SKU, Job, Design, Category, PromiseDate, QuotePrice, Status, TotalQty, Supplied) {
@@ -442,6 +483,14 @@ const QuotationJob = () => {
 
   useEffect(() => {
     fetchData();
+    let inputFrom = fromDateRef?.current?.querySelector(".MuiInputBase-root input");
+    if (inputFrom) {
+      inputFrom.placeholder = 'Date From';
+    }
+    let inputTo = toDateRef?.current?.querySelector(".MuiInputBase-root input");
+    if (inputTo) {
+      inputTo.placeholder = 'Date To';
+    }
   }, []);
 
   return (
@@ -453,6 +502,7 @@ const QuotationJob = () => {
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
             value={orderProm}
+
             onChange={handleOrderProms}
             sx={{ display: "flex", alignItems: "center", flexDirection: "unset" }}
           >
@@ -468,9 +518,28 @@ const QuotationJob = () => {
                 <DatePicker
                   label="Date From"
                   value={fromDate}
-                  onChange={(newValue) => setFromDate(newValue)}
+                  ref={fromDateRef}
+                  // onChange={(newValue) => setFromDate(newValue)}
                   format="DD MMM YYYY"
                   className='quotationFilterDates'
+                  onChange={(newValue) => {
+                    if (newValue === null) {
+                      setFromDate(null)
+                    } else {
+                      if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                        setFromDate(newValue)
+                      } else {
+
+                        Swal.fire({
+                          title: "Error !",
+                          text: "Enter Valid Date From",
+                          icon: "error",
+                          confirmButtonText: "ok"
+                        });
+                        resetAllFilters();
+                      }
+                    }
+                  }}
                 />
               </LocalizationProvider>
             </Box>
@@ -482,9 +551,27 @@ const QuotationJob = () => {
                 <DatePicker
                   label="Date To"
                   value={toDate}
-                  onChange={(newValue) => setToDate(newValue)}
+                  ref={toDateRef}
+                  // onChange={(newValue) => setToDate(newValue)}
                   format="DD MMM YYYY"
                   className='quotationFilterDates'
+                  onChange={(newValue) => {
+                    if (newValue === null) {
+                      setToDate(null)
+                    } else {
+                      if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                        setToDate(newValue)
+                      } else {
+                        Swal.fire({
+                          title: "Error !",
+                          text: "Enter Valid Date To",
+                          icon: "error",
+                          confirmButtonText: "ok"
+                        });
+                        resetAllFilters();
+                      }
+                    }
+                  }}
                 />
               </LocalizationProvider>
             </Box>
