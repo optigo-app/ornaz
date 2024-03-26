@@ -83,15 +83,21 @@ export default function CartPage() {
   const [dqcData, setDqcData] = useState([]);
   const [csqcData, setCsqcData] = useState([]);
   const [selectedColor, setSelectedColor] = useState()
+  const [getPriceData, setGetPriceData] = useState([])
 
   const [dialogOpen,setDialogOpen] = useState(false)
 
   const setCartCount = useSetRecoilState(CartListCounts);
   const setWishCount = useSetRecoilState(WishListCounts);
-  const getPriceData = useRecoilValue(priceData);
+//   const getPriceData = useRecoilValue(priceData);
 
   const navigation = useNavigate();
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
+
+  useEffect(()=>{
+    const data = JSON.parse(localStorage.getItem("getPriceData"))
+    setGetPriceData(data)
+  },[])
 
   useEffect(() => {
 
@@ -1123,7 +1129,7 @@ export default function CartPage() {
                         </div>
                       </div>
                     )}
-                    <div className="cartProdSection resCon">
+                    {!isLoading &&<div className="cartProdSection resCon">
                       <div
                         // style={{
                         //   display: "flex",
@@ -1232,7 +1238,7 @@ export default function CartPage() {
                           Add Order Remark
                         </button>
                       </div>
-                    </div>
+                    </div>}
                   </div>
                 )}
               </div>
