@@ -718,9 +718,10 @@ const AccountLedger = () => {
 
                 {/* <div className='p-2 ps-4 border-bottom' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div> */}
                 
-                <div className='d-flex justify-content-between align-items-center flex_col_Al'>
+                <div className='d-flex justify-content-between align-items-center flex_col_Al mt-2'>
                 {
-                    filterVisible ? <div className='fs_al2 p-2 d-flex justify-content-start  align-items-center flex-wrap'>
+                    // filterVisible ? 
+                    <div className='fs_al2 p-2 d-flex justify-content-start  align-items-center flex-wrap'>
                         <div>
                         <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
                     <Box sx={{ display: "flex", alignItems: "center", paddingRight: "15px", paddingBottom: "35px" }} className="QuotePadSec">
@@ -784,7 +785,7 @@ const AccountLedger = () => {
                     <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
 
                    
-                    <div className='d-flex'>
+                    <div className='d-flex pt-2'>
                         <button className='ms-2 mx-1 btn border p-2 py-0 daybtn mb-2' title='previous' 
                         onClick={() => handlePreviousDays()}
                         >&lt;</button>
@@ -809,9 +810,10 @@ const AccountLedger = () => {
                     <div className='mx-1 ms-4 mb-2'>
                         {/* <input type="checkbox" name="duedate" checked={dueDateWise} value={dueDateWise} id="duedate" onChange={() => setDueDateWise(!dueDateWise)} /><label htmlFor="duedate" className='user-select-none ps-1'>Due Date Wise</label> */}
                     </div>
-                </div> : <div className=''></div>
+                </div>
+                //  : <div className=''></div>
                 }
-                <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}> <div className='m-2' style={{minWidth:'max-content'}} onClick={toggleFilter}> { !filterVisible ? <button className='toggleBtn'>Show More</button> : <button className='toggleBtn'>Show Less</button> } </div></Box>
+                {/* <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}> <div className='m-2' style={{minWidth:'max-content'}} onClick={toggleFilter}> { !filterVisible ? <button className='toggleBtn'>Show More</button> : <button className='toggleBtn'>Show Less</button> } </div></Box> */}
                 {/* <ExpandMoreIcon sx={{cursor:'pointer'}} titleAccess='Show' /> */}
                 {/* <ExpandLessIcon sx={{cursor:'pointer'}} titleAccess='Hide'/> */}
                 </div>
@@ -844,8 +846,8 @@ const AccountLedger = () => {
                                 <td className='border-end p-1 text-center '>VOUCHER</td>
                                 <td className='border-end p-1 text-center '>METAL</td>
                                 <td className='border-end p-1 text-center '>DIAM.</td>
-                                <td className='border-end p-1 text-center '>AMOUNT</td>
-                                <td className='border-end p-1 text-center ' title='Currency Rate'>RATE</td>
+                                {/* <td className='border-end p-1 text-center '>AMOUNT</td>
+                                <td className='border-end p-1 text-center ' title='Currency Rate'>RATE</td> */}
                                 <td className='border-end p-1 text-center '>CURRENCY</td>
                                 <td className='border-end p-1 text-center '>VERIFIED</td>
                                 <td className='border-end p-1 text-center '>DATE</td>
@@ -853,8 +855,8 @@ const AccountLedger = () => {
                                 <td className='border-end p-1 text-center '>VOUCHER</td>
                                 <td className='border-end p-1 text-center '>METAL</td>
                                 <td className='border-end p-1 text-center '>DIAM.</td>
-                                <td className='border-end p-1 text-center '>AMOUNT</td>
-                                <td className='border-end p-1 text-center ' title='Currency Rate'>RATE</td>
+                                {/* <td className='border-end p-1 text-center '>AMOUNT</td>
+                                <td className='border-end p-1 text-center ' title='Currency Rate'>RATE</td> */}
                                 <td className='border-end p-1 text-center '>CURRENCY</td>
                                 <td className='p-1 text-center'>VERIFIED</td>
                             </tr>
@@ -874,8 +876,8 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-start ps-1'></td>
                                             <td className='border-end p-1 text-end ps-1'>{ Math.abs(debit_mg_diff)}</td>
                                             <td className='border-end p-1 text-end ps-1'>{Math.abs(debit_dia_diff)}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{Math.abs(debit_amt_diff)}</td>
-                                            <td className='border-end p-1 text-end pe-1'></td>
+                                            {/* <td className='border-end p-1 text-end pe-1'>{Math.abs(debit_amt_diff)}</td>
+                                            <td className='border-end p-1 text-end pe-1'></td> */}
                                             <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(debit_curr_diff)}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
@@ -883,8 +885,8 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-end pe-1'></td>
                                             <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_mg_diff)}</td>
                                             <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_dia_diff)}</td>
-                                            <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_amt_diff)}</td>
-                                            <td className='border-end p-1 text-end pe-1'></td>
+                                            {/* <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_amt_diff)}</td>
+                                            <td className='border-end p-1 text-end pe-1'></td> */}
                                             <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(credit_curr_diff)}</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr> 
@@ -907,18 +909,18 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' style={{cursor:'pointer'}} onClick={() => window.open("http://localhost:3000/accountledgerdebit")}>{e?.IsDebit === 0 ? '' : e?.referenceno === '' ? e?.voucherno : e?.referenceno}</td>
                                             <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.metalctw}</td>
                                             <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.diamondctw}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.Amount}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.CurrRate}</td>
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{e?.IsDebit === 0 ? '' : `${formatAmount(e?.Currency)} (${e?.CurrSymbol})`}</td>
+                                            {/* <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.Amount}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.CurrRate}</td> */}
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{e?.IsDebit === 0 ? '' : `${e?.CurrSymbol} ${formatAmount(e?.Currency)} `}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'>{e?.IsDebit === 0 ? e?.EntryDate : ''}</td>
                                             <td className='border-end p-1 text-start ps-1'>{e?.IsDebit === 0 ? e?.particular : ''}</td>
                                             <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' onClick={() => window.open("http://localhost:3000/accountledgercredit")} style={{cursor:'pointer'}}>{e?.IsDebit === 0 ? e?.referenceno === '' ? e?.voucherno : e?.referenceno : ''}</td>
                                             <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.metalctw : ''}</td>
                                             <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.diamondctw : ''}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.Amount : ''}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.CurrRate : ''}</td>
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{e?.IsDebit === 0 ? `${formatAmount(e?.Currency)} (${e?.CurrSymbol})`  : ''}</td>
+                                            {/* <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.Amount : ''}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.CurrRate : ''}</td> */}
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{e?.IsDebit === 0 ? `${e?.CurrSymbol} ${formatAmount(e?.Currency)} `  : ''}</td>
                                             {/* <td className=' p-1 text-center'><DoneIcon sx={{color:'red'}} /><CloseIcon /></td> */}
                                             <td className=' p-1 text-center'>{doneIcon}{closeIcon}</td>
                                         </tr>
@@ -931,8 +933,8 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-start ps-1'></td>
                                             <td className='border-end p-1 text-end pe-1'>{( (Math.abs(debit_mg_diff) + resultTotal?.debit_metalgold))?.toFixed(3)}</td>
                                             <td className='border-end p-1 text-end pe-1'>{((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt))?.toFixed(3)}</td>
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount)))}</td>
-                                            <td className='border-end p-1 text-end pe-1'></td>
+                                            {/* <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount)))}</td>
+                                            <td className='border-end p-1 text-end pe-1'></td> */}
                                             <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{currencySymbol}&nbsp;{formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency))}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
@@ -941,8 +943,8 @@ const AccountLedger = () => {
                                             {/* {console.log("dia wt total with result",((Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3))} */}
                                             <td className='border-end p-1 text-end pe-1'>{((Math.abs(credit_mg_diff) + resultTotal?.credit_metalgold))?.toFixed(3)}</td>
                                             <td className='border-end p-1 text-end pe-1'>{((Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3)}</td>
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount((Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount))}</td>
-                                            <td className='border-end p-1 text-end pe-1'></td>
+                                            {/* <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount((Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount))}</td>
+                                            <td className='border-end p-1 text-end pe-1'></td> */}
                                             <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{currencySymbol}&nbsp;{formatAmount((Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency))}</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr>
