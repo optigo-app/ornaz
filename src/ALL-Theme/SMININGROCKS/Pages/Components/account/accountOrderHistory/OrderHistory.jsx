@@ -269,9 +269,9 @@ const OrderHistory = () => {
                             })}
                         </div>
                         <div className="pt-2 _end">
-                          <div className="d-flex justify-content-between align-items-center fs-4 w-25 w25_oh  text-secondary _w50_oh_2 fs_small ">
-                            <div className="w-50">Total :</div>
-                            <div className="w-50 _end"> <div className="pe-1"
+                          <div className="d-flex justify-content-between align-items-center fs-4 w-25 w25_oh  text-secondary _w50_oh_2 fs_small " style={{width:'30% !important'}}>
+                            <div style={{width:'40%'}}>Total :</div>
+                            <div style={{width:'60%'}} className="d-flex align-items-center"> <div className="pe-1"
                                   dangerouslySetInnerHTML={{ __html: e?.Currencysymbol }}
                             ></div>{e?.orderAmountwithvat}</div>
                           </div>

@@ -7,11 +7,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
-import { Box, CircularProgress } from '@mui/material';
-import { formatAmount } from '../../../../Utils/globalFunctions/GlobalFunction';
+import { Box, Button, CircularProgress } from '@mui/material';
+import { checkMonth, formatAmount } from '../../../../Utils/globalFunctions/GlobalFunction';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import moment from 'moment';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 const AccountLedger = () => {
     const [resultArray, setResultArray] = useState([]);
     const [currencySymbol, setCurrencySymbol] = useState('');
@@ -34,26 +37,36 @@ const AccountLedger = () => {
     const [credit_mg_diff, setCredit_mg_diff] = useState(0);
     const [credit_amt_diff, setCredit_amt_diff] = useState(0);
     const [credit_curr_diff, setCredit_curr_diff] = useState(0);
+    const firstDayOfMonth = dayjs().startOf('month');
+    const lastDayOfMonth = dayjs().endOf('month');
+    const [fromDate, setFromDate] = useState((firstDayOfMonth));
+    const [toDate, setToDate] = useState(lastDayOfMonth);
     const navigate = useNavigate("");
 
     useEffect(() => {
 
-        getStartNEndDate();
+        // getStartNEndDate();
 
         const userName = JSON.parse(localStorage.getItem('loginUserDetail'));
         setUserName(userName?.customercode)
 
         getLedgerData();
 
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
       useEffect(() => {
+        console.log('called');
+        console.log(fromDate, toDate, selectedDays);
         filterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [startDate, endDate, selectedDays]);
+    }, [fromDate, toDate, selectedDays]);
     // }, [startDate, endDate, selectedDays, dueDateWise, selectedStatus]);
-
+        useEffect(() => {
+            filterData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        },[resultArray])
       const getLedgerData = async() => {
         setLoaderAC(true)
         let storeinit = JSON.parse(localStorage.getItem("storeInit"));
@@ -162,7 +175,8 @@ const AccountLedger = () => {
         setSelectedStatus('all');
         
         //set date
-        getStartNEndDate();
+        // getStartNEndDate();
+        // getCurrentMonthDates();
 
         // setDays
         setSelectedDays(30)
@@ -188,29 +202,45 @@ const AccountLedger = () => {
         setCredit_amt_diff(0);
         setCredit_dia_diff(0);
         setCredit_mg_diff(0);
+        const initialFromDate = dayjs(resultArray[0]?.EntryDate);
+        const initialToDate = dayjs(resultArray[resultArray?.length - 1]?.EntryDate);
+        setFromDate(initialFromDate);
+        setToDate(initialToDate);
 
       }
       
       const handleDays = (days) => {
         setSelectedDays(days)
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-        const currentMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
-        const currentDay = ('0' + currentDate.getDate()).slice(-2); // Add leading zero if needed
-        
-        // Set end date to current date
-        const formattedCurrentDate = `${currentYear}-${currentMonth}-${currentDay}`;
-        setEndDate(formattedCurrentDate);
-    
-        // Calculate start date based on selected number of days
-        const startDate = new Date(currentDate.getTime() - days * 24 * 60 * 60 * 1000);
-        const startYear = startDate.getFullYear();
-        const startMonth = ('0' + (startDate.getMonth() + 1)).slice(-2);
-        const startDay = ('0' + startDate.getDate()).slice(-2);
-        const formattedStartDate = `${startYear}-${startMonth}-${startDay}`;
-        setStartDate(formattedStartDate);
+        const currentDate = dayjs();
 
-        filterData(formattedStartDate, formattedCurrentDate);
+        // Set the end date to the current date
+        const endDate = currentDate.endOf('day').format('YYYY-MM-DD');
+    
+        // Calculate the start date based on the selected number of days
+        const startDate = currentDate.subtract(days, 'day').startOf('day').format('YYYY-MM-DD');
+    
+        // Update the start and end dates in the state
+        setStartDate(startDate);
+        setEndDate(endDate);
+        filterData();
+        // const currentDate = new Date();
+        // const currentYear = currentDate.getFullYear();
+        // const currentMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
+        // const currentDay = ('0' + currentDate.getDate()).slice(-2); // Add leading zero if needed
+        
+        // // Set end date to current date
+        // const formattedCurrentDate = `${currentYear}-${currentMonth}-${currentDay}`;
+        // setEndDate(formattedCurrentDate);
+    
+        // // Calculate start date based on selected number of days
+        // const startDate = new Date(currentDate.getTime() - days * 24 * 60 * 60 * 1000);
+        // const startYear = startDate.getFullYear();
+        // const startMonth = ('0' + (startDate.getMonth() + 1)).slice(-2);
+        // const startDay = ('0' + startDate.getDate()).slice(-2);
+        // const formattedStartDate = `${startYear}-${startMonth}-${startDay}`;
+        // setStartDate(formattedStartDate);
+
+        // filterData(formattedStartDate, formattedCurrentDate);
 
         const buttons = document.querySelectorAll('.daybtn');
         buttons.forEach(button => {
@@ -224,7 +254,7 @@ const AccountLedger = () => {
 
       }
 
-
+      
       
       const handleSearch = () => {
         filterData();
@@ -285,58 +315,171 @@ const AccountLedger = () => {
     //   };
 
 
-    const filterData = () => {
-        const filteredData = resultArray?.filter(entry => {
-            const entryDate = new Date(entry?.EntryDate);
-            const startDateObj = new Date(startDate);
-            const endDateObj = new Date(endDate);
-        
-            // Extract year, month, and day components of the dates
-            const entryYear = entryDate.getFullYear();
-            const entryMonth = entryDate.getMonth();
-            const entryDay = entryDate.getDate();
-        
-            const startYear = startDateObj.getFullYear();
-            const startMonth = startDateObj.getMonth();
-            const startDay = startDateObj.getDate();
-        
-            const endYear = endDateObj.getFullYear();
-            const endMonth = endDateObj.getMonth();
-            const endDay = endDateObj.getDate();
+    // const filterData = () => {
+    //     console.log('in filter called');
+    //     let fromdates = `${fromDate?.["$y"]}-${checkMonth(fromDate?.["$M"])}-${fromDate?.["$D"]}`;
+    //     let todates = `${toDate?.["$y"]}-${checkMonth(toDate?.["$M"])}-${toDate?.["$D"]}`;
+    //     const fromDates = moment(fromdates);
+    //     const toDates = moment(todates);
+    //     console.log(fromDates, toDates);
 
-            // Compare only the year, month, and day components
-            if (
-                (entryYear > startYear || 
-                (entryYear === startYear && entryMonth > startMonth) || 
-                (entryYear === startYear && entryMonth === startMonth && entryDay >= startDay)) 
-                && 
-                (entryYear < endYear ||  
-                (entryYear === endYear && entryMonth < endMonth) ||  
-                (entryYear === endYear && entryMonth === endMonth && entryDay <= endDay))
-            ) {
-                return true;
-                // Filter based on selected status
-                // if (selectedStatus === 'all' || entry?.IsVerified?.toString() === selectedStatus) {
-                //     return true;
-                // }
-            }
+    //     const filteredData = resultArray?.filter((entry) => {
+    //         // Parse the entry date into a Moment.js object
+    //         const apiDate = moment(entry?.EntryDate, 'DD MMM YY');
+    
+    //         // Set the time part of the apiDate to midnight
+    //         apiDate.startOf('day');
+    
+    //         // Check if the apiDate falls within the fromDate and toDate range
+    //         return apiDate.isBetween(fromDates, toDates, null, '[]'); // '[]' includes boundaries
+    //     });
+    //     const recordsBeforeStartDate = resultArray?.filter((entry) => {
+    //         // Parse the entry date into a Moment.js object
+    //         const apiDate = moment(entry?.EntryDate, 'DD MMM YY');
+    
+    //         // Set the time part of the apiDate to midnight
+    //         apiDate.startOf('day');
+    
+    //         // Check if the apiDate is before the fromDate
+    //         return apiDate.isBefore(fromDates);
+    //     });
+    //     // setFromDate(fromDates)
+    //     // setToDate(toDates)
+    //     console.log(filteredData);
+    //     setFilterArray(filteredData)
+    //     getFormatedArrayData(filteredData);
+    //     CalculateOpeningBalance(recordsBeforeStartDate);
+
+    //     // console.log(recordsBeforeStartDate);
+    //     // setFilterArray(filteredData);
+    //     // let filteredData = [];
         
-            return false;
-        });
-        const oneDayBeforeStartDate = new Date(startDate);
-        oneDayBeforeStartDate.setDate(oneDayBeforeStartDate.getDate() - 1);
-        const recordsBeforeStartDate = resultArray.filter(entry => {
-            const entryDate = new Date(entry?.EntryDate);
-            return entryDate <= oneDayBeforeStartDate;
-        });
+    //     // resultArray?.forEach((e) => {
+    //     //                 let cutDate = "";
+    //     //                 cutDate = e?.["Date"]?.split("-");
+    //     //                 let compareDate = `${cutDate[0]}-${cutDate[1]}-${cutDate[2]}`
+    //     //                  cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
+    //     //                 let flags = {
+    //     //                         dateFrom: false,
+    //     //                         dateTo: false,
+    //     //                         // search: false,
+    //     //     }
+    //     //     if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+    //     //         let fromdat = moment(fromdates);
+    //     //         let todat = moment(todates);
+    //     //         let cutDat = moment(cutDate);
+    //     //         const isBetween = cutDat.isBetween(fromdat, todat);
+    //     //         if (isBetween) {
+    //     //             flags.dateTo = true;
+    //     //             flags.dateFrom = true;
+    //     //         }
+    //     //     } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+    //     //         let todat = new Date(todates);
+    //     //         let cutDat = new Date(cutDate);
+    //     //         if (cutDat < todat) {
+    //     //             flags.dateTo = true;
+    //     //             flags.dateFrom = true;
+    //     //         }
+
+    //     //     } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
+    //     //         let fromdat = new Date(fromdates);
+    //     //         let cutDat = new Date(cutDate);
+    //     //         if (cutDat > fromdat) {
+    //     //             flags.dateTo = true;
+    //     //             flags.dateFrom = true;
+    //     //         }
+
+    //     //     } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
+    //     //         flags.dateTo = true;
+    //     //         flags.dateFrom = true;
+    //     //     }
+
+    //     //     if (flags.dateFrom === true && flags.dateTo === true && flags.search === true) {
+    //     //         filteredData.push(e);
+    //     //     }
+    //     // })
+    //     // setFilterArray(filteredData)
+
+
+
+    //     // const filteredData = resultArray?.filter(entry => {
+    //     //     const entryDate = new Date(entry?.EntryDate);
+    //     //     const startDateObj = new Date(startDate);
+    //     //     const endDateObj = new Date(endDate);
+        
+    //     //     // Extract year, month, and day components of the dates
+    //     //     const entryYear = entryDate.getFullYear();
+    //     //     const entryMonth = entryDate.getMonth();
+    //     //     const entryDay = entryDate.getDate();
+        
+    //     //     const startYear = startDateObj.getFullYear();
+    //     //     const startMonth = startDateObj.getMonth();
+    //     //     const startDay = startDateObj.getDate();
+        
+    //     //     const endYear = endDateObj.getFullYear();
+    //     //     const endMonth = endDateObj.getMonth();
+    //     //     const endDay = endDateObj.getDate();
+
+    //     //     // Compare only the year, month, and day components
+    //     //     if (
+    //     //         (entryYear > startYear || 
+    //     //         (entryYear === startYear && entryMonth > startMonth) || 
+    //     //         (entryYear === startYear && entryMonth === startMonth && entryDay >= startDay)) 
+    //     //         && 
+    //     //         (entryYear < endYear ||  
+    //     //         (entryYear === endYear && entryMonth < endMonth) ||  
+    //     //         (entryYear === endYear && entryMonth === endMonth && entryDay <= endDay))
+    //     //     ) {
+    //     //         return true;
+    //     //         // Filter based on selected status
+    //     //         // if (selectedStatus === 'all' || entry?.IsVerified?.toString() === selectedStatus) {
+    //     //         //     return true;
+    //     //         // }
+    //     //     }
+        
+    //     //     return false;
+    //     // });
+    //     // const oneDayBeforeStartDate = new Date(startDate);
+    //     // oneDayBeforeStartDate.setDate(oneDayBeforeStartDate.getDate() - 1);
+    //     // const recordsBeforeStartDate = resultArray.filter(entry => {
+    //     //     const entryDate = new Date(entry?.EntryDate);
+    //     //     return entryDate <= oneDayBeforeStartDate;
+    //     // });
     
-        setFilterArray(filteredData);
-        getFormatedArrayData(filteredData);
-        CalculateOpeningBalance(recordsBeforeStartDate);
-    };
+    //     // setFilterArray(filteredData);
+    //     // getFormatedArrayData(filteredData);
+    //     // CalculateOpeningBalance(recordsBeforeStartDate);
+    // };
+    const filterData = () => {
+        const nowdays = selectedDays;
+        const startdate = fromDate.format('DD MMM YY');;
+        const enddate = toDate.format('DD MMM YY');;
+
+        const findedData = resultArray?.filter((e) => {
+            const entryDate = dayjs(e?.EntryDate);
+                return entryDate.isBetween(startdate, enddate, null, '[]'); // '[]' includes start and end dates
+        })
+        setFilterArray(findedData);
+        // const startDate = fromDate?.subtract(selectedDays, 'day');
+        // console.log(startDate);
+        // // Filter data based on date range
+        // const filteredData = resultArray?.filter(item => {
+        //     const entryDate = dayjs(item?.EntryDate);
+        //     return entryDate.isBetween(startDate, toDate, null, '[]'); // '[]' includes start and end dates
+        // });
     
-    
-    
+        // Update filtered data in state
+        // setFilterArray(filteredData);
+        const oneDayBeforeStartDate = new Date(startdate);
+            oneDayBeforeStartDate.setDate(oneDayBeforeStartDate.getDate() - 1);
+            const recordsBeforeStartDate = resultArray?.filter(entry => {
+                const entryDate = new Date(entry.EntryDate);
+                return entryDate <= oneDayBeforeStartDate;
+            });
+            setFilterArray(findedData);
+            getFormatedArrayData(findedData);
+            CalculateOpeningBalance(recordsBeforeStartDate);
+    }
     
       const CalculateOpeningBalance = (data) => {
         
@@ -423,74 +566,120 @@ const AccountLedger = () => {
     //     setSelectedStatus(e.target.value);
     //   }
 
-      const getStartNEndDate = () => {
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-        const currentMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
+    //   const getStartNEndDate = () => {
+    //     const currentDate = new Date();
+    //     const currentYear = currentDate.getFullYear();
+    //     const currentMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
     
-        // Set start date to the first day of the current month
-        const formattedStartDate = `${currentYear}-${currentMonth}-01`;
-        setStartDate(formattedStartDate);
+    //     // Set start date to the first day of the current month
+    //     const formattedStartDate = `${currentYear}-${currentMonth}-01`;
+    //     setStartDate(formattedStartDate);
     
-        // Set end date to the last day of the current month
-        const lastDay = new Date(currentYear, currentMonth, 0).getDate();
-        const formattedEndDate = `${currentYear}-${currentMonth}-${lastDay}`;
-        setEndDate(formattedEndDate);
+    //     // Set end date to the last day of the current month
+    //     const lastDay = new Date(currentYear, currentMonth, 0).getDate();
+    //     const formattedEndDate = `${currentYear}-${currentMonth}-${lastDay}`;
+    //     setEndDate(formattedEndDate);
         
-        // const currentDate = new Date();
-        // const currentYear = currentDate.getFullYear();
-        // const currentMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
-        // const currentDay = ('0' + currentDate.getDate()).slice(-2); // Add leading zero if needed
-        // const formattedCurrentDate = `${currentYear}-${currentMonth}-${currentDay}`;
-        // setEndDate(formattedCurrentDate);
-        // // Set start date to previous 7 days
-        // const sixDaysAgo = new Date(currentDate.getTime() - 6 * 24 * 60 * 60 * 1000);
-        // const sixDaysAgoYear = sixDaysAgo.getFullYear();
-        // const sixDaysAgoMonth = ('0' + (sixDaysAgo.getMonth() + 1)).slice(-2);
-        // const sixDaysAgoDay = ('0' + sixDaysAgo.getDate()).slice(-2);
-        // const formattedStartDate = `${sixDaysAgoYear}-${sixDaysAgoMonth}-${sixDaysAgoDay}`;
-        // setStartDate(formattedStartDate);
-      }
+    //     // const currentDate = new Date();
+    //     // const currentYear = currentDate.getFullYear();
+    //     // const currentMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
+    //     // const currentDay = ('0' + currentDate.getDate()).slice(-2); // Add leading zero if needed
+    //     // const formattedCurrentDate = `${currentYear}-${currentMonth}-${currentDay}`;
+    //     // setEndDate(formattedCurrentDate);
+    //     // // Set start date to previous 7 days
+    //     // const sixDaysAgo = new Date(currentDate.getTime() - 6 * 24 * 60 * 60 * 1000);
+    //     // const sixDaysAgoYear = sixDaysAgo.getFullYear();
+    //     // const sixDaysAgoMonth = ('0' + (sixDaysAgo.getMonth() + 1)).slice(-2);
+    //     // const sixDaysAgoDay = ('0' + sixDaysAgo.getDate()).slice(-2);
+    //     // const formattedStartDate = `${sixDaysAgoYear}-${sixDaysAgoMonth}-${sixDaysAgoDay}`;
+    //     // setStartDate(formattedStartDate);
+    //   }
 
-      const formatDate = (dateString) => {
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const [year, month, day] = dateString.split('-');
-        return `${day} ${months[parseInt(month) - 1]} ${year}`;
-      };
+    //   const formatDate = (dateString) => {
+    //     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    //     const [year, month, day] = dateString.split('-');
+    //     return `${day} ${months[parseInt(month) - 1]} ${year}`;
+    //   };
 
+        // const handlePreviousDays = () => {
+        //     // Calculate new start date by subtracting 30 days from the current start date
+        //     console.log(fromDate, toDate);
+        //     const newStartDate = moment(fromDate).subtract(selectedDays, 'days').format('YYYY-MM-DD');
+    
+        //     // Calculate new end date by subtracting 30 days from the current end date
+        //     const newEndDate = moment(toDate).subtract(selectedDays, 'days').format('YYYY-MM-DD');
+        
+        //     // Update the state with the new start date and end date
+            
+        // // const newStartDate = moment(startDate).subtract(selectedDays, 'days');
+        // // const newStartDate = moment(fromDate)?.subtract(selectedDays, 'days').format('YYYY-MM-DD');
+        
+        // // Calculate new end date by subtracting 30 days from the current end date
+        // // const newEndDate = moment(endDate).subtract(selectedDays, 'days').format('YYYY-MM-DD');
+        // // const newEndDate = moment(toDate)?.subtract(selectedDays, 'days');
+        // setFromDate(newStartDate);
+        // setToDate(newEndDate);
+
+        // // Update the state with the new start date and end date
+        // // setStartDate(newStartDate);
+        // // setEndDate(newEndDate);
+
+        // // Filter data based on the new start date and end date
+        // filterData();
+
+        // }
         const handlePreviousDays = () => {
-
-        // Calculate new start date by subtracting 30 days from the current start date
-        const newStartDate = moment(startDate).subtract(selectedDays, 'days').format('YYYY-MM-DD');
+            // Get the selected number of days
+            const days = selectedDays;
+            
+            // Calculate the new end date (which is the current end date)
+            const newEndDate = toDate.subtract(days, 'day');
+            
+            // Calculate the new start date based on the new end date and selected number of days
+            const newStartDate = newEndDate.subtract(days - 1, 'day'); // Subtract one less day to maintain the selected number of days
+            
+            // Update the state with the new start and end dates
+            setFromDate(newStartDate);
+            setToDate(newEndDate);
         
-        // Calculate new end date by subtracting 30 days from the current end date
-        const newEndDate = moment(endDate).subtract(selectedDays, 'days').format('YYYY-MM-DD');
-
-        // Update the state with the new start date and end date
-        setStartDate(newStartDate);
-        setEndDate(newEndDate);
-
-        // Filter data based on the new start date and end date
-        filterData();
-
-
-
-        }
-      
-        const handleNextDays = () => {
-
-            const newStartDate = moment(startDate).add(30, 'days').format('YYYY-MM-DD');
-        
-            // Calculate new end date by adding 30 days to the current end date
-            const newEndDate = moment(endDate).add(30, 'days').format('YYYY-MM-DD');
-        
-            // Update the state with the new start date and end date
-            setStartDate(newStartDate);
-            setEndDate(newEndDate);
-        
-            // Filter data based on the new start date and end date
+            // Filter the data based on the new date range
             filterData();
         }
+        const handleNextDays = () => {
+            // Get the selected number of days
+            const days = selectedDays;
+            
+            // Calculate the new end date (which is the current end date)
+            const newEndDate = toDate.add(days, 'day');
+            
+            // Calculate the new start date based on the new end date and selected number of days
+            const newStartDate = newEndDate.add(days - 1, 'day'); // Subtract one less day to maintain the selected number of days
+            
+            // Update the state with the new start and end dates
+            setFromDate(newEndDate);
+            setToDate(newStartDate);
+        
+            // Filter the data based on the new date range
+            filterData();
+        }
+        // const handleNextDays = () => {
+
+        //     // const newStartDate = moment(startDate).add(30, 'days').format('YYYY-MM-DD');
+        //     const newStartDate = moment(fromDate).add(30, 'days').format('YYYY-MM-DD');
+        
+        //     // Calculate new end date by adding 30 days to the current end date
+        //     // const newEndDate = moment(endDate).add(30, 'days').format('YYYY-MM-DD');
+        //     const newEndDate = moment(toDate).add(30, 'days').format('YYYY-MM-DD');
+        
+        //     // Update the state with the new start date and end date
+        //     // setStartDate(newStartDate);
+        //     setStartDate(newStartDate);
+        //     // setEndDate(newEndDate);
+        //     setToDate(newEndDate);
+        
+        //     // Filter data based on the new start date and end date
+        //     filterData();
+        // }
       
         const handleExcel = () => {
        
@@ -512,36 +701,98 @@ const AccountLedger = () => {
         window.open("http://localhost:3000/accountledgerexcel");
       }
 
+    // const formattedFromDate = fromDate === null ? '' : moment(fromDate)?.format('DD MMM YYYY');
+    // const formattedToDate = toDate === null ? '' : moment(toDate)?.format('DD MMM YYYY');
+
   return (
     <div>
-        <div className='fs-4 fw-bold text-center text-secondary ledger_title'>Ledger</div>
+        {/* <div className='fs-4 fw-bold text-center text-secondary ledger_title'>Ledger</div> */}
         <div>
             <div className='border'>
-            <div className='p-2 ps-4 border-bottom fs_Al_mq' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div>
+            {/* <div className='p-2 ps-4 border-bottom fs_Al_mq' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formattedFromDate}</b>&nbsp; to &nbsp;<b>{formattedToDate}</b>&nbsp;</div> */}
 
                 {/* <div className='p-2 ps-4 border-bottom' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div> */}
                 
                 <div className='d-flex justify-content-between align-items-center flex_col_Al'>
                 {
                     filterVisible ? <div className='fs_al2 p-2 d-flex justify-content-start  align-items-center flex-wrap'>
-                    <div ><input type="date" name="date" id="startdate" className='mx-2 p-1 mb-2' value={startDate} onChange={(e) => setStartDate(e.target.value)} title='find data'  />
-                     To 
-                    <input type="date" name="date" id="enddate" className='mx-2 p-1 mb-2'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /><SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/></div>
-                    
-                    <div className='mb-2'><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div>
+                        <div>
+                        <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", paddingRight: "15px", paddingBottom: "35px" }} className="QuotePadSec">
+                        <p className='fs-6 mb-0' style={{ paddingRight: "8px" }}>Date: </p>
+                        <Box>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                    label="Any"
+                                    value={fromDate} 
+                                    defaultValue={dayjs('2022-04-17')}
+                                    // onChange={(e) => setStartDate(e.target.value)}
+                                    onChange={(newValue) => setFromDate(newValue)}
+                                    format="DD MMM YYYY"
+                                    placeholder="DD MMM YYYY"
+                                    className='quotationFilterDates'
+                                    name="date" 
+                                    id="startdate" 
+                                />
+                            </LocalizationProvider>
+                        </Box>
+                    </Box>
+                    <Box sx={{ display: "flex", alignItems: "center", paddingBottom: "35px", paddingRight: "15px" }} className="QuotePadSec">
+                        <p className='fs-6 mb-0' style={{ paddingRight: "8px" }}>To: </p>
+                        <Box>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                    label="Any"
+                                    value={toDate} 
+                                    defaultValue={dayjs('2022-04-17')}
+                                    onChange={(newValue) => setToDate(newValue)}
+                                    // onChange={(e) => setEndDate(e.target.value)}
+                                    format="DD MMM YYYY"
+                                    placeholder="DD MMM YYYY"
+                                    className='quotationFilterDates'
+                                    name="date" 
+                                    id="enddate"
+                                />
+                            </LocalizationProvider>
+                        </Box>
+                    </Box>
+                </Box>
+                        </div>
+                    <div>
+                        {/* <input type="date" name="date" id="startdate" className='mx-2 p-1 mb-2' value={startDate} onChange={(e) => setStartDate(e.target.value)} title='find data'  />
+                            To 
+                        <input type="date" name="date" id="enddate" className='mx-2 p-1 mb-2'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /> */}
+                        <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
+                            <SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/>
+                        </Box>
+                    </div>
+                    <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
+                        {/* <div className='mb-2'><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div> */}
+                        <Button variant="contained" className="muiSmilingRocksBtn" sx={{ background: "#7d7f85", display: "flex", alignItems: "center", marginBottom: 0, padding: "6px 0", }}  onClick={() => backToInitial()}>
+                            All
+                        </Button>
+                    </Box>
                     {/* <div onClick={() => navigate("/accountledgerexcel")}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
                     {/* <div onClick={() => handleExcel()}><img src="https://cdn22.optigoapps.com/lib/jo/28/images/ExcelExport.png" alt="#excelexport" className='eeal' /></div> */}
                     {/* <div onClick={() => navigate("/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#excelexport" className='eeal' /></div> */}
                     {/* <div onClick={() => window.open("http://localhost:3000/accountledgertable")}><img src="	https://cdn22.optigoapps.com/lib/jo/28/images/print_icon.png" alt="#printtable" className='eeal' /></div> */}
+                    <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
+
+                   
                     <div className='d-flex'>
-                        <button className='ms-2 mx-1 btn border p-2 py-0 daybtn mb-2' title='previous' onClick={() => handlePreviousDays()}>&lt;</button>
+                        <button className='ms-2 mx-1 btn border p-2 py-0 daybtn mb-2' title='previous' 
+                        onClick={() => handlePreviousDays()}
+                        >&lt;</button>
                         {/* <div className='mx-2 mb-2 d-flex flex-wrap'> */}
                             {[30, 60, 90]?.map((days) => (
                                 <button key={days} className={`mx-1 btn border p-2 py-0 daybtn mb-2 ${selectedDays === days ? 'selected' : ''}`} title={`${days} days`} onClick={() => handleDays(days)}>{days}</button>
                             ))}
                         {/* </div> */}
-                        <button className='ms-2 mx-1 btn border p-2 py-0 daybtn me-3 mb-2' title='next' onClick={() => handleNextDays()}>&gt;</button>
+                        <button className='ms-2 mx-1 btn border p-2 py-0 daybtn me-3 mb-2' title='next' 
+                        onClick={() => handleNextDays()}
+                        >&gt;</button>
                     </div>
+                    </Box>
                     {/* <div>
                         <select name="status" className='p-1' id="status" value={selectedStatus} onChange={(e) => handleSelect(e)}>
                             <option value="all">All</option>
@@ -555,23 +806,23 @@ const AccountLedger = () => {
                     </div>
                 </div> : <div className=''></div>
                 }
-                <div className='m-2' style={{minWidth:'max-content'}} onClick={toggleFilter}> { !filterVisible ? <button className='toggleBtn'>Show More</button> : <button className='toggleBtn'>Show Less</button> } </div>
+                <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}> <div className='m-2' style={{minWidth:'max-content'}} onClick={toggleFilter}> { !filterVisible ? <button className='toggleBtn'>Show More</button> : <button className='toggleBtn'>Show Less</button> } </div></Box>
                 {/* <ExpandMoreIcon sx={{cursor:'pointer'}} titleAccess='Show' /> */}
                 {/* <ExpandLessIcon sx={{cursor:'pointer'}} titleAccess='Hide'/> */}
                 </div>
                 
                 <div className='text-secondary fs_al d-flex justify-content-between align-items-start p-2 my-3'>
                     <div className='d-flex justify-content-start align-items-start flex-wrap'>
-                        <div className='px-4 px_2_al d-flex align-items-center mb-2 '><span>Balance Gold :</span> <span className='bal_Amt_ac'>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2 '><span>Balance Gold :&nbsp;</span> <span className='bal_Amt_ac'>
                             { (((resultTotal?.debit_metalgold  + Math.abs(debit_mg_diff) ) - ( resultTotal?.credit_metalgold + Math.abs(credit_mg_diff)))?.toFixed(3)) }
-                            { ((resultTotal?.debit_metalgold + Math.abs(debit_mg_diff)) - (resultTotal?.credit_metalgold + Math.abs(credit_mg_diff))) > 0 ? 'Dr' : 'Cr' }</span></div>
-                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Diam. :</span> <span className='bal_Amt_ac'>
+                            { ((resultTotal?.debit_metalgold + Math.abs(debit_mg_diff)) - (resultTotal?.credit_metalgold + Math.abs(credit_mg_diff))) > 0 ? 'Dr' : ' Cr' }</span></div>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Diam. :&nbsp;</span> <span className='bal_Amt_ac'>
                             { (((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3)) }
-                            { ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt)) > 0 ? 'Dr' : 'Cr' }</span></div>
-                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Amount :</span> <span className='bal_Amt_ac'>
+                            { ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt)) > 0 ? 'Dr' : ' Cr' }</span></div>
+                        <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Amount :&nbsp;</span> <span className='bal_Amt_ac'>
                             {/* { (formatAmount(resultTotal?.debit_totalcurrency - resultTotal?.credit_totalcurrency))}&nbsp;{(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)) ? 'Dr' : 'Cr' ) }</span></div> */}
                             {currencySymbol}&nbsp;{ (formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)))}&nbsp;
-                            {(((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) ? 'Dr' : 'Cr' ) }</span></div>
+                            {(((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) ? 'Dr' : ' Cr' ) }</span></div>
                     </div>
                 </div>
                 {
@@ -645,7 +896,7 @@ const AccountLedger = () => {
                                             }
 
                                     return(
-                                        <tr className='border' key={e}>
+                                        <tr className='border' key={e?.id}>
                                             <td className='border-end p-1 text-center'>{e?.IsDebit === 0 ? '' : e?.EntryDate}</td>
                                             <td className='border-end p-1 text-start ps-1'>{ e?.IsDebit === 0 ? '' : e?.particular}</td>
                                             <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' style={{cursor:'pointer'}} onClick={() => window.open("http://localhost:3000/accountledgerdebit")}>{e?.IsDebit === 0 ? '' : e?.referenceno === '' ? e?.voucherno : e?.referenceno}</td>
