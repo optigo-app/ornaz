@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "./SalesReport.css";
 import { Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -29,6 +29,7 @@ import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { FaBullseye } from 'react-icons/fa';
 import { NumberWithCommas, checkDates, checkMonth } from '../../../../Utils/globalFunctions/GlobalFunction';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 function createData(SrNo, EntryDate,
     StockDocumentNo, SKUNo,
@@ -289,7 +290,7 @@ const SalesReport = () => {
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [total, setTotal] = useState({
         GrossWt: 0,
         NetWt: 0,
@@ -306,6 +307,8 @@ const SalesReport = () => {
         Netwt_24k: 0,
         uniqueDesigns: 0,
     });
+    const fromDateRef = useRef(null);
+    const toDateRef = useRef(null);
 
 
     const handleRequestSort = (event, property) => {
@@ -360,10 +363,8 @@ const SalesReport = () => {
     );
 
     const handleSearch = (eve, searchValue, fromDates, toDates, grossWtFrom, grossWtTo) => {
-        // console.log(eve);
-
         let datass = [];
-
+        let count = 0;
         data?.forEach((e, i) => {
             let flags = {
                 searchValue: false,
@@ -376,7 +377,6 @@ const SalesReport = () => {
             let dateFlag = checkDates(fromDates, toDates, cutDate);
             flags.fromDate = dateFlag?.dateFrom;
             flags.toDate = dateFlag?.dateTo;
-
             if ((
                 (String(e?.SrNo)?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase())) ||
                 (String(e?.EntryDate)?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase())) ||
@@ -401,16 +401,46 @@ const SalesReport = () => {
                 flags.searchValue = true;
             }
 
-            // || (String(e?.GrossWt)?.toLowerCase()?.includes(grossWtFrom?.trim()?.toLowerCase()))
             if ((grossWtFrom?.trim() === "") || (+grossWtFrom <= e?.GrossWt)) {
                 flags.grossWtFrom = true;
+                  count = count+1;
+                Swal.fire({
+                    title: "Error !",
+                    text: "Enter date From",
+                    icon: "error",
+                    confirmButtonText: "ok"
+                });
             }
-            // console.log((String(e?.GrossWt)?.toLowerCase()?.includes(grossWtTo?.trim()?.toLowerCase())));
-            // || (String(e?.GrossWt)?.toLowerCase()?.includes(grossWtTo?.trim()?.toLowerCase()))
             if ((grossWtTo?.trim() === "") || (+grossWtTo >= e?.GrossWt)) {
                 flags.grossWtTo = true;
+                    count = count+1;
+                Swal.fire({
+                    title: "Error !",
+                    text: "Enter date To",
+                    icon: "error",
+                    confirmButtonText: "ok"
+                });
             }
-            if (flags.searchValue === true && flags.fromDate === true && flags.toDate === true && flags.grossWtFrom === true && flags.grossWtTo === true) {
+            if (grossWtFrom?.trim() === "" && grossWtTo?.trim() !== "") {
+                flags.grossWtTo = true;
+                count = count+1;
+                Swal.fire({
+                    title: "Error !",
+                    text: "Enter Gross Wt From",
+                    icon: "error",
+                    confirmButtonText: "ok"
+                });
+            } else if (grossWtFrom?.trim() !== "" && grossWtTo?.trim() === "") {
+                flags.grossWtFrom = true;
+                count = count+1;
+                Swal.fire({
+                    title: "Error !",
+                    text: "Enter Gross Wt To",
+                    icon: "error",
+                    confirmButtonText: "ok"
+                });
+            }
+            if (flags.searchValue === true && flags.fromDate === true && flags.toDate === true && flags.grossWtFrom === true && flags.grossWtTo === true && count === 0) {
                 let dataObj = createData(i + 1, e?.EntryDate,
                     e?.StockDocumentNo, e?.SKUNo,
                     e?.designno, e?.MetalType, e?.MetalAmount,
@@ -420,9 +450,17 @@ const SalesReport = () => {
                 datass?.push(dataObj);
             }
         });
-        setFilterData(datass);
+        if(count ===0){
+            console.log(datass);
+            setFilterData(datass);
+        }
+        else{
+            console.log("asjkcdnhajksdhsh");
+            setFilterData(data);
+            resetAllFilters();
 
-        console.log(datass);
+        }
+
     }
 
     const resetAllFilters = () => {
@@ -434,7 +472,6 @@ const SalesReport = () => {
     }
 
     const handleimageShow = (eve, img) => {
-        console.log(img);
         setHoverImg(img)
         // onMouseEnter={handleMouseEnter}
     }
@@ -515,6 +552,14 @@ const SalesReport = () => {
 
     useEffect(() => {
         fetchData();
+        let inputFrom = fromDateRef?.current?.querySelector(".MuiInputBase-root input");
+        if (inputFrom) {
+            inputFrom.placeholder = 'Date From';
+        }
+        let inputTo = toDateRef?.current?.querySelector(".MuiInputBase-root input");
+        if (inputTo) {
+            inputTo.placeholder = 'Date To';
+        }
     }, []);
 
     return (
@@ -586,9 +631,27 @@ const SalesReport = () => {
                         <DatePicker
                             label="Date From"
                             value={fromDate}
-                            onChange={(newValue) => setFromDate(newValue)}
+                            ref={fromDateRef}
+                            // onChange={(newValue) => setFromDate(newValue)}
                             format="DD MMM YYYY"
                             className='quotationFilterDates'
+                            onChange={(newValue) => {
+                                if (newValue === null) {
+                                    setFromDate(null)
+                                } else {
+                                    if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                        setFromDate(newValue)
+                                    } else {
+                                        Swal.fire({
+                                            title: "Error !",
+                                            text: "Enter Valid Date From",
+                                            icon: "error",
+                                            confirmButtonText: "ok"
+                                        });
+                                        resetAllFilters()
+                                    }
+                                }
+                            }}
                         />
                     </LocalizationProvider>
                 </Box>
@@ -597,9 +660,27 @@ const SalesReport = () => {
                         <DatePicker
                             label="Date To"
                             value={toDate}
-                            onChange={(newValue) => setToDate(newValue)}
+                            ref={toDateRef}
+                            // onChange={(newValue) => setToDate(newValue)}
                             format="DD MMM YYYY"
                             className='quotationFilterDates'
+                            onChange={(newValue) => {
+                                if (newValue === null) {
+                                    setToDate(null)
+                                } else {
+                                    if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                        setToDate(newValue)
+                                    } else {
+                                        Swal.fire({
+                                            title: "Error !",
+                                            text: "Enter Valid Date To",
+                                            icon: "error",
+                                            confirmButtonText: "ok"
+                                        });
+                                        resetAllFilters()
+                                    }
+                                }
+                            }}
                         />
                     </LocalizationProvider>
                 </Box>
@@ -628,7 +709,7 @@ const SalesReport = () => {
                 isLoading ?
                     <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <>
                         <Paper sx={{ width: '100%', mb: 2 }} className='salesReportTableSec'>
-                            <TableContainer sx={{maxHeight: 580}}>
+                            <TableContainer sx={{ maxHeight: 580 }}>
                                 <Table
                                     sx={{ minWidth: 750 }}
                                     aria-labelledby="tableTitle"
@@ -653,7 +734,7 @@ const SalesReport = () => {
                                                     onMouseEnter={(eve) => handleimageShow(eve, row?.imgsrc)}
                                                     onMouseLeave={(eve) => handleimageShow(eve, row?.imgsrc)}
                                                 >
-                                                    <TableCell id={labelId} scope="row" align="center"> {row.SrNo} </TableCell>
+                                                    <TableCell id={labelId} scope="row" align="center"> {index+1} </TableCell>
                                                     <TableCell align="center">{row.EntryDate}</TableCell>
                                                     <TableCell align="center">{row.StockDocumentNo}</TableCell>
                                                     <TableCell align="center">{row.SKUNo}</TableCell>
@@ -679,7 +760,7 @@ const SalesReport = () => {
                                 </Table>
                             </TableContainer>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
+                                rowsPerPageOptions={[10, 25, 100,]}
                                 component="div"
                                 count={filterData.length}
                                 rowsPerPage={rowsPerPage}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./Sales.css";
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
@@ -30,6 +30,7 @@ import { Label } from "@mui/icons-material";
 import { checkMonth } from "../../../../Utils/globalFunctions/GlobalFunction";
 import moment from "moment";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
+import Swal from 'sweetalert2';
 const createData = (SrNo, Date, StockDocumentNo, TotalDesign, Amount) => {
     return {
         SrNo,
@@ -167,6 +168,9 @@ const Sales = () => {
     const [filterData, setFilterData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
+    const fromDateRef = useRef(null);
+    const toDateRef = useRef(null);
+
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -226,6 +230,7 @@ const Sales = () => {
         let todates = `${todatess?.["$y"]}-${checkMonth(todatess?.["$M"])}-${todatess?.["$D"]}`;
 
         let filteredData = [];
+        let count = 0;
         data?.forEach((e, i) => {
             let cutDate = "";
             cutDate = e?.["Date"]?.split("-");
@@ -250,34 +255,54 @@ const Sales = () => {
                 flags.search = true;
             }
 
-            if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
-                let fromdat = moment(fromdates);
-                let todat = moment(todates);
-                let cutDat = moment(cutDate);
-                const isBetween = cutDat.isBetween(fromdat, todat);
-                if (isBetween) {
+            if (cutDate !== undefined) {
+                if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+                    let fromdat = moment(fromdates);
+                    let todat = moment(todates);
+                    let cutDat = moment(cutDate);
+                    const isBetween = cutDat.isBetween(fromdat, todat);
+                    if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
+                        flags.dateTo = true;
+                        flags.dateFrom = true;
+                    }
+                } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+                    // let todat = new Date(todates);
+                    // let cutDat = new Date(cutDate);
+                    // if (cutDat < todat) {
+                    //     flags.dateTo = true;
+                    //     flags.dateFrom = true;
+                    // }
+                    count = count + 1;
                     flags.dateTo = true;
-                    flags.dateFrom = true;
-                }
-            } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
-                let todat = new Date(todates);
-                let cutDat = new Date(cutDate);
-                if (cutDat < todat) {
-                    flags.dateTo = true;
-                    flags.dateFrom = true;
-                }
+                    Swal.fire({
+                        title: "Error !",
+                        text: "Enter Valid Date From",
+                        icon: "error",
+                        confirmButtonText: "ok"
+                    });
+                    // flags.dateFrom = true;
 
-            } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
-                let fromdat = new Date(fromdates);
-                let cutDat = new Date(cutDate);
-                if (cutDat > fromdat) {
+                } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
+                    // let fromdat = new Date(fromdates);
+                    // let cutDat = new Date(cutDate);
+                    // if (cutDat > fromdat) {
+                    //     flags.dateTo = true;
+                    //     flags.dateFrom = true;
+                    // }
+                    // flags.dateTo = true;
+                    count = count + 1;
+                    flags.dateFrom = true;
+                    Swal.fire({
+                        title: "Error !",
+                        text: "Enter Valid Date To",
+                        icon: "error",
+                        confirmButtonText: "ok"
+                    });
+
+                } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
                     flags.dateTo = true;
                     flags.dateFrom = true;
                 }
-
-            } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
-                flags.dateTo = true;
-                flags.dateFrom = true;
             }
 
             if (flags.dateFrom === true && flags.dateTo === true && flags.search === true) {
@@ -285,7 +310,11 @@ const Sales = () => {
             }
 
         });
-        setFilterData(filteredData)
+        if(count === 0){
+            setFilterData(filteredData);
+        }else{
+            resetAllFilters();
+        }
     }
 
     const fetchData = async () => {
@@ -310,7 +339,7 @@ const Sales = () => {
             const response = await CommonAPI(body);
             if (response.Data?.rd) {
                 let rows = [];
-                console.log( response?.Data?.rd);
+                console.log(response?.Data?.rd);
                 response?.Data?.rd?.forEach((e, i) => {
                     let dataa = createData(i + 1, e?.Date, e?.StockDocumentNo, e?.TotalDesign, e?.Amount);
                     rows?.push(dataa)
@@ -330,6 +359,14 @@ const Sales = () => {
 
     useEffect(() => {
         fetchData();
+        let inputFrom = fromDateRef?.current?.querySelector(".MuiInputBase-root input");
+        if (inputFrom) {
+            inputFrom.placeholder = 'Date From';
+        }
+        let inputTo = toDateRef?.current?.querySelector(".MuiInputBase-root input");
+        if (inputTo) {
+            inputTo.placeholder = 'Date To';
+        }
     }, []);
 
     return (
@@ -350,12 +387,30 @@ const Sales = () => {
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="Any"
+                                    label="Date From"
                                     value={fromDate}
-                                    onChange={(newValue) => setFromDate(newValue)}
+                                    ref={fromDateRef}
+                                    // onChange={(newValue) => setFromDate(newValue)}
                                     format="DD MMM YYYY"
                                     placeholder="DD MMM YYYY"
                                     className='quotationFilterDates'
+                                    onChange={(newValue) => {
+                                        if (newValue === null) {
+                                            setFromDate(null)
+                                        } else {
+                                            if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                                setFromDate(newValue)
+                                            } else {
+                                                Swal.fire({
+                                                    title: "Error !",
+                                                    text: "Enter Valid Date From",
+                                                    icon: "error",
+                                                    confirmButtonText: "ok"
+                                                });
+                                                resetAllFilters();
+                                            }
+                                        }
+                                    }}
                                 />
                             </LocalizationProvider>
                         </Box>
@@ -365,12 +420,30 @@ const Sales = () => {
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="Any"
+                                    label="Date To"
                                     value={toDate}
-                                    onChange={(newValue) => setToDate(newValue)}
+                                    ref={toDateRef}
+                                    // onChange={(newValue) => setToDate(newValue)}
                                     format="DD MMM YYYY"
                                     placeholder="DD MMM YYYY"
                                     className='quotationFilterDates'
+                                    onChange={(newValue) => {
+                                        if (newValue === null) {
+                                            setToDate(null)
+                                        } else {
+                                            if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                                setToDate(newValue)
+                                            } else {
+                                                Swal.fire({
+                                                    title: "Error !",
+                                                    text: "Enter Valid Date To",
+                                                    icon: "error",
+                                                    confirmButtonText: "ok"
+                                                });
+                                                resetAllFilters();
+                                            }
+                                        }
+                                    }}
                                 />
                             </LocalizationProvider>
                         </Box>
@@ -382,12 +455,12 @@ const Sales = () => {
             </Box>
             {isLoading ?
                 <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> : <Paper sx={{ width: '100%', mb: 2 }} className="salesApiTable">
-                    <TableContainer  className='salesPartTable'>
+                    <TableContainer className='salesPartTable'>
                         <Table
                             sx={{ minWidth: 750, border: "1px solid rgba(224, 224, 224, 1)", }}
                             aria-labelledby="tableTitle"
                             size={dense ? 'small' : 'medium'}
-                           
+
                         >
                             <EnhancedTableHead
                                 numSelected={selected.length}
@@ -421,7 +494,7 @@ const Sales = () => {
                                                 padding="none"
                                                 align="center"
                                             >
-                                                {row.SrNo}
+                                                {index+1}
                                             </TableCell>
                                             <TableCell align="center">{row.Date}</TableCell>
                                             <TableCell align="center">{row.StockDocumentNo}</TableCell>
