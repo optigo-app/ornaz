@@ -41,6 +41,8 @@ const AccountLedger = () => {
     const lastDayOfMonth = dayjs().endOf('month');
     const [fromDate, setFromDate] = useState((firstDayOfMonth));
     const [toDate, setToDate] = useState(lastDayOfMonth);
+    const [showStartDate, setShowStartDate] = useState();
+    const [showEndDate, setShowEndDate] = useState();
     const navigate = useNavigate("");
 
     useEffect(() => {
@@ -57,16 +59,16 @@ const AccountLedger = () => {
       }, []);
 
       useEffect(() => {
-        console.log('called');
-        console.log(fromDate, toDate, selectedDays);
         filterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fromDate, toDate, selectedDays]);
     // }, [startDate, endDate, selectedDays, dueDateWise, selectedStatus]);
+
         useEffect(() => {
             filterData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
         },[resultArray])
+
       const getLedgerData = async() => {
         setLoaderAC(true)
         let storeinit = JSON.parse(localStorage.getItem("storeInit"));
@@ -253,8 +255,6 @@ const AccountLedger = () => {
         });
 
       }
-
-      
       
       const handleSearch = () => {
         filterData();
@@ -479,6 +479,12 @@ const AccountLedger = () => {
             setFilterArray(findedData);
             getFormatedArrayData(findedData);
             CalculateOpeningBalance(recordsBeforeStartDate);
+
+            const formattedFromDate = startdate === null ? '' : moment(startdate)?.format('DD MMM YYYY');
+            const formattedToDate = enddate === null ? '' : moment(enddate)?.format('DD MMM YYYY');
+
+            setShowStartDate(formattedFromDate)
+            setShowEndDate(formattedToDate)
     }
     
       const CalculateOpeningBalance = (data) => {
@@ -701,15 +707,14 @@ const AccountLedger = () => {
         window.open("http://localhost:3000/accountledgerexcel");
       }
 
-    // const formattedFromDate = fromDate === null ? '' : moment(fromDate)?.format('DD MMM YYYY');
-    // const formattedToDate = toDate === null ? '' : moment(toDate)?.format('DD MMM YYYY');
+    
 
   return (
     <div>
         {/* <div className='fs-4 fw-bold text-center text-secondary ledger_title'>Ledger</div> */}
         <div>
             <div className='border'>
-            {/* <div className='p-2 ps-4 border-bottom fs_Al_mq' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formattedFromDate}</b>&nbsp; to &nbsp;<b>{formattedToDate}</b>&nbsp;</div> */}
+            <div className='p-2 ps-4 border-bottom fs_Al_mq' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{showStartDate}</b>&nbsp; to &nbsp;<b>{showEndDate}</b>&nbsp;</div>
 
                 {/* <div className='p-2 ps-4 border-bottom' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div> */}
                 
