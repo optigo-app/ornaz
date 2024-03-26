@@ -267,7 +267,7 @@ const ProdDetail = () => {
       ele?.D === mtTypeOption
     );
 
-    console.log("mtrddetail",mtrd);
+
 
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
@@ -306,23 +306,6 @@ const ProdDetail = () => {
       setCSQCPrice(csqcpirce[0]?.S ?? 0)
     }
 
-    // let p1=[];
-    // let p2=[];
-    // let p3=[];
-
-    // if (mtrd) {
-    //   p1.push(mtrd)
-    // }
-
-    // if (diaqcprice) {
-    //   p2.push(diaqcprice)
-    // }
-
-    // if (csqcpirce) {
-    //   p3.push(csqcpirce)
-    // }
-
-    // console.log("ppp",{mtrd,diaqcprice,csqcpirce})
 
     let gt = showPrice + showPrice1 + showPrice2;
     setGrandTotal(gt ?? 0);
@@ -330,6 +313,11 @@ const ProdDetail = () => {
   }, [mtTypeOption, diaQColOpt, cSQopt])
 
 
+  useEffect(()=>{
+    if(mtrdData.U === 1) {
+      handleColorSelection(productData?.MetalColorName)
+    }
+  },[mtrdData])
 
   const handelLocalStorage = () => {
     handleColorSelection('Rose Gold');
@@ -373,7 +361,6 @@ const ProdDetail = () => {
     designListData?.filter((dld) => {
 
       let findData = allProductData?.find((ele) => ele.designno === dld)
-      // console.log("findData",findData);
 
       if (findData !== undefined) {
         arrFinal.push(findData)
@@ -1434,6 +1421,11 @@ const ProdDetail = () => {
                     <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
                       METAL TYPE:
                     </label>
+                    {mtrdData.U === 1 ?
+                    <span style={{fontSize: "12.5px",color: "#7d7f85"}}>
+                      {`${productData.MetalPurity} ${productData.MetalTypeName}`}
+                    </span>
+                    :
                     <select
                       style={{
                         border: "none",
@@ -1449,7 +1441,7 @@ const ProdDetail = () => {
                           {data.metaltype}
                         </option>
                       ))}
-                    </select>
+                    </select>}
                   </div>}
                   <Divider
                     orientation="vertical"
@@ -1475,7 +1467,12 @@ const ProdDetail = () => {
                       <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
                         METAL COLOR:
                       </label>
-                      <select
+                      {mtrdData.U === 1 ?
+                       <span style={{fontSize: "12.5px",color: "#7d7f85"}}>
+                        {productData.MetalColorName}
+                       </span>
+                       :
+                        <select
                         style={{
                           border: "none",
                           outline: "none",
@@ -1489,7 +1486,7 @@ const ProdDetail = () => {
                             {colorItem.metalcolorname}
                           </option>
                         ))}
-                      </select>
+                      </select>}
                     </div>}
 
 
@@ -1509,7 +1506,12 @@ const ProdDetail = () => {
                     <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
                       DAIMOND :
                     </label>
-                    <select
+                   { mtrdData?.U ===1 ?
+                   <span style={{fontSize: "12.5px",color: "#7d7f85"}}>
+                   {`${productData.diamondquality}_${productData.diamondcolorname}`}
+                  </span>
+                   :
+                   <select
                       style={{
                         border: "none",
                         outline: "none",
@@ -1524,7 +1526,7 @@ const ProdDetail = () => {
                           {`${colorItem.Quality}_${colorItem.color}`}
                         </option>
                       ))}
-                    </select>
+                    </select>}
                   </div>}
                   <Divider
                     orientation="vertical"
@@ -1551,7 +1553,13 @@ const ProdDetail = () => {
                     <label style={{ fontSize: "12.5px", color: "#7d7f85"}}>
                       COLOR STONE:
                     </label>
-                    <select
+                    {
+                      mtrdData.U === 1 ? 
+                      <span style={{fontSize: "12.5px",color: "#7d7f85"}}>
+                        {`${productData.colorstonequality}-${productData?.colorstonecolorname}`}
+                       </span>
+                      :
+                      <select
                       style={{
                         border: "none",
                         outline: "none",
@@ -1566,7 +1574,7 @@ const ProdDetail = () => {
                           {`${data.Quality}-${data.color}`}
                         </option>
                       ))}
-                    </select>
+                    </select>}
                   </div>}
 
 
