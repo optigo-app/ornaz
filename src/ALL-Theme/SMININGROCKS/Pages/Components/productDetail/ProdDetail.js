@@ -77,6 +77,8 @@ const ProdDetail = () => {
   const handelImgLoad = () => {
     setImgLoading(false)
   }
+  
+  console.log('getPriceDatagetPriceData',getPriceData);
 
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
   let navigate = useNavigate()
@@ -426,9 +428,6 @@ const ProdDetail = () => {
     }
 
   }, [selectedColor])
-
-
-  console.log("selectedcolor",selectedColor);
 
   const handleColorSelection = (color) => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
@@ -1142,16 +1141,16 @@ const ProdDetail = () => {
   // console.log('DefaultSizeDefaultSizeDefaultlengthlength', productData?.DefaultSize.length);
 
   // console.log('daimondFilterDatadaimondFilterData', daimondFilterData);
-  console.log("metalFilterData", metalFilterData)
-  console.log("daimondFilterData", daimondFilterData)
-  console.log('lastPrice', { "unitcost": productData?.UnitCost ?? 0, "mtrdPrice": mtrdData, "dqcDataPrice": dqcData?.S ?? 0, "csqcData": csqcData?.S ?? 0, sizeMarkup, "metalupdatePrice": metalUpdatedPrice(), "diaUpdatedPrice": diaUpdatedPrice(), "colUpdatedPrice": colUpdatedPrice() })
+  // console.log("metalFilterData", metalFilterData)
+  // console.log("daimondFilterData", daimondFilterData)
+  // console.log('lastPrice', { "unitcost": productData?.UnitCost ?? 0, "mtrdPrice": mtrdData, "dqcDataPrice": dqcData?.S ?? 0, "csqcData": csqcData?.S ?? 0, sizeMarkup, "metalupdatePrice": metalUpdatedPrice(), "diaUpdatedPrice": diaUpdatedPrice(), "colUpdatedPrice": colUpdatedPrice() })
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const handleClick = () => {
     setIsVideoPlaying(true);
   };
 
-  console.log("cSQopt", cSQopt)
+  // console.log("cSQopt", cSQopt)
 
 
   return (

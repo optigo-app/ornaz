@@ -168,7 +168,6 @@ const ProductList = () => {
 
     fetchData();
   }, [priceDataApi]);
-
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
   };
@@ -1084,6 +1083,8 @@ const ProductList = () => {
       "DesignNo": ""
     }
 
+    console.log('GetPriceReqGetPriceReqGetPriceReqGetPriceReq',GetPriceReq);
+
     const encodedCombinedValue = btoa(JSON.stringify(GetPriceReq));
 
     let body = {
@@ -1093,6 +1094,9 @@ const ProductList = () => {
     }
 
     await CommonAPI(body).then((res) => {
+      console.log('resssssssssssssssssssssssssssssssssssssssssssssss',res);
+
+
       setpriceDataApi(res?.Data)
     })
 
@@ -1104,7 +1108,7 @@ const ProductList = () => {
 
   useEffect(() => {
     getDesignPriceList()
-  }, [])
+  }, [priceDataApi])
 
   //for price range
   useEffect(() => {
@@ -1399,7 +1403,7 @@ const ProductList = () => {
     } else if (selectedOption === 'PRICE LOW TO HIGH') {
       sortedData.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
     } else {
-      sortedData = [...ProductApiData2]; 
+      sortedData = [...ProductApiData2];
     }
     setProductApiData2(sortedData);
   };
@@ -1705,8 +1709,8 @@ const ProductList = () => {
                   <select
                     style={{
                       width: "20%",
-                      height:'40px',
-                      border:'1px solid lightgray',
+                      height: '40px',
+                      border: '1px solid lightgray',
                       borderRadius: '5px',
                       paddingBottom: '10px',
                       outline: "none",
@@ -1747,6 +1751,10 @@ const ProductList = () => {
                       className="smilingProductImageBox"
 
                     >
+                      {products?.designno === "S24705E"  && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
+                      {products?.designno === "S24705" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
+                      {products?.designno === "MCJ2" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
+
                       <div onClick={() => handelProductSubmit(products)}>
                         <img
                           className="prod_img"
