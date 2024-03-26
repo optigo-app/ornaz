@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "./DesignWiseSalesReport.css";
 import { Box, Button, MenuItem, Select, Slider, TextField, Typography, Accordion, AccordionDetails, AccordionSummary, Checkbox, RadioGroup, FormControlLabel, Radio, CircularProgress, Stack } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -10,6 +10,7 @@ import moment from 'moment';
 import ReactPaginate from 'react-paginate';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import Skeleton from '@mui/material/Skeleton';
+import Swal from 'sweetalert2';
 const DesignWiseSalesReport = () => {
     const [offset, setOffset] = useState(0);
     const [perPage, setPerPage] = useState(10);
@@ -61,6 +62,8 @@ const DesignWiseSalesReport = () => {
 
     const [designNo, setDesignNo] = useState("");
     const [orderProm, setOrderProm] = useState('order');
+    const fromDateRef = useRef(null);
+    const toDateRef = useRef(null);
 
     const handleChangePurchaseCount = (event) => {
         setPurchaseCount(event?.target?.value);
@@ -194,16 +197,18 @@ const DesignWiseSalesReport = () => {
         // handleSearch(eve, fromDate, toDate, netWtSlider[0], netWtSlider[1], grossWtSlider[0], grossWtSlider[1], purchaseCount, designNo, metal, productType, metalColor, category, subCategory);
         let datas = [];
         let datass = [];
+        let count = 0
         data?.forEach((e, i) => {
             let fromdat = moment(fromdates);
             let todat = moment(todates);
             if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
                 let salescount = dataRd2?.reduce((acc, cObj) => {
-                    let cutDate = cObj?.["Date"]?.split("-");
+                    let cutDate = cObj?.["Date"]?.split(" ");
                     cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
+                    console.log(cutDate);
                     let cutDat = moment(cutDate);
                     const isBetween = cutDat.isBetween(fromdat, todat);
-                    if (e?.designno === cObj?.designno && isBetween) {
+                    if (e?.designno === cObj?.designno && (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat))) {
                         return acc + cObj?.salescount;
                     } else {
                         return acc;
@@ -217,18 +222,25 @@ const DesignWiseSalesReport = () => {
 
 
             } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
-
                 let salescount = dataRd2?.reduce((acc, cObj) => {
-                    let cutDate = cObj?.["Date"]?.split("-");
-                    cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
-                    let todat = new Date(todates);
-                    let cutDat = new Date(cutDate);
-                    if (cutDat < todat) {
-                        return acc + cObj?.salescount;
-                    } else {
-                        return acc;
-                    }
+                    // let cutDate = cObj?.["Date"]?.split("-");
+                    // cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
+                    // let todat = new Date(todates);
+                    // let cutDat = new Date(cutDate);
+                    // if (cutDat < todat) {
+                    return acc + cObj?.salescount;
+                    // } else {
+                    //     return acc;
+                    // }
                 }, 0);
+                Swal.fire({
+                    title: "Error !",
+                    text: "Enter Valid Date From",
+                    icon: "error",
+                    confirmButtonText: "ok"
+                });
+                count = count + 1;
+
 
                 if (salescount !== 0) {
                     let obj = { ...e };
@@ -238,23 +250,28 @@ const DesignWiseSalesReport = () => {
 
             } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
                 let salescount = dataRd2?.reduce((acc, cObj) => {
-                    let cutDate = cObj?.["Date"]?.split("-");
-                    cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
-                    let fromdat = new Date(fromdates);
-                    let cutDat = new Date(cutDate);
-                    if (cutDat > fromdat) {
-                        return acc + cObj?.salescount;
-                    } else {
-                        return acc;
-                    }
+                    // let cutDate = cObj?.["Date"]?.split("-");
+                    // cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
+                    // let fromdat = new Date(fromdates);
+                    // let cutDat = new Date(cutDate);
+                    // if (cutDat > fromdat) {
+                    return acc + cObj?.salescount;
+                    // } else {
+                    //     return acc;
+                    // }
                 }, 0);
+                Swal.fire({
+                    title: "Error !",
+                    text: "Enter Valid Date To",
+                    icon: "error",
+                    confirmButtonText: "ok"
+                });
+                count = count + 1;
                 if (salescount !== 0) {
                     let obj = { ...e };
                     obj.salescount = salescount;
                     datass?.push(obj);
                 }
-
-
 
             } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
                 let salescount = dataRd2?.reduce((acc, cObj) => (e?.designno === cObj?.designno) ? (acc + cObj?.salescount) : acc, 0);
@@ -265,11 +282,8 @@ const DesignWiseSalesReport = () => {
                 }
             }
         });
-        console.log(datass);
         datass?.forEach((e, i) => {
             let flags = {
-                // dateFrom: false,
-                // dateTo: false,
                 netWt: false,
                 grossWt: false,
                 purchaseCount: false,
@@ -361,7 +375,11 @@ const DesignWiseSalesReport = () => {
                 datas.push(e);
             }
         });
-        setFilterData(datas);
+        if (count === 0) {
+            setFilterData(datas);
+        } else {
+            resetAllFilters();
+        }
 
     }
 
@@ -490,6 +508,7 @@ const DesignWiseSalesReport = () => {
             const response = await CommonAPI(body);
             // console.log(response);
             if (response?.Data?.rd) {
+                console.log(response?.Data?.rd);
                 resetAllFilters();
                 let datass = [];
                 let minNetWt = 0;
@@ -612,6 +631,14 @@ const DesignWiseSalesReport = () => {
 
     useEffect(() => {
         fetchData();
+        let inputFrom = fromDateRef?.current?.querySelector(".MuiInputBase-root input");
+        if (inputFrom) {
+            inputFrom.placeholder = 'Date From';
+        }
+        let inputTo = toDateRef?.current?.querySelector(".MuiInputBase-root input");
+        if (inputTo) {
+            inputTo.placeholder = 'Date To';
+        }
     }, []);
 
     return (
@@ -637,9 +664,27 @@ const DesignWiseSalesReport = () => {
                         <DatePicker
                             label="Date From"
                             value={fromDate}
-                            onChange={(newValue) => setFromDate(newValue)}
+                            ref={fromDateRef}
+                            // onChange={(newValue) => setFromDate(newValue)}
                             format="DD MMM YYYY"
                             className='quotationFilterDates'
+                            onChange={(newValue) => {
+                                if (newValue === null) {
+                                    setFromDate(null)
+                                } else {
+                                    if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                        setFromDate(newValue)
+                                    } else {
+                                        Swal.fire({
+                                            title: "Error !",
+                                            text: "Enter Valid Date From",
+                                            icon: "error",
+                                            confirmButtonText: "ok"
+                                        });
+                                        resetAllFilters();
+                                    }
+                                }
+                            }}
                         />
                     </LocalizationProvider>
                 </Box>
@@ -648,9 +693,26 @@ const DesignWiseSalesReport = () => {
                         <DatePicker
                             label="Date To"
                             value={toDate}
-                            onChange={(newValue) => setToDate(newValue)}
+                            ref={toDateRef}
                             format="DD MMM YYYY"
                             className='quotationFilterDates'
+                            onChange={(newValue) => {
+                                if (newValue === null) {
+                                    setToDate(null)
+                                } else {
+                                    if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                        setToDate(newValue)
+                                    } else {
+                                        Swal.fire({
+                                            title: "Error !",
+                                            text: "Enter Valid Date To",
+                                            icon: "error",
+                                            confirmButtonText: "ok"
+                                        });
+                                        resetAllFilters();
+                                    }
+                                }
+                            }}
                         />
                     </LocalizationProvider>
                 </Box>
@@ -834,11 +896,12 @@ const DesignWiseSalesReport = () => {
                 </Box>
             </Box>
 
-            <Box sx={{ display: "grid", gap: "15px", paddingTop: "10px",  gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", }} className="designWiseSalesProducts">
 
-                {isLoading ?
-                    <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box> :
-                    filteredDataPaginated?.map((products, i) => (
+
+            {isLoading ?
+                <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px", margin: "0 auto" }}><CircularProgress className='loadingBarManage' /></Box> :
+                <Box sx={{ display: "grid", gap: "15px", paddingTop: "10px", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", }} className="designWiseSalesProducts">
+                    {filteredDataPaginated?.map((products, i) => (
                         <div
                             style={{
                                 minWidth: "100%",
@@ -916,10 +979,12 @@ const DesignWiseSalesReport = () => {
 
                         </div>
                     ))}
+                </Box>
 
-            </Box>
-
-            <ReactPaginate
+            }
+            {/* filterData.length > perPage && 
+            filterData.length > perPage &&  */}
+            {filterData.length !== 0 && <ReactPaginate
                 previousLabel={"previous"}
                 nextLabel={"next"}
                 breakLabel={"..."}
@@ -931,7 +996,7 @@ const DesignWiseSalesReport = () => {
                 subContainerClassName={"pages pagination"}
                 activeClassName={"active"}
                 className='reactPaginationDesignWise'
-            />
+            />}
         </Box>
     )
 }

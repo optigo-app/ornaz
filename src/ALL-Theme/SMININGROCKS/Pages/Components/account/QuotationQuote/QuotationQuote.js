@@ -1,5 +1,5 @@
 import "./QuotationQuote.css";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -20,6 +20,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { checkMonth } from "../../../../Utils/globalFunctions/GlobalFunction";
 import moment from "moment";
 import { CommonAPI } from "../../../../Utils/API/CommonAPI";
+import { addYears, subYears } from 'date-fns';
+import Swal from "sweetalert2";
+// import AlertPopup from '../../../../../../alertPopup/AlertPopup';
 const createData = (SrNo, Date, SKUNo, TotalDesign, Amount) => {
     return {
         SrNo,
@@ -164,6 +167,11 @@ const QuotationQuote = () => {
     const [data, setData] = useState([]);
     const [filterData, setFilterData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const maxYear = addYears(new Date(), 1); // Set maximum year to the next year
+    const minYear = subYears(new Date(), 1);
+
+    const fromDateRef = useRef(null);
+    const toDateRef = useRef(null);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -219,11 +227,19 @@ const QuotationQuote = () => {
         setPage(0);
     }
 
+    const reseltFil = () => {
+        setSearchVal("");
+        setFromDate(null);
+        setToDate(null);
+        setPage(0);
+    }
+
     const handleSearch = (eve, searchValue, fromDatess, todatess) => {
         let fromdates = `${fromDatess?.["$y"]}-${checkMonth(fromDatess?.["$M"])}-${fromDatess?.["$D"]}`;
         let todates = `${todatess?.["$y"]}-${checkMonth(todatess?.["$M"])}-${todatess?.["$D"]}`;
 
         let filteredData = [];
+        let count = 0;
         data?.forEach((e, i) => {
             let cutDate = "";
             cutDate = e?.["Date"]?.split("-");
@@ -247,34 +263,55 @@ const QuotationQuote = () => {
                 flags.search = true;
             }
 
-            if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
-                let fromdat = moment(fromdates);
-                let todat = moment(todates);
-                let cutDat = moment(cutDate);
-                const isBetween = cutDat.isBetween(fromdat, todat);
-                if (isBetween) {
-                    flags.dateTo = true;
+            if (cutDate !== undefined) {
+                if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+                    let fromdat = moment(fromdates);
+                    let todat = moment(todates);
+                    let cutDat = moment(cutDate);
+                    const isBetween = cutDat.isBetween(fromdat, todat);
+                    if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
+                        flags.dateTo = true;
+                        flags.dateFrom = true;
+                    }
+                } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+                    // let todat = new Date(todates);
+                    // let cutDat = new Date(cutDate);
+                    // if (cutDat <= todat) {
+                    //     flags.dateTo = true;
+                    //     flags.dateFrom = true;
+                    // }
+                    // flags.dateTo = true;
+                    count = count+1
                     flags.dateFrom = true;
-                }
-            } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
-                let todat = new Date(todates);
-                let cutDat = new Date(cutDate);
-                if (cutDat < todat) {
+                    Swal.fire({
+                        title: "Error !",
+                        text: "Enter Valid Date From",
+                        icon: "error",
+                        confirmButtonText: "ok"
+                      });
+                      reseltFil();
+                } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
+                    // let fromdat = new Date(fromdates);
+                    // let cutDat = new Date(cutDate);
+                    // if (cutDat >= fromdat) {
+                    //     flags.dateTo = true;
+                    //     flags.dateFrom = true;
+                    // }
+                    count = count+1
                     flags.dateTo = true;
-                    flags.dateFrom = true;
-                }
+                    Swal.fire({
+                        title: "Error !",
+                        text: "Enter Valid Date To",
+                        icon: "error",
+                        confirmButtonText: "ok"
+                      });
+                      reseltFil();
+                    // flags.dateFrom = true;
 
-            } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
-                let fromdat = new Date(fromdates);
-                let cutDat = new Date(cutDate);
-                if (cutDat > fromdat) {
+                } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
                     flags.dateTo = true;
                     flags.dateFrom = true;
                 }
-
-            } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
-                flags.dateTo = true;
-                flags.dateFrom = true;
             }
 
             if (flags.dateFrom === true && flags.dateTo === true && flags.search === true) {
@@ -282,7 +319,12 @@ const QuotationQuote = () => {
             }
 
         });
-        setFilterData(filteredData)
+        if(count === 0){
+            setFilterData(filteredData);
+        }
+        else{
+            setFilterData(data);
+        }
     }
 
     const fetchData = async () => {
@@ -327,6 +369,14 @@ const QuotationQuote = () => {
 
     useEffect(() => {
         fetchData();
+        let inputFrom = fromDateRef?.current?.querySelector(".MuiInputBase-root input");
+        if (inputFrom) {
+            inputFrom.placeholder = 'Date From';
+        }
+        let inputTo = toDateRef?.current?.querySelector(".MuiInputBase-root input");
+        if (inputTo) {
+            inputTo.placeholder = 'Date To';
+        }
     }, []);
 
     return (
@@ -349,12 +399,29 @@ const QuotationQuote = () => {
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="Any"
+                                    label="Date From"
                                     value={fromDate}
-                                    onChange={(newValue) => setFromDate(newValue)}
+                                    onChange={(newValue) => {
+                                        if (newValue === null) {
+                                            setFromDate(null)
+                                        } else {
+                                            if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                                setFromDate(newValue)
+                                            } else {
+                                                Swal.fire({
+                                                    title: "Error !",
+                                                    text: "Enter Valid Date From",
+                                                    icon: "error",
+                                                    confirmButtonText: "ok"
+                                                });
+                                                resetAllFilters();
+                                            }
+                                        }
+                                    }}
                                     format="DD MMM YYYY"
-                                    placeholder="DD MMM YYYY"
+                                    placeholder={fromDate ? undefined : "Date From"}
                                     className='quotationFilterDates'
+                                    ref={fromDateRef}
                                 />
                             </LocalizationProvider>
                         </Box>
@@ -364,12 +431,31 @@ const QuotationQuote = () => {
                         <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="Any"
+                                    label="Date To"
                                     value={toDate}
-                                    onChange={(newValue) => setToDate(newValue)}
+                                    // onChange={(newValue) => setToDate(newValue)}
                                     format="DD MMM YYYY"
-                                    placeholder="DD MMM YYYY"
+                                    placeholder="Date To"
                                     className='quotationFilterDates'
+                                    ref={toDateRef}
+                                    inputProps={{ readOnly: true }}
+                                    onChange={(newValue) => {
+                                        if (newValue === null) {
+                                            setToDate(null)
+                                        } else {
+                                            if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                                setToDate(newValue)
+                                            } else {
+                                                Swal.fire({
+                                                    title: "Error !",
+                                                    text: "Enter Valid Date To",
+                                                    icon: "error",
+                                                    confirmButtonText: "ok"
+                                                });
+                                                resetAllFilters();
+                                            }
+                                        }
+                                    }}
                                 />
                             </LocalizationProvider>
                         </Box>
