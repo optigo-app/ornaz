@@ -1379,6 +1379,32 @@ const ProductList = () => {
     </Box>
   );
 
+
+
+
+  const [selectedSortOption, setSelectedSortOption] = useState('None');
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("allproductlist"));
+    setProductApiData2(data);
+  }, [ProductApiData2]);
+
+  const handleSortChange = (e) => {
+    const selectedOption = e.target.value;
+    setSelectedSortOption(selectedOption);
+    let sortedData = [...ProductApiData2];
+
+    if (selectedOption === 'PRICE HIGH TO LOW') {
+      sortedData.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+    } else if (selectedOption === 'PRICE LOW TO HIGH') {
+      sortedData.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
+    } else {
+      sortedData = [...ProductApiData2]; 
+    }
+    setProductApiData2(sortedData);
+  };
+
+
   return (
     <div id="top">
 
@@ -1660,6 +1686,7 @@ const ProductList = () => {
                 style={{
                   width: "80%",
                   display: "flex",
+                  flexDirection: 'column',
                   justifyContent: "center",
                   alignItems: "center",
                   margin: "40px 50px 0px 0px",
@@ -1667,6 +1694,32 @@ const ProductList = () => {
                 className="smilingProductImageMain"
                 id="smilingProductImageMain"
               >
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    marginBottom: '10px'
+                  }}
+                >
+                  <select
+                    style={{
+                      width: "20%",
+                      height:'40px',
+                      border:'1px solid lightgray',
+                      borderRadius: '5px',
+                      paddingBottom: '10px',
+                      outline: "none",
+                      fontSize: "13px ",
+                    }}
+                    onChange={handleSortChange}
+                    value={selectedSortOption}
+                  >
+                    <option value="None">Normal</option>
+                    <option value="PRICE HIGH TO LOW">PRICE HIGH TO LOW</option>
+                    <option value="PRICE LOW TO HIGH">PRICE LOW TO HIGH</option>
+                  </select>
+                </div>
                 <div
                   style={{
                     width: "100%",
