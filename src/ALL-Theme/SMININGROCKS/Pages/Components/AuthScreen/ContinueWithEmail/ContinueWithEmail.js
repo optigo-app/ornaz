@@ -55,6 +55,7 @@ export default function ContinueWithEmail() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
+            console.log('ressssssss',response);
             if (response.Data.rd[0].stat === 1) {
                 navigation('/LoginWithEmail', { state: { email: trimmedEmail } });
             } else {
