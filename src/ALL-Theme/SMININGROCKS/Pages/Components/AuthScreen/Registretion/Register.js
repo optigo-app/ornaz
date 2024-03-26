@@ -197,6 +197,8 @@ export default function Register() {
         const response = await CommonAPI(body);
         if (response.Data.rd[0].stat === 1) {
           localStorage.setItem('LoginUser', 'true')
+          console.log('registeeeeeeeeeeeeeeeeeeee',response.Data);
+          localStorage.setItem('loginUserDetail', JSON.stringify(response.Data?.rd[0]));
           setIsLoginState('true')
           localStorage.setItem('registerEmail', email)
           navigation('/');

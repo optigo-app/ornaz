@@ -1416,6 +1416,7 @@ const ProdDetail = () => {
                       </div>
                     </div>
                   )} */}
+                  
                 </div>
                 <div
                   style={{ display: "flex", flexWrap: 'wrap', width: "100%", marginTop: "12px" }}

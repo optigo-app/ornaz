@@ -563,15 +563,18 @@ export default function Delivery() {
                         <div className='smilingDeliveyAddressMain' style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {
                                 addressData?.map((item, index) => (
-                                    <div key={item.id} className='AddressMain'>
-                                        <input
-                                            type="radio"
-                                            checked={item.isdefault === 1}
-                                            onChange={() => handleDefaultSelection(item.id)}
-                                        />
-                                        <p>{item.addressprofile}</p>
+                                    <div key={item.id} className='AddressMain' onClick={() => handleDefaultSelection(item.id)}>
+                                        <div style={{display: 'flex' ,height: '25px'}}>
+                                            <input
+                                                type="radio"
+                                                checked={item.isdefault === 1}
+                                                onChange={() => handleDefaultSelection(item.id)}
+                                                style={{ color: 'red' }} 
+                                            />
+                                            {item.isdefault === 1 && <p style={{color: '#7d7f85' ,margin: '0px 0px 0px 5px', fontWeight: 500}}>Selected</p>}
+                                        </div>
+                                        <p style={{margin: '10px 0px 0px 0px'}}>{item.addressprofile}</p>
                                         <p className='addressData'>{item.shippingfirstname}</p>
-                                        <p className='addressData'>{item.addressprofile}</p>
                                         <p className='addressData'>{item.street}</p>
                                         <p className='addressData'>{item.city}-{item.zip}</p>
                                         <p className='addressData'>{item.state}</p>
