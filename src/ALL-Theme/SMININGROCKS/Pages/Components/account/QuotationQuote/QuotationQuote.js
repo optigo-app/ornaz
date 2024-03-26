@@ -332,7 +332,8 @@ const QuotationQuote = () => {
     return (
         <Box className='smilingSavedAddressMain salesApiSection' sx={{ padding: "20px", }}>
             <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                <Box sx={{ paddingRight: "15px" }} className="AllQuoteBtn QuotePadSec"> <Button variant="contained" className="muiSmilingRocksBtn" sx={{ background: "#7d7f85", display: "flex", alignItems: "center", marginBottom: 0, padding: "6px 0", }} onClick={eve => resetAllFilters(eve)}>
+                <Box sx={{ paddingRight: "15px" }} className="AllQuoteBtn QuotePadSec"> 
+                <Button variant="contained" className="muiSmilingRocksBtn" sx={{ background: "#7d7f85", display: "flex", alignItems: "center", marginBottom: 0, padding: "6px 0", }} onClick={eve => resetAllFilters(eve)}>
                     All
                 </Button></Box>
                 <Box sx={{ display: "flex", alignItems: "center", position: "relative", padding: "0 15px 35px 0", maxWidth: "max-content" }} className="searchbox QuotePadSec">

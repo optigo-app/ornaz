@@ -3,6 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   CircularProgress,
+  Dialog,
   Divider,
   Drawer,
   Tab,
@@ -83,6 +84,8 @@ export default function CartPage() {
   const [csqcData, setCsqcData] = useState([]);
   const [selectedColor, setSelectedColor] = useState()
 
+  const [dialogOpen,setDialogOpen] = useState(false)
+
   const setCartCount = useSetRecoilState(CartListCounts);
   const setWishCount = useSetRecoilState(WishListCounts);
   const getPriceData = useRecoilValue(priceData);
@@ -109,12 +112,14 @@ export default function CartPage() {
     });
   };
 
+  console.log("cartListData1122",cartListData)
+
   useEffect(() => {
     if (cartListData && !cartSelectData) {
       setCartSelectData(cartListData[0]);
       getSizeData(cartListData[0]?.autocode);
     }
-  }, [cartListData]);
+  }, [cartListData,cartSelectData]);
 
 
   useEffect(() => {
@@ -124,6 +129,8 @@ export default function CartPage() {
         ele?.B === cartSelectData?.designno &&
         ele?.D === mtTypeOption
     );
+
+    console.log("mtrd",mtrd)
 
 
     if (mtrd && mtrd.length > 0) {
@@ -156,8 +163,6 @@ export default function CartPage() {
   }, [mtTypeOption, diaQColOpt, cSQopt, cartSelectData, getPriceData]);
 
   useEffect(() => {
-    // let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
-    // let ColorStoneQualityColor = JSON.parse(localStorage.getItem("ColorStoneQualityColor"))
     setmtTypeOption(cartSelectData?.metal);
 
     let qualityColor = `${cartSelectData?.diamondquality}_${cartSelectData?.diamondcolor}`;
@@ -168,19 +173,8 @@ export default function CartPage() {
 
     setSelectedColor(cartSelectData?.metalcolorname)
 
-    // let dqcc = ColorStoneQualityColor?.find((dqc) => `${dqc.Quality}-${dqc.color}` === cartSelectData?.)
+  }, [cartSelectData])
 
-    // if (dqcc) {
-    //     setCSQOpt(csQualColor)
-    // } else {
-    //     let ref = `${ColorStoneQualityColor[0].Quality}-${ColorStoneQualityColor[0].color}`
-    //     setCSQOpt(ref)
-    // }
-
-    // setSizeOption(sizeData[1]?.id)
-
-
-  }, [cartSelectData]);
 
   useEffect(() => {
     getCountFunc();
@@ -338,8 +332,8 @@ export default function CartPage() {
       };
       const response = await CommonAPI(body);
       if (response.Data.rd[0].stat === 1) {
-        getCartData();
-        getCountFunc();
+        await getCartData();
+        await getCountFunc();
       } else {
         alert("Error");
       }
@@ -417,6 +411,7 @@ export default function CartPage() {
         };
         const response = await CommonAPI(body);
         if (response.Data.rd[0].stat === 1) {
+          await getCartData()
           toast.success("Add remark successfully");
         } else {
           alert("Error");
@@ -461,6 +456,7 @@ export default function CartPage() {
       const response = await CommonAPI(body);
       console.log('resssssssss',response);
       if (response.Data.rd[0].stat === 1) {
+        await getCartData()
         toast.success("QTY change successfully");
       } else {
         alert("Error");
@@ -468,6 +464,7 @@ export default function CartPage() {
     } catch (error) {
       console.error("Error:", error);
     } finally {
+
     }
   };
 
@@ -514,41 +511,43 @@ export default function CartPage() {
   };
 
   useEffect(() => {
-    const prodData = JSON.parse(localStorage.getItem("allproductlist"));
+    const prodData = JSON.parse(localStorage.getItem("allproductlist"))
 
-    let isCartData = cartSelectData ? cartSelectData : cartListData[0];
+    console.log("cartListData",cartListData);
+
+    let isCartData = cartSelectData ? cartSelectData : cartListData[0]
 
     const finalProdData = prodData.filter(
       (pd) =>
         pd?.designno === isCartData?.designno &&
         pd?.autocode === isCartData?.autocode
-    )[0];
+    )[0]
 
     if (finalProdData) {
-      setProdSelectData(finalProdData);
+      setProdSelectData(finalProdData)
     }
-  }, [cartSelectData, cartListData]);
+  }, [cartSelectData, cartListData])
 
 
-  const [sizeMarkup, setSizeMarkup] = useState();
+  const [sizeMarkup, setSizeMarkup] = useState()
 
   const handelSize = (data) => {
-    const selectedSize = sizeData.find((size) => size.sizename === data);
+    const selectedSize = sizeData.find((size) => size.sizename === data)
     if (selectedSize) {
       setSizeMarkup(selectedSize?.MarkUp);
     }
     setSizeOption(data);
     const filteredData = getAllFilterSizeData?.filter(
       (item) => item.sizename === data
-    );
+    )
     const filteredDataMetal = filteredData?.filter(
       (item) => item.DiamondStoneTypeName === "METAL"
-    );
+    )
     const filteredDataDaimond = filteredData?.filter(
       (item) => item.DiamondStoneTypeName === "DIAMOND"
-    );
-    setMetalFilterData(filteredDataMetal);
-    setDaimondFiletrData(filteredDataDaimond);
+    )
+    setMetalFilterData(filteredDataMetal)
+    setDaimondFiletrData(filteredDataDaimond)
   };
 
   const handleColorSelection = (color) => {
@@ -594,416 +593,653 @@ export default function CartPage() {
   console.log('cartSelectDatacartSelectData', cartSelectData);
 
   return (
-    <div
-      className="paddingTopMobileSet"
-      style={{ backgroundColor: "#c0bbb1", paddingTop: "110px" }}
-    >
-      {isLoading && (
-        <div className="loader-overlay">
-          <CircularProgress className="loadingBarManage" />
-        </div>
-      )}
-      <ToastContainer />
+    <>
+      <div
+        className="paddingTopMobileSet"
+        style={{ backgroundColor: "#c0bbb1", paddingTop: "110px" }}
+      >
+        {isLoading && (
+          <div className="loader-overlay">
+            <CircularProgress className="loadingBarManage" />
+          </div>
+        )}
+        <ToastContainer />
 
-      <div className="smilingCartPageMain">
-        <div
-          style={{
-            width: "-webkit-fill-available",
-            backgroundColor: "white",
-            zIndex: "111",
-          }}
-        >
-          <p className="SmiWishListTitle" style={{ paddingTop: "30px" }}>
-            My Cart
-          </p>
-
-          {cartListData?.length !== 0 && (
-            <div>
-              <div
-                className="smilingListTopButton"
-                style={{ marginTop: "0px" }}
-              >
-                <button
-                  className="smiTopClearBtn"
-                  onClick={() => handleChange(0)}
-                >
-                  List View
-                </button>
-                <button
-                  className="smiTopAddAllBtn"
-                  onClick={() => handleChange(1)}
-                >
-                  Image View
-                </button>
-                <button
-                  className="smiTopClearBtn"
-                  onClick={handleRemoveAllWishList}
-                >
-                  CLEAR ALL
-                </button>
-                <button
-                  className="smiTopAddAllBtn"
-                  onClick={() => navigation("/productpage")}
-                >
-                  Show ProductList
-                </button>
-                <button
-                  className="placeOrderCartPageBtnMobile"
-                  onClick={(event) => {
-                    navigation("/Delivery");
-                  }}
-                >
-                  Place Order
-                </button>
-              </div>
-              <div
-                className="smilingCartPagePlaceOrderBtnMainWeb"
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  margin: "-50px 25px 0px 20px",
-                  paddingBottom: "50px",
-                }}
-              >
-                <button
-                  className="placeOrderCartPageBtn"
-                  onClick={(event) => {
-                    navigation("/Delivery");
-                  }}
-                >
-                  Place Order
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <CustomTabPanel value={value} index={0}>
+        <div className="smilingCartPageMain">
           <div
             style={{
-              // paddingBottom: "150px",
-              // marginTop: '10px',
-              paddingInline: "10px",
-              display: "flex",
+              width: "-webkit-fill-available",
+              backgroundColor: "white",
+              zIndex: "111",
             }}
           >
-            {!isLoading && prodSelectData && cartSelectData && (
-              <div className="smilingCartDeatilSub1">
+            <p className="SmiWishListTitle" style={{ paddingTop: "30px" }}>
+              My Cart
+            </p>
+
+            {cartListData?.length !== 0 && (
+              <div>
                 <div
+                  className="smilingListTopButton"
+                  style={{ marginTop: "0px" }}
+                >
+                  <button
+                    className="smiTopClearBtn"
+                    onClick={() => handleChange(0)}
+                  >
+                    List View
+                  </button>
+                  <button
+                    className="smiTopAddAllBtn"
+                    onClick={() => handleChange(1)}
+                  >
+                    Image View
+                  </button>
+                  <button
+                    className="smiTopClearBtn"
+                    onClick={handleRemoveAllWishList}
+                  >
+                    CLEAR ALL
+                  </button>
+                  <button
+                    className="smiTopAddAllBtn"
+                    onClick={() => navigation("/productpage")}
+                  >
+                    Show ProductList
+                  </button>
+                  <button
+                    className="placeOrderCartPageBtnMobile"
+                    onClick={(event) => {
+                      navigation("/Delivery");
+                    }}
+                  >
+                    Place Order
+                  </button>
+                </div>
+                <div
+                  className="smilingCartPagePlaceOrderBtnMainWeb"
                   style={{
-                    width: "100%",
-                    height: "70%",
-                    marginTop: "0px",
                     display: "flex",
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                    gap: "20px",
+                    justifyContent: "flex-end",
+                    margin: "-50px 25px 0px 20px",
+                    paddingBottom: "50px",
                   }}
                 >
-                  <img
-                    src={
-                      prodSelectData?.imagepath +
-                      prodSelectData?.MediumImagePath?.split(",")[0]
-                    }
-                    style={{
-                      border: "1px solid #e1e1e1",
-                      borderRadius: "12px",
-                      width: "35%",
+                  <button
+                    className="placeOrderCartPageBtn"
+                    onClick={(event) => {
+                      navigation("/Delivery");
                     }}
-                  />
+                  >
+                    Place Order
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
-                  <div style={{ width: "40%" }}>
+          <CustomTabPanel value={value} index={0}>
+            <div
+              style={{
+                paddingInline: "10px",
+                display: "flex",
+              }}
+            >
+              <div className="smilingCartDeatilSub2">
+                {cartListData?.length === 0 ? (
+                  !isLoading && (
                     <div
                       style={{
-                        width: "100%",
                         display: "flex",
                         flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: "150px",
                       }}
-                      className="srcolorsizecarat"
                     >
-                      <div
+                      <p
                         style={{
-                          fontSize: "40px",
-                          fontFamily: "FreightDisp Pro Medium",
-                          color: "#7d7f85",
-                          lineHeight: "40px",
-                          marginBottom: '14px'
+                          margin: "0px",
+                          fontSize: "20px",
+                          fontWeight: 500,
                         }}
                       >
-                        {prodSelectData?.TitleLine}
-                      </div>
-
-                      {/* <Divider
-                        sx={{
-                          margin: "12px",
-                          backgroundColor: "#e1e1e1",
-                          marginLeft: "-5px",
-                        }}
-                      /> */}
-                      <div style={{ borderTop: '1px solid #e1e1e1', marginInline: '-10px', padding: '20px' }}>
+                        No Data Available
+                      </p>
+                      <p>Please First Add To Cart Data</p>
+                      <button
+                        className="browseBtnMore"
+                        onClick={() => navigation("/productpage")}
+                      >
+                        BROWSE OUR COLLECTION
+                      </button>
+                    </div>
+                  )
+                ) : (
+                  <div className="mainCartContainer">
+                    {!isLoading && (
+                      <div className="resproDet">
+                        <div>
+                          <div
+                            style={{
+                              cursor: "pointer",
+                              position: "absolute",
+                              right: "12px",
+                              top: "12px",
+                              borderRadius: "12px",
+                            }}
+                            onClick={() => setDialogOpen(false)}
+                          >
+                            <CloseIcon
+                              sx={{ color: "black", fontSize: "30px" }}
+                            />
+                          </div>
+                        </div>
                         <div
+                          className="smilingCartDeatilSub1"
                           style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            marginTop: "12px",
+                            display:
+                              !prodSelectData && !cartSelectData && "none",
                           }}
                         >
-                          {isMetalCutoMizeFlag == 1 && (
-                            <div
+                          <div className="popUpcontainer">
+                            <img
+                              src={
+                                prodSelectData?.imagepath +
+                                prodSelectData?.MediumImagePath?.split(",")[0]
+                              }
                               style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                width: "49%",
+                                border: "1px solid #e1e1e1",
+                                borderRadius: "12px",
+                                width: "35%",
                               }}
-                            >
-                              <label
-                                style={{ fontSize: "12.5px", color: "#7d7f85" }}
-                              >
-                                METAL COLOR:
-                              </label>
-                              <select
+                            />
+
+                            <div>
+                              <div
                                 style={{
-                                  border: "none",
-                                  outline: "none",
-                                  color: "#7d7f85",
-                                  fontSize: "12.5px",
+                                  width: "100%",
+                                  display: "flex",
+                                  flexDirection: "column",
                                 }}
-                                value={selectedColor}
-                                onChange={(e) =>
-                                  setSelectedColor(e.target.value)
-                                }
+                                className="srcolorsizecarat"
                               >
-                                {metalColorData.map((colorItem) => (
-                                  <option
-                                    key={colorItem.ColorId}
-                                    value={colorItem.metalcolorname}
+                                <div
+                                  style={{
+                                    fontSize: "40px",
+                                    fontFamily: "FreightDisp Pro Medium",
+                                    color: "#7d7f85",
+                                    lineHeight: "40px",
+                                    marginBottom: "14px",
+                                  }}
+                                  className="prodTitleLine"
+                                >
+                                  {prodSelectData?.TitleLine}
+                                </div>
+
+                                {/* <Divider
+                    sx={{
+                        margin: "12px",
+                        backgroundColor: "#e1e1e1",
+                        marginLeft: "-5px",
+                    }}
+                    /> */}
+                                <div
+                                  style={{
+                                    borderTop: "1px solid #e1e1e1",
+                                    marginInline: "-10px",
+                                    padding: "20px",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      marginTop: "12px",
+                                    }}
                                   >
-                                    {colorItem.metalcolorname}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          )}
+                                    {isMetalCutoMizeFlag == 1 && (
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          width: "49%",
+                                        }}
+                                      >
+                                        <label
+                                          style={{
+                                            fontSize: "12.5px",
+                                            color: "#7d7f85",
+                                          }}
+                                        >
+                                          METAL COLOR:
+                                        </label>
+                                        <select
+                                          style={{
+                                            border: "none",
+                                            outline: "none",
+                                            color: "#7d7f85",
+                                            fontSize: "12.5px",
+                                          }}
+                                          value={selectedColor}
+                                          onChange={(e) =>
+                                            setSelectedColor(e.target.value)
+                                          }
+                                        >
+                                          {metalColorData.map((colorItem) => (
+                                            <option
+                                              key={colorItem.ColorId}
+                                              value={colorItem.metalcolorname}
+                                            >
+                                              {colorItem.metalcolorname}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                    )}
 
-                          {/* <Divider orientation='horizontal' sx={{backgroundColor:'black',width:'1px'}}/> */}
+                                    {/* <Divider orientation='horizontal' sx={{backgroundColor:'black',width:'1px'}}/> */}
 
-                          {isMetalCutoMizeFlag == 1 && (
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                width: "49%",
-                              }}
-                            >
-                              <label
-                                style={{ fontSize: "12.5px", color: "#7d7f85" }}
-                              >
-                                METAL TYPE:
-                              </label>
-                              <select
-                                style={{
-                                  border: "none",
-                                  outline: "none",
-                                  color: "#7d7f85",
-                                  fontSize: "12.5px",
-                                }}
-                                // value={mtTypeOption ?? cartSelectData?.metal}
-                                value={mtTypeOption}
-                                onChange={(e) =>
-                                  setmtTypeOption(e.target.value)
-                                }
-                              >
-                                {metalType.map((data, index) => (
-                                  <option key={index} value={data.metalType}>
-                                    {data.metaltype}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          )}
-                        </div>
+                                    {isMetalCutoMizeFlag == 1 && (
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          width: "49%",
+                                        }}
+                                      >
+                                        <label
+                                          style={{
+                                            fontSize: "12.5px",
+                                            color: "#7d7f85",
+                                          }}
+                                        >
+                                          METAL TYPE:
+                                        </label>
+                                        <select
+                                          style={{
+                                            border: "none",
+                                            outline: "none",
+                                            color: "#7d7f85",
+                                            fontSize: "12.5px",
+                                          }}
+                                          // value={mtTypeOption ?? cartSelectData?.metal}
+                                          value={mtTypeOption}
+                                          onChange={(e) =>
+                                            setmtTypeOption(e.target.value)
+                                          }
+                                        >
+                                          {metalType.map((data, index) => (
+                                            <option
+                                              key={index}
+                                              value={data.metalType}
+                                            >
+                                              {data.metaltype}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                    )}
+                                  </div>
 
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          {isDaimondCstoFlag == 1 && (
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                width: "49%",
-                                marginTop: "30px",
-                              }}
-                            >
-                              <label
-                                style={{ fontSize: "12.5px", color: "#7d7f85" }}
-                              >
-                                DAIMOND :
-                              </label>
-                              <select
-                                style={{
-                                  border: "none",
-                                  outline: "none",
-                                  color: "#7d7f85",
-                                  fontSize: "12.5px",
-                                }}
-                                value={diaQColOpt}
-                                onChange={(e) => setDiaQColOpt(e.target.value)}
-                              >
-                                {colorData?.map((colorItem) => (
-                                  <option
-                                    key={colorItem.ColorId}
-                                    value={`${colorItem.Quality}_${colorItem.color}`}
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                    }}
                                   >
-                                    {`${colorItem.Quality}_${colorItem.color}`}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          )}
+                                    {isDaimondCstoFlag == 1 && (
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          width: "49%",
+                                          marginTop: "30px",
+                                        }}
+                                      >
+                                        <label
+                                          style={{
+                                            fontSize: "12.5px",
+                                            color: "#7d7f85",
+                                          }}
+                                        >
+                                          DAIMOND :
+                                        </label>
+                                        <select
+                                          style={{
+                                            border: "none",
+                                            outline: "none",
+                                            color: "#7d7f85",
+                                            fontSize: "12.5px",
+                                          }}
+                                          value={diaQColOpt}
+                                          onChange={(e) =>
+                                            setDiaQColOpt(e.target.value)
+                                          }
+                                        >
+                                          {colorData?.map((colorItem) => (
+                                            <option
+                                              key={colorItem.ColorId}
+                                              value={`${colorItem.Quality}_${colorItem.color}`}
+                                            >
+                                              {`${colorItem.Quality}_${colorItem.color}`}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                    )}
 
-                          {isCColrStoneCustFlag == 1 && (
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                width: "49%",
-                                marginTop: "20px",
-                              }}
-                            >
-                              <label
-                                style={{
-                                  fontSize: "12.5px",
-                                  color: "#7d7f85",
-                                  marginTop: "10px",
-                                }}
-                              >
-                                COLOR STONE:
-                              </label>
-                              <select
-                                style={{
-                                  border: "none",
-                                  outline: "none",
-                                  color: "#7d7f85",
-                                  fontSize: "12.5px",
-                                }}
-                                value={cSQopt}
-                                onChange={(e) => setCSQOpt(e.target.value)}
-                              >
-                                {DaimondQualityColor.map((data, index) => (
-                                  <option
-                                    key={index}
-                                    value={`${data.Quality}-${data.color}`}
-                                  >
-                                    {`${data.Quality}-${data.color}`}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          )}
-                        </div>
+                                    {isCColrStoneCustFlag == 1 && (
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          width: "49%",
+                                          marginTop: "20px",
+                                        }}
+                                      >
+                                        <label
+                                          style={{
+                                            fontSize: "12.5px",
+                                            color: "#7d7f85",
+                                            marginTop: "10px",
+                                          }}
+                                        >
+                                          COLOR STONE:
+                                        </label>
+                                        <select
+                                          style={{
+                                            border: "none",
+                                            outline: "none",
+                                            color: "#7d7f85",
+                                            fontSize: "12.5px",
+                                          }}
+                                          value={cSQopt}
+                                          onChange={(e) =>
+                                            setCSQOpt(e.target.value)
+                                          }
+                                        >
+                                          {DaimondQualityColor.map(
+                                            (data, index) => (
+                                              <option
+                                                key={index}
+                                                value={`${data.Quality}-${data.color}`}
+                                              >
+                                                {`${data.Quality}-${data.color}`}
+                                              </option>
+                                            )
+                                          )}
+                                        </select>
+                                      </div>
+                                    )}
+                                  </div>
 
-                        {(sizeData?.length !== 0 ||
-                          (productData?.DefaultSize &&
-                            productData.DefaultSize.length !== 0)) && (
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                width: "49%",
-                                marginTop: "30px",
-                              }}
-                            >
-                              <label
-                                style={{ fontSize: "12.5px", color: "#7d7f85" }}
-                              >
-                                SIZE:
-                              </label>
-                              <select
+                                  {(sizeData?.length !== 0 ||
+                                    (productData?.DefaultSize &&
+                                      productData.DefaultSize.length !==
+                                        0)) && (
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        width: "49%",
+                                        marginTop: "30px",
+                                      }}
+                                    >
+                                      <label
+                                        style={{
+                                          fontSize: "12.5px",
+                                          color: "#7d7f85",
+                                        }}
+                                      >
+                                        SIZE:
+                                      </label>
+                                      <select
+                                        style={{
+                                          border: "none",
+                                          outline: "none",
+                                          color: "#7d7f85",
+                                          fontSize: "12.5px",
+                                        }}
+                                        onChange={(e) =>
+                                          handelSize(e.target.value)
+                                        }
+                                        defaultValue={
+                                          productData && productData.DefaultSize
+                                            ? productData.DefaultSize
+                                            : sizeData.find(
+                                                (size) =>
+                                                  size.IsDefaultSize === 1
+                                              )?.id
+                                        }
+                                      >
+                                        {sizeData?.map((size) => (
+                                          <option
+                                            key={size.id}
+                                            value={size.sizename} // Pass sizename as value
+                                            selected={
+                                              productData &&
+                                              productData.DefaultSize ===
+                                                size.sizename
+                                            }
+                                          >
+                                            {size.sizename}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              <div
                                 style={{
-                                  border: "none",
-                                  outline: "none",
+                                  marginTop: "20px",
                                   color: "#7d7f85",
-                                  fontSize: "12.5px",
+                                  fontSize: "14px",
                                 }}
-                                onChange={(e) => handelSize(e.target.value)}
-                                defaultValue={
-                                  productData && productData.DefaultSize
-                                    ? productData.DefaultSize
-                                    : sizeData.find(
-                                      (size) => size.IsDefaultSize === 1
-                                    )?.id
-                                }
                               >
-                                {sizeData?.map((size) => (
-                                  <option
-                                    key={size.id}
-                                    value={size.sizename} // Pass sizename as value
-                                    selected={
-                                      productData &&
-                                      productData.DefaultSize === size.sizename
+                                Price :{" "}
+                                <span
+                                  style={{
+                                    fontWeight: "500",
+                                    fontSize: "16px",
+                                  }}
+                                >
+                                  {currencySymbol?.Currencysymbol}
+                                  {(
+                                    cartSelectData?.UnitCost +
+                                    (mtrdData?.Z ?? 0) +
+                                    (dqcData?.S ?? 0) +
+                                    (csqcData?.S ?? 0)
+                                  ).toFixed(2)}
+                                </span>
+                              </div>
+                              <div className="similingCartPageBotttomMain">
+                                <div
+                                  className="smilingQualityMain"
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <input
+                                    type="text"
+                                    style={{
+                                      border: "0px",
+                                      textAlign: "center",
+                                      outline: "none",
+                                      width: "80px",
+                                      height: "35px",
+                                      border: "1px solid #7d7f85",
+                                    }}
+                                    maxLength={2}
+                                    className="simlingQualityBox"
+                                    inputMode="numeric"
+                                    onClick={(event) => event.target.select()}
+                                    value={lastEnteredQuantity}
+                                    onChange={(event) =>
+                                      handleInputChange(event)
+                                    }
+                                  />
+                                  <button
+                                    className="SmilingUpdateQuantityBtn"
+                                    onClick={() =>
+                                      handleUpdateQuantity(
+                                        prodSelectData?.designno
+                                      )
                                     }
                                   >
-                                    {size.sizename}
-                                  </option>
-                                ))}
-                              </select>
+                                    QTY
+                                  </button>
+                                </div>
+
+                                <div
+                                  className="smilingAddresingleMobileMain"
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    marginLeft: "30px",
+                                  }}
+                                >
+                                  <textarea
+                                    type="text"
+                                    placeholder="Enter Remarks..."
+                                    value={remarks}
+                                    onChange={(event) =>
+                                      handleInputChangeRemarks(event)
+                                    }
+                                    className="YourCartMainRemkarBoxSingle"
+                                  />
+                                  <button
+                                    onClick={() => handleSubmit(cartSelectData)}
+                                    className="SmilingAddSingleRemkarBtn"
+                                  >
+                                    Add
+                                  </button>
+                                </div>
+                              </div>
                             </div>
-                          )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div style={{ marginTop: "20px", color: "#7d7f85", fontSize: "14px" }}>
-                      Price : <span style={{ fontWeight: '500', fontSize: "16px" }}>{currencySymbol?.Currencysymbol}{(cartSelectData?.UnitCost + (mtrdData?.Z ?? 0) + (dqcData?.S ?? 0) + (csqcData?.S ?? 0)).toFixed(2)}</span>
-                    </div>
-                    <div className='similingCartPageBotttomMain'>
-                      <div className='smilingQualityMain' style={{ display: "flex", alignItems: 'center'}}>
-                        <input
-                          type="text"
-                          style={{
-                            border: "0px",
-                            textAlign: "center",
-                            outline: "none",
-                            width: "80px",
-                            height: '35px',
-                            border: "1px solid #7d7f85",
-
-                          }}
-                          maxLength={2}
-                          className='simlingQualityBox'
-                          inputMode="numeric"
-                          onClick={(event) => event.target.select()}
-                          value={lastEnteredQuantity}
-                          onChange={(event) => handleInputChange(event)}
-                        />
-                        <button className="SmilingUpdateQuantityBtn" onClick={() => handleUpdateQuantity(prodSelectData?.designno)}>QTY</button>
+                    )}
+                    <div className="cartProdSection resCon">
+                      <div
+                        // style={{
+                        //   display: "flex",
+                        //   flexWrap: "wrap",
+                        //   height: "565px",
+                        //   overflowY: "auto",
+                        // }}
+                        className="cartProdpart"
+                      >
+                        {cartListData?.map((item, index) => (
+                          <div
+                            key={item.id}
+                            className="smiling-cartPageBoxMain"
+                            onClick={() => {
+                              setCartSelectData(item);
+                              getSizeData(item.autocode)
+                              window.innerWidth <= 1080 && setDialogOpen(true)
+                            }}
+                          >
+                            <div
+                              style={{
+                                cursor: "pointer",
+                                position: "absolute",
+                                right: "0px",
+                                top: "0px",
+                                backgroundColor: "black",
+                                borderRadius: "2px",
+                                opacity: "0.8",
+                              }}
+                              onClick={() => handleRemove(item)}
+                            >
+                              <CloseIcon
+                                sx={{ color: "white", fontSize: "22px" }}
+                              />
+                            </div>
+                            <img
+                              src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
+                              alt="#"
+                              className="cartImageShow"
+                            />
+                            <div
+                              className="smilingCartBox1"
+                              style={{ padding: "5px" }}
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                <p style={{ margin: "0px", fontSize: "12px" }}>
+                                  NWT :{" "}
+                                  <span style={{ fontWeight: 600 }}>
+                                    {item?.MetalWeight}
+                                  </span>
+                                </p>
+                                <p style={{ margin: "0px", fontSize: "12px" }}>
+                                  DWT :{" "}
+                                  <span style={{ fontWeight: 600 }}>
+                                    {item?.Rec_DiamondWeight} /{" "}
+                                    {item?.totaldiamondpcs}
+                                  </span>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                }}
+                              >
+                                <p style={{ margin: "0px", fontSize: "12px" }}>
+                                  CWT :{" "}
+                                  <span style={{ fontWeight: 600 }}>
+                                    {item?.Rec_CSWeight} /{" "}
+                                    {item?.totalcolorstonepcs}
+                                  </span>
+                                </p>
+                                <p style={{ margin: "0px", fontSize: "12px" }}>
+                                  GWT :{" "}
+                                  <span style={{ fontWeight: 600 }}>
+                                    {item?.grossweight}
+                                  </span>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
 
-                      <div className='smilingAddresingleMobileMain' style={{ display: "flex", alignItems: 'center', marginLeft: '30px' }}>
-                        <textarea
-                          type="text"
-                          placeholder="Enter Remarks..."
-                          value={remarks}
-                          onChange={(event) => handleInputChangeRemarks(event)}
-                          className="YourCartMainRemkarBoxSingle"
-                        />
+                      <textarea
+                        label="Enter Remarks"
+                        variant="outlined"
+                        placeholder="Enter Order Remark"
+                        value={Mainremarks}
+                        rows={4}
+                        onChange={(e) => handleInputChangeMainRemarks(e)}
+                        className="YourCartPageMainRemkarBox"
+                        style={{ marginTop: "30px" }}
+                      />
+                      <div className="addRemkarMainBottom">
                         <button
-                          onClick={() => handleSubmit(cartSelectData)}
-                          className="SmilingAddSingleRemkarBtn"
+                          onClick={submitMainRemrks}
+                          className="SmilingAddRemkarBtn"
+                          style={{ marginTop: "10px" }}
                         >
-                          Add
+                          Add Order Remark
                         </button>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
-            )}
-
-
-            <div className="smilingCartDeatilSub2">
+            </div>
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <div style={{ paddingBottom: "150px", marginTop: "10px" }}>
               {cartListData?.length === 0 ? (
                 !isLoading && (
                   <div
@@ -1034,191 +1270,418 @@ export default function CartPage() {
                   </div>
                 )
               ) : (
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      height: "565px",
-                      overflowY: "auto",
-                    }}
-                  >
-                    {cartListData?.map((item, index) => (
-                      <div
-                        key={item.id}
-                        className="smiling-cartPageBoxMain"
-                        onClick={() => {
-                          setCartSelectData(item);
-                          getSizeData(item.autocode);
-                        }}
-                      >
-                        <div
-                          style={{
-                            cursor: "pointer",
-                            position: "absolute",
-                            right: "15px",
-                            top: "10px",
-                          }}
-                          onClick={() => handleRemove(item)}
-                        >
-                          <CloseIcon />
-                        </div>
-                        <img
-                          src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
-                          alt="#"
-                          className="cartImageShow"
-                        />
-                        <div
-                          className="smilingCartBox1"
-                          style={{ padding: "5px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <p style={{ margin: "0px", fontSize: "12px" }}>
-                              NWT :{" "}
-                              <span style={{ fontWeight: 600 }}>
-                                {item?.MetalWeight}
-                              </span>
-                            </p>
-                            <p style={{ margin: "0px", fontSize: "12px" }}>
-                              DWT :{" "}
-                              <span style={{ fontWeight: 600 }}>
-                                {item?.Rec_DiamondWeight} /{" "}
-                                {item?.totaldiamondpcs}
-                              </span>
-                            </p>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <p style={{ margin: "0px", fontSize: "12px" }}>
-                              CWT :{" "}
-                              <span style={{ fontWeight: 600 }}>
-                                {item?.Rec_CSWeight} /{" "}
-                                {item?.totalcolorstonepcs}
-                              </span>
-                            </p>
-                            <p style={{ margin: "0px", fontSize: "12px" }}>
-                              GWT :{" "}
-                              <span style={{ fontWeight: 600 }}>
-                                {item?.grossweight}
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <textarea
-                    label="Enter Remarks"
-                    variant="outlined"
-                    placeholder="Enter Order Remark"
-                    value={Mainremarks}
-                    rows={4}
-                    onChange={(e) => handleInputChangeMainRemarks(e)}
-                    className="YourCartPageMainRemkarBox"
-                    style={{ marginTop: "30px" }}
-                  />
-                  <div className="addRemkarMainBottom">
-                    <button
-                      onClick={submitMainRemrks}
-                      className="SmilingAddRemkarBtn"
-                      style={{ marginTop: "10px" }}
-                    >
-                      Add Order Remark
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <div style={{ paddingBottom: "150px", marginTop: "10px" }}>
-            {cartListData?.length === 0 ? (
-              !isLoading && (
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "150px",
+                    flexWrap: "wrap",
+                    justifyContent: cartListData?.length > 5 && "center",
                   }}
                 >
-                  <p
-                    style={{
-                      margin: "0px",
-                      fontSize: "20px",
-                      fontWeight: 500,
-                    }}
-                  >
-                    No Data Available
-                  </p>
-                  <p>Please First Add To Cart Data</p>
-                  <button
-                    className="browseBtnMore"
-                    onClick={() => navigation("/productpage")}
-                  >
-                    BROWSE OUR COLLECTION
-                  </button>
+                  {cartListData?.map((item, index) => (
+                    <div key={item.id} className="smiling-cartBoxMainImageView">
+                      <div
+                        className="smilingCartMobileMain"
+                        style={{ display: "flex" }}
+                      >
+                        <img
+                          src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
+                          className="smiling-cartPageBoxImgView"
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              )
-            ) : (
+              )}
+            </div>
+          </CustomTabPanel>
+          <Footer />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingBlock: "30px",
+          }}
+        >
+          <p
+            style={{
+              margin: "0px",
+              fontWeight: 500,
+              width: "100px",
+              color: "white",
+              cursor: "pointer",
+            }}
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            BACK TO TOP
+          </p>
+        </div>
+      </div>
+      <Dialog
+        onClose={() => setDialogOpen(false)}
+        open={dialogOpen}
+        // fullWidth
+        // maxWidth={"xl"}
+        fullScreen
+      >
+        {!isLoading && (
+          <div style={{ marginTop: "50px" }}>
+            <div>
               <div
                 style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: cartListData?.length > 5 && "center",
+                  cursor: "pointer",
+                  position: "absolute",
+                  right: "12px",
+                  top: "12px",
+                  borderRadius: "12px",
                 }}
+                onClick={() => setDialogOpen(false)}
               >
-                {cartListData?.map((item, index) => (
-                  <div key={item.id} className="smiling-cartBoxMainImageView">
+                <CloseIcon sx={{ color: "black", fontSize: "30px" }} />
+              </div>
+            </div>
+            <div
+              className="smilingCartDeatilSub1"
+              style={{ display: !prodSelectData && !cartSelectData && "none" }}
+            >
+              <div className="popUpcontainer">
+                <img
+                  src={
+                    prodSelectData?.imagepath +
+                    prodSelectData?.MediumImagePath?.split(",")[0]
+                  }
+                  style={{
+                    border: "1px solid #e1e1e1",
+                    borderRadius: "12px",
+                    width: "35%",
+                  }}
+                />
+
+                <div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                    className="srcolorsizecarat"
+                  >
                     <div
-                      className="smilingCartMobileMain"
-                      style={{ display: "flex" }}
+                      style={{
+                        fontSize: "40px",
+                        fontFamily: "FreightDisp Pro Medium",
+                        color: "#7d7f85",
+                        lineHeight: "40px",
+                        marginBottom: "14px",
+                      }}
+                      className="prodTitleLine"
                     >
-                      <img
-                        src={`${imageURL}/${yKey}/${item.DefaultImageName}`}
-                        className="smiling-cartPageBoxImgView"
-                      />
+                      {prodSelectData?.TitleLine}
+                    </div>
+
+                    {/* <Divider
+                    sx={{
+                        margin: "12px",
+                        backgroundColor: "#e1e1e1",
+                        marginLeft: "-5px",
+                    }}
+                    /> */}
+                    <div
+                      style={{
+                        borderTop: "1px solid #e1e1e1",
+                        marginInline: "-10px",
+                        padding: "20px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginTop: "12px",
+                        }}
+                      >
+                        {isMetalCutoMizeFlag == 1 && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              width: "49%",
+                            }}
+                          >
+                            <label
+                              style={{ fontSize: "12.5px", color: "#7d7f85" }}
+                            >
+                              METAL COLOR:
+                            </label>
+                            <select
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                color: "#7d7f85",
+                                fontSize: "12.5px",
+                              }}
+                              value={selectedColor}
+                              onChange={(e) => setSelectedColor(e.target.value)}
+                            >
+                              {metalColorData.map((colorItem) => (
+                                <option
+                                  key={colorItem.ColorId}
+                                  value={colorItem.metalcolorname}
+                                >
+                                  {colorItem.metalcolorname}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
+
+                        {/* <Divider orientation='horizontal' sx={{backgroundColor:'black',width:'1px'}}/> */}
+
+                        {isMetalCutoMizeFlag == 1 && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              width: "49%",
+                            }}
+                          >
+                            <label
+                              style={{ fontSize: "12.5px", color: "#7d7f85" }}
+                            >
+                              METAL TYPE:
+                            </label>
+                            <select
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                color: "#7d7f85",
+                                fontSize: "12.5px",
+                              }}
+                              // value={mtTypeOption ?? cartSelectData?.metal}
+                              value={mtTypeOption}
+                              onChange={(e) => setmtTypeOption(e.target.value)}
+                            >
+                              {metalType.map((data, index) => (
+                                <option key={index} value={data.metalType}>
+                                  {data.metaltype}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
+                      </div>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {isDaimondCstoFlag == 1 && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              width: "49%",
+                              marginTop: "30px",
+                            }}
+                          >
+                            <label
+                              style={{ fontSize: "12.5px", color: "#7d7f85" }}
+                            >
+                              DAIMOND :
+                            </label>
+                            <select
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                color: "#7d7f85",
+                                fontSize: "12.5px",
+                              }}
+                              value={diaQColOpt}
+                              onChange={(e) => setDiaQColOpt(e.target.value)}
+                            >
+                              {colorData?.map((colorItem) => (
+                                <option
+                                  key={colorItem.ColorId}
+                                  value={`${colorItem.Quality}_${colorItem.color}`}
+                                >
+                                  {`${colorItem.Quality}_${colorItem.color}`}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
+
+                        {isCColrStoneCustFlag == 1 && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              width: "49%",
+                              marginTop: "20px",
+                            }}
+                          >
+                            <label
+                              style={{
+                                fontSize: "12.5px",
+                                color: "#7d7f85",
+                                marginTop: "10px",
+                              }}
+                            >
+                              COLOR STONE:
+                            </label>
+                            <select
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                color: "#7d7f85",
+                                fontSize: "12.5px",
+                              }}
+                              value={cSQopt}
+                              onChange={(e) => setCSQOpt(e.target.value)}
+                            >
+                              {DaimondQualityColor.map((data, index) => (
+                                <option
+                                  key={index}
+                                  value={`${data.Quality}-${data.color}`}
+                                >
+                                  {`${data.Quality}-${data.color}`}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
+                      </div>
+
+                      {(sizeData?.length !== 0 ||
+                        (productData?.DefaultSize &&
+                          productData.DefaultSize.length !== 0)) && (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "49%",
+                            marginTop: "30px",
+                          }}
+                        >
+                          <label
+                            style={{ fontSize: "12.5px", color: "#7d7f85" }}
+                          >
+                            SIZE:
+                          </label>
+                          <select
+                            style={{
+                              border: "none",
+                              outline: "none",
+                              color: "#7d7f85",
+                              fontSize: "12.5px",
+                            }}
+                            onChange={(e) => handelSize(e.target.value)}
+                            defaultValue={
+                              productData && productData.DefaultSize
+                                ? productData.DefaultSize
+                                : sizeData.find(
+                                    (size) => size.IsDefaultSize === 1
+                                  )?.id
+                            }
+                          >
+                            {sizeData?.map((size) => (
+                              <option
+                                key={size.id}
+                                value={size.sizename} // Pass sizename as value
+                                selected={
+                                  productData &&
+                                  productData.DefaultSize === size.sizename
+                                }
+                              >
+                                {size.sizename}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
                     </div>
                   </div>
-                ))}
+                  <div
+                    style={{
+                      marginTop: "20px",
+                      color: "#7d7f85",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Price :{" "}
+                    <span style={{ fontWeight: "500", fontSize: "16px" }}>
+                      {currencySymbol?.Currencysymbol}
+                      {(
+                        cartSelectData?.UnitCost +
+                        (mtrdData?.Z ?? 0) +
+                        (dqcData?.S ?? 0) +
+                        (csqcData?.S ?? 0)
+                      ).toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="similingCartPageBotttomMain">
+                    <div
+                      className="smilingQualityMain"
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
+                      <input
+                        type="text"
+                        style={{
+                          border: "0px",
+                          textAlign: "center",
+                          outline: "none",
+                          width: "80px",
+                          height: "35px",
+                          border: "1px solid #7d7f85",
+                        }}
+                        maxLength={2}
+                        className="simlingQualityBox"
+                        inputMode="numeric"
+                        onClick={(event) => event.target.select()}
+                        value={lastEnteredQuantity}
+                        onChange={(event) => handleInputChange(event)}
+                      />
+                      <button
+                        className="SmilingUpdateQuantityBtn"
+                        onClick={() =>
+                          handleUpdateQuantity(prodSelectData?.designno)
+                        }
+                      >
+                        QTY
+                      </button>
+                    </div>
+
+                    <div
+                      className="smilingAddresingleMobileMain"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginLeft: "30px",
+                      }}
+                    >
+                      <textarea
+                        type="text"
+                        placeholder="Enter Remarks..."
+                        value={remarks}
+                        onChange={(event) => handleInputChangeRemarks(event)}
+                        className="YourCartMainRemkarBoxSingle"
+                      />
+                      <button
+                        onClick={() => handleSubmit(cartSelectData)}
+                        className="SmilingAddSingleRemkarBtn"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            )}
+            </div>
           </div>
-        </CustomTabPanel>
-        <Footer />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          paddingBlock: "30px",
-        }}
-      >
-        <p
-          style={{
-            margin: "0px",
-            fontWeight: 500,
-            width: "100px",
-            color: "white",
-            cursor: "pointer",
-          }}
-          onClick={() => window.scrollTo(0, 0)}
-        >
-          BACK TO TOP
-        </p>
-      </div>
-    </div>
+        )}
+      </Dialog>
+    </>
   );
 }
