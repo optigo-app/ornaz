@@ -8,7 +8,8 @@
     width: 75%;
     display: flex;
     justify-content: center;
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
+    border:1px solid #e1e1e1;
     margin: 2px 20px;
     border-radius: 12px;
     height: 100%;
@@ -30,6 +31,7 @@
     width: 47%;
     border-radius: 5px;
     overflow: hidden;
+    max-height: 250px;
 }
 
 .cartImageShow{
@@ -61,7 +63,7 @@
 .similingCartPageBotttomMain {
     display: flex;
     justify-content: flex-end;
-    margin: 5px 40px 10px 0px;
+    margin-top: 15px;
 }
 
 .smilingCartPageTab1Main {
