@@ -156,7 +156,6 @@ export default function Cart({ open, toggleCartDrawer }) {
                 const sizeDropdownData = response.Data.rd;
                 setGetAllFilterSizeData(response.Data.rd1)
                 const selectElement = document.getElementById(`sizeDropdown_${index}`);
-                console.log('sizeDropdownDatasizeDropdownDatasizeDropdownData', sizeDropdownData);
                 if (selectElement) {
                     if (sizeDropdownData.length === 0) {
                         selectElement.innerHTML = '';
@@ -455,10 +454,6 @@ export default function Cart({ open, toggleCartDrawer }) {
             ele?.B === cartData?.designno &&
             ele?.D === selectedMetalType
             );
-
-
-            console.log("mtrd", Object.values(Object.fromEntries(Object.entries(selectedMetalType).filter(([key, value]) => key === cartData.autocode))))
-            
         })
     }, [selectedMetalType])
 
@@ -470,7 +465,6 @@ export default function Cart({ open, toggleCartDrawer }) {
     const handelSize = (selectedId) => {
         const sizeData = allSelectedSizeData.find(item => item.id === parseInt(selectedId));
         if (sizeData) {
-            console.log('Selected size:', sizeData.sizename);
             const filteredData = getAllFilterSizeData?.filter(item => item.sizename === sizeData.sizename);
             const filteredDataMetal = filteredData?.filter(item => item.DiamondStoneTypeName === "METAL");
             const filteredDataDaimond = filteredData?.filter(item => item.DiamondStoneTypeName === "DIAMOND");
@@ -479,10 +473,6 @@ export default function Cart({ open, toggleCartDrawer }) {
         }
 
     }
-
-    console.log("metalFilterData", metalFilterData)
-    console.log("daimondFilterData", daimondFilterData)
-
 
     return (
         <Drawer

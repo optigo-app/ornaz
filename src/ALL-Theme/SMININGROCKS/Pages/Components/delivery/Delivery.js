@@ -564,16 +564,27 @@ export default function Delivery() {
                             {
                                 addressData?.map((item, index) => (
                                     <div key={item.id} className='AddressMain' onClick={() => handleDefaultSelection(item.id)}>
-                                        <div style={{display: 'flex' ,height: '25px'}}>
+                                        <div style={{ display: 'flex', height: '25px' }}>
                                             <input
                                                 type="radio"
                                                 checked={item.isdefault === 1}
                                                 onChange={() => handleDefaultSelection(item.id)}
-                                                style={{ color: 'red' }} 
+                                                style={{ color: 'red' }}
                                             />
-                                            {item.isdefault === 1 && <p style={{color: '#7d7f85' ,margin: '0px 0px 0px 5px', fontWeight: 500}}>Selected</p>}
+                                            {/* <span
+                                                style={{
+                                                    display: 'inline-block',
+                                                    width: '12px', 
+                                                    height: '12px', 
+                                                    borderRadius: '50%',
+                                                    marginTop: '7px',
+                                                    backgroundColor: item.isdefault === 1 ? '#7d7f85' : 'transparent', 
+                                                    border: '1px solid #999',
+                                                }}
+                                            /> */}
+                                            {item.isdefault === 1 && <p style={{ margin: '0px 0px 0px 5px'}}>Selected</p>}
                                         </div>
-                                        <p style={{margin: '10px 0px 0px 0px'}}>{item.addressprofile}</p>
+                                        <p style={{ margin: '10px 0px 0px 0px' }}>{item.addressprofile}</p>
                                         <p className='addressData'>{item.shippingfirstname}</p>
                                         <p className='addressData'>{item.street}</p>
                                         <p className='addressData'>{item.city}-{item.zip}</p>

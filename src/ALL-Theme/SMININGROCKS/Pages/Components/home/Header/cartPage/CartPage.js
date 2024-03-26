@@ -85,7 +85,7 @@ export default function CartPage() {
   const [selectedColor, setSelectedColor] = useState()
   const [getPriceData, setGetPriceData] = useState([])
 
-  const [dialogOpen,setDialogOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   const setCartCount = useSetRecoilState(CartListCounts);
   const setWishCount = useSetRecoilState(WishListCounts);
@@ -118,25 +118,22 @@ export default function CartPage() {
     });
   };
 
-  console.log("cartListData1122",cartListData)
-
   useEffect(() => {
     if (cartListData && !cartSelectData) {
       setCartSelectData(cartListData[0]);
       getSizeData(cartListData[0]?.autocode);
     }
-  }, [cartListData,cartSelectData]);
+  }, [cartListData, cartSelectData]);
 
 
   useEffect(() => {
+    console.log('getPriceDatagetPriceData',getPriceData);
     let mtrd = getPriceData?.rd?.filter(
       (ele) =>
         ele?.A === cartSelectData?.autocode &&
         ele?.B === cartSelectData?.designno &&
         ele?.D === mtTypeOption
     );
-
-    console.log("mtrd",mtrd)
 
 
     if (mtrd && mtrd.length > 0) {
@@ -451,8 +448,6 @@ export default function CartPage() {
         FrontEnd_RegNo: `${FrontEnd_RegNo}`,
         Customerid: `${customerID}`,
       });
-      console.log('combinedValuecombinedValuecombinedValue',combinedValue);
-
       const encodedCombinedValue = btoa(combinedValue);
       const body = {
         con: `{\"id\":\"\",\"mode\":\"UpdateQuantity\",\"appuserid\":\"${userEmail}\"}`,
@@ -460,7 +455,6 @@ export default function CartPage() {
         p: encodedCombinedValue,
       };
       const response = await CommonAPI(body);
-      console.log('resssssssss',response);
       if (response.Data.rd[0].stat === 1) {
         await getCartData()
         toast.success("QTY change successfully");
@@ -518,9 +512,6 @@ export default function CartPage() {
 
   useEffect(() => {
     const prodData = JSON.parse(localStorage.getItem("allproductlist"))
-
-    console.log("cartListData",cartListData);
-
     let isCartData = cartSelectData ? cartSelectData : cartListData[0]
 
     const finalProdData = prodData.filter(
@@ -596,7 +587,10 @@ export default function CartPage() {
     //     }
   };
 
-  console.log('cartSelectDatacartSelectData', cartSelectData);
+  console.log('cartSelectData', cartSelectData?.UnitCost);
+  console.log('dqcData', dqcData?.S);
+  console.log('csqcData', csqcData?.S);
+  console.log('mtrdData', mtrdData?.Z);
 
   return (
     <>
@@ -725,22 +719,6 @@ export default function CartPage() {
                   <div className="mainCartContainer">
                     {!isLoading && (
                       <div className="resproDet">
-                        <div>
-                          <div
-                            style={{
-                              cursor: "pointer",
-                              position: "absolute",
-                              right: "12px",
-                              top: "12px",
-                              borderRadius: "12px",
-                            }}
-                            onClick={() => setDialogOpen(false)}
-                          >
-                            <CloseIcon
-                              sx={{ color: "black", fontSize: "30px" }}
-                            />
-                          </div>
-                        </div>
                         <div
                           className="smilingCartDeatilSub1"
                           style={{
@@ -761,7 +739,7 @@ export default function CartPage() {
                               }}
                             />
 
-                            <div>
+                            <div style={{ width: '550px' }}>
                               <div
                                 style={{
                                   width: "100%",
@@ -777,19 +755,18 @@ export default function CartPage() {
                                     color: "#7d7f85",
                                     lineHeight: "40px",
                                     marginBottom: "14px",
+                                    textOverflow: 'ellipsis',
+                                    overflow: 'hidden',
+                                    whiteSpace: 'none',
+                                    height: '40px',
+                                    width: '70%'
                                   }}
                                   className="prodTitleLine"
                                 >
                                   {prodSelectData?.TitleLine}
                                 </div>
 
-                                {/* <Divider
-                    sx={{
-                        margin: "12px",
-                        backgroundColor: "#e1e1e1",
-                        marginLeft: "-5px",
-                    }}
-                    /> */}
+
                                 <div
                                   style={{
                                     borderTop: "1px solid #e1e1e1",
@@ -983,58 +960,58 @@ export default function CartPage() {
                                   {(sizeData?.length !== 0 ||
                                     (productData?.DefaultSize &&
                                       productData.DefaultSize.length !==
-                                        0)) && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        width: "49%",
-                                        marginTop: "30px",
-                                      }}
-                                    >
-                                      <label
+                                      0)) && (
+                                      <div
                                         style={{
-                                          fontSize: "12.5px",
-                                          color: "#7d7f85",
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          width: "49%",
+                                          marginTop: "30px",
                                         }}
                                       >
-                                        SIZE:
-                                      </label>
-                                      <select
-                                        style={{
-                                          border: "none",
-                                          outline: "none",
-                                          color: "#7d7f85",
-                                          fontSize: "12.5px",
-                                        }}
-                                        onChange={(e) =>
-                                          handelSize(e.target.value)
-                                        }
-                                        defaultValue={
-                                          productData && productData.DefaultSize
-                                            ? productData.DefaultSize
-                                            : sizeData.find(
+                                        <label
+                                          style={{
+                                            fontSize: "12.5px",
+                                            color: "#7d7f85",
+                                          }}
+                                        >
+                                          SIZE:
+                                        </label>
+                                        <select
+                                          style={{
+                                            border: "none",
+                                            outline: "none",
+                                            color: "#7d7f85",
+                                            fontSize: "12.5px",
+                                          }}
+                                          onChange={(e) =>
+                                            handelSize(e.target.value)
+                                          }
+                                          defaultValue={
+                                            productData && productData.DefaultSize
+                                              ? productData.DefaultSize
+                                              : sizeData.find(
                                                 (size) =>
                                                   size.IsDefaultSize === 1
                                               )?.id
-                                        }
-                                      >
-                                        {sizeData?.map((size) => (
-                                          <option
-                                            key={size.id}
-                                            value={size.sizename} // Pass sizename as value
-                                            selected={
-                                              productData &&
-                                              productData.DefaultSize ===
+                                          }
+                                        >
+                                          {sizeData?.map((size) => (
+                                            <option
+                                              key={size.id}
+                                              value={size.sizename} // Pass sizename as value
+                                              selected={
+                                                productData &&
+                                                productData.DefaultSize ===
                                                 size.sizename
-                                            }
-                                          >
-                                            {size.sizename}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                  )}
+                                              }
+                                            >
+                                              {size.sizename}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                    )}
                                 </div>
                               </div>
                               <div
@@ -1129,7 +1106,7 @@ export default function CartPage() {
                         </div>
                       </div>
                     )}
-                    {!isLoading &&<div className="cartProdSection resCon">
+                    {!isLoading && <div className="cartProdSection resCon">
                       <div
                         // style={{
                         //   display: "flex",
@@ -1563,50 +1540,50 @@ export default function CartPage() {
                       {(sizeData?.length !== 0 ||
                         (productData?.DefaultSize &&
                           productData.DefaultSize.length !== 0)) && (
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            width: "49%",
-                            marginTop: "30px",
-                          }}
-                        >
-                          <label
-                            style={{ fontSize: "12.5px", color: "#7d7f85" }}
-                          >
-                            SIZE:
-                          </label>
-                          <select
+                          <div
                             style={{
-                              border: "none",
-                              outline: "none",
-                              color: "#7d7f85",
-                              fontSize: "12.5px",
+                              display: "flex",
+                              flexDirection: "column",
+                              width: "49%",
+                              marginTop: "30px",
                             }}
-                            onChange={(e) => handelSize(e.target.value)}
-                            defaultValue={
-                              productData && productData.DefaultSize
-                                ? productData.DefaultSize
-                                : sizeData.find(
+                          >
+                            <label
+                              style={{ fontSize: "12.5px", color: "#7d7f85" }}
+                            >
+                              SIZE:
+                            </label>
+                            <select
+                              style={{
+                                border: "none",
+                                outline: "none",
+                                color: "#7d7f85",
+                                fontSize: "12.5px",
+                              }}
+                              onChange={(e) => handelSize(e.target.value)}
+                              defaultValue={
+                                productData && productData.DefaultSize
+                                  ? productData.DefaultSize
+                                  : sizeData.find(
                                     (size) => size.IsDefaultSize === 1
                                   )?.id
-                            }
-                          >
-                            {sizeData?.map((size) => (
-                              <option
-                                key={size.id}
-                                value={size.sizename} // Pass sizename as value
-                                selected={
-                                  productData &&
-                                  productData.DefaultSize === size.sizename
-                                }
-                              >
-                                {size.sizename}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      )}
+                              }
+                            >
+                              {sizeData?.map((size) => (
+                                <option
+                                  key={size.id}
+                                  value={size.sizename} // Pass sizename as value
+                                  selected={
+                                    productData &&
+                                    productData.DefaultSize === size.sizename
+                                  }
+                                >
+                                  {size.sizename}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        )}
                     </div>
                   </div>
                   <div
