@@ -20,8 +20,12 @@
     width: 7.14%;
 }
 .daybtn{
-    height: 35px;
-    width: 35px;
+    /* height: 35px;
+    width: 35px; */
+    min-height: 42px;
+    max-height: 42px;
+    min-width: 45px;
+    padding: 5px !important;
 }
 .daybtn:hover{
     background-color: rgb(210, 213, 213);
