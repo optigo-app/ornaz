@@ -578,29 +578,60 @@ const ProductList = () => {
     }));
   }
 
-  // console.log("filterChecked",filterChecked)
+
+  // useEffect(() => {
+  //   let FilterDataVar = [];
+  //   let NewFilterArr = Object?.values(filterChecked).filter((ele) => ele?.checked === true)
+  //   NewFilterArr.map((ele) => {
+  //     let fd = ProductApiData2.filter((pd) => pd[ele?.type] === ele?.value)
+  //     if (fd) {
+  //       FilterDataVar.push(fd)
+  //     }
+  //   })
+
+  //   console.log("filterDataVar",NewFilterArr)
+
+  //   if (FilterDataVar.length && FilterDataVar) {
+  //     let reverseData = FilterDataVar.reverse()
+  //     const mergedArray = [].concat(...reverseData);
+  //     setNewProData(mergedArray)
+  //     // console.log("FilterDataVar", mergedArray)
+  //   } else {
+  //     setNewProData(ProductApiData2)
+  //   }
+
+  // }, [filterChecked])
 
   useEffect(() => {
-    let FilterDataVar = [];
-    let NewFilterArr = Object?.values(filterChecked).filter((ele) => ele?.checked === true)
-    NewFilterArr.map((ele) => {
-      let fd = ProductApiData2.filter((pd) => pd[ele?.type] === ele?.value)
-      if (fd) {
-        FilterDataVar.push(fd)
-      }
-    })
-    if (FilterDataVar.length && FilterDataVar) {
-      let reverseData = FilterDataVar.reverse()
-      const mergedArray = [].concat(...reverseData);
-      setNewProData(mergedArray)
-      // console.log("FilterDataVar", mergedArray)
-    } else {
-      setNewProData(ProductApiData2)
+    let filteredData = ProductApiData2;
+
+    const activeFilters = Object.values(filterChecked).filter(ele => ele.checked);
+
+    if (activeFilters.length > 0) {
+        filteredData = filteredData.filter(product => {
+            // Group filters by type
+            const filtersByType = activeFilters.reduce((acc, filter) => {
+                acc[filter.type] = acc[filter.type] || [];
+                acc[filter.type].push(filter);
+                return acc;
+            }, {});
+
+            // console.log("filtersByType",Object.values(filtersByType).every)
+
+          
+            // return Object.values(filtersByType).every(filters => {
+            //     return filters.some(filter => product[filter.type] === filter.value);
+            // });
+
+            return Object.values(filtersByType).every(filters => {
+              const filterResults = filters.map(filter => product[filter.type] === filter.value);
+              return filterResults.some(result => result);
+          });
+        });
     }
 
-  }, [filterChecked])
-
-
+    setNewProData(filteredData);
+}, [filterChecked]);
 
 
   const getCartAndWishListData = async () => {
