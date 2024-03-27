@@ -9,7 +9,6 @@
 }
 
 .smilingdeliverBox1{
-    width: 60%;
     margin-top: 8%;
 }
 
@@ -26,16 +25,20 @@
 
 .AddressMain{
     border: 1px solid #ccc;
-    width: 220px;
+    width: 350px;
     word-wrap: break-word;
-    margin: 5px;
-    padding: 5px;
+    margin-right: 5px;
+    padding: 22px;
     cursor: pointer;
     border-radius: 5px;
     position: relative;
 }
 .addressData{
     margin: 0px;
+    font-family: 'TTCommons-Medium,Helvetica,sans-serif';
+    color: rgb(125, 127, 133);
+    text-transform: capitalize;
+    /* font-family: "FreightDisp Pro Medium"; */
 }
 
 .deliveryAddressEdit{
@@ -44,8 +47,6 @@
     justify-content: center;
     align-items: center;
     height: 30px;
-    background-color: white;
-    border: 1px solid lightgray;
     margin-inline: 2px;
     cursor: pointer;
 }
@@ -60,8 +61,6 @@
     justify-content: center;
     align-items: center;
     height: 30px;
-    background-color: white;
-    border: 1px solid lightgray;
     margin-inline: 2px;
     cursor: pointer;
 }
