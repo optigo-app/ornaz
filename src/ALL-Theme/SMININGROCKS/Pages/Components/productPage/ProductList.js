@@ -516,27 +516,44 @@ const ProductList = () => {
     } catch (error) {
       console.error("Error storing data in localStorage:", error);
     }
-  }, [WishData, ProductApiData2]);
+  }, [WishData, ProductApiData2])
 
-  let cartlistUpdate = async () => {
-    let newCartCheckData = (ProductApiData2)?.map((pd) => {
+  //let cartlistUpdate = async () => {
+    // let newCartCheckData = (ProductApiData2)?.map((pd) => {
+      
+    //   let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
+      
 
-      let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
-
-      let checkFlag = false
-      if (newWish) {
-        checkFlag = true
-      } else {
-        checkFlag = false
-      }
-      return { ...pd, checkFlag }
-    })
-    setProductApiData2(newCartCheckData)
-  }
+    //   let checkFlag = false
+    //   if (newWish) {
+    //     checkFlag = true
+    //   } else {
+    //     checkFlag = false
+    //   }
+    //   return { ...pd, checkFlag }
+    // })
+    // setProductApiData2(newCartCheckData)
+    // if(newCartCheckData){
+    //   localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+    // }
+  //}
 
   useEffect(() => {
-    cartlistUpdate()
-  }, [cartData])
+    let newCartCheckData = (ProductApiData2 || []).map((pd) => {
+      const newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode);
+      let checkFlag = !!newWish;
+      return { ...pd, checkFlag };
+    });
+
+    try {
+      localStorage.setItem("allproductlist", JSON.stringify(newCartCheckData));
+      if (JSON.stringify(newCartCheckData) !== JSON.stringify(ProductApiData2)) {
+        setProductApiData2(newCartCheckData);
+      }
+    } catch (error) {
+      console.error("Error storing data in localStorage:", error);
+    }
+  }, [cartData,ProductApiData2])
 
 
   const handelProductSubmit = (product) => {
@@ -1412,9 +1429,6 @@ const ProductList = () => {
     </Box>
   );
 
-
-
-
   const [selectedSortOption, setSelectedSortOption] = useState('None');
 
   useEffect(() => {
@@ -1767,7 +1781,6 @@ const ProductList = () => {
                   {/* RollOverImageName */}
                   {/* {(newProData.length ? newProData : finalDataOfDisplaying())?.map((products, i) => ( */}
                   {(newProData?.length ? newProData : ProductApiData2)?.map((products, i) => (
-
                     <div
                       style={{
                         width: "33.33%",
@@ -1778,7 +1791,6 @@ const ProductList = () => {
                         zIndex: 0,
                       }}
                       className="smilingProductImageBox"
-
                     >
                       {products?.designno === "S24705E"  && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
                       {products?.designno === "S24705" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
@@ -1856,8 +1868,6 @@ const ProductList = () => {
                         </div>
                       </div>
 
-
-
                       <div style={{ position: "absolute", zIndex: 999999, top: 0, right: 0, display: 'flex' }}>
                         <div>
                           <Checkbox
@@ -1877,7 +1887,6 @@ const ProductList = () => {
                             checked={products?.wishCheck}
                             onChange={(e) => handelWishList(e, products)}
                           />
-
                         </div>
                         <div>
                           <Checkbox
@@ -1937,8 +1946,6 @@ const ProductList = () => {
                       )} */}
                     </div>
                   ))}
-
-
                 </div>
               </div>
             </div>
