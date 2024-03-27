@@ -406,6 +406,7 @@ export default function Delivery() {
         }
     };
 
+    console.log('addddddddd',addressData);
     return (
         <div className='paddingTopMobileSet' style={{
             backgroundColor: '#c0bbb1',
@@ -563,14 +564,15 @@ export default function Delivery() {
                         <div className='smilingDeliveyAddressMain' style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {
                                 addressData?.map((item, index) => (
-                                    <div key={item.id} className='AddressMain' onClick={() => handleDefaultSelection(item.id)}>
-                                        <div style={{ display: 'flex', height: '25px' }}>
-                                            <input
+                                    // rgb(245 244 244)   fbfbfb
+                                    <div key={item.id} className='AddressMain' style={{backgroundColor: item.isdefault === 1 && 'rgb(245 244 244)'}} onClick={() => handleDefaultSelection(item.id)}>
+                                        <div style={{ display: 'flex', height: '25px' , justifyContent: 'flex-end'}}>
+                                            {/* <input
                                                 type="radio"
                                                 checked={item.isdefault === 1}
                                                 onChange={() => handleDefaultSelection(item.id)}
                                                 style={{ color: 'red' }}
-                                            />
+                                            /> */}
                                             {/* <span
                                                 style={{
                                                     display: 'inline-block',
@@ -582,15 +584,14 @@ export default function Delivery() {
                                                     border: '1px solid #999',
                                                 }}
                                             /> */}
-                                            {item.isdefault === 1 && <p style={{ margin: '0px 0px 0px 5px'}}>Selected</p>}
+                                            {item.isdefault === 1 && <p style={{ margin: '0px 0px 0px 5px' , backgroundColor: 'blue', fontWeight: 500,borderRadius:'5px', padding: '0px 10px 0px 10px', color: 'white' }}>Selected</p>}
                                         </div>
-                                        <p style={{ margin: '10px 0px 0px 0px' }}>{item.addressprofile}</p>
-                                        <p className='addressData'>{item.shippingfirstname}</p>
+                                        <p className='addressData' style={{ margin: '0px 0px 5px 0px' }}>{item.shippingfirstname} {item.shippinglastname}</p>
                                         <p className='addressData'>{item.street}</p>
                                         <p className='addressData'>{item.city}-{item.zip}</p>
                                         <p className='addressData'>{item.state}</p>
-                                        <p className='addressData' style={{ marginBottom: '35px' }}>{item.shippingmobile}</p>
-                                        <div style={{ position: 'absolute', bottom: '5px', width: '95%', display: 'flex', marginTop: '10px' }}>
+                                        <p className='addressData' style={{ marginBottom: '35px' }}>Phone : {item.shippingmobile}</p>
+                                        <div style={{ position: 'absolute', bottom: '5px', width: '90%', display: 'flex', marginTop: '10px' }}>
                                             <div onClick={() => handleOpen(item, index)} className='deliveryAddressEdit' style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                 <MdEdit />
                                             </div>
@@ -602,10 +603,10 @@ export default function Delivery() {
                                 ))
                             }
                         </div>
-                        <div className='smilingMobileDeliveryBtnMain'>
+                        {!isLoading && <div className='smilingMobileDeliveryBtnMain'>
                             <button className='smilingAddToAddressBtn' onClick={handleOpen}>ADD NEW ADDRESS</button>
                             <button style={{ marginInline: '20px' }} className='smilingAddToAddressBtn' onClick={handleContinue}>Continue</button>
-                        </div>
+                        </div>}
                     </div>
                     {/* <div className='smilingdeliverBox2'> */}
                     {/* <p style={{ fontSize: '30px', fontWeight: 500, color: 'gray' }}>Order Summary</p>

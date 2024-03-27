@@ -266,7 +266,7 @@ export default function Cart({ open, toggleCartDrawer }) {
 
     const submitMainRemrks = async () => {
         if (!Mainremarks || Mainremarks.trim() === '') {
-            alert('Enter a value for remarks.');
+            toast.error("Enter a value for remarks.");
         } else {
             try {
                 setIsLoading(true);
@@ -299,7 +299,7 @@ export default function Cart({ open, toggleCartDrawer }) {
     const handleSubmit = async (index, data) => {
         const remark = remarks[index];
         if (!remark || remark.trim() === '') {
-            alert('Enter a value for remarks.');
+            toast.error("Enter a value for remarks.");
         } else {
 
             try {
@@ -322,9 +322,9 @@ export default function Cart({ open, toggleCartDrawer }) {
                     //   ...prevRemarks,
                     //   [index]: ''
                     // }));
-                    alert('done');
+                    toast.success("Add remark successfully");
                 } else {
-                    alert('Error');
+                    toast.error('Error');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -349,7 +349,7 @@ export default function Cart({ open, toggleCartDrawer }) {
 
     const handleUpdateQuantity = async (num) => {
         if (lastEnteredQuantity.length === 0) {
-            alert('enter value first');
+            toast.error('enter value first');
         } else {
             try {
                 const updatedQuantity = cartListData[lastEnteredQuantityIndex].Quantity;
@@ -807,7 +807,6 @@ export default function Cart({ open, toggleCartDrawer }) {
                                                 style={{
                                                     border: "0px",
                                                     textAlign: "center",
-                                                    outline: "none",
                                                     width: "80px",
                                                     height: '35px',
                                                     border: "1px solid #7d7f85",
