@@ -309,7 +309,8 @@ export default function Header() {
   useEffect(() => {
     const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
     const { IsB2BWebsite } = storeInit;
-    setIsB2BFlaf(IsB2BWebsite);
+    setIsB2BFlaf(1);
+    // setIsB2BFlaf(IsB2BWebsite);
   }, [])
 
   const getMenuApi = async () => {
@@ -340,7 +341,8 @@ export default function Header() {
       getMenuApi()
       const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
       const { IsB2BWebsite } = storeInit;
-      setIsB2BFlaf(IsB2BWebsite);
+      setIsB2BFlaf(1);
+      // setIsB2BFlaf(IsB2BWebsite);
     }
   }, [islogin])
 
