@@ -176,9 +176,9 @@ const OrderHistory = () => {
 
   return (
     <div>
-      <div className="text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-2 yourOrderHistory bg_oh">
+      {/* <div className="text-center text-secondary w-100 fs-4 fw-bold mt-2 pt-2 pb-2 yourOrderHistory bg_oh">
         Your Order History
-      </div>
+      </div> */}
       {loaderOH ? (
         <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "10px" }}><CircularProgress className='loadingBarManage' /></Box>
       ) : (
