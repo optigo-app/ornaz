@@ -80,8 +80,8 @@ export default function CartPage() {
   const [sizeData, setSizeData] = useState([]);
 
   const [mtrdData, setMtrdData] = useState([]);
-  const [dqcData, setDqcData] = useState([]);
-  const [csqcData, setCsqcData] = useState([]);
+  const [dqcData, setDqcData] = useState();
+  const [csqcData, setCsqcData] = useState();
   const [selectedColor, setSelectedColor] = useState()
   const [getPriceData, setGetPriceData] = useState([])
 
@@ -148,20 +148,24 @@ export default function CartPage() {
         ele.J === diaQColOpt?.split("_")[1]
     );
 
+    console.log("diaqcprice",diaqcprice)
+
     if (diaqcprice && diaqcprice.length > 0) {
-      setDqcData(diaqcprice[0] ?? []);
+      let totalPrice =diaqcprice.reduce((acc, obj) => acc + obj.S, 0)
+      setDqcData(totalPrice ?? 0);
     }
 
     let csqcpirce = getPriceData?.rd2?.filter(
       (ele) =>
         ele.A === cartSelectData?.autocode &&
         ele.B === cartSelectData?.designno &&
-        ele.H === cSQopt?.split("-")[0] &&
-        ele.J === cSQopt?.split("-")[1]
+        ele.H === cSQopt?.split("_")[0] &&
+        ele.J === cSQopt?.split("_")[1]
     );
 
     if (csqcpirce && csqcpirce.length > 0) {
-      setCsqcData(csqcpirce[0] ?? []);
+      let totalPrice =csqcpirce.reduce((acc, obj) => acc + obj.S, 0)
+      setCsqcData(totalPrice ?? 0)
     }
   }, [mtTypeOption, diaQColOpt, cSQopt, cartSelectData, getPriceData]);
 
@@ -171,7 +175,7 @@ export default function CartPage() {
     let qualityColor = `${cartSelectData?.diamondquality}_${cartSelectData?.diamondcolor}`;
     setDiaQColOpt(qualityColor);
 
-    let csQualColor = `${cartSelectData?.colorstonequality}-${cartSelectData?.colorstonecolor}`;
+    let csQualColor = `${cartSelectData?.colorstonequality}_${cartSelectData?.colorstonecolor}`;
     setCSQOpt(csQualColor);
 
     setSelectedColor(cartSelectData?.metalcolorname)
@@ -587,10 +591,14 @@ export default function CartPage() {
     //     }
   };
 
-  console.log('cartSelectData', cartSelectData?.UnitCost);
-  console.log('dqcData', dqcData?.S);
-  console.log('csqcData', csqcData?.S);
+  console.log('cartListData', cartListData);
+  console.log('dqcData', dqcData);
+  console.log('csqcData', csqcData);
   console.log('mtrdData', mtrdData?.Z);
+
+  useEffect(()=>{
+
+  },[])
 
   return (
     <>
@@ -946,9 +954,9 @@ export default function CartPage() {
                                             (data, index) => (
                                               <option
                                                 key={index}
-                                                value={`${data.Quality}-${data.color}`}
+                                                value={`${data.Quality}_${data.color}`}
                                               >
-                                                {`${data.Quality}-${data.color}`}
+                                                {`${data.Quality}_${data.color}`}
                                               </option>
                                             )
                                           )}
@@ -1032,8 +1040,8 @@ export default function CartPage() {
                                   {(
                                     cartSelectData?.UnitCost +
                                     (mtrdData?.Z ?? 0) +
-                                    (dqcData?.S ?? 0) +
-                                    (csqcData?.S ?? 0)
+                                    (dqcData ?? 0) +
+                                    (csqcData ?? 0)
                                   ).toFixed(2)}
                                 </span>
                               </div>
@@ -1599,8 +1607,8 @@ export default function CartPage() {
                       {(
                         cartSelectData?.UnitCost +
                         (mtrdData?.Z ?? 0) +
-                        (dqcData?.S ?? 0) +
-                        (csqcData?.S ?? 0)
+                        (dqcData ?? 0) +
+                        (csqcData ?? 0)
                       ).toFixed(2)}
                     </span>
                   </div>

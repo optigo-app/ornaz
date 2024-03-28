@@ -300,6 +300,8 @@ const ProdDetail = () => {
     )
 
 
+    console.log("diaqcprice",diaqcprice)
+
     let showPrice1 = 0;
     if (diaqcprice && diaqcprice.length > 0) {
       showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
@@ -317,9 +319,11 @@ const ProdDetail = () => {
     let csqcpirce = getPriceData?.rd2?.filter((ele) =>
       ele.A === srProductsData?.autocode &&
       ele.B === srProductsData?.designno &&
-      ele.H === cSQopt?.split("-")[0] &&
-      ele.J === cSQopt?.split("-")[1]
+      ele.H === cSQopt?.split("_")[0] &&
+      ele.J === cSQopt?.split("_")[1]
     );
+
+    console.log("csqcpirce1",csqcpirce)
 
     let showPrice2 = 0;
     if (csqcpirce && csqcpirce.length > 0) {
@@ -783,8 +787,8 @@ const ProdDetail = () => {
           // "UnitCost": `${(product?.UnitCost + mtrdData?.Z + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)).toFixed(2)}`,
           // "UnitCostWithmarkup":(`${(product?.price === "Not Available" ? 0 : product?.price) + (product?.markup ?? 0)}`),
           "UnitCostWithmarkup": (`${(product?.UnitCost ?? 0) + (product?.markup ?? 0)}`),
-          "colorstonecolorname": `${cSQopt ? cSQopt?.split('-')[1] : product?.colorstonecolorname}`,
-          "colorstonequality": `${cSQopt ? cSQopt?.split('-')[0] : product?.colorstonequality}`,
+          "colorstonecolorname": `${cSQopt ? cSQopt?.split('_')[1] : product?.colorstonecolorname}`,
+          "colorstonequality": `${cSQopt ? cSQopt?.split('_')[0] : product?.colorstonequality}`,
           // "diamondcolorname": `${product?.diamondcolorname ? product?.diamondcolorname : diaQColOpt?.split('_')[1]}`,
           "diamondcolorname": `${diaQColOpt ? diaQColOpt?.split('_')[1] : product?.diamondcolorname}`,
           "diamondpcs": Number(`${product?.diamondpcs}`),
@@ -1672,9 +1676,9 @@ const ProdDetail = () => {
                             {DaimondQualityColor.map((data, index) => (
                               <option
                                 key={index}
-                                value={`${data.Quality}-${data.color}`}
+                                value={`${data.Quality}_${data.color}`}
                               >
-                                {`${data.Quality}-${data.color}`}
+                                {`${data.Quality}_${data.color}`}
                               </option>
                             ))}
                           </select>
