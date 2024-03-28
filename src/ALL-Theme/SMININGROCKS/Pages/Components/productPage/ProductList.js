@@ -30,9 +30,6 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-const minDistance = 10;
-
-
 const ProductList = () => {
 
   const ProductData2 = [];
@@ -42,8 +39,8 @@ const ProductList = () => {
   const [ProductApiData2, setProductApiData2] = useState([])
   const [drawerShowOverlay, setDrawerShowOverlay] = useState(false)
   const [filterChecked, setFilterChecked] = useState({})
-  const [wishFlag, setWishFlag] = useState(false)
-  const [cartFlag, setCartFlag] = useState(false)
+  const [wishFlag, setWishFlag] = useState({})
+  const [cartFlag, setCartFlag] = useState({})
   const [cartData, setCartData] = useState([])
   const [WishData, setWishData] = useState([])
   const [cartRemoveData, setCartRemoveData] = useState("")
@@ -102,6 +99,7 @@ const ProductList = () => {
   const [isMetalTCShow, setIsMetalTCShow] = useState('');
   const [isPriceShow, setIsPriceShow] = useState('');
 
+  // console.log({cartFlag,wishFlag});
 
   useEffect(() => {
     setNewProData(getSearchData)
@@ -148,7 +146,6 @@ const ProductList = () => {
         );
 
         let price = 0;
-        let isLoading = true;
         let markup = 0;
         let metalrd = 0;
         let diard1 = 0;
@@ -160,13 +157,9 @@ const ProductList = () => {
           diard1 = newPriceData1?.S
           csrd2 = newPriceData2?.S ?? 0
           markup = newPriceData?.AB
-          isLoading = false;
-        }
-        else {
-          isLoading = false;
         }
 
-        return { ...product, price, isLoading, markup, metalrd, diard1, csrd2 };
+        return { ...product, price, markup, metalrd, diard1, csrd2 }
       }));
 
       localStorage.setItem("allproductlist", JSON.stringify(updatedData));
@@ -175,6 +168,7 @@ const ProductList = () => {
 
     fetchData();
   }, [priceDataApi]);
+
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
   };
@@ -502,6 +496,26 @@ const ProductList = () => {
   //     setProductApiData2(product)
 
   useEffect(() => {
+    // let newWishCheckData = (ProductApiData2)?.map((pd) => {
+      
+    //   let newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
+      
+
+    //   let wishCheck = false
+    //   if (newWish?.length && newWish) {
+    //     wishCheck = true
+    //   } else {
+    //     wishCheck = false
+    //   }
+    //   return { ...pd, wishCheck }
+    // })
+    // setProductApiData2(newWishCheckData)
+    // if(newWishCheckData?.length && newWishCheckData){
+    //   console.log("updateWish",newWishCheckData);
+    //   // debugger
+    //   localStorage.setItem("allproductlist",JSON.stringify(newWishCheckData))
+    // }
+
     let newWishCheckData = (ProductApiData2 || []).map((pd) => {
       const newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode);
       let wishCheck = !!newWish;
@@ -516,44 +530,45 @@ const ProductList = () => {
     } catch (error) {
       console.error("Error storing data in localStorage:", error);
     }
-  }, [WishData, ProductApiData2])
+  }, [WishData,ProductApiData2])
 
-  //let cartlistUpdate = async () => {
-  // let newCartCheckData = (ProductApiData2)?.map((pd) => {
+  let cartlistUpdate = async () => {
+    let newCartCheckData = (ProductApiData2)?.map((pd) => {
+      
+      let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
+      
 
-  //   let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
-
-
-  //   let checkFlag = false
-  //   if (newWish) {
-  //     checkFlag = true
-  //   } else {
-  //     checkFlag = false
-  //   }
-  //   return { ...pd, checkFlag }
-  // })
-  // setProductApiData2(newCartCheckData)
-  // if(newCartCheckData){
-  //   localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
-  // }
-  //}
+      let checkFlag = false
+      if (newWish) {
+        checkFlag = true
+      } else {
+        checkFlag = false
+      }
+      return { ...pd, checkFlag }
+    })
+    setProductApiData2(newCartCheckData)
+    if(newCartCheckData){
+      localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+    }
+  }
 
   useEffect(() => {
-    let newCartCheckData = (ProductApiData2 || []).map((pd) => {
-      const newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode);
-      let checkFlag = !!newWish;
-      return { ...pd, checkFlag };
-    });
+    // let newCartCheckData = (ProductApiData2 || []).map((pd) => {
+    //   const newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode);
+    //   let checkFlag = !!newWish;
+    //   return { ...pd, checkFlag };
+    // });
 
-    try {
-      localStorage.setItem("allproductlist", JSON.stringify(newCartCheckData));
-      if (JSON.stringify(newCartCheckData) !== JSON.stringify(ProductApiData2)) {
-        setProductApiData2(newCartCheckData);
-      }
-    } catch (error) {
-      console.error("Error storing data in localStorage:", error);
-    }
-  }, [cartData, ProductApiData2])
+    // try {
+    //   localStorage.setItem("allproductlist", JSON.stringify(newCartCheckData));
+    //   if (JSON.stringify(newCartCheckData) !== JSON.stringify(ProductApiData2)) {
+    //     setProductApiData2(newCartCheckData);
+    //   }
+    // } catch (error) {
+    //   console.error("Error storing data in localStorage:", error);
+    // }
+    cartlistUpdate()
+  }, [cartData])
 
 
   const handelProductSubmit = (product) => {
@@ -678,6 +693,21 @@ const ProductList = () => {
 
   }
 
+  useEffect(()=>{
+    let newData = Object.keys(cartFlag).filter((cf)=>Object.keys(wishFlag).find((wf)=>wf===cf))
+
+    // const cartFlagKeys = Object.keys(cartFlag);
+    // const updatedWishFlag = { ...wishFlag };
+
+    // cartFlagKeys.forEach((cf) => {
+    //   if (updatedWishFlag.hasOwnProperty(cf)) {
+    //     delete updatedWishFlag[cf];
+    //   }
+    // });
+    console.log({cartFlag,wishFlag},newData)
+
+  },[cartFlag,wishFlag])
+
   useEffect(() => {
 
     getCartAndWishListData()
@@ -686,10 +716,10 @@ const ProductList = () => {
 
   }, [])
 
-  const handelWishList = async (event, prod) => {
+  const handelWishList = async (event, prod) => {   
 
     try {
-      setWishFlag(event.target.checked)
+      setWishFlag(prev => ({ ...prev, [prod?.designno]: event.target.checked }))
 
       if (event.target.checked === true) {
 
@@ -785,7 +815,6 @@ const ProductList = () => {
           "ukey": `${storeInit?.ukey}`
         }
 
-
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
 
         const body = {
@@ -795,9 +824,7 @@ const ProductList = () => {
         };
 
         await CommonAPI(body).then(async (res) => {
-
           if (res?.Data?.rd[0]?.msg === "success") {
-
             await getCartAndWishListData()
             getCountFunc()
           }
@@ -844,7 +871,8 @@ const ProductList = () => {
   const handelCartList = async (event, prod) => {
 
     try {
-      setCartFlag(event.target.checked)
+      setCartFlag(prev => ({ ...prev, [prod?.designno]: event.target.checked }))
+
 
       if (event.target.checked === true) {
         const storeInit = JSON.parse(localStorage.getItem("storeInit"))
@@ -857,8 +885,6 @@ const ProductList = () => {
         // console.log("isWishHasCartData", isWishHasCartData)
 
         let wishToCartEncData = { "autocodelist": `${isWishHasCartData[0]?.autocode}`, "ischeckall": 0, "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` }
-
-
 
         const finalJSON = {
           "stockweb_event": "",
@@ -969,19 +995,16 @@ const ProductList = () => {
           p: wishToCartEncData1
         }
 
-
-
-
         await CommonAPI(isWishHasCartData.length ? body1 : body).then(async (res) => {
           // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
-          if (!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success") {
+          if (!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success") { //ADDTOCART
             await getCartAndWishListData()
             // await getCountApi()
             getCountFunc()
             // prod.checkFlag=false
           }
 
-          if (isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success") {
+          if (isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success") { //ADDWISHLISTTOCART
             await getCartAndWishListData()
             // await getCountApi()
             getCountFunc()
@@ -1887,6 +1910,7 @@ const ProductList = () => {
                             disableRipple={true}
                             sx={{ padding: "5px" }}
 
+                            // checked={wishFlag[products?.designno] ?? products?.wishCheck}
                             checked={products?.wishCheck}
                             onChange={(e) => handelWishList(e, products)}
                           />
@@ -1906,6 +1930,7 @@ const ProductList = () => {
                             disableRipple={true}
                             sx={{ padding: "5px" }}
 
+                            // checked={cartFlag[products?.designno] ?? products?.checkFlag}
                             checked={products?.checkFlag}
                             onChange={(e) => handelCartList(e, products)}
                           />

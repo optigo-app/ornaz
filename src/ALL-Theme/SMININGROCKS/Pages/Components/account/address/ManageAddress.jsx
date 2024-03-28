@@ -438,7 +438,7 @@ const ManageAddress = () => {
 
     return (
         <div>
-            <p style={{
+            {/* <p style={{
                 textAlign: 'center',
                 padding: "15px 15px",
                 marginTop: '30px',
@@ -446,9 +446,9 @@ const ManageAddress = () => {
                 background: '#7d7f85',
                 color: "#fff",
                 fontWeight: "500",
-            }} className='savedAddress'>Saved Addresses</p>
+            }} className='savedAddress'>Saved Addresses</p> */}
             <Box sx={{ paddingLeft: "15px" }}>
-                <Button className='muiSmilingRocksBtnManage savedAddressManageBtn' variant="contained" sx={{ background: "#7d7f85", padding: "6px 15px", textAlign: "end", fontSize: "0.9rem", marginBottom: "10px", borderRadius: "0" }} onClick={handleOpen}>ADD NEW ADDRESS</Button></Box>
+                <Button className='muiSmilingRocksBtnManage savedAddressManageBtn' variant="contained" sx={{ background: "#7d7f85", padding: "6px 15px", textAlign: "end", fontSize: "0.9rem", marginBottom: "10px", marginTop:'18px', borderRadius: "0" }} onClick={handleOpen}>ADD NEW ADDRESS</Button></Box>
             {/* <Button className='smilingAcoountAddNewBtn' sx={{marginLeft: "auto"}} >ADD NEW ADDRESS</Button> */}
             <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"

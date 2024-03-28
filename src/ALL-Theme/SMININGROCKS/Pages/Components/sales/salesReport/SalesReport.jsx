@@ -400,26 +400,12 @@ const SalesReport = () => {
             ) || (searchValue?.trim()?.toLowerCase() === "")) {
                 flags.searchValue = true;
             }
-
+            console.log(grossWtFrom, grossWtTo);
             if ((grossWtFrom?.trim() === "") || (+grossWtFrom <= e?.GrossWt)) {
                 flags.grossWtFrom = true;
-                  count = count+1;
-                Swal.fire({
-                    title: "Error !",
-                    text: "Enter date From",
-                    icon: "error",
-                    confirmButtonText: "ok"
-                });
             }
             if ((grossWtTo?.trim() === "") || (+grossWtTo >= e?.GrossWt)) {
                 flags.grossWtTo = true;
-                    count = count+1;
-                Swal.fire({
-                    title: "Error !",
-                    text: "Enter date To",
-                    icon: "error",
-                    confirmButtonText: "ok"
-                });
             }
             if (grossWtFrom?.trim() === "" && grossWtTo?.trim() !== "") {
                 flags.grossWtTo = true;
@@ -455,7 +441,6 @@ const SalesReport = () => {
             setFilterData(datass);
         }
         else{
-            console.log("asjkcdnhajksdhsh");
             setFilterData(data);
             resetAllFilters();
 
