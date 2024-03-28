@@ -585,6 +585,7 @@ export default function Delivery() {
                                                 }}
                                             /> */}
                                             {item.isdefault === 1 && <p style={{ margin: '0px 0px 0px 5px' , backgroundColor: 'blue', fontWeight: 500,borderRadius:'5px', padding: '0px 10px 0px 10px', color: 'white' }}>Selected</p>}
+                                            {/* {item.isdefault !== 1 && <p style={{ margin: '0px 0px 0px 5px' , backgroundColor: 'blue', fontWeight: 500,borderRadius:'5px', padding: '0px 10px 0px 10px', color: 'white' }}>Click Select</p>} */}
                                         </div>
                                         <p className='addressData' style={{ margin: '0px 0px 5px 0px' }}>{item.shippingfirstname} {item.shippinglastname}</p>
                                         <p className='addressData'>{item.street}</p>

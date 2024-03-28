@@ -86,6 +86,10 @@
         display: none;
     }
 
+    .smilingFilterweb{
+        display: none!important;
+    }
+
     .smilingProductMain {
         margin-inline: 2%;
     }

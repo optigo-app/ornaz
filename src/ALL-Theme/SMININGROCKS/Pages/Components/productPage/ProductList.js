@@ -112,10 +112,10 @@ const ProductList = () => {
     setProductApiData2(data)
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     const data = JSON.parse(localStorage.getItem("getPriceData"));
     setpriceDataApi(data)
-  },[])
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -519,23 +519,23 @@ const ProductList = () => {
   }, [WishData, ProductApiData2])
 
   //let cartlistUpdate = async () => {
-    // let newCartCheckData = (ProductApiData2)?.map((pd) => {
-      
-    //   let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
-      
+  // let newCartCheckData = (ProductApiData2)?.map((pd) => {
 
-    //   let checkFlag = false
-    //   if (newWish) {
-    //     checkFlag = true
-    //   } else {
-    //     checkFlag = false
-    //   }
-    //   return { ...pd, checkFlag }
-    // })
-    // setProductApiData2(newCartCheckData)
-    // if(newCartCheckData){
-    //   localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
-    // }
+  //   let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
+
+
+  //   let checkFlag = false
+  //   if (newWish) {
+  //     checkFlag = true
+  //   } else {
+  //     checkFlag = false
+  //   }
+  //   return { ...pd, checkFlag }
+  // })
+  // setProductApiData2(newCartCheckData)
+  // if(newCartCheckData){
+  //   localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+  // }
   //}
 
   useEffect(() => {
@@ -553,7 +553,7 @@ const ProductList = () => {
     } catch (error) {
       console.error("Error storing data in localStorage:", error);
     }
-  }, [cartData,ProductApiData2])
+  }, [cartData, ProductApiData2])
 
 
   const handelProductSubmit = (product) => {
@@ -625,30 +625,30 @@ const ProductList = () => {
     const activeFilters = Object.values(filterChecked).filter(ele => ele.checked);
 
     if (activeFilters.length > 0) {
-        filteredData = filteredData.filter(product => {
-            // Group filters by type
-            const filtersByType = activeFilters.reduce((acc, filter) => {
-                acc[filter.type] = acc[filter.type] || [];
-                acc[filter.type].push(filter);
-                return acc;
-            }, {});
+      filteredData = filteredData.filter(product => {
+        // Group filters by type
+        const filtersByType = activeFilters.reduce((acc, filter) => {
+          acc[filter.type] = acc[filter.type] || [];
+          acc[filter.type].push(filter);
+          return acc;
+        }, {});
 
-            // console.log("filtersByType",Object.values(filtersByType).every)
+        // console.log("filtersByType",Object.values(filtersByType).every)
 
-          
-            // return Object.values(filtersByType).every(filters => {
-            //     return filters.some(filter => product[filter.type] === filter.value);
-            // });
 
-            return Object.values(filtersByType).every(filters => {
-              const filterResults = filters.map(filter => product[filter.type] === filter.value);
-              return filterResults.some(result => result);
-          });
+        // return Object.values(filtersByType).every(filters => {
+        //     return filters.some(filter => product[filter.type] === filter.value);
+        // });
+
+        return Object.values(filtersByType).every(filters => {
+          const filterResults = filters.map(filter => product[filter.type] === filter.value);
+          return filterResults.some(result => result);
         });
+      });
     }
 
     setNewProData(filteredData);
-}, [filterChecked]);
+  }, [filterChecked]);
 
 
   const getCartAndWishListData = async () => {
@@ -1721,10 +1721,12 @@ const ProductList = () => {
                         outline: "none",
                         fontSize: "13px ",
                       }}
+                      onChange={handleSortChange}
+                      value={selectedSortOption}
                     >
-                      <option>RECOMMENDED</option>
-                      <option>PRICE HIGH TO LOW</option>
-                      <option>PRICE LOW TO HIGH</option>
+                      <option value="None">Normal</option>
+                      <option value="PRICE HIGH TO LOW">PRICE HIGH TO LOW</option>
+                      <option value="PRICE LOW TO HIGH">PRICE LOW TO HIGH</option>
                     </select>
                   </div>
                 </div>
@@ -1748,6 +1750,7 @@ const ProductList = () => {
                     justifyContent: "flex-end",
                     marginBottom: '10px'
                   }}
+                  className="smilingFilterweb"
                 >
                   <select
                     style={{
@@ -1792,7 +1795,7 @@ const ProductList = () => {
                       }}
                       className="smilingProductImageBox"
                     >
-                      {products?.designno === "S24705E"  && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
+                      {products?.designno === "S24705E" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
                       {products?.designno === "S24705" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
                       {products?.designno === "MCJ2" && <p id="labelTag_0002388" className="instockP">IN STOCK</p>}
 
@@ -1958,7 +1961,7 @@ const ProductList = () => {
         </div>
       </div>
 
-    </div>
+    </div >
   );
 };
 

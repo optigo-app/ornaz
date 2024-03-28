@@ -79,16 +79,16 @@ const ProdDetail = () => {
   const handelImgLoad = () => {
     setImgLoading(false)
   }
-  
-  console.log('getPriceDatagetPriceData',getPriceData);
+
+  console.log('getPriceDatagetPriceData', getPriceData);
 
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
   let navigate = useNavigate()
 
-  useEffect(()=>{
+  useEffect(() => {
     const data = JSON.parse(localStorage.getItem("getPriceData"))
     setGetPriceData(data)
-  },[])
+  }, [])
 
 
 
@@ -272,15 +272,15 @@ const ProdDetail = () => {
   useEffect(() => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
 
-  console.log("getPriceDatagetPriceData",getPriceData)
-    
+    console.log("getPriceDatagetPriceData", getPriceData)
+
     let mtrd = getPriceData?.rd?.filter((ele) =>
-    ele?.A === srProductsData?.autocode &&
-    ele?.B === srProductsData?.designno &&
-    ele?.D === mtTypeOption
+      ele?.A === srProductsData?.autocode &&
+      ele?.B === srProductsData?.designno &&
+      ele?.D === mtTypeOption
     );
-    
-    
+
+
     // console.log("call11",getPriceData);
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
@@ -323,14 +323,14 @@ const ProdDetail = () => {
     let gt = showPrice + showPrice1 + showPrice2;
     setGrandTotal(gt ?? 0);
 
-  }, [getPriceData,mtTypeOption, diaQColOpt, cSQopt])
+  }, [getPriceData, mtTypeOption, diaQColOpt, cSQopt])
 
 
-  useEffect(()=>{
-    if(mtrdData.U === 1) {
+  useEffect(() => {
+    if (mtrdData.U === 1) {
       handleColorSelection(productData?.MetalColorName)
     }
-  },[mtrdData])
+  }, [mtrdData])
 
   const handelLocalStorage = () => {
     handleColorSelection('Rose Gold');
@@ -1161,20 +1161,20 @@ const ProdDetail = () => {
     setIsVideoPlaying(true);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
 
     let srData = JSON.parse(localStorage.getItem("srProductsData"))
     let price = ((productData?.UnitCost) + (mtrdData?.Z ?? 0) + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + metalUpdatedPrice() + diaUpdatedPrice() + colUpdatedPrice()).toFixed(2)
 
-    if(price){
+    if (price) {
       srData.price = Number(price)
     }
 
-    localStorage.setItem("srProductsData",JSON.stringify(srData))
+    localStorage.setItem("srProductsData", JSON.stringify(srData))
 
-  },[mtrdData,dqcData,csqcData,sizeMarkup,metalUpdatedPrice,diaUpdatedPrice,colUpdatedPrice])
+  }, [mtrdData, dqcData, csqcData, sizeMarkup, metalUpdatedPrice, diaUpdatedPrice, colUpdatedPrice])
 
-  console.log("priceData",productData,productData?.price);
+  console.log("priceData", productData, productData?.price);
 
 
   return (
@@ -1426,7 +1426,7 @@ const ProdDetail = () => {
                       </div>
                     </div>
                   )} */}
-                  
+
                 </div>
                 <div
                   style={{ display: "flex", flexWrap: 'wrap', width: "100%", marginTop: "12px" }}
@@ -1446,30 +1446,30 @@ const ProdDetail = () => {
                       METAL TYPE:
                     </label>
                     {mtrdData.U === 1 ?
-                    <span style={{fontSize: "12.5px",color: "#7d7f85"}}>
-                      {`${productData.MetalPurity} ${productData.MetalTypeName}`}
-                    </span>
-                    :
-                    <select
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        color: "#7d7f85",
-                        fontSize: "12.5px",
-                      }}
-                      defaultValue={mtTypeOption}
-                      onChange={(e) =>{ 
-                        setmtTypeOption(e.target.value)
-                      }}
-                    >
-                      {metalType.map((data, index) => (
-                        <option key={index} value={data.metalType}>
-                          {data.metaltype}
-                        </option>
-                      ))}
-                    </select>}
+                      <span style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                        {`${productData.MetalPurity} ${productData.MetalTypeName}`}
+                      </span>
+                      :
+                      <select
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          color: "#7d7f85",
+                          fontSize: "12.5px",
+                        }}
+                        defaultValue={mtTypeOption}
+                        onChange={(e) => {
+                          setmtTypeOption(e.target.value)
+                        }}
+                      >
+                        {metalType.map((data, index) => (
+                          <option key={index} value={data.metalType}>
+                            {data.metaltype}
+                          </option>
+                        ))}
+                      </select>}
                   </div>}
-                  <Divider
+                  {isMetalCutoMizeFlag == 1 && <Divider
                     orientation="vertical"
                     flexItem
                     style={{
@@ -1478,14 +1478,14 @@ const ProdDetail = () => {
                       margin: "10px 10px 0px 10px",
                       marginTop: '20px'
                     }}
-                  />
+                  />}
 
                   {isMetalCutoMizeFlag == 1 &&
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
-                        width: '49%',
+                        width: '45%',
                         marginTop: '20px'
 
                       }}
@@ -1494,27 +1494,26 @@ const ProdDetail = () => {
                         METAL COLOR:
                       </label>
                       {mtrdData.U === 1 ?
-                       <span style={{fontSize: "12.5px",color: "#7d7f85"}}>
-                        {productData.MetalColorName}
-                       </span>
-                       :
+                        <span style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                          {productData.MetalColorName}
+                        </span>
+                        :
                         <select
-                        style={{
-                          border: "none",
-                          outline: "none",
-                          color: "#7d7f85",
-                          fontSize: "12.5px",
-                        }}
-                        onChange={(e) => handleColorSelection(e.target.value)}
-                      >
-                        {metalColorData.map((colorItem) => (
-                          <option key={colorItem.ColorId} value={colorItem.metalcolorname}>
-                            {colorItem.metalcolorname}
-                          </option>
-                        ))}
-                      </select>}
+                          style={{
+                            border: "none",
+                            outline: "none",
+                            color: "#7d7f85",
+                            fontSize: "12.5px",
+                          }}
+                          onChange={(e) => handleColorSelection(e.target.value)}
+                        >
+                          {metalColorData.map((colorItem) => (
+                            <option key={colorItem.ColorId} value={colorItem.metalcolorname}>
+                              {colorItem.metalcolorname}
+                            </option>
+                          ))}
+                        </select>}
                     </div>}
-
 
                   <Divider sx={{
                     marginTop: '20px', background: '#a9a7a7',
@@ -1532,27 +1531,27 @@ const ProdDetail = () => {
                     <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
                       DAIMOND :
                     </label>
-                   { mtrdData?.U ===1 ?
-                   <span style={{fontSize: "12.5px",color: "#7d7f85"}}>
-                   {`${productData.diamondquality}_${productData.diamondcolorname}`}
-                  </span>
-                   :
-                   <select
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        color: "#7d7f85",
-                        fontSize: "12.5px",
-                      }}
-                      defaultValue={diaQColOpt}
-                      onChange={(e) => setDiaQColOpt(e.target.value)}
-                    >
-                      {colorData?.map((colorItem) => (
-                        <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
-                          {`${colorItem.Quality}_${colorItem.color}`}
-                        </option>
-                      ))}
-                    </select>}
+                    {mtrdData?.U === 1 ?
+                      <span style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                        {`${productData.diamondquality}_${productData.diamondcolorname}`}
+                      </span>
+                      :
+                      <select
+                        style={{
+                          border: "none",
+                          outline: "none",
+                          color: "#7d7f85",
+                          fontSize: "12.5px",
+                        }}
+                        defaultValue={diaQColOpt}
+                        onChange={(e) => setDiaQColOpt(e.target.value)}
+                      >
+                        {colorData?.map((colorItem) => (
+                          <option key={colorItem.ColorId} value={`${colorItem.Quality}_${colorItem.color}`}>
+                            {`${colorItem.Quality}_${colorItem.color}`}
+                          </option>
+                        ))}
+                      </select>}
                   </div>}
                   <Divider
                     orientation="vertical"
@@ -1571,36 +1570,36 @@ const ProdDetail = () => {
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      width: '49%',
+                      width: '45%',
                       marginTop: '20px'
 
                     }}
                   >
-                    <label style={{ fontSize: "12.5px", color: "#7d7f85"}}>
+                    <label style={{ fontSize: "12.5px", color: "#7d7f85" }}>
                       COLOR STONE:
                     </label>
                     {
-                      mtrdData.U === 1 ? 
-                      <span style={{fontSize: "12.5px",color: "#7d7f85"}}>
-                        {`${productData.colorstonequality}-${productData?.colorstonecolorname}`}
-                       </span>
-                      :
-                      <select
-                      style={{
-                        border: "none",
-                        outline: "none",
-                        color: "#7d7f85",
-                        fontSize: "12.5px",
-                      }}
-                      onChange={(e) => setCSQOpt(e.target.value)}
-                      defaultValue={cSQopt}
-                    >
-                      {DaimondQualityColor.map((data, index) => (
-                        <option key={index} value={`${data.Quality}-${data.color}`} >
-                          {`${data.Quality}-${data.color}`}
-                        </option>
-                      ))}
-                    </select>}
+                      mtrdData.U === 1 ?
+                        <span style={{ fontSize: "12.5px", color: "#7d7f85" }}>
+                          {`${productData.colorstonequality}-${productData?.colorstonecolorname}`}
+                        </span>
+                        :
+                        <select
+                          style={{
+                            border: "none",
+                            outline: "none",
+                            color: "#7d7f85",
+                            fontSize: "12.5px",
+                          }}
+                          onChange={(e) => setCSQOpt(e.target.value)}
+                          defaultValue={cSQopt}
+                        >
+                          {DaimondQualityColor.map((data, index) => (
+                            <option key={index} value={`${data.Quality}-${data.color}`} >
+                              {`${data.Quality}-${data.color}`}
+                            </option>
+                          ))}
+                        </select>}
                   </div>}
 
 
@@ -2012,12 +2011,12 @@ const ProdDetail = () => {
             </div>
           </div>
           {(designSetList.length !== 0 && showIcateDesign === 1) &&
-            <div style={{ position: 'relative', marginInline: '10%', display: 'flex', alignItems: 'center', marginBottom: '7%' }}>
-              <div className='similiarBrand' style={{ backgroundColor: 'white', right: '0px', position: 'absolute', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '100px', marginTop: !(productData?.OriginalImagePath) && '120px' }}>
+            <div className='smilingCompleteLookMainWeb' style={{ position: 'relative', marginInline: '10%', display: 'flex', alignItems: 'center', marginBottom: '7%' }}>
+              <div className='similiarBrand' style={{ right: '0px', position: 'absolute', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '100px', marginTop: !(productData?.OriginalImagePath) && '120px' }}>
                 <div style={{ marginBottom: '12px' }}>
                   <span style={{ fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85', fontSize: '26px' }}>Complete The Look</span>
                 </div>
-                <div style={{ border: '1px solid #e1e1e1', borderRadius: '4px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                <div style={{ border: '1px solid #e1e1e1', backgroundColor: 'white', borderRadius: '4px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
                   {
                     designSetList?.map((dsl, i) => (
                       <>
@@ -2044,6 +2043,44 @@ const ProdDetail = () => {
                 </div>
               </div>
               <img src='https://cdn.accentuate.io/3204707942500/4121939443812/Essentials%20(2).jpg?2048x1950' style={{ width: '800px' }} />
+            </div>
+          }
+
+          {(designSetList.length !== 0 && showIcateDesign === 1) &&
+            <div className='smilingCompleteLookMainMobile' style={{ position: 'relative', marginInline: '5%', marginBottom: '7%', marginTop: '20px' }}>
+              <div style={{display: 'flex' ,justifyContent: 'center'}}>
+                <img src='https://cdn.accentuate.io/3204707942500/4121939443812/Essentials%20(2).jpg?2048x1950' className='smilingCompleteLookMainMobileImg'/>
+              </div>
+              <div className='similiarBrand' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '100px', marginTop: !(productData?.OriginalImagePath) && '120px' }}>
+                <div style={{ marginBottom: '12px' }}>
+                  <span style={{ fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85', fontSize: '26px' }}>Complete The Look</span>
+                </div>
+                <div style={{ border: '1px solid #e1e1e1', backgroundColor: 'white', borderRadius: '4px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+                  {
+                    designSetList?.map((dsl, i) => (
+                      <>
+                        {/* {i !== 0 && <hr style={{opacity:0.06}}/>} */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
+                          <div >
+                            <img src={!(dsl?.ThumbImagePath) ? notFound : dsl?.imagepath + dsl?.ThumbImagePath.split(",")[0]} alt={""} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', position: 'relative', height: '100px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <sapn style={{ fontWeight: '500' }}>{dsl?.TitleLine}({dsl?.designno})</sapn>
+                              {/* <span></span> */}
+                              <span style={{ fontSize: '14px', color: '#888' }}>{dsl?.description}</span>
+                            </div>
+                            <div onClick={() => handelDesignSet(dsl)}>
+                              <NavigateNextRoundedIcon />
+                            </div>
+                            {(i !== designSetList.length - 1) && <div style={{ borderBottom: '1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%", }}></div>}
+                          </div>
+                        </div>
+                      </>
+                    ))
+                  }
+                </div>
+              </div>
             </div>
           }
 
