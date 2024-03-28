@@ -693,6 +693,21 @@ const ProductList = () => {
 
   }
 
+  useEffect(()=>{
+    let newData = Object.keys(cartFlag).filter((cf)=>Object.keys(wishFlag).find((wf)=>wf===cf))
+
+    // const cartFlagKeys = Object.keys(cartFlag);
+    // const updatedWishFlag = { ...wishFlag };
+
+    // cartFlagKeys.forEach((cf) => {
+    //   if (updatedWishFlag.hasOwnProperty(cf)) {
+    //     delete updatedWishFlag[cf];
+    //   }
+    // });
+    console.log({cartFlag,wishFlag},newData)
+
+  },[cartFlag,wishFlag])
+
   useEffect(() => {
 
     getCartAndWishListData()
@@ -701,7 +716,7 @@ const ProductList = () => {
 
   }, [])
 
-  const handelWishList = async (event, prod) => {
+  const handelWishList = async (event, prod) => {   
 
     try {
       setWishFlag(prev => ({ ...prev, [prod?.designno]: event.target.checked }))
@@ -800,7 +815,6 @@ const ProductList = () => {
           "ukey": `${storeInit?.ukey}`
         }
 
-
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
 
         const body = {
@@ -810,9 +824,7 @@ const ProductList = () => {
         };
 
         await CommonAPI(body).then(async (res) => {
-
           if (res?.Data?.rd[0]?.msg === "success") {
-
             await getCartAndWishListData()
             getCountFunc()
           }
@@ -873,8 +885,6 @@ const ProductList = () => {
         // console.log("isWishHasCartData", isWishHasCartData)
 
         let wishToCartEncData = { "autocodelist": `${isWishHasCartData[0]?.autocode}`, "ischeckall": 0, "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}` }
-
-
 
         const finalJSON = {
           "stockweb_event": "",
@@ -985,19 +995,16 @@ const ProductList = () => {
           p: wishToCartEncData1
         }
 
-
-
-
         await CommonAPI(isWishHasCartData.length ? body1 : body).then(async (res) => {
           // console.log("responsePlist",res?.Data?.rd[0]?.msg === "success");
-          if (!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success") {
+          if (!isWishHasCartData.length && res?.Data?.rd[0]?.msg === "success") { //ADDTOCART
             await getCartAndWishListData()
             // await getCountApi()
             getCountFunc()
             // prod.checkFlag=false
           }
 
-          if (isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success") {
+          if (isWishHasCartData.length && res?.Data?.rd[0]?.stat_msg === "success") { //ADDWISHLISTTOCART
             await getCartAndWishListData()
             // await getCountApi()
             getCountFunc()
@@ -1900,7 +1907,8 @@ const ProductList = () => {
                             disableRipple={true}
                             sx={{ padding: "5px" }}
 
-                            checked={wishFlag[products?.designno] ?? products?.wishCheck}
+                            // checked={wishFlag[products?.designno] ?? products?.wishCheck}
+                            checked={products?.wishCheck}
                             onChange={(e) => handelWishList(e, products)}
                           />
                         </div>
@@ -1919,7 +1927,8 @@ const ProductList = () => {
                             disableRipple={true}
                             sx={{ padding: "5px" }}
 
-                            checked={cartFlag[products?.designno] ?? products?.checkFlag}
+                            // checked={cartFlag[products?.designno] ?? products?.checkFlag}
+                            checked={products?.checkFlag}
                             onChange={(e) => handelCartList(e, products)}
                           />
                         </div>
