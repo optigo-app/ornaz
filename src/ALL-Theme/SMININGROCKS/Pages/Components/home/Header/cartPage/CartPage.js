@@ -1204,9 +1204,9 @@ export default function CartPage() {
                         rows={4}
                         onChange={(e) => handleInputChangeMainRemarks(e)}
                         className="YourCartPageMainRemkarBox"
-                        style={{ marginTop: "30px" }}
+                        style={{ marginTop: "30px",width:'300px',marginLeft:'20px'}}
                       />
-                      <div className="addRemkarMainBottom">
+                      <div className="addRemkarMainBottom" style={{marginLeft:'20px'}}>
                         <button
                           onClick={submitMainRemrks}
                           className="SmilingAddRemkarBtn"
