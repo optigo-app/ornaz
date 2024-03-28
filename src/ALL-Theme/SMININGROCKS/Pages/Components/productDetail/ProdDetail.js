@@ -67,8 +67,12 @@ const ProdDetail = () => {
   const [sizeMarkup, setSizeMarkup] = useState();
 
   const [mtrdData, setMtrdData] = useState([])
-  const [dqcData, setDqcData] = useState([])
-  const [csqcData, setCsqcData] = useState([])
+  const [dqcData, setDqcData] = useState()
+  const [dqcRate, setDqcRate] = useState()
+  const [dqcSettRate, setDqcSettRate] = useState()
+  const [csqcData, setCsqcData] = useState()
+  const [csqcRate, setCsqcRate] = useState()
+  const [csqcSettRate, setCsqcSettRate] = useState()
   const [getPriceData, setGetPriceData] = useState([])
 
   const [metalColorSelection,setMetalColorSelection] = useState('')
@@ -221,7 +225,7 @@ const ProdDetail = () => {
 
       let CalcPics = (srProductsData?.diamondpcs ?? 0) + (daimondFilterData?.pieces ?? 0)
 
-      let fpprice = ((dqcData?.O ?? 0) * (calcDiaWt ?? 0)) + ((dqcData?.Q ?? 0) * (CalcPics ?? 0))
+      let fpprice = ((dqcRate ?? 0) * (calcDiaWt ?? 0)) + ((dqcSettRate ?? 0) * (CalcPics ?? 0))
 
       return fpprice
     }
@@ -242,7 +246,7 @@ const ProdDetail = () => {
 
       let CalcPics = (srProductsData?.totalcolorstonepcs ?? 0) + (daimondFilterData?.pieces ?? 0)
 
-      let fpprice = ((csqcData?.O ?? 0) * (calcDiaWt ?? 0)) + ((csqcData?.Q ?? 0) * (CalcPics ?? 0))
+      let fpprice = ((csqcRate ?? 0) * (calcDiaWt ?? 0)) + ((csqcSettRate ?? 0) * (CalcPics ?? 0))
 
       return fpprice
     } else {
@@ -272,8 +276,6 @@ const ProdDetail = () => {
 
   useEffect(() => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
-
-  console.log("getPriceDatagetPriceData",getPriceData)
     
     let mtrd = getPriceData?.rd?.filter((ele) =>
     ele?.A === srProductsData?.autocode &&
@@ -281,8 +283,8 @@ const ProdDetail = () => {
     ele?.D === mtTypeOption
     );
     
+    console.log("mtrd",mtrd);
     
-    // console.log("call11",getPriceData);
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
       showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
@@ -295,15 +297,21 @@ const ProdDetail = () => {
       ele.B === srProductsData?.designno &&
       ele.H === diaQColOpt?.split("_")[0] &&
       ele.J === diaQColOpt?.split("_")[1]
-    );
-
+    )
 
 
     let showPrice1 = 0;
     if (diaqcprice && diaqcprice.length > 0) {
       showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
-      setDqcData(diaqcprice[0] ?? [])
+      let totalPrice = diaqcprice?.reduce((acc, obj) => acc + obj.S, 0)
+      let diaRate = diaqcprice?.reduce((acc, obj) => acc + obj.O, 0)
+      let diaSettRate = diaqcprice?.reduce((acc, obj) => acc + obj.Q, 0)
+
+      setDqcRate(diaRate ?? 0)
+      setDqcSettRate(diaSettRate ?? 0)
+      setDqcData(totalPrice ?? 0)
       setDQCPrice(diaqcprice[0]?.S ?? 0)
+      
     }
 
     let csqcpirce = getPriceData?.rd2?.filter((ele) =>
@@ -316,10 +324,17 @@ const ProdDetail = () => {
     let showPrice2 = 0;
     if (csqcpirce && csqcpirce.length > 0) {
       showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
-      setCsqcData(csqcpirce[0] ?? [])
+      let totalPrice = csqcpirce?.reduce((acc, obj) => acc + obj.S, 0)
+      let diaRate = csqcpirce?.reduce((acc, obj) => acc + obj.O, 0)
+      let diaSettRate = csqcpirce?.reduce((acc, obj) => acc + obj.Q, 0)
+      setCsqcData(totalPrice ?? 0)
+      setCsqcRate(diaRate ?? 0)
+      setCsqcSettRate(diaSettRate ?? 0)
       setCSQCPrice(csqcpirce[0]?.S ?? 0)
     }
 
+    
+    console.log("csqcpirce",csqcpirce)
 
     let gt = showPrice + showPrice1 + showPrice2;
     setGrandTotal(gt ?? 0);
@@ -1166,7 +1181,7 @@ const ProdDetail = () => {
   useEffect(()=>{
 
     let srData = JSON.parse(localStorage.getItem("srProductsData"))
-    let price = ((productData?.UnitCost) + (mtrdData?.Z ?? 0) + (dqcData?.S ?? 0) + (csqcData?.S ?? 0) + (sizeMarkup ?? 0) + metalUpdatedPrice() + diaUpdatedPrice() + colUpdatedPrice()).toFixed(2)
+    let price = ((productData?.UnitCost ?? 0) + (mtrdData?.Z ?? 0) + (dqcData ?? 0) + (csqcData ?? 0) + (sizeMarkup ?? 0) + metalUpdatedPrice() + diaUpdatedPrice() + colUpdatedPrice())
 
     if(price){
       srData.price = Number(price)
@@ -1175,6 +1190,8 @@ const ProdDetail = () => {
     localStorage.setItem("srProductsData",JSON.stringify(srData))
 
   },[mtrdData,dqcData,csqcData,sizeMarkup,metalUpdatedPrice,diaUpdatedPrice,colUpdatedPrice])
+
+  console.log("pricedata",mtrdData,dqcData,csqcData,sizeMarkup,metalUpdatedPrice(),diaUpdatedPrice(),colUpdatedPrice())
 
   return (
     <div
@@ -1941,8 +1958,8 @@ const ProdDetail = () => {
                         {`${(
                           productData?.UnitCost +
                           (mtrdData?.Z ?? 0) +
-                          (dqcData?.S ?? 0) +
-                          (csqcData?.S ?? 0) +
+                          (dqcData ?? 0) +
+                          (csqcData ?? 0) +
                           (sizeMarkup ?? 0) +
                           metalUpdatedPrice() +
                           diaUpdatedPrice() +
