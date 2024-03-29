@@ -95,7 +95,7 @@ export default function YourProfile() {
                                     variant="outlined"
                                     className='labgrowRegister'
                                     style={{ margin: '15px', color: 'black' }}
-                                    value={userData.defaddress_shippingfirstname !== "undefined" ? userData.defaddress_shippingfirstname : ""}
+                                    value={userData.firstname !== "undefined" ? userData.firstname : ""}
                                     disabled={!editMode}
                                     onChange={handleInputChange}
                                 />
@@ -105,7 +105,7 @@ export default function YourProfile() {
                                     variant="outlined"
                                     className='labgrowRegister'
                                     style={{ margin: '15px' }}
-                                    value={userData.defaddress_shippinglastname !== "undefined" ? userData.defaddress_shippinglastname : ""}
+                                    value={userData.lastname !== "undefined" ? userData.lastname : ""}
                                     disabled={!editMode}
                                     onChange={handleInputChange}
                                 />
@@ -127,7 +127,7 @@ export default function YourProfile() {
                                     variant="outlined"
                                     className='labgrowRegister'
                                     style={{ margin: '15px' }}
-                                    value={userData.defaddress_shippingmobile !== "undefined" ? userData.defaddress_shippingmobile : ""}
+                                    value={(userData.defaddress_shippingmobile || userData.mobile) !== "undefined" ? (userData.defaddress_shippingmobile || userData.mobile) : ""}
                                     disabled={!editMode}
                                     onChange={handleInputChange}
                                 />

@@ -295,7 +295,7 @@ export default function Header() {
   };
 
   const [islogin, setislogin] = useRecoilState(loginState);
-  const [isB2bFlag, setIsB2BFlaf] = useState('');
+  const [isB2bFlag, setIsB2BFlag] = useState('');
   const fetchData = () => {
     const value = localStorage.getItem('LoginUser');
     const val = (value === 'true' ? 'true' : 'false')
@@ -309,8 +309,8 @@ export default function Header() {
   useEffect(() => {
     const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
     const { IsB2BWebsite } = storeInit;
-    setIsB2BFlaf(1);
-    // setIsB2BFlaf(IsB2BWebsite);
+    setIsB2BFlag(1);
+    // setIsB2BFlag(IsB2BWebsite);
   }, [])
 
   const getMenuApi = async () => {
@@ -341,8 +341,8 @@ export default function Header() {
       getMenuApi()
       const storeInit = JSON.parse(localStorage.getItem('storeInit')) ?? "";
       const { IsB2BWebsite } = storeInit;
-      setIsB2BFlaf(1);
-      // setIsB2BFlaf(IsB2BWebsite);
+      setIsB2BFlag(1);
+      // setIsB2BFlag(IsB2BWebsite);
     }
   }, [islogin])
 

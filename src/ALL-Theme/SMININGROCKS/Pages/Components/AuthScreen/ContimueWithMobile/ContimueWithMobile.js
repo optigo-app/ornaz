@@ -58,6 +58,7 @@ export default function ContimueWithMobile() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
+            console.log('resssssssssssss',response);
             if (response.Data.Table1[0].stat === '1') {
                 navigation('/LoginWithMobileCode', { mobileNo: mobileNo });
                 localStorage.setItem('registerMobile', mobileNo)
