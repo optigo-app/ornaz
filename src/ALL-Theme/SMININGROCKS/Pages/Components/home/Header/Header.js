@@ -1069,8 +1069,8 @@ export default function Header() {
             </div>
 
             <div style={{ display: 'flex', gap: '15px' }}>
-              <img src={menu2Img} alt="#" style={{ height: '250px', width: '300px', objectFit: 'cover' }} />
-              <img src={menu1Img} alt="#" style={{ height: '250px', width: '300px', objectFit: 'cover' }} />
+              <img src={menu2Img} alt="#" className="menuImages"/>
+              <img src={menu1Img} alt="#" className="menuImages"/>
             </div>
 
           </div>
