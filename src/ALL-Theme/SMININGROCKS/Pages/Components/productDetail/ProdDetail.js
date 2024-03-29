@@ -276,11 +276,18 @@ const ProdDetail = () => {
 
   useEffect(() => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
+    const storeInit = JSON.parse(localStorage.getItem('storeInit'));
     
     let mtrd = getPriceData?.rd?.filter((ele) =>
-      ele?.A === srProductsData?.autocode &&
-      ele?.B === srProductsData?.designno &&
-      ele?.D === mtTypeOption
+    storeInit?.IsMetalCustomization === 1
+    ?
+    ele?.A === srProductsData?.autocode &&
+    ele?.B === srProductsData?.designno &&
+    ele?.D === mtTypeOption
+    :
+    ele?.A === srProductsData?.autocode &&
+    ele?.B === srProductsData?.designno
+
     );
     
     console.log("mtrd",mtrd);
@@ -293,12 +300,17 @@ const ProdDetail = () => {
     }
 
     let diaqcprice = getPriceData?.rd1?.filter((ele) =>
+    storeInit?.IsDiamondCustomization === 1 
+      ?
       ele.A === srProductsData?.autocode &&
       ele.B === srProductsData?.designno &&
       ele.H === diaQColOpt?.split("_")[0] &&
       ele.J === diaQColOpt?.split("_")[1]
-    )
+      :
+      ele.A === srProductsData?.autocode &&
+      ele.B === srProductsData?.designno
 
+    )
 
     console.log("diaqcprice",diaqcprice)
 
@@ -313,14 +325,19 @@ const ProdDetail = () => {
       setDqcSettRate(diaSettRate ?? 0)
       setDqcData(totalPrice ?? 0)
       setDQCPrice(diaqcprice[0]?.S ?? 0)
-      
     }
 
     let csqcpirce = getPriceData?.rd2?.filter((ele) =>
+    storeInit?.IsCsCustomization === 1
+      ?
       ele.A === srProductsData?.autocode &&
       ele.B === srProductsData?.designno &&
       ele.H === cSQopt?.split("_")[0] &&
       ele.J === cSQopt?.split("_")[1]
+      :
+      ele.A === srProductsData?.autocode &&
+      ele.B === srProductsData?.designno
+
     );
 
     console.log("csqcpirce1",csqcpirce)
@@ -337,7 +354,7 @@ const ProdDetail = () => {
       setCSQCPrice(csqcpirce[0]?.S ?? 0)
     }
 
-    
+
     console.log("csqcpirce",csqcpirce)
 
     let gt = showPrice + showPrice1 + showPrice2;
@@ -2168,16 +2185,22 @@ const ProdDetail = () => {
                       <div className="srAccContainer">
                         <div className="srFloat">
                           <span>
-                            <b>MetalPurity</b>: {productData?.MetalPurity}
+                            MetalPurity: <b>{productData?.MetalPurity}</b>
                           </span>
                           {/* <span>
                             <b>MetalWeight</b>: {productData?.MetalWeight}
                           </span> */}
                           <span>
-                            <b>GrossWeight</b>:
-                            {
-                              (productData?.Grossweight + (metalFilterData.length === 0 ? 0 : metalFilterData[0]?.Weight) + (daimondFilterData.length === 0 ? 0 : (daimondFilterData[0]?.Weight / 5))).toFixed(2)
-                            }
+                            GrossWeight:
+                            <b>{(
+                              productData?.Grossweight +
+                              (metalFilterData.length === 0
+                                ? 0
+                                : metalFilterData[0]?.Weight) +
+                              (daimondFilterData.length === 0
+                                ? 0
+                                : daimondFilterData[0]?.Weight / 5)
+                            ).toFixed(2)}</b>
                             {/* {daimondFilterData?.length && metalFilterData.length ? (
                               <>
                                 <b>GrossWeight</b>: {metalFilterData[0]?.Weight + (daimondFilterData[0]?.Weight / 5)}
@@ -2200,31 +2223,57 @@ const ProdDetail = () => {
                             ) : ''} */}
                           </span>
                           <span>
-                            <b>DiamondWeight</b>: {daimondFilterData?.length ? ((productData?.diamondweight + daimondFilterData[0]?.Weight)).toFixed(2) : productData?.diamondweight}
+                             DiamondWeight:{" "}
+                            <b>{daimondFilterData?.length
+                              ? (
+                                  productData?.diamondweight +
+                                  daimondFilterData[0]?.Weight
+                                ).toFixed(2)
+                              : productData?.diamondweight}</b>
                           </span>
                           <span>
-                            <b>Diamondpcs</b>: {daimondFilterData?.length ? (productData?.diamondpcs + daimondFilterData[0]?.pieces) : productData?.diamondpcs}
+                            Diamondpcs:{" "}
+                            <b>{daimondFilterData?.length
+                              ? productData?.diamondpcs +
+                                daimondFilterData[0]?.pieces
+                              : productData?.diamondpcs}</b>
                           </span>
                           <span>
-                            <b>NumberOfDiamonds</b>: {daimondFilterData?.length ? (productData?.diamondpcs + daimondFilterData[0]?.pieces) : productData?.diamondpcs}
+                            NumberOfDiamonds:{" "}
+                            <b>{daimondFilterData?.length
+                              ? productData?.diamondpcs +
+                                daimondFilterData[0]?.pieces
+                              : productData?.diamondpcs}</b>
                           </span>
                         </div>
                         <div className="srFloat">
                           <span>
-                            <b>Netwt</b>: {metalFilterData?.length ? ((productData?.netwt + metalFilterData[0]?.Weight)).toFixed(2) : productData?.netwt}
+                            Netwt:{" "}
+                            <b>{metalFilterData?.length
+                              ? (
+                                  productData?.netwt +
+                                  metalFilterData[0]?.Weight
+                                ).toFixed(2)
+                              : productData?.netwt}</b>
                           </span>
                           <span>
-                            <b>DiamondQuality</b>: {productData?.diamondquality}
+                            DiamondQuality: <b>{productData?.diamondquality}</b>
                           </span>
                           <span>
-                            <b>DiamondColorname</b>:{" "}
-                            {productData?.diamondcolorname}
+                            DiamondColorname:{" "}
+                            <b>{productData?.diamondcolorname}</b>
                           </span>
                           <span>
-                            <b>TotalDiamondWeight</b>:{daimondFilterData?.length ? ((productData?.diamondweight + daimondFilterData[0]?.Weight)).toFixed(2) : productData?.diamondweight}
+                            TotalDiamondWeight:
+                            <b>{daimondFilterData?.length
+                              ? (
+                                  productData?.diamondweight +
+                                  daimondFilterData[0]?.Weight
+                                ).toFixed(2)
+                              : productData?.diamondweight}</b>
                           </span>
                           <span>
-                            <b>DiamondSetting</b>: {productData?.diamondsetting}
+                            DiamondSetting: <b>{productData?.diamondsetting}</b>
                           </span>
                         </div>
                       </div>
