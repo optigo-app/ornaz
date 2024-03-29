@@ -80,8 +80,8 @@ export default function CartPage() {
   const [sizeData, setSizeData] = useState([]);
 
   const [mtrdData, setMtrdData] = useState([]);
-  const [dqcData, setDqcData] = useState([]);
-  const [csqcData, setCsqcData] = useState([]);
+  const [dqcData, setDqcData] = useState();
+  const [csqcData, setCsqcData] = useState();
   const [selectedColor, setSelectedColor] = useState()
   const [getPriceData, setGetPriceData] = useState([])
 
@@ -89,15 +89,15 @@ export default function CartPage() {
 
   const setCartCount = useSetRecoilState(CartListCounts);
   const setWishCount = useSetRecoilState(WishListCounts);
-//   const getPriceData = useRecoilValue(priceData);
+  //   const getPriceData = useRecoilValue(priceData);
 
   const navigation = useNavigate();
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
 
-  useEffect(()=>{
+  useEffect(() => {
     const data = JSON.parse(localStorage.getItem("getPriceData"))
     setGetPriceData(data)
-  },[])
+  }, [])
 
   useEffect(() => {
 
@@ -127,7 +127,7 @@ export default function CartPage() {
 
 
   useEffect(() => {
-    console.log('getPriceDatagetPriceData',getPriceData);
+    console.log('getPriceDatagetPriceData', getPriceData);
     let mtrd = getPriceData?.rd?.filter(
       (ele) =>
         ele?.A === cartSelectData?.autocode &&
@@ -148,20 +148,24 @@ export default function CartPage() {
         ele.J === diaQColOpt?.split("_")[1]
     );
 
+    console.log("diaqcprice", diaqcprice)
+
     if (diaqcprice && diaqcprice.length > 0) {
-      setDqcData(diaqcprice[0] ?? []);
+      let totalPrice = diaqcprice.reduce((acc, obj) => acc + obj.S, 0)
+      setDqcData(totalPrice ?? 0);
     }
 
     let csqcpirce = getPriceData?.rd2?.filter(
       (ele) =>
         ele.A === cartSelectData?.autocode &&
         ele.B === cartSelectData?.designno &&
-        ele.H === cSQopt?.split("-")[0] &&
-        ele.J === cSQopt?.split("-")[1]
+        ele.H === cSQopt?.split("_")[0] &&
+        ele.J === cSQopt?.split("_")[1]
     );
 
     if (csqcpirce && csqcpirce.length > 0) {
-      setCsqcData(csqcpirce[0] ?? []);
+      let totalPrice = csqcpirce.reduce((acc, obj) => acc + obj.S, 0)
+      setCsqcData(totalPrice ?? 0)
     }
   }, [mtTypeOption, diaQColOpt, cSQopt, cartSelectData, getPriceData]);
 
@@ -171,7 +175,7 @@ export default function CartPage() {
     let qualityColor = `${cartSelectData?.diamondquality}_${cartSelectData?.diamondcolor}`;
     setDiaQColOpt(qualityColor);
 
-    let csQualColor = `${cartSelectData?.colorstonequality}-${cartSelectData?.colorstonecolor}`;
+    let csQualColor = `${cartSelectData?.colorstonequality}_${cartSelectData?.colorstonecolor}`;
     setCSQOpt(csQualColor);
 
     setSelectedColor(cartSelectData?.metalcolorname)
@@ -587,10 +591,14 @@ export default function CartPage() {
     //     }
   };
 
-  console.log('cartSelectData', cartSelectData?.UnitCost);
-  console.log('dqcData', dqcData?.S);
-  console.log('csqcData', csqcData?.S);
+  console.log('cartListData', cartListData);
+  console.log('dqcData', dqcData);
+  console.log('csqcData', csqcData);
   console.log('mtrdData', mtrdData?.Z);
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <>
@@ -767,7 +775,7 @@ export default function CartPage() {
                                 </div>
 
 
-                                <div
+                                {isProductCuFlag === 1 && <div
                                   style={{
                                     borderTop: "1px solid #e1e1e1",
                                     marginInline: "-10px",
@@ -778,6 +786,7 @@ export default function CartPage() {
                                     style={{
                                       display: "flex",
                                       justifyContent: "space-between",
+                                      flexWrap: 'wrap',
                                       marginTop: "12px",
                                     }}
                                   >
@@ -786,49 +795,7 @@ export default function CartPage() {
                                         style={{
                                           display: "flex",
                                           flexDirection: "column",
-                                          width: "49%",
-                                        }}
-                                      >
-                                        <label
-                                          style={{
-                                            fontSize: "12.5px",
-                                            color: "#7d7f85",
-                                          }}
-                                        >
-                                          METAL COLOR:
-                                        </label>
-                                        <select
-                                          style={{
-                                            border: "none",
-                                            outline: "none",
-                                            color: "#7d7f85",
-                                            fontSize: "12.5px",
-                                          }}
-                                          value={selectedColor}
-                                          onChange={(e) =>
-                                            setSelectedColor(e.target.value)
-                                          }
-                                        >
-                                          {metalColorData.map((colorItem) => (
-                                            <option
-                                              key={colorItem.ColorId}
-                                              value={colorItem.metalcolorname}
-                                            >
-                                              {colorItem.metalcolorname}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    )}
-
-                                    {/* <Divider orientation='horizontal' sx={{backgroundColor:'black',width:'1px'}}/> */}
-
-                                    {isMetalCutoMizeFlag == 1 && (
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "column",
-                                          width: "49%",
+                                          width: "45%",
                                         }}
                                       >
                                         <label
@@ -863,20 +830,54 @@ export default function CartPage() {
                                         </select>
                                       </div>
                                     )}
-                                  </div>
 
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "space-between",
-                                    }}
-                                  >
+                                    {isMetalCutoMizeFlag == 1 && (
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          width: "45%",
+                                        }}
+                                      >
+                                        <label
+                                          style={{
+                                            fontSize: "12.5px",
+                                            color: "#7d7f85",
+                                          }}
+                                        >
+                                          METAL COLOR:
+                                        </label>
+                                        <select
+                                          style={{
+                                            border: "none",
+                                            outline: "none",
+                                            color: "#7d7f85",
+                                            fontSize: "12.5px",
+                                          }}
+                                          value={selectedColor}
+                                          onChange={(e) =>
+                                            setSelectedColor(e.target.value)
+                                          }
+                                        >
+                                          {metalColorData.map((colorItem) => (
+                                            <option
+                                              key={colorItem.ColorId}
+                                              value={colorItem.metalcolorname}
+                                            >
+                                              {colorItem.metalcolorname}
+                                            </option>
+                                          ))}
+                                        </select>
+                                      </div>
+                                    )}
+
+
                                     {isDaimondCstoFlag == 1 && (
                                       <div
                                         style={{
                                           display: "flex",
                                           flexDirection: "column",
-                                          width: "49%",
+                                          width: "45%",
                                           marginTop: "30px",
                                         }}
                                       >
@@ -917,7 +918,7 @@ export default function CartPage() {
                                         style={{
                                           display: "flex",
                                           flexDirection: "column",
-                                          width: "49%",
+                                          width: "4%",
                                           marginTop: "20px",
                                         }}
                                       >
@@ -946,73 +947,73 @@ export default function CartPage() {
                                             (data, index) => (
                                               <option
                                                 key={index}
-                                                value={`${data.Quality}-${data.color}`}
+                                                value={`${data.Quality}_${data.color}`}
                                               >
-                                                {`${data.Quality}-${data.color}`}
+                                                {`${data.Quality}_${data.color}`}
                                               </option>
                                             )
                                           )}
                                         </select>
                                       </div>
                                     )}
-                                  </div>
 
-                                  {(sizeData?.length !== 0 ||
-                                    (productData?.DefaultSize &&
-                                      productData.DefaultSize.length !==
-                                      0)) && (
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "column",
-                                          width: "49%",
-                                          marginTop: "30px",
-                                        }}
-                                      >
-                                        <label
+                                    {(sizeData?.length !== 0 ||
+                                      (productData?.DefaultSize &&
+                                        productData.DefaultSize.length !==
+                                        0)) && (
+                                        <div
                                           style={{
-                                            fontSize: "12.5px",
-                                            color: "#7d7f85",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            width: "45%",
+                                            marginTop: "30px",
                                           }}
                                         >
-                                          SIZE:
-                                        </label>
-                                        <select
-                                          style={{
-                                            border: "none",
-                                            outline: "none",
-                                            color: "#7d7f85",
-                                            fontSize: "12.5px",
-                                          }}
-                                          onChange={(e) =>
-                                            handelSize(e.target.value)
-                                          }
-                                          defaultValue={
-                                            productData && productData.DefaultSize
-                                              ? productData.DefaultSize
-                                              : sizeData.find(
-                                                (size) =>
-                                                  size.IsDefaultSize === 1
-                                              )?.id
-                                          }
-                                        >
-                                          {sizeData?.map((size) => (
-                                            <option
-                                              key={size.id}
-                                              value={size.sizename} // Pass sizename as value
-                                              selected={
-                                                productData &&
-                                                productData.DefaultSize ===
-                                                size.sizename
-                                              }
-                                            >
-                                              {size.sizename}
-                                            </option>
-                                          ))}
-                                        </select>
-                                      </div>
-                                    )}
-                                </div>
+                                          <label
+                                            style={{
+                                              fontSize: "12.5px",
+                                              color: "#7d7f85",
+                                            }}
+                                          >
+                                            SIZE:
+                                          </label>
+                                          <select
+                                            style={{
+                                              border: "none",
+                                              outline: "none",
+                                              color: "#7d7f85",
+                                              fontSize: "12.5px",
+                                            }}
+                                            onChange={(e) =>
+                                              handelSize(e.target.value)
+                                            }
+                                            defaultValue={
+                                              productData && productData.DefaultSize
+                                                ? productData.DefaultSize
+                                                : sizeData.find(
+                                                  (size) =>
+                                                    size.IsDefaultSize === 1
+                                                )?.id
+                                            }
+                                          >
+                                            {sizeData?.map((size) => (
+                                              <option
+                                                key={size.id}
+                                                value={size.sizename} // Pass sizename as value
+                                                selected={
+                                                  productData &&
+                                                  productData.DefaultSize ===
+                                                  size.sizename
+                                                }
+                                              >
+                                                {size.sizename}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      )}
+                                  </div>
+                                </div>}
                               </div>
                               <div
                                 style={{
@@ -1032,8 +1033,8 @@ export default function CartPage() {
                                   {(
                                     cartSelectData?.UnitCost +
                                     (mtrdData?.Z ?? 0) +
-                                    (dqcData?.S ?? 0) +
-                                    (csqcData?.S ?? 0)
+                                    (dqcData ?? 0) +
+                                    (csqcData ?? 0)
                                   ).toFixed(2)}
                                 </span>
                               </div>
@@ -1204,9 +1205,9 @@ export default function CartPage() {
                         rows={4}
                         onChange={(e) => handleInputChangeMainRemarks(e)}
                         className="YourCartPageMainRemkarBox"
-                        style={{ marginTop: "30px",width:'300px',marginLeft:'20px'}}
+                        style={{ marginTop: "30px", width: '300px', marginLeft: '20px' }}
                       />
-                      <div className="addRemkarMainBottom" style={{marginLeft:'20px'}}>
+                      <div className="addRemkarMainBottom" style={{ marginLeft: '20px' }}>
                         <button
                           onClick={submitMainRemrks}
                           className="SmilingAddRemkarBtn"
@@ -1369,7 +1370,7 @@ export default function CartPage() {
                         marginLeft: "-5px",
                     }}
                     /> */}
-                    <div
+                    {isProductCuFlag === 1 && <div
                       style={{
                         borderTop: "1px solid #e1e1e1",
                         marginInline: "-10px",
@@ -1417,8 +1418,6 @@ export default function CartPage() {
                             </select>
                           </div>
                         )}
-
-                        {/* <Divider orientation='horizontal' sx={{backgroundColor:'black',width:'1px'}}/> */}
 
                         {isMetalCutoMizeFlag == 1 && (
                           <div
@@ -1584,7 +1583,7 @@ export default function CartPage() {
                             </select>
                           </div>
                         )}
-                    </div>
+                    </div>}
                   </div>
                   <div
                     style={{
@@ -1599,8 +1598,8 @@ export default function CartPage() {
                       {(
                         cartSelectData?.UnitCost +
                         (mtrdData?.Z ?? 0) +
-                        (dqcData?.S ?? 0) +
-                        (csqcData?.S ?? 0)
+                        (dqcData ?? 0) +
+                        (csqcData ?? 0)
                       ).toFixed(2)}
                     </span>
                   </div>

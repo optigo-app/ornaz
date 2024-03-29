@@ -120,6 +120,7 @@ const ProductList = () => {
       const data = JSON.parse(localStorage.getItem("allproductlist"));
       const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
 
+      // let newRd = [];
       const updatedData = await Promise?.all(data?.map(async (product) => {
         const newPriceData = priceDataApi?.rd?.find(
           (pda) =>
@@ -128,22 +129,35 @@ const ProductList = () => {
             pda.D === loginUserDetail?.cmboMetalType
         );
 
-        const newPriceData1 = priceDataApi?.rd1?.find(
+        const newPriceData1 = priceDataApi?.rd1?.filter(
           (pda) =>
             pda.A === product.autocode &&
             pda.B === product.designno &&
             pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
             pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
-        );
+        ).reduce((acc, obj) => acc + obj.S, 0)
+
+        // const newPriceData11 = priceDataApi?.rd1?.filter(
+        //   (pda) =>
+        //     pda.A === product.autocode &&
+        //     pda.B === product.designno &&
+        //     pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
+        //     pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
+        // )
+        // if(newPriceData1){
+        //   newRd.push(newPriceData1);
+        // }
+
+        // console.log("newPriceData11",newPriceData11)
 
 
-        const newPriceData2 = priceDataApi?.rd2?.find(
+        const newPriceData2 = priceDataApi?.rd2?.filter(
           (pda) =>
             pda.A === product.autocode &&
             pda.B === product.designno &&
             pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
             pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
-        );
+        ).reduce((acc, obj) => acc + obj.S, 0)
 
         let price = 0;
         let markup = 0;
@@ -152,15 +166,17 @@ const ProductList = () => {
         let csrd2 = 0;
 
         if (newPriceData || newPriceData1 || newPriceData2) {
-          price = (newPriceData?.Z ?? 0) + (newPriceData1?.S ?? 0) + (newPriceData2?.S ?? 0);
+          price = (newPriceData?.Z ?? 0) + (newPriceData1 ?? 0) + (newPriceData2 ?? 0);
           metalrd = newPriceData?.Z
-          diard1 = newPriceData1?.S
-          csrd2 = newPriceData2?.S ?? 0
+          diard1 = newPriceData1 ?? 0
+          csrd2 = newPriceData2 ?? 0
           markup = newPriceData?.AB
         }
 
         return { ...product, price, markup, metalrd, diard1, csrd2 }
       }));
+
+      // console.log("newRd",newRd);
 
       localStorage.setItem("allproductlist", JSON.stringify(updatedData));
       setProductApiData2(updatedData);
@@ -168,6 +184,22 @@ const ProductList = () => {
 
     fetchData();
   }, [priceDataApi]);
+
+  // const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
+
+  // useEffect(()=>{
+  //   const newPriceData11 = priceDataApi?.rd1?.filter(
+  //     (pda) =>
+  //       pda.A === "0003789" &&
+  //       pda.B === "G34908E" &&
+  //       pda.H === "VVS" &&
+  //       pda.J === "IJ"
+  //   );
+  
+  //   console.log("newPriceData111",newPriceData11)
+  // },[priceDataApi])
+
+  
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
