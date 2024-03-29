@@ -119,22 +119,35 @@ const ProductList = () => {
     const fetchData = async () => {
       const data = JSON.parse(localStorage.getItem("allproductlist"));
       const loginUserDetail = JSON.parse(localStorage.getItem('loginUserDetail'));
+      const storeInit = JSON.parse(localStorage.getItem('storeInit'));
 
       // let newRd = [];
       const updatedData = await Promise?.all(data?.map(async (product) => {
         const newPriceData = priceDataApi?.rd?.find(
           (pda) =>
+           storeInit?.IsMetalCustomization === 1
+            ?
             pda.A === product.autocode &&
             pda.B === product.designno &&
             pda.D === loginUserDetail?.cmboMetalType
+            :
+            pda.A === product.autocode &&
+            pda.B === product.designno
         );
 
         const newPriceData1 = priceDataApi?.rd1?.filter(
           (pda) =>
+
+           storeInit?.IsDiamondCustomization === 1
+            ?
             pda.A === product.autocode &&
             pda.B === product.designno &&
             pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
             pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
+            :
+            pda.A === product.autocode &&
+            pda.B === product.designno
+
         ).reduce((acc, obj) => acc + obj.S, 0)
 
         // const newPriceData11 = priceDataApi?.rd1?.filter(
@@ -150,13 +163,21 @@ const ProductList = () => {
 
         // console.log("newPriceData11",newPriceData11)
 
+        
 
         const newPriceData2 = priceDataApi?.rd2?.filter(
           (pda) =>
+
+          storeInit?.IsCsCustomization === 1
+            ? 
             pda.A === product.autocode &&
             pda.B === product.designno &&
             pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
             pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
+            :
+            pda.A === product.autocode &&
+            pda.B === product.designno
+
         ).reduce((acc, obj) => acc + obj.S, 0)
 
         let price = 0;

@@ -551,7 +551,7 @@ export default function CartPage() {
     setDaimondFiletrData(filteredDataDaimond)
   };
 
-  const handleColorSelection = (color) => {
+  // const handleColorSelection = (color) => {
     //     let uploadPath = localStorage.getItem('UploadLogicalPath');
     //     const storedDataAll = localStorage.getItem('storeInit');
     //     const data = JSON.parse(storedDataAll);
@@ -589,7 +589,7 @@ export default function CartPage() {
     //         setSelectedImagePath('');
     //       }
     //     }
-  };
+  // };
 
   console.log('cartListData', cartListData);
   console.log('dqcData', dqcData);
