@@ -249,7 +249,6 @@ const OrderHistory = () => {
                         <div className="d-flex flex-wrap align-items-center center_price_2 d_block">
                           {orderDetails?.length > 0 &&
                             orderDetails?.map((el) => {
-                              console.log(el);
                               return (
                                 <div className="container_order_details ">
                                   <div className="_center_img">
@@ -286,7 +285,7 @@ const OrderHistory = () => {
                   </div>
                 </div>
               );
-            }) : <span className="w-100 d-flex justify-content-center align-items-center fs-5">Data Not Present</span>}
+            }) : <span className="w-100 d-flex justify-content-center align-items-center fs-5" style={{marginTop:'15%'}}>Data Not Present</span>}
         </div>
       )}
       {/* {
