@@ -213,18 +213,57 @@ const AccountLedger = () => {
       
       const handleDays = (days) => {
         setSelectedDays(days)
-        const currentDate = dayjs();
+        let newStartDate = null;
+        let newEndDate = null;
+        
+        const currentMonthStart = dayjs().startOf('month');
+        const currentMonthEnd = dayjs().endOf('month');
+    
+        if (days === 30) {
+            newStartDate = currentMonthStart;
+            newEndDate = currentMonthEnd;
+        } else if (days === 60) {
+            const prevMonthStart = currentMonthStart.subtract(1, 'month');
+            newStartDate = prevMonthStart;
+            newEndDate = currentMonthEnd;
+        } else if (days === 90) {
+            const twoMonthsAgoStart = currentMonthStart.subtract(2, 'month');
+            newStartDate = twoMonthsAgoStart;
+            newEndDate = currentMonthEnd;
+        }
+        // let newStartDate = null;
+        // let newEndDate = null;
+        // if (days === 30) {
+        //     newStartDate = dayjs().subtract(1, 'month').startOf('month');
+        //     newEndDate = dayjs().subtract(1, 'day').endOf('month');
+        // } else if (days === 60) {
+        //     newStartDate = dayjs().subtract(2, 'month').startOf('month');
+        //     newEndDate = dayjs().subtract(1, 'day').endOf('month');
+        // } else if (days === 90) {
+        //     newStartDate = dayjs().subtract(3, 'month').startOf('month');
+        //     newEndDate = dayjs().subtract(1, 'day').endOf('month');
+        // }
+    
+    
 
-        // Set the end date to the current date
-        const endDate = currentDate.endOf('day').format('YYYY-MM-DD');
+    // Update the start and end dates in the state
+        setFromDate(newStartDate);
+        setToDate(newEndDate);
     
-        // Calculate the start date based on the selected number of days
-        const startDate = currentDate.subtract(days, 'day').startOf('day').format('YYYY-MM-DD');
-    
-        // Update the start and end dates in the state
-        setStartDate(startDate);
-        setEndDate(endDate);
+        // Filter the data based on the new date range
         filterData();
+        // const currentDate = dayjs();
+
+        // // Set the end date to the current date
+        // const endDate = currentDate.endOf('day').format('YYYY-MM-DD');
+    
+        // // Calculate the start date based on the selected number of days
+        // const startDate = currentDate.subtract(days, 'day').startOf('day').format('YYYY-MM-DD');
+    
+        // // Update the start and end dates in the state
+        // setStartDate(startDate);
+        // setEndDate(endDate);
+        // filterData();
         // const currentDate = new Date();
         // const currentYear = currentDate.getFullYear();
         // const currentMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Add leading zero if needed
@@ -245,8 +284,8 @@ const AccountLedger = () => {
         // filterData(formattedStartDate, formattedCurrentDate);
 
         const buttons = document.querySelectorAll('.daybtn');
-        buttons.forEach(button => {
-            const buttonDays = parseInt(button.textContent);
+            buttons.forEach(button => {
+        const buttonDays = parseInt(button.textContent);
             if (buttonDays === days) {
                 button.classList.add('selected');
             } else {
@@ -636,17 +675,67 @@ const AccountLedger = () => {
         // }
         const handlePreviousDays = () => {
             // Get the selected number of days
+            // const days = selectedDays;
             const days = selectedDays;
-            
-            // Calculate the new end date (which is the current end date)
-            const newEndDate = toDate.subtract(days, 'day');
-            
-            // Calculate the new start date based on the new end date and selected number of days
-            const newStartDate = newEndDate.subtract(days - 1, 'day'); // Subtract one less day to maintain the selected number of days
-            
+            let newStartDate = null;
+            let newEndDate = null;
+            let fromDateCopy = fromDate; // Create a copy of fromDate to avoid modifying the state directly
+        
+            if (days === 30) {
+                // Subtract 1 month from the current start date to get the new start date
+                newStartDate = fromDate.subtract(1, 'month').startOf('month');
+                // Set the end date as the last day of the previous month
+                newEndDate = fromDate.subtract(1, 'month').endOf('month');
+                fromDateCopy = fromDateCopy.subtract(1, 'month');
+            } else if (days === 60) {
+                // Subtract 2 months from the current start date to get the new start date
+                newStartDate = fromDate.subtract(2, 'month').startOf('month');
+                // Set the end date as the last day of the previous month
+                newEndDate = fromDate.subtract(1, 'month').endOf('month');
+                fromDateCopy = fromDateCopy.subtract(2, 'month');
+            } else if (days === 90) {
+                // Subtract 3 months from the current start date to get the new start date
+                newStartDate = fromDate.subtract(3, 'month').startOf('month');
+                // Set the end date as the last day of the previous month
+                newEndDate = fromDate.subtract(1, 'month').endOf('month');
+                fromDateCopy = fromDateCopy.subtract(3, 'month');
+            }
+        
             // Update the state with the new start and end dates
             setFromDate(newStartDate);
             setToDate(newEndDate);
+        
+            // Update the fromDate state
+            setFromDate(fromDateCopy);
+            // let newStartDate = null;
+            // let newEndDate = null;
+        
+            // if (days === 30) {
+            //     // Subtract 1 month from the current start date to get the new start date
+            //     newStartDate = fromDate.subtract(1, 'month');
+            //     // Set the end date as the last day of the previous month
+            //     newEndDate = newStartDate.endOf('month');
+            // } else if (days === 60) {
+            //     // Subtract 2 months from the current start date to get the new start date
+            //     newStartDate = fromDate.subtract(2, 'month');
+            //     // Set the end date as the last day of the previous month
+            //     newEndDate = newStartDate.endOf('month');
+            // } else if (days === 90) {
+            //     // Subtract 3 months from the current start date to get the new start date
+            //     newStartDate = fromDate.subtract(3, 'month');
+            //     // Set the end date as the last day of the previous month
+            //     newEndDate = newStartDate.endOf('month');
+            // }
+            // console.log(days);
+            // // Calculate the new end date (which is the current end date)
+            // const newEndDate = toDate.subtract(days, 'day');
+            
+            // // Calculate the new start date based on the new end date and selected number of days
+            // const newStartDate = newEndDate.subtract(days - 1, 'day'); // Subtract one less day to maintain the selected number of days
+            
+            // Update the state with the new start and end dates
+            // setFromDate(newStartDate);
+            // setToDate(newEndDate);
         
             // Filter the data based on the new date range
             filterData();
@@ -654,19 +743,106 @@ const AccountLedger = () => {
         const handleNextDays = () => {
             // Get the selected number of days
             const days = selectedDays;
+            let newStartDate = null;
+            let newEndDate = null;
+            let toDateCopy = toDate; // Create a copy of toDate to avoid modifying the state directly
             
-            // Calculate the new end date (which is the current end date)
-            const newEndDate = toDate.add(days, 'day');
-            
-            // Calculate the new start date based on the new end date and selected number of days
-            const newStartDate = newEndDate.add(days - 1, 'day'); // Subtract one less day to maintain the selected number of days
-            
-            // Update the state with the new start and end dates
-            setFromDate(newEndDate);
-            setToDate(newStartDate);
+            if (days === 30) {
+                newStartDate = fromDate.add(1, 'month').startOf('month');
+                newEndDate = fromDate.add(1, 'month').endOf('month');
+                toDateCopy = toDateCopy.add(1, 'month').endOf('month'); // Adjust to end of month
+            } else if (days === 60) {
+                newStartDate = fromDate.add(2, 'month').startOf('month');
+                newEndDate = fromDate.add(2, 'month').endOf('month');
+                toDateCopy = toDateCopy.add(2, 'month').endOf('month'); // Adjust to end of month
+            } else if (days === 90) {
+                newStartDate = fromDate.add(3, 'month').startOf('month');
+                newEndDate = fromDate.add(3, 'month').endOf('month');
+                toDateCopy = toDateCopy.add(3, 'month').endOf('month'); // Adjust to end of month
+            }
         
-            // Filter the data based on the new date range
-            filterData();
+            setFromDate(newStartDate);
+            setToDate(newEndDate);
+            
+            // Update the toDate state
+            setToDate(toDateCopy);
+            //working code
+            // const days = selectedDays;
+            // let newStartDate = null;
+            // let newEndDate = null;
+            // let toDateCopy = toDate; // Create a copy of toDate to avoid modifying the state directly
+            
+            // if (days === 30) {
+            //     newStartDate = fromDate.add(1, 'month').startOf('month');
+            //     newEndDate = fromDate.add(1, 'month').endOf('month');
+            //     toDateCopy = toDateCopy.add(1, 'month');
+            // } else if (days === 60) {
+            //     newStartDate = fromDate.add(2, 'month').startOf('month');
+            //     newEndDate = fromDate.add(2, 'month').endOf('month');
+            //     toDateCopy = toDateCopy.add(2, 'month');
+            // } else if (days === 90) {
+            //     newStartDate = fromDate.add(3, 'month').startOf('month');
+            //     newEndDate = fromDate.add(3, 'month').endOf('month');
+            //     toDateCopy = toDateCopy.add(3, 'month');
+            // }
+        
+            // setFromDate(newStartDate);
+            // setToDate(newEndDate);
+        
+            // // Update the toDate state
+            // setToDate(toDateCopy);
+            //above working code ^
+            // const days = selectedDays;
+            // console.log(days);
+            // let newStartDate = null;
+            // let newEndDate = null;
+            
+            // if (days === 30) {
+            //     // Add 1 month to the current start date to get the new start date
+            //     newStartDate = fromDate.add(1, 'month').startOf('month');
+            //     // Set the end date as the last day of the new month
+            //     newEndDate = newStartDate.endOf('month');
+            // } else if (days === 60) {
+            //     // Add 2 months to the current start date to get the new start date
+            //     newStartDate = fromDate.add(2, 'month').startOf('month');
+            //     // Set the end date as the last day of the new month
+            //     newEndDate = newStartDate.endOf('month');
+            // } else if (days === 90) {
+            //     // Add 3 months to the current start date to get the new start date
+            //     newStartDate = fromDate.add(3, 'month').startOf('month');
+            //     // Set the end date as the last day of the new month
+            //     newEndDate = newStartDate.endOf('month');
+            // }
+        
+            // // Update the state with the new start and end dates
+            // setFromDate(newStartDate);
+            // setToDate(newEndDate);
+            // const days = selectedDays;
+            // let newStartDate = null;
+            // let newEndDate = null;
+        
+            // if (days === 30) {
+            //     // Add 1 month to the current start date to get the new start date
+            //     newStartDate = fromDate.add(1, 'month');
+            //     // Set the end date as the last day of the new month
+            //     newEndDate = newStartDate.endOf('month');
+            // } else if (days === 60) {
+            //     // Add 2 months to the current start date to get the new start date
+            //     newStartDate = fromDate.add(2, 'month');
+            //     // Set the end date as the last day of the new month
+            //     newEndDate = newStartDate.endOf('month');
+            // } else if (days === 90) {
+            //     // Add 3 months to the current start date to get the new start date
+            //     newStartDate = fromDate.add(3, 'month');
+            //     // Set the end date as the last day of the new month
+            //     newEndDate = newStartDate.endOf('month');
+            // }
+        
+            // // Update the state with the new start and end dates
+            // setFromDate(newStartDate);
+            // setToDate(newEndDate);
+
+            // filterData();
         }
         // const handleNextDays = () => {
 
@@ -707,7 +883,17 @@ const AccountLedger = () => {
         window.open("http://localhost:3000/accountledgerexcel");
       }
 
-    
+    // useEffect(() => {
+    //     if(fromDate === 'invalid date'){
+    //         setFilterArray([])
+    //     }
+    //     else if(toDate === 'invalid date'){
+    //         setFilterArray([])
+    //     }
+    //     else if(fromDate === 'invalid date' && toDate === 'invalid date'){
+    //         setFilterArray([])
+    //     }
+    // }, [fromDate, toDate])
 
   return (
     <div>
@@ -874,20 +1060,20 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1  ps-1' align='center'>Opening</td>
                                             <td className='border-end p-1 text-start ps-1'></td>
-                                            <td className='border-end p-1 text-end ps-1'>{ Math.abs(debit_mg_diff)}</td>
-                                            <td className='border-end p-1 text-end ps-1'>{Math.abs(debit_dia_diff)}</td>
+                                            <td className='border-end p-1 text-end ps-1'>{ (Math.abs(debit_mg_diff))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(debit_dia_diff))?.toFixed(3)}</td>
                                             {/* <td className='border-end p-1 text-end pe-1'>{Math.abs(debit_amt_diff)}</td>
                                             <td className='border-end p-1 text-end pe-1'></td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(debit_curr_diff)}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(Math.abs(debit_curr_diff))}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-start ps-1' align='center'>Opening</td>
                                             <td className='border-end p-1 text-end pe-1'></td>
-                                            <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_mg_diff)}</td>
-                                            <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_dia_diff)}</td>
+                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(credit_mg_diff))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(credit_dia_diff))?.toFixed(3)}</td>
                                             {/* <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_amt_diff)}</td>
                                             <td className='border-end p-1 text-end pe-1'></td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(credit_curr_diff)}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(Math.abs(credit_curr_diff))}</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr> 
                                         }
