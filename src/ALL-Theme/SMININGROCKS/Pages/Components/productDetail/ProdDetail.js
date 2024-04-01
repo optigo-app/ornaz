@@ -60,6 +60,7 @@ const ProdDetail = () => {
   const [showIcateDesign, setShowEcateDesign] = useState('');
 
   const [mtPrice, setMetalPrice] = useState(0)
+  
   const [dqcPrice, setDQCPrice] = useState(0)
   const [csqcPrice, setCSQCPrice] = useState(0)
   const [grandTotal, setGrandTotal] = useState(0)
@@ -76,6 +77,9 @@ const ProdDetail = () => {
   const [csqcSettRate, setCsqcSettRate] = useState()
   const [getPriceData, setGetPriceData] = useState([])
 
+  const [uploadLogicPath , setUploadLogicPath] = useState('');
+  const [uKey , setUkey] = useState('');
+
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
@@ -91,6 +95,9 @@ const ProdDetail = () => {
   let navigate = useNavigate()
 
   useEffect(() => {
+    let uploadPath = localStorage.getItem('UploadLogicalPath');
+    setUploadLogicPath(uploadPath);
+
     const data = JSON.parse(localStorage.getItem("getPriceData"))
     setGetPriceData(data)
   }, [])
@@ -277,7 +284,8 @@ const ProdDetail = () => {
   useEffect(() => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
     const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-    
+    setUkey(storeInit.ukey);
+
     let mtrd = getPriceData?.rd?.filter((ele) =>
     storeInit?.IsMetalCustomization === 1
     ?
@@ -2100,6 +2108,8 @@ const ProdDetail = () => {
                   }
                 </div>
               </div>
+
+              {/* {uploadLogicPath}/{uKey}/Photo_original/designmanagement_designset/{designUniqueNO}/{DefaultImageName} */}
               <img src='https://cdn.accentuate.io/3204707942500/4121939443812/Essentials%20(2).jpg?2048x1950' style={{ width: '800px' }} />
             </div>
           }
