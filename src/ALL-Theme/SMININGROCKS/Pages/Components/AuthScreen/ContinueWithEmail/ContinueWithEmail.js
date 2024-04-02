@@ -63,6 +63,9 @@ export default function ContinueWithEmail() {
             console.log('ressssssss',response);
             if (response.Data.rd[0].stat === 1) {
                 navigation('/LoginWithEmail', { state: { email: trimmedEmail } });
+                if(trimmedEmail){
+                    localStorage.setItem("userEmailForPdList",trimmedEmail);
+                }
             } else {
                 navigation('/register', { state: { email: trimmedEmail } });
             }
