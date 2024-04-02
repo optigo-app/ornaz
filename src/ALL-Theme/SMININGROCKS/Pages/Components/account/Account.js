@@ -95,6 +95,7 @@ export default function Account() {
         localStorage.removeItem('UploadLogicalPath');
         localStorage.removeItem('remarks');
         localStorage.removeItem('registerMobile');
+        localStorage.removeItem('allproductlist');
         naviagation('/')
         window.location.reload();
     }

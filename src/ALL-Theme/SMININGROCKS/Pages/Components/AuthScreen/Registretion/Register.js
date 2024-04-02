@@ -21,7 +21,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [Errors, setErrors] = useState({});
   const [passwordError, setPasswordError] = useState('');
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
@@ -43,13 +43,13 @@ export default function Register() {
   useEffect(() => {
     const storedEmail = location.state?.email;
     const routeMobileNo = location.state?.mobileNo;
-    
+
     if (routeMobileNo) {
       setMobileNo(routeMobileNo);
       mobileNoRef.current.disabled = true;
     }
-  
-    if(storedEmail) {
+
+    if (storedEmail) {
       setEmail(storedEmail);
       emailRef.current.disabled = true;
     }
@@ -128,13 +128,13 @@ export default function Register() {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[^\w\d\s]).{8,}$/;
     return passwordRegex.test(value);
   };
-  
+
   const handlePasswordChange = (event) => {
     const { value } = event.target;
     setPassword(value);
     if (!value.trim()) {
       setPasswordError('Password is required')
-    }else if (!validatePassword(value)) {
+    } else if (!validatePassword(value)) {
       setPasswordError('Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character!');
     } else if (value === confirmPassword) {
       setErrors(prevErrors => ({ ...prevErrors, confirmPassword: '' }));
@@ -145,6 +145,8 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const errors = {};
     if (!firstName.trim()) {
       errors.firstName = 'First Name is required';
@@ -159,9 +161,9 @@ export default function Register() {
     if (!mobileNo.trim()) {
       errors.mobileNo = 'Mobile No. is required';
     } else if (!/^\d{10}$/.test(mobileNo.trim())) {
-      errors.mobileNo =  'Enter Valid mobile number';
-    } 
-    
+      errors.mobileNo = 'Enter Valid mobile number';
+    }
+
     if (!email.trim()) {
       errors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -170,15 +172,16 @@ export default function Register() {
     if (!password.trim()) {
       setPasswordError('Password is required');
       errors.password = 'Password is required';
-    }else if (!validatePassword(password)) {
-      errors.password =  'Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character!';
-    } 
+    } else if (!validatePassword(password)) {
+      errors.password = 'Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character!';
+    }
 
     if (!confirmPassword.trim()) {
       errors.confirmPassword = 'Confirm Password is required';
     } else if (confirmPassword !== password) {
       errors.confirmPassword = 'Passwords do not match';
     }
+
     if (Object.keys(errors).length === 0 && passwordError.length === 0) {
       const hashedPassword = hashPasswordSHA1(password);
       setIsLoading(true);
@@ -195,7 +198,7 @@ export default function Register() {
           "p": encodedCombinedValue
         }
         const response = await CommonAPI(body);
-        console.log('ressssssssssssssssss',response);
+        console.log('ressssssssssssssssss', response);
         if (response.Data.rd[0].stat === 1) {
           localStorage.setItem('LoginUser', 'true')
           localStorage.setItem('loginUserDetail', JSON.stringify(response.Data?.rd[0]));
@@ -203,10 +206,12 @@ export default function Register() {
           localStorage.setItem('registerEmail', email)
           navigation('/');
         } else {
-          const storedEmail = location.state?.email;;
-          const routeMobileNo = location.state?.mobileNo;
-          if (storedEmail) errors.email = response.Data.rd[0].stat_msg;
-          if (routeMobileNo) errors.mobileNo = response.Data.rd[0].stat_msg;
+          if (response.Data?.rd[0].ismobileexists === 1) {
+            errors.mobileNo = response.Data.rd[0].stat_msg;
+          }
+          if (response.Data?.rd[0].isemailexists === 1) {
+            errors.email = response.Data.rd[0].stat_msg;
+          }
           setErrors(errors);
         }
       } catch (error) {
@@ -218,13 +223,6 @@ export default function Register() {
       setErrors(errors);
     }
   };
-  const isDefaultValueSet = (value) => {
-    return value && value.trim() !== '';
-  };
-
-
-
-  
 
   return (
     <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
@@ -254,13 +252,13 @@ export default function Register() {
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
-              autoComplete="new-FirstName" 
+              autoComplete="new-FirstName"
               value={firstName}
               inputRef={firstNameRef}
               onKeyDown={(e) => handleKeyDown(e, lastNameRef)}
               onChange={(e) => handleInputChange(e, setFirstName, 'firstName')}
-              error={!!errors.firstName}
-              helperText={errors.firstName}
+              error={!!Errors.firstName}
+              helperText={Errors.firstName}
             />
 
             <TextField
@@ -269,13 +267,13 @@ export default function Register() {
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
-              autoComplete="new-LastName" 
+              autoComplete="new-LastName"
               value={lastName}
               inputRef={lastNameRef}
               onKeyDown={(e) => handleKeyDown(e, mobileNoRef)}
               onChange={(e) => handleInputChange(e, setLastName, 'lastName')}
-              error={!!errors.lastName}
-              helperText={errors.lastName}
+              error={!!Errors.lastName}
+              helperText={Errors.lastName}
             />
 
             <TextField
@@ -288,14 +286,14 @@ export default function Register() {
               inputRef={mobileNoRef}
               onKeyDown={(e) => handleKeyDown(e, emailRef)}
               onChange={(e) => handleInputChange(e, setMobileNo, 'mobileNo')}
-              error={!!errors.mobileNo}
-              helperText={errors.mobileNo}
+              error={!!Errors.mobileNo}
+              helperText={Errors.mobileNo}
             />
 
             <TextField
               id="outlined-basic"
               label="Email"
-              autoComplete="ne-Email" 
+              autoComplete="ne-Email"
               variant="outlined"
               className='labgrowRegister'
               style={{ margin: '15px' }}
@@ -303,14 +301,14 @@ export default function Register() {
               inputRef={emailRef}
               onKeyDown={(e) => handleKeyDown(e, passwordRef)}
               onChange={(e) => handleInputChange(e, setEmail, 'email')}
-              error={!!errors.email}
-              helperText={errors.email}
+              error={!!Errors.email}
+              helperText={Errors.email}
             />
 
             <TextField
               id="outlined-password-input"
               label="Password"
-              autoComplete="enter-NewPass-Word" 
+              autoComplete="enter-NewPass-Word"
               type={showPassword ? 'text' : 'password'}
               className='labgrowRegister'
               style={{ margin: '15px' }}
@@ -339,7 +337,7 @@ export default function Register() {
             <TextField
               id="outlined-confirm-password-input"
               label="Confirm Password"
-              autoComplete="Enetr-NewConfirm-Pass" 
+              autoComplete="Enetr-NewConfirm-Pass"
               type={showConfirmPassword ? 'text' : 'password'}
               className='labgrowRegister'
               style={{ margin: '15px' }}
@@ -351,8 +349,8 @@ export default function Register() {
                 }
               }}
               onChange={(e) => handleInputChange(e, setConfirmPassword, 'confirmPassword')}
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword}
+              error={!!Errors.confirmPassword}
+              helperText={Errors.confirmPassword}
               InputProps={{ // Set InputProps for icon
                 endAdornment: (
                   <InputAdornment position="end">
@@ -375,7 +373,7 @@ export default function Register() {
               <input type='checkbox' />
               <p style={{ margin: '5px' }}>Subscribe to our newsletter</p>
             </div> */}
-            <Button style={{marginTop: '10px' ,color: 'gray'}} onClick={() => navigation('/LoginOption')}>BACK</Button>
+            <Button style={{ marginTop: '10px', color: 'gray' }} onClick={() => navigation('/LoginOption')}>BACK</Button>
           </div>
           <Footer />
         </div>

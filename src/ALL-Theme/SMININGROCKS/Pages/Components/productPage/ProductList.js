@@ -1940,10 +1940,13 @@ const ProductList = () => {
 
                         <div>
                           <p style={{ fontSize: "14px", fontWeight: 'bold' }}>
-                            {isMetalTCShow === 1 && products?.MetalTypeName}-{products?.MetalColorName}{products?.MetalPurity}
+                            {isMetalTCShow === 1 && <span>
+                              {products?.MetalTypeName} -
+                              {products?.MetalColorName}
+                              {products?.MetalPurity} /
+                            </span>}
                             {isPriceShow === 1 &&
                               <span>
-                                /
                                 {currencySym?.Currencysymbol}
                                 {((products?.UnitCost ?? 0) + (products?.price ?? 0) + (products?.markup ?? 0)).toFixed(2)}
                               </span>
