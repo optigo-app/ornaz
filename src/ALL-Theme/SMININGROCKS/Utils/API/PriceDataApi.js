@@ -14,7 +14,7 @@ export const getDesignPriceList = async () => {
       "Laboursetid": `${storeInit.PolicyApplyOnName === "Customer Wise Policy" ? loginUserDetail?._pricemanagement_laboursetid : loginUserDetail?.pricemanagement_laboursetid}`,
       "diamondpricelistname": `${loginUserDetail?._diamondpricelistname}`,
       "colorstonepricelistname": `${loginUserDetail?._colorstonepricelistname}`,
-      "SettingPriceUniqueNo": `${loginUserDetail?.SettingPriceUniqueNo}`,
+      "SettingPriceUniqueNo": `${storeInit.PolicyApplyOnName === "Customer Wise Policy" ? loginUserDetail?._SettingPriceUniqueNo : loginUserDetail?.SettingPriceUniqueNo }`,
       "DesignNo": ""
     }
 

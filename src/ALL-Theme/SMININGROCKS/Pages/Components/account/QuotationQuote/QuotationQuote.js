@@ -262,13 +262,15 @@ const QuotationQuote = () => {
             } else {
                 flags.search = true;
             }
-
+            
             if (cutDate !== undefined) {
+                if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
                 if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
                     let fromdat = moment(fromdates);
                     let todat = moment(todates);
                     let cutDat = moment(cutDate);
-                    const isBetween = cutDat.isBetween(fromdat, todat);
+                    
+                    const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
                     if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
                         flags.dateTo = true;
                         flags.dateFrom = true;
@@ -312,6 +314,7 @@ const QuotationQuote = () => {
                     flags.dateTo = true;
                     flags.dateFrom = true;
                 }
+              }
             }
 
             if (flags.dateFrom === true && flags.dateTo === true && flags.search === true) {
@@ -361,7 +364,7 @@ const QuotationQuote = () => {
                 alert('nodata')
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.log('Error:', error);
         } finally {
             setIsLoading(false);
         }
@@ -402,6 +405,8 @@ const QuotationQuote = () => {
                                 <DatePicker
                                     label="Date From"
                                     value={fromDate}
+                                    format="DD MMM YYYY"
+                                    placeholder="DD MMM YYYY"
                                     onChange={(newValue) => {
                                         if (newValue === null) {
                                             setFromDate(null)
@@ -419,8 +424,9 @@ const QuotationQuote = () => {
                                             }
                                         }
                                     }}
-                                    format="DD MMM YYYY"
-                                    placeholder={fromDate ? undefined : "Date From"}
+                                    
+                                    // placeholder={fromDate ? undefined : "DD MMM YYYY"}
+                                    // placeholder="DD MMM YYYY"
                                     className='quotationFilterDates'
                                     ref={fromDateRef}
                                 />
@@ -436,7 +442,8 @@ const QuotationQuote = () => {
                                     value={toDate}
                                     // onChange={(newValue) => setToDate(newValue)}
                                     format="DD MMM YYYY"
-                                    placeholder="Date To"
+                                    placeholder="DD MMM YYYY"
+                                    // placeholder="Date To"
                                     className='quotationFilterDates'
                                     ref={toDateRef}
                                     inputProps={{ readOnly: true }}

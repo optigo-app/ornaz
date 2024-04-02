@@ -341,6 +341,12 @@ export default function CartPage() {
       if (response.Data.rd[0].stat === 1) {
         await getCartData();
         await getCountFunc();
+        let prevIndexofCartList = cartListData?.findIndex((cld)=>cld?.autocode === data?.autocode)
+        if(prevIndexofCartList === 0){
+          setCartSelectData()
+        }else{  
+          setCartSelectData(cartListData[prevIndexofCartList -1]);
+        }
       } else {
         alert("Error");
       }
@@ -599,6 +605,8 @@ export default function CartPage() {
   useEffect(() => {
 
   }, [])
+
+
 
   return (
     <>

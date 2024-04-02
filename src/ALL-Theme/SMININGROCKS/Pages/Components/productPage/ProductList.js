@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { productListApiCall } from "../../../Utils/API/ProductListAPI";
 
 function valuetext(value) {
   return `${value}°C`;
@@ -82,6 +83,8 @@ const ProductList = () => {
   const mtName = useRecoilValue(metalTypeG)
   const dqcName = useRecoilValue(diamondQualityColorG)
   const csqcName = useRecoilValue(colorstoneQualityColorG)
+  const [pdData,setPdData] = useRecoilState(productDataNew)
+
   // console.log(mtName, dqcName, csqcName);
   //RANGE FILTERS
 
@@ -100,6 +103,15 @@ const ProductList = () => {
   const [isPriceShow, setIsPriceShow] = useState('');
 
   // console.log({cartFlag,wishFlag});
+
+  useEffect(()=>{
+    let pdDataCalling = async () => {
+      await productListApiCall().then((res) => {
+          setPdData(res)
+      })
+  }
+  pdDataCalling()
+  },[])
 
   useEffect(() => {
     setNewProData(getSearchData)
@@ -599,9 +611,9 @@ const ProductList = () => {
       }
       return { ...pd, checkFlag }
     })
-    setProductApiData2(newCartCheckData)
-    if (newCartCheckData) {
-      localStorage.setItem("allproductlist", JSON.stringify(newCartCheckData))
+    if(newCartCheckData){
+      setProductApiData2(newCartCheckData)
+      localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
     }
   }
 
@@ -626,7 +638,7 @@ const ProductList = () => {
 
   const handelProductSubmit = (product) => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
-    navigate("/productdetail");
+    navigate("/productdetail");       
   };
 
   const NewFilterData = () => {
@@ -1507,10 +1519,10 @@ const ProductList = () => {
 
   const [selectedSortOption, setSelectedSortOption] = useState('None');
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("allproductlist"));
-    setProductApiData2(data);
-  }, [ProductApiData2]);
+  // useEffect(() => {
+  //   const data = JSON.parse(localStorage.getItem("allproductlist"));
+  //   setProductApiData2(data);
+  // }, []);
 
   const handleSortChange = (e) => {
     const selectedOption = e.target.value;

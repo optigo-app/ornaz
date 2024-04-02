@@ -253,7 +253,7 @@ const OrderHistory = () => {
                                 <div className="container_order_details ">
                                   <div className="_center_img">
                                     <img
-                                      src={`${image_path}/${ukey}/Design_Image/D999EBEDCCMDAwMzQ2Mg==/Red_Thumb/0003462_23102023133214918.jpg`}
+                                      src={`${image_path}/${ukey}/Design_Image/${el?.imgrandomno}${btoa(el?.autocode)}/Red_Thumb/${el?.DefaultImageName}`}
                                       alt="#designimage"
                                       className="des_img_aoh"
                                     />
