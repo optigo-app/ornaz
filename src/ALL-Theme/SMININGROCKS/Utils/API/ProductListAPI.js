@@ -81,18 +81,19 @@ export const productListApiCall = async() =>{
         "75": "ProducttypeName"
       };
 
-
     let pdList=[];
 
     let storeinit = JSON.parse(localStorage.getItem("storeInit"))
     let loginInfo = JSON.parse(localStorage.getItem("loginUserDetail"))
+    let userEmail = localStorage.getItem("userEmailForPdList")
+    console.log("userEmail",userEmail);
 
     const data = {"PackageId":`${loginInfo?.PackageId}`,"autocode":"","FrontEnd_RegNo":`${storeinit?.FrontEnd_RegNo}`,"Customerid":`${loginInfo?.id}`}
 
     let encData =  btoa(JSON.stringify(data))
 
     let body = {
-      "con":"{\"id\":\"\",\"mode\":\"GETPRODUCTLIST\",\"appuserid\":\"nimesh@ymail.in\"}",
+      "con":`{\"id\":\"\",\"mode\":\"GETPRODUCTLIST\",\"appuserid\":\"${userEmail}\"}`,
       "f":"onlogin (GETPRODUCTLIST)",
       "p":encData
     }
@@ -103,25 +104,17 @@ export const productListApiCall = async() =>{
             const mergedItem = {};
             for (let key in p) {
                 if (keyMapping[key]) {
-                    mergedItem[keyMapping[key]] = p[key];
+                    mergedItem[keyMapping[key]] = p[key]
                 }
             }
             pdList.push(mergedItem); 
         });
-        console.log("pdList",pdList);
+        // console.log("pdList",pdList);
     });
     
     localStorage.setItem("allproductlist", JSON.stringify(pdList));
 
-
     //DesignList API Calling
-
-
-    
-    
-
-
-
     return pdList
 
   }

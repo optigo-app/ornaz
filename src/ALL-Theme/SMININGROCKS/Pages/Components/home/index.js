@@ -80,8 +80,8 @@ export default function Home() {
           "p": encodedCombinedValue
         }
         const response = await CommonAPI(body);
-        if (response.Data?.rd) {
-          let data = JSON.stringify(response.Data?.rd)
+        if (response?.Data?.rd) {
+          let data = JSON.stringify(response?.Data?.rd)
           localStorage.setItem('MetalTypeData', data)
         }
       } catch (error) {
@@ -112,8 +112,8 @@ export default function Home() {
           "p": encodedCombinedValue
         }
         const response = await CommonAPI(body);
-        if (response.Data?.rd) {
-          let data = JSON.stringify(response.Data?.rd)
+        if (response?.Data?.rd) {
+          let data = JSON.stringify(response?.Data?.rd)
           localStorage.setItem('QualityColor', data)
         }
 
@@ -146,8 +146,8 @@ export default function Home() {
           "p": encodedCombinedValue
         }
         const response = await CommonAPI(body);
-        if (response.Data?.rd) {
-          let data = JSON.stringify(response.Data?.rd)
+        if (response?.Data?.rd) {
+          let data = JSON.stringify(response?.Data?.rd)
           localStorage.setItem('ColorStoneQualityColor', data)
         }
       } catch (error) {
@@ -178,8 +178,8 @@ export default function Home() {
           "p": encodedCombinedValue
         }
         const response = await CommonAPI(body);
-        if (response.Data?.rd) {
-          let data = JSON.stringify(response.Data?.rd)
+        if (response?.Data?.rd) {
+          let data = JSON.stringify(response?.Data?.rd)
           localStorage.setItem('MetalColorData', data)
         }
       } catch (error) {
@@ -209,7 +209,7 @@ export default function Home() {
         }
 
         await CommonAPI(body).then((res) => {
-          localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res.Data.rd[0]))
+          localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res?.Data.rd[0]))
           // console.log("res",res)
         })
 
@@ -240,8 +240,8 @@ export default function Home() {
         }
 
         const response = await CommonAPI(body);
-        if (response.Data?.rd) {
-          let data = JSON.stringify(response.Data?.rd)
+        if (response?.Data?.rd) {
+          let data = JSON.stringify(response?.Data?.rd)
           localStorage.setItem('colorDataImages', data)
         }
 
