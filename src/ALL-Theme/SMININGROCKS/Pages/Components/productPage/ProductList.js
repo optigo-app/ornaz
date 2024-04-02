@@ -137,28 +137,28 @@ const ProductList = () => {
       const updatedData = await Promise?.all(data?.map(async (product) => {
         const newPriceData = priceDataApi?.rd?.find(
           (pda) =>
-           storeInit?.IsMetalCustomization === 1
-            ?
-            pda.A === product.autocode &&
-            pda.B === product.designno &&
-            pda.D === loginUserDetail?.cmboMetalType
-            :
-            pda.A === product.autocode &&
-            pda.B === product.designno
+            storeInit?.IsMetalCustomization === 1
+              ?
+              pda.A === product.autocode &&
+              pda.B === product.designno &&
+              pda.D === loginUserDetail?.cmboMetalType
+              :
+              pda.A === product.autocode &&
+              pda.B === product.designno
         );
 
         const newPriceData1 = priceDataApi?.rd1?.filter(
           (pda) =>
 
-           storeInit?.IsDiamondCustomization === 1
-            ?
-            pda.A === product.autocode &&
-            pda.B === product.designno &&
-            pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
-            pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
-            :
-            pda.A === product.autocode &&
-            pda.B === product.designno
+            storeInit?.IsDiamondCustomization === 1
+              ?
+              pda.A === product.autocode &&
+              pda.B === product.designno &&
+              pda.H === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[0] &&
+              pda.J === loginUserDetail?.cmboDiaQualityColor?.split('#@#')[1]
+              :
+              pda.A === product.autocode &&
+              pda.B === product.designno
 
         ).reduce((acc, obj) => acc + obj.S, 0)
 
@@ -175,20 +175,20 @@ const ProductList = () => {
 
         // console.log("newPriceData11",newPriceData11)
 
-        
+
 
         const newPriceData2 = priceDataApi?.rd2?.filter(
           (pda) =>
 
-          storeInit?.IsCsCustomization === 1
-            ? 
-            pda.A === product.autocode &&
-            pda.B === product.designno &&
-            pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
-            pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
-            :
-            pda.A === product.autocode &&
-            pda.B === product.designno
+            storeInit?.IsCsCustomization === 1
+              ?
+              pda.A === product.autocode &&
+              pda.B === product.designno &&
+              pda.H === loginUserDetail?.cmboCSQualityColor?.split('#@#')[0].toUpperCase() &&
+              pda.J === loginUserDetail?.cmboCSQualityColor?.split('#@#')[1].toUpperCase()
+              :
+              pda.A === product.autocode &&
+              pda.B === product.designno
 
         ).reduce((acc, obj) => acc + obj.S, 0)
 
@@ -228,11 +228,11 @@ const ProductList = () => {
   //       pda.H === "VVS" &&
   //       pda.J === "IJ"
   //   );
-  
+
   //   console.log("newPriceData111",newPriceData11)
   // },[priceDataApi])
 
-  
+
 
   const toggleDeatilList = () => {
     setIsOpenDetail(!isOpenDetail)
@@ -562,9 +562,9 @@ const ProductList = () => {
 
   useEffect(() => {
     // let newWishCheckData = (ProductApiData2)?.map((pd) => {
-      
+
     //   let newWish = WishData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
-      
+
 
     //   let wishCheck = false
     //   if (newWish?.length && newWish) {
@@ -595,13 +595,13 @@ const ProductList = () => {
     } catch (error) {
       console.error("Error storing data in localStorage:", error);
     }
-  }, [WishData,ProductApiData2])
+  }, [WishData, ProductApiData2])
 
   let cartlistUpdate = async () => {
     let newCartCheckData = (ProductApiData2)?.map((pd) => {
-      
+
       let newWish = cartData?.find((cd) => pd.designno === cd.DesignNo && pd.autocode === cd.autocode)
-      
+
 
       let checkFlag = false
       if (newWish) {
@@ -758,8 +758,8 @@ const ProductList = () => {
 
   }
 
-  useEffect(()=>{
-    let newData = Object.keys(cartFlag).filter((cf)=>Object.keys(wishFlag).find((wf)=>wf===cf))
+  useEffect(() => {
+    let newData = Object.keys(cartFlag).filter((cf) => Object.keys(wishFlag).find((wf) => wf === cf))
 
     // const cartFlagKeys = Object.keys(cartFlag);
     // const updatedWishFlag = { ...wishFlag };
@@ -769,9 +769,9 @@ const ProductList = () => {
     //     delete updatedWishFlag[cf];
     //   }
     // });
-    console.log({cartFlag,wishFlag},newData)
+    console.log({ cartFlag, wishFlag }, newData)
 
-  },[cartFlag,wishFlag])
+  }, [cartFlag, wishFlag])
 
   useEffect(() => {
 
@@ -781,7 +781,7 @@ const ProductList = () => {
 
   }, [])
 
-  const handelWishList = async (event, prod) => {   
+  const handelWishList = async (event, prod) => {
 
     try {
       setWishFlag(prev => ({ ...prev, [prod?.designno]: event.target.checked }))
@@ -1530,14 +1530,15 @@ const ProductList = () => {
     let sortedData = [...ProductApiData2];
 
     if (selectedOption === 'PRICE HIGH TO LOW') {
-      sortedData.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+      sortedData.sort((a, b) => ((b?.UnitCost ?? 0) + (b?.price ?? 0) + (b?.markup ?? 0)) - ((a?.UnitCost ?? 0) + (a?.price ?? 0) + (a?.markup ?? 0)));
     } else if (selectedOption === 'PRICE LOW TO HIGH') {
-      sortedData.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
+      sortedData.sort((a, b) => ((a?.UnitCost ?? 0) + (a?.price ?? 0) + (a?.markup ?? 0)) - ((b?.UnitCost ?? 0) + (b?.price ?? 0) + (b?.markup ?? 0)));
     } else {
       sortedData = [...ProductApiData2];
     }
     setProductApiData2(sortedData);
   };
+
 
 
   return (
@@ -1812,7 +1813,9 @@ const ProductList = () => {
                       onChange={handleSortChange}
                       value={selectedSortOption}
                     >
-                      <option value="None">Normal</option>
+                      <option value="None">Recommended</option>
+                      <option value="None">New</option>
+                      <option value="None">In stock</option>
                       <option value="PRICE HIGH TO LOW">PRICE HIGH TO LOW</option>
                       <option value="PRICE LOW TO HIGH">PRICE LOW TO HIGH</option>
                     </select>
@@ -1853,7 +1856,9 @@ const ProductList = () => {
                     onChange={handleSortChange}
                     value={selectedSortOption}
                   >
-                    <option value="None">Normal</option>
+                    <option value="None">Recommended</option>
+                    <option value="None">New</option>
+                    <option value="None">In stock</option>
                     <option value="PRICE HIGH TO LOW">PRICE HIGH TO LOW</option>
                     <option value="PRICE LOW TO HIGH">PRICE LOW TO HIGH</option>
                   </select>
@@ -1947,10 +1952,13 @@ const ProductList = () => {
 
                         <div>
                           <p style={{ fontSize: "14px", fontWeight: 'bold' }}>
-                            {isMetalTCShow === 1 && products?.MetalTypeName}-{products?.MetalColorName}{products?.MetalPurity}
+                            {isMetalTCShow === 1 && <span>
+                              {products?.MetalTypeName} -
+                              {products?.MetalColorName}
+                              {products?.MetalPurity} /
+                            </span>}
                             {isPriceShow === 1 &&
                               <span>
-                                /
                                 {currencySym?.Currencysymbol}
                                 {((products?.UnitCost ?? 0) + (products?.price ?? 0) + (products?.markup ?? 0)).toFixed(2)}
                               </span>

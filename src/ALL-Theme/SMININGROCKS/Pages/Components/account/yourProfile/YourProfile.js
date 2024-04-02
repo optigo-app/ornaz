@@ -41,7 +41,7 @@ export default function YourProfile() {
             const { FrontEnd_RegNo } = storeInit;
 
             const combinedValue = JSON.stringify({
-                firstname: `${editedUserData.defaddress_shippingfirstname}`, lastname: `${editedUserData.defaddress_shippinglastname}`, street: `${editedUserData.defaddress_state}`, addressprofile: `${editedUserData.defaddress_shippingfirstname +' '+ editedUserData.defaddress_shippinglastname}`, city: `${editedUserData.city}`, state: `${editedUserData.state}`, country: `${userData.defaddress_country}`, zip: `${userData.defaddress_zip}`, mobile: `${userData.defaddress_shippingmobile}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${editedUserData.id}`
+                firstname: `${editedUserData.defaddress_shippingfirstname}`, lastname: `${editedUserData.defaddress_shippinglastname}`, street: `${editedUserData.defaddress_state}`, addressprofile: `${editedUserData.defaddress_shippingfirstname + ' ' + editedUserData.defaddress_shippinglastname}`, city: `${editedUserData.city}`, state: `${editedUserData.state}`, country: `${userData.defaddress_country}`, zip: `${userData.defaddress_zip}`, mobile: `${userData.defaddress_shippingmobile}`, FrontEnd_RegNo: `${FrontEnd_RegNo}`, Customerid: `${editedUserData.id}`
             });
 
             const encodedCombinedValue = btoa(combinedValue);
@@ -74,6 +74,7 @@ export default function YourProfile() {
         setEditMode(false);
     };
 
+
     return (
         <div>
             <ToastContainer />
@@ -95,7 +96,7 @@ export default function YourProfile() {
                                     variant="outlined"
                                     className='labgrowRegister'
                                     style={{ margin: '15px', color: 'black' }}
-                                    value={userData.firstname !== "undefined" ? userData.firstname : ""}
+                                    value={userData.defaddress_shippingfirstname !== undefined ? userData.defaddress_shippingfirstname : userData.firstname}
                                     disabled={!editMode}
                                     onChange={handleInputChange}
                                 />
@@ -105,7 +106,7 @@ export default function YourProfile() {
                                     variant="outlined"
                                     className='labgrowRegister'
                                     style={{ margin: '15px' }}
-                                    value={userData.lastname !== "undefined" ? userData.lastname : ""}
+                                    value={userData.defaddress_shippinglastname !== undefined ? userData.defaddress_shippinglastname : userData.lastname}
                                     disabled={!editMode}
                                     onChange={handleInputChange}
                                 />
@@ -148,7 +149,7 @@ export default function YourProfile() {
                     )}
                 </div>
                 <div>
-                    <button onClick={handleEdit} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' ,marginTop: '15px' }}>Edit Profile</button>
+                    <button onClick={handleEdit} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray', marginTop: '15px' }}>Edit Profile</button>
                 </div>
             </div>
 
@@ -205,7 +206,7 @@ export default function YourProfile() {
                         )}
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', marginBottom: '25px' }}>
-                        <button onClick={handleSave} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' ,marginInline: '5px' }}>Save</button>
+                        <button onClick={handleSave} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray', marginInline: '5px' }}>Save</button>
                         <button onClick={() => setEditMode(false)} className='SmilingAddEditAddrwess' style={{ backgroundColor: 'lightgray' }}>Cancel</button>
                     </div>
                 </div>

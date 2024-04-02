@@ -19,6 +19,8 @@ export default function MyWishList() {
     const [userEmail, setUserEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isPriseShow, setIsPriceShow] = useState('');
+    const [cuurencySymbol, setCuurencySymbol] = useState('');
+
     const setCartCount = useSetRecoilState(CartListCounts)
     const setWishCount = useSetRecoilState(WishListCounts)
     const navigation = useNavigate();
@@ -34,6 +36,10 @@ export default function MyWishList() {
 
     }
     useEffect(() => {
+        const storeInit = JSON.parse(localStorage.getItem('CURRENCYCOMBO'));
+        const { Currencysymbol } = storeInit;
+        setCuurencySymbol(Currencysymbol);
+        
         const fetchData = async () => {
             try {
                 wishlistData.length === 0 && setIsLoading(true);
@@ -236,7 +242,7 @@ export default function MyWishList() {
                                     <img src={`${imageURL}/${yKey}/${item.DefaultImageName}`} className='smiWishLsitBoxImge' style={{ cursor: 'pointer' }} alt='Wishlist item' onClick={() => handelProductSubmit(item)} />
                                    
                                     <p className='smiWishLsitBoxDesc1'>{item.designno}</p>
-                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} <br /> {isPriseShow == 1 && <p>$ {item.TotalUnitCost}</p>}</p>
+                                    <p className='smiWishLsitBoxDesc2'>{item.mastermanagement_goldtypename} / {item.mastermanagement_goldcolorname} / {item.ActualGrossweight} <br /> {isPriseShow == 1 && <p>{cuurencySymbol} {item.TotalUnitCost}</p>}</p>
                                     <p className='smiWishLsitBoxDesc3' onClick={() => handleAddToCart(item.autocode)}>ADD TO CART +</p>
                                 </div>
                             ))}
