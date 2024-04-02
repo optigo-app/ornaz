@@ -305,9 +305,13 @@ const DesignWiseSalesReport = () => {
                     flags.grossWt = true;
                 }
             }
-            if (design_No?.trim() === "" || e?.designno?.toLowerCase()?.includes(design_No)) {
+            if(e?.designno?.toLowerCase()?.includes(design_No?.toLowerCase())){
                 flags.designNo = true;
             }
+            // if (design_No?.trim() === "" || e?.designno?.toLowerCase()?.includes(design_No)) {
+            //     console.log("in if",design_No);
+            //     flags.designNo = true;
+            // }
             // if (String(purchase_Count)?.toLowerCase() === "all") {
             //     flags.purchaseCount = true;
             // }else{

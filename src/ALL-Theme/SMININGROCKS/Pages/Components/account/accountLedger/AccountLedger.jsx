@@ -739,7 +739,7 @@ const AccountLedger = () => {
                   });
                   backToInitial2();
             }
-            }
+      }
             
     const CalculateOpeningBalance = (data) => {
         
@@ -954,7 +954,6 @@ const AccountLedger = () => {
     // };
 
 
-
   return (
     <div>
         {/* <div className='fs-4 fw-bold text-center text-secondary ledger_title'>Ledger</div> */}
@@ -989,7 +988,6 @@ const AccountLedger = () => {
                                           if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
                                             setFromDate(newValue)
                                           } else {
-                                            console.log(newValue, "abcd")
                                             Swal.fire({
                                               title: "Error !",
                                               text: "Enter Valid Date From",
