@@ -179,6 +179,8 @@ const QuotationQuote = () => {
         setOrderBy(property);
     };
 
+
+
     const handleClick = (event, id) => {
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -264,7 +266,7 @@ const QuotationQuote = () => {
             }
             
             if (cutDate !== undefined) {
-                if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
+                // if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
                 if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
                     let fromdat = moment(fromdates);
                     let todat = moment(todates);
@@ -314,7 +316,7 @@ const QuotationQuote = () => {
                     flags.dateTo = true;
                     flags.dateFrom = true;
                 }
-              }
+            //   }
             }
 
             if (flags.dateFrom === true && flags.dateTo === true && flags.search === true) {
@@ -411,19 +413,31 @@ const QuotationQuote = () => {
                                         if (newValue === null) {
                                             setFromDate(null)
                                         } else {
-                                            if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
-                                                setFromDate(newValue)
-                                            } else {
-                                                Swal.fire({
-                                                    title: "Error !",
-                                                    text: "Enter Valid Date From",
-                                                    icon: "error",
-                                                    confirmButtonText: "ok"
-                                                });
-                                                resetAllFilters();
+                                            // if(newValue["$d"] == "Invalid Date"){
+                                            //     Swal.fire({
+                                            //         title: "Error !",
+                                            //         text: "Enter Valid Date From",
+                                            //         icon: "error",
+                                            //         confirmButtonText: "ok"
+                                            //       });
+                                            //       resetAllFilters();
+                                            // }else{
+
+                                                if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                                    setFromDate(newValue)
+                                                } else {
+                                                    
+                                                    Swal.fire({
+                                                        title: "Error !",
+                                                        text: "Enter Valid Date From",
+                                                        icon: "error",
+                                                        confirmButtonText: "ok"
+                                                    });
+                                                    resetAllFilters();
+                                                }
                                             }
-                                        }
-                                    }}
+                                        // }
+                                        }}
                                     
                                     // placeholder={fromDate ? undefined : "DD MMM YYYY"}
                                     // placeholder="DD MMM YYYY"

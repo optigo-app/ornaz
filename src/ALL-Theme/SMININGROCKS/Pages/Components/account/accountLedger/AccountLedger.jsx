@@ -219,11 +219,12 @@ const AccountLedger = () => {
 
       }
       const backToInitial2 = () => {
-        const firstDayOfMonth = dayjs().startOf('month');
-        const lastDayOfMonth = dayjs().endOf('month');
-        setFromDate(firstDayOfMonth);
-        setToDate(lastDayOfMonth);
-        setSelectedDays(30)
+          const firstDayOfMonth = dayjs().startOf('month');
+          const lastDayOfMonth = dayjs().endOf('month');
+          console.log("back ini", firstDayOfMonth, lastDayOfMonth);
+          setFromDate(firstDayOfMonth);
+          setToDate(lastDayOfMonth);
+          setSelectedDays(30)
 
         const buttons = document.querySelectorAll('.daybtn');
         buttons.forEach(button => {
@@ -690,7 +691,7 @@ const AccountLedger = () => {
 
                 const startdate = fromDate.format('DD MMM YY');
                 const enddate = toDate.format('DD MMM YY');
-            if (moment(startdate).isSameOrBefore(enddate)) {
+            // if (moment(startdate).isSameOrBefore(enddate)) {
             const findedData = resultArray?.filter((e) => {
                 const entryDate = dayjs(e?.EntryDate);
                     return entryDate.isBetween(startdate, enddate, null, '[]'); // '[]' includes start and end dates
@@ -721,9 +722,11 @@ const AccountLedger = () => {
                 
                 setShowStartDate(formattedFromDate)
                 setShowEndDate(formattedToDate)
-             }else{
-                backToInitial2();
-            }}
+            //  }
+            //  else{
+            //     backToInitial2();
+            // }
+        }
             else if(fromDate !== null && toDate === null){
                 Swal.fire({
                     title: "Error !",
@@ -987,19 +990,32 @@ const AccountLedger = () => {
                                         if (newValue === null) {
                                           setFromDate(null)
                                         } else {
-                                          if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
-                                            setFromDate(newValue)
-                                          } else {
-                                            Swal.fire({
-                                              title: "Error !",
-                                              text: "Enter Valid Date From",
-                                              icon: "error",
-                                              confirmButtonText: "ok"
-                                            });
-                                            // resetAllFilters();
-                                            backToInitial();
-                                            // backToInitial2();
-                                          }
+                                            console.log(newValue["$d"]);
+                                            // if(newValue["$d"] == "Invalid Date"){
+                                            //     Swal.fire({
+                                            //         title: "Error !",
+                                            //         text: "Enter Valid Date From",
+                                            //         icon: "error",
+                                            //         confirmButtonText: "ok"
+                                            //       });
+                                            //       backToInitial2();
+                                            // }
+                                            // else {
+                                                if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                                    setFromDate(newValue)
+                                                  } else {
+                                                    Swal.fire({
+                                                      title: "Error !",
+                                                      text: "Enter Valid Date From",
+                                                      icon: "error",
+                                                      confirmButtonText: "ok"
+                                                    });
+                                                    // resetAllFilters();
+                                                    backToInitial2();
+                                                    // backToInitial2();
+                                                  }
+                                            // }
+                                         
                                         }
                                       }}
                                     format="DD MMM YYYY"
@@ -1029,7 +1045,8 @@ const AccountLedger = () => {
                                         } else {
                                           if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
                                             setToDate(newValue)
-                                          } else {
+                                          } 
+                                          else {
                                             Swal.fire({
                                               title: "Error !",
                                               text: "Enter Valid Date To",

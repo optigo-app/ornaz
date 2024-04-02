@@ -59,7 +59,7 @@ export const checkDates = (fromDates, toDates, cutDates) => {
         dateFrom: false,
     }
     if(cutDate !== undefined){
-        if(fromDates && toDates && moment(fromdates).isSameOrBefore(moment(todates))){
+        // if(fromDates && toDates && moment(fromdates).isSameOrBefore(moment(todates))){
         if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
             let fromdat = moment(fromdates);
             let todat = moment(todates);
@@ -93,7 +93,7 @@ export const checkDates = (fromDates, toDates, cutDates) => {
             flags.dateFrom = true;
         }
        } 
-    }
+    // }
 
     return flags;
 }

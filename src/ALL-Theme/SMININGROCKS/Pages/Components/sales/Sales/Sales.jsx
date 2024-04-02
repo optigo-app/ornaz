@@ -255,7 +255,7 @@ const Sales = () => {
             }
 
             if (cutDate !== undefined) {
-                if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
+                // if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
                 if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
                     let fromdat = moment(fromdates);
                     let todat = moment(todates);
@@ -303,7 +303,7 @@ const Sales = () => {
                     flags.dateTo = true;
                     flags.dateFrom = true;
                 }
-             }
+            //  }
             }
 
             if (flags.dateFrom === true && flags.dateTo === true && flags.search === true) {

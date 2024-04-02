@@ -202,7 +202,7 @@ const DesignWiseSalesReport = () => {
             let fromdat = moment(fromdates);
             let todat = moment(todates);
             if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
-                if(fromdates && todates && moment(fromdates).isSameOrBefore(moment(todates))){
+                // if(fromdates && todates && moment(fromdates).isSameOrBefore(moment(todates))){
 
                 
                 let salescount = dataRd2?.reduce((acc, cObj) => {
@@ -283,7 +283,7 @@ const DesignWiseSalesReport = () => {
                     datass?.push(obj);
                 }
             }
-          } 
+        //   } 
         });
         datass?.forEach((e, i) => {
             let flags = {
