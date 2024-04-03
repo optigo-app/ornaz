@@ -75,6 +75,7 @@ const ProductList = () => {
 
   const [hoverProductImageShow, setHoverProductImageShow] = useState(false);
   const [isColorWiseImageShow, setIsColorWiseImage] = useState('');
+  const [updatedColorImage, setUpdateColorImage] = useState({});
 
   const navigate = useNavigate();
 
@@ -83,7 +84,7 @@ const ProductList = () => {
   const mtName = useRecoilValue(metalTypeG)
   const dqcName = useRecoilValue(diamondQualityColorG)
   const csqcName = useRecoilValue(colorstoneQualityColorG)
-  const [pdData,setPdData] = useRecoilState(productDataNew)
+  const [pdData, setPdData] = useRecoilState(productDataNew)
 
   // console.log(mtName, dqcName, csqcName);
   //RANGE FILTERS
@@ -104,14 +105,14 @@ const ProductList = () => {
 
   // console.log({cartFlag,wishFlag});
 
-  useEffect(()=>{
+  useEffect(() => {
     let pdDataCalling = async () => {
       await productListApiCall().then((res) => {
-          setPdData(res)
+        setPdData(res)
       })
-  }
-  pdDataCalling()
-  },[])
+    }
+    pdDataCalling()
+  }, [])
 
   useEffect(() => {
     setNewProData(getSearchData)
@@ -611,9 +612,9 @@ const ProductList = () => {
       }
       return { ...pd, checkFlag }
     })
-    if(newCartCheckData){
+    if (newCartCheckData) {
       setProductApiData2(newCartCheckData)
-      localStorage.setItem("allproductlist",JSON.stringify(newCartCheckData))
+      localStorage.setItem("allproductlist", JSON.stringify(newCartCheckData))
     }
   }
 
@@ -638,7 +639,7 @@ const ProductList = () => {
 
   const handelProductSubmit = (product) => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
-    navigate("/productdetail");       
+    navigate("/productdetail");
   };
 
   const NewFilterData = () => {
@@ -1341,6 +1342,60 @@ const ProductList = () => {
   };
 
 
+  function convertPath(path) {
+    return path.replace(/\\/g, '/');
+  }
+
+  function checkImageAvailability(imageUrl) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = imageUrl;
+    });
+  }
+
+const handleColorSelection = async (product, index, color) => {
+  const uploadPath = localStorage.getItem('UploadLogicalPath');
+  const storedDataAll = localStorage.getItem('storeInit');
+  const data = JSON.parse(storedDataAll);
+  const colorWiseImageData = JSON.parse(localStorage.getItem('colorDataImages'));
+  const productAutoCode = product?.autocode;
+  const productColorName = color;
+  console.log("color--", productColorName);
+
+  if (!colorWiseImageData) {
+      return [];
+  }
+
+  if (data.IsColorWiseImages === 1) {
+      const matchingData = colorWiseImageData.filter(imageDataItem => (
+          productAutoCode === imageDataItem.autocode && productColorName === imageDataItem.colorname
+      ));
+
+      const checkAvailabilityPromises = matchingData.map(async (imageDataItem) => {
+          const imagePath = uploadPath + '/' + data.ukey + convertPath(imageDataItem.imagepath);
+          const isAvailable = await checkImageAvailability(imagePath);
+          console.log('isAvailable---', isAvailable);
+          return { imagePath: imagePath.replace(/ /g, "%20"), isAvailable };
+      });
+
+      const imageData = await Promise.all(checkAvailabilityPromises);
+      const availableImage = imageData.find(image => image.isAvailable);
+
+      if (availableImage) {
+          const formedImgData = { [index]: availableImage.imagePath };
+          setUpdateColorImage(formedImgData);
+          return availableImage;
+      } else {
+          console.log('No available image found');
+          return [];
+      }
+  } else {
+      setUpdateColorImage({});
+      return [];
+  }
+};
 
   const [state, setState] = React.useState({
     top: false,
@@ -1896,7 +1951,7 @@ const ProductList = () => {
                         <img
                           className="prod_img"
                           src={
-                            hoveredImageUrls[i] ? hoveredImageUrls[i] : // Check if hover image URL exists
+                            hoveredImageUrls[i] ? hoveredImageUrls[i] : updatedColorImage[i] ? updatedColorImage[i] :
                               (products?.MediumImagePath ?
                                 (products?.imagepath + products?.MediumImagePath?.split(",")[0])
                                 :
@@ -2009,7 +2064,7 @@ const ProductList = () => {
                           />
                         </div>
                       </div>
-                      {/* {products?.IsColorWiseImageExists !== null && (
+                      {products?.IsColorWiseImageExists !== null && (
                         <div
                           style={{
                             display: "flex",
@@ -2025,7 +2080,9 @@ const ProductList = () => {
                               height: "9px",
                               backgroundColor: "#c8c8c8",
                               borderRadius: "50%",
+                              cursor: 'pointer'
                             }}
+                            onClick={() => handleColorSelection(products, i, 'White Gold')}
                           ></div>
                           <div
                             style={{
@@ -2033,7 +2090,9 @@ const ProductList = () => {
                               height: "9px",
                               backgroundColor: "#ffcfbc",
                               borderRadius: "50%",
+                              cursor: 'pointer'
                             }}
+                            onClick={(e) => handleColorSelection(products, i, 'Rose Gold')}
                           ></div>
                           <div
                             style={{
@@ -2041,10 +2100,13 @@ const ProductList = () => {
                               height: "9px",
                               backgroundColor: "#e0be77",
                               borderRadius: "50%",
+                              cursor: 'pointer'
                             }}
-                          ></div>
+                            onClick={(e) => handleColorSelection(products, i, 'Yellow Gold')}
+                          >
+                          </div>
                         </div>
-                      )} */}
+                      )}
                     </div>
                   ))}
                 </div>
