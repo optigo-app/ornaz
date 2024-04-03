@@ -270,7 +270,7 @@ const QuotationJob = () => {
         cutDate = e?.["PDate"]?.split("-");
       }
       if (cutDate !== undefined) {
-        if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
+        // if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
 
         
         cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
@@ -321,7 +321,7 @@ const QuotationJob = () => {
           flags.dateTo = true;
           flags.dateFrom = true;
         }
-       }
+      //  }
       }
 
       if (e?.MetalType?.toString()?.toLowerCase()?.includes(metalPurities?.toLowerCase()) || metalPurities?.toLowerCase() === "all") {
@@ -652,8 +652,9 @@ const QuotationJob = () => {
             }
           </Select>
         </Box>
-        <Box sx={{ paddingBottom: "35px", paddingRight: "15px", marginTop: "-5px" }} className="QuotationJobAllBtnSec">
-          <Button sx={{ padding: 0, minWidth: "max-content" }}><PrintIcon /></Button></Box>
+        {/* <Box sx={{ paddingBottom: "35px", paddingRight: "15px", marginTop: "-5px" }} className="QuotationJobAllBtnSec">
+          <Button sx={{ padding: 0, minWidth: "max-content" }}><PrintIcon /></Button>
+        </Box> */}
         <Box sx={{ display: "flex", alignItems: "center", position: "relative", padding: "0 15px 35px 0", maxWidth: "max-content" }} className="searchbox QuotationJobAllBtnSec">
           <TextField id="standard-basic" label="Search" variant="outlined" value={searchVal} onChange={eve => {
             setSearchVal(eve?.target?.value);
