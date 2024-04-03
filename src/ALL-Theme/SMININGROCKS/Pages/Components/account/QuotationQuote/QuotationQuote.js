@@ -234,6 +234,8 @@ const QuotationQuote = () => {
         setFromDate(null);
         setToDate(null);
         setPage(0);
+        // resetAllFilters(data);
+        // setFilterData(data);
     }
 
     const handleSearch = (eve, searchValue, fromDatess, todatess) => {
@@ -271,11 +273,24 @@ const QuotationQuote = () => {
                     let fromdat = moment(fromdates);
                     let todat = moment(todates);
                     let cutDat = moment(cutDate);
-                    
-                    const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
-                    if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
-                        flags.dateTo = true;
-                        flags.dateFrom = true;
+                    if(moment(fromdates).isSameOrBefore(todates)){
+                        const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
+                        if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
+                            flags.dateTo = true;
+                            flags.dateFrom = true;
+                        }
+                    }
+                    else{
+                        // count = count+1
+                        // flags.dateFrom = true;
+                        // flags.dateTo = true;
+                        Swal.fire({
+                            title: "Error !",
+                            text: "Enter Valid Dates",
+                            icon: "error",
+                            confirmButtonText: "ok"
+                        });
+                        reseltFil();
                     }
                 } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
                     // let todat = new Date(todates);
