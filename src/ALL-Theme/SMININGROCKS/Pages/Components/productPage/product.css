@@ -84,6 +84,20 @@
     white-space: nowrap;
     padding:0 5px;
     min-height:19.5px;
+    width:300px;
+    margin:3px;
+}
+
+.smilingProductDeatilTitleMobilenotWidth{
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding:0 5px;
+    min-height:19.5px;
     /* width:300px; */
     margin:3px;
 }
