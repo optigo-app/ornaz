@@ -22,6 +22,8 @@ import { CommonAPI } from '../../../Utils/API/CommonAPI';
 
 export default function Home() {
 
+ 
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -209,7 +211,9 @@ export default function Home() {
         }
 
         await CommonAPI(body).then((res) => {
-          localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res?.Data.rd[0]))
+          if(res?.Data.rd[0]){
+            localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res?.Data.rd[0]))
+          }
           // console.log("res",res)
         })
 
@@ -253,21 +257,15 @@ export default function Home() {
     }
 
     fetchData();
+    currencyCombo();
     getColorImgData();
     getMetalTypeData();
     getQualityColor();
     getColorStoneQualityData();
     getMetalColor();
-    currencyCombo();
   }, []);
 
   
-
-
-
-
-
-
 
   return (
     <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
