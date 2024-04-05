@@ -17,11 +17,12 @@ import { Button, Dialog } from '@mui/material';
 import { IoMdMail } from "react-icons/io";
 import { FaMobileAlt } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CommonAPI } from '../../../Utils/API/CommonAPI';
 
 export default function Home() {
 
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +31,7 @@ export default function Home() {
 
       const header = {
         Authorization: 'Bearer optigo_json_api',
-        domain: 'gstore.orail.co.in',
+        domain:  (window.location.hostname === 'localhost' || window.location.hostname === 'zen') ? 'gstore.orail.co.in' : window.location.hostname,
         version: 'V4',
         sp: "1"
         // domain: 'zen',
@@ -229,7 +230,7 @@ export default function Home() {
         const storedEmail = localStorage.getItem('registerEmail') || '';
 
         const combinedValue = JSON.stringify({
-          autocode:"", FrontEnd_RegNo: `${storeInit?.FrontEnd_RegNo}`, Customerid: `${loginUserDetail?.id}`
+          autocode: "", FrontEnd_RegNo: `${storeInit?.FrontEnd_RegNo}`, Customerid: `${loginUserDetail?.id}`
         });
         const encodedCombinedValue = btoa(combinedValue);
 
@@ -261,7 +262,7 @@ export default function Home() {
     currencyCombo();
   }, []);
 
-  
+
 
 
 

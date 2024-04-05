@@ -58,7 +58,7 @@ const ProdDetail = () => {
 
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
-  
+
   const [showIcateDesign, setShowEcateDesign] = useState('');
 
   const [mtPrice, setMetalPrice] = useState(0)
@@ -410,14 +410,11 @@ const ProdDetail = () => {
     }
 
   }
-  console.log('completttttttttt', completeBackImage);
 
   useEffect(() => {
     const storedDataAll = localStorage.getItem('srProductsData');
     const data = JSON.parse(storedDataAll);
     setVideoUrl(data.videoName);
-    console.log('videoUrlvideoUrlvideoUrl', videoUrl);
-
 
     let allProductData = JSON.parse(localStorage.getItem('allproductlist'))
 
@@ -447,6 +444,7 @@ const ProdDetail = () => {
       return;
     }
     const filteredData = storedData.filter(item => item.autocode === autoCode);
+    console.log('filteredDatafilteredDatafilteredDatafilteredData', filteredData)
     setColorImageData(filteredData)
   }
 
@@ -457,6 +455,7 @@ const ProdDetail = () => {
   function convertPath(path) {
     return path.replace(/\\/g, '/');
   }
+
   function checkImageAvailability(imageUrl) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -465,6 +464,7 @@ const ProdDetail = () => {
       img.src = imageUrl;
     });
   }
+  console.log('updatedColorImageupdatedColorImageupdatedColorImage', updatedColorImage)
 
   useEffect(() => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
@@ -499,6 +499,7 @@ const ProdDetail = () => {
       const selectedColor = color;
       setSelectedColor(selectedColor);
       const filteredData = colorImageData.filter(item => item.colorname.toLowerCase() === selectedColor.toLowerCase());
+
       if (filteredData.length > 0) {
         const correctedData = filteredData.map(item => {
           return {
@@ -1267,14 +1268,18 @@ const ProdDetail = () => {
                 :
                 <img
                   src={
-
-                    (productData?.OriginalImagePath) ? (selectedImagePath == '' ?
-                      productData?.imagepath +
-                      (!handelmainImg()?.length
-                        ? productData?.OriginalImagePath?.split(",")[0]
-                        : handelmainImg())
-                      :
-                      selectedImagePath)
+                    (productData?.OriginalImagePath) ?
+                      updatedColorImage?.length !== 0 ?
+                        updatedColorImage[0]?.imagepath
+                        :
+                        (
+                          selectedImagePath == '' ?
+                            productData?.imagepath + (!handelmainImg()?.length ? productData?.OriginalImagePath?.split(",")[0]
+                              :
+                              handelmainImg()
+                            )
+                            :
+                            selectedImagePath)
                       :
                       notFound
                   }
