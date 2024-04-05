@@ -17,7 +17,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import { CommonAPI } from "../../../Utils/API/CommonAPI";
 import axios from "axios";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CartListCounts, HeaderData, HeaderData2, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, newMenuData, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
+import { CartListCounts, HeaderData, HeaderData2, WishListCounts, colorstoneQualityColorG, diamondQualityColorG, metalTypeG, newMenuData, newTestProdData, priceData, productDataNew, searchData } from "../../../../../Recoil/atom";
 import { GetCount } from "../../../Utils/API/GetCount";
 import notFound from "../../assets/image-not-found.png";
 import { Category } from "@mui/icons-material";
@@ -60,6 +60,7 @@ const ProductList = () => {
   const getHeaderData = useRecoilValue(HeaderData)
   const getHeaderData2 = useRecoilValue(HeaderData2)
   const getnewMenuData = useRecoilValue(newMenuData)
+  const getAllProdData = useRecoilValue(newTestProdData);
 
   // console.log("getnewMenuData",getnewMenuData)  
   // console.log("getHeaderData2",getHeaderData2)
@@ -101,8 +102,14 @@ const ProductList = () => {
   const [isStonePShow, setIsStonePShow] = useState('');
   const [isMetalTCShow, setIsMetalTCShow] = useState('');
   const [isPriceShow, setIsPriceShow] = useState('');
+  const [globImagePath,setGlobImagepath] = useState();
 
   // console.log({cartFlag,wishFlag});
+
+  useEffect(()=>{
+    const storeInit = JSON.parse(localStorage.getItem('storeInit'))
+    setGlobImagepath(storeInit?.DesignImageFol)
+  },[])
 
   useEffect(()=>{
     let pdDataCalling = async () => {
@@ -127,6 +134,7 @@ const ProductList = () => {
     setpriceDataApi(data)
   }, [])
 
+
   useEffect(() => {
     const fetchData = async () => {
       const data = JSON.parse(localStorage.getItem("allproductlist"));
@@ -146,6 +154,8 @@ const ProductList = () => {
             pda.A === product.autocode &&
             pda.B === product.designno
         );
+
+        // console.log("newPriceData",newPriceData)
 
         const newPriceData1 = priceDataApi?.rd1?.filter(
           (pda) =>
@@ -859,7 +869,7 @@ const ProductList = () => {
           "encrypted_designno": `${product?.encrypted_designno ?? ""}`,
           "hashtagid": `${product?.Hashtagid ?? ""}`,
           "hashtagname": `${product?.Hashtagname ?? ""}`,
-          "imagepath": `${product?.imagepath}`,
+          "imagepath": `${globImagePath}`,
           "imgrandomno": `${product?.imgrandomno}`,
           "mediumimage": `${product?.MediumImagePath ?? ""}`,
           "originalimage": `${product?.OriginalImagePath}`,
@@ -1018,7 +1028,7 @@ const ProductList = () => {
           "encrypted_designno": `${product?.encrypted_designno ?? ""}`,
           "hashtagid": `${product?.Hashtagid ?? ""}`,
           "hashtagname": `${product?.Hashtagname ?? ""}`,
-          "imagepath": `${product?.imagepath}`,
+          "imagepath": `${globImagePath}`,
           "mediumimage": `${product?.MediumImagePath ?? ""}`,
           "originalimage": `${product?.OriginalImagePath}`,
           "storyline_html": `${product?.storyline_html ?? ""}`,
@@ -1893,11 +1903,11 @@ const ProductList = () => {
                           src={
                             hoveredImageUrls[i] ? hoveredImageUrls[i] : // Check if hover image URL exists
                               (products?.MediumImagePath ?
-                                (products?.imagepath + products?.MediumImagePath?.split(",")[0])
+                                (globImagePath+ products?.MediumImagePath?.split(",")[0])
                                 :
                                 notFound)
                           }
-                          onMouseEnter={() => handleHoverImageShow(products?.MediumImagePath?.split(",")[0], i, products?.RollOverImageName, products?.imagepath)}
+                          onMouseEnter={() => handleHoverImageShow(products?.MediumImagePath?.split(",")[0], i, products?.RollOverImageName, globImagePath)}
                           // onMouseEnter={() => handleHoverImageShow(products?.MediumImagePath?.split(",")[0], i, isColorWiseImageShow === 1 ? products?.ColorWiseRollOverImageName : products?.RollOverImageName, products?.imagepath)}
                           onMouseLeave={() => handleMouseLeave(i)}
                           style={{ objectFit: 'cover' }}
@@ -1906,22 +1916,11 @@ const ProductList = () => {
                       </div>
                       <div className="productTitleLine" onClick={() => handelProductSubmit(products)}>
                         <p
-                          style={{
-                            fontSize: "13px",
-                            textTransform: "uppercase",
-                            fontWeight: "500",
-                            cursor: "pointer",
-                            textoverflow: "ellipsis",
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            padding: '0 15px',
-                            minHeight: '19.5px',
-                            margin: '3px'
-                          }}
                           className="smilingProductDeatilTitleMobile"
                         >
-                          {products?.TitleLine} -<span style={{ fontWeight: 600 }}> {products?.designno} </span>
+                          {products?.TitleLine} 
                         </p>
+                        <span style={{ fontWeight: 600 ,fontSize:"13px"}}>{`- ${products?.designno}`} </span>
                       </div>
                       <div style={{}}>
                         <div className="mobileDeatilDiv1" style={{ display: 'flex', justifyContent: 'center' }}>
