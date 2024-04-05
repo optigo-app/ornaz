@@ -54,12 +54,15 @@ const ProdDetail = () => {
   const [IsColorWiseImagesShow, setIsColorWiseImagesShow] = useState('')
   const [videoUrl, setVideoUrl] = useState('');
   const [completeBackImage, setCompleteBackImage] = useState('');
+  const [designUniqueNO, setDesignUnicNo] = useState('');
 
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
+  
   const [showIcateDesign, setShowEcateDesign] = useState('');
 
   const [mtPrice, setMetalPrice] = useState(0)
+
   const [dqcPrice, setDQCPrice] = useState(0)
   const [csqcPrice, setCSQCPrice] = useState(0)
   const [grandTotal, setGrandTotal] = useState(0)
@@ -77,6 +80,9 @@ const ProdDetail = () => {
   const [getPriceData, setGetPriceData] = useState([])
   const [globImagePath,setGlobImagepath] = useState()
 
+
+  const [uploadLogicPath, setUploadLogicPath] = useState('');
+  const [uKey, setUkey] = useState('');
 
 
   const setCartCount = useSetRecoilState(CartListCounts)
@@ -98,6 +104,9 @@ const ProdDetail = () => {
   let navigate = useNavigate()
 
   useEffect(() => {
+    let uploadPath = localStorage.getItem('UploadLogicalPath');
+    setUploadLogicPath(uploadPath);
+
     const data = JSON.parse(localStorage.getItem("getPriceData"))
     setGetPriceData(data)
   }, [])
@@ -288,16 +297,17 @@ const ProdDetail = () => {
   useEffect(() => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
     const storeInit = JSON.parse(localStorage.getItem('storeInit'));
-    
+    setUkey(storeInit.ukey);
+
     let mtrd = getPriceData?.rd?.filter((ele) =>
-    storeInit?.IsMetalCustomization === 1
-    ?
-    ele?.A === srProductsData?.autocode &&
-    ele?.B === srProductsData?.designno &&
-    ele?.D === mtTypeOption
-    :
-    ele?.A === srProductsData?.autocode &&
-    ele?.B === srProductsData?.designno
+      storeInit?.IsMetalCustomization === 1
+        ?
+        ele?.A === srProductsData?.autocode &&
+        ele?.B === srProductsData?.designno &&
+        ele?.D === mtTypeOption
+        :
+        ele?.A === srProductsData?.autocode &&
+        ele?.B === srProductsData?.designno
 
     );
     
@@ -310,15 +320,15 @@ const ProdDetail = () => {
     }
 
     let diaqcprice = getPriceData?.rd1?.filter((ele) =>
-    storeInit?.IsDiamondCustomization === 1 
-      ?
-      ele.A === srProductsData?.autocode &&
-      ele.B === srProductsData?.designno &&
-      ele.H === diaQColOpt?.split("_")[0] &&
-      ele.J === diaQColOpt?.split("_")[1]
-      :
-      ele.A === srProductsData?.autocode &&
-      ele.B === srProductsData?.designno
+      storeInit?.IsDiamondCustomization === 1
+        ?
+        ele.A === srProductsData?.autocode &&
+        ele.B === srProductsData?.designno &&
+        ele.H === diaQColOpt?.split("_")[0] &&
+        ele.J === diaQColOpt?.split("_")[1]
+        :
+        ele.A === srProductsData?.autocode &&
+        ele.B === srProductsData?.designno
 
     )
 
@@ -337,15 +347,15 @@ const ProdDetail = () => {
     }
 
     let csqcpirce = getPriceData?.rd2?.filter((ele) =>
-    storeInit?.IsCsCustomization === 1
-      ?
-      ele.A === srProductsData?.autocode &&
-      ele.B === srProductsData?.designno &&
-      ele.H === cSQopt?.split("_")[0] &&
-      ele.J === cSQopt?.split("_")[1]
-      :
-      ele.A === srProductsData?.autocode &&
-      ele.B === srProductsData?.designno
+      storeInit?.IsCsCustomization === 1
+        ?
+        ele.A === srProductsData?.autocode &&
+        ele.B === srProductsData?.designno &&
+        ele.H === cSQopt?.split("_")[0] &&
+        ele.J === cSQopt?.split("_")[1]
+        :
+        ele.A === srProductsData?.autocode &&
+        ele.B === srProductsData?.designno
 
     );
 
@@ -392,10 +402,19 @@ const ProdDetail = () => {
     const storedData = localStorage.getItem('designsetlist');
     const jsonData = JSON.parse(storedData);
     const filteredData = jsonData.filter(item => item.autocode === autoCode);
-    if (filteredData.DefaultImageName) {
-      setCompleteBackImage(filteredData.DefaultImageName);
+
+    console.log('filteredData', filteredData);
+
+    if (filteredData.length > 0) {
+      const num = filteredData[0].designsetuniqueno;
+      const defaultImage = filteredData[0].DefaultImageName;
+
+      setCompleteBackImage(defaultImage);
+      setDesignUnicNo(num);
     }
+
   }
+  console.log('completttttttttt', completeBackImage);
 
   useEffect(() => {
     const storedDataAll = localStorage.getItem('srProductsData');
@@ -441,7 +460,14 @@ const ProdDetail = () => {
   function convertPath(path) {
     return path.replace(/\\/g, '/');
   }
-
+  function checkImageAvailability(imageUrl) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = imageUrl;
+    });
+  }
 
   useEffect(() => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
@@ -452,30 +478,20 @@ const ProdDetail = () => {
     if (data.IsColorWiseImages === 1) {
       const filteredData = colorImageData.filter(item => item.colorname.toLowerCase() === selectedColor.toLowerCase());
       if (filteredData.length > 0) {
-        const correctedData = filteredData.map(item => {
-          return {
-            ...item,
-            imagepath: convertPath(item.imagepath)
-          };
-        });
-
-        correctedData.forEach(item => {
-          item.imagepath = uploadPath + '/' + data.ukey + item.imagepath;
-        });
-
-        correctedData.forEach((item, index) => {
-          correctedData[index] = item;
-        });
-
-        setTimeout(() => {
+        const correctedData = [];
+        Promise.all(filteredData.map(async (item) => {
+          const imageUrl = uploadPath + '/' + data.ukey + convertPath(item.imagepath);
+          const isAvailable = await checkImageAvailability(imageUrl);
+          if (isAvailable) {
+            correctedData.push({ ...item, imagepath: imageUrl });
+          }
+        })).then(() => {
           setUpdateColorImage(correctedData);
-        }, 100);
-
+        });
       } else {
         setUpdateColorImage('');
       }
     }
-
   }, [selectedColor])
 
   const handleColorSelection = (color) => {
@@ -490,36 +506,26 @@ const ProdDetail = () => {
         const correctedData = filteredData.map(item => {
           return {
             ...item,
-            imagepath: convertPath(item.imagepath)
+            imagepath: uploadPath + '/' + data.ukey + convertPath(item.imagepath)
           };
         });
+        setUpdateColorImage(correctedData);
 
-        correctedData.forEach(item => {
-          item.imagepath = uploadPath + '/' + data.ukey + item.imagepath;
-        });
-
-        correctedData.forEach((item, index) => {
-          correctedData[index] = item;
-        });
-
-        setTimeout(() => {
-          setUpdateColorImage(correctedData);
-        }, 100);
+        const selectedColorData = colorImageData.find(item => item.colorname === selectedColor);
+        if (selectedColorData) {
+          const correctedImagePath = convertPath(selectedColorData.imagepath);
+          let path = uploadPath + '/' + data.ukey + correctedImagePath
+          setSelectedImagePath(path);
+        } else {
+          setSelectedImagePath('');
+        }
       } else {
         setUpdateColorImage('');
       }
-
-
-      const selectedColorData = colorImageData.find(item => item.colorname === selectedColor);
-      if (selectedColorData) {
-        const correctedImagePath = convertPath(selectedColorData.imagepath);
-        let path = uploadPath + '/' + data.ukey + correctedImagePath
-        setSelectedImagePath(path);
-      } else {
-        setSelectedImagePath('');
-      }
     }
   };
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -1211,7 +1217,7 @@ const ProdDetail = () => {
 
     localStorage.setItem("srProductsData", JSON.stringify(srData))
 
-  },[mtrdData,dqcData,csqcData,sizeMarkup,metalUpdatedPrice,diaUpdatedPrice,colUpdatedPrice])
+  }, [mtrdData, dqcData, csqcData, sizeMarkup, metalUpdatedPrice, diaUpdatedPrice, colUpdatedPrice])
 
   // console.log("pricedata",mtrdData,dqcData,csqcData,sizeMarkup,metalUpdatedPrice(),diaUpdatedPrice(),colUpdatedPrice())
 
@@ -2102,14 +2108,21 @@ const ProdDetail = () => {
                   }
                 </div>
               </div>
-              <img src='https://cdn.accentuate.io/3204707942500/4121939443812/Essentials%20(2).jpg?2048x1950' style={{ width: '800px' }} />
+
+              <img
+                src={`${uploadLogicPath}/${uKey}/Photo_original/designmanagement_designset/${designUniqueNO}/${completeBackImage}`}
+                style={{ width: '800px' }}
+              />
             </div>
           }
 
           {(designSetList.length !== 0 && showIcateDesign === 1) &&
             <div className='smilingCompleteLookMainMobile' style={{ position: 'relative', marginInline: '5%', marginBottom: '7%', marginTop: '20px' }}>
-              <div style={{display: 'flex' ,justifyContent: 'center'}}>
-                <img src='https://cdn.accentuate.io/3204707942500/4121939443812/Essentials%20(2).jpg?2048x1950' className='smilingCompleteLookMainMobileImg'/>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <img
+                  src={`${uploadLogicPath}/${uKey}/Photo_original/designmanagement_designset/${designUniqueNO}/${completeBackImage}`}
+                  className='smilingCompleteLookMainMobileImg'
+                />
               </div>
               <div className='similiarBrand' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '100px', marginTop: !(productData?.OriginalImagePath) && '120px' }}>
                 <div style={{ marginBottom: '12px' }}>
@@ -2225,26 +2238,26 @@ const ProdDetail = () => {
                             ) : ''} */}
                           </span>
                           <span>
-                             DiamondWeight:{" "}
+                            DiamondWeight:{" "}
                             <b>{daimondFilterData?.length
                               ? (
-                                  productData?.diamondweight +
-                                  daimondFilterData[0]?.Weight
-                                ).toFixed(2)
+                                productData?.diamondweight +
+                                daimondFilterData[0]?.Weight
+                              ).toFixed(2)
                               : productData?.diamondweight}</b>
                           </span>
                           <span>
                             Diamondpcs:{" "}
                             <b>{daimondFilterData?.length
                               ? productData?.diamondpcs +
-                                daimondFilterData[0]?.pieces
+                              daimondFilterData[0]?.pieces
                               : productData?.diamondpcs}</b>
                           </span>
                           <span>
                             NumberOfDiamonds:{" "}
                             <b>{daimondFilterData?.length
                               ? productData?.diamondpcs +
-                                daimondFilterData[0]?.pieces
+                              daimondFilterData[0]?.pieces
                               : productData?.diamondpcs}</b>
                           </span>
                         </div>
@@ -2253,9 +2266,9 @@ const ProdDetail = () => {
                             Netwt:{" "}
                             <b>{metalFilterData?.length
                               ? (
-                                  productData?.netwt +
-                                  metalFilterData[0]?.Weight
-                                ).toFixed(2)
+                                productData?.netwt +
+                                metalFilterData[0]?.Weight
+                              ).toFixed(2)
                               : productData?.netwt}</b>
                           </span>
                           <span>
@@ -2269,9 +2282,9 @@ const ProdDetail = () => {
                             TotalDiamondWeight:
                             <b>{daimondFilterData?.length
                               ? (
-                                  productData?.diamondweight +
-                                  daimondFilterData[0]?.Weight
-                                ).toFixed(2)
+                                productData?.diamondweight +
+                                daimondFilterData[0]?.Weight
+                              ).toFixed(2)
                               : productData?.diamondweight}</b>
                           </span>
                           <span>

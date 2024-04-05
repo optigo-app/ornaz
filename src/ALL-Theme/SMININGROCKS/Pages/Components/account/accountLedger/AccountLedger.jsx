@@ -28,7 +28,7 @@ const AccountLedger = () => {
     const [selectedStatus, setSelectedStatus] = useState('all');
     const [dueDateWise, setDueDateWise] = useState(false);
     const [userName, setUserName] = useState('');
-    const [selectedDays, setSelectedDays] = useState(30); 
+    const [selectedDays, setSelectedDays] = useState(null); 
     const [resultTotal, setResultTotal] = useState(null);
     const [openingBalanceTotal, setOpeningBalanceTotal] = useState(null);
     const [debit_dia_diff, setDebit_dia_diff] = useState(0);
@@ -39,10 +39,12 @@ const AccountLedger = () => {
     const [credit_mg_diff, setCredit_mg_diff] = useState(0);
     const [credit_amt_diff, setCredit_amt_diff] = useState(0);
     const [credit_curr_diff, setCredit_curr_diff] = useState(0);
-    const firstDayOfMonth = dayjs().startOf('month');
-    const lastDayOfMonth = dayjs().endOf('month');
-    const [fromDate, setFromDate] = useState((firstDayOfMonth));
-    const [toDate, setToDate] = useState(lastDayOfMonth);
+    // const firstDayOfMonth = dayjs().startOf('month');
+    // const lastDayOfMonth = dayjs().endOf('month');
+    // const [fromDate, setFromDate] = useState((firstDayOfMonth));
+    const [fromDate, setFromDate] = useState();
+    // const [toDate, setToDate] = useState(lastDayOfMonth);
+    const [toDate, setToDate] = useState();
     const [showStartDate, setShowStartDate] = useState();
     const [showEndDate, setShowEndDate] = useState();
     const fromDateRef = useRef(null);
@@ -57,25 +59,10 @@ const AccountLedger = () => {
         setUserName(userName?.customercode)
 
         getLedgerData();
-
-
+        
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
-      useEffect(() => {
-        filterData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fromDate, toDate, selectedDays]);
-    // }, [ ]);
-    // }, [startDate, endDate, selectedDays, dueDateWise, selectedStatus]);
-    // useEffect(() => {
-
-    // }, [])
-
-        useEffect(() => {
-            filterData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        },[resultArray])
 
       const getLedgerData = async() => {
         setLoaderAC(true)
@@ -189,13 +176,14 @@ const AccountLedger = () => {
         // getCurrentMonthDates();
 
         // setDays
-        setSelectedDays(30)
+        // setSelectedDays(30)
+        setSelectedDays(null)
 
         const buttons = document.querySelectorAll('.daybtn');
         buttons.forEach(button => {
             const buttonDays = parseInt(button?.textContent);
-            if (buttonDays === 30) {
-                button.classList.add('selected');
+            if (buttonDays === null) {
+                button.classList.remove('selected');
             } else {
                 button.classList.remove('selected');
             }
@@ -204,7 +192,7 @@ const AccountLedger = () => {
         getLedgerData();
 
 
-        setOpeningBalanceTotal(null);
+        // setOpeningBalanceTotal(null);
 
         setDebit_amt_diff(0);
         setDebit_dia_diff(0);
@@ -212,28 +200,53 @@ const AccountLedger = () => {
         setCredit_amt_diff(0);
         setCredit_dia_diff(0);
         setCredit_mg_diff(0);
+        
         const initialFromDate = dayjs(resultArray[0]?.EntryDate);
         const initialToDate = dayjs(resultArray[resultArray?.length - 1]?.EntryDate);
-        setFromDate(initialFromDate);
-        setToDate(initialToDate);
+        // setFromDate(initialFromDate);
+        // setToDate(initialToDate);
+        setFromDate(null);
+        setToDate(null);
+        
 
       }
       const backToInitial2 = () => {
-        const firstDayOfMonth = dayjs().startOf('month');
-        const lastDayOfMonth = dayjs().endOf('month');
-        setFromDate(firstDayOfMonth);
-        setToDate(lastDayOfMonth);
-        setSelectedDays(30)
+          const firstDayOfMonth = dayjs().startOf('month');
+          const lastDayOfMonth = dayjs().endOf('month');
+          console.log("back ini", firstDayOfMonth, lastDayOfMonth);
+          setFromDate(null);
+          setToDate(null);
+          setSelectedDays(null)
+        //   setFromDate(firstDayOfMonth);
+        //   setToDate(lastDayOfMonth);
+        //   setSelectedDays(30)
 
         const buttons = document.querySelectorAll('.daybtn');
         buttons.forEach(button => {
             const buttonDays = parseInt(button?.textContent);
-            if (buttonDays === 30) {
-                button.classList.add('selected');
+            if (buttonDays === null) {
+                button.classList.remove('selected');
             } else {
                 button.classList.remove('selected');
             }
         });
+      }
+      const backToInitial3 = () => {
+        setSelectedDays(null);
+        setFilterArray(resultArray);
+        setDebit_amt_diff(0);
+        setDebit_dia_diff(0);
+        setDebit_mg_diff(0);
+        setCredit_amt_diff(0);
+        setCredit_dia_diff(0);
+        setCredit_mg_diff(0);
+        setCredit_curr_diff(0);
+        setDebit_curr_diff(0);
+        getLedgerData();
+        setFromDate(null);
+        setToDate(null);
+        // setResultTotal(null);
+        // CalculateOpeningBalance(resultArray)
       }
       const handleDays = (days) => {
         setSelectedDays(days)
@@ -273,9 +286,9 @@ const AccountLedger = () => {
     // Update the start and end dates in the state
         setFromDate(newStartDate);
         setToDate(newEndDate);
-    
+        handleSearchBtn('', newStartDate, newEndDate, days)
         // Filter the data based on the new date range
-        filterData();
+        // filterData();
         // const currentDate = dayjs();
 
         // // Set the end date to the current date
@@ -352,6 +365,7 @@ const AccountLedger = () => {
     
         // Update the fromDate state
         setFromDate(fromDateCopy);
+        handleSearchBtn('', newStartDate, newEndDate, days)
         // let newStartDate = null;
         // let newEndDate = null;
     
@@ -383,7 +397,7 @@ const AccountLedger = () => {
         // setToDate(newEndDate);
     
         // Filter the data based on the new date range
-        filterData();
+        // filterData();
       }
       const handleNextDays = () => {
         // Get the selected number of days
@@ -411,6 +425,7 @@ const AccountLedger = () => {
         
         // Update the toDate state
         setToDate(toDateCopy);
+        handleSearchBtn('', newStartDate, newEndDate, days)
         //working code
         // const days = selectedDays;
         // let newStartDate = null;
@@ -491,7 +506,7 @@ const AccountLedger = () => {
       }
       
       const handleSearch = () => {
-        filterData();
+        // filterData();
       };
 
     //   const filterData = () => {
@@ -684,65 +699,78 @@ const AccountLedger = () => {
     //     // getFormatedArrayData(filteredData);
     //     // CalculateOpeningBalance(recordsBeforeStartDate);
     // };
-      const filterData = () => {
-            const nowdays = selectedDays;
-            if(fromDate !== null && toDate !== null){
+    //   const filterData = () => {
+    //         const nowdays = selectedDays;
+    //         if(fromDate !== null && toDate !== null){
 
-                const startdate = fromDate.format('DD MMM YY');
-                const enddate = toDate.format('DD MMM YY');
-
-            const findedData = resultArray?.filter((e) => {
-                const entryDate = dayjs(e?.EntryDate);
-                    return entryDate.isBetween(startdate, enddate, null, '[]'); // '[]' includes start and end dates
-            })
-            setFilterArray(findedData);
-            // const startDate = fromDate?.subtract(selectedDays, 'day');
-            // console.log(startDate);
-            // // Filter data based on date range
-            // const filteredData = resultArray?.filter(item => {
-            //     const entryDate = dayjs(item?.EntryDate);
-            //     return entryDate.isBetween(startDate, toDate, null, '[]'); // '[]' includes start and end dates
-            // });
+    //             const startdate = fromDate.format('DD MMM YY');
+    //             const enddate = toDate.format('DD MMM YY');
+    //         // if (moment(startdate).isSameOrBefore(enddate)) {
+    //         const findedData = resultArray?.filter((e) => {
+    //             const entryDate = dayjs(e?.EntryDate);
+    //             if(moment(startdate).isSameOrBefore(enddate)){
+    //                 return entryDate.isBetween(startdate, enddate, null, '[]'); // '[]' includes start and end dates
+    //             }else{
+    //                 Swal.fire({
+    //                     title: "Error !",
+    //                     text: "Enter Valid Dates",
+    //                     icon: "error",
+    //                     confirmButtonText: "ok"
+    //                   });
+    //                 //   backToInitial2();
+    //             }
+    //         })
+    //         setFilterArray(findedData);
+    //         // const startDate = fromDate?.subtract(selectedDays, 'day');
+    //         // console.log(startDate);
+    //         // // Filter data based on date range
+    //         // const filteredData = resultArray?.filter(item => {
+    //         //     const entryDate = dayjs(item?.EntryDate);
+    //         //     return entryDate.isBetween(startDate, toDate, null, '[]'); // '[]' includes start and end dates
+    //         // });
         
-            // Update filtered data in state
-            // setFilterArray(filteredData);
-            const oneDayBeforeStartDate = new Date(startdate);
-            oneDayBeforeStartDate.setDate(oneDayBeforeStartDate.getDate() - 1);
-                const recordsBeforeStartDate = resultArray?.filter(entry => {
-                    const entryDate = new Date(entry.EntryDate);
-                    return entryDate <= oneDayBeforeStartDate;
-                });
-                setFilterArray(findedData);
-                getFormatedArrayData(findedData);
-                CalculateOpeningBalance(recordsBeforeStartDate);
+    //         // Update filtered data in state
+    //         // setFilterArray(filteredData);
+    //         const oneDayBeforeStartDate = new Date(startdate);
+    //         oneDayBeforeStartDate.setDate(oneDayBeforeStartDate.getDate() - 1);
+    //             const recordsBeforeStartDate = resultArray?.filter(entry => {
+    //                 const entryDate = new Date(entry.EntryDate);
+    //                 return entryDate <= oneDayBeforeStartDate;
+    //             });
+    //             setFilterArray(findedData);
+    //             getFormatedArrayData(findedData);
+    //             CalculateOpeningBalance(recordsBeforeStartDate);
 
-                const formattedFromDate = startdate === null ? '' : moment(startdate)?.format('DD MMM YYYY');
-                const formattedToDate = enddate === null ? '' : moment(enddate)?.format('DD MMM YYYY');
+    //             const formattedFromDate = startdate === null ? '' : moment(startdate)?.format('DD MMM YYYY');
+    //             const formattedToDate = enddate === null ? '' : moment(enddate)?.format('DD MMM YYYY');
                 
-                setShowStartDate(formattedFromDate)
-                setShowEndDate(formattedToDate)
-            }
-            else if(fromDate !== null && toDate === null){
-                Swal.fire({
-                    title: "Error !",
-                    text: "Enter Valid Date To",
-                    icon: "error",
-                    confirmButtonText: "ok"
-                  });
-                  backToInitial2();
-            }else if(fromDate === null && toDate !== null){
-                Swal.fire({
-                    title: "Error !",
-                    text: "Enter Valid Date From",
-                    icon: "error",
-                    confirmButtonText: "ok"
-                  });
-                  backToInitial2();
-            }
-            }
+    //             setShowStartDate(formattedFromDate)
+    //             setShowEndDate(formattedToDate)
+    //         //  }
+    //         //  else{
+    //         //     backToInitial2();
+    //         // }
+    //     }
+    //         else if(fromDate !== null && toDate === null){
+    //             Swal.fire({
+    //                 title: "Error !",
+    //                 text: "Enter Valid Date To",
+    //                 icon: "error",
+    //                 confirmButtonText: "ok"
+    //               });
+    //               backToInitial2();
+    //         }else if(fromDate === null && toDate !== null){
+    //             Swal.fire({
+    //                 title: "Error !",
+    //                 text: "Enter Valid Date From",
+    //                 icon: "error",
+    //                 confirmButtonText: "ok"
+    //               });
+    //               backToInitial2();
+    //         }
+    //   }
             
     const CalculateOpeningBalance = (data) => {
-        
         let credit_debit = {
             credit_metalgold : 0,
             credit_diamondwt : 0,
@@ -953,7 +981,169 @@ const AccountLedger = () => {
     //     }
     // };
 
+    const handleSearchBtn = (eve, fromDatess, todatess, days) => {
+        let fromdates = `${fromDatess?.["$y"]}-${checkMonth(fromDatess?.["$M"])}-${fromDatess?.["$D"]}`;
+        let todates = `${todatess?.["$y"]}-${checkMonth(todatess?.["$M"])}-${todatess?.["$D"]}`;
 
+        let filteredData = [];
+        let count = 0;
+        resultArray?.forEach((e, i) => {
+            let cutDate = "";
+            cutDate = e?.["EntryDate"]?.split("-");
+            let compareDate = `${cutDate[0]}-${cutDate[1]}-${cutDate[2]}`
+            cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
+            let flags = {
+                dateFrom: false,
+                dateTo: false,
+                // search: false,
+            }
+            
+            if (cutDate !== undefined) {
+                // if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
+                if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+                    let fromdat = moment(fromdates);
+                    let todat = moment(todates);
+                    let cutDat = moment(cutDate);
+                    if(moment(fromdates).isSameOrBefore(todates)){
+                        console.log("in if");
+                        const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
+                        if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
+                            flags.dateTo = true;
+                            flags.dateFrom = true;
+                        }
+                    }
+                    else{
+                        setTimeout(() => {
+                        setSelectedDays(null);
+                        setFilterArray(resultArray);
+                        setDebit_amt_diff(0);
+                        setDebit_dia_diff(0);
+                        setDebit_mg_diff(0);
+                        setCredit_amt_diff(0);
+                        setCredit_dia_diff(0);
+                        setCredit_mg_diff(0);
+                        setCredit_curr_diff(0);
+                        setDebit_curr_diff(0);
+                        setFromDate(null);
+                        setToDate(null);
+                        getLedgerData();
+                        const buttons = document.querySelectorAll('.daybtn');
+                        buttons.forEach(button => {
+                        const buttonDays = parseInt(button.textContent);
+                            if (buttonDays === days) {
+                                button.classList.remove('selected');
+                            } else {
+                                button.classList.remove('selected');
+                            }
+                        });
+                        }, 0);
+                        
+                  
+
+                        // backToInitial3();
+                        // reseltFil();
+                        // getLedgerData();
+                    }
+                    // }
+                    // else{
+                    //     // count = count+1
+                    //     // flags.dateFrom = true;
+                    //     // flags.dateTo = true;
+                    //     Swal.fire({
+                    //         title: "Error !",
+                    //         text: "Enter Valid Dates",
+                    //         icon: "error",
+                    //         confirmButtonText: "ok"
+                    //     });
+                    //     reseltFil();
+                    // }
+                } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+                    // let todat = new Date(todates);
+                    // let cutDat = new Date(cutDate);
+                    // if (cutDat <= todat) {
+                    //     flags.dateTo = true;
+                    //     flags.dateFrom = true;
+                    // }
+                    // flags.dateTo = true;
+                    count = count+1
+                    flags.dateFrom = true;
+                    Swal.fire({
+                        title: "Error !",
+                        text: "Enter Valid Date From",
+                        icon: "error",
+                        confirmButtonText: "ok"
+                      });
+                      reseltFil();
+                } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
+                    // let fromdat = new Date(fromdates);
+                    // let cutDat = new Date(cutDate);
+                    // if (cutDat >= fromdat) {
+                    //     flags.dateTo = true;
+                    //     flags.dateFrom = true;
+                    // }
+                    count = count+1
+                    flags.dateTo = true;
+                    Swal.fire({
+                        title: "Error !",
+                        text: "Enter Valid Date To",
+                        icon: "error",
+                        confirmButtonText: "ok"
+                      });
+                      reseltFil();
+                    // flags.dateFrom = true;
+
+                } else if (fromdates?.includes(undefined) && todates?.includes(undefined) ) {
+                    flags.dateTo = true;
+                    flags.dateFrom = true;
+                }
+            //   }
+            }
+
+            if (flags.dateFrom === true && flags.dateTo === true) {
+                filteredData.push(e);
+            }
+
+        });
+        // CalculateOpeningBalance(recordsBeforeStartDate);
+        if(count === 0){
+            // setFilterData(filteredData);
+            setFilterArray(filteredData)
+            
+                const oneDayBeforeStartDate = new Date(fromdates);
+                oneDayBeforeStartDate.setDate(oneDayBeforeStartDate.getDate() - 1);
+                const recordsBeforeStartDate = resultArray.filter(entry => {
+                    const entryDate = new Date(entry.EntryDate);
+                    return entryDate <= oneDayBeforeStartDate;
+                });
+                setFilterArray(filteredData);
+                getFormatedArrayData(filteredData);
+                CalculateOpeningBalance(recordsBeforeStartDate);
+                // handleSearchBtn('', fromdates, todates, '');
+        }
+        else{
+            setFilterArray(resultArray)
+            // handleSearchBtn('', fromdates, todates, '');
+        
+            const oneDayBeforeStartDate = new Date(fromdates);
+            oneDayBeforeStartDate.setDate(oneDayBeforeStartDate.getDate() - 1);
+            const recordsBeforeStartDate = resultArray.filter(entry => {
+                const entryDate = new Date(entry.EntryDate);
+                return entryDate <= oneDayBeforeStartDate;
+            });
+            // setFilterArray(filteredData);
+            getFormatedArrayData(filteredData);
+            CalculateOpeningBalance(recordsBeforeStartDate);
+            // backToInitial();
+        }
+    }
+    const reseltFil = () => {
+        // setSearchVal("");
+        setFromDate(null);
+        setToDate(null);
+        // setPage(0);
+        // resetAllFilters(data);
+        // setFilterData(data);
+    }
 
   return (
     <div>
@@ -978,7 +1168,7 @@ const AccountLedger = () => {
                                     label="Date From"
                                     value={fromDate} 
                                     ref={fromDateRef}
-                                    defaultValue={dayjs('2022-04-17')}
+                                    // defaultValue={dayjs('2022-04-17')}
                                     // onChange={(e) => setStartDate(e.target.value)}
                                     // onChange={(newValue) => setFromDate(newValue)}
                                     // onChange={handleFromDateChange}
@@ -986,20 +1176,31 @@ const AccountLedger = () => {
                                         if (newValue === null) {
                                           setFromDate(null)
                                         } else {
-                                          if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
-                                            setFromDate(newValue)
-                                          } else {
-                                            console.log(newValue, "abcd")
-                                            Swal.fire({
-                                              title: "Error !",
-                                              text: "Enter Valid Date From",
-                                              icon: "error",
-                                              confirmButtonText: "ok"
-                                            });
-                                            // resetAllFilters();
-                                            backToInitial();
-                                            // backToInitial2();
-                                          }
+                                            // if(newValue["$d"] == "Invalid Date"){
+                                            //     Swal.fire({
+                                            //         title: "Error !",
+                                            //         text: "Enter Valid Date From",
+                                            //         icon: "error",
+                                            //         confirmButtonText: "ok"
+                                            //       });
+                                            //       backToInitial2();
+                                            // }
+                                            // else {
+                                                if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
+                                                    setFromDate(newValue)
+                                                  } else {
+                                                    Swal.fire({
+                                                      title: "Error !",
+                                                      text: "Enter Valid Date From",
+                                                      icon: "error",
+                                                      confirmButtonText: "ok"
+                                                    });
+                                                    // resetAllFilters();
+                                                    backToInitial2();
+                                                    // backToInitial2();
+                                                  }
+                                            // }
+                                         
                                         }
                                       }}
                                     format="DD MMM YYYY"
@@ -1019,7 +1220,7 @@ const AccountLedger = () => {
                                     label="Date To"
                                     value={toDate} 
                                     ref={toDateRef}
-                                    defaultValue={dayjs('2022-04-17')}
+                                    // defaultValue={dayjs('2022-04-17')}
                                     // onChange={(newValue) => setToDate(newValue)}
                                     // onChange={(e) => setEndDate(e.target.value)}
                                     // onChange={handleToDateChange}
@@ -1029,7 +1230,8 @@ const AccountLedger = () => {
                                         } else {
                                           if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
                                             setToDate(newValue)
-                                          } else {
+                                          } 
+                                          else {
                                             Swal.fire({
                                               title: "Error !",
                                               text: "Enter Valid Date To",
@@ -1037,8 +1239,8 @@ const AccountLedger = () => {
                                               confirmButtonText: "ok"
                                             });
                                             // resetAllFilters();
-                                            backToInitial();
-                                            // backToInitial2();
+                                            // backToInitial();
+                                            backToInitial2();
                                         }
                                         }
                                       }}
@@ -1058,12 +1260,14 @@ const AccountLedger = () => {
                             To 
                         <input type="date" name="date" id="enddate" className='mx-2 p-1 mb-2'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /> */}
                         <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
-                            <SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={handleSearch}/>
+                            <SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={(e) => handleSearchBtn(e, fromDate, toDate, selectedDays)}/>
                         </Box>
                     </div>
                     <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
                         {/* <div className='mb-2'><button className='btn btn-secondary mx-2 py-1' onClick={() => backToInitial()}>All</button></div> */}
-                        <Button variant="contained" className="muiSmilingRocksBtn" sx={{ background: "#7d7f85", display: "flex", alignItems: "center", marginBottom: 0, padding: "6px 0", }}  onClick={() => backToInitial()}>
+                        <Button variant="contained" className="muiSmilingRocksBtn" sx={{ background: "#7d7f85", display: "flex", alignItems: "center", marginBottom: 0, padding: "6px 0", }}  
+                        // onClick={() => backToInitial()}>
+                        onClick={() => backToInitial3()}>
                             All
                         </Button>
                     </Box>
@@ -1117,7 +1321,9 @@ const AccountLedger = () => {
                             { ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt) - (Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt)) > 0 ? 'Dr' : ' Cr' }</span></div>
                         <div className='px-4 px_2_al d-flex align-items-center mb-2'><span>Balance Amount :&nbsp;</span> <span className='bal_Amt_ac'>
                             {/* { (formatAmount(resultTotal?.debit_totalcurrency - resultTotal?.credit_totalcurrency))}&nbsp;{(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount) - (Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount)) ? 'Dr' : 'Cr' ) }</span></div> */}
-                            {currencySymbol}&nbsp;{ (formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)))}&nbsp;
+                            {currencySymbol}&nbsp;
+                            { (formatAmount(
+                                (Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)))}&nbsp;
                             {(((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency) - (Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) ? 'Dr' : ' Cr' ) }</span></div>
                     </div>
                 </div>
@@ -1163,20 +1369,20 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1  ps-1' align='center'>Opening</td>
                                             <td className='border-end p-1 text-start ps-1'></td>
-                                            <td className='border-end p-1 text-end ps-1'>{ (Math.abs(debit_mg_diff))?.toFixed(3)}</td>
-                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(debit_dia_diff))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end ps-1'>{ (Math.abs(debit_mg_diff))?.toFixed(3) === '0.000' ? '' : (Math.abs(debit_mg_diff))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(debit_dia_diff))?.toFixed(3) === '0.000' ? '' : (Math.abs(debit_dia_diff))?.toFixed(3)}</td>
                                             {/* <td className='border-end p-1 text-end pe-1'>{Math.abs(debit_amt_diff)}</td>
                                             <td className='border-end p-1 text-end pe-1'></td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(Math.abs(debit_curr_diff))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(debit_curr_diff) === '0.00' ? '' : formatAmount(Math.abs(debit_curr_diff))}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-start ps-1' align='center'>Opening</td>
                                             <td className='border-end p-1 text-end pe-1'></td>
-                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(credit_mg_diff))?.toFixed(3)}</td>
-                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(credit_dia_diff))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(credit_mg_diff))?.toFixed(3) === '0.000' ? '' : (Math.abs(credit_mg_diff))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end ps-1'>{(Math.abs(credit_dia_diff))?.toFixed(3) === '0.000' ? '' : (Math.abs(credit_dia_diff))?.toFixed(3)}</td>
                                             {/* <td className='border-end p-1 text-end ps-1'>{Math.abs(credit_amt_diff)}</td>
                                             <td className='border-end p-1 text-end pe-1'></td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(Math.abs(credit_curr_diff))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(credit_curr_diff) === 0.00 ? '' : formatAmount(Math.abs(credit_curr_diff))}</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr> 
                                         }
@@ -1196,8 +1402,8 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-center'>{e?.IsDebit === 0 ? '' : e?.EntryDate}</td>
                                             <td className='border-end p-1 text-start ps-1'>{ e?.IsDebit === 0 ? '' : e?.particular}</td>
                                             <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' style={{cursor:'pointer'}} onClick={() => window.open("http://localhost:3000/accountledgerdebit")}>{e?.IsDebit === 0 ? '' : e?.referenceno === '' ? e?.voucherno : e?.referenceno}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.metalctw}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.diamondctw}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : (e?.metalctw === 0 ? '' : e?.metalctw)}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : (e?.diamondctw === 0 ? '' : e?.diamondctw)}</td>
                                             {/* <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.Amount}</td>
                                             <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? '' : e?.CurrRate}</td> */}
                                             <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{e?.IsDebit === 0 ? '' : `${e?.CurrSymbol} ${formatAmount(e?.Currency)} `}</td>
@@ -1205,11 +1411,11 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-center'>{e?.IsDebit === 0 ? e?.EntryDate : ''}</td>
                                             <td className='border-end p-1 text-start ps-1'>{e?.IsDebit === 0 ? e?.particular : ''}</td>
                                             <td className='border-end p-1 text-start ps-1 text-primary text-decoration-underline' onClick={() => window.open("http://localhost:3000/accountledgercredit")} style={{cursor:'pointer'}}>{e?.IsDebit === 0 ? e?.referenceno === '' ? e?.voucherno : e?.referenceno : ''}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.metalctw : ''}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.diamondctw : ''}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? (e?.metalctw === 0 ? '' : e?.metalctw) : ''}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? (e?.diamondctw === 0 ? '' : e?.diamondctw) : ''}</td>
                                             {/* <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.Amount : ''}</td>
                                             <td className='border-end p-1 text-end pe-1'>{e?.IsDebit === 0 ? e?.CurrRate : ''}</td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{e?.IsDebit === 0 ? `${e?.CurrSymbol} ${formatAmount(e?.Currency)} `  : ''}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{e?.IsDebit === 0 ? `${e?.Currency === 0 ? '' : e?.CurrSymbol} ${e?.Currency === 0 ? '' : formatAmount(e?.Currency)}`  : ''}</td>
                                             {/* <td className=' p-1 text-center'><DoneIcon sx={{color:'red'}} /><CloseIcon /></td> */}
                                             <td className=' p-1 text-center'>{doneIcon}{closeIcon}</td>
                                         </tr>
@@ -1220,21 +1426,24 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-start ps-1'></td>
                                             <td className='border-end p-1 text-start ps-1'></td>
-                                            <td className='border-end p-1 text-end pe-1'>{( (Math.abs(debit_mg_diff) + resultTotal?.debit_metalgold))?.toFixed(3)}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{( (Math.abs(debit_mg_diff) + resultTotal?.debit_metalgold))?.toFixed(3) === '0.000' ? '' : ( (Math.abs(debit_mg_diff) + resultTotal?.debit_metalgold))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt))?.toFixed(3) === '0.000' ? '' : ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt))?.toFixed(3)}</td>
                                             {/* <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount)))}</td>
                                             <td className='border-end p-1 text-end pe-1'></td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{currencySymbol}&nbsp;{formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{currencySymbol}&nbsp;{formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency)) === '0.00' ? '' : formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency))}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-start ps-1'></td>
                                             <td className='border-end p-1 text-start ps-1'></td>
                                             {/* {console.log("dia wt total with result",((Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3))} */}
-                                            <td className='border-end p-1 text-end pe-1'>{((Math.abs(credit_mg_diff) + resultTotal?.credit_metalgold))?.toFixed(3)}</td>
-                                            <td className='border-end p-1 text-end pe-1'>{((Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{((Math.abs(credit_mg_diff) + resultTotal?.credit_metalgold))?.toFixed(3) === '0.000' ? '' : ((Math.abs(credit_mg_diff) + resultTotal?.credit_metalgold))?.toFixed(3)}</td>
+                                            <td className='border-end p-1 text-end pe-1'>{((Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3) === '0.000' ? '' : ((Math.abs(credit_dia_diff) + resultTotal?.credit_diamondwt))?.toFixed(3)}</td>
                                             {/* <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount((Math.abs(credit_amt_diff) + resultTotal?.credit_totalamount))}</td>
                                             <td className='border-end p-1 text-end pe-1'></td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{currencySymbol}&nbsp;{formatAmount((Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>
+                                                {formatAmount((Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) === '0.00' ? '' : currencySymbol}
+                                                &nbsp;
+                                                {formatAmount((Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency)) === '0.00' ? '' : formatAmount((Math.abs(credit_curr_diff) + resultTotal?.credit_totalcurrency))}</td>
                                             <td className=' p-1 text-center'></td>
                                         </tr>
                         </tbody>
@@ -1242,17 +1451,6 @@ const AccountLedger = () => {
                 </div>
                 }
             </div>
-            {/* <Dialog open={errorDialogOpen} onClose={handleCloseErrorDialog}>
-                <DialogTitle>Error</DialogTitle>
-                <DialogContent>
-                    The selected date range is invalid. Please make sure the end date is after the start date.
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleConfirmErrorDialog} variant="contained" color="primary">
-                        OK
-                    </Button>
-                </DialogActions>
-            </Dialog> */}
             
         </div>
     </div>

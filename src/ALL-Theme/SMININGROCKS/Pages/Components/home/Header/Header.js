@@ -427,7 +427,7 @@ export default function Header() {
     if (savedProductList) {
       const productList = JSON.parse(savedProductList);
       const searchValue = searchText;
-      const filteredProducts = productList.filter(product => product.designno === searchValue || product.id === parseInt(searchValue));
+      const filteredProducts = productList.filter(product => product.designno === searchValue || product.id === parseInt(searchValue)|| product.ProducttypeName === parseInt(searchValue)|| product.MetalColorName === parseInt(searchValue)|| product.MetalTypeName === parseInt(searchValue)|| product.OcassionName === parseInt(searchValue)|| product.GenderName === parseInt(searchValue)|| product.BrandName === parseInt(searchValue)|| product.CategoryName === parseInt(searchValue)|| product.CollectionName === parseInt(searchValue)|| product.autocode === parseInt(searchValue));
       setSearchedProducts(filteredProducts);
     }
     navigation('/productpage');
@@ -783,33 +783,33 @@ export default function Header() {
             }}
           >
             <ul className="nav-ul-shop">
-                  {islogin === "true" && 
-                  <li
-                    className="nav-li-shop-main"
-                    onMouseEnter={handleDropdownOpen}
-                    onMouseLeave={handleDropdownClose}
-                  >
-                    <span
-                      className="nav-li-smining"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        fontWeight: 500,
-                      }}
-                    >
-                      SHOP
-                      <RiArrowDropDownLine
-                        style={{ width: "20px", height: "20px" }}
-                      />
-                    </span>
-                  </li>}
-                  <li
+              {islogin === "true" &&
+                <li
+                  className="nav-li-shop-main"
+                  onMouseEnter={handleDropdownOpen}
+                  onMouseLeave={handleDropdownClose}
+                >
+                  <span
                     className="nav-li-smining"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => navigation("/impact")}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      fontWeight: 500,
+                    }}
                   >
-                    {IMPACT}
-                  </li>
+                    SHOP
+                    <RiArrowDropDownLine
+                      style={{ width: "20px", height: "20px" }}
+                    />
+                  </span>
+                </li>}
+              <li
+                className="nav-li-smining"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigation("/impact")}
+              >
+                {IMPACT}
+              </li>
               {/* <li
                 className="nav-li-smining"
                 style={{ cursor: "pointer" }}
@@ -1069,8 +1069,8 @@ export default function Header() {
             </div>
 
             <div style={{ display: 'flex', gap: '15px' }}>
-              <img src={menu2Img} alt="#" className="menuImages"/>
-              <img src={menu1Img} alt="#" className="menuImages"/>
+              <img src={menu2Img} alt="#" className="menuImages" />
+              <img src={menu1Img} alt="#" className="menuImages" />
             </div>
 
           </div>
@@ -1405,7 +1405,7 @@ export default function Header() {
 
                       /> */}
                       <ShoppingCartOutlinedIcon
-                        sx={{ height: '30px', width: '30px' ,color: "white"}}
+                        sx={{ height: '30px', width: '30px', color: "white" }}
                       />
                     </li>
                   </Tooltip>
@@ -1532,7 +1532,7 @@ export default function Header() {
 
                         /> */}
                         <ShoppingCartOutlinedIcon
-                          sx={{ height: '30px', width: '30px', color:'#7d7f85' }}
+                          sx={{ height: '30px', width: '30px', color: '#7d7f85' }}
                         />
                       </li>
                     </Tooltip>

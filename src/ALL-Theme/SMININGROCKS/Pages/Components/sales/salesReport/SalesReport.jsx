@@ -400,7 +400,6 @@ const SalesReport = () => {
             ) || (searchValue?.trim()?.toLowerCase() === "")) {
                 flags.searchValue = true;
             }
-            console.log(grossWtFrom, grossWtTo);
             if ((grossWtFrom?.trim() === "") || (+grossWtFrom <= e?.GrossWt)) {
                 flags.grossWtFrom = true;
             }
@@ -437,7 +436,6 @@ const SalesReport = () => {
             }
         });
         if(count ===0){
-            console.log(datass);
             setFilterData(datass);
         }
         else{
@@ -550,7 +548,7 @@ const SalesReport = () => {
     return (
         <Box>
             <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "space-between" }}>
-                <Box className="salesReporttable" sx={{ paddingBottom: "45px", paddingRight: "15px" }}>
+                <Box className="salesReporttable" sx={{ paddingBottom: "5px", paddingRight: "15px" }}>
                     <table>
                         <tbody>
                             <tr>
@@ -594,8 +592,8 @@ const SalesReport = () => {
                     <Typography sx={{ fontWeight: 700, textAlign: "center" }}>{NumberWithCommas(total?.TotalAmount, 2)}</Typography>
                 </Box>
                 <Box className="salesReportImgSec" sx={{ width: "135px", height: "135px", paddingBottom: "20px", overflow: "hidden", }}>
-                    <Box sx={{ border: "1px solid #d6d6d6", height: "135px", }}>
-                        {hoverImg !== "" && <img src={hoverImg} alt="" style={{ width: "100%", objectFit: "contain" }} />}
+                    <Box sx={{ border: "1px solid #d6d6d6", height: "117px", marginTop:'17px' }}>
+                        {hoverImg !== "" && <img src={hoverImg} alt="" style={{ width: "100%", objectFit: "contain", minHeight:'114px', maxHeight:'114px' }} />}
                     </Box>
                 </Box>
             </Box>

@@ -241,7 +241,6 @@ const Sales = () => {
                 dateTo: false,
                 search: false,
             }
-            console.log(compareDate?.toString()?.toLowerCase(), (searchValue?.trim()?.toLowerCase()), compareDate?.toString()?.toLowerCase()?.includes?.(searchValue?.trim()?.toLowerCase()));
             if (searchValue !== "") {
                 if (e?.["SrNo"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
                     e?.["StockDocumentNo"]?.toString()?.toLowerCase()?.includes(searchValue?.trim()?.toLowerCase()) ||
@@ -256,11 +255,12 @@ const Sales = () => {
             }
 
             if (cutDate !== undefined) {
+                // if(fromDatess && todatess && moment(fromdates).isSameOrBefore(moment(todates))){
                 if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
                     let fromdat = moment(fromdates);
                     let todat = moment(todates);
                     let cutDat = moment(cutDate);
-                    const isBetween = cutDat.isBetween(fromdat, todat);
+                    const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
                     if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
                         flags.dateTo = true;
                         flags.dateFrom = true;
@@ -303,6 +303,7 @@ const Sales = () => {
                     flags.dateTo = true;
                     flags.dateFrom = true;
                 }
+            //  }
             }
 
             if (flags.dateFrom === true && flags.dateTo === true && flags.search === true) {
@@ -339,19 +340,17 @@ const Sales = () => {
             const response = await CommonAPI(body);
             if (response.Data?.rd) {
                 let rows = [];
-                console.log(response?.Data?.rd);
                 response?.Data?.rd?.forEach((e, i) => {
                     let dataa = createData(i + 1, e?.Date, e?.StockDocumentNo, e?.TotalDesign, e?.Amount);
                     rows?.push(dataa)
                 });
-                console.log(rows);
                 setData(rows);
                 setFilterData(rows);
             } else {
                 alert('nodata')
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.log('Error:', error);
         } finally {
             setIsLoading(false);
         }

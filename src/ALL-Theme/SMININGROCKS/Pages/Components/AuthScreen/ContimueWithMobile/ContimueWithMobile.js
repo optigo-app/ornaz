@@ -4,6 +4,7 @@ import { Button, CircularProgress, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function ContimueWithMobile() {
     const [mobileNo, setMobileNo] = useState('');
@@ -58,9 +59,11 @@ export default function ContimueWithMobile() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('resssssssssssss',response);
-            if (response.Data.Table1[0].stat === '1') {
-                navigation('/LoginWithMobileCode', { mobileNo: mobileNo });
+            console.log('log.........', response);
+            if (response.Data.Table1[0].stat === '1' && response.Data.Table1[0].islead === '1') {
+                toast.error('You are not a customer, contact to admin')
+            } else if (response.Data.Table1[0].stat === '1' && response.Data.Table1[0].islead === '0') {
+                navigation('/LoginWithMobileCode', { state: { mobileNo: mobileNo } });
                 localStorage.setItem('registerMobile', mobileNo)
             } else {
                 navigation('/register', { state: { mobileNo: mobileNo } });
@@ -76,6 +79,7 @@ export default function ContimueWithMobile() {
 
     return (
         <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+            <ToastContainer />
             {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />

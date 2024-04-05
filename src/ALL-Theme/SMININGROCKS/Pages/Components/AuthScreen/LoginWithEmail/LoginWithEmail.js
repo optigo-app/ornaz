@@ -145,8 +145,7 @@ export default function LoginWithEmail() {
 
     const handleNavigation = () => {
         localStorage.setItem('LoginCodeEmail', 'true');
-        localStorage.setItem('registerEmail', email);
-        navigation('/LoginWithEmailCode');
+        navigation('/LoginWithEmailCode', { state: { email: location.state?.email } });
     }
 
     const handleForgotPassword = async () => {

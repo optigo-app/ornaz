@@ -138,7 +138,7 @@ export default function ChangePassword() {
                     naviagation('/')
                     window.location.reload()
                 } else {
-                    alert(response.Data.rd[0].stat_msg);
+                    setErrors(prevErrors => ({ ...prevErrors, oldPassword: 'Enter Valid Old Password' }));
                 }
             } catch (error) {
                 console.error('Error:', error);

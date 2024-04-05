@@ -59,6 +59,7 @@
     font-size: 13px;
     font-weight: 500;
     margin: 10px;
+    justify-content: center;
 }
 
 .smiTopAddAllBtn:hover {

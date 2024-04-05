@@ -5,6 +5,8 @@ import { Button, CircularProgress, TextField } from '@mui/material';
 import Footer from '../../home/Footer/Footer';
 import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 export default function ContinueWithEmail() {
     const [email, setEmail] = useState('');
@@ -60,8 +62,10 @@ export default function ContinueWithEmail() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('ressssssss',response);
-            if (response.Data.rd[0].stat === 1) {
+            console.log('ressssssss', response);
+            if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 1) {
+                toast.error('You are not a customer, contact to admin')
+            } else if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 0) {
                 navigation('/LoginWithEmail', { state: { email: trimmedEmail } });
                 if(trimmedEmail){
                     localStorage.setItem("userEmailForPdList",trimmedEmail);
@@ -78,6 +82,8 @@ export default function ContinueWithEmail() {
 
     return (
         <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+        <ToastContainer />
+
             {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />
@@ -102,8 +108,8 @@ export default function ContinueWithEmail() {
                         color: '#7d7f85',
                         fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif'
                     }}
-                    
-                    className='AuthScreenSubTitle'
+
+                        className='AuthScreenSubTitle'
                     >We'll check if you have an account, and help create one if you don't.</p>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -125,7 +131,7 @@ export default function ContinueWithEmail() {
                             helperText={emailError}
                         />
 
-                          {/* <button
+                        {/* <button
                             className={`submitBtnForgot ${buttonFocused ? 'focused' : ''}`}
                             onClick={handleSubmit}
                             onFocus={() => setButtonFocused(true)}
@@ -136,7 +142,7 @@ export default function ContinueWithEmail() {
                         </button> */}
 
                         <button type='submit' className='submitBtnForgot' onClick={handleSubmit}>SUBMIT</button>
-                        <Button style={{marginTop: '10px' ,color: 'gray'}} onClick={() => navigation('/LoginOption')}>CANCEL</Button>
+                        <Button style={{ marginTop: '10px', color: 'gray' }} onClick={() => navigation('/LoginOption')}>CANCEL</Button>
                     </div>
                     <Footer />
                 </div>
