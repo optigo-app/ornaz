@@ -50,6 +50,16 @@ const AccountLedger = () => {
     const fromDateRef = useRef(null);
     const toDateRef = useRef(null);
     const navigate = useNavigate("");
+    // const [displayDates, setDisplayDates] = useState({ from: null, to: null });
+
+    // useEffect(() => {
+    //     if (fromDate && toDate) {
+    //         setDisplayDates({
+    //             from: moment(fromDate).format('DD-MM-YYYY'),
+    //             to: moment(toDate).format('DD-MM-YYYY')
+    //         });
+    //     }
+    // }, [fromDate, toDate]);
 
     useEffect(() => {
 
@@ -285,7 +295,9 @@ const AccountLedger = () => {
 
     // Update the start and end dates in the state
         setFromDate(newStartDate);
+        // setShowStartDate(newStartDate)
         setToDate(newEndDate);
+        // setShowEndDate(newEndDate)
         handleSearchBtn('', newStartDate, newEndDate, days)
         // Filter the data based on the new date range
         // filterData();
@@ -361,7 +373,9 @@ const AccountLedger = () => {
     
         // Update the state with the new start and end dates
         setFromDate(newStartDate);
+        // setShowStartDate(newStartDate);
         setToDate(newEndDate);
+        // setShowEndDate(newEndDate)
     
         // Update the fromDate state
         setFromDate(fromDateCopy);
@@ -421,7 +435,9 @@ const AccountLedger = () => {
         }
     
         setFromDate(newStartDate);
+        // setShowStartDate(newStartDate)
         setToDate(newEndDate);
+        // setShowEndDate(newEndDate)
         
         // Update the toDate state
         setToDate(toDateCopy);
@@ -1005,7 +1021,6 @@ const AccountLedger = () => {
                     let todat = moment(todates);
                     let cutDat = moment(cutDate);
                     if(moment(fromdates).isSameOrBefore(todates)){
-                        console.log("in if");
                         const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
                         if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
                             flags.dateTo = true;
@@ -1145,12 +1160,35 @@ const AccountLedger = () => {
         // setFilterData(data);
     }
 
+    useEffect(() => {
+        
+        let fromdate =  moment(fromDate)
+        let enddate =  moment(toDate)
+        let daytextf = fromdate?._i?.$d;
+        let daytextt = enddate?._i?.$d;
+
+        const startDate = new Date(daytextf);
+        const endDate = new Date(daytextt);
+
+        const formattedStartDate = moment(startDate).format('DD MMM YYYY');
+        const formattedEndDate = moment(endDate).format('DD MMM YYYY');
+
+        setShowStartDate(formattedStartDate)
+        setShowEndDate(formattedEndDate);
+
+    }, [fromDate, toDate])
+
+// console.log(moment(fromDate));
+// console.log(moment(toDate));
+
   return (
     <div>
         {/* <div className='fs-4 fw-bold text-center text-secondary ledger_title'>Ledger</div> */}
         <div>
             <div className='border'>
-            <div className='p-2 ps-4 border-bottom fs_Al_mq' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{showStartDate}</b>&nbsp; to &nbsp;<b>{showEndDate}</b>&nbsp;</div>
+            <div className='p-2 ps-4 border-bottom fs_Al_mq' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>
+                &nbsp; Period of &nbsp;<b>{moment(showStartDate).format('DD MMM YYYY') === 'Invalid date' ? '' : moment(showStartDate).format('DD MMM YYYY')}</b>&nbsp; to 
+                &nbsp;<b>{moment(showEndDate).format('DD MMM YYYY') === 'Invalid date' ? '' : moment(showEndDate).format('DD MMM YYYY')}</b>&nbsp;</div>
 
                 {/* <div className='p-2 ps-4 border-bottom' style={{letterSpacing:'1px'}}>Account Detail for &nbsp; <b>{userName}</b>&nbsp; Period of &nbsp;<b>{formatDate(startDate)}</b>&nbsp; to &nbsp;<b>{formatDate(endDate)}</b>&nbsp;</div> */}
                 
@@ -1173,6 +1211,7 @@ const AccountLedger = () => {
                                     // onChange={(newValue) => setFromDate(newValue)}
                                     // onChange={handleFromDateChange}
                                     onChange={(newValue) => {
+                                        console.log(moment(newValue));
                                         if (newValue === null) {
                                           setFromDate(null)
                                         } else {
@@ -1230,6 +1269,7 @@ const AccountLedger = () => {
                                         } else {
                                           if (((newValue["$y"] <= 2099 && newValue["$y"] >= 1900) || newValue["$y"] < 1000) || isNaN(newValue["$y"])) {
                                             setToDate(newValue)
+                                            setShowEndDate(newValue)
                                           } 
                                           else {
                                             Swal.fire({
@@ -1259,8 +1299,17 @@ const AccountLedger = () => {
                         {/* <input type="date" name="date" id="startdate" className='mx-2 p-1 mb-2' value={startDate} onChange={(e) => setStartDate(e.target.value)} title='find data'  />
                             To 
                         <input type="date" name="date" id="enddate" className='mx-2 p-1 mb-2'   value={endDate} onChange={(e) => setEndDate(e.target.value)}  title='enddate' /> */}
-                        <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
+                        {/* <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
                             <SearchIcon titleAccess='search here' sx={{cursor:'pointer'}}   onClick={(e) => handleSearchBtn(e, fromDate, toDate, selectedDays)}/>
+                        </Box> */}
+                        <Box sx={{ paddingBottom: "35px", paddingRight: "15px"}}>
+
+                         <Button variant='contained' className='muiSmilingRocksBtn' title='search here'
+                            sx={{ padding: "7px 10px", minWidth: "max-content", background: "#7d7f85",  }}
+                            onClick={(e) => handleSearchBtn(e, fromDate, toDate, selectedDays)}
+                            // onClick={(eve) => handleSearch(eve, fromDate, toDate, netWtSlider[0], netWtSlider[1], grossWtSlider[0], grossWtSlider[1], purchaseCount, designNo, metal, productType, metalColor, category, subCategory, orderProm)}
+                            >
+                            <SearchIcon sx={{ color: "#fff !important", cursor:'pointer' }} /></Button>
                         </Box>
                     </div>
                     <Box sx={{paddingBottom: "35px", paddingRight: "15px"}}>
@@ -1373,7 +1422,7 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-end ps-1'>{(Math.abs(debit_dia_diff))?.toFixed(3) === '0.000' ? '' : (Math.abs(debit_dia_diff))?.toFixed(3)}</td>
                                             {/* <td className='border-end p-1 text-end pe-1'>{Math.abs(debit_amt_diff)}</td>
                                             <td className='border-end p-1 text-end pe-1'></td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(debit_curr_diff) === '0.00' ? '' : formatAmount(Math.abs(debit_curr_diff))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{Math.abs(debit_curr_diff) === 0.00 ? '' : formatAmount(Math.abs(debit_curr_diff))}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-start ps-1' align='center'>Opening</td>
@@ -1430,7 +1479,7 @@ const AccountLedger = () => {
                                             <td className='border-end p-1 text-end pe-1'>{((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt))?.toFixed(3) === '0.000' ? '' : ((Math.abs(debit_dia_diff) + resultTotal?.debit_diamondwt))?.toFixed(3)}</td>
                                             {/* <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount(((Math.abs(debit_amt_diff) + resultTotal?.debit_totalamount)))}</td>
                                             <td className='border-end p-1 text-end pe-1'></td> */}
-                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{currencySymbol}&nbsp;{formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency)) === '0.00' ? '' : formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency))}</td>
+                                            <td className='border-end p-1 text-end pe-1' style={{minWidth:'100px'}}>{formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency)) === '0.00' ? '' :  currencySymbol}&nbsp;{formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency)) === '0.00' ? '' : formatAmount((Math.abs(debit_curr_diff) + resultTotal?.debit_totalcurrency))}</td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-center'></td>
                                             <td className='border-end p-1 text-start ps-1'></td>

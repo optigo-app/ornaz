@@ -278,10 +278,16 @@ const QuotationJob = () => {
           let fromdat = moment(fromdates);
           let todat = moment(todates);
           let cutDat = moment(cutDate);
-          const isBetween = cutDat.isBetween(fromdat, todat);
-          if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
-            flags.dateTo = true;
-            flags.dateFrom = true;
+          if(moment(fromdat).isSameOrBefore(todat)){
+            const isBetween = cutDat.isBetween(fromdat, todat);
+            if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
+              flags.dateTo = true;
+              flags.dateFrom = true;
+            }
+          }else{
+            setTimeout(() => {
+              resetAllFilters();
+            }, 0) 
           }
         } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
           // let todat = new Date(todates);
