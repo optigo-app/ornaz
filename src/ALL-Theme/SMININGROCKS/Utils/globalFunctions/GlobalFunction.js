@@ -44,10 +44,12 @@ export const checkMonth = (val) => {
         default:
             break;
     }
+  
     return month;
 };
 
 export const checkDates = (fromDates, toDates, cutDates) => {
+
     let fromdates = `${fromDates?.["$y"]}-${checkMonth(fromDates?.["$M"])}-${fromDates?.["$D"]}`;
     let todates = `${toDates?.["$y"]}-${checkMonth(toDates?.["$M"])}-${toDates?.["$D"]}`;
 
@@ -57,18 +59,26 @@ export const checkDates = (fromDates, toDates, cutDates) => {
     let flags = {
         dateTo: false,
         dateFrom: false,
+        alldata: false
     }
+
     if(cutDate !== undefined){
         // if(fromDates && toDates && moment(fromdates).isSameOrBefore(moment(todates))){
         if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
             let fromdat = moment(fromdates);
             let todat = moment(todates);
             let cutDat = moment(cutDate);
-            const isBetween = cutDat.isBetween(fromdat, todat);
-            if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
-                flags.dateTo = true;
-                flags.dateFrom = true;
+            if(moment(fromdat).isSameOrBefore(todat)){
+                const isBetween = cutDat.isBetween(fromdat, todat);
+                if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
+                    flags.dateTo = true;
+                    flags.dateFrom = true;
+                }
             }
+            else{
+                flags.alldata = true
+            }
+            
         } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
             // let todat = new Date(todates);
             // let cutDat = new Date(cutDate);
@@ -78,6 +88,7 @@ export const checkDates = (fromDates, toDates, cutDates) => {
             // }
             flags.dateTo = true;
             flags.dateFrom = true;
+            flags.alldata = false;
     
         } else if (!fromdates?.includes(undefined) && todates?.includes(undefined)) {
             // let fromdat = new Date(fromdates);
@@ -88,9 +99,11 @@ export const checkDates = (fromDates, toDates, cutDates) => {
             // }
             flags.dateTo = true;
             flags.dateFrom = true;
+            flags.alldata = false;
         } else if (fromdates?.includes(undefined) && todates?.includes(undefined)) {
             flags.dateTo = true;
             flags.dateFrom = true;
+            flags.alldata = false;
         }
        } 
     // }
