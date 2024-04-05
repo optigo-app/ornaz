@@ -2083,14 +2083,14 @@ const ProdDetail = () => {
             </div>
           </div>
           {(designSetList.length !== 0 && showIcateDesign === 1) &&
-            <div className='smilingCompleteLookMainWeb' style={{ position: 'relative', marginInline: '10%', display: 'flex', alignItems: 'center', marginBottom: '7%' }}>
+            <div className='smilingCompleteLookMainWeb' style={{ position: 'relative', marginInline: '10%', display: 'flex', alignItems: 'center', marginBottom: '7%',marginTop:'7%' }}>
               <div className='similiarBrand' style={{ right: '0px', position: 'absolute', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '100px', marginTop: !(productData?.OriginalImagePath) && '120px' }}>
                 <div style={{ marginBottom: '12px' }}>
                   <span style={{ fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85', fontSize: '26px' }}>Complete The Look</span>
                 </div>
                 <div style={{ border: '1px solid #e1e1e1', backgroundColor: 'white', borderRadius: '4px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
                   {
-                    designSetList?.map((dsl, i) => (
+                    designSetList?.slice(0, 3)?.map((dsl, i) => (
                       <>
                         {/* {i !== 0 && <hr style={{opacity:0.06}}/>} */}
                         <div style={{ display: 'flex', alignItems: 'center', width: '670px', gap: '30px' }}>
@@ -2106,7 +2106,7 @@ const ProdDetail = () => {
                             <div onClick={() => handelDesignSet(dsl)}>
                               <NavigateNextRoundedIcon />
                             </div>
-                            {(i !== designSetList.length - 1) && <div style={{ borderBottom: '1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%", }}></div>}
+                            {(i !== designSetList?.slice(0, 3).length - 1) && <div style={{ borderBottom: '1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%", }}></div>}
                           </div>
                         </div>
                       </>

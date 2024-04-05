@@ -1976,11 +1976,11 @@ const handleColorSelection = async (product, index, color) => {
                       </div>
                       <div className="productTitleLine" onClick={() => handelProductSubmit(products)}>
                         <p
-                          className="smilingProductDeatilTitleMobile"
+                          className={products?.TitleLine?.length > 20 ? "smilingProductDeatilTitleMobile" : "smilingProductDeatilTitleMobilenotWidth"}
                         >
                           {products?.TitleLine} 
                         </p>
-                        <span style={{ fontWeight: 600 ,fontSize:"13px"}}>{`- ${products?.designno}`} </span>
+                        <span style={{ fontWeight: 600 ,fontSize:"13px"}}>{`-${products?.designno}`} </span>
                       </div>
                       <div style={{}}>
                         <div className="mobileDeatilDiv1" style={{ display: 'flex', justifyContent: 'center',height: '20px' }}>
@@ -2061,7 +2061,7 @@ const handleColorSelection = async (product, index, color) => {
                           />
                         </div>
                       </div>
-                      {products?.IsColorWiseImageExists !== null && (
+                      {isColorWiseImageShow == 1  && (
                         <div
                           style={{
                             display: "flex",
