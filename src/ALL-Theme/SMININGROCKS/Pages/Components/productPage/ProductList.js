@@ -2063,7 +2063,7 @@ const handleColorSelection = async (product, index, color) => {
                           />
                         </div>
                       </div>
-                      {products?.IsColorWiseImageExists !== null && (
+                      {isColorWiseImageShow == 1  && (
                         <div
                           style={{
                             display: "flex",
