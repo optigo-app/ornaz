@@ -63,9 +63,9 @@ export default function ContinueWithEmail() {
             };
             const response = await CommonAPI(body);
             console.log('ressssssss', response);
-            if (response.Data.rd[0].stat === 1 && response.Data.rd[0].islead === 1) {
+            if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 1) {
                 toast.error('You are not a customer, contact to admin')
-            } else if (response.Data.rd[0].stat === 1 && response.Data.rd[0].islead === 0) {
+            } else if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 0) {
                 navigation('/LoginWithEmail', { state: { email: trimmedEmail } });
                 if(trimmedEmail){
                     localStorage.setItem("userEmailForPdList",trimmedEmail);

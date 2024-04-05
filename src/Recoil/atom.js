@@ -64,3 +64,8 @@ export const newMenuData = atom({
   key:'newMenuData',
   default:{}
 })
+
+export const newTestProdData = atom({
+  key:'newTestProdData',
+  default:[]
+})

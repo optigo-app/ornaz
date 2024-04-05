@@ -6,6 +6,7 @@ import { CommonAPI } from '../../../../Utils/API/CommonAPI';
 import { useNavigate } from 'react-router-dom';
 import './LoginWithEmailCode.css';
 import CryptoJS from 'crypto-js';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function LoginWithEmailCode() {
     const [email, setEmail] = useState('');
@@ -38,9 +39,9 @@ export default function LoginWithEmailCode() {
                         const response = await CommonAPI(body);
                         if (response.Data.Table1[0].stat === '1') {
                             localStorage.setItem('LoginCodeEmail', 'false');
-                            alert('OTP send Sucssessfully');
+                            toast.success('OTP send Sucssessfully');
                         } else {
-                            // Handle error condition
+                            toast.error('OTP send Error');
                         }
                     }
                 }
@@ -114,7 +115,6 @@ export default function LoginWithEmailCode() {
             const response = await CommonAPI(body);
             if (response.Data.rd[0].stat === 1) {
                 localStorage.setItem('LoginUser', 'true')
-                alert('Register Sucssessfully');
                 navigation('/');
             } else {
                 errors.mobileNo = 'Code is Invalid'
@@ -144,9 +144,9 @@ export default function LoginWithEmailCode() {
             const response = await CommonAPI(body);
             if (response.Data.Table1[0].stat === '1') {
                 localStorage.setItem('LoginCodeEmail', 'false');
-                alert('OTP send Sucssessfully');
+                toast.success('OTP send Sucssessfully');
             } else {
-                alert('OTP send Error');
+                toast.error('OTP send Error');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -155,6 +155,7 @@ export default function LoginWithEmailCode() {
 
     return (
         <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
+            <ToastContainer />
             {isLoading && (
                 <div className="loader-overlay">
                     <CircularProgress className='loadingBarManage' />

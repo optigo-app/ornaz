@@ -59,11 +59,11 @@ export default function ContimueWithMobile() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('resssssssssssss', response);
-            if (response.Data.Table1[0].stat === 1 && response.Data.rd[0].islead === 1) {
+            console.log('log.........', response);
+            if (response.Data.Table1[0].stat === '1' && response.Data.Table1[0].islead === '1') {
                 toast.error('You are not a customer, contact to admin')
-            } else if (response.Data.Table1[0].stat === 1 && response.Data.rd[0].islead === 0) {
-                navigation('/LoginWithMobileCode', { mobileNo: mobileNo });
+            } else if (response.Data.Table1[0].stat === '1' && response.Data.Table1[0].islead === '0') {
+                navigation('/LoginWithMobileCode', { state: { mobileNo: mobileNo } });
                 localStorage.setItem('registerMobile', mobileNo)
             } else {
                 navigation('/register', { state: { mobileNo: mobileNo } });

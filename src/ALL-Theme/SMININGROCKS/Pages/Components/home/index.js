@@ -17,11 +17,12 @@ import { Button, Dialog } from '@mui/material';
 import { IoMdMail } from "react-icons/io";
 import { FaMobileAlt } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CommonAPI } from '../../../Utils/API/CommonAPI';
 
 export default function Home() {
 
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +31,7 @@ export default function Home() {
 
       const header = {
         Authorization: 'Bearer optigo_json_api',
-        domain: 'gstore.orail.co.in',
+        domain:  (window.location.hostname === 'localhost' || window.location.hostname === 'zen') ? 'gstore.orail.co.in' : window.location.hostname,
         version: 'V4',
         sp: "1"
         // domain: 'zen',
@@ -209,7 +210,9 @@ export default function Home() {
         }
 
         await CommonAPI(body).then((res) => {
-          localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res?.Data.rd[0]))
+          if(res?.Data.rd[0]){
+            localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res?.Data.rd[0]))
+          }
           // console.log("res",res)
         })
 
@@ -229,7 +232,7 @@ export default function Home() {
         const storedEmail = localStorage.getItem('registerEmail') || '';
 
         const combinedValue = JSON.stringify({
-          autocode:"", FrontEnd_RegNo: `${storeInit?.FrontEnd_RegNo}`, Customerid: `${loginUserDetail?.id}`
+          autocode: "", FrontEnd_RegNo: `${storeInit?.FrontEnd_RegNo}`, Customerid: `${loginUserDetail?.id}`
         });
         const encodedCombinedValue = btoa(combinedValue);
 
@@ -253,21 +256,21 @@ export default function Home() {
     }
 
     fetchData();
+    currencyCombo();
     getColorImgData();
     getMetalTypeData();
     getQualityColor();
     getColorStoneQualityData();
     getMetalColor();
-    currencyCombo();
   }, []);
 
+
+
+
+
+
+
   
-
-
-
-
-
-
 
   return (
     <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>

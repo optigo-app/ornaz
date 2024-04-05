@@ -58,7 +58,7 @@ const ProdDetail = () => {
 
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
-  
+
   const [showIcateDesign, setShowEcateDesign] = useState('');
 
   const [mtPrice, setMetalPrice] = useState(0)
@@ -78,6 +78,8 @@ const ProdDetail = () => {
   const [csqcRate, setCsqcRate] = useState()
   const [csqcSettRate, setCsqcSettRate] = useState()
   const [getPriceData, setGetPriceData] = useState([])
+  const [globImagePath,setGlobImagepath] = useState()
+
 
   const [uploadLogicPath, setUploadLogicPath] = useState('');
   const [uKey, setUkey] = useState('');
@@ -85,13 +87,17 @@ const ProdDetail = () => {
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
-  // const getPriceData = useRecoilValue(priceData);
   const getDesignSet = useRecoilValue(designSet)
   const handelImgLoad = () => {
     setImgLoading(false)
   }
 
-  console.log('getPriceDatagetPriceData', getPriceData);
+  useEffect(()=>{
+    const storeInit = JSON.parse(localStorage.getItem('storeInit'))
+    setGlobImagepath(storeInit?.DesignImageFol)
+  },[])
+
+
 
   let currencySymbol = JSON.parse(localStorage.getItem('CURRENCYCOMBO'))
   let navigate = useNavigate()
@@ -133,9 +139,14 @@ const ProdDetail = () => {
       setCSQOpt(ref)
     }
 
-    setSizeOption(sizeData[1]?.id)
-
-  }, [colorData])
+    // let sizeDatafilter = sizeData?.filter((sd)=>sd?.IsDefaultSize === 1)
+    // console.log("sizeData",sizeDatafilter)
+    
+    // setSizeOption(sizeData[1]?.id)
+    
+  }, [colorData,sizeData])
+  
+  // console.log("productData",sizeOption)
 
   // useEffect(()=>{
 
@@ -270,10 +281,9 @@ const ProdDetail = () => {
 
     if (metalFilterData && metalFilterData.length) {
 
-      let CalcNetwt = (srProductsData?.netwt ?? 0) + (metalFilterData?.Weight ?? 0)
-      // console.log("CalcNetwt", CalcNetwt)
+      let CalcNetwt = ((srProductsData?.netwt ?? 0) + (metalFilterData?.Weight ?? 0) ?? 0 )
 
-      let fprice = (mtrdData?.AD * CalcNetwt) + (mtrdData?.AC * CalcNetwt)
+      let fprice = ((mtrdData?.AD ?? 0) * CalcNetwt) + ((mtrdData?.AC ?? 0)* CalcNetwt)
 
       return fprice
     } else {
@@ -299,9 +309,8 @@ const ProdDetail = () => {
         ele?.B === srProductsData?.designno
 
     );
-
-    console.log("mtrd", mtrd);
-
+    
+    
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
       showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
@@ -322,7 +331,6 @@ const ProdDetail = () => {
 
     )
 
-    console.log("diaqcprice", diaqcprice)
 
     let showPrice1 = 0;
     if (diaqcprice && diaqcprice.length > 0) {
@@ -350,8 +358,6 @@ const ProdDetail = () => {
 
     );
 
-    console.log("csqcpirce1", csqcpirce)
-
     let showPrice2 = 0;
     if (csqcpirce && csqcpirce.length > 0) {
       showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
@@ -363,9 +369,6 @@ const ProdDetail = () => {
       setCsqcSettRate(diaSettRate ?? 0)
       setCSQCPrice(csqcpirce[0]?.S ?? 0)
     }
-
-
-    console.log("csqcpirce", csqcpirce)
 
     let gt = showPrice + showPrice1 + showPrice2;
     setGrandTotal(gt ?? 0);
@@ -410,13 +413,11 @@ const ProdDetail = () => {
     }
 
   }
-  console.log('completttttttttt', completeBackImage);
 
   useEffect(() => {
     const storedDataAll = localStorage.getItem('srProductsData');
     const data = JSON.parse(storedDataAll);
     setVideoUrl(data.videoName);
-    console.log('videoUrlvideoUrlvideoUrl', videoUrl);
 
 
     let allProductData = JSON.parse(localStorage.getItem('allproductlist'))
@@ -447,6 +448,7 @@ const ProdDetail = () => {
       return;
     }
     const filteredData = storedData.filter(item => item.autocode === autoCode);
+    console.log('filteredDatafilteredDatafilteredDatafilteredData', filteredData)
     setColorImageData(filteredData)
   }
 
@@ -457,6 +459,7 @@ const ProdDetail = () => {
   function convertPath(path) {
     return path.replace(/\\/g, '/');
   }
+
   function checkImageAvailability(imageUrl) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -465,6 +468,7 @@ const ProdDetail = () => {
       img.src = imageUrl;
     });
   }
+  console.log('updatedColorImageupdatedColorImageupdatedColorImage', updatedColorImage)
 
   useEffect(() => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
@@ -499,6 +503,7 @@ const ProdDetail = () => {
       const selectedColor = color;
       setSelectedColor(selectedColor);
       const filteredData = colorImageData.filter(item => item.colorname.toLowerCase() === selectedColor.toLowerCase());
+
       if (filteredData.length > 0) {
         const correctedData = filteredData.map(item => {
           return {
@@ -820,7 +825,7 @@ const ProdDetail = () => {
           "encrypted_designno": `${product?.encrypted_designno ?? ""}`,
           "hashtagid": `${product?.Hashtagid ?? ""}`,
           "hashtagname": `${product?.Hashtagname ?? ""}`,
-          "imagepath": `${product?.imagepath}`,
+          "imagepath": `${globImagePath}`,
           "mediumimage": `${product?.MediumImagePath ?? ""}`,
           "originalimage": `${product?.OriginalImagePath}`,
           "storyline_html": `${product?.storyline_html ?? ""}`,
@@ -839,13 +844,14 @@ const ProdDetail = () => {
           "remarks_design": `${product?.remarks_design ?? ""}`,
           "diamondcolorid": `${product?.diamondcolorid ?? ""}`,
           "diamondqualityid": `${product?.diamondqualityid ?? ""}`,
-          "detail_ringsize": `${sizeOption ? (sizeOption ?? "") : (product?.detail_ringsize ?? "")}`,
+          "detail_ringsize": `${sizeOption ? (sizeOption ?? "") : (product?.DefaultSize ?? "")}`,
           "ProjMode": `${product?.ProjMode ?? ""}`,
           "AlbumMasterid": `${product?.AlbumMasterid ?? ""}`,
           "AlbumMastername": `${product?.AlbumMastername ?? ""}`,
           "Albumcode": `${product?.Albumcode ?? ""}`,
           "Designid": `${product?.Designid ?? ""}`
         }
+
         const encodedCombinedValue = btoa(JSON.stringify(finalJSON));
         const wishToCartEncData1 = btoa(JSON.stringify(wishToCartEncData));
         const body = {
@@ -882,8 +888,6 @@ const ProdDetail = () => {
         localStorage.setItem("srProductsData", JSON.stringify(productData))
 
         let prod = productData
-
-        // setCartRemoveData(prod.designno)
 
         let Data = { "designno": `${prod?.designno}`, "autocode": `${prod?.autocode}`, "metalcolorid": 0, "isSolStockNo": 0, "is_show_stock_website": "0", "isdelete_all": 0, "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`, "Customerid": `${Customer_id?.id}`, "cartidlist": "" }
 
@@ -1085,7 +1089,7 @@ const ProdDetail = () => {
           "encrypted_designno": `${product?.encrypted_designno ?? ""}`,
           "hashtagid": `${product?.Hashtagid ?? ""}`,
           "hashtagname": `${product?.Hashtagname ?? ""}`,
-          "imagepath": `${product?.imagepath}`,
+          "imagepath": `${globImagePath}`,
           "imgrandomno": `${product?.imgrandomno}`,
           "mediumimage": `${product?.MediumImagePath ?? ""}`,
           "originalimage": `${product?.OriginalImagePath}`,
@@ -1167,16 +1171,18 @@ const ProdDetail = () => {
 
   const handelSize = (data) => {
 
-    const selectedSize = sizeData.find((size) => size.sizename === data);
+    // console.log("data",data)
+
+    const selectedSize = sizeData.find((size) => size.sizename === data)
     if (selectedSize) {
       setSizeMarkup(selectedSize?.MarkUp)
     }
-    setSizeOption(data)
-    const filteredData = getAllFilterSizeData?.filter(item => item.sizename === data);
-    const filteredDataMetal = filteredData?.filter(item => item.DiamondStoneTypeName === "METAL");
-    const filteredDataDaimond = filteredData?.filter(item => item.DiamondStoneTypeName === "DIAMOND");
-    setMetalFilterData(filteredDataMetal);
-    setDaimondFiletrData(filteredDataDaimond);
+    setSizeOption(data) 
+    const filteredData = getAllFilterSizeData?.filter(item => item.sizename === data)
+    const filteredDataMetal = filteredData?.filter(item => item.DiamondStoneTypeName === "METAL")
+    const filteredDataDaimond = filteredData?.filter(item => item.DiamondStoneTypeName === "DIAMOND")
+    setMetalFilterData(filteredDataMetal)
+    setDaimondFiletrData(filteredDataDaimond)
   }
 
 
@@ -1205,7 +1211,7 @@ const ProdDetail = () => {
   useEffect(() => {
 
     let srData = JSON.parse(localStorage.getItem("srProductsData"))
-    let price = ((productData?.UnitCost ?? 0) + (mtrdData?.Z ?? 0) + (dqcData ?? 0) + (csqcData ?? 0) + (sizeMarkup ?? 0) + metalUpdatedPrice() + diaUpdatedPrice() + colUpdatedPrice())
+    let price = ((productData?.UnitCost ?? 0) + (mtrdData?.Z ?? 0) + (dqcData ?? 0) + (csqcData ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0))
 
     if (price) {
       srData.price = Number(price)
@@ -1215,7 +1221,7 @@ const ProdDetail = () => {
 
   }, [mtrdData, dqcData, csqcData, sizeMarkup, metalUpdatedPrice, diaUpdatedPrice, colUpdatedPrice])
 
-  console.log("pricedata", mtrdData, dqcData, csqcData, sizeMarkup, metalUpdatedPrice(), diaUpdatedPrice(), colUpdatedPrice())
+  // console.log("pricedata",mtrdData,dqcData,csqcData,sizeMarkup,metalUpdatedPrice(),diaUpdatedPrice(),colUpdatedPrice())
 
   return (
     <div
@@ -1267,14 +1273,18 @@ const ProdDetail = () => {
                 :
                 <img
                   src={
-
-                    (productData?.OriginalImagePath) ? (selectedImagePath == '' ?
-                      productData?.imagepath +
-                      (!handelmainImg()?.length
-                        ? productData?.OriginalImagePath?.split(",")[0]
-                        : handelmainImg())
-                      :
-                      selectedImagePath)
+                    (productData?.OriginalImagePath) ?
+                      updatedColorImage?.length !== 0 ?
+                        updatedColorImage[0]?.imagepath
+                        :
+                        (
+                          selectedImagePath == '' ?
+                          globImagePath + (!handelmainImg()?.length ? productData?.OriginalImagePath?.split(",")[0]
+                              :
+                              handelmainImg()
+                            )
+                            :
+                            selectedImagePath)
                       :
                       notFound
                   }
@@ -1296,7 +1306,7 @@ const ProdDetail = () => {
                   {productData?.ThumbImagePath && <div className="srthumb_images">
                     {productData?.ThumbImagePath?.split(",").map((data, i) => (
                       <img
-                        src={productData?.imagepath + data}
+                        src={globImagePath + data}
                         alt={""}
                         className="srthumb_images_el"
                         onClick={() => setThumbImg(i)}
@@ -1894,9 +1904,9 @@ const ProdDetail = () => {
                           (dqcData ?? 0) +
                           (csqcData ?? 0) +
                           (sizeMarkup ?? 0) +
-                          metalUpdatedPrice() +
-                          diaUpdatedPrice() +
-                          colUpdatedPrice()
+                          (metalUpdatedPrice() ?? 0) +
+                          (diaUpdatedPrice() ?? 0) +
+                          (colUpdatedPrice() ?? 0)
                         ).toFixed(2)}`}
                       </span>
                     </p>
@@ -2073,14 +2083,14 @@ const ProdDetail = () => {
             </div>
           </div>
           {(designSetList.length !== 0 && showIcateDesign === 1) &&
-            <div className='smilingCompleteLookMainWeb' style={{ position: 'relative', marginInline: '10%', display: 'flex', alignItems: 'center', marginBottom: '7%' }}>
+            <div className='smilingCompleteLookMainWeb' style={{ position: 'relative', marginInline: '10%', display: 'flex', alignItems: 'center', marginBottom: '7%',marginTop:'7%' }}>
               <div className='similiarBrand' style={{ right: '0px', position: 'absolute', display: 'flex', alignItems: 'center', flexDirection: 'column', marginBottom: '100px', marginTop: !(productData?.OriginalImagePath) && '120px' }}>
                 <div style={{ marginBottom: '12px' }}>
                   <span style={{ fontFamily: 'FreightDisp Pro Medium', color: '#7d7f85', fontSize: '26px' }}>Complete The Look</span>
                 </div>
                 <div style={{ border: '1px solid #e1e1e1', backgroundColor: 'white', borderRadius: '4px', padding: '30px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
                   {
-                    designSetList?.map((dsl, i) => (
+                    designSetList?.slice(0, 3)?.map((dsl, i) => (
                       <>
                         {/* {i !== 0 && <hr style={{opacity:0.06}}/>} */}
                         <div style={{ display: 'flex', alignItems: 'center', width: '670px', gap: '30px' }}>
@@ -2096,7 +2106,7 @@ const ProdDetail = () => {
                             <div onClick={() => handelDesignSet(dsl)}>
                               <NavigateNextRoundedIcon />
                             </div>
-                            {(i !== designSetList.length - 1) && <div style={{ borderBottom: '1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%", }}></div>}
+                            {(i !== designSetList?.slice(0, 3).length - 1) && <div style={{ borderBottom: '1px solid #e1e1e1', position: "absolute", bottom: "-18.5px", left: "0", width: "100%", }}></div>}
                           </div>
                         </div>
                       </>
