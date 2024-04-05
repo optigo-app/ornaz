@@ -210,7 +210,9 @@ export default function Home() {
         }
 
         await CommonAPI(body).then((res) => {
-          localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res?.Data.rd[0]))
+          if(res?.Data.rd[0]){
+            localStorage.setItem("CURRENCYCOMBO", JSON.stringify(res?.Data.rd[0]))
+          }
           // console.log("res",res)
         })
 
@@ -254,12 +256,12 @@ export default function Home() {
     }
 
     fetchData();
+    currencyCombo();
     getColorImgData();
     getMetalTypeData();
     getQualityColor();
     getColorStoneQualityData();
     getMetalColor();
-    currencyCombo();
   }, []);
 
 
@@ -268,7 +270,7 @@ export default function Home() {
 
 
 
-
+  
 
   return (
     <div className='paddingTopMobileSet' style={{ backgroundColor: '#c0bbb1', paddingTop: '110px' }}>
