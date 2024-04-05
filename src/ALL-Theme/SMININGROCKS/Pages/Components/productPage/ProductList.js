@@ -1976,7 +1976,7 @@ const handleColorSelection = async (product, index, color) => {
                       </div>
                       <div className="productTitleLine" onClick={() => handelProductSubmit(products)}>
                         <p
-                          className={products?.TitleLine ? "smilingProductDeatilTitleMobile" : "smilingProductDeatilTitleMobilenotWidth"}
+                          className={products?.TitleLine?.length > 20 ? "smilingProductDeatilTitleMobile" : "smilingProductDeatilTitleMobilenotWidth"}
                         >
                           {products?.TitleLine} 
                         </p>
