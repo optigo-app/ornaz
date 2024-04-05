@@ -202,12 +202,14 @@ const DesignWiseSalesReport = () => {
             let fromdat = moment(fromdates);
             let todat = moment(todates);
             if (!fromdates?.includes(undefined) && !todates?.includes(undefined)) {
+                // if(fromdates && todates && moment(fromdates).isSameOrBefore(moment(todates))){
+
+                
                 let salescount = dataRd2?.reduce((acc, cObj) => {
                     let cutDate = cObj?.["Date"]?.split(" ");
                     cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
-                    console.log(cutDate);
                     let cutDat = moment(cutDate);
-                    const isBetween = cutDat.isBetween(fromdat, todat);
+                    const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
                     if (e?.designno === cObj?.designno && (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat))) {
                         return acc + cObj?.salescount;
                     } else {
@@ -281,6 +283,7 @@ const DesignWiseSalesReport = () => {
                     datass?.push(obj);
                 }
             }
+        //   } 
         });
         datass?.forEach((e, i) => {
             let flags = {
@@ -512,7 +515,6 @@ const DesignWiseSalesReport = () => {
             const response = await CommonAPI(body);
             // console.log(response);
             if (response?.Data?.rd) {
-                console.log(response?.Data?.rd);
                 resetAllFilters();
                 let datass = [];
                 let minNetWt = 0;
@@ -932,7 +934,7 @@ const DesignWiseSalesReport = () => {
                                     {products?.imgsrc ? (
                                         <img className="prod_img" src={products?.imgsrc} alt='' style={{ objectFit: "contain", height: "100%", minheight: "271px", maxHeight: "271px" }} />
                                     ) : (
-                                        <Skeleton variant="rectangular" width={"100%"} height={271} />
+                                        <Skeleton variant="rectangular" width={"100%"} height={335} style={{marginBottom:'76px'}} />
                                     )}
                                 </Box>
 
@@ -989,8 +991,8 @@ const DesignWiseSalesReport = () => {
             {/* filterData.length > perPage && 
             filterData.length > perPage &&  */}
             {filterData.length !== 0 && <ReactPaginate
-                previousLabel={"previous"}
-                nextLabel={"next"}
+                previousLabel={"<"}
+                nextLabel={">"}
                 breakLabel={"..."}
                 pageCount={Math.ceil(filterData.length / perPage)}
                 marginPagesDisplayed={2}
