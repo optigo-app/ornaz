@@ -92,11 +92,11 @@ export default function Video() {
   setTimeout(() => {
    
   }, 0);
+
   videoRef.current.controls = false;
   };
 
   const handleVideoPlay = () => {
-    // Set the flag indicating that the video has started playing
     setVideoStarted(true);
   };
 
