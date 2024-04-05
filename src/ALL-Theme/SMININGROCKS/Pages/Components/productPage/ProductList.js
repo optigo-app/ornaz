@@ -1983,18 +1983,16 @@ const handleColorSelection = async (product, index, color) => {
                         <span style={{ fontWeight: 600 ,fontSize:"13px"}}>{`- ${products?.designno}`} </span>
                       </div>
                       <div style={{}}>
-                        <div className="mobileDeatilDiv1" style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div className="mobileDeatilDiv1" style={{ display: 'flex', justifyContent: 'center',height: '20px' }}>
                           {ismetalWShow === 1 &&
                             <div>
                               <p style={{ margin: '0px', fontSize: '13px' }}>NWT : <span style={{ fontWeight: 600, marginRight: '15px' }}>{products?.netwt}</span></p>
                             </div>}
                           {isGrossWShow === 1 && <div>
-
                             <p style={{ margin: '0px', fontSize: '13px' }}>GWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{products?.Grossweight}</span></p>
                           </div>}
-
                         </div>
-                        <div className="mobileDeatilDiv2" style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div className="mobileDeatilDiv2" style={{ display: 'flex', justifyContent: 'center' , height: '20px' }}>
                           {((isDaaimongWShow || isDaaimongWShow) === 1 && (products?.diamondweight !== 0 || products?.diamondpcs !== 0)) && <div>
                             <p style={{ margin: '0px', fontSize: '13px' }}>DWT : <span style={{ fontWeight: 600, marginRight: '10px' }}>{(isDaaimongWShow === 1 && products?.diamondweight !== 0) && products?.diamondweight + '/'}  {(isDaaimonPShow === 1 && products?.diamondpcs !== 0) && products?.diamondpcs}</span></p>
                           </div>}

@@ -87,7 +87,6 @@ const ProdDetail = () => {
 
   const setCartCount = useSetRecoilState(CartListCounts)
   const setWishCount = useSetRecoilState(WishListCounts)
-  // const getPriceData = useRecoilValue(priceData);
   const getDesignSet = useRecoilValue(designSet)
   const handelImgLoad = () => {
     setImgLoading(false)
@@ -1280,7 +1279,7 @@ const ProdDetail = () => {
                         :
                         (
                           selectedImagePath == '' ?
-                            productData?.imagepath + (!handelmainImg()?.length ? productData?.OriginalImagePath?.split(",")[0]
+                          globImagePath + (!handelmainImg()?.length ? productData?.OriginalImagePath?.split(",")[0]
                               :
                               handelmainImg()
                             )
