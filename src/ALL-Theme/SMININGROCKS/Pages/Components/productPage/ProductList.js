@@ -8,7 +8,7 @@ import prodListData from "../../jsonFile/Productlist_4_95oztttesi0o50vr.json";
 import filterData from "../../jsonFile/M_4_95oztttesi0o50vr.json";
 import PriceData from "../../jsonFile/Productlist_4_95oztttesi0o50vr_8.json";
 // import PriceData from "../../jsonFile/testingFile/Productlist_4_95oztttesi0o50vr_8_Original.json";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Slider } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, CircularProgress, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Slider } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -41,7 +41,7 @@ const ProductList = () => {
   const [drawerShowOverlay, setDrawerShowOverlay] = useState(false)
   const [filterChecked, setFilterChecked] = useState({})
   const [wishFlag, setWishFlag] = useState({})
-  const [cartFlag, setCartFlag] = useState({})
+  const [cartFlag, setCartFlag] = useState(false)
   const [cartData, setCartData] = useState([])
   const [WishData, setWishData] = useState([])
   const [cartRemoveData, setCartRemoveData] = useState("")
@@ -104,8 +104,42 @@ const ProductList = () => {
   const [isMetalTCShow, setIsMetalTCShow] = useState('');
   const [isPriceShow, setIsPriceShow] = useState('');
   const [globImagePath,setGlobImagepath] = useState();
+  const [IsProdLoading,setIsProdLoading] = useState(false);
+  
+  useEffect(()=>{
+    if(Object.keys(wishFlag)?.length === 0){
+      let obj={};
+      WishData.forEach(item => {
+        obj[item?.DesignNo] = true;
+      })
 
-  // console.log({cartFlag,wishFlag});
+      if(Object.keys(obj).length>0){
+        setWishFlag(obj)
+      }
+    }
+  },[WishData])
+
+  useEffect(()=>{
+    if(Object.keys(cartData)?.length === 0){
+      let obj={};
+      cartData.forEach(item => {
+        obj[item?.DesignNo] = true;
+      })
+
+      if(Object.keys(obj).length>0){
+        setCartFlag(obj)
+      }
+    }
+  },[WishData])
+
+  useEffect(()=>{
+    let findData = Object.keys(wishFlag).filter((wd)=>Object.keys(cartFlag).find((cd)=>wd === cd))
+    if(findData){
+      wishFlag[findData] = false
+      setWishFlag(wishFlag)
+    }
+  },[WishData,cartData])
+
 
   useEffect(()=>{
     const storeInit = JSON.parse(localStorage.getItem('storeInit'))
@@ -769,20 +803,21 @@ const ProductList = () => {
 
   }
 
-  useEffect(() => {
-    let newData = Object.keys(cartFlag).filter((cf) => Object.keys(wishFlag).find((wf) => wf === cf))
+  // useEffect(() => {
+  //   let newData = Object.keys(cartFlag).filter((cf) => Object.keys(wishFlag).find((wf) => wf === cf))
 
-    // const cartFlagKeys = Object.keys(cartFlag);
-    // const updatedWishFlag = { ...wishFlag };
+  //   // const cartFlagKeys = Object.keys(cartFlag);
+  //   // const updatedWishFlag = { ...wishFlag };
 
-    // cartFlagKeys.forEach((cf) => {
-    //   if (updatedWishFlag.hasOwnProperty(cf)) {
-    //     delete updatedWishFlag[cf];
-    //   }
-    // });
-    console.log({ cartFlag, wishFlag }, newData)
+  //   // cartFlagKeys.forEach((cf) => {
+  //   //   if (updatedWishFlag.hasOwnProperty(cf)) {
+  //   //     delete updatedWishFlag[cf];
+  //   //   }
+  //   // });
+  //   // console.log({ cartFlag, wishFlag }, newData)
+  //   console.log(wishFlag)
 
-  }, [cartFlag, wishFlag])
+  // }, [cartFlag, wishFlag])
 
   useEffect(() => {
 
@@ -796,6 +831,7 @@ const ProductList = () => {
 
     try {
       setWishFlag(prev => ({ ...prev, [prod?.designno]: event.target.checked }))
+      // setWishFlag(event.target.checked)
 
       if (event.target.checked === true) {
 
@@ -945,6 +981,7 @@ const ProductList = () => {
   }
 
   const handelCartList = async (event, prod) => {
+
 
     try {
       setCartFlag(prev => ({ ...prev, [prod?.designno]: event.target.checked }))
@@ -1604,6 +1641,14 @@ const handleColorSelection = async (product, index, color) => {
     setProductApiData2(sortedData);
   };
 
+  useEffect(()=>{
+   if((newProData?.length || ProductApiData2?.length)){
+    setIsProdLoading(true)
+   }else{
+    setIsProdLoading(false)
+   }
+  },[newProData,ProductApiData2])
+
 
 
   return (
@@ -1617,6 +1662,9 @@ const handleColorSelection = async (product, index, color) => {
           // paddingBottom: "100px",
         }}
       >
+        {( !IsProdLoading && <div className="loader-overlay">
+          <CircularProgress className="loadingBarManage" />
+          </div>)}
         <div
           style={{
             display: "flex",
@@ -2036,7 +2084,7 @@ const handleColorSelection = async (product, index, color) => {
                             sx={{ padding: "5px" }}
 
                             // checked={wishFlag[products?.designno] ?? products?.wishCheck}
-                            checked={products?.wishCheck}
+                            checked={wishFlag[products?.designno] ?? products?.wishCheck}
                             onChange={(e) => handelWishList(e, products)}
                           />
                         </div>
@@ -2056,8 +2104,9 @@ const handleColorSelection = async (product, index, color) => {
                             sx={{ padding: "5px" }}
 
                             // checked={cartFlag[products?.designno] ?? products?.checkFlag}
-                            checked={products?.checkFlag}
+                            checked={cartFlag[products?.designno] ?? products?.checkFlag}
                             onChange={(e) => handelCartList(e, products)}
+                            // disabled
                           />
                         </div>
                       </div>
