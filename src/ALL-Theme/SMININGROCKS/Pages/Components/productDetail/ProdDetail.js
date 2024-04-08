@@ -474,7 +474,6 @@ const ProdDetail = () => {
       img.src = imageUrl;
     });
   }
-  console.log('updatedColorImageupdatedColorImageupdatedColorImage', updatedColorImage)
 
   useEffect(() => {
     let uploadPath = localStorage.getItem('UploadLogicalPath');
