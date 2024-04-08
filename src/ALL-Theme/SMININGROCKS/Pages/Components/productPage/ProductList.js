@@ -105,6 +105,14 @@ const ProductList = () => {
   const [isPriceShow, setIsPriceShow] = useState('');
   const [globImagePath,setGlobImagepath] = useState();
   const [IsProdLoading,setIsProdLoading] = useState(false);
+  const [currData,setCurrData] = useState([])
+
+  useEffect(()=>{
+    let currencyData = JSON.parse(localStorage.getItem("currencyData"))
+    setCurrData(currencyData)
+  },[])
+
+  console.log("data",currData[0]?.CurrencyRate)
   
   useEffect(()=>{
     if(Object.keys(wishFlag)?.length === 0){
@@ -244,8 +252,8 @@ const ProductList = () => {
         let csrd2 = 0;
 
         if (newPriceData || newPriceData1 || newPriceData2) {
-          price = (newPriceData?.Z ?? 0) + (newPriceData1 ?? 0) + (newPriceData2 ?? 0);
-          metalrd = newPriceData?.Z
+          price = (((newPriceData?.V ?? 0)/currData[0]?.CurrencyRate ?? 0) + newPriceData?.W ?? 0) + (newPriceData1 ?? 0) + (newPriceData2 ?? 0);
+          metalrd = (((newPriceData?.V ?? 0)/currData[0]?.CurrencyRate ?? 0) + newPriceData?.W ?? 0)
           diard1 = newPriceData1 ?? 0
           csrd2 = newPriceData2 ?? 0
           markup = newPriceData?.AB
@@ -1650,6 +1658,11 @@ const handleColorSelection = async (product, index, color) => {
   },[newProData,ProductApiData2])
 
 
+  const decodeEntities = (html) => {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  }
 
   return (
     <div id="top">
@@ -2051,15 +2064,22 @@ const handleColorSelection = async (product, index, color) => {
                         </div>
 
                         <div>
-                          <p style={{ fontSize: "14px", fontWeight: 'bold' }}>
+                          <p style={{fontSize: "14px", fontWeight: 'bold',display:'flex',justifyContent:'center'}}>
                             {isMetalTCShow === 1 && <span>
                               {products?.MetalTypeName} -
                               {products?.MetalColorName}
                               {products?.MetalPurity} /
                             </span>}
                             {isPriceShow === 1 &&
-                              <span>
-                                {currencySym?.Currencysymbol}
+                              <span style={{display:'flex'}}>
+                                {/* {currencySym?.Currencysymbol} */}
+                                {/* {currData[0]?.Currencysymbol.split(";").filter((cs)=>cs !== ' ').map((sym,index)=>{(
+                                  <div
+                                  key={index}    
+                                  dangerouslySetInnerHTML={{ __html: sym }}
+                                />
+                                )})} */}
+                                <div dangerouslySetInnerHTML={{ __html: decodeEntities(currData[0]?.Currencysymbol) }} />
                                 {((products?.UnitCost ?? 0) + (products?.price ?? 0) + (products?.markup ?? 0)).toFixed(2)}
                               </span>
                             }

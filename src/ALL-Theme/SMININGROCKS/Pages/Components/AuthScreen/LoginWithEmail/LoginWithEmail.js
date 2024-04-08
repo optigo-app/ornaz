@@ -84,12 +84,28 @@ export default function LoginWithEmail() {
         return hashedPassword;
     }
 
-    // const getAllProdData = async() =>{
-    //     await newProdApiCalling().then((res)=>{
-    //         console.log("res",res)
-    //         setTestProdData(res)
-    //     })
-    // }
+    const handelCurrencyData = (param) =>{
+        let currencyData = JSON.parse(localStorage.getItem('CURRENCYCOMBO'));
+
+        let filterData = currencyData?.filter((cd)=>cd?.Currencyid === param?.CurrencyCodeid)
+        
+        console.log("currencyData",filterData);
+
+        if(filterData){
+            localStorage.setItem("currencyData",JSON.stringify(filterData))
+        }else{
+            let DefaultObj = {
+                "Currencyid": 42,
+                "Currencycode": "INR",
+                "Currencyname": "Rupees",
+                "Currencysymbol": "₹",
+                "CurrencyRate": 1.00000,
+                "IsDefault": 1
+            }
+            localStorage.setItem("currencyData",JSON.stringify(DefaultObj))
+        }
+    }  
+
    
 
     const handleSubmit = async () => {
@@ -117,6 +133,7 @@ export default function LoginWithEmail() {
             console.log('ressssssssssssssssss', response);
 
             if (response.Data.rd[0].stat === 1) {
+                let resData = response.Data.rd[0]
                 localStorage.setItem('registerEmail', email)
                 setIsLoginState('true')
                 localStorage.setItem('LoginUser', 'true')
@@ -125,6 +142,7 @@ export default function LoginWithEmail() {
                 designDataCall()
                 getCountFunc()
                 getDesignPriceList(response.Data.rd[0])
+                handelCurrencyData(resData)
                 // getAllProdData()
                 // window.location.reload(); 
                 navigation('/');

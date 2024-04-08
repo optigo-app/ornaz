@@ -83,6 +83,12 @@ const ProdDetail = () => {
 
   const [uploadLogicPath, setUploadLogicPath] = useState('');
   const [uKey, setUkey] = useState('');
+  const [currData,setCurrData] = useState([])
+
+  useEffect(()=>{
+    let currencyData = JSON.parse(localStorage.getItem("currencyData"))
+    setCurrData(currencyData)
+  },[])
 
 
   const setCartCount = useSetRecoilState(CartListCounts)
@@ -234,7 +240,7 @@ const ProdDetail = () => {
 
   // },[mtPrice, dqcPrice, csqcPrice])
 
-  // console.log("ppp",{mtrdData,dqcData,csqcData})
+  console.log("ppp",{mtrdData})
 
   let diaUpdatedPrice = () => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'))
@@ -1211,8 +1217,8 @@ const ProdDetail = () => {
   useEffect(() => {
 
     let srData = JSON.parse(localStorage.getItem("srProductsData"))
-    let price = ((productData?.UnitCost ?? 0) + (mtrdData?.Z ?? 0) + (dqcData ?? 0) + (csqcData ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0))
-
+    let price = ((productData?.UnitCost ?? 0) + (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)) + (dqcData ?? 0) + (csqcData ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0))
+    //((mtrdData?.V/currData[0]?.CurrencyRate ?? 0) + mtrdData?.W ?? 0)
     if (price) {
       srData.price = Number(price)
     }
@@ -1221,7 +1227,14 @@ const ProdDetail = () => {
 
   }, [mtrdData, dqcData, csqcData, sizeMarkup, metalUpdatedPrice, diaUpdatedPrice, colUpdatedPrice])
 
-  // console.log("pricedata",mtrdData,dqcData,csqcData,sizeMarkup,metalUpdatedPrice(),diaUpdatedPrice(),colUpdatedPrice())
+  console.log("pricedata",(((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)),dqcData,csqcData,sizeMarkup,metalUpdatedPrice(),diaUpdatedPrice(),colUpdatedPrice())
+  console.log("pricedatacv",((productData?.UnitCost ?? 0) + (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0))+ (dqcData ?? 0) + (csqcData ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)))
+
+  const decodeEntities = (html) => {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  }
 
   return (
     <div
@@ -1892,15 +1905,15 @@ const ProdDetail = () => {
 
                 {isPriseShow == 1 && (
                   <div style={{ marginTop: "23px" }}>
-                    <p style={{ color: "#7d7f85", fontSize: "14px" }}>
+                    <p style={{ color: "#7d7f85", fontSize: "14px",display:'flex'}}>
                       {/* Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${(productData?.price - grandTotal) === 0 ? "Not Availabel" : (productData?.price - grandTotal)?.toFixed(2)}`}</span> */}
                       {/* Price: <span style={{ fontWeight: '500', fontSize: '16px' }}>{currencySymbol?.Currencysymbol}{`${productData?.UnitCost + (productData?.price - grandTotal)?.toFixed(2)}`}</span> */}
-                      Price:{" "}
-                      <span style={{ fontWeight: "500", fontSize: "16px" }}>
-                        {currencySymbol?.Currencysymbol}
+                       Price:{" "}
+                      <span style={{ fontWeight: "500", fontSize: "16px",display:'flex'}}>
+                      <div dangerouslySetInnerHTML={{ __html: decodeEntities(currData[0]?.Currencysymbol) }} />
                         {`${(
                           productData?.UnitCost +
-                          (mtrdData?.Z ?? 0) +
+                          (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0))+
                           (dqcData ?? 0) +
                           (csqcData ?? 0) +
                           (sizeMarkup ?? 0) +
