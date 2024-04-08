@@ -97,6 +97,12 @@ export default function CartPage() {
   const setWishCount = useSetRecoilState(WishListCounts);
   //   const getPriceData = useRecoilValue(priceData);
   const getTestProdData = useRecoilValue(newTestProdData);
+  const [currData,setCurrData] = useState([])
+
+  useEffect(()=>{
+    let currencyData = JSON.parse(localStorage.getItem("currencyData"))
+    setCurrData(currencyData)
+  },[])
 
   useEffect(()=>{
     console.log("getTestProdData",getTestProdData)
@@ -790,7 +796,7 @@ export default function CartPage() {
   console.log('cartListData', cartListData);
   console.log('dqcData', dqcData);
   console.log('csqcData', csqcData);
-  console.log('mtrdData', mtrdData?.Z);
+  console.log('mtrdData', (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)));
 
   const getCartAndWishListData = async () => {
 
@@ -1416,7 +1422,7 @@ export default function CartPage() {
                                     {currencySymbol?.Currencysymbol}
                                     {(
                                       (cartSelectData?.UnitCost ?? 0) +
-                                      (mtrdData?.Z ?? 0) +
+                                      (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)) +
                                       (dqcData ?? 0) +
                                       (csqcData ?? 0) +
                                       (sizeMarkup ?? 0) +
@@ -2036,7 +2042,7 @@ export default function CartPage() {
                         {currencySymbol?.Currencysymbol}
                         {(
                           (cartSelectData?.UnitCost ?? 0) +
-                          (mtrdData?.Z ?? 0) +
+                          (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)) +
                           (dqcData ?? 0) +
                           (csqcData ?? 0) +
                           (sizeMarkup ?? 0) +
