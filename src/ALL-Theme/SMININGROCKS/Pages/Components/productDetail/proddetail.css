@@ -139,7 +139,8 @@
 
 .product-detail-container {
     display: flex;
-    width: 100%
+    width: 100%;
+    min-height: 1009px;
 }
 
 .srprodetail1 {

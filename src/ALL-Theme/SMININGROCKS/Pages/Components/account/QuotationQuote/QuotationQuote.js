@@ -284,13 +284,16 @@ const QuotationQuote = () => {
                         // count = count+1
                         // flags.dateFrom = true;
                         // flags.dateTo = true;
-                        Swal.fire({
-                            title: "Error !",
-                            text: "Enter Valid Dates",
-                            icon: "error",
-                            confirmButtonText: "ok"
-                        });
-                        reseltFil();
+                        // Swal.fire({
+                        //     title: "Error !",
+                        //     text: "Enter Valid Dates",
+                        //     icon: "error",
+                        //     confirmButtonText: "ok"
+                        // });
+                        setTimeout(() => {
+                            reseltFil();
+                            setFilterData(data);
+                        }, 0)
                     }
                 } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
                     // let todat = new Date(todates);

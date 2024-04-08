@@ -231,6 +231,7 @@ const Sales = () => {
 
         let filteredData = [];
         let count = 0;
+      
         data?.forEach((e, i) => {
             let cutDate = "";
             cutDate = e?.["Date"]?.split("-");
@@ -260,10 +261,17 @@ const Sales = () => {
                     let fromdat = moment(fromdates);
                     let todat = moment(todates);
                     let cutDat = moment(cutDate);
-                    const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
-                    if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
-                        flags.dateTo = true;
-                        flags.dateFrom = true;
+                    if(moment(fromdat).isSameOrBefore(todat)){
+                        console.log("in if");
+                        const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
+                        if (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat)) {
+                            flags.dateTo = true;
+                            flags.dateFrom = true;
+                        }
+                    }else{
+                        setTimeout(() => {
+                            resetAllFilters();
+                        }, 0)
                     }
                 } else if (fromdates?.includes(undefined) && !todates?.includes(undefined)) {
                     // let todat = new Date(todates);

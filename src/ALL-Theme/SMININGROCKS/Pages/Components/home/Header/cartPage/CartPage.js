@@ -97,6 +97,12 @@ export default function CartPage() {
   const setWishCount = useSetRecoilState(WishListCounts);
   //   const getPriceData = useRecoilValue(priceData);
   const getTestProdData = useRecoilValue(newTestProdData);
+  const [currData,setCurrData] = useState([])
+
+  useEffect(()=>{
+    let currencyData = JSON.parse(localStorage.getItem("currencyData"))
+    setCurrData(currencyData)
+  },[])
 
   useEffect(()=>{
     console.log("getTestProdData",getTestProdData)
@@ -790,7 +796,7 @@ export default function CartPage() {
   console.log('cartListData', cartListData);
   console.log('dqcData', dqcData);
   console.log('csqcData', csqcData);
-  console.log('mtrdData', mtrdData?.Z);
+  console.log('mtrdData', (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)));
 
   const getCartAndWishListData = async () => {
 
@@ -1400,32 +1406,50 @@ export default function CartPage() {
                                   marginTop: "20px",
                                   color: "#7d7f85",
                                   fontSize: "14px",
-                                  display:'flex',
-                                  justifyContent:'space-between',
+                                  display: "flex",
+                                  justifyContent: "space-between",
                                 }}
                               >
                                 <span>
-                                  Price : 
-                                  <span  style={{
-                                    fontWeight: "500",
-                                    fontSize: "18px",
-                                    color:'black'
-                                  }}>
-                                  {currencySymbol?.Currencysymbol}
-                                  {(
-                                    (cartSelectData?.UnitCost ?? 0) +
-                                    (mtrdData?.Z ?? 0) +
-                                    (dqcData ?? 0) +
-                                    (csqcData ?? 0) +
-                                    (sizeMarkup  ?? 0) +
-                                    (metalUpdatedPrice() ?? 0) +
-                                    (diaUpdatedPrice() ?? 0) +
-                                    (colUpdatedPrice() ?? 0)
-                                  ).toFixed(2)}
+                                  Price :
+                                  <span
+                                    style={{
+                                      fontWeight: "500",
+                                      fontSize: "18px",
+                                      color: "black",
+                                    }}
+                                  >
+                                    {currencySymbol?.Currencysymbol}
+                                    {(
+                                      (cartSelectData?.UnitCost ?? 0) +
+                                      (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)) +
+                                      (dqcData ?? 0) +
+                                      (csqcData ?? 0) +
+                                      (sizeMarkup ?? 0) +
+                                      (metalUpdatedPrice() ?? 0) +
+                                      (diaUpdatedPrice() ?? 0) +
+                                      (colUpdatedPrice() ?? 0)
+                                    ).toFixed(2)}
                                   </span>
                                 </span>
-                                <button style={{border:'none',outline:'none', backgroundColor:'#e1e1e1',padding:'6px 17px',borderRadius:'4px'}}>
-                                  <span style={{fontSize:'16px',fontWeight:'500'}} onClick={handleCartUpdate}>Save</span>
+                                <button
+                                  style={{
+                                    border: "none",
+                                    outline: "none",
+                                    backgroundColor: "#e1e1e1",
+                                    padding: "6px 17px",
+                                    borderRadius: "4px",
+                                  }}
+                                >
+                                  <span
+                                    style={{
+                                      fontSize: "16px",
+                                      fontWeight: "500",
+                                    }}
+                                    onClick={handleCartUpdate}
+                                  >
+                                    Save
+                                  </span>
                                 </button>
                               </div>
                               <div className="similingCartPageBotttomMain">
@@ -2006,20 +2030,47 @@ export default function CartPage() {
                       fontSize: "14px",
                     }}
                   >
-                    <span style={{ fontWeight: "500", fontSize: "16px" }}>
-                      Price : {currencySymbol?.Currencysymbol}
-                      {(
-                        (cartSelectData?.UnitCost ?? 0) +
-                        (mtrdData?.Z ?? 0) +
-                        (dqcData ?? 0) +
-                        (csqcData ?? 0) +
-                        (sizeMarkup ?? 0) +
-                        (metalUpdatedPrice() ?? 0) +
-                        (diaUpdatedPrice() ?? 0) +
-                        (colUpdatedPrice() ?? 0)
-                      ).toFixed(2)}
+                    <span>
+                      Price :
+                      <span
+                        style={{
+                          fontWeight: "500",
+                          fontSize: "18px",
+                          color: "black",
+                        }}
+                      >
+                        {currencySymbol?.Currencysymbol}
+                        {(
+                          (cartSelectData?.UnitCost ?? 0) +
+                          (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)) +
+                          (dqcData ?? 0) +
+                          (csqcData ?? 0) +
+                          (sizeMarkup ?? 0) +
+                          (metalUpdatedPrice() ?? 0) +
+                          (diaUpdatedPrice() ?? 0) +
+                          (colUpdatedPrice() ?? 0)
+                        ).toFixed(2)}
+                      </span>
                     </span>
-                    <button>Save</button>
+                    <button
+                      style={{
+                        border: "none",
+                        outline: "none",
+                        backgroundColor: "#e1e1e1",
+                        padding: "6px 17px",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: "500",
+                        }}
+                        onClick={handleCartUpdate}
+                      >
+                        Save
+                      </span>
+                    </button>
                   </div>
                   <div className="similingCartPageBotttomMain">
                     <div

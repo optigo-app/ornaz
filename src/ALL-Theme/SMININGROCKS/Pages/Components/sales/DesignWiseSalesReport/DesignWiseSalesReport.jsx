@@ -209,11 +209,17 @@ const DesignWiseSalesReport = () => {
                     let cutDate = cObj?.["Date"]?.split(" ");
                     cutDate = `${cutDate[2]}-${cutDate[1]}-${cutDate[0]}`;
                     let cutDat = moment(cutDate);
-                    const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
-                    if (e?.designno === cObj?.designno && (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat))) {
-                        return acc + cObj?.salescount;
-                    } else {
-                        return acc;
+                    if(moment(fromdat).isSameOrBefore(todat)){   
+                        const isBetween = cutDat.isBetween(fromdat, todat, null, '[]');
+                        if (e?.designno === cObj?.designno && (isBetween || cutDat.isSame(fromdat) || cutDat.isSame(todat))) {
+                            return acc + cObj?.salescount;
+                        } else {
+                            return acc;
+                        }
+                    }else{
+                        setTimeout(() => {
+                            resetAllFilters();
+                        }, 0);
                     }
                 }, 0);
                 if (salescount !== 0) {
