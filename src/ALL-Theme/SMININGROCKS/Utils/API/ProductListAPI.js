@@ -100,7 +100,7 @@ export const productListApiCall = async() =>{
 
     await CommonAPI(body).then((res) => {
         let pdData = res?.Data.rd;
-        pdData.forEach(p => {
+        pdData?.forEach(p => {
             const mergedItem = {};
             for (let key in p) {
                 if (keyMapping[key]) {

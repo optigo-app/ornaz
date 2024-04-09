@@ -252,12 +252,12 @@ export default function CartPage() {
     let mtrd = getPriceData?.rd?.filter((ele) =>
     storeInit?.IsMetalCustomization === 1
     ?
-    ele?.A === srProductsData?.autocode &&
-    ele?.B === srProductsData?.designno &&
+    ele?.A === cartSelectData?.autocode &&
+    ele?.B === cartSelectData?.designno &&
     ele?.D === mtTypeOption
     :
-    ele?.A === srProductsData?.autocode &&
-    ele?.B === srProductsData?.designno
+    ele?.A === cartSelectData?.autocode &&
+    ele?.B === cartSelectData?.designno
 
     );
     
@@ -265,7 +265,7 @@ export default function CartPage() {
     
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
-      showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0));
+      // showPrice = cartSelectData?.price - ((cartSelectData?.price - cartSelectData?.metalrd) + (mtrd[0]?.Z ?? 0));
       setMtrdData(mtrd[0] ?? [])
       // setMetalPrice(mtrd[0]?.Z ?? 0)
     }
@@ -273,13 +273,13 @@ export default function CartPage() {
     let diaqcprice = getPriceData?.rd1?.filter((ele) =>
     storeInit?.IsDiamondCustomization === 1 
       ?
-      ele.A === srProductsData?.autocode &&
-      ele.B === srProductsData?.designno &&
+      ele.A === cartSelectData?.autocode &&
+      ele.B === cartSelectData?.designno &&
       ele.H === diaQColOpt?.split("_")[0] &&
       ele.J === diaQColOpt?.split("_")[1]
       :
-      ele.A === srProductsData?.autocode &&
-      ele.B === srProductsData?.designno
+      ele.A === cartSelectData?.autocode &&
+      ele.B === cartSelectData?.designno
 
     )
 
@@ -287,7 +287,7 @@ export default function CartPage() {
 
     let showPrice1 = 0;
     if (diaqcprice && diaqcprice.length > 0) {
-      showPrice1 = srProductsData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
+      // showPrice1 = cartSelectData?.price - ((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0));
       let totalPrice = diaqcprice?.reduce((acc, obj) => acc + obj.S, 0)
       let diaRate = diaqcprice?.reduce((acc, obj) => acc + obj.O, 0)
       let diaSettRate = diaqcprice?.reduce((acc, obj) => acc + obj.Q, 0)
@@ -301,21 +301,21 @@ export default function CartPage() {
     let csqcpirce = getPriceData?.rd2?.filter((ele) =>
     storeInit?.IsCsCustomization === 1
       ?
-      ele.A === srProductsData?.autocode &&
-      ele.B === srProductsData?.designno &&
+      ele.A === cartSelectData?.autocode &&
+      ele.B === cartSelectData?.designno &&
       ele.H === cSQopt?.split("_")[0] &&
       ele.J === cSQopt?.split("_")[1]
       :
-      ele.A === srProductsData?.autocode &&
-      ele.B === srProductsData?.designno
+      ele.A === cartSelectData?.autocode &&
+      ele.B === cartSelectData?.designno
 
     );
 
-    console.log("csqcpirce1",csqcpirce)
+    // console.log("csqcpirce1",csqcpirce)
 
     let showPrice2 = 0;
     if (csqcpirce && csqcpirce.length > 0) {
-      showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
+      // showPrice2 = srProductsData?.price - ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
       let totalPrice = csqcpirce?.reduce((acc, obj) => acc + obj.S, 0)
       let diaRate = csqcpirce?.reduce((acc, obj) => acc + obj.O, 0)
       let diaSettRate = csqcpirce?.reduce((acc, obj) => acc + obj.Q, 0)
@@ -331,7 +331,7 @@ export default function CartPage() {
     // let gt = showPrice + showPrice1 + showPrice2;
     // setGrandTotal(gt ?? 0);
 
-  }, [getPriceData, mtTypeOption, diaQColOpt, cSQopt])
+  }, [getPriceData, mtTypeOption, diaQColOpt, cSQopt,cartSelectData])
 
   useEffect(() => {
     setmtTypeOption(cartSelectData?.metal);
