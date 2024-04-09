@@ -295,8 +295,6 @@ const ProdDetail = () => {
     } else {
       return 0
     }
-
-
   }
 
   useEffect(() => {
