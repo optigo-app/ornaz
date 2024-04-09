@@ -266,8 +266,10 @@ export default function CartPage() {
     let showPrice = 0;
     if (mtrd && mtrd.length > 0) {
       // showPrice = cartSelectData?.price - ((cartSelectData?.price - cartSelectData?.metalrd) + (mtrd[0]?.Z ?? 0));
-      setMtrdData(mtrd[0] ?? [])
+      setMtrdData(mtrd[0]);
       // setMetalPrice(mtrd[0]?.Z ?? 0)
+    }else{
+      setMtrdData([]);
     }
 
     let diaqcprice = getPriceData?.rd1?.filter((ele) =>
@@ -292,10 +294,14 @@ export default function CartPage() {
       let diaRate = diaqcprice?.reduce((acc, obj) => acc + obj.O, 0)
       let diaSettRate = diaqcprice?.reduce((acc, obj) => acc + obj.Q, 0)
 
-      setDqcRate(diaRate ?? 0)
-      setDqcSettRate(diaSettRate ?? 0)
-      setDqcData(totalPrice ?? 0)
+      setDqcRate(diaRate)
+      setDqcSettRate(diaSettRate)
+      setDqcData(totalPrice)
       // setDQCPrice(diaqcprice[0]?.S ?? 0)
+    }else{
+      setDqcRate(0)
+      setDqcSettRate(0)
+      setDqcData(0)
     }
 
     let csqcpirce = getPriceData?.rd2?.filter((ele) =>
@@ -319,18 +325,18 @@ export default function CartPage() {
       let totalPrice = csqcpirce?.reduce((acc, obj) => acc + obj.S, 0)
       let diaRate = csqcpirce?.reduce((acc, obj) => acc + obj.O, 0)
       let diaSettRate = csqcpirce?.reduce((acc, obj) => acc + obj.Q, 0)
-      setCsqcData(totalPrice ?? 0)
-      setCsqcRate(diaRate ?? 0)
-      setCsqcSettRate(diaSettRate ?? 0)
+      setCsqcData(totalPrice)
+      setCsqcRate(diaRate)
+      setCsqcSettRate(diaSettRate)
       // setCSQCPrice(csqcpirce[0]?.S ?? 0)
+    }else{
+      setCsqcData(0)
+      setCsqcRate(0)
+      setCsqcSettRate(0)
     }
-
-
     console.log("csqcpirce",csqcpirce)
-
     // let gt = showPrice + showPrice1 + showPrice2;
     // setGrandTotal(gt ?? 0);
-
   }, [getPriceData, mtTypeOption, diaQColOpt, cSQopt,cartSelectData])
 
   useEffect(() => {
