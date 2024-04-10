@@ -90,6 +90,7 @@ export default function CartPage() {
   const [dqcSettRate, setDqcSettRate] = useState()
   const [csqcRate, setCsqcRate] = useState()
   const [csqcSettRate, setCsqcSettRate] = useState()
+  const [storeInitData,setStoreInitData] = useState();
 
   const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -97,12 +98,17 @@ export default function CartPage() {
   const setWishCount = useSetRecoilState(WishListCounts);
   //   const getPriceData = useRecoilValue(priceData);
   const getTestProdData = useRecoilValue(newTestProdData);
-  const [currData,setCurrData] = useState([])
+  const [currData,setCurrData] = useState()
 
   useEffect(()=>{
     let currencyData = JSON.parse(localStorage.getItem("currencyData"))
-    setCurrData(currencyData)
+    setCurrData(currencyData[0])
   },[])
+
+  useEffect(()=>{
+    const storeInit = JSON.parse(localStorage.getItem('storeInit'))
+    setStoreInitData(storeInit)
+  },[]);
 
   useEffect(()=>{
     console.log("getTestProdData",getTestProdData)
@@ -802,7 +808,7 @@ export default function CartPage() {
   console.log('cartListData', cartListData);
   console.log('dqcData', dqcData);
   console.log('csqcData', csqcData);
-  console.log('mtrdData', (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)));
+  console.log('mtrdData', (((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)));
 
   const getCartAndWishListData = async () => {
 
@@ -982,10 +988,11 @@ export default function CartPage() {
           }
         })
 
-        console.log("finalJSON",finalJSON);
-        console.log("filterProdData",filterProdData);
+        // console.log("finalJSON",finalJSON);
+        // console.log("filterProdData",filterProdData);
 
   }
+
 
 
 
@@ -1126,7 +1133,7 @@ export default function CartPage() {
                           <div className="popUpcontainer">
                             <img
                               src={
-                                prodSelectData?.imagepath +
+                                storeInitData?.DesignImageFol +
                                 prodSelectData?.MediumImagePath?.split(",")[0]
                               }
                               style={{
@@ -1428,7 +1435,7 @@ export default function CartPage() {
                                     {currencySymbol?.Currencysymbol}
                                     {(
                                       (cartSelectData?.UnitCost ?? 0) +
-                                      (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)) +
+                                      (((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)) +
                                       (dqcData ?? 0) +
                                       (csqcData ?? 0) +
                                       (sizeMarkup ?? 0) +
@@ -2048,7 +2055,7 @@ export default function CartPage() {
                         {currencySymbol?.Currencysymbol}
                         {(
                           (cartSelectData?.UnitCost ?? 0) +
-                          (((mtrdData?.V ?? 0)/currData[0]?.CurrencyRate) + (mtrdData?.W ?? 0)) +
+                          (((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)) +
                           (dqcData ?? 0) +
                           (csqcData ?? 0) +
                           (sizeMarkup ?? 0) +
