@@ -109,7 +109,7 @@ const ProductList = () => {
 
   useEffect(()=>{
     let currencyData = JSON.parse(localStorage.getItem("currencyData"))
-    setCurrData(currencyData[0])
+    setCurrData(currencyData)
   },[])
 
   console.log("data",currData?.CurrencyRate)

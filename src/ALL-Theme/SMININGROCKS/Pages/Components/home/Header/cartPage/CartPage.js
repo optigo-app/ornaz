@@ -102,7 +102,7 @@ export default function CartPage() {
 
   useEffect(()=>{
     let currencyData = JSON.parse(localStorage.getItem("currencyData"))
-    setCurrData(currencyData[0])
+    setCurrData(currencyData)
   },[])
 
   useEffect(()=>{
@@ -993,7 +993,11 @@ export default function CartPage() {
 
   }
 
-
+  const decodeEntities = (html) => {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  }
 
 
   return (
@@ -1424,15 +1428,22 @@ export default function CartPage() {
                                 }}
                               >
                                 <span>
-                                  Price :
                                   <span
                                     style={{
                                       fontWeight: "500",
                                       fontSize: "18px",
                                       color: "black",
+                                      display:'flex'
                                     }}
                                   >
-                                    {currencySymbol?.Currencysymbol}
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html: decodeEntities(
+                                          currData?.Currencysymbol
+                                        ),
+                                      }}
+                                      style={{ fontFamily: "sans-serif" }}
+                                    />
                                     {(
                                       (cartSelectData?.UnitCost ?? 0) +
                                       (((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)) +
