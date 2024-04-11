@@ -410,32 +410,33 @@ export default function Header() {
   };
 
 
-
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      toggleOverlay();
-      handleEnterPress();
+  const setGSearch = useSetRecoilState(searchData);
+  function searchDataFucn(e) {
+    if (e.key === 'Enter') {
+      let ProductApiData2 = JSON.parse(localStorage.getItem("allproductlist"));
+      if (ProductApiData2) {
+        let searchText = e.target.value.toLowerCase();
+        let data = ProductApiData2.filter((pd) => {
+          for (const key in pd) {
+            if (pd.hasOwnProperty(key) && pd[key]?.toString().toLowerCase().includes(searchText)) {
+              return true;
+            }
+          }
+          return false;
+        });
+        if (data.length > 0) {
+          setGSearch(data);
+          navigation('/productpage');
+          toggleOverlay();
+        } else {
+          setGSearch([]);
+        }
+      } else {
+        setGSearch([]);
+      }
     }
-  };
+  }
 
-  const [searchedProducts, setSearchedProducts] = useState([]);
-  const [gSearch, setGSearch] = useRecoilState(searchData)
-
-  const handleEnterPress = () => {
-    const savedProductList = localStorage.getItem('allproductlist');
-    if (savedProductList) {
-      const productList = JSON.parse(savedProductList);
-      const searchValue = searchText;
-      const filteredProducts = productList.filter(product => product.designno === searchValue || product.id === parseInt(searchValue)|| product.ProducttypeName === parseInt(searchValue)|| product.MetalColorName === parseInt(searchValue)|| product.MetalTypeName === parseInt(searchValue)|| product.OcassionName === parseInt(searchValue)|| product.GenderName === parseInt(searchValue)|| product.BrandName === parseInt(searchValue)|| product.CategoryName === parseInt(searchValue)|| product.CollectionName === parseInt(searchValue)|| product.autocode === parseInt(searchValue));
-      setSearchedProducts(filteredProducts);
-    }
-    navigation('/productpage');
-  };
-
-  useEffect(() => {
-    setGSearch(searchedProducts);
-  }, [searchedProducts])
 
 
   function capitalizeText(text) {
@@ -459,7 +460,7 @@ export default function Header() {
                 autoFocus
                 onChange={(e) => setSearchText(e.target.value)}
                 className="serachinputBoxOverly"
-                onKeyPress={handleKeyPress}
+                onKeyDown={searchDataFucn}
               />
               <IoClose
                 style={{
@@ -483,7 +484,7 @@ export default function Header() {
                 autoFocus
                 onChange={(e) => setSearchText(e.target.value)}
                 className="serachinputBoxOverly"
-                onKeyPress={handleKeyPress}
+                onKeyDown={searchDataFucn}
               />
               <IoClose
                 style={{
