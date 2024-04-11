@@ -164,8 +164,12 @@ const ProductList = () => {
   }, [])
 
   useEffect(() => {
-    setNewProData(getSearchData)
-  }, [getSearchData])
+    setTimeout(() => {
+      if (getSearchData) {
+        setNewProData(getSearchData);
+      }
+    }, 100);
+  }, [getSearchData]);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("allproductlist"));
