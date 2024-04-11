@@ -105,14 +105,14 @@ const ProductList = () => {
   const [isPriceShow, setIsPriceShow] = useState('');
   const [globImagePath,setGlobImagepath] = useState();
   const [IsProdLoading,setIsProdLoading] = useState(false);
-  const [currData,setCurrData] = useState([])
+  const [currData,setCurrData] = useState()
 
   useEffect(()=>{
     let currencyData = JSON.parse(localStorage.getItem("currencyData"))
     setCurrData(currencyData)
   },[])
 
-  console.log("data",currData[0]?.CurrencyRate)
+  console.log("data",currData?.CurrencyRate)
   
   useEffect(()=>{
     if(Object.keys(wishFlag)?.length === 0){
@@ -256,8 +256,8 @@ const ProductList = () => {
         let csrd2 = 0;
 
         if (newPriceData || newPriceData1 || newPriceData2) {
-          price = (((newPriceData?.V ?? 0)/currData[0]?.CurrencyRate ?? 0) + newPriceData?.W ?? 0) + (newPriceData1 ?? 0) + (newPriceData2 ?? 0);
-          metalrd = (((newPriceData?.V ?? 0)/currData[0]?.CurrencyRate ?? 0) + newPriceData?.W ?? 0)
+          price = (((newPriceData?.V ?? 0)/currData?.CurrencyRate ?? 0) + newPriceData?.W ?? 0) + (newPriceData1 ?? 0) + (newPriceData2 ?? 0);
+          metalrd = (((newPriceData?.V ?? 0)/currData?.CurrencyRate ?? 0) + newPriceData?.W ?? 0)
           diard1 = newPriceData1 ?? 0
           csrd2 = newPriceData2 ?? 0
           markup = newPriceData?.AB
@@ -2083,7 +2083,7 @@ const handleColorSelection = async (product, index, color) => {
                                   dangerouslySetInnerHTML={{ __html: sym }}
                                 />
                                 )})} */}
-                                <div dangerouslySetInnerHTML={{ __html: decodeEntities(currData[0]?.Currencysymbol) }} />
+                                <div dangerouslySetInnerHTML={{ __html: decodeEntities(currData?.Currencysymbol) }} />
                                 {((products?.UnitCost ?? 0) + (products?.price ?? 0) + (products?.markup ?? 0)).toFixed(2)}
                               </span>
                             }
