@@ -1,6 +1,6 @@
 import { CommonAPI } from "./CommonAPI";
 
-export const getDesignPriceList = async (data) => {
+export const getDesignPriceList = async () => {
 
     // console.log("datadesprice",data);
 

@@ -84,31 +84,34 @@ export default function LoginWithEmail() {
         return hashedPassword;
     }
 
-    const handelCurrencyData = (param) =>{
-        let currencyData = JSON.parse(localStorage.getItem('CURRENCYCOMBO'));
+    // const handelCurrencyData = () =>{
 
-        let filterData = currencyData?.filter((cd)=>cd?.Currencyid === param?.CurrencyCodeid)
+    //     let currencyData = JSON.parse(localStorage.getItem('CURRENCYCOMBO'));
+    //     let loginData = JSON.parse(localStorage.getItem('loginUserDetail'));
+    //     console.log("param",loginData);
+
+    //     const filterData = currencyData?.filter((cd)=>cd?.Currencyid === loginData?.CurrencyCodeid)
         
-        console.log("currencyData",filterData);
+    //     console.log("currencyData",filterData);
 
-        if(filterData){
-            if(Array.isArray(filterData)){
-                localStorage.setItem("currencyData",JSON.stringify(filterData[0]))
-            }else{
-                localStorage.setItem("currencyData",JSON.stringify(filterData))
-            }
-        }else{
-            let DefaultObj = {
-                "Currencyid": 42,
-                "Currencycode": "INR",
-                "Currencyname": "Rupees",
-                "Currencysymbol": "₹",
-                "CurrencyRate": 1.00000,
-                "IsDefault": 1
-            }
-            localStorage.setItem("currencyData",JSON.stringify(DefaultObj))
-        }
-    }  
+    //     if(filterData.length && filterData){
+    //         if(Array.isArray(filterData)){
+    //             localStorage.setItem("currencyData",JSON.stringify(filterData[0]))
+    //         }else{
+    //             localStorage.setItem("currencyData",JSON.stringify(filterData))
+    //         }
+    //     }else{
+    //         let DefaultObj = {
+    //             "Currencyid": 42,
+    //             "Currencycode": "INR",
+    //             "Currencyname": "Rupees",
+    //             "Currencysymbol": "₹",
+    //             "CurrencyRate": 1.00000,
+    //             "IsDefault": 1
+    //         }
+    //         localStorage.setItem("currencyData",JSON.stringify(DefaultObj))
+    //     }
+    // }  
 
    
 
@@ -142,14 +145,14 @@ export default function LoginWithEmail() {
                 setIsLoginState('true')
                 localStorage.setItem('LoginUser', 'true')
                 localStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
+                navigation('/');
                 pdDataCalling()
                 designDataCall()
                 getCountFunc()
-                getDesignPriceList(response.Data.rd[0])
-                handelCurrencyData(resData)
+                getDesignPriceList()
+                // handelCurrencyData()
                 // getAllProdData()
                 // window.location.reload(); 
-                navigation('/');
             } else {
                 errors.confirmPassword = 'Password is Invalid'
             }
