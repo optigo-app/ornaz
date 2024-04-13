@@ -1648,9 +1648,9 @@ const handleColorSelection = async (product, index, color) => {
     } else if (selectedOption === 'PRICE LOW TO HIGH') {
       sortedData.sort((a, b) => ((a?.UnitCost ?? 0) + (a?.price ?? 0) + (a?.markup ?? 0)) - ((b?.UnitCost ?? 0) + (b?.price ?? 0) + (b?.markup ?? 0)));
     } else {
-      sortedData = [...ProductApiData2];
+      setNewProData(ProductApiData2)
     }
-    setProductApiData2(sortedData);
+    setNewProData(sortedData);
   };
 
   useEffect(()=>{
