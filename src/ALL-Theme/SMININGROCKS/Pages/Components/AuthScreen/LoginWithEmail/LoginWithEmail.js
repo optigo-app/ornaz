@@ -137,7 +137,6 @@ export default function LoginWithEmail() {
                 p: encodedCombinedValue
             };
             const response = await CommonAPI(body);
-            console.log('ressssssssssssssssss', response);
 
             if (response.Data.rd[0].stat === 1) {
                 let resData = response.Data.rd[0]
