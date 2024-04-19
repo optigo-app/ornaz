@@ -103,7 +103,7 @@ export default function SMININGROCKS_App() {
                     <Route path="/celeb" element={<Celeb />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/productpage" element={<ProductList />} />
-                    <Route path="/productdetail" element={<ProdDetail />} />
+                    <Route path="/productdetail/*" element={<ProdDetail />} />
                     <Route path="/Delivery" element={<Delivery />} />
                     <Route path="/Payment" element={<Payment />} />
                     <Route path="/Confirmation" element={<Confirmation />} />
