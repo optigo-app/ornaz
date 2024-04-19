@@ -656,12 +656,17 @@ useEffect(()=>{
         f: "header (handleUpdateQuantity)",
         p: encodedCombinedValue,
       };
-      const response = await CommonAPI(body);
-      if (response.Data.rd[0].stat === 1) {
-        await getCartData()
-        toast.success("QTY change successfully");
-      } else {
-        alert("Error");
+      if(lastEnteredQuantity !== "" ){
+        const response = await CommonAPI(body);
+        if (response.Data.rd[0].stat === 1 ) {
+          await getCartData()
+          toast.success("QTY change successfully");
+        } else {
+          alert("Error");
+        }
+      }else{
+        toast.error("ERROR !!!,Please Check QTY");
+        // setLastEnteredQuantity((prev)=>prev)
       }
     } catch (error) {
       console.error("Error:", error);
@@ -946,7 +951,7 @@ useEffect(()=>{
           "FrontEnd_RegNo": `${storeInit?.FrontEnd_RegNo}`,
           "Customerid": `${Customer_id?.id}`,
           "PriceMastersetid": `${product?.PriceMastersetid ?? ""}`,
-          "quantity": `${product?.quantity ?? "1"}`,
+          "quantity": `${ lastEnteredQuantity ?? "1"}`,
           "CurrencyRate": `${product?.CurrencyRate ?? ""}`,
           "remarks_design": `${product?.remarks_design ?? ""}`,
           "diamondcolorid": `${product?.diamondcolorid ?? ""}`,
@@ -969,8 +974,11 @@ useEffect(()=>{
           p: encodedCombinedValue1,
         }
 
-        await CommonAPI(body1).then(async (res) => {
-          if(res?.Data?.rd[0]?.stat_msg === "success") {
+        await CommonAPI(body1).then((res) => {
+          return res
+        }).then(async (prevRes)=>{
+          if(prevRes?.Data?.rd[0]?.stat_msg === "success") {
+            console.log("prevRes?.Data?.rd[0]?.stat_msg",prevRes?.Data?.rd[0]?.stat_msg);
             // await getCartAndWishListData()
             // getCountFunc()
             
@@ -1457,15 +1465,16 @@ useEffect(()=>{
                                       style={{ fontFamily: "sans-serif" }}
                                     />
                                     {(
-                                      (cartSelectData?.UnitCost ?? 0) +
-                                      (((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)) +
+                                      // (cartSelectData?.UnitCost ?? 0) +
+                                      ((((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)) +
                                       (dqcData ?? 0) +
                                       (csqcData ?? 0) +
                                       (sizeMarkup ?? 0) +
                                       (metalUpdatedPrice() ?? 0) +
                                       (diaUpdatedPrice() ?? 0) +
-                                      (colUpdatedPrice() ?? 0)
-                                    ).toFixed(2)}
+                                      (colUpdatedPrice() ?? 0))
+                                      * lastEnteredQuantity
+                                    ).toFixed(2) }
                                   </span>
                                 </span>
                                 <button
@@ -2077,14 +2086,15 @@ useEffect(()=>{
                       >
                         {currencySymbol?.Currencysymbol}
                         {(
-                          (cartSelectData?.UnitCost ?? 0) +
-                          (((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)) +
+                          // (cartSelectData?.UnitCost ?? 0) +
+                          ((((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)) +
                           (dqcData ?? 0) +
                           (csqcData ?? 0) +
                           (sizeMarkup ?? 0) +
                           (metalUpdatedPrice() ?? 0) +
                           (diaUpdatedPrice() ?? 0) +
-                          (colUpdatedPrice() ?? 0)
+                          (colUpdatedPrice() ?? 0))
+                          * lastEnteredQuantity
                         ).toFixed(2)}
                       </span>
                     </span>

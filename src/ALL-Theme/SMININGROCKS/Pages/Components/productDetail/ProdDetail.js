@@ -15,12 +15,13 @@ import { CartListCounts, WishListCounts, designSet, colorstoneQualityColorG, dia
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import notFound from '../../assets/image-not-found.png'
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import playVidoe from '../../assets/paly.png'
 import { IoIosPlayCircle } from "react-icons/io";
 
 const ProdDetail = () => {
 
+  //local states
   const [acc, setAcc] = useState(false);
   const [accNo, setAccNo] = useState('');
   const [imgLoading, setImgLoading] = useState(true);
@@ -36,7 +37,6 @@ const ProdDetail = () => {
   const [metalFilterData, setMetalFilterData] = useState([]);
   const [daimondFilterData, setDaimondFiletrData] = useState([]);
   const [updatedColorImage, setUpdateColorImage] = useState('');
-
   const [metalColorData, setMetalColorData] = useState([]);
   const [metalType, setMetalType] = useState([]);
   const [DaimondQualityColor, setDaimondQualityColor] = useState([]);
@@ -44,32 +44,22 @@ const ProdDetail = () => {
   const [isDaimondCstoFlag, setIsDaimondCstoFlag] = useState('');
   const [isCColrStoneCustFlag, setIsCColrStoneCustFlag] = useState('');
   const [isPriseShow, setIsPriceShow] = useState()
-
   const [sizeOption, setSizeOption] = useState();
-  const [diaQColOpt, setDiaQColOpt] = useRecoilState(diamondQualityColorG);
-  const [mtTypeOption, setmtTypeOption] = useRecoilState(metalTypeG);
-  const [cSQopt, setCSQOpt] = useRecoilState(colorstoneQualityColorG);
   const [colorImageData, setColorImageData] = useState([]);
   const [isProductCuFlag, setIsProductCuFlag] = useState("");
   const [IsColorWiseImagesShow, setIsColorWiseImagesShow] = useState('')
   const [videoUrl, setVideoUrl] = useState('');
   const [completeBackImage, setCompleteBackImage] = useState('');
   const [designUniqueNO, setDesignUnicNo] = useState('');
-
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState('');
-
   const [showIcateDesign, setShowEcateDesign] = useState('');
-
   const [mtPrice, setMetalPrice] = useState(0)
-
   const [dqcPrice, setDQCPrice] = useState(0)
   const [csqcPrice, setCSQCPrice] = useState(0)
   const [grandTotal, setGrandTotal] = useState(0)
-
   const [designSetList, setDesignSetList] = useState([]);
   const [sizeMarkup, setSizeMarkup] = useState();
-
   const [mtrdData, setMtrdData] = useState([])
   const [dqcData, setDqcData] = useState()
   const [dqcRate, setDqcRate] = useState()
@@ -79,14 +69,36 @@ const ProdDetail = () => {
   const [csqcSettRate, setCsqcSettRate] = useState()
   const [getPriceData, setGetPriceData] = useState([])
   const [globImagePath,setGlobImagepath] = useState()
-
-
   const [uploadLogicPath, setUploadLogicPath] = useState('');
   const [uKey, setUkey] = useState('');
   const [currData,setCurrData] = useState()
 
-  const handelCurrencyData = () =>{
+  // recoil State for globle state management
+  const [diaQColOpt, setDiaQColOpt] = useRecoilState(diamondQualityColorG);
+  const [mtTypeOption, setmtTypeOption] = useRecoilState(metalTypeG);
+  const [cSQopt, setCSQOpt] = useRecoilState(colorstoneQualityColorG);
+  const setCartCount = useSetRecoilState(CartListCounts)
+  const setWishCount = useSetRecoilState(WishListCounts)
+  const getDesignSet = useRecoilValue(designSet)
 
+
+  // deeplinking Functionality
+
+  let location = useLocation();
+
+  useEffect(()=>{
+    console.log("location",atob(location?.search.slice(1)));
+
+    let srProductsData = JSON.parse(localStorage.getItem('srProductsData'))
+    if(!srProductsData){
+      let data = atob(location?.search.slice(1))
+      setProductData(data)
+    }
+  },[])
+
+  // other local functionality
+
+  const handelCurrencyData = () =>{
     let currencyData = JSON.parse(localStorage.getItem('CURRENCYCOMBO'));
     let loginData = JSON.parse(localStorage.getItem('loginUserDetail'));
     console.log("param",loginData);
@@ -103,9 +115,7 @@ useEffect(()=>{
 },[])
 
 
-  const setCartCount = useSetRecoilState(CartListCounts)
-  const setWishCount = useSetRecoilState(WishListCounts)
-  const getDesignSet = useRecoilValue(designSet)
+  
   const handelImgLoad = () => {
     setImgLoading(false)
   }
@@ -153,8 +163,14 @@ useEffect(()=>{
     if (dqcc) {
       setCSQOpt(csQualColor)
     } else {
-      let ref = `${ColorStoneQualityColor[0].Quality}-${ColorStoneQualityColor[0].color}`
-      setCSQOpt(ref)
+
+      if(ColorStoneQualityColor){
+        let ref = `${ColorStoneQualityColor[0].Quality}-${ColorStoneQualityColor[0].color}`
+        setCSQOpt(ref)
+
+      }else{
+        setCSQOpt("")
+      }
     }
 
     // let sizeDatafilter = sizeData?.filter((sd)=>sd?.IsDefaultSize === 1)
@@ -163,96 +179,7 @@ useEffect(()=>{
     // setSizeOption(sizeData[1]?.id)
     
   }, [colorData,sizeData])
-  
-  // console.log("productData",sizeOption)
 
-  // useEffect(()=>{
-
-  //   let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
-
-  //       let mtrd = getPriceData?.rd?.filter((ele) => 
-  //           ele?.A === srProductsData?.autocode && 
-  //           ele?.B === srProductsData?.designno && 
-  //           ele?.D === mtTypeOption
-  //         )
-
-  //         let showPrice = srProductsData?.price - ((srProductsData?.price - srProductsData?.metalrd) + (mtrd[0].Z ?? 0))
-
-  //         // setMetalPrice(showPrice)
-
-  //       let diaqcprice = getPriceData?.rd1?.filter((ele) => 
-  //         ele.A === srProductsData?.autocode && 
-  //         ele.B === srProductsData?.designno &&
-  //         ele.H === diaQColOpt?.split("_")[0] &&
-  //         ele.J === diaQColOpt?.split("_")[1] 
-  //         )
-
-  //         let showPrice1 = srProductsData?.price-((srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0].S ?? 0))
-  //         // setDQCPrice(showPrice1)
-
-  //       let csqcpirce = getPriceData?.rd2?.filter((ele) => 
-  //         ele.A === srProductsData?.autocode && 
-  //         ele.B === srProductsData?.designno &&
-  //         ele.H === cSQopt?.split("-")[0] &&
-  //         ele.J === cSQopt?.split("-")[1]   
-  //         )
-
-  //         let showPrice2 = srProductsData?.price -((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0].S ?? 0));
-  //         // setCSQCPrice(showPrice2)
-
-  //         let showPriceall = (srProductsData?.price - srProductsData?.metalrd) + (mtrd[0]?.Z ?? 0)
-
-  //         console.log({showPrice,showPrice1,showPrice2});
-  //         let gt = showPrice + showPrice1 + showPrice2;
-  //         setGrandTotal(gt ?? 0)
-
-  // },[mtTypeOption,diaQColOpt,cSQopt])
-
-  // useEffect(()=>{
-
-  //   let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
-
-  //       let diaqcprice = getPriceData?.rd1?.filter((ele) => 
-  //           ele.A === srProductsData?.autocode && 
-  //           ele.B === srProductsData?.designno &&
-  //           ele.H === diaQColOpt?.split("_")[0] &&
-  //           ele.J === diaQColOpt?.split("_")[1] 
-  //           )
-
-  //           let showPrice = (srProductsData?.price - srProductsData?.diard1) + (diaqcprice[0]?.S ?? 0)
-  //           setDQCPrice(showPrice)
-
-  // },[diaQColOpt])
-
-  // useEffect(() => {
-  //   let srProductsData = JSON.parse(localStorage.getItem('srProductsData'));
-
-  //       let csqcpirce = getPriceData?.rd2?.filter((ele) => 
-  //           ele.A === srProductsData?.autocode && 
-  //           ele.B === srProductsData?.designno &&
-  //           ele.H === cSQopt?.split("-")[0] &&
-  //           ele.J === cSQopt?.split("-")[1]   
-  //           )
-
-  //           let showPrice = ((srProductsData?.price - srProductsData?.csrd2) + (csqcpirce[0]?.S ?? 0));
-  //           setCSQCPrice(showPrice)
-
-
-  // },[cSQopt])
-
-  // useEffect(() => {
-  //   let mt = (mtPrice) 
-  //   let dqc = (dqcPrice)
-  //   let csqc = (csqcPrice)
-
-  //   console.log("mt,dqc,csqc",mt,dqc,csqc)
-  //   // console.log("in usee", (mtPrice === NaN ? 0 :mtPrice), (dqcPrice === NaN ? 0 : dqcPrice), (csqcPrice === NaN ? 0 : csqcPrice));
-  //   // let gt = (gt === NaN ? 0 : gt);
-  //   // setGrandTotal(gt)
-
-  // },[mtPrice, dqcPrice, csqcPrice])
-
-  console.log("ppp",{mtrdData})
 
   let diaUpdatedPrice = () => {
     let srProductsData = JSON.parse(localStorage.getItem('srProductsData'))
@@ -1185,9 +1112,6 @@ useEffect(()=>{
   }
 
   const handelSize = (data) => {
-
-    // console.log("data",data)
-
     const selectedSize = sizeData.find((size) => size.sizename === data)
     if (selectedSize) {
       setSizeMarkup(selectedSize?.MarkUp)
@@ -1200,22 +1124,12 @@ useEffect(()=>{
     setDaimondFiletrData(filteredDataDaimond)
   }
 
-
   const handelDesignSet = (ele) => {
     localStorage.setItem("srProductsData", JSON.stringify(ele))
     // navigate(window.location.pathname)
     handelLocalStorage()
     window.scrollTo(0, 0)
   }
-
-
-  // console.log('prodddddddddddd', updatedColorImage);
-  // console.log('DefaultSizeDefaultSizeDefaultSize', productData?.DefaultSize);
-  // console.log('DefaultSizeDefaultSizeDefaultlengthlength', productData?.DefaultSize.length);
-
-  // console.log('daimondFilterDatadaimondFilterData', daimondFilterData);
-  // // console.log("metalFilterData", metalFilterData)
-  // // console.log("daimondFilterData", daimondFilterData)
   // // console.log('lastPrice', { "unitcost": productData?.UnitCost ?? 0, "mtrdPrice": mtrdData, "dqcDataPrice": dqcData?.S ?? 0, "csqcData": csqcData?.S ?? 0, sizeMarkup, "metalupdatePrice": metalUpdatedPrice(), "diaUpdatedPrice": diaUpdatedPrice(), "colUpdatedPrice": colUpdatedPrice() })
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
@@ -1224,7 +1138,6 @@ useEffect(()=>{
   };
 
   useEffect(() => {
-
     let srData = JSON.parse(localStorage.getItem("srProductsData"))
     let price = ((productData?.UnitCost ?? 0) + (((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)) + (dqcData ?? 0) + (csqcData ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0))
     //((mtrdData?.V/currData[0]?.CurrencyRate ?? 0) + mtrdData?.W ?? 0)
@@ -1235,6 +1148,8 @@ useEffect(()=>{
     localStorage.setItem("srProductsData", JSON.stringify(srData))
 
   }, [mtrdData, dqcData, csqcData, sizeMarkup, metalUpdatedPrice, diaUpdatedPrice, colUpdatedPrice])
+
+  console.log("mtrdData",mtrdData);
 
   console.log("pricedata",(((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0)),dqcData,csqcData,sizeMarkup,metalUpdatedPrice(),diaUpdatedPrice(),colUpdatedPrice())
   console.log("pricedatacv",((productData?.UnitCost ?? 0) + (((mtrdData?.V ?? 0)/currData?.CurrencyRate) + (mtrdData?.W ?? 0))+ (dqcData ?? 0) + (csqcData ?? 0) + (sizeMarkup ?? 0) + (metalUpdatedPrice() ?? 0) + (diaUpdatedPrice() ?? 0) + (colUpdatedPrice() ?? 0)))
