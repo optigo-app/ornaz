@@ -3,8 +3,9 @@ import './AboutUs.css'
 import Header from '../home/Header/Header'
 import ContactForm from '../contactForm/ContactForm'
 import Footer from '../home/Footer/Footer'
-import demo1img from '../../assets/demoImg1.jpg'
-import demo2img from '../../assets/demoimg2.jpg'
+import demo1img from '../../assets/SmilingRockImage/about1.jpg'
+import demo2img from '../../assets/SmilingRockImage/about2.jpg'
+import back from '../../assets/SmilingRockImage/backgroundBanner.jpg'
 
 export default function AboutUs() {
     return (
@@ -12,7 +13,7 @@ export default function AboutUs() {
             {/* https://cdn.accentuate.io/19336364132/3641674891364/Stocksy_txpdd2f673ddEJ200_Medium_1086442.jpg?1733x1155 */}
             <div>
                 <img
-                    src="https://cdn.accentuate.io/19336364132/3641674891364/Stocksy_txpdd2f673ddEJ200_Medium_1086442.jpg?1733x1155"
+                    src={back}
                     alt="..."
                     className="smiling-About-container"
                 />

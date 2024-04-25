@@ -4,6 +4,8 @@ import i1 from "../../assets/Impact/campaign/banner.webp";
 import Campaign from "./campaign/Campaign";
 import Header from "../home/Header/Header";
 import Explore from "./Explore/Explore";
+import ImpactBackgroundBanner from '../../assets/SmilingRockImage/ImpactBackgroundBanner.jpg'
+import ImpactMainBanner from '../../assets/SmilingRockImage/ImpactMainBanner.jpg'
 
 const index = () => {
   return (
@@ -12,7 +14,7 @@ const index = () => {
         <div className="back-img-container">
           <img
             src={
-              "https://wallpapers.com/images/featured/tree-background-xgzu0ujdd4khh95j.jpg"
+              ImpactBackgroundBanner
             }
             alt="..."
             className="impact-container"
