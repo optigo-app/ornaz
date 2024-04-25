@@ -79,7 +79,7 @@
 
 import React, { useState, useRef } from "react";
 import "./Video.css";
-import demovide from "../../../assets/Video/demo2.mp4";
+import demovide from "../../../assets/SmilingRockImage/Topvideo.mp4";
 
 export default function Video() {
   const [loading, setLoading] = useState(false);
