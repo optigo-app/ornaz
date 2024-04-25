@@ -155,7 +155,7 @@ useEffect(()=>{
         setCartFlag(obj)
       }
     }
-  },[WishData])
+  },[cartData])
 
   useEffect(()=>{
     let findData = Object.keys(wishFlag).filter((wd)=>Object.keys(cartFlag).find((cd)=>wd === cd))
@@ -273,11 +273,14 @@ useEffect(()=>{
         let csrd2 = 0;
 
         if (newPriceData || newPriceData1 || newPriceData2) {
-          price = (((newPriceData?.V ?? 0)/currData?.CurrencyRate ?? 0) + newPriceData?.W ?? 0) + (newPriceData1 ?? 0) + (newPriceData2 ?? 0);
+          price = ((productData?.UnitCost ?? 0)+((newPriceData?.V ?? 0)/currData?.CurrencyRate ?? 0) + newPriceData?.W ?? 0) + (newPriceData1 ?? 0) + (newPriceData2 ?? 0);
           metalrd = (((newPriceData?.V ?? 0)/currData?.CurrencyRate ?? 0) + newPriceData?.W ?? 0)
           diard1 = newPriceData1 ?? 0
           csrd2 = newPriceData2 ?? 0
           markup = newPriceData?.AB
+        }
+        else{
+          price = (productData?.UnitCost ?? 0)
         }
 
         return { ...product, price, markup, metalrd, diard1, csrd2 }
@@ -712,7 +715,8 @@ useEffect(()=>{
 
   const handelProductSubmit = (product) => {
     localStorage.setItem("srProductsData", JSON.stringify(product));
-    navigate("/productdetail");
+    // navigate(`/productdetail/${product?.designno}/${product?.autocode}/${product?.GenderName}/${product?.OcassionName}/${product?.ProducttypeName}/${product?.CollectionName}/${product?.SubCategoryName}/?${btoa(JSON.stringify(product))}`);
+    navigate(`/productdetail`);
   };
 
   const NewFilterData = () => {
