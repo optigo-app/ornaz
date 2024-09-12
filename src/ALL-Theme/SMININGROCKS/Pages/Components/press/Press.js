@@ -48,13 +48,13 @@ const Press = () => {
         backgroundColor: "#c0bbb1",
         height: "100%",
         width: "100%",
-        paddingBottom: '100px'
+        paddingBottom: '100px',
+        paddingTop: '110px'
       }}
     >
-      <Header />
       <div className='smilingPressTopTitle' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: '100px' }}>
         <p style={{ textTransform: 'uppercase', color: 'white', fontSize: '14px', fontWeight: '500' }}>press</p>
-        <p style={{ textTransform: 'capitalize',textAlign:'center', color: 'white', fontSize: '40px', fontFamily: "FreightDisp Pro Medium", marginBottom: '120px' }}className='smilingPressTopTitleSub' >Smiling Rocks in the News</p>
+        <p style={{ textTransform: 'capitalize',textAlign:'center', color: 'white', fontSize: '40px', fontFamily: "FreightDisp Pro Medium", marginBottom: '120px' }}className='smilingPressTopTitleSub' >Sonasons in the News</p>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div style={{ maxWidth: '1680px', backgroundColor: 'white' }} className='smilingPressBoxMain'>
