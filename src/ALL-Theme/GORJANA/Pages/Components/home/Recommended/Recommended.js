@@ -54,7 +54,6 @@ export default function Recommended() {
     ]
     return (
         <div>
-            {/* <div className='sliderCardMobile'> */}
             <p style={{
                 textAlign: 'center',
                 fontSize: '35px',

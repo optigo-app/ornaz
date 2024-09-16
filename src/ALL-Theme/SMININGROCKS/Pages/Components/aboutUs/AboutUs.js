@@ -3,12 +3,13 @@ import './AboutUs.css'
 import Header from '../home/Header/Header'
 import ContactForm from '../contactForm/ContactForm'
 import Footer from '../home/Footer/Footer'
+import demo1img from '../../assets/demoImg1.jpg'
+import demo2img from '../../assets/demoimg2.jpg'
 
 export default function AboutUs() {
     return (
-        <div>
+        <div className='paddingTopMobileSet' style={{paddingTop: '110px'}}>
             {/* https://cdn.accentuate.io/19336364132/3641674891364/Stocksy_txpdd2f673ddEJ200_Medium_1086442.jpg?1733x1155 */}
-            <Header />
             <div>
                 <img
                     src="https://cdn.accentuate.io/19336364132/3641674891364/Stocksy_txpdd2f673ddEJ200_Medium_1086442.jpg?1733x1155"
@@ -36,7 +37,7 @@ export default function AboutUs() {
                             fontWeight: 500,
                             fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif',
                             color: '#7d7f85'
-                        }}>#WEARESMILINGROCKS</p>
+                        }}>#WEARESONASONS</p>
                         <p style={{
                             textAlign: 'center',
                             fontSize: '22px',
@@ -54,29 +55,29 @@ export default function AboutUs() {
                     <div className='about-daimondBoxMain'>
                         <div className='about-daimondBox1'>
                             <p style={{ fontSize: '25px', color: '#7d7f85', fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif' }}>Wear a Smile</p>
-                            <p style={{ textAlign: 'center', color: '#7d7f85', fontSize: '13px' }}>We want you to find reasons to smile in your everyday, from the time leaving your house to the endless experience of the day, we want you to be comfortable and confident wearing Smiling Rocks. Our unique designs and one-of-a-kind styles will bring your personality to a different level. Our sustainable, affordable and conflict-free lab grown diamond jewelry is perfect for your pocket! Love who you are, the way you look and the way you smile.</p>
+                            <p style={{ textAlign: 'center', color: '#7d7f85', fontSize: '13px' }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vel orci porta non pulvinar neque laoreet suspendisse interdum. Risus nullam eget felis eget nunc lobortis mattis. Eleifend quam adipiscing vitae proin sagittis nisl. Quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Eget dolor morbi non arcu. Id aliquet lectus proin nibh nisl condimentum id venenatis. Massa enim nec dui nunc mattis enim. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Porttitor leo a diam sollicitudin tempor id eu. Id leo in vitae turpis massa sed elementum. Sagittis eu volutpat odio facilisis mauris. Sed vulputate odio ut enim. Dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in.</p>
                         </div>
                         <div className='about-daimondBox2'>
-                            <img src='https://smilingrocks.com/cdn/shop/files/0W9A2307-Modifier.jpg?v=1613679005' className='about-daimondBox2-image' />
+                            <img src={demo1img} className='about-daimondBox2-image' />
                         </div>
                     </div>
 
                     <div className='about-daimondBoxMain' style={{ marginTop: '80px' }}>
                         <div className='about-daimondBox2'>
-                            <img src='//smilingrocks.com/cdn/shop/files/Stocksy_txpfc04c93bSEJ200_Medium_1266992_2019-04-11T19_00_12.686_180x.jpg?v=1613679005 180w' className='about-daimondBox2-image' />
+                            <img src={demo2img} className='about-daimondBox2-image' />
                         </div>
                         <div className='about-daimondBox1'>
                             <p style={{ fontSize: '25px', color: '#7d7f85', fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif' }}>Wear a Smile</p>
-                            <p style={{ textAlign: 'center', color: '#7d7f85', fontSize: '13px' }}>We want you to find reasons to smile in your everyday, from the time leaving your house to the endless experience of the day, we want you to be comfortable and confident wearing Smiling Rocks. Our unique designs and one-of-a-kind styles will bring your personality to a different level. Our sustainable, affordable and conflict-free lab grown diamond jewelry is perfect for your pocket! Love who you are, the way you look and the way you smile.</p>
+                            <p style={{ textAlign: 'center', color: '#7d7f85', fontSize: '13px' }}>Dictum varius duis at consectetur lorem donec massa sapien faucibus. Eget magna fermentum iaculis eu non diam phasellus vestibulum. Sit amet luctus venenatis lectus magna fringilla urna. Aenean et tortor at risus viverra adipiscing. A diam maecenas sed enim ut sem. Faucibus pulvinar elementum integer enim neque volutpat. Faucibus nisl tincidunt eget nullam non nisi est sit amet. Purus sit amet luctus venenatis lectus magna. Nam libero justo laoreet sit amet. Dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Donec ultrices tincidunt arcu non sodales neque sodales ut. Magna eget est lorem ipsum dolor sit. Eu sem integer vitae justo eget. Integer vitae justo eget magna fermentum iaculis eu non diam.</p>
                         </div>
                     </div>
                 </div>
 
-                <div>
+                {/* <div>
                     <div>
-                        <p style={{ fontSize: '25px', color: '#7d7f85', textAlign: 'center', fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif', marginTop: '80px' }}>Founders</p>
+                        <p style={{ fontSize: '25px', color: '#7d7f85', textAlign: 'center', fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif', marginTop: '80px' }}>Gentereted</p>
                         <div className='about-foundersDesc'>
-                            <p style={{ fontSize: '14px', color: '#7d7f85', width: '600px', textAlign: 'center', letterSpacing: '1px' }}>We are on a mission to make this world a better place by first starting with us and our business. Zulu Ghevriya and Manish Jiwani are self-made businessmen with over 20 years of experience in the Diamond and Jewelry Industry. Our Lab Men have built this business as an embodiment of their dream and a lifetime goal. They have seen this industry strive but did not feel 100% satisfied with their accomplishment. They wanted to do something for the world, so that they can leave a positive footprint for the next generations. Smiling Rocks is a brand they built that promotes the betterment in communities and preserve our mother nature. They believe Smiling Rocks is the links for the smiles that will pass from the lab to the world.</p>
+                            <p style={{ fontSize: '14px', color: '#7d7f85', width: '600px', textAlign: 'center', letterSpacing: '1px' }}>Sodales ut eu sem integer vitae justo eget. Nisi porta lorem mollis aliquam ut porttitor leo a diam. Vel orci porta non pulvinar neque laoreet suspendisse interdum. Risus pretium quam vulputate dignissim suspendisse in est ante in. Consequat nisl vel pretium lectus quam id. Sed vulputate odio ut enim blandit volutpat maecenas volutpat. Habitasse platea dictumst quisque sagittis purus sit amet volutpat consequat. Enim tortor at auctor urna nunc id cursus metus aliquam. Quis viverra nibh cras pulvinar mattis nunc sed blandit. Urna molestie at elementum eu facilisis sed. Sed risus pretium quam vulputate. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend. Vitae et leo duis ut diam quam nulla porttitor massa. Tristique senectus et netus et malesuada fames. Tempor orci dapibus ultrices in iaculis nunc. Nisi porta lorem mollis aliquam ut. Auctor elit sed vulputate mi sit amet.</p>
                         </div>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -85,16 +86,16 @@ export default function AboutUs() {
                 </div>
 
                 <div>
-                    <p style={{ fontSize: '30px', color: '#7d7f85', textAlign: 'center', fontFamily : 'FreightDispProMedium-Regular, "Times New Roman", serif' }}>Smiling Rocks Brand Story</p>
+                    <p style={{ fontSize: '30px', color: '#7d7f85', textAlign: 'center', fontFamily : 'FreightDispProMedium-Regular, "Times New Roman", serif' }}>Sonasons Brand Story</p>
                     <div className='about-foundersDesc'>
                         <p style={{ fontSize: '14px', color: '#7d7f85', width: '700px', textAlign: 'center', letterSpacing: '1px' }}>A journey of our diamonds, our mission and our passion with your support and purchase. Watch a short video about us and our mission that we promised together with you. </p>
                     </div>
                     <div style={{display : 'flex', justifyContent : 'center'}}>
                         <iframe src="https://player.vimeo.com/video/431344262" width="640" height="480" frameborder="0" allowfullscreen=""></iframe>
                     </div>
-                </div>
+                </div> */}
 
-                <ContactForm />
+                {/* <ContactForm /> */}
                 <Footer />
             </div>
         </div>

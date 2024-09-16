@@ -56,6 +56,14 @@
 }
 
 
+#outlined-password-input::-ms-reveal {
+    display: none !important;
+}
+
+#outlined-confirm-password-input::-ms-reveal {
+    display: none !important;
+}
+
 
 @media screen and (max-width: 700px) {
     .labGrowForgot {

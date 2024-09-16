@@ -8,12 +8,11 @@ import Explore from "./Explore/Explore";
 const index = () => {
   return (
     <>
-      <Header />
-      <div>
+      <div style={{ paddingTop: '110px' }}>
         <div className="back-img-container">
           <img
             src={
-              "https://cdn.accentuate.io/19336265828/3641674891364/Stocksy_txp824d1dddS9J200_Medium_2036581.jpg"
+              "https://wallpapers.com/images/featured/tree-background-xgzu0ujdd4khh95j.jpg"
             }
             alt="..."
             className="impact-container"
@@ -33,7 +32,7 @@ const index = () => {
           }}
           className="main-front-container"
         >
-          <img src={i1} alt="..." style={{width:'100%'}} />
+          <img src="https://www.highspeedtraining.co.uk/hub/wp-content/uploads/2021/07/Class-planting-plants-1.jpg" alt="..." style={{width:'100%'}} />
 
           <div
             style={{
@@ -99,13 +98,13 @@ const index = () => {
               }}
               className="quotes-div2Descript"
             >
-              “Creating Smiling Rocks has been our dream and life mission as our
+              “Creating Sonasons has been our dream and life mission as our
               way of spreading smiles around the world and to help make our
               world a better place.”
             </p>
             <p style={{ color: "white" }}>
               <small>
-                <i>-Smiling Rocks Founders</i>
+                <i>-Sonasons Founders</i>
               </small>
             </p>
           </div>

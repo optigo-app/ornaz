@@ -28,6 +28,7 @@
 .prod_img {
     /* background-image: url('https://smilingrocks.com/cdn/shop/products/Lab-grown-diamond-white-gold-ring-srr00363wht_11c94dae-c1d2-45e8-ae46-d16152c77f45_800x800.jpg?v=1613627318'); */
     width: 100%;
+    min-height: 412px;
     height: 412px;
     background-size: cover;
     background-position: center;
@@ -64,39 +65,157 @@
     transition: all 0.9s ease-in-out;
 }
 
+.minmaxvalpl {
+    outline: none !important;
+    font-size: 13px !important;
+    height: 25px !important;
+    width: 30% !important;
+    padding: 5px !important;
+    color: #555050 !important;
+}
+
+.smilingProductDeatilTitleMobile{
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding:0 5px;
+    min-height:19.5px;
+    width:300px;
+    margin:3px;
+}
+
+.smilingProductDeatilTitleMobilenotWidth{
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding:0 5px;
+    min-height:19.5px;
+    /* width:300px; */
+    margin:3px;
+}
+
+.productTitleLine{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media screen and (min-width: 1441px) {
-    .smilingMobileProductListSideBar{
+    .smilingMobileProductListSideBar {
         display: none;
     }
 }
 
 @media screen and (max-width: 1441px) {
 
-    .smilingWebProductListSideBar{
+    .smilingWebProductListSideBar {
         display: none;
     }
-    .smilingProductMain{
+
+    .smilingFilterweb{
+        display: none!important;
+    }
+
+    .smilingProductMain {
         margin-inline: 2%;
     }
-    .smilingProductSubMain{
+
+    .smilingProductSubMain {
         display: flex;
         flex-direction: column;
-    }   
-    .smilingProductImageMain{
-        margin: 0px!important;
-        width: 100%!important;
+    }
+
+    .smilingProductImageMain {
+        margin: 0px !important;
+        width: 100% !important;
     }
 }
 
 @media screen and (max-width: 800px) {
 
-    .smilingProductImageBox{
-        width: 50%!important;
+    .smilingProductImageBox {
+        width: 50% !important;
     }
 }
+
+
+.instockP {
+    border-radius: 0px 3px 0px 0 !important;
+    font-weight: 300 !important;
+    padding: 1px 3px !important;
+    font-size: 8px !important;
+    background: #c9f7cb !important;
+    border-radius: 0 !important;
+    z-index: 1 !important;
+    top: 28px !important;
+    left: 0 !important;
+    color: #3F51B5;
+    right: unset !important;
+    letter-spacing: unset !important;
+    position: absolute;
+}
+
+@media screen and (max-width: 600px) {
+
+    /* .prod_img{
+        height: auto!important;
+    } */
+
+    .prod_img {
+        margin-top: 30px !important;
+        min-height: 200px !important;
+        height: 200px !important;
+    }
+
+    .productTitleLine p {
+        font-size: 12px !important;
+        white-space: unset !important;
+        line-height: 1.4 !important;
+        min-height: auto !important;
+    }
+
+    .mobileDeatilDiv1 {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .mobileDeatilDiv2 {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .smilingProductDeatilTitleMobile {
+        white-space: normal !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    .smilingAllProductDataMainMobile {
+        display: flex !important;
+        flex-direction: column !important;
+        margin: 10px;
+    }
+
+    .smilingProductImageBox {
+        width: 100% !important;
+    }
+
+    .prod_img {
+        width: 80% !important;
+    }
+
+}
+
 
 .inputCheck:checked {
     background-color: '#7f7d85';
 }
-
-
