@@ -8,12 +8,38 @@ import shop1 from '../../../assets/shopByCategory/shopByCategory1.webp'
 import shop2 from '../../../assets/shopByCategory/shopByCategory2.jpg'
 import shop3 from '../../../assets/shopByCategory/shopByCategory3.webp'
 import shop4 from '../../../assets/shopByCategory/shopByCategory4.jpg'
-import linkingLoveImage from '../../../assets/linkingLove/linkingLove.webp'
-import ring1 from '../../../assets/linkingLove/ring1.webp'
-import ring1hover from '../../../assets/linkingLove/ring1hover.jpg'
-import ring2 from '../../../assets/linkingLove/ring2.webp'
-import ring2hover from '../../../assets/linkingLove/ring2hover.jpg'
-import floraMain from '../../../assets/linkingLove/floraMain.webp'
+
+import promoSetMainBanner from '../../../assets/SmilingRockImage/promoSetMainBanner.jpg'
+import ring1 from '../../../assets/SmilingRockImage/promoSetBanner1Img1.jpg'
+import ring2 from '../../../assets/SmilingRockImage/promoSetBanner1Img2.jpg'
+import ring3 from '../../../assets/SmilingRockImage/promoSetBanner1Img3.jpg'
+import ring4 from '../../../assets/SmilingRockImage/promoSetBanner1Img4.jpg'
+import ring5 from '../../../assets/SmilingRockImage/promoSetBanner1Img5.jpg'
+import ring6 from '../../../assets/SmilingRockImage/promoSetBanner1Img6.jpg'
+import ring1hover from '../../../assets/SmilingRockImage/promoSetBanner1Img1Hover.jpg'
+import ring2hover from '../../../assets/SmilingRockImage/promoSetBanner1Img2Hover.jpg'
+import ring3hover from '../../../assets/SmilingRockImage/promoSetBanner1Img3Hover.jpg'
+import ring4hover from '../../../assets/SmilingRockImage/promoSetBanner1Img4Hover.jpg'
+import ring5hover from '../../../assets/SmilingRockImage/promoSetBanner1Img5Hover.jpg'
+import ring6hover from '../../../assets/SmilingRockImage/promoSetBanner1Img6Hover.jpg'
+
+import promoSetMainBanner2 from '../../../assets/SmilingRockImage/promoSetMainBanner2.jpg'
+import pring1 from '../../../assets/SmilingRockImage/promoSetBanner2Img1.jpg'
+import pring2 from '../../../assets/SmilingRockImage/promoSetBanner2Img2.jpg'
+import pring3 from '../../../assets/SmilingRockImage/promoSetBanner2Img3.jpg'
+import pring4 from '../../../assets/SmilingRockImage/promoSetBanner2Img4.jpg'
+import pring5 from '../../../assets/SmilingRockImage/promoSetBanner2Img5.jpg'
+import pring6 from '../../../assets/SmilingRockImage/promoSetBanner2Img6.jpg'
+import pring1hover from '../../../assets/SmilingRockImage/promoSetBanner2Img1Hover.jpg'
+import pring2hover from '../../../assets/SmilingRockImage/promoSetBanner2Img2Hover.jpg'
+import pring3hover from '../../../assets/SmilingRockImage/promoSetBanner2Img3Hover.jpg'
+import pring4hover from '../../../assets/SmilingRockImage/promoSetBanner2Img4Hover.jpg'
+import pring5hover from '../../../assets/SmilingRockImage/promoSetBanner2Img5Hover.jpg'
+import pring6hover from '../../../assets/SmilingRockImage/promoSetBanner2Img6Hover.jpg'
+
+
+
+
 import Slider from 'react-slick'
 
 export default function FeaturedCollection() {
@@ -78,14 +104,12 @@ export default function FeaturedCollection() {
                     <p className='linkingShopCol'>SHOP COLLECTION</p>
                     <Slider {...settings} >
                         <div className='linkRingLove'>
-
                             <div>
                                 <div className='linkLoveRing1'>
                                     <img src={ring1ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                             <div>
@@ -94,110 +118,81 @@ export default function FeaturedCollection() {
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div className='linkRingLove'>
-                            <div>
-                                <div className='linkLoveRing1'>
-                                    <img src={ring1ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
-                                </div>
-                                <div className='linkLoveRing1Desc'>
-                                    <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div className='linkLoveRing2'>
-                                    <img src={ring2ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
-                                </div>
-                                <div className='linkLoveRing1Desc'>
-                                    <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                         </div>
 
                         <div className='linkRingLove'>
+
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring1ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                    <img src={ring1ImageChange ? ring3hover : ring3} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring2ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                    <img src={ring2ImageChange ? ring4hover : ring4} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='linkRingLove'>
+
+                            <div>
+                                <div className='linkLoveRing1'>
+                                    <img src={ring1ImageChange ? ring5hover : ring5} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                </div>
+                                <div className='linkLoveRing1Desc'>
+                                    <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div className='linkLoveRing2'>
+                                    <img src={ring2ImageChange ? ring6hover : ring6} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                </div>
+                                <div className='linkLoveRing1Desc'>
+                                    <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
                                 </div>
                             </div>
                         </div>
                     </Slider>
                 </div>
                 <div className='linkingLoveImage'>
-                    <img src={linkingLoveImage} className='linkingLoveImageDesign'  />
+                    <img src={promoSetMainBanner} className='linkingLoveImageDesign' />
                 </div>
             </div>
 
 
             <div className='linkingLoveMain'>
                 <div className='linkingLoveImage'>
-                    <img src={floraMain} className='linkingLoveImageDesign' />
+                    <img src={promoSetMainBanner2} className='linkingLoveImageDesign' />
                 </div>
                 <div className='linkingLove'>
                     <p className='linkingTitle'>FLORA</p>
                     <p className='linkingDesc'>High end affordable luxury with sophisticated designs for your every day.</p>
                     <p className='linkingShopCol'>SHOP COLLECTION</p>
                     <Slider {...settings} >
-                        <div className='linkRingLove'>
-
+                    <div className='linkRingLove'>
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring3ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                                    <img src={ring1ImageChange ? pring1hover : pring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring4ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
+                                    <img src={ring2ImageChange ? pring2hover : pring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div className='linkRingLove'>
-                            <div>
-                                <div className='linkLoveRing1'>
-                                    <img src={ring3ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
-                                </div>
-                                <div className='linkLoveRing1Desc'>
-                                    <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div className='linkLoveRing2'>
-                                    <img src={ring4ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
-                                </div>
-                                <div className='linkLoveRing1Desc'>
-                                    <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                         </div>
@@ -205,20 +200,36 @@ export default function FeaturedCollection() {
                         <div className='linkRingLove'>
                             <div>
                                 <div className='linkLoveRing1'>
-                                    <img src={ring3ImageChange ? ring1hover : ring1} className='likingLoveImages' onMouseEnter={handleMouseEnterRing3} onMouseLeave={handleMouseLeaveRing3} />
+                                    <img src={ring1ImageChange ? pring3hover : pring3} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
                                 </div>
                             </div>
                             <div>
                                 <div className='linkLoveRing2'>
-                                    <img src={ring4ImageChange ? ring2hover : ring2} className='likingLoveImages' onMouseEnter={handleMouseEnterRing4} onMouseLeave={handleMouseLeaveRing4} />
+                                    <img src={ring2ImageChange ? pring4hover : pring4} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
                                 </div>
                                 <div className='linkLoveRing1Desc'>
                                     <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
-                                    <p style={{ fontSize: '12px' }}>White Gold / $4,949.00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='linkRingLove'>
+                            <div>
+                                <div className='linkLoveRing1'>
+                                    <img src={ring1ImageChange ? pring5hover : pring5} className='likingLoveImages' onMouseEnter={handleMouseEnterRing1} onMouseLeave={handleMouseLeaveRing1} />
+                                </div>
+                                <div className='linkLoveRing1Desc'>
+                                    <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div className='linkLoveRing2'>
+                                    <img src={ring2ImageChange ? pring6hover : pring6} className='likingLoveImages' onMouseEnter={handleMouseEnterRing2} onMouseLeave={handleMouseLeaveRing2} />
+                                </div>
+                                <div className='linkLoveRing1Desc'>
+                                    <p className='ring1Desc'>Lab Grown Diamond 1.97ctw Chain Linking Bracelet BL-01993WHT</p>
                                 </div>
                             </div>
                         </div>

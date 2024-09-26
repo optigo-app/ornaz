@@ -94,17 +94,17 @@ export default function Header({ }) {
           <div style={{ marginTop: '70px', paddingBottom: '150px' }}>
             <div style={{ display: 'flex', marginInline: '30px' }}>
               <img alt="" src="https://cdn.shopify.com/s/files/1/0015/3849/0427/files/RE-1811-202-G_1_641d250d-bdec-4856-9232-5c453e35e89c.jpg?v=1700605683&width=832&height=1109&crop=center" className="gorBagimge" />
-              <div style={{width: '100%'}}>
+              <div style={{ width: '100%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <p style={{margin: '0px' ,fontSize:'17px', fontFamily: 'Freight Big Pro,serif'}}>Bespoke Plate Adjustable Bracelet (gold)</p>
-                  <p style={{margin: '0px' ,fontSize:'15px'}}>$150</p>
+                  <p style={{ margin: '0px', fontSize: '17px', fontFamily: 'Freight Big Pro,serif' }}>Bespoke Plate Adjustable Bracelet (gold)</p>
+                  <p style={{ margin: '0px', fontSize: '15px' }}>$150</p>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <p style={{margin: '0px' ,fontSize:'13px',fontStyle: 'italic'}}>Gold Plated</p>
+                  <p style={{ margin: '0px', fontSize: '13px', fontStyle: 'italic' }}>Gold Plated</p>
                   <p>Remove</p>
                 </div>
                 <div style={{ marginTop: '40px' }}>
-                  <p style={{fontSize: '13px' ,cursor:'pointer', textDecoration: 'underline'}}>Remove</p>
+                  <p style={{ fontSize: '13px', cursor: 'pointer', textDecoration: 'underline' }}>Remove</p>
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function Header({ }) {
               <p style={{ fontSize: '32px', marginTop: '50px', fontFamily: 'Freight Big Pro,serif', textAlign: 'center' }}>Don't Forget These</p>
               <div style={{ display: 'flex' }}>
                 <div style={{ marginInline: '20px' }}>
-                  <div style={{ position: 'relative',zIndex:'-1', width: 'fit-content' }}>
+                  <div style={{ position: 'relative', zIndex: '-1', width: 'fit-content' }}>
                     <img alt="" src={enterMouceimg1 ? "https://cdn.shopify.com/s/files/1/0015/3849/0427/products/GS-229-200-G_4.jpg?v=1690277975&width=832&height=1109&crop=center" : "https://cdn.shopify.com/s/files/1/0015/3849/0427/products/GS-229-200-G_1.jpg?v=1690277975&width=832&height=1109&crop=center"} className="gorBagForgetimage" onMouseEnter={() => setEnterMouceimg1(true)} onMouseLeave={() => setEnterMouceimg1(false)} />
                     <div className="gorForgotIconeDiv">
                       <PiBagThin style={{ height: '35px', width: '35px' }} />
@@ -123,7 +123,7 @@ export default function Header({ }) {
                   <p>999</p>
                 </div>
                 <div>
-                  <div style={{ position: 'relative',zIndex:'-1',  width: 'fit-content' }}>
+                  <div style={{ position: 'relative', zIndex: '-1', width: 'fit-content' }}>
                     <img alt="" src={enterMouceimg1 ? "https://cdn.shopify.com/s/files/1/0015/3849/0427/products/GS-229-200-G_4.jpg?v=1690277975&width=832&height=1109&crop=center" : "https://cdn.shopify.com/s/files/1/0015/3849/0427/products/GS-229-200-G_1.jpg?v=1690277975&width=832&height=1109&crop=center"} className="gorBagForgetimage" onMouseEnter={() => setEnterMouceimg1(true)} onMouseLeave={() => setEnterMouceimg1(false)} />
                     <div className="gorForgotIconeDiv">
                       <PiBagThin style={{ height: '35px', width: '35px' }} />
@@ -134,7 +134,7 @@ export default function Header({ }) {
                 </div>
               </div>
             </div>
-            
+
 
           </div>
 
@@ -166,6 +166,16 @@ export default function Header({ }) {
             />
             <div className="gorjanaHeaderSubMenuMain">
               <ul className="gorjanaHeaderMenu">
+                <li
+                  className="gorjana-Menu-item"
+                  onClick={() => {
+                    setRecoilBlurFlag(true)
+                    setRecoilSideNavListItem('Jewelry')
+                    setRecoilSideNavListFlag(true)
+                  }}
+                >
+                  Shop
+                </li>
                 <li
                   className="gorjana-Menu-item"
                   onClick={() => {

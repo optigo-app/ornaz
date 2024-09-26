@@ -51,4 +51,13 @@
         width: 100%;
         order: 1;
     }
+
+    .shopifyDescription{
+        color: #7d7f85!important;
+        width: 95%!important;
+    }
+
+    .shopifyTitle{
+        font-size: 22px!important;
+    }
 }

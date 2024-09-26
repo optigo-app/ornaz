@@ -1,8 +1,8 @@
 import React from "react";
-import image1 from "../../../assets/Impact/campaign/img1.webp";
-import image2 from "../../../assets/Impact/campaign/img2.webp";
-import image3 from "../../../assets/Impact/campaign/img3.webp";
-import image4 from "../../../assets/Impact/campaign/img4.webp";
+import image1 from "../../../assets/SmilingRockImage/ImpactBanner1.jpg";
+import image2 from "../../../assets/SmilingRockImage/ImpactBanner2.jpg";
+import image3 from "../../../assets/SmilingRockImage/ImpactBanner3.jpg";
+import image4 from "../../../assets/SmilingRockImage/ImpactBanner4.jpg";
 import edu1 from "../../../assets/Impact/smallogo/edu-logo-1.avif";
 import edu2 from "../../../assets/Impact/smallogo/edu-logo-2.avif";
 import med1 from "../../../assets/Impact/smallogo/med1.avif";
@@ -38,7 +38,7 @@ const ImpCards = () => {
       icon: leaf,
       title: "Environmental Protection",
       descript:
-        "Smiling Rocks has launched a Carbon For Carbon initiative. We are working with NGOs to launch this campaign and research the amount of CO2 produced by one human cycle which will be offset with the amounts of trees that need to be planted to improve the environment impact of unnecessary carbon usage.",
+        "Sonasons has launched a Carbon For Carbon initiative. We are working with NGOs to launch this campaign and research the amount of CO2 produced by one human cycle which will be offset with the amounts of trees that need to be planted to improve the environment impact of unnecessary carbon usage.",
       counter: [
         { a: "", b: "Trees Planted & Clean Up Ocean" },
         { a: "159,619 +", b: "Trees Planted" },

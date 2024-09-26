@@ -1,6 +1,6 @@
 import React from 'react'
-import sustain1 from '../../assets/sustain/sustain1.webp'
-import sustain2 from '../../assets/sustain/sustain2.webp'
+import sustain1 from '../../assets/SmilingRockImage/sustainability1.jpg'
+import sustain2 from '../../assets/SmilingRockImage/sustainability2.jpg'
 import './sustain.css'
 
 const SustainAbility = () => {

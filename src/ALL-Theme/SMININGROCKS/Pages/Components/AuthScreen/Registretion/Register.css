@@ -1,3 +1,9 @@
+.css-1wc848c-MuiFormHelperText-root {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+
+
 .smling-register-main {
     margin-inline: 6%;
     background-color: white;
@@ -8,7 +14,7 @@
     margin: 10px;
 }
 
-.createBtnRegister{
+.createBtnRegister {
     height: 60px;
     width: 420px;
     color: white;
@@ -21,13 +27,13 @@
     transition: all 0.5s ease;
 }
 
-.createBtnRegister:hover{
+.createBtnRegister:hover {
     background-color: white;
     color: #7d7f85;
     border: 1px solid #7d7f85;
 }
 
-.SmilingSignInHere{
+.SmilingSignInHere {
     color: #7d7f85;
     font-size: 12px;
     margin-top: 10px;
@@ -38,6 +44,7 @@
     transition: color 0.3s;
     cursor: pointer;
 }
+
 .SmilingSignInHere::before {
     content: '';
     position: absolute;
@@ -48,18 +55,41 @@
     background-color: #000;
     transition: width 0.3s ease;
 }
+
 .SmilingSignInHere:hover::before {
-    width: 100%; 
+    width: 100%;
+}
+
+#outlined-password-input::-ms-reveal {
+    display: none !important;
+}
+
+#outlined-confirm-password-input::-ms-reveal {
+    display: none !important;
 }
 
 
 @media screen and (max-width: 700px) {
+
+    .AuthScreenRegisterMainTitle {
+        padding-block: 10px !important;
+        padding-bottom: 0px !important;
+        font-size: 25px !important;
+
+    }
+
     .labgrowRegister {
         width: 80%;
         margin: 10px;
     }
-    .createBtnRegister{
+
+    .createBtnRegister {
         width: 80%;
     }
-   
+
+    .smling-register-main {
+        margin-inline: 2% !important;
+
+    }
+
 }
