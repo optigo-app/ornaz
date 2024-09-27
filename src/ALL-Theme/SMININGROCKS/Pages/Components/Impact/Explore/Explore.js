@@ -10,20 +10,20 @@ const Explore = () => {
         <div className='exploreMain'>
           <div>
             <img
-              src={'https://smilingrocks.com/cdn/shop/files/founders_image_resize_2_grande.jpg?v=1613679000'}
+              src={'https://media.istockphoto.com/id/544357744/photo/friends-laughing-and-enjoying.jpg?s=612x612&w=0&k=20&c=Pbic5nOf77r61WX7nhGvCq7IStW76FmfiXm6niYYvak='}
               alt={''}
               style={{ width: '735px', height: '459px', objectFit: 'cover' }}
               className='smilingExpolerImgs'
             />
             <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', gap: '10px', margin: '60px 0px 90px 0px' }}>
               <h3 style={{ fontFamily: "FreightDisp Pro Medium" }}>About Us</h3>
-              <p className='smilingExpolerBoxDesc' style={{ width: '420px', fontFamily: "TT Commons, sans-serif", fontSize: '13px', textAlign: 'center' }}>The founders of Smiling Rocks have a mission to spread smiles through supporting different charity organizations.</p>
+              <p className='smilingExpolerBoxDesc' style={{ width: '420px', fontFamily: "TT Commons, sans-serif", fontSize: '13px', textAlign: 'center' }}>The founders of Sonasons have a mission to spread smiles through supporting different charity organizations.</p>
               <a href="#" style={{ textDecoration: 'none', fontFamily: "TT Commons, sans-serif", fontSize: '12px', letterSpacing: '1px', fontWeight: '600' }}>LEARN MORE</a>
             </div>
           </div>
           <div>
             <img
-              src={'https://smilingrocks.com/cdn/shop/files/product_image_2_grande.jpg?v=1613689552'}
+              src={'https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iHccLmdFtnFk/v0/1200x801.jpg'}
               alt={''}
               style={{ width: '735px', height: '459px', objectFit: 'cover' }}
               className='smilingExpolerImgs'
