@@ -3,6 +3,7 @@ import ImpCards from "../impact-cards/ImpCards";
 import SustainAbility from "../../sustainAbility/SustainAbility";
 import jointlogo from '../../../assets/Impact/campaign/jointlogo.avif'
 import united from '../../../assets/Impact/campaign/united.jpg'
+import ImpactBottomBanner from '../../../assets/SmilingRockImage/ImpactBottomBanner.jpg'
 import './campaign.css'
 
 const Campaign = () => {
@@ -37,8 +38,8 @@ const Campaign = () => {
           }}
           className="campaignDesc"
         >
-          For every purchase you make, Smiling Rocks Foundation will donate 3%
-          to your choice of the following charity categories. Smiling Rocks
+          For every purchase you make, Sonasons Foundation will donate 3%
+          to your choice of the following charity categories. Sonasons
           Foundation is an organization qualified by the Internal Revenue
           Service as a tax exempt charitable foundation under 501(c)(3) of the
           Internal Revenue Code.
@@ -50,7 +51,7 @@ const Campaign = () => {
         <SustainAbility />
       </div>
       <div className="campaingImages" style={{ padding: "0px 85px 0px", marginTop: '45px' }}>
-        <img src={united} alt={''} style={{width:'100%'}} />
+        <img src={ImpactBottomBanner} alt={''} style={{width:'100%'}} />
       </div>
       <div style={{ padding: "0px 85px 0px", marginTop: '45px' }}>
         <div style={{ display: 'flex', justifyContent: 'center' }}>

@@ -1,11 +1,11 @@
 import React from 'react'
 import './SmilingBrides.css'
-import bridesImage from '../../../assets/smilingBrides/brides1.webp'
+import bridesImage from '../../../assets/SmilingRockImage/PromoBanner2.jpg'
 import { Colors } from '../../../../lib/consts/Colors'
 
 export default function SmilingBrides() {
     return (
-        <div>
+        <div className='paddingTopMobileSet'>
             <div className='smilingBridesMain'>
                 <div className='smilingBrides'>
                     <p style={{
@@ -13,7 +13,7 @@ export default function SmilingBrides() {
                         fontSize: '25px',
                         textAlign: 'center',
                         fontFamily: 'FreightDispProMedium-Regular,Times New Roman,serif'
-                    }}>SMILING BRIDES</p>
+                    }} className='smilingBridesMainTitle'>SMILING BRIDES</p>
                     <button className='enagementBtn'>ENGAGEMENT COLLECTION</button>
                 </div>
                 <div className='smlingBridesImages'>

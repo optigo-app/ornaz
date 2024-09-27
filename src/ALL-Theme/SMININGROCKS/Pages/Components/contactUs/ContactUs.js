@@ -7,9 +7,9 @@ import Footer from '../home/Footer/Footer'
 export default function ContactUs() {
     return (
         <div style={{
-            backgroundColor: '#c0bbb1'
+            backgroundColor: '#c0bbb1',
+            paddingTop: '110px'
         }}>
-            <Header />
             <div>
                 <div style={{ marginBlock: '20px' }}>
                     <p style={{ fontSize: '40px', color: 'white', textAlign: 'center', fontFamily: 'FreightDispProBook-Regular,Times New Roman,serif' }}>Contact Us</p>
@@ -51,7 +51,7 @@ export default function ContactUs() {
                         </div>
                         <div className='Fo-contactBox2'>
                             <p className='Fo-contactBox2Title'>Have questions?</p>
-                            <p className='Fo-contactBox2Desc'>Smiling Rocks is Here For You! Fill the line below or email us directly</p>
+                            <p className='Fo-contactBox2Desc'>Sonasons is Here For You! Fill the line below or email us directly</p>
 
                             <p style={{
                                 fontSize: '15px',
@@ -59,7 +59,7 @@ export default function ContactUs() {
                             }}>General inquiries:<span style={{
                                 fontWeight: 400,
                                 fontSize: '13px'
-                            }}>  Info@smilingrocks.com</span></p>
+                            }}>  Info@sonasons.com</span></p>
 
                             <p style={{
                                 fontSize: '15px',
@@ -67,7 +67,7 @@ export default function ContactUs() {
                             }}>Customer inquiries:<span tyle={{
                                 fontWeight: 400,
                                 fontSize: '13px'
-                            }}>  order@smilingrocks.com</span></p>
+                            }}>  order@sonasons.com</span></p>
 
                             <p style={{
                                 fontSize: '15px',
@@ -75,7 +75,7 @@ export default function ContactUs() {
                             }}>Orders & Returns:<spna tyle={{
                                 fontWeight: 400,
                                 fontSize: '13px'
-                            }}>  order@smilingrocks.com</spna></p>
+                            }}>  order@sonasons.com</spna></p>
 
                             <p className='Fo-contactBox2Desc'>If you are looking for instant answers, check out our FAQ page for more information!</p>
                             <p className='Fo-contactBox2Title'>Orders & Returns</p>
@@ -91,7 +91,7 @@ export default function ContactUs() {
                 </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', paddingBlock: '30px' }}>
-                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => ''}>BACK TO TOP</p>
+                <p style={{ margin: '0px', fontWeight: 500, width: '100px', color: 'white', cursor: 'pointer' }} onClick={() => window.scrollTo(0, 0)}>BACK TO TOP</p>
             </div>
         </div>
     )

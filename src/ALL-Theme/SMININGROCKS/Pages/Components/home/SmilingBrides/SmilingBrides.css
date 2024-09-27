@@ -67,15 +67,52 @@
         margin-inline: 40px;
         background-color: #7d7f85;
     }
+
+    .linkingTitle{
+        margin-top: 25px!important;
+        font-size: 22px!important;
+    }
+
+    .linkingShopCol{
+        font-weight: 700!important;
+    }
+
+    .ring1Desc{
+        font-size: 12px!important;
+        letter-spacing: 1px!important;
+        font-weight: 500!important;
+        color: #7d7f85!important;
+    }
 }
 
 @media screen and (max-width: 500px) {
- 
+
+    .smilingBridesMain {
+        margin-top: 40px !important;
+        border: none !important;
+    }
+    .smilingBrides{
+        border: none !important;
+    }
+
     .smilingMainImages {
         height: 350px;
         width: 100%;
         margin-top: 5px;
     }
 
-   
+    .smilingBridesMainTitle {
+        font-size: 22px !important;
+        margin-top: 20px;
+    }
+
+
+    .enagementBtn {
+        width: 100% !important;
+        margin-inline: 2px;
+        height: 45px !important;
+        font-weight: 500;
+        font-size: 13px;
+    }
+
 }
