@@ -1,5 +1,5 @@
 import React from "react";
-import image1 from "../../../assets/Impact/campaign/img1.webp";
+import image1 from "../../../assets/staticImg/impact2.jpg";
 import image2 from "../../../assets/Impact/campaign/img2.webp";
 import image3 from "../../../assets/Impact/campaign/img3.webp";
 import image4 from "../../../assets/Impact/campaign/img4.webp";
@@ -34,11 +34,11 @@ const ImpCards = () => {
       fund: [{ i: edu1 }, { i: edu2 }]
     },
     {
-      banner: image2,
+      banner: "https://img.freepik.com/premium-photo/people-hands-planting-small-tree-sunset-concept-save-earth_34152-3251.jpg",
       icon: leaf,
       title: "Environmental Protection",
       descript:
-        "Smiling Rocks has launched a Carbon For Carbon initiative. We are working with NGOs to launch this campaign and research the amount of CO2 produced by one human cycle which will be offset with the amounts of trees that need to be planted to improve the environment impact of unnecessary carbon usage.",
+        "Sonasons has launched a Carbon For Carbon initiative. We are working with NGOs to launch this campaign and research the amount of CO2 produced by one human cycle which will be offset with the amounts of trees that need to be planted to improve the environment impact of unnecessary carbon usage.",
       counter: [
         { a: "", b: "Trees Planted & Clean Up Ocean" },
         { a: "159,619 +", b: "Trees Planted" },
@@ -47,7 +47,7 @@ const ImpCards = () => {
       fund: [{ i: trees1 }, { i: tress2 }, { i: tress3 }]
     },
     {
-      banner: image3,
+      banner: "https://media.istockphoto.com/id/1369620254/photo/shot-of-a-doctor-using-a-cotton-ball-on-a-little-girls-arm-while-administering-an-injection.jpg?s=612x612&w=0&k=20&c=1k44-DJxeSdtKIltzVk2tSPs19dW1EO_oeDjvlDsI3g=",
       icon: heart,
       title: "Medical Support",
       descript:
@@ -61,7 +61,7 @@ const ImpCards = () => {
       fund: [{ i: edu2 }, { i: med1 }, { i: med2 }]
     },
     {
-      banner: image4,
+      banner: "https://www.shutterstock.com/image-photo/animals-care-protection-mixed-media-260nw-528609712.jpg",
       icon: paws,
       title: "Animal Protection",
       descript:

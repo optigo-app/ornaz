@@ -70,7 +70,6 @@ export default function GORJANA_App() {
   let subNavData = () =>{
 
     let StoreData = [];
-    console.log("SideNavListItemLabel",navItem);
     switch (navItem) {
       case "Jewelry":
         StoreData.push({
@@ -190,7 +189,6 @@ export default function GORJANA_App() {
     }
   };
 
-  // console.log("CheckFlag", CheckFlag(), blurFlag);
 
   return (
     <div>
